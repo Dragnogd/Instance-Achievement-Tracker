@@ -6,7 +6,7 @@ local _, core = ...
 local events = CreateFrame("Frame")
 local UIConfig
 local UICreated = false
-local version = 10
+local addonVersion = 10
 
 -- local events = CreateFrame("Frame", "AchievementTracker2", UIParent, "UIPanelDialogTemplate")
 -- events:SetSize(800, 500)
@@ -49,6 +49,7 @@ core.scanFinished = false						--Set to true when everyone in the group has been
 --------------------------------------
 -- Main Variables
 --------------------------------------
+core.masterAddon = false						--The master addon for the group. This stop multiple people with the addon outputting identical messages
 core.currentZoneID = nil						--The ID of the current instance the player is in
 core.playerCount = 0							--The amount of players the instance lock can hold
 core.inCombat = false							--Whether anyone in the current group is in combat with boss/mobs
@@ -378,7 +379,7 @@ end
 
 function createEnableAchievementTrackingUI()
 	UICreated = true
-	
+
 	--Create the frame to ask the user whether they want to enable the addon for the particular instance they are in
 	UIConfig = CreateFrame("Frame", "AchievementTrackerCheck", UIParent, "UIPanelDialogTemplate", "AchievementTemplate")
 	UIConfig:SetSize(200, 200)
@@ -422,6 +423,21 @@ function enableAchievementTracking(self)
 	events:RegisterEvent("PLAYER_REGEN_ENABLED")				--Used to track when the player has left combat
 	events:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")			--Used to get information about the fight and to report information about the tracked achievement
 	getPlayersInGroup()
+
+	--Check if there is already someone else running the addon in the group / whether the priority is higher for the current player than other players running the addon
+	if core.groupSize == 0
+		--Player is not a group so run the addon
+		core.masterAddon = true
+	else
+		--Send out a request to the addon channel asking if anyone else in the group has the addon enabled
+			--Wait period of time
+				--If player has the addon
+					--If player has higher permissions in raid then let them be the leader (RL, Assist, Normal)
+					--If you have higher permissions that player, take control
+					--If you have same permissions as other players in the raid
+						--If someone already has the addon enabled, let them be leader
+						--Else take leader 
+	end
 end
 
 function disableAchievementTracking(self)
@@ -434,7 +450,7 @@ function events:ADDON_LOADED(event, name)
 	SLASH_MENU1 = "/at"
 	SlashCmdList.MENU = core.Config.Toggle
 
-	----print(name .. " loaded")
+	print(name .. " loaded. Version: " .. addonVersion)
 end
 
 function events:PLAYER_REGEN_DISABLED()
