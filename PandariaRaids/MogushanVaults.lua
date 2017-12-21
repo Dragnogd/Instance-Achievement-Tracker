@@ -19,37 +19,34 @@ local ArcaneVelocityReversed = false
 local itemsReversed = 0
 
 function core.MogushanVaults:FengTheAccursed()
-	core:displayAchievementsToTrackCurrent(6674)
-
 	if core.type == "SPELL_AURA_APPLIED" then
 		if core.spellId == 116936 and EpicenterReversed == false then
 			EpicenterReversed = true
 			itemsReversed = itemsReversed + 1
-			SendChatMessage("[WIP] Epicenter Reversed (" .. itemsReversed .. "/5)",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+			core:sendMessage("Epicenter Reversed (" .. itemsReversed .. "/5)")
 		elseif core.spellId == 118307 and WildfireSparkReversed == false then
 			WildfireSparkReversed = true
 			itemsReversed = itemsReversed + 1
-			SendChatMessage("[WIP] WildfireSpark Reversed (" .. itemsReversed .. "/5)",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+			core:sendMessage("WildfireSpark Reversed (" .. itemsReversed .. "/5)")
 		elseif core.spellId == 118194 and ArcaneResonanceReversed == false then
 			ArcaneResonanceReversed = true
 			itemsReversed = itemsReversed + 1
-			SendChatMessage("[WIP] Arcane Resonance Reversed (" .. itemsReversed .. "/5)",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+			core:sendMessage("Arcane Resonance Reversed (" .. itemsReversed .. "/5)")
 		elseif core.spellId == 115730 and LightningFistsReversed == false then
 			LightningFistsReversed = true
 			itemsReversed = itemsReversed + 1
-			SendChatMessage("[WIP] Lightning Fists Reversed (" .. itemsReversed .. "/5)",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+			core:sendMessage("Lightning Fists Reversed (" .. itemsReversed .. "/5)")
 		end
 	elseif core.type == "SPELL_CAST_SUCCESS" then
 		if core.spellId == 116938 and ArcaneVelocityReversed == false then
 			ArcaneVelocityReversed = true
 			itemsReversed = itemsReversed + 1
-			SendChatMessage("[WIP] Arcane Velocity Reversed (" .. itemsReversed .. "/5)",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+			core:sendMessage("Arcane Velocity Reversed (" .. itemsReversed .. "/5)")
 		end
 	end
 
-	if itemsReversed == 5 and core.achievementCompleted == false then
-		SendChatMessage("[WIP] "  .. GetAchievementLink(6674) .. " requirements have been met. Boss can now be killed!",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
-		core.achievementCompleted = true
+	if itemsReversed == 5 then
+		core:getAchievementSuccess()
 	end
 end
 
