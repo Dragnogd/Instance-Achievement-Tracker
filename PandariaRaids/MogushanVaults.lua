@@ -62,7 +62,7 @@ function MogushanVaults_TheSpiritKings()
 	--Announce in chat who did not dance in time.
 end
 
-function MogushanVaults_ClearVariables()
+function core.MogushanVaults:ClearVariables()
 	------------------------------------------------------
 	---- Feng The Accursed
 	------------------------------------------------------
