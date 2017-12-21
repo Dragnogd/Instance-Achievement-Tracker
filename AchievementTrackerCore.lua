@@ -4,6 +4,9 @@
 local _, core = ...
 
 local events = CreateFrame("Frame")
+local UIConfig
+local UICreated = false
+local version = 10
 
 -- local events = CreateFrame("Frame", "AchievementTracker2", UIParent, "UIPanelDialogTemplate")
 -- events:SetSize(800, 500)
@@ -25,12 +28,8 @@ local events = CreateFrame("Frame")
 -- playersWaitingToScanFontstring:SetWidth(500)
 
 events:RegisterEvent("ADDON_LOADED")						--Used to setup the slash commands for the addon
-events:RegisterEvent("INSPECT_ACHIEVEMENT_READY") 			--Used for scanning players in the group to see which achievements they are missing
-events:RegisterEvent("GROUP_ROSTER_UPDATE")					--Used to find out when the group size has changed and to therefore initiate an achievement scan of the group
 events:RegisterEvent("PLAYER_ENTERING_WORLD")				--Used to detect if player is inside an instance when they enter the world
-events:RegisterEvent("PLAYER_REGEN_DISABLED")				--Used to detect when the player has entered combat and to reset tracked variables for bosses
-events:RegisterEvent("PLAYER_REGEN_ENABLED")				--Used to track when the player has left combat
-events:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")			--Used to get information about the fight and to report information about the tracked achievement
+events:RegisterEvent("ZONE_CHANGED_NEW_AREA")				--Used to detect if player is inside an instance when they change zone
 
 events:SetScript("OnEvent", function(self, event, ...)
    return self[event] and self[event](self, event, ...) 	--Allow event arguments to be called from seperate functions
@@ -59,6 +58,7 @@ core.chatType = nil								--The chat type for the current group (say/party/raid
 core.achievementTrackedMessageShown = false		--Set to true when the message "Tracking {achievement}" is output to the chat so that it only outputs once per fight
 core.groupSize = 0								--Amount of players currently in the group
 core.currentAchievementID = nil					--The ID for the current boss achievement
+core.achievementTrackingEnabled = false			--Whether the user wants to track achievements for the particular instance or not
 local currentBoss = nil							--The current boss the player is attacking. Can only be one of the bosses listed in the instances.lua file
 local expansion = nil							--Current expansion of the particular instance
 local instanceType = nil						--Whether the instance is a dungeon or a raid
@@ -329,35 +329,103 @@ function events:PLAYER_ENTERING_WORLD()
 		mode = "normal"
 	end
 
-	--Wait for the user to load in before starting the scan
-	C_Timer.After(5, function()
-		--If player is in an instance then start scanning the achievemenents for that instance
-		local isInstance, instanceType = IsInInstance()
-		if isInstance == true and (instanceType == "party" or instanceType == "raid") then
-			local str = string.gsub(" "..name, "%W%l", string.upper):sub(2)
-        	str = str:gsub("%s+", "")
-			core.currentZoneID = 1448 
-			instanceName = str
-			getPlayersInGroup()
-		end 
-	end)
-
+	local isInstance, instanceType = IsInInstance()
+	if isInstance == true and (instanceType == "party" or instanceType == "raid") then
+		local str = string.gsub(" "..name, "%W%l", string.upper):sub(2)
+		str = str:gsub("%s+", "")
+		core.currentZoneID = 1448 
+		instanceName = str
+		
+		--Ask the user whether they want to enable Achievement Tracking in the instance
+		createEnableAchievementTrackingUI()
+	end 
 end
 
 function events:ZONE_CHANGED_NEW_AREA()
-	--When player enters the world in an instance start the achievement scanner
-	-- if core.currentZoneID == 1448 then
-	-- 	----print("Hellfire Citadel")
-	-- 	instanceName = "HellfireCitadel"
-	-- 	--print("Calling GetPlayersInGroup from zone_changed_new_area for hellfire citadel")
-	-- 	scanInProgress = true
-	-- 	getPlayersInGroup()
-	-- elseif core.currentZoneID == 996 then
-	-- 	instanceName = "TerraceOfEndlessSpring"
-	-- 	--print("Calling GetPlayersInGroup from zone_changed_new_area for terrace of endless spring")
-	-- 	scanInProgress = true
-	-- 	getPlayersInGroup()
-	-- end
+	local name, _, difficultyID, _, maxPlayers, _, _, mapID, _ = GetInstanceInfo()
+	playerCount = maxPlayers
+	core.currentZoneID = mapID
+	----print(currentZoneID)
+
+	if(difficultyID == 5 or difficultyID == 6) then
+		mode = "heroic"
+	else
+		mode = "normal"
+	end
+
+	local isInstance, instanceType = IsInInstance()
+	if isInstance == true and (instanceType == "party" or instanceType == "raid") then
+		local str = string.gsub(" "..name, "%W%l", string.upper):sub(2)
+		str = str:gsub("%s+", "")
+		core.currentZoneID = 1448 
+		instanceName = str
+		
+		--Ask the user whether they want to enable Achievement Tracking in the instance
+		if UICreated == false then
+			createEnableAchievementTrackingUI()
+		else
+			UIConfig:Show()
+		end
+	else
+		--If user has left the instance then unregister events if they were registered
+		events:UnregisterEvent("INSPECT_ACHIEVEMENT_READY") 			
+		events:UnregisterEvent("GROUP_ROSTER_UPDATE")					
+		events:UnregisterEvent("PLAYER_REGEN_DISABLED")				
+		events:UnregisterEvent("PLAYER_REGEN_ENABLED")				
+		events:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")	
+	end		
+end
+
+function createEnableAchievementTrackingUI()
+	UICreated = true
+	
+	--Create the frame to ask the user whether they want to enable the addon for the particular instance they are in
+	UIConfig = CreateFrame("Frame", "AchievementTrackerCheck", UIParent, "UIPanelDialogTemplate", "AchievementTemplate")
+	UIConfig:SetSize(200, 200)
+	UIConfig:SetPoint("CENTER")
+
+	--Title
+	UIConfig.title = UIConfig:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
+	UIConfig.title:SetPoint("CENTER", AchievementTrackerCheckTitleBG, "CENTER", -5, 0);
+	UIConfig.title:SetText("Track Achievements?");
+
+	--Content
+	UIConfig.content = UIConfig:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
+	UIConfig.content:SetPoint("TOPLEFT", AchievementTrackerCheckDialogBG, "TOPLEFT", 0, -5);
+	UIConfig.content:SetText("Do you want to enable achievement tracking for: " .. instanceName);
+	UIConfig.content:SetWidth(185)
+
+	UIConfig.btnYes = CreateFrame("Button", nil, UIConfig, "GameMenuButtonTemplate");
+	UIConfig.btnYes:SetPoint("RIGHT", UIConfig.content, "BOTTOM", 0, -20);
+	UIConfig.btnYes:SetSize(80, 30);
+	UIConfig.btnYes:SetText("Yes");
+	UIConfig.btnYes:SetNormalFontObject("GameFontNormal");
+	UIConfig.btnYes:SetHighlightFontObject("GameFontHighlight");
+
+	UIConfig.btnNo = CreateFrame("Button", nil, UIConfig, "GameMenuButtonTemplate");
+	UIConfig.btnNo:SetPoint("LEFT", UIConfig.btnYes, "RIGHT", 5, 0);
+	UIConfig.btnNo:SetSize(80, 30);
+	UIConfig.btnNo:SetText("No");
+	UIConfig.btnNo:SetNormalFontObject("GameFontNormal");
+	UIConfig.btnNo:SetHighlightFontObject("GameFontHighlight");
+
+	UIConfig:SetHeight(UIConfig.content:GetHeight() + UIConfig.btnYes:GetHeight() + UIConfig.title:GetHeight() + 35)
+	UIConfig.btnYes:SetScript("OnClick", enableAchievementTracking);
+	UIConfig.btnNo:SetScript("OnClick", disableAchievementTracking);
+end
+
+function enableAchievementTracking(self)
+	UIConfig:Hide()
+	events:RegisterEvent("INSPECT_ACHIEVEMENT_READY") 			--Used for scanning players in the group to see which achievements they are missing
+	events:RegisterEvent("GROUP_ROSTER_UPDATE")					--Used to find out when the group size has changed and to therefore initiate an achievement scan of the group
+	events:RegisterEvent("PLAYER_REGEN_DISABLED")				--Used to detect when the player has entered combat and to reset tracked variables for bosses
+	events:RegisterEvent("PLAYER_REGEN_ENABLED")				--Used to track when the player has left combat
+	events:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")			--Used to get information about the fight and to report information about the tracked achievement
+	getPlayersInGroup()
+end
+
+function disableAchievementTracking(self)
+	UIConfig:Hide()
 end
 
 function events:ADDON_LOADED(event, name)
