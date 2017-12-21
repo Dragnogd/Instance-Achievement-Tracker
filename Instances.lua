@@ -1653,7 +1653,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.SiegeOfOrgrimmar:TheFallenProtectors() end,
-                    partial = false,
+                    partial = true,
                 },
                 boss3 = {
                     name = "Amalgam of Corruption",
@@ -1673,7 +1673,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.SiegeOfOrgrimmar:ShaOfPride() end,
-                    partial = false,
+                    partial = true,
                 },
                 boss5 = {
                     name = "Galakras",
@@ -1683,7 +1683,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.SiegeOfOrgrimmar:Galakras() end,
-                    partial = false,
+                    partial = true,
                 },
                 boss6 = {
                     name = "Iron Juggernaut",

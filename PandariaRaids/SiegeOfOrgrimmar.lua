@@ -77,22 +77,17 @@ local warbringersKilled = 0
 local warbringersKilledIds = {}
 
 function core.SiegeOfOrgrimmar:Immerseus()
-	core:displayAchievementsToTrackCurrent(8536)
-
 	if core.type == "UNIT_DIED" and core.destName == "Tears of the Vale" and core.achievementCompleted == false then
 		tearsOfTheValeKilled = tearsOfTheValeKilled + 1
 		SendChatMessage("[WIP] Tears of the Vale Killed ("  .. tearsOfTheValeKilled .. "/10)",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
 	end
 
-	if tearsOfTheValeKilled == 10 and core.achievementCompleted == false then
-		core:getAchievementSuccess(8536)
-		core.achievementCompleted = true
+	if tearsOfTheValeKilled == 10 then
+		core:getAchievementSuccess()
 	end
 end
 
 function core.SiegeOfOrgrimmar:TheFallenProtectors()
-	--core:displayAchievementsToTrackCurrent(8528)
-
 	--Don't count the mark for the the first person that has recieved it
 	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 143840 then
 		table.insert(playersRecievedMark, core.spawn_uid_dest_Player)
@@ -101,76 +96,57 @@ function core.SiegeOfOrgrimmar:TheFallenProtectors()
 	if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 143842 and core:has_value(playersRecievedMark, core.spawn_uid_dest_Player) == false and core.achievementCompleted == false then
 		table.insert(playersRecievedMark, core.spawn_uid_dest_Player)
 		playersRecievedMarkCounter = playersRecievedMarkCounter + 1
-		SendChatMessage("[WIP] Unique Players Recieved Mark of Anguish ("  .. playersRecievedMarkCounter .. "/5)",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+		core:sendMessage("Unique Players Recieved Mark of Anguish ("  .. playersRecievedMarkCounter .. "/5)")
 	end
 
-	if playersRecievedMarkCounter == 5 and core.achievementCompleted == false then
-		SendChatMessage("[WIP] "  .. GetAchievementLink(8528) .. " '5 unique players recieved Mark of Anguish' part of the achievement complete. Make sure 200yards have also been covered before killing boss'",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
-		core.achievementCompleted = true
+	if playersRecievedMarkCounter == 5then
+		core:getAchievementSuccessWithCustomMessage(GetAchievementLink(core.currentAchievementID) .. " '5 unique players recieved Mark of Anguish' part of the achievement complete. Make sure 200yards have also been covered before killing boss'")
 	end
 end
 
 function core.SiegeOfOrgrimmar:AmalgamOfCorruption()
-	core:displayAchievementsToTrackCurrent(8532)
-
-	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 145132 and core.achievementFailed == false then
-		SendChatMessage("[WIP] "  .. GetAchievementLink(8532) .. " FAILED",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
-		core.achievementFailed = true		
+	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 145132 then
+		core:getAchievementFailed()
 	end
 end
 
 function core.SiegeOfOrgrimmar:ShaOfPride()
-	--core:displayAchievementsToTrackCurrentPartial(8521)
-
 	--Mocking Blast
-	if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 144379 and core.achievementFailed == false then
-		SendChatMessage("[WIP] "  .. GetAchievementLink(8532) .. " FAILED (Mocking Blast has to be interrupted)",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
-		core.achievementFailed = true
+	if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 144379 then
+		core:getAchievementFailedWithMessageAfter("(Mocking Blast has to be interrupted)")
 	end
 
 	--Last Word
 	if core.type == "UNIT_DIED" and core.destID == "71946" and core.achievementFailed == false then
-		SendChatMessage("[WIP] WARNING: Manifestation of Pride has died. If the closest 2 players to the add did not have " .. GetSpellLink(146595) .. " then the achievement has FAILED",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
-		core.achievementFailed = true
+		core:sendMessage("WARNING: Manifestation of Pride has died. If the closest 2 players to the add did not have " .. GetSpellLink(146595) .. " then the achievement has FAILED")
 	end
 end
 
 function core.SiegeOfOrgrimmar:Galakras()
-	--Cannot track this one reliabily. Do not announce to group!
-	--core:displayAchievementsToTrackCurrent(8530)
-
 	f:SetScript("OnEvent", function(self, event, unitID)
-		if event == "UNIT_HEALTH" and UnitName(unitID) == "Alliance Vanguard" and core.achievementFailed == false then
-			--print(UnitName(unitID) .. " " .. UnitHealth(unitID) .. UnitGUID(unitID))
+		if event == "UNIT_HEALTH" and UnitName(unitID) == "Alliance Vanguard" then
 			if UnitHealth(unitID) == 0 then
-				SendChatMessage("[WIP] "  .. GetAchievementLink(8530) .. " FAILED",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
-				core.achievementFailed = true
+				core:getAchievementFailed()
 			end
 		end
 	end)
 end
 
 function core.SiegeOfOrgrimmar:IronJuggernaut()
-	core:displayAchievementsToTrackCurrent(8520)
-
 	--Crawler Mine Blast
 	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 144766 then
-		--print("Found: " .. spawn_uid_dest)
 		if superheatedCrawlerMines[core.spawn_uid_dest] ~= nil then
-			--print("Removing: " .. spawn_uid_dest)
 			superheatedCrawlerMinesTemp = superheatedCrawlerMinesTemp - 1
 		end
 	end
 
 	if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 144718 and detonationStarted == false then
 		detonationStarted = true
-		--print("Detonation Started")
 		C_Timer.After(20, function()
-			--print("Detonation Finished")
 			detonationStarted = false
 			if superheatedCrawlerMinesTemp > 0 then
 				superheatedCrawlerMinesSquashed = superheatedCrawlerMinesSquashed + superheatedCrawlerMinesTemp
-				SendChatMessage("[WIP] " .. GetAchievementLink(8520) .. " (" .. superheatedCrawlerMinesSquashed .. "/6) Superheated Crawler Mines Stomped",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)			
+				core:sendMessage(GetAchievementLink(core.currentAchievementID) .. " (" .. superheatedCrawlerMinesSquashed .. "/6) Superheated Crawler Mines Stomped")		
 				superheatedCrawlerMinesTemp = 0
 				superheatedCrawlerMines = {}
 			end
@@ -183,7 +159,6 @@ function core.SiegeOfOrgrimmar:IronJuggernaut()
 			if name == "Superheated Crawler Mine" and detonationStarted == true then
 				local _, _, _, _, _, _, spawn_uid_dest = strsplit("-", UnitGUID(unitID));
 				if superheatedCrawlerMines[spawn_uid_dest] == nil then
-					--print("Adding: " .. spawn_uid_dest)
 					superheatedCrawlerMines[spawn_uid_dest] = spawn_uid_dest
 					superheatedCrawlerMinesTemp = superheatedCrawlerMinesTemp + 1
 				end
@@ -191,88 +166,33 @@ function core.SiegeOfOrgrimmar:IronJuggernaut()
 		end
 	end)
 
-	if superheatedCrawlerMinesSquashed >= 6 and core.achievementCompleted == false then
-		SendChatMessage("[WIP] "  .. GetAchievementLink(8520) .. " requirements have been met. Boss can now be killed!",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
-		core.achievementCompleted = true
+	if superheatedCrawlerMinesSquashed >= 6 then
+		core:getAchievementSuccess()
 	end
 end
 
-function SiegeOfOrgrimmar_ClearVariables()
-	------------------------------------------------------
-	---- Immerseus
-	------------------------------------------------------
-	tearsOfTheValeKilled = 0
-	mobSpawnIDs = {}
-
-	------------------------------------------------------
-	---- TheFallenProtectors
-	------------------------------------------------------
-	playersRecievedMark = {}
-	playersRecievedMarkCounter = 0
-
-	------------------------------------------------------
-	---- Iron Juggernaut
-	------------------------------------------------------
-	detonationStarted = false
-	superheatedCrawlerMinesSquashed = 0
-	superheatedCrawlerMines = {}
-	superheatedCrawlerMinesTemp = 0
-
-	------------------------------------------------------
-	---- Secured Stockpile Of PandarenSpoils
-	------------------------------------------------------
-	playersSide = {}
-
-	------------------------------------------------------
-	---- Siegecrafter Blackfuse
-	------------------------------------------------------
-	deactivatedLaserTurretKilled = false
-	deactivatedMissileTurret = false
-	deactivatedElectromagnet = false
-	disassembledCrawlerMines = false
-
-	------------------------------------------------------
-	---- Garrosh Hellscream
-	------------------------------------------------------
-	warbringersIds = {}
-	warbringersCounter = 0
-	step1Complete = false
-	timerStarted = false
-	warbringersKilled = 0
-end
-
 function core.SiegeOfOrgrimmar:GeneralNazgrim()
-	core:displayAchievementsToTrackCurrent(8448)
-	
-	if core.type == "UNIT_DIED" and core.destID == "72192" and core.achievementFailed == false then
-		SendChatMessage("[WIP] "  .. GetAchievementLink(8448) .. " FAILED",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
-		core.achievementFailed = true		
+	if core.type == "UNIT_DIED" and core.destID == "72192" then
+		getAchievementFailed()
 	end
 end
 
 function core.SiegeOfOrgrimmar:Malkorok()
-	core:displayAchievementsToTrackCurrent(8538)
-
-	if core.type == "SPELL_AURA_APPLIED" and core.destID == "72983" and core.spellId == 142848 and core.achievementCompleted == false then
-		SendChatMessage("[WIP] "  .. GetAchievementLink(8538) .. " requirements have been met. Boss can now be killed!",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
-		core.achievementCompleted = true	
+	if core.type == "SPELL_AURA_APPLIED" and core.destID == "72983" and core.spellId == 142848 then
+		core:getAchievementSuccess()
 	end
 
 	--Corrupted Skullsplitter/Amalgamation Killed
-	if core.type == "UNIT_DIED" and core.destID == "72983" and core.achievementFailed == false and core.achievementCompleted == false then
-		SendChatMessage("[WIP] "  .. GetAchievementLink(8538) .. " FAILED. Do not kill boss (This achievement can be repeated)",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
-		core.achievementFailed = true							
+	if core.type == "UNIT_DIED" and core.destID == "72983" then
+		core:getAchievementFailedWithMessageAfter("Do not kill boss (This achievement can be repeated)")						
 	end
 end
 
 function core.SiegeOfOrgrimmar:SecuredStockpileOfPandarenSpoils()
-	core:displayAchievementsToTrackCurrent(8529)
-	
 	local unitTypeSrc, sourceID, spawn_uid = strsplit("-",core.sourceGUID);
 	local overkillTemp = overkill
 
 	if core.type == "SWING_DAMAGE" or core.type == "RANGE_DAMAGE" or core.type == "SPELL_DAMAGE" or core.type == "SPELL_PERIODIC_DAMAGE" then
-		
 		if core.type == "SWING_DAMAGE" then
 			--TODO: Overkill value not working on swing damage
 			overkillTemp = core.spellSchool
@@ -289,14 +209,12 @@ function core.SiegeOfOrgrimmar:SecuredStockpileOfPandarenSpoils()
 				end
 			elseif playersSide[spawn_uid] ~= nil then
 				if core:has_value(mantridMobs, core.destID) then
-					if playersSide[spawn_uid] ~= "Mantrid" and core.achievementFailed == false then
-						SendChatMessage("[WIP] "  .. GetAchievementLink(8529) .. " FAILED! (" .. core.sourceName .. ")",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
-						core.achievementFailed = true
+					if playersSide[spawn_uid] ~= "Mantrid" then
+						core:getAchievementFailedWithMessageAfter("(" .. core.sourceName .. ")")
 					end
 				elseif core:has_value(moguMobs, core.destID) then
-					if playersSide[spawn_uid] ~= "Mogu" and core.achievementFailed == false then
-						SendChatMessage("[WIP] "  .. GetAchievementLink(8529) .. " FAILED! (" .. core.sourceName .. ")",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
-						core.achievementFailed = true
+					if playersSide[spawn_uid] ~= "Mogu" then
+						core:getAchievementFailedWithMessageAfter("(" .. core.sourceName .. ")")
 					end					
 				end
 			end
@@ -321,93 +239,66 @@ function core.SiegeOfOrgrimmar:ThokTheBloodthirsty()
 end
 
 function core.SiegeOfOrgrimmar:SiegecrafterBlackfuse()
-	core:displayAchievementsToTrackCurrent(8543)
-
 	--Deactivated Missile Turret
 	if core.type == "UNIT_DIED" and core.destID == "71606" and deactivatedMissileTurret == false then
 		deactivatedMissileTurret = true
-		SendChatMessage("[WIP] 'Deactivated Missile Turret' part of "  .. GetAchievementLink(8453) .. " FAILED!",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+		core:getAchievementFailedWithMessageBefore("'Deactivated Missile Turret' part of")
 	end
 
 	--Deactivated Laser Turret
 	if core.type == "UNIT_DIED" and core.destID == "71751" and deactivatedLaserTurretKilled == false then
 		deactivatedLaserTurretKilled = true
-		SendChatMessage("[WIP] 'Deactivated Laser Turret' part of "  .. GetAchievementLink(8453) .. " FAILED!",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+		core:getAchievementFailedWithMessageBefore("'Deactivated Laser Turret' part of")
 	end
 
 	--Deactivated Electromagnet
 	if core.type == "UNIT_DIED" and core.destID == "71694" and deactivatedElectromagnet == false then
 		deactivatedElectromagnet = true
-		SendChatMessage("[WIP] 'Deactivated Electromagnet' part of "  .. GetAchievementLink(8453) .. " FAILED!",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+		core:getAchievementFailedWithMessageBefore("'Deactivated Electromagnet' part of")
 	end
 
 	--Disassembled Crawler Mines
 	if core.type == "UNIT_DIED" and core.destID == "71790" and disassembledCrawlerMines == false then
 		disassembledCrawlerMines = true
-		SendChatMessage("[WIP] 'Disassembled Crawler Mines' part of "  .. GetAchievementLink(8453) .. " FAILED!",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+		core:getAchievementFailedWithMessageBefore("'Disassembled Crawler Mines' part of")
 	end
 end
 
 function core.SiegeOfOrgrimmar:Paragons()
-	core:displayAchievementsToTrackCurrent(8531)
-
-	--Alert group who can use which power when each paragon dies
-	-- if type == "UNIT_DIED" and core.destID == "71158" then
-	-- 	SendChatMessage("[WIP] Rik'kal the Dissector Killed. This power can be used by ANYONE",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
-	-- elseif type == "UNIT_DIED" and core.destID == "71152" then
-	-- 	SendChatMessage("[WIP] Skeer the Bloodseeker Killed. This power can be used by DPS",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
-	-- elseif type == "UNIT_DIED" and core.destID == "71155" then
-	-- 	SendChatMessage("[WIP] Korven the Prime Killed. This power can be used by TANKS",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)		
-	-- elseif type == "UNIT_DIED" and core.destID == "71153" then
-	-- 	SendChatMessage("[WIP] Hisek the Swarmkeeper Killed. This power can be used by DPS",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)				
-	-- elseif type == "UNIT_DIED" and core.destID == "71157" then
-	-- 	SendChatMessage("[WIP] Xaril the Poisoned Mind Killed. This power can be used by HEALERS",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)						
-	-- elseif type == "UNIT_DIED" and core.destID == "71160" then
-	-- 	SendChatMessage("[WIP] Iyyokuk the Lucid Killed. This power can be used by ANYONE",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)								
-	-- elseif type == "UNIT_DIED" and core.destID == "71156" then
-	-- 	SendChatMessage("[WIP] Kaz'tik the Manipulator Killed. This power can be used by ANYONE",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)									
-	-- elseif type == "UNIT_DIED" and core.destID == "71154" then
-	-- 	SendChatMessage("[WIP] Ka'roz the Locust Killed. This power can be used by DPS",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)											
-	-- elseif type == "UNIT_DIED" and core.destID == "71161" then
-	-- 	SendChatMessage("[WIP] Kil'ruk the Wind-Reaver Killed. This power can be used by DPS",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)													
-	-- end
-
 	--Alert the user when they assume the power of one of the parargons
 	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 141857 then
-		SendChatMessage("[WIP] " .. core.destName .. " has gained powers from Rik'kal the Dissector",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)		
+		core:sendMessage(core.destName .. " has gained powers from Rik'kal the Dissector")		
 	elseif core.type == "SPELL_AURA_APPLIED" and core.spellId == 141851 then
-		SendChatMessage("[WIP] " .. core.destName .. " has gained powers from Skeer the Bloodseeker",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)				
+		core:sendMessage(core.destName .. " has gained powers from Skeer the Bloodseeker")				
 	elseif core.type == "SPELL_AURA_APPLIED" and core.spellId == 141854 then
-		SendChatMessage("[WIP] " .. core.destName .. " has gained powers from Korven the Prime",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)						
+		core:sendMessage(core.destName .. " has gained powers from Korven the Prime")						
 	elseif core.type == "SPELL_AURA_APPLIED" and core.spellId == 141852 then
-		SendChatMessage("[WIP] " .. core.destName .. " has gained powers from Hisek the Swarmkeeper",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)								
+		core:sendMessage(core.destName .. " has gained powers from Hisek the Swarmkeeper")								
 	elseif core.type == "SPELL_AURA_APPLIED" and core.spellId == 141856 then
-		SendChatMessage("[WIP] " .. core.destName .. " has gained powers from Xaril the Poisoned Mind",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)										
+		core:sendMessage(core.destName .. " has gained powers from Xaril the Poisoned Mind")										
 	elseif core.type == "SPELL_AURA_APPLIED" and core.spellId == 148653 then
-		SendChatMessage("[WIP] " .. core.destName .. " has gained powers from Iyyokuk the Lucid",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)											
+		core:sendMessage(core.destName .. " has gained powers from Iyyokuk the Lucid")											
 	elseif core.type == "SPELL_AURA_APPLIED" and core.spellId == 148648 then
-		SendChatMessage("[WIP] " .. core.destName .. " has gained powers from Kaz'tik the Manipulator",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)													
+		core:sendMessage(core.destName .. " has gained powers from Kaz'tik the Manipulator")													
 	elseif core.type == "SPELL_AURA_APPLIED" and core.spellId == 141853 then
-		SendChatMessage("[WIP] " .. core.destName .. " has gained powers from Ka'roz the Locust",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)															
+		core:sendMessage(core.destName .. " has gained powers from Ka'roz the Locust")															
 	elseif core.type == "SPELL_AURA_APPLIED" and core.spellId == 141859 then
-		SendChatMessage("[WIP] " .. core.destName .. " has gained powers from Kil'ruk the Wind-Reaver",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)																	
+		core:sendMessage(core.destName .. " has gained powers from Kil'ruk the Wind-Reaver")																	
 	end
 end
 
 function core.SiegeOfOrgrimmar:GarroshHellscream()
-	core:displayAchievementsToTrackCurrent(8537)
-
 	if core.achievementCompleted == false then
 		if (core.type == "SWING_DAMAGE" or core.type == "SWING_MISSED") and core.sourceID == "71979" then
 			if warbringersIds[core.spawn_uid] == nil then
 				warbringersIds[core.spawn_uid] = core.spawn_uid
 				warbringersCounter = warbringersCounter + 1
-				SendChatMessage("[WIP] Kor'kron Warbringer (" .. warbringersCounter .. "/18)",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+				core:sendMessage("Kor'kron Warbringer (" .. warbringersCounter .. "/18)")
 			end
 		end
 
 		if warbringersCounter == 18 and step1Complete == false then
-			SendChatMessage("[WIP] "  .. GetAchievementLink(8537) .. " 18 Kor'kron Warbringers Alive. They can now be killed with a single Iron Star",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+			core:sendMessage(GetAchievementLink(core.currentAchievementID) .. " 18 Kor'kron Warbringers Alive. They can now be killed with a single Iron Star")
 			step1Complete = true		
 		end
 
@@ -431,14 +322,13 @@ function core.SiegeOfOrgrimmar:GarroshHellscream()
 					SendChatMessage("[WIP] Timer Started! ",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
 					C_Timer.After(10, function()
 						if warbringersKilled < 18 then
-							SendChatMessage("[WIP] "  .. GetAchievementLink(8537) .. " FAILED!. (" .. warbringersKilled .. "/18) killed in time (This achievement can be repeated)",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+							core:getAchievementFailedWithMessageAfter("(" .. warbringersKilled .. "/18) killed in time (This achievement can be repeated)")
 							step1Complete = false
 							timerStarted = false
 							warbringersKilled = 0
 							warbringersKilledIds = {}
 						elseif warbringersKilled >= 18 then
-							SendChatMessage("[WIP] "  .. GetAchievementLink(8537) .. " requirements have been met. Boss can now be killed!",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
-							core.achievementCompleted = true										
+							core:getAchievementSuccess()										
 						end
 					end)			
 				end
@@ -451,7 +341,7 @@ function core.SiegeOfOrgrimmar:GarroshHellscream()
 		if core.type == "UNIT_DIED" and core.destID == "71979" and timerStarted == false then
 			warbringersIds[core.spawn_uid_dest] = nil
 			warbringersCounter = warbringersCounter - 1
-			SendChatMessage("[WIP] Kor'kron Warbringer DIED (" .. warbringersCounter .. "/18)",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+			core:sendMessage("Kor'kron Warbringer DIED (" .. warbringersCounter .. "/18)")
 		end
 	end
 end
@@ -600,12 +490,46 @@ f:SetScript("OnEvent", function(self, event, ...)
 	end
 end)
 
-local function has_value(tab, val)
-    for index, value in ipairs(tab) do
-        if value == val then
-            return true
-        end
-    end
+function core.SiegeOfOrgrimmar:ClearVariables()
+	------------------------------------------------------
+	---- Immerseus
+	------------------------------------------------------
+	tearsOfTheValeKilled = 0
+	mobSpawnIDs = {}
 
-    return false
+	------------------------------------------------------
+	---- TheFallenProtectors
+	------------------------------------------------------
+	playersRecievedMark = {}
+	playersRecievedMarkCounter = 0
+
+	------------------------------------------------------
+	---- Iron Juggernaut
+	------------------------------------------------------
+	detonationStarted = false
+	superheatedCrawlerMinesSquashed = 0
+	superheatedCrawlerMines = {}
+	superheatedCrawlerMinesTemp = 0
+
+	------------------------------------------------------
+	---- Secured Stockpile Of PandarenSpoils
+	------------------------------------------------------
+	playersSide = {}
+
+	------------------------------------------------------
+	---- Siegecrafter Blackfuse
+	------------------------------------------------------
+	deactivatedLaserTurretKilled = false
+	deactivatedMissileTurret = false
+	deactivatedElectromagnet = false
+	disassembledCrawlerMines = false
+
+	------------------------------------------------------
+	---- Garrosh Hellscream
+	------------------------------------------------------
+	warbringersIds = {}
+	warbringersCounter = 0
+	step1Complete = false
+	timerStarted = false
+	warbringersKilled = 0
 end
