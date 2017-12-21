@@ -949,6 +949,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.BlackrockFoundary:BeastlordDarmac() end,
+                    partial = false,
                 },
                 boss2 = {
                     name = "Operator Thogar",
@@ -958,6 +959,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.BlackrockFoundary:OperatorThogar() end,
+                    partial = false,
                 },
                 boss3 = {
                     name = "Iron Maidens",
@@ -967,6 +969,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.BlackrockFoundary:TheIronMaidens() end,
+                    partial = false,
                 },
                 boss4 = {
                     name = "Hans'gar & Franzok",
@@ -976,6 +979,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.BlackrockFoundary:HansgarFranzok() end,
+                    partial = false,
                 },
                 boss5 = {
                     name = "Flamebender Ka'graz",
@@ -985,6 +989,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.BlackrockFoundary:FlamebenderKagraz() end,
+                    partial = false,
                 },
                 boss6 = {
                     name = "Kromog",
@@ -994,6 +999,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.BlackrockFoundary:Kromog() end,
+                    partial = false,
                 },
                 boss7 = {
                     name = "Gruul",
@@ -1023,6 +1029,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.BlackrockFoundary:BlastFurnace() end,
+                    partial = false,
                 },
                 boss10 = {
                     name = "Blackhand",
@@ -1032,6 +1039,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.BlackrockFoundary:Blackhand() end,
+                    partial = false,
                 },
             },
             
@@ -1045,6 +1053,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.HellfireCitadel:HellfireAssualt() end,
+                    partial = false,
                 },
                 boss2 = {
                     name = "Iron Reaver",
@@ -1054,6 +1063,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.HellfireCitadel:IronReaver() end,
+                    partial = false,
                 },
                 boss3 = {
                     name = "Kormrok",
@@ -1063,6 +1073,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.HellfireCitadel:Kormrok() end,
+                    partial = false,
                 },
                 boss4 = {
                     name = "Hellfire High Council",
@@ -1072,6 +1083,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.HellfireCitadel:HellfireHighCouncil() end,
+                    partial = false,
                 },
                 boss5 = {
                     name = "Kilrogg Deadeye",
@@ -1081,6 +1093,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.HellfireCitadel:KilroggDeadeye() end,
+                    partial = false,
                 },
                 boss6 = {
                     name = "Gorefiend",
@@ -1090,6 +1103,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.HellfireCitadel:Gorefiend() end,
+                    partial = false,
                 },
                 boss7 = {
                     name = "Shadow-Lord Iskar",
@@ -1099,6 +1113,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.HellfireCitadel:ShadowLordIskar() end,
+                    partial = false,
                 },
                 boss8 = {
                     name = "Socrethar the Eternal",
@@ -1108,6 +1123,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.HellfireCitadel:SocretharTheEternal() end,
+                    partial = false,
                 },
                 boss9 = {
                     name = "Tyrant Velhari",
@@ -1117,6 +1133,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.HellfireCitadel:TyrantVelhari() end,
+                    partial = false,
                 },
                 boss10 = {
                     name = "Fel Lord Zakuun",
@@ -1126,6 +1143,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.HellfireCitadel:FelLordZakuun() end,
+                    partial = false,
                 },
                 boss11 = {
                     name = "Xhul'horac",
@@ -1135,6 +1153,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.HellfireCitadel:Xhulhorac() end,
+                    partial = false,
                 },
                 boss12 = {
                     name = "Mannoroth",
@@ -1144,6 +1163,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.HellfireCitadel:Mannoroth() end,
+                    partial = false,
                 },
                 boss13 = {
                     name = "Archimonde",
