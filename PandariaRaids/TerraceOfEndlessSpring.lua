@@ -79,7 +79,7 @@ function core.TerraceOfEndlessSpring:ShaOfFear()
 end
 
 function core.TerraceOfEndlessSpring:ClearVariables()
-	print("Clearing vairables for Terrace of Endless Spring")
+	print("Clearing variables for Terrace of Endless Spring")
 	-------------------------------
 	-- Protectors Of The Endless --
 	-------------------------------
