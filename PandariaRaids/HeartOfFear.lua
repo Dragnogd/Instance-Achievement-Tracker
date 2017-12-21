@@ -101,7 +101,7 @@ function core.HeartOfFear:GrandEmpressShekzeer()
 	end
 end
 
-function HeartOfFear_ClearVariables()
+function core.HeartOfFear:ClearVariables()
 	------------------------------------------------------
 	---- Imperial Vizier Zor'lok
 	------------------------------------------------------
