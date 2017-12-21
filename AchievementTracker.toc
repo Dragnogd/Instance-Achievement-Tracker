@@ -1,0 +1,24 @@
+﻿## Interface: 70300
+## Title: Achievement Tracker
+## Author: Whizzey
+## Version: 1.0.0
+
+PandariaRaids\TerraceOfEndlessSpring.lua
+PandariaRaids\HeartOfFear.lua
+PandariaRaids\MogushanVaults.lua
+PandariaRaids\SiegeOfOrgrimmar.lua
+PandariaRaids\ThroneOfThunder.lua
+PandariaDungeons\StormstoutBrewery.lua
+LichKingRaids\Icecrown.lua
+CataclysmRaids\BastionOfTwilight.lua
+CataclysmRaids\BlackwingDescent.lua
+CataclysmRaids\DragonSoul.lua
+CataclysmRaids\Firelands.lua
+DraenorRaids\BlackrockFoundary.lua
+DraenorRaids\HellfireCitadel.lua
+
+Instances.lua
+Bosses.lua
+GUI.lua
+
+AchievementTrackerCore.lua
