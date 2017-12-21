@@ -1529,6 +1529,7 @@ core.Instances = {
                     tactics = "At 110 you can simply nuke the boss before any Zandalari Dinomancers spawn",
                     enabled = true,
                     track = function() core.ThroneOfThunder:Horridon() end,
+                    partial = false,
                 },
                 boss3 = {
                     name = "Council of Elders",
@@ -1548,6 +1549,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.ThroneOfThunder:Tortos() end,
+                    partial = false,
                 },
                 boss5 = {
                     name = "Megaera",
@@ -1567,6 +1569,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.ThroneOfThunder:JiKun() end,
+                    partial = false,
                 },
                 boss7 = {
                     name = "Durumu the Forgotten",
@@ -1576,6 +1579,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.ThroneOfThunder:DurumuTheForgotten() end,
+                    partial = false,
                 },
                 boss8 = {
                     name = "Primordius",
@@ -1585,6 +1589,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.ThroneOfThunder:Primordius() end,
+                    partial = false,
                 },
                 boss9 = {
                     name = "Dark Animus",
@@ -1604,6 +1609,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.ThroneOfThunder:IronQon() end,
+                    partial = false,
                 },
                 boss11 = {
                     name = "Twin Consorts",
@@ -1613,6 +1619,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.ThroneOfThunder:TwinConsorts() end,
+                    partial = false,
                 },
                 boss12 = {
                     name = "Lei Shen",
@@ -1636,6 +1643,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.SiegeOfOrgrimmar:Immerseus() end,
+                    partial = false,
                 },
                 boss2 = {
                     name = "The Fallen Protectors",
@@ -1645,6 +1653,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.SiegeOfOrgrimmar:TheFallenProtectors() end,
+                    partial = false,
                 },
                 boss3 = {
                     name = "Amalgam of Corruption",
@@ -1654,6 +1663,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.SiegeOfOrgrimmar:AmalgamOfCorruption() end,
+                    partial = false,
                 },
                 boss4 = {
                     name = "Sha of Pride",
@@ -1663,6 +1673,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.SiegeOfOrgrimmar:ShaOfPride() end,
+                    partial = false,
                 },
                 boss5 = {
                     name = "Galakras",
@@ -1672,6 +1683,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.SiegeOfOrgrimmar:Galakras() end,
+                    partial = false,
                 },
                 boss6 = {
                     name = "Iron Juggernaut",
@@ -1681,6 +1693,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.SiegeOfOrgrimmar:IronJuggernaut() end,
+                    partial = false,
                 },
                 boss7 = {
                     name = "Kor'kron Dark Shaman",
@@ -1699,6 +1712,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.SiegeOfOrgrimmar:GeneralNazgrim() end,
+                    partial = false,
                 },
                 boss9 = {
                     name = "Malkorok",
@@ -1708,6 +1722,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.SiegeOfOrgrimmar:Malkorok() end,
+                    partial = false,
                 },
                 boss10 = {
                     name = "Spoils of Pandaria",
@@ -1717,6 +1732,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.SiegeOfOrgrimmar:SecuredStockpileOfPandarenSpoils() end,
+                    partial = false,
                 },
                 boss11 = {
                     name = "Thok the Bloodthirsty",
@@ -1726,6 +1742,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.SiegeOfOrgrimmar:ThokTheBloodthirsty() end,
+                    partial = false,
                 },
                 boss12 = {
                     name = "Siegecrafter Blackfuse",
@@ -1735,6 +1752,7 @@ core.Instances = {
                     tactics = "At 110 you can simply nuke the boss and ignore killing any of the weapons",
                     enabled = true,
                     track = function() core.SiegeOfOrgrimmar:SiegecrafterBlackfuse() end,
+                    partial = false,
                 },
                 boss13 = {
                     name = "Paragons of the Klaxxi",
@@ -1744,6 +1762,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.SiegeOfOrgrimmar:Paragons() end,
+                    partial = false,
                 },
                 boss14 = {
                     name = "Garrosh Hellscream",
@@ -1753,6 +1772,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.SiegeOfOrgrimmar:GarroshHellscream() end,
+                    partial = false,
                 },
             },
 
@@ -1766,6 +1786,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.HeartOfFear:ImperialVizierZorlok() end,
+                    partial = false,
                 },
                 boss2 = {
                     name = "Blade Lord Ta'yak",
@@ -1785,6 +1806,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.HeartOfFear:Garalon() end,
+                    partial = false,
                 },
                 boss4 = {
                     name = "Wind Lord Mel'jarak",
@@ -1814,6 +1836,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.HeartOfFear:GrandEmpressShekzeer() end,
+                    partial = false,
                 },
             },
 
@@ -1837,6 +1860,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.MogushanVaults:FengTheAccursed() end,
+                    partial = false,
                 },
                 boss3 = {
                     name = "Gara'jal the Spiritbinder",
@@ -1892,6 +1916,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.StormstoutBrewery:OokOok() end,
+                    partial = false,
                 },
                 boss2 = {
                     name = "Hoptallus",
@@ -1901,6 +1926,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.StormstoutBrewery:Hoptallus() end,
+                    partial = false,
                 },
                 boss3 = {
                     name = "Other",
@@ -2210,6 +2236,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.DragonSoul:WarlordZonozz() end,
+                    partial = false,
                 },
                 boss3 = {
                     name = "Yor'sahj the Unsleeping",
@@ -2219,6 +2246,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.DragonSoul:YorsahjTheUnsleeping() end,
+                    partial = false,
                 },
                 boss4 = {
                     name = "Hagara the Stormbinder",
@@ -2238,6 +2266,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.DragonSoul:Ultraxion() end,
+                    partial = false,
                 },
                 boss6 = {
                     name = "Warmaster Blackhorn",
@@ -2247,6 +2276,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.DragonSoul:Skyfire() end,
+                    partial = false,
                 },
                 boss7 = {
                     name = "Spine of Deathwing",
@@ -2256,6 +2286,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.DragonSoul:SpineOfDeathwing() end,
+                    partial = false,
                 },
                 boss8 = {
                     name = "Madness of Deathwing",
@@ -2265,6 +2296,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() end,
+                    partial = false,
                 },
             },
 
@@ -2278,6 +2310,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.BlackwingDescent:Magmaw() end,
+                    partial = false,
                 },
                 boss2 = {
                     name = "Omnotron Defense System",
@@ -2287,6 +2320,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.BlackwingDescent:OminitronDefenseSystem() end,
+                    partial = false,
                 },
                 boss3 = {
                     name = "Maloriak",
@@ -2296,6 +2330,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.BlackwingDescent:Maloriak() end,
+                    partial = false,
                 },
                 boss4 = {
                     name = "Atramedes",
@@ -2305,6 +2340,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.BlackwingDescent:Atramedes() end,
+                    partial = false,
                 },
                 boss5 = {
                     name = "Chimaeron",
@@ -2314,6 +2350,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.BlackwingDescent:Chimaeron() end,
+                    partial = false,
                 },
                 boss6 = {
                     name = "Nefarian",
@@ -2323,6 +2360,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.BlackwingDescent:Nefarian() end,
+                    partial = false,
                 },
             },
 
@@ -2336,6 +2374,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.BastionOfTwilight:HalfusWyrmbreaker() end,
+                    partial = false,
                 },
                 boss2 = {
                     name = "Valiona And Theralion",
@@ -2345,6 +2384,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.BastionOfTwilight_ValionaAndTheralion() end,
+                    partial = false,
                 },
                 boss3 = {
                     name = "Ascendant Council",
@@ -2364,6 +2404,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.BastionOfTwilight:Chogall() end,
+                    partial = false,
                 },
             },
 
@@ -2401,6 +2442,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.Firelands:Bethtilac() end,
+                    partial = false,
                 },
                 boss2 = {
                     name = "Lord Rhyolith",
@@ -2410,6 +2452,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.Firelands:LordRhyolith() end,
+                    partial = false,
                 },
                 boss3 = {
                     name = "Alysrazor",
@@ -2419,6 +2462,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.Firelands:Alysrazor() end,
+                    partial = false,
                 },
                 boss4 = {
                     name = "Shannox",
@@ -2438,6 +2482,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.Firelands:Baleroc() end,
+                    partial = false,
                 },
                 boss6 = {
                     name = "Majordomo Staghelm",
@@ -4809,6 +4854,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.Icecrown:LordMarrowgar() end,
+                    partial = false,
                 },
                 boss2 = {
                     name = "Lady Deathwhisper",
@@ -4818,6 +4864,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.Icecrown:LadyDeathwhisper() end,
+                    partial = false,
                 },     
                 boss3 = {
                     name = "Gunship Battle",
@@ -4827,6 +4874,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.Icecrown:GunshipBattle() end,
+                    partial = false,
                 },     
                 boss4 = {
                     name = "Deathbringer Saurfang",
@@ -4836,6 +4884,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.Icecrown:DeathbringerSaurfang() end,
+                    partial = false,
                 },     
                 boss5 = {
                     name = "Festergut",
@@ -4845,6 +4894,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.Icecrown:Festergut() end,
+                    partial = false,
                 },     
                 boss6 = {
                     name = "Rotface",
@@ -4854,6 +4904,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.Icecrown:Rotface() end,
+                    partial = false,
                 },     
                 boss7 = {
                     name = "Professor Putricide",
@@ -4863,6 +4914,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.Icecrown:ProfessorPutricide() end,
+                    partial = false,
                 },     
                 boss8 = {
                     name = "Valithria Dreamwalker",
@@ -4882,6 +4934,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.Icecrown:Sindragosa() end,
+                    partial = false,
                 },     
                 boss10 = {
                     name = "Blood Prince Council",
@@ -4891,6 +4944,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.Icecrown:BloodPrinceCouncil() end,
+                    partial = false,
                 },     
                 boss11 = {
                     name = "Blood-Queen Lana'thel",
@@ -4910,6 +4964,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.Icecrown:LichKing() end,
+                    partial = false,
                 },
                 boss13 = {
                     name = "The Lich King",
@@ -4933,6 +4988,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.Icecrown:LordMarrowgar() end,
+                    partial = false,
                 },
                 boss2 = {
                     name = "Lady Deathwhisper",
@@ -4942,6 +4998,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.Icecrown:LadyDeathwhisper() end,
+                    partial = false,
                 },     
                 boss3 = {
                     name = "Gunship Battle",
@@ -4951,6 +5008,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.Icecrown:GunshipBattle() end,
+                    partial = false,
                 },     
                 boss4 = {
                     name = "Deathbringer Saurfang",
@@ -4960,6 +5018,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.Icecrown:DeathbringerSaurfang() end,
+                    partial = false,
                 },     
                 boss5 = {
                     name = "Festergut",
@@ -4969,6 +5028,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.Icecrown:Festergut() end,
+                    partial = false,
                 },     
                 boss6 = {
                     name = "Rotface",
@@ -4978,6 +5038,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.Icecrown:Rotface() end,
+                    partial = false,
                 },     
                 boss7 = {
                     name = "Professor Putricide",
@@ -4987,6 +5048,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.Icecrown:ProfessorPutricide() end,
+                    partial = false,
                 },     
                 boss8 = {
                     name = "Valithria Dreamwalker",
@@ -5006,6 +5068,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.Icecrown:Sindragosa() end,
+                    partial = false,
                 },     
                 boss10 = {
                     name = "Blood Prince Council",
@@ -5015,6 +5078,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.Icecrown:BloodPrinceCouncil() end,
+                    partial = false,
                 },     
                 boss11 = {
                     name = "Blood-Queen Lana'thel",
@@ -5034,6 +5098,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.Icecrown:LichKing() end,
+                    partial = false,
                 },
                 boss13 = {
                     name = "The Lich King",
