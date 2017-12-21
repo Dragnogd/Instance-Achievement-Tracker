@@ -99,7 +99,7 @@ function core.SiegeOfOrgrimmar:TheFallenProtectors()
 		core:sendMessage("Unique Players Recieved Mark of Anguish ("  .. playersRecievedMarkCounter .. "/5)")
 	end
 
-	if playersRecievedMarkCounter == 5then
+	if playersRecievedMarkCounter == 5 then
 		core:getAchievementSuccessWithCustomMessage(GetAchievementLink(core.currentAchievementID) .. " '5 unique players recieved Mark of Anguish' part of the achievement complete. Make sure 200yards have also been covered before killing boss'")
 	end
 end
