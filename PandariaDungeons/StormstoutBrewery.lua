@@ -6,7 +6,7 @@ local _, core = ...
 ------------------------------------------------------
 ---- Stormstout Brewery Bosses
 ------------------------------------------------------
-core.StormstoutBrewery = {6089}
+core.StormstoutBrewery = {}
 
 ------------------------------------------------------
 ---- Ook-Ook
@@ -23,15 +23,13 @@ local startCountingVirmen = false
 local hammerUsedAmount = 0
 
 function core.StormstoutBrewery:OokOok()
-	core:displayAchievementsToTrackCurrent(6089)
-
 	if core.type == "SPELL_DAMAGE" and core.spellId == 106784 then
 		brewExplosion = brewExplosion + 1
-		SendChatMessage("[WIP] Rolling Brew Barrels (" .. brewExplosion .. "/20)",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+		core:sendMessage("Rolling Brew Barrels (" .. brewExplosion .. "/20)")
 	end
 
-	if brewExplosion >= 20 and core.achievementCompleted == false then
-		core:getAchievementSuccess(6089)
+	if brewExplosion >= 20 then
+		core:getAchievementSuccess()
 	end
 end
 
@@ -90,7 +88,7 @@ function core.StormstoutBrewery:Hoptallus()
 end
 
 
-function StormstoutBrewery_ClearVariables()
+function core.StormstoutBrewery:ClearVariables()
 	------------------------------------------------------
 	---- Ook-Ook
 	------------------------------------------------------
