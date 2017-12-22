@@ -50,6 +50,7 @@ core.scanFinished = false						--Set to true when everyone in the group has been
 -- Main Variables
 --------------------------------------
 core.masterAddon = false						--The master addon for the group. This stop multiple people with the addon outputting identical messages
+core.playerRankInGroup = 0						--The rank of the player is the group. Used to sync multiple addons in the group
 core.currentZoneID = nil						--The ID of the current instance the player is in
 core.playerCount = 0							--The amount of players the instance lock can hold
 core.inCombat = false							--Whether anyone in the current group is in combat with boss/mobs
@@ -66,6 +67,7 @@ local instanceType = nil						--Whether the instance is a dungeon or a raid
 local instance = nil							--Name of the instance the player is currently in
 local combatTimerStarted = false				--Used to determine if players in the group are still in combat with a boss
 local lastMessageSent = ""   					--Stores the last message sent to the chat. This is used to prevent the same message being sent more than once in case of an error and to prevent unwanted spam
+local enabledCheckSent = false
 
 --------------------------------------
 -- Achievement Functions
@@ -415,6 +417,19 @@ function createEnableAchievementTrackingUI()
 	UIConfig.btnNo:SetScript("OnClick", disableAchievementTracking);
 end
 
+function events:CHAT_MSG_ADDON(prefix, message, channel, sender)
+	--If this addon sent out the check then scan for replies
+	--else sent out the reply
+
+	if enabledCheckSent == true then
+		--This Addon sent the message to ask for permission to run
+	else
+		--Another addon is requesting info and this addon
+		SendAddonMessage("AchievementTracker", core.masterAddon .. "," .. core.playerRankInGroup , "RAID")
+		print(core.masterAddon .. "," .. core.playerRankInGroup)
+	end
+end
+
 function enableAchievementTracking(self)
 	UIConfig:Hide()
 	events:RegisterEvent("INSPECT_ACHIEVEMENT_READY") 			--Used for scanning players in the group to see which achievements they are missing
@@ -422,6 +437,7 @@ function enableAchievementTracking(self)
 	events:RegisterEvent("PLAYER_REGEN_DISABLED")				--Used to detect when the player has entered combat and to reset tracked variables for bosses
 	events:RegisterEvent("PLAYER_REGEN_ENABLED")				--Used to track when the player has left combat
 	events:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")			--Used to get information about the fight and to report information about the tracked achievement
+	events:RegisterEvent("CHAT_MSG_ADDON")						--Allows the addon to communicate with other addons in the same party/raid
 	getPlayersInGroup()
 
 	--Check if there is already someone else running the addon in the group / whether the priority is higher for the current player than other players running the addon
@@ -429,6 +445,13 @@ function enableAchievementTracking(self)
 		--Player is not a group so run the addon
 		core.masterAddon = true
 	else
+		--Get the permissions for the current player
+		local name, rank, subgroup, level, class, fileName, zone, online, isDead, role, isML = GetRaidRosterInfo(index)
+		print("Setting rank to: " .. rank)
+		core.playerRankInGroup = rank
+
+		SendAddonMessage("AchievementTracker", "enabledCheck", "RAID")
+		enabledCheckSent = true
 		--Send out a request to the addon channel asking if anyone else in the group has the addon enabled
 			--Wait period of time
 				--If player has the addon
