@@ -65,6 +65,7 @@ local currentBoss = nil							--The current boss the player is attacking. Can on
 local expansion = nil							--Current expansion of the particular instance
 local instanceType = nil						--Whether the instance is a dungeon or a raid
 local instance = nil							--Name of the instance the player is currently in
+local instanceNameSpaces						--Instance name with spaces
 local combatTimerStarted = false				--Used to determine if players in the group are still in combat with a boss
 local lastMessageSent = ""   					--Stores the last message sent to the chat. This is used to prevent the same message being sent more than once in case of an error and to prevent unwanted spam
 local enabledCheckSent = false
@@ -103,7 +104,7 @@ function updateDebugTable()
 end
 
 function getPlayersInGroup()
-	print("Starting Player Achievement Scan for " .. instanceName .. "...")
+	print("Starting Player Achievement Scan for " .. instanceNameSpaces .. "...")
 	scanInProgress = true
 	core.scanFinished = false
 	local currentGroup = {}
@@ -338,6 +339,7 @@ function events:PLAYER_ENTERING_WORLD()
 		str = str:gsub("%s+", "")
 		core.currentZoneID = 1448 
 		instanceName = str
+		instanceNameSpaces = name
 		
 		--Ask the user whether they want to enable Achievement Tracking in the instance
 		createEnableAchievementTrackingUI()
@@ -395,7 +397,7 @@ function createEnableAchievementTrackingUI()
 	--Content
 	UIConfig.content = UIConfig:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
 	UIConfig.content:SetPoint("TOPLEFT", AchievementTrackerCheckDialogBG, "TOPLEFT", 0, -5);
-	UIConfig.content:SetText("Do you want to enable achievement tracking for: " .. instanceName);
+	UIConfig.content:SetText("Do you want to enable achievement tracking for: " .. instanceNameSpaces);
 	UIConfig.content:SetWidth(185)
 
 	UIConfig.btnYes = CreateFrame("Button", nil, UIConfig, "GameMenuButtonTemplate");
@@ -441,7 +443,7 @@ function enableAchievementTracking(self)
 	getPlayersInGroup()
 
 	--Check if there is already someone else running the addon in the group / whether the priority is higher for the current player than other players running the addon
-	if core.groupSize == 0
+	if core.groupSize == 0 then
 		--Player is not a group so run the addon
 		core.masterAddon = true
 	else
