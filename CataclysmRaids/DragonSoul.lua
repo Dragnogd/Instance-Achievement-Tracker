@@ -121,7 +121,7 @@ end
 function core.DragonSoul:Ultraxion()
 	if core.type == "SPELL_DAMAGE" and core.spellId == 103327 then
 		if core:has_value(hourOfTwilightPlayers, core.spawn_uid_dest) then
-			core:getAchievementFailedWithMessageAfter("by (" .. core.destName .. ")"))
+			core:getAchievementFailedWithMessageAfter("by (" .. core.destName .. ")")
 		else
 			table.insert(hourOfTwilightPlayers, core.spawn_uid_dest)
 		end
