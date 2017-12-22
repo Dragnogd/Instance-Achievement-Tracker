@@ -40,46 +40,37 @@ local firstPickup = false
 local hauntingSoulsKilled = 0
 
 function core.HellfireCitadel:HellfireAssualt()
-	core:displayAchievementsToTrackCurrent(10026)
-
 	f:SetScript("OnEvent", function(self, event, unitID)
 		local unitType, _, _, _, _, destID, spawn_uid_dest = strsplit("-", UnitGUID(unitID));
-		if event == "UNIT_HEALTH" and destID == "90018" and core.achievementFailed == false then
+		if event == "UNIT_HEALTH" and destID == "90018" then
 			--If health is less than 90% then fail the achievement
 			if (UnitHealth(unitID) / UnitHealthMax(unitID)) * 100 < 90 then
-				SendChatMessage("[WIP] "  .. GetAchievementLink(10026) .. " FAILED",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
-				core.achievementFailed = true				
+				core:getAchievementFailed()			
 			end
 		end
 	end)
 end
 
 function core.HellfireCitadel:IronReaver()
-	core:displayAchievementsToTrackCurrent(10057)
-
 	if core.type == "SPELL_INSTAKILL" and core.destID == "94985" and core.achievementCompleted == false then
 		hellfireGuardianKilled = hellfireGuardianKilled + 1
-		SendChatMessage("[WIP] Hellfire Guardians Killed (" .. hellfireGuardianKilled .. "/10)",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+		core:sendMessage("Hellfire Guardians Killed (" .. hellfireGuardianKilled .. "/10)")
 	end
 
-	if hellfireGuardianKilled == 10 and core.achievementCompleted == false then
-		SendChatMessage("[WIP] "  .. GetAchievementLink(10057) .. " requirements have been met. Boss can now be killed!",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
-		core.achievementCompleted = true		
+	if hellfireGuardianKilled == 10 then
+		core:getAchievementSuccess()		
 	end
 end
 
 function core.HellfireCitadel:HellfireHighCouncil()
-	core:displayAchievementsToTrackCurrent(10054)
-	
 	if core.type == "UNIT_DIED" and (core.destID == "92142" or core.destID == "92146" or core.destID == "92144") then
 		unitsKilled = unitsKilled + 1
 		if timerStarted == false then
-			SendChatMessage("[WIP] Timer Started!",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+			core:sendMessage("Timer Started!")
 			timerStarted = true
 			C_Timer.After(10, function()
-				if unitsKilled ~= 3 and core.achievementFailed == false and core.inCombat == true then
-					SendChatMessage("[WIP] "  .. GetAchievementLink(10054) .. " FAILED (" .. unitsKilled .. "/3) Killed in time",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
-					core.achievementFailed = true							
+				if unitsKilled ~= 3 and core.inCombat == true then
+					core:getAchievementFailedWithMessageAfter("(" .. unitsKilled .. "/3) Killed in time")						
 				end
 			end)
 		end
@@ -87,24 +78,14 @@ function core.HellfireCitadel:HellfireHighCouncil()
 end
 
 function core.HellfireCitadel:KilroggDeadeye()
-	core:displayAchievementsToTrackCurrent(9972)
-
-	-- if type == "UNIT_DIED" and destID == "90980" and core.achievementFailed == false then
-	-- 	SendChatMessage("[WIP] "  .. GetAchievementLink(9972) .. " FAILED",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
-	-- 	core.achievementFailed = true			
-	-- end
-
 	f:SetScript("OnEvent", function(self, event, message, sender)
-		if event == "CHAT_MSG_MONSTER_YELL" and message == "GHHAAAaaa!!!" and core.achievementFailed == false then
-			SendChatMessage("[WIP] " .. GetAchievementLink(9972) .. " FAILED!",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
-			core.achievementFailed = true				
+		if event == "CHAT_MSG_MONSTER_YELL" and message == "GHHAAAaaa!!!" then
+			core:getAchievementFailed()				
 		end
 	end)
 end
 
 function core.HellfireCitadel:Kormrok()
-	core:displayAchievementsToTrackCurrent(10013)
-
 	--If player gets hit by one of the abilities and has not already been hit then fail the achievement for the player
 	if core.type == "SPELL_AURA_APPLIED" and (core.spellId == 185521 or core.spellId == 185519 or core.spellId == 180270) and core:has_value(playersHit, core.spawn_uid_dest_Player) == false then
 		table.insert(playersHit, core.spawn_uid_dest_Player)
@@ -113,17 +94,12 @@ function core.HellfireCitadel:Kormrok()
 end
 
 function core.HellfireCitadel:Gorefiend()
-	core:displayAchievementsToTrackCurrent(9979)
-
-	if core.type == "UNIT_DIED" and core.destID == "93145" and core.achievementCompleted == false then
-		SendChatMessage("[WIP] "  .. GetAchievementLink(9979) .. " requirements have been met. Boss can now be killed!",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
-		core.achievementCompleted = true				
+	if core.type == "UNIT_DIED" and core.destID == "93145" then
+		core:getAchievementSuccess()			
 	end
 end
 
 function core.HellfireCitadel:ShadowLordIskar()
-	core:displayAchievementsToTrackCurrent(9988)
-
 	if core.type == "SPELL_AURA_REMOVED" and core.spellId == 179202 and core.achievementFailed == false then
 		eyeOfAnzuPlayer = nil
 	end
@@ -134,18 +110,17 @@ function core.HellfireCitadel:ShadowLordIskar()
 		firstPickup = true
 		C_Timer.After(5, function()
 			if eyeOfAnzuPlayer == core.destName then
-				SendChatMessage("[WIP] " .. GetAchievementLink(9988) .. " FAILED! by " .. core.destName,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
-				core.achievementFailed = true				
+				core:getAchievementFailedWithMessageAfter("by " .. core.destName)			
 			end
 		end)				
 	end
 
 	if firstPickup == false then
-		if GetNumGroupMembers() > 0 then
-			for i = 1, GetNumGroupMembers() do
+		if core.groupSize > 0 then
+			for i = 1, core.groupSize do
 				local unit = nil
 				if core.chatType == "PARTY" then
-					if i < GetNumGroupMembers() then
+					if i < core.groupSize then
 						unit = "party" .. i
 					else
 						unit = "player"
@@ -159,8 +134,7 @@ function core.HellfireCitadel:ShadowLordIskar()
 					firstPickup = true
 					C_Timer.After(5, function()
 						if eyeOfAnzuPlayer == core.destName then
-							SendChatMessage("[WIP] " .. GetAchievementLink(9988) .. " FAILED! by " .. core.destName,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
-							core.achievementFailed = true				
+							core:getAchievementFailedWithMessageAfter("by " .. core.destName)			
 						end
 					end)						
 				end
@@ -171,8 +145,7 @@ function core.HellfireCitadel:ShadowLordIskar()
 				firstPickup = true
 				C_Timer.After(5, function()
 					if eyeOfAnzuPlayer == core.destName then
-						SendChatMessage("[WIP] " .. GetAchievementLink(9988) .. " FAILED! by " .. core.destName,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
-						core.achievementFailed = true				
+						core:getAchievementFailedWithMessageAfter("by " .. core.destName)		
 					end
 				end)						
 			end			
@@ -181,43 +154,34 @@ function core.HellfireCitadel:ShadowLordIskar()
 end
 
 function core.HellfireCitadel:FelLordZakuun()
-	core:displayAchievementsToTrackCurrent(10012)
-
-	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 179428 and core.achievementFailed == false then
-		core.achievementFailed = true		
+	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 179428 then	
 		C_Timer.After(6, function()
-			SendChatMessage("[WIP] " .. GetAchievementLink(10012) .. " FAILED! by " .. core.destName,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+			core:getAchievementFailedWithMessageAfter("by " .. core.destName)
 		end)		
 	end
 end
 
 function core.HellfireCitadel:Xhulhorac()
-	core:displayAchievementsToTrackCurrent(10087)
-
-	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 185656 and core.achievementFailed == false then
-		SendChatMessage("[WIP] " .. GetAchievementLink(10087) .. " FAILED! by " .. core.destName,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
-		core.achievementFailed = true
+	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 185656 then
+		core:getAchievementFailedWithMessageAfter("by " .. core.destName)
 	end
 end
 
 function core.HellfireCitadel:SocretharTheEternal()
-	core:displayAchievementsToTrackCurrent(10086)
-
 	if core.type == "UNIT_DIED" and core.destID == "91938" and core.achievementCompleted == false then
 		hauntingSoulsKilled = hauntingSoulsKilled + 1
-		SendChatMessage("[WIP] Haunting Souls Killed: (" .. hauntingSoulsKilled .. "/20)",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)		
+		core:sendMessage("Haunting Souls Killed: (" .. hauntingSoulsKilled .. "/20)")	
 		if timerStarted == false then
 			timerStarted = true
-			SendChatMessage("[WIP] Timer Started! 10 seconds remaining",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+			core:sendMessage("Timer Started! 10 seconds remaining")
 			C_Timer.After(10, function()
 				if hauntingSoulsKilled < 20 and core.inCombat == true then
-					SendChatMessage("[WIP] " .. GetAchievementLink(10086) .. " FAILED! (" .. hauntingSoulsKilled .. "/20) Killed in time",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
-					core.achievementFailed = true
+					core:sendMessage(GetAchievementLink(core.currentAchievementID) .. " FAILED! (" .. hauntingSoulsKilled .. "/20) Killed in time.")
 					hauntingSoulsKilled = 0
 					timerStarted = false
 				elseif hauntingSoulsKilled >= 20 then
-					SendChatMessage("[WIP] " .. GetAchievementLink(10086) .. " Requirements have been met. Boss can now be killed",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)												
-					core.achievementCompleted = true
+					core:getAchievementSuccess()
+					SendChatMessage("[WIP] " .. GetAchievementLink(10086) .. " Requirements have been met. Boss can now be killed",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
 				end
 			end)
 		end
@@ -225,24 +189,18 @@ function core.HellfireCitadel:SocretharTheEternal()
 end
 
 function core.HellfireCitadel:TyrantVelhari()
-	core:displayAchievementsToTrackCurrent(9989)
-
-	if core.type == "UNIT_DIED" and core.destID == "90270" and core.achievementFailed == false then
-		SendChatMessage("[WIP] " .. GetAchievementLink(9989) .. " FAILED!",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
-		core.achievementFailed = true		
+	if core.type == "UNIT_DIED" and core.destID == "90270" then
+		core:getAchievementFailed()	
 	end
 end
 
 function core.HellfireCitadel:Mannoroth()
-	--core:displayAchievementsToTrackCurrent(10030)
-
-	if core.type == "SPELL_DAMAGE" and core.spellId == 182077 and core.destID == "91241" and core.overkill > 0 and core.achievementCompleted == false then
-		SendChatMessage("[WIP] "  .. GetAchievementLink(10030) .. " requirements have been met. Boss can now be killed!",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
-		core.achievementCompleted = true				
+	if core.type == "SPELL_DAMAGE" and core.spellId == 182077 and core.destID == "91241" and core.overkill > 0 then
+		core:getAchievementSuccess()			
 	end
 end
 
-function HellfireCitadel_ClearVariables()
+function core.HellfireCitadel:ClearVariables()
 	------------------------------------------------------
 	---- Iron Reaver
 	------------------------------------------------------
