@@ -9,8 +9,6 @@ local _, core = ...
 core.BlackwingDescent = {}
 
 local f = CreateFrame ("Frame")
-f:RegisterEvent("UNIT_POWER")
-f:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
 ------------------------------------------------------
 ---- Ominitron Defense System
@@ -139,6 +137,9 @@ function core.BlackwingDescent:Chimaeron()
 end
 
 function core.BlackwingDescent:Atramedes()
+	if f:IsEventRegistered("UNIT_POWER") == nil then
+		f:RegisterEvent("UNIT_POWER")
+	end
 	f:SetScript("OnEvent", function(self, event, unit, powerType)
 		if event == "UNIT_POWER" and powerType == "ALTERNATE" then
 			if UnitPower(unit, ALTERNATE_POWER_INDEX) > 50 then
@@ -149,6 +150,9 @@ function core.BlackwingDescent:Atramedes()
 end
 
 function core.BlackwingDescent:Nefarian()
+	if f:IsEventRegistered("CHAT_MSG_MONSTER_YELL") == nil then
+		f:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+	end
 	--Get percentage of onyxia and nefarian health
 	local onyxiaPercentage = nil
 	local nefarianPercentage = nil
@@ -242,5 +246,13 @@ function core.BlackwingDescent:ClearVariables()
 	step1Complete = false
 	step2Complete = false
 	step3Complete = false
-	step4Complete = false		
+	step4Complete = false
+
+	if f:IsEventRegistered("UNIT_POWER") == true then
+		f:UnregisterEvent("UNIT_POWER")
+	end
+	
+	if f:IsEventRegistered("CHAT_MSG_MONSTER_YELL") == true then
+		f:UnregisterEvent("CHAT_MSG_MONSTER_YELL")
+	end
 end
