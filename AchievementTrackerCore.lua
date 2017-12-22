@@ -37,6 +37,22 @@ events:SetScript("OnEvent", function(self, event, ...)
    return self[event] and self[event](self, event, ...) 	--Allow event arguments to be called from seperate functions
 end)
 
+function events:onUpdate(sinceLastUpdate)
+	self.sinceLastUpdate = (self.sinceLastUpdate or 0) + sinceLastUpdate;
+	if ( self.sinceLastUpdate >= 1 ) then -- in seconds
+		-- do stuff here
+		self.sinceLastUpdate = 0;
+		local combatStatus = getCombatStatus()
+		if combatStatus == false then
+			core.inCombat = false
+			clearVariables()
+			print("Left Combat")
+			events:SetScript("OnUpdate",nil)
+			events:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+		end
+	end
+end
+
 --------------------------------------
 -- Achievement Scanning Variables
 --------------------------------------
@@ -537,16 +553,13 @@ function events:PLAYER_REGEN_ENABLED()
 		core.inCombat = false
 		clearVariables()
 		print("Left Combat")
+		events:SetScript("OnUpdate",nil)
+		events:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 	else
 		--Someone in the group is still in combat. Wait 1 second then check again
-		combatTimerStarted = true
-		C_Timer.After(1, function()
-			combatTimerStarted = false
-			getCombatStatus()
-		end)
+		
+		events:SetScript("OnUpdate",events.onUpdate)
 	end
-
-	events:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 end
 
 function getCombatStatus()
