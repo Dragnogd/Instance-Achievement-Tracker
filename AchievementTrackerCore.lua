@@ -44,7 +44,6 @@ function events:onUpdate(sinceLastUpdate)
 		self.sinceLastUpdate = 0;
 		local combatStatus = getCombatStatus()
 		if combatStatus == false then
-			core.inCombat = false
 			clearVariables()
 			print("Left Combat")
 			events:SetScript("OnUpdate",nil)
@@ -550,7 +549,6 @@ end
 function events:PLAYER_REGEN_ENABLED()
 	--Although the player running the addon has left combat, the boss could still be in combat with other players. Check everyone else in the group to see if anyone is still in combat with the boss
 	if getCombatStatus() == false then
-		core.inCombat = false
 		clearVariables()
 		print("Left Combat")
 		events:SetScript("OnUpdate",nil)
@@ -786,8 +784,9 @@ function clearVariables()
 	core.lastMessageSent = nil
 
 	--If a boss was pulled then clear the variables for that raid
-	if instances ~= nil then
-		core.instance:ClearVariables()
+	print(instanceName)
+	if instanceName ~= nil then
+		core[instanceName]:ClearVariables()
 	end
 
 	currentBoss = nil
