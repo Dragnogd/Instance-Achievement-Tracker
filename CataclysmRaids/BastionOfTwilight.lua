@@ -9,7 +9,6 @@ local _, core = ...
 core.BastionOfTwilight = {}
 
 local f = CreateFrame ("Frame")
-f:RegisterEvent("UNIT_POWER")
 
 ------------------------------------------------------
 ---- Halfus Wyrmbreaker
@@ -52,6 +51,9 @@ function core.BastionOfTwilight_ValionaAndTheralion()
 end
 
 function core.BastionOfTwilight:Chogall()
+	if f:IsEventRegistered("UNIT_POWER") == nil then
+		f:RegisterEvent("UNIT_POWER")
+	end
 	f:SetScript("OnEvent", function(self, event, unit, powerType)
 		if event == "UNIT_POWER" and powerType == "ALTERNATE" then
 			if UnitPower(unit, ALTERNATE_POWER_INDEX) > 30 then
@@ -72,4 +74,8 @@ function core.BastionOfTwilight:ClearVariables()
 	---- Valiona And Theralion
 	------------------------------------------------------
 	TwilightFiendsKilled = 0
+
+	if f:IsEventRegistered("UNIT_POWER") == true then
+		f:UnregisterEvent("UNIT_POWER")
+	end
 end
