@@ -9,10 +9,6 @@ local _, core = ...
 core.Firelands = {}
 
 local f = CreateFrame ("Frame")
-f:RegisterEvent("UNIT_POWER")
-f:RegisterEvent("UNIT_AURA")
-f:RegisterEvent("ZONE_CHANGED_INDOORS")
-f:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 
 -- local onlyThePenitentFailed = false
 -- --Only The Pentient
@@ -47,6 +43,9 @@ local cinderwebDroneList = {}
 local tormentStacks = {}
 
 function core.Firelands:LordRhyolith()
+	if f:IsEventRegistered("UNIT_POWER") == nil then
+		f:RegisterEvent("UNIT_POWER")
+	end
 	f:SetScript("OnEvent", function(self, event, unit, powerType)
 		if event == "UNIT_POWER" and powerType == "ALTERNATE" then
 			if UnitPower(unit, ALTERNATE_POWER_INDEX) == 0 then
@@ -87,7 +86,9 @@ function core.Firelands:Bethtilac()
 	--Loop through all the unit auras currently active
 	--If mob is Cinderweb Drone and has the aura to say they are ontop of the web add to saveToKillArray
 	--If a cinderweb drone is killed and is not in this array then fail the achievement
-
+	if f:IsEventRegistered("UNIT_AURA") == nil then
+		f:RegisterEvent("UNIT_AURA")
+	end
 	f:SetScript("OnEvent", function(self, event, unitID)
 		if event == "UNIT_AURA" then
 			local name, rank, icon, count, dispelType, duration, expires, caster, isStealable, nameplateShowPersonal, spellID2, canApplyAura, isBossDebuff, _, nameplateShowAll, timeMod, value1, value2, value3 = UnitDebuff(unitID, "Fiery Web Silk")
@@ -164,4 +165,12 @@ function core.Firelands:ClearVariables()
 	---- Beth'tilac
 	------------------------------------------------------
 	tormentStacks = {}
+
+	if f:IsEventRegistered("UNIT_POWER") == true then
+		f:UnregisterEvent("UNIT_POWER")
+	end
+
+	if f:IsEventRegistered("UNIT_AURA") == true then
+		f:UnregisterEvent("UNIT_AURA")
+	end
 end
