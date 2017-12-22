@@ -427,8 +427,8 @@ function events:CHAT_MSG_ADDON(prefix, message, channel, sender)
 		--This Addon sent the message to ask for permission to run
 	else
 		--Another addon is requesting info and this addon
-		SendAddonMessage("AchievementTracker", core.masterAddon .. "," .. core.playerRankInGroup , "RAID")
-		print(core.masterAddon .. "," .. core.playerRankInGroup)
+		--SendAddonMessage("AchievementTracker", core.masterAddon .. "," .. core.playerRankInGroup , "RAID")
+		--print(core.masterAddon .. "," .. core.playerRankInGroup)
 	end
 end
 
@@ -438,7 +438,7 @@ function enableAchievementTracking(self)
 	events:RegisterEvent("GROUP_ROSTER_UPDATE")					--Used to find out when the group size has changed and to therefore initiate an achievement scan of the group
 	events:RegisterEvent("PLAYER_REGEN_DISABLED")				--Used to detect when the player has entered combat and to reset tracked variables for bosses
 	events:RegisterEvent("PLAYER_REGEN_ENABLED")				--Used to track when the player has left combat
-	events:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")			--Used to get information about the fight and to report information about the tracked achievement
+	--events:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")			--Used to get information about the fight and to report information about the tracked achievement
 	events:RegisterEvent("CHAT_MSG_ADDON")						--Allows the addon to communicate with other addons in the same party/raid
 	getPlayersInGroup()
 
@@ -483,6 +483,11 @@ function events:PLAYER_REGEN_DISABLED()
  	core:detectGroupType()
 	print("Entered Combat")
 
+	local isInstance, instanceType = IsInInstance()
+	if isInstance == true and (instanceType == "party" or instanceType == "raid") then
+		events:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+	end
+
 	--DEBUG
  	----print(UnitGUID("Boss1"))
  	----print(UnitGUID("Boss2"))		
@@ -502,6 +507,8 @@ function events:PLAYER_REGEN_ENABLED()
 			getCombatStatus()
 		end)
 	end
+
+	events:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 end
 
 function getCombatStatus()
@@ -540,27 +547,24 @@ function getCombatStatus()
 end
 
 function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
-	local isInstance, instanceType = IsInInstance()
-	if isInstance == true and (instanceType == "party" or instanceType == "raid") then
-		--If the current boss is nil then get the type of group the user is in and the boss they are currently attacking
-		core:detectGroupType()
-		detectBoss()
-		
-		core.timeStamp, core.type, core.hideCaster, core.sourceGUID, core.sourceName, core.sourceFlags, core.sourceRaidFlags, core.destGUID, core.destName, core.destFlags, core.destRaidFlags, core.spellId, core.spellName, core.spellSchool, core.amount, core.overkill, core.school, core.resisted, core.blocked, core.absorbed, core.critical, core.glancing, core.crushing = ...
+	--If the current boss is nil then get the type of group the user is in and the boss they are currently attacking
+	core:detectGroupType()
+	detectBoss()
+	
+	core.timeStamp, core.type, core.hideCaster, core.sourceGUID, core.sourceName, core.sourceFlags, core.sourceRaidFlags, core.destGUID, core.destName, core.destFlags, core.destRaidFlags, core.spellId, core.spellName, core.spellSchool, core.amount, core.overkill, core.school, core.resisted, core.blocked, core.absorbed, core.critical, core.glancing, core.crushing = ...
 
-		--For a Creature
-		core.unitTypeSrc, _, _, _, _, core.sourceID, core.spawn_uid = strsplit("-", core.sourceGUID);
-		core.unitType, _, _, _, _, core.destID, core.spawn_uid_dest = strsplit("-", core.destGUID);
+	--For a Creature
+	core.unitTypeSrc, _, _, _, _, core.sourceID, core.spawn_uid = strsplit("-", core.sourceGUID);
+	core.unitType, _, _, _, _, core.destID, core.spawn_uid_dest = strsplit("-", core.destGUID);
 
-		--For a Player
-		core.unitTypePlayer, core.destIDPlayer, core.spawn_uid_dest_Player = strsplit("-", core.destGUID);		
+	--For a Player
+	core.unitTypePlayer, core.destIDPlayer, core.spawn_uid_dest_Player = strsplit("-", core.destGUID);		
 
-		--If the boss has been found then we can load the tracker for that particular boss
-		if currentBoss ~= nil then			
-			--Start tracking the particular boss if the user has not disabled tracking for that boss
-			if currentBoss.enabled then
-				currentBoss.track()
-			end
+	--If the boss has been found then we can load the tracker for that particular boss
+	if currentBoss ~= nil then			
+		--Start tracking the particular boss if the user has not disabled tracking for that boss
+		if currentBoss.enabled then
+			currentBoss.track()
 		end
 	end
 end
