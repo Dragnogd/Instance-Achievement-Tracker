@@ -75,7 +75,7 @@ core.achievementFailed = false					--Set to true when the requirements for a tra
 core.achievementCompleted = false				--Set to true when the requrements for a tracked achievement have been met
 core.chatType = nil								--The chat type for the current group (say/party/raid)
 core.achievementTrackedMessageShown = false		--Set to true when the message "Tracking {achievement}" is output to the chat so that it only outputs once per fight
-core.groupSize = 0								--Amount of players currently in the group
+core.groupSize = 1							--Amount of players currently in the group
 core.currentAchievementID = nil					--The ID for the current boss achievement
 core.achievementTrackingEnabled = false			--Whether the user wants to track achievements for the particular instance or not
 local currentBoss = nil							--The current boss the player is attacking. Can only be one of the bosses listed in the instances.lua file
@@ -126,6 +126,10 @@ function getPlayersInGroup()
 	core.scanFinished = false
 	local currentGroup = {}
 	core.groupSize = GetNumGroupMembers()
+	if core.groupSize == 0 then
+		core.groupSize = 1
+	end
+
 	if GetNumGroupMembers() > 0 then
 		--We are in a group
 		local currentUnit
@@ -292,6 +296,9 @@ function events:GROUP_ROSTER_UPDATE()
 
 	--Save the current number of players in group to the namespace
 	core.groupSize = GetNumGroupMembers()	
+	if core.groupSize == 0 then
+		core.groupSize = 1
+	end
 end
 
 function events:INSPECT_ACHIEVEMENT_READY()
@@ -496,7 +503,7 @@ function enableAchievementTracking(self)
 	getPlayersInGroup()
 
 	--Check if there is already someone else running the addon in the group / whether the priority is higher for the current player than other players running the addon
-	if core.groupSize == 0 then
+	if core.groupSize == 1 then
 		--Player is not a group so run the addon
 		core.masterAddon = true
 		print(UnitName("Player") .. " is the master addon")
@@ -576,9 +583,11 @@ function getCombatStatus()
 			elseif core.chatType == "RAID" then
 				currentUnit = "raid" .. i
 			end
-	
-			if UnitAffectingCombat(currentUnit) == true then
-				playerInCombat = true
+			
+			if currentUnit ~= nil then
+				if UnitAffectingCombat(currentUnit) == true then
+					playerInCombat = true
+				end
 			end
 		end
 
@@ -784,7 +793,6 @@ function clearVariables()
 	core.lastMessageSent = nil
 
 	--If a boss was pulled then clear the variables for that raid
-	print(instanceName)
 	if instanceName ~= nil then
 		core[instanceName]:ClearVariables()
 	end
