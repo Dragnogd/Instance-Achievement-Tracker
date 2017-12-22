@@ -30,6 +30,8 @@ local addonVersion = 10
 events:RegisterEvent("ADDON_LOADED")						--Used to setup the slash commands for the addon
 events:RegisterEvent("PLAYER_ENTERING_WORLD")				--Used to detect if player is inside an instance when they enter the world
 events:RegisterEvent("ZONE_CHANGED_NEW_AREA")				--Used to detect if player is inside an instance when they change zone
+events:RegisterEvent("CHAT_MSG_ADDON")						--Allows the addon to communicate with other addons in the same party/raid
+RegisterAddonMessagePrefix("Whizzey")						--Register events to listen out for client-client communication
 
 events:SetScript("OnEvent", function(self, event, ...)
    return self[event] and self[event](self, event, ...) 	--Allow event arguments to be called from seperate functions
@@ -50,7 +52,7 @@ core.scanFinished = false						--Set to true when everyone in the group has been
 -- Main Variables
 --------------------------------------
 core.masterAddon = false						--The master addon for the group. This stop multiple people with the addon outputting identical messages
-core.playerRankInGroup = 0						--The rank of the player is the group. Used to sync multiple addons in the group
+core.playerRankInGroup = -1						--The rank of the player is the group. Used to sync multiple addons in the group
 core.currentZoneID = nil						--The ID of the current instance the player is in
 core.playerCount = 0							--The amount of players the instance lock can hold
 core.inCombat = false							--Whether anyone in the current group is in combat with boss/mobs
@@ -108,6 +110,7 @@ function getPlayersInGroup()
 	scanInProgress = true
 	core.scanFinished = false
 	local currentGroup = {}
+	core.groupSize = GetNumGroupMembers()
 	if GetNumGroupMembers() > 0 then
 		--We are in a group
 		local currentUnit
@@ -347,6 +350,7 @@ function events:PLAYER_ENTERING_WORLD()
 end
 
 function events:ZONE_CHANGED_NEW_AREA()
+	UIConfig:Hide()
 	local name, _, difficultyID, _, maxPlayers, _, _, mapID, _ = GetInstanceInfo()
 	playerCount = maxPlayers
 	core.currentZoneID = mapID
@@ -419,16 +423,52 @@ function createEnableAchievementTrackingUI()
 	UIConfig.btnNo:SetScript("OnClick", disableAchievementTracking);
 end
 
-function events:CHAT_MSG_ADDON(prefix, message, channel, sender)
-	--If this addon sent out the check then scan for replies
-	--else sent out the reply
+function events:CHAT_MSG_ADDON(self, prefix, message, channel, sender)	
+	--Addon is checking who should be leader
+	local name, realm = UnitName("Player")
+	local nameSend, realmSend = strsplit("-", sender)
+	if message == "enabledCheck" then
+		if enabledCheckSent == true then
+			--This Addon sent the message to ask for permission to run
+			enabledCheckSent = false
+		else
+			--Another addon is requesting info about the addon
+			SendAddonMessage("Whizzey", tostring(core.masterAddon) .. "," .. core.playerRankInGroup , "RAID")
+		end
+	elseif string.match(message, "demote") then
+		local nameFetched, realmFetched, message = strsplit("-", message)
+		
+		if nameFetched == name then
+			--Demote this player
+			print("Demoting Myself...")
+			core.masterAddon = false
+		end
+	elseif nameSend ~= name then
+		--Other addons have returned the requested info
 
-	if enabledCheckSent == true then
-		--This Addon sent the message to ask for permission to run
-	else
-		--Another addon is requesting info and this addon
-		--SendAddonMessage("AchievementTracker", core.masterAddon .. "," .. core.playerRankInGroup , "RAID")
-		--print(core.masterAddon .. "," .. core.playerRankInGroup)
+		--If the rank of other player is lower and they have addon enabled then let them to continue to run the addon
+		local trackingEnabled, playerRank = strsplit(",", message);
+		if trackingEnabled == "true" and tonumber(playerRank) > core.playerRankInGroup then
+			--Player rank is lower than other players so not master addon
+			print("Not enabling tracking output since a player running the addon has a higher rank than you")
+			core.masterAddon = false
+		elseif trackingEnabled == "true" and tonumber(playerRank) < core.playerRankInGroup then
+			--Player rank is higher than other players so set it the master addon
+			print("Setting master addon since player has highest rank so far in group")
+			core.masterAddon = true
+
+			--Tell the user that was originally the leader they are no longer the leader
+			print(sender .. ": " .. "needs demoting")
+			SendAddonMessage("Whizzey", sender .. "-demote", "RAID")
+		elseif trackingEnabled == "true" and tonumber(playerRank) == core.playerRankInGroup then
+			--Player rank is equal but other player is already running addon so let them run it instead
+			print("Another player with the same rank is already running the addon: (" .. playerRank .. " : " .. core.playerRankInGroup .. ") " .. sender)
+			core.masterAddon = false
+		elseif trackingEnabled == "false" then
+			--No one else is currently running the addon so take control
+			print("Setting master addon since no one else is running the addon")
+			core.masterAddon = true
+		end
 	end
 end
 
@@ -438,30 +478,28 @@ function enableAchievementTracking(self)
 	events:RegisterEvent("GROUP_ROSTER_UPDATE")					--Used to find out when the group size has changed and to therefore initiate an achievement scan of the group
 	events:RegisterEvent("PLAYER_REGEN_DISABLED")				--Used to detect when the player has entered combat and to reset tracked variables for bosses
 	events:RegisterEvent("PLAYER_REGEN_ENABLED")				--Used to track when the player has left combat
-	--events:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")			--Used to get information about the fight and to report information about the tracked achievement
-	events:RegisterEvent("CHAT_MSG_ADDON")						--Allows the addon to communicate with other addons in the same party/raid
 	getPlayersInGroup()
 
 	--Check if there is already someone else running the addon in the group / whether the priority is higher for the current player than other players running the addon
 	if core.groupSize == 0 then
 		--Player is not a group so run the addon
 		core.masterAddon = true
+		print(UnitName("Player") .. " is the master addon")
 	else
 		--Get the permissions for the current player
-		local name, rank, subgroup, level, class, fileName, zone, online, isDead, role, isML = GetRaidRosterInfo(index)
-		print("Setting rank to: " .. rank)
-		core.playerRankInGroup = rank
+		for i = 1, core.groupSize do
+			local name, rank, subgroup, level, class, fileName, zone, online, isDead, role, isML = GetRaidRosterInfo(i)
+			if name == UnitName("Player") then
+				print("Found: " .. name)
 
-		SendAddonMessage("AchievementTracker", "enabledCheck", "RAID")
-		enabledCheckSent = true
-		--Send out a request to the addon channel asking if anyone else in the group has the addon enabled
-			--Wait period of time
-				--If player has the addon
-					--If player has higher permissions in raid then let them be the leader (RL, Assist, Normal)
-					--If you have higher permissions that player, take control
-					--If you have same permissions as other players in the raid
-						--If someone already has the addon enabled, let them be leader
-						--Else take leader 
+				print("Setting rank to: " .. rank)
+				core.playerRankInGroup = rank
+				
+				print("Sending Addon Message")
+				SendAddonMessage("Whizzey", "enabledCheck", "RAID")
+				enabledCheckSent = true
+			end
+		end
 	end
 end
 
@@ -484,7 +522,7 @@ function events:PLAYER_REGEN_DISABLED()
 	print("Entered Combat")
 
 	local isInstance, instanceType = IsInInstance()
-	if isInstance == true and (instanceType == "party" or instanceType == "raid") then
+	if isInstance == true and (instanceType == "party" or instanceType == "raid") and core.masterAddon == true then
 		events:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 	end
 
