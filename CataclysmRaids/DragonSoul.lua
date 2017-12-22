@@ -44,34 +44,20 @@ local lastRole = nil
 local rolesPerformed = 0
 
 function core.DragonSoul:WarlordZonozz()
-	core:displayAchievementsToTrackCurrent(6128)
-
-	--If void diffusion is applied and is SPELL_AURA_APPLIED then set counter to one
-	--Else if void diffusion is applied and is SPELL_AURA_APPLIED_DOSE then increment counter by 1
-	--If Counter equals 10 then complete the achievement
-
 	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 106836 then
 		pingPongCounter = 1
-		SendChatMessage("[WIP] Void of the Unmaking ("  .. pingPongCounter .. "/10)",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+		core:sendMessage("Void of the Unmaking ("  .. pingPongCounter .. "/10)")
 	elseif core.type == "SPELL_AURA_APPLIED_DOSE" and core.spellId == 106836 then
 		pingPongCounter = pingPongCounter + 1
-		SendChatMessage("[WIP] Void of the Unmaking ("  .. pingPongCounter .. "/10)",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+		core:sendMessage("Void of the Unmaking ("  .. pingPongCounter .. "/10)")
 	end
 
-	if pingPongCounter == 10 and core.achievementCompleted == false then
-        SendChatMessage("[WIP] "  .. GetAchievementLink(6128) .. " requirements have been met. Boss can now be killed!",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
-        core.achievementCompleted = true		
+	if pingPongCounter == 10 then
+		core:getAchievementSuccess()	
 	end
 end
 
 function core.DragonSoul:YorsahjTheUnsleeping()
-	core:displayAchievementsToTrackCurrent(6129)
-
-	--If type is spell aura applied and is one of the colours
-	--Figure out which color it is and add to appropriate variable
-	--Start a timer of 40 seconds and clear variables after the 40 seconds
-	--If combination is found then alert the user
-
 	--Set variable to detect which colours have been found
 	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 104897 and core.destID == "55312" then
 		redFound = true
@@ -90,31 +76,30 @@ function core.DragonSoul:YorsahjTheUnsleeping()
 	--Check if any of the combinations have been matched
 	if blackFound == true and yellowFound == true and blackYellowFound == false then
 		combinationsFound = combinationsFound + 1
-		SendChatMessage("[WIP] Black and Yellow combination found for " .. GetAchievementLink(6129) .. " (" .. combinationsFound .. "/4)",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+		core:sendMessage("Black and Yellow combination found for " .. GetAchievementLink(core.currentAchievementID) .. " (" .. combinationsFound .. "/4)")
 		blackYellowFound = true
 	end
 
 	if redFound == true and greenFound == true and redGreenFound == false then
 		combinationsFound = combinationsFound + 1
-		SendChatMessage("[WIP] Red and Green combination found for " .. GetAchievementLink(6129) .. " (" .. combinationsFound .. "/4)",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+		core:sendMessage("Red and Green combination found for " .. GetAchievementLink(core.currentAchievementID) .. " (" .. combinationsFound .. "/4)")
 		redGreenFound = true
 	end
 	
 	if blackFound == true and blueFound == true and blackBlueFound == false then
 		combinationsFound = combinationsFound + 1
-		SendChatMessage("[WIP] Black and Blue combination found for " .. GetAchievementLink(6129) .. " (" .. combinationsFound .. "/4)",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+		core:sendMessage("Black and Blue combination found for " .. GetAchievementLink(core.currentAchievementID) .. " (" .. combinationsFound .. "/4)")
 		blackBlueFound = true
 	end
 
 	if purpleFound == true and yellowFound == true and purpleYellowFound == false then
 		combinationsFound = combinationsFound + 1
-		SendChatMessage("[WIP] Purple and Yellow combination found for " .. GetAchievementLink(6129) .. " (" .. combinationsFound .. "/4)",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+		core:sendMessage("Purple and Yellow combination found for " .. GetAchievementLink(core.currentAchievementID) .. " (" .. combinationsFound .. "/4)")
 		purpleYellowFound = true
 	end
 
-	if combinationsFound == 4 and core.achievementCompleted == false then
-		SendChatMessage("[WIP] "  .. GetAchievementLink(6129) .. " requirements have been met. Boss can now be killed!",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
-		core.achievementCompleted = true
+	if combinationsFound == 4 then
+		core:getAchievementSuccess()
 	end
 
 	--Reset variables once buff on boss has warn off
@@ -134,11 +119,9 @@ function core.DragonSoul:YorsahjTheUnsleeping()
 end
 
 function core.DragonSoul:Ultraxion()
-	core:displayAchievementsToTrackCurrent(6084)
-
 	if core.type == "SPELL_DAMAGE" and core.spellId == 103327 then
 		if core:has_value(hourOfTwilightPlayers, core.spawn_uid_dest) then
-			SendChatMessage("[WIP] "  .. GetAchievementLink(6084) .. " FAILED! by (" .. core.destName .. ")",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+			core:getAchievementFailedWithMessageAfter("by (" .. core.destName .. ")"))
 		else
 			table.insert(hourOfTwilightPlayers, core.spawn_uid_dest)
 		end
@@ -146,56 +129,77 @@ function core.DragonSoul:Ultraxion()
 end
 
 function core.DragonSoul:Skyfire()
-	core:displayAchievementsToTrackCurrent(6105)
-
-	if core.type == "SPELL_DAMAGE" and core.spellId == 107501 and core.destID == "56598" and core.achievementFailed == false then
-		SendChatMessage("[WIP] "  .. GetAchievementLink(6105) .. " FAILED!",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
-		core.achievementFailed = true
+	if core.type == "SPELL_DAMAGE" and core.spellId == 107501 and core.destID == "56598" then
+		core:getAchievementFailed()
 	end
 end
 
 function core.DragonSoul:SpineOfDeathwing()
-	core:displayAchievementsToTrackCurrent(6133)
-
 	f:SetScript("OnEvent", function(self, event, message, sender, language, channelString, target, flags, unknown, channelNumber, channelName, unknown, counter)
 		if event == "CHAT_MSG_RAID_BOSS_EMOTE" and core.achievementCompleted == false then
 			if message == "%s rolls right!" then
 				if lastRole == "right" or lastRole == nil then
 					rolesPerformed = 0
-					SendChatMessage("[WIP] "  .. GetAchievementLink(6133) .. " FAILED! (This Achievement Can be Attempted Again)",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
-					SendChatMessage("[WIP] Roll the boss LEFT now! (" .. rolesPerformed .. "/4)",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+					core:getAchievementFailedWithMessageAfter("(This Achievement Can be Attempted Again)")
+					core.achievementFailed = false
+					core:sendMessage("Roll the boss LEFT now! (" .. rolesPerformed .. "/4)")
 					lastRole = nil
 				elseif lastRole == "left" then
 					rolesPerformed = rolesPerformed + 1
-					SendChatMessage("[WIP] Roll the boss LEFT now! (" .. rolesPerformed .. "/4)",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+					core:sendMessage("Roll the boss LEFT now! (" .. rolesPerformed .. "/4)")
 					lastRole = "right"
 				end
 			elseif message == "%s rolls left!" then
 				if lastRole == nil then
 					rolesPerformed = rolesPerformed + 1
-					SendChatMessage("[WIP] Roll the boss RIGHT now! (" .. rolesPerformed .. "/4)",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+					core:sendMessage("Roll the boss RIGHT now! (" .. rolesPerformed .. "/4)")
 					lastRole = "left"
 				elseif lastRole == "left" then
 					rolesPerformed = 1
-					SendChatMessage("[WIP] "  .. GetAchievementLink(6133) .. " FAILED! (This Achievement Can be Attempted Again)",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
-					SendChatMessage("[WIP] Roll the boss RIGHT now! (" .. rolesPerformed .. "/4)",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+					core:getAchievementFailedWithMessageAfter("(This Achievement Can be Attempted Again)")
+					core.achievementFailed = false
+					core:sendMessage("Roll the boss RIGHT now! (" .. rolesPerformed .. "/4)")
 					lastRole = "left"
 				elseif lastRole == "right" then
 					rolesPerformed = rolesPerformed + 1
-					SendChatMessage("[WIP] Roll the boss RIGHT now! (" .. rolesPerformed .. "/4)",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+					core:sendMessage("Roll the boss RIGHT now! (" .. rolesPerformed .. "/4)")
 					lastRole = "left"
 				end
 			end
 		end
 
-		if rolesPerformed == 4 and core.achievementCompleted == false then
-			SendChatMessage("[WIP] "  .. GetAchievementLink(6133) .. " requirements have been met. Boss can now be killed!",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
-			core.achievementCompleted = true			
+		if rolesPerformed == 4 then
+			core:getAchievementSuccess()
 		end
 	end)
 end
 
-function DragonSoul_ClearVariables()
+
+--Deathwing (Cannot use function since boss is not registered before assualting a platform)
+f:SetScript("OnEvent", function(self, event, message, sender, language, channelString, target, flags, unknown, channelNumber, channelName, unknown, counter)
+	if event == "CHAT_MSG_RAID_BOSS_EMOTE" and core.achievementCompleted == false then
+		if string.match(message, "Ysera") and core.achievementCompleted == false then
+			core:displayAchievementsToTrackCurrent(6180)
+			SendChatMessage("[WIP] 'Ysera Assualted First' part of " .. GetAchievementLink(6180) .. " will be completed once boss is killed",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+			core.achievementCompleted = true
+		elseif string.match(message, "Nozdormu") and core.achievementCompleted == false then
+			core:displayAchievementsToTrackCurrent(6180)
+			SendChatMessage("[WIP] 'Nozdormu Assualted First' part of " .. GetAchievementLink(6180) .. " will be completed once boss is killed",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+			core.achievementCompleted = true
+		elseif string.match(message, "Alexstrasza") and core.achievementCompleted == false then
+			core:displayAchievementsToTrackCurrent(6180)
+			SendChatMessage("[WIP] 'Alexstrasza Assualted First' part of " .. GetAchievementLink(6180) .. " will be completed once boss is killed",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+			core.achievementCompleted = true
+		elseif string.match(message, "Kalecgos") and core.achievementCompleted == false then
+			core:displayAchievementsToTrackCurrent(6180)
+			SendChatMessage("[WIP] 'Kalecgos Assualted First' part of " .. GetAchievementLink(6180) .. " will be completed once boss is killed",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+			core.achievementCompleted = true
+		end
+	end
+end)
+
+
+function core.DragonSoul:ClearVariables()
 	------------------------------------------------------
 	---- Warlord Zon'ozz
 	------------------------------------------------------
@@ -228,26 +232,3 @@ function DragonSoul_ClearVariables()
 	lastRole = nil
 	rolesPerformed = 0		
 end
-
---Deathwing (Cannot use function since boss is not registered before assualting a platform)
-f:SetScript("OnEvent", function(self, event, message, sender, language, channelString, target, flags, unknown, channelNumber, channelName, unknown, counter)
-	if event == "CHAT_MSG_RAID_BOSS_EMOTE" and core.achievementCompleted == false then
-		if string.match(message, "Ysera") and core.achievementCompleted == false then
-			core:displayAchievementsToTrackCurrent(6180)
-			SendChatMessage("[WIP] 'Ysera Assualted First' part of " .. GetAchievementLink(6180) .. " will be completed once boss is killed",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
-			core.achievementCompleted = true
-		elseif string.match(message, "Nozdormu") and core.achievementCompleted == false then
-			core:displayAchievementsToTrackCurrent(6180)
-			SendChatMessage("[WIP] 'Nozdormu Assualted First' part of " .. GetAchievementLink(6180) .. " will be completed once boss is killed",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
-			core.achievementCompleted = true
-		elseif string.match(message, "Alexstrasza") and core.achievementCompleted == false then
-			core:displayAchievementsToTrackCurrent(6180)
-			SendChatMessage("[WIP] 'Alexstrasza Assualted First' part of " .. GetAchievementLink(6180) .. " will be completed once boss is killed",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
-			core.achievementCompleted = true
-		elseif string.match(message, "Kalecgos") and core.achievementCompleted == false then
-			core:displayAchievementsToTrackCurrent(6180)
-			SendChatMessage("[WIP] 'Kalecgos Assualted First' part of " .. GetAchievementLink(6180) .. " will be completed once boss is killed",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
-			core.achievementCompleted = true
-		end
-	end
-end)
