@@ -548,8 +548,6 @@ end
 
 function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 	--If the current boss is nil then get the type of group the user is in and the boss they are currently attacking
-	core:detectGroupType()
-	detectBoss()
 	
 	core.timeStamp, core.type, core.hideCaster, core.sourceGUID, core.sourceName, core.sourceFlags, core.sourceRaidFlags, core.destGUID, core.destName, core.destFlags, core.destRaidFlags, core.spellId, core.spellName, core.spellSchool, core.amount, core.overkill, core.school, core.resisted, core.blocked, core.absorbed, core.critical, core.glancing, core.crushing = ...
 
@@ -566,6 +564,8 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 		if currentBoss.enabled then
 			currentBoss.track()
 		end
+	else
+		detectBoss()
 	end
 end
 
