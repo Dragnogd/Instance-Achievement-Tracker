@@ -6,7 +6,7 @@ local _, core = ...
 local events = CreateFrame("Frame")
 local UIConfig
 local UICreated = false
-local addonVersion = 10
+local addonVersion = 1
 
 -- local events = CreateFrame("Frame", "AchievementTracker2", UIParent, "UIPanelDialogTemplate")
 -- events:SetSize(800, 500)
@@ -75,7 +75,7 @@ core.achievementFailed = false					--Set to true when the requirements for a tra
 core.achievementCompleted = false				--Set to true when the requrements for a tracked achievement have been met
 core.chatType = nil								--The chat type for the current group (say/party/raid)
 core.achievementTrackedMessageShown = false		--Set to true when the message "Tracking {achievement}" is output to the chat so that it only outputs once per fight
-core.groupSize = 1							--Amount of players currently in the group
+core.groupSize = 1								--Amount of players currently in the group. Set to 1 by default
 core.currentAchievementID = nil					--The ID for the current boss achievement
 core.achievementTrackingEnabled = false			--Whether the user wants to track achievements for the particular instance or not
 local currentBoss = nil							--The current boss the player is attacking. Can only be one of the bosses listed in the instances.lua file
@@ -132,7 +132,7 @@ function core:getGroupSize()
 end
 
 function getPlayersInGroup()
-	print("Starting Player Achievement Scan for " .. instanceNameSpaces .. "...")
+	core:printMessage("Starting Achievement Scan For " .. instanceNameSpaces .. " (This may lag your game for a few seconds)")
 	core:getGroupSize()
 	scanInProgress = true
 	core.scanFinished = false
@@ -177,7 +177,6 @@ function getPlayersInGroup()
 	if #playersToScan > 0 then
 		for i = #playersToScan, 1, -1 do
 			if core:has_value(currentGroup, playersToScan[i]) == false then
-				print("Removing: " .. playersToScan[i])
 				table.remove(playersToScan, i)
 			end	
 		end
@@ -187,9 +186,6 @@ function getPlayersInGroup()
 	if #playersScanned > 0 then
 		for i = #playersScanned, 1, -1 do
 			if core:has_value(currentGroup, playersScanned[i]) == false then
-				print("Removing: " .. playersScanned[i])
-				
-
 				--Remove player from the table that generates the UI for that achievement
 				for expansion,_ in pairs(core.Instances) do
 					for instanceType,_ in pairs(core.Instances[expansion]) do
@@ -220,15 +216,13 @@ function getPlayersInGroup()
 	end
 
 	rescanNeeded = false
-	----print("Size of group: " .. (#playersToScan + #playersScanned + #playersWaitingToScan))
 	updateDebugTable()
 
 	--Start the player scanning
 	if #playersToScan > 0 then
-		--print("Calling getInstanceAchievements from getPlayersInGroup since scanning of players has finished")
 		getInstanceAchievements()
 	else
-		print("Achievment Scanning Finished (" .. #playersScanned .. "/" .. core.groupSize .. ")")
+		core:printMessage("Achievment Scanning Finished (" .. #playersScanned .. "/" .. core.groupSize .. ")")
 		scanInProgress = false
 		core.scanFinished = true
 	end	
@@ -239,7 +233,6 @@ function getInstanceAchievements()
 	--Make sure the player we are about to scan is still in the group
 	updateDebugTable()
 	if UnitName(playersToScan[1]) ~= nil then
-		print("Scanning " .. UnitName(playersToScan[1]))
 		playerCurrentlyScanning = playersToScan[1]
 		SetAchievementComparisonUnit(playersToScan[1])
 
@@ -252,12 +245,12 @@ function getInstanceAchievements()
 				if #playersToScan > 0 then
 					getInstanceAchievements()
 				elseif #playersToScan == 0 and rescanNeeded == false then
-					print("Achievment Scanning Finished (" .. #playersScanned .. "/" .. core.groupSize .. ")")
+					core:printMessage("Achievment Scanning Finished (" .. #playersScanned .. "/" .. core.groupSize .. ")")
 					scanInProgress = false
 					core.scanFinished = true
 					updateDebugTable()
 				elseif #playersToScan == 0 and rescanNeeded == true then
-					print("Achievement Scanning Finished but some players still need scanning. Waiting 20 seconds then trying again (" .. #playersScanned .. "/" .. core.groupSize .. ")")
+					--print("Achievement Scanning Finished but some players still need scanning. Waiting 20 seconds then trying again (" .. #playersScanned .. "/" .. core.groupSize .. ")")
 					C_Timer.After(10, function()
 						scanInProgress = true
 						getPlayersInGroup()
@@ -267,14 +260,14 @@ function getInstanceAchievements()
 				--Last player to scan was not successfull
 				rescanNeeded = true
 				if playersToScan[1] ~= nil then
-					print("Cannot Scan " .. playersToScan[1])	
+					--print("Cannot Scan " .. playersToScan[1])	
 					table.remove(playersToScan, 1)				
 				end			
 
 				if #playersToScan > 0 then
 					getInstanceAchievements()
 				elseif #playersToScan == 0 and rescanNeeded == true then
-					print("Achievement Scanning Finished but some players still need scanning. Waiting 20 seconds then trying again (" .. #playersScanned .. "/" .. core.groupSize .. ")")
+					--print("Achievement Scanning Finished but some players still need scanning. Waiting 20 seconds then trying again (" .. #playersScanned .. "/" .. core.groupSize .. ")")
 					C_Timer.After(10, function()
 						scanInProgress = true
 						getPlayersInGroup()
@@ -292,14 +285,16 @@ function getInstanceAchievements()
 end
 
 function events:GROUP_ROSTER_UPDATE()
-	--When player enters the world in an instance start the achievement scanner
-	if scanInProgress == false then
-		print("Scan not in progress. Starting scan...")
-		scanInProgress = true
-		getPlayersInGroup()
-	else
-		print("Scan in progress asking for rescan since group size has changed")
-		rescanNeeded = true
+	--When player enters the world in an instance start the achievement scanner. Only start the scanner if the raid size has changed
+	if GetNumGroupMembers() ~= core.groupSize then
+		if scanInProgress == false then
+			--print("Scan not in progress. Starting scan...")
+			scanInProgress = true
+			getPlayersInGroup()
+		else
+			--print("Scan in progress asking for rescan since group size has changed")
+			rescanNeeded = true
+		end
 	end
 
 	--Update the group size whenever the composition of the group changes
@@ -336,7 +331,7 @@ function events:INSPECT_ACHIEVEMENT_READY()
 			end
 		end
 
-		print("Scanned " .. UnitName(playersToScan[1]))
+		--print("Scanned " .. UnitName(playersToScan[1]))
 		table.insert(playersScanned, playersToScan[1])
 		table.remove(playersToScan, 1)
 
@@ -460,37 +455,58 @@ function events:CHAT_MSG_ADDON(self, prefix, message, channel, sender)
 			enabledCheckSent = false
 		else
 			--Another addon is requesting info about the addon
-			SendAddonMessage("Whizzey", tostring(core.masterAddon) .. "," .. core.playerRankInGroup , "RAID")
+			SendAddonMessage("Whizzey", tostring(core.masterAddon) .. "," .. core.playerRankInGroup .. "," .. tostring(addonVersion), "RAID")
 		end
 	elseif string.match(message, "demote") then
 		local nameFetched, realmFetched, message = strsplit("-", message)
 		
 		if nameFetched == name then
 			--Demote this player
-			print("Demoting Myself...")
+			--print("Demoting Myself...")
 			core.masterAddon = false
 		end
 	elseif nameSend ~= name then
 		--Other addons have returned the requested info
 
 		--If the rank of other player is lower and they have addon enabled then let them to continue to run the addon
-		local trackingEnabled, playerRank = strsplit(",", message);
-		if trackingEnabled == "true" and tonumber(playerRank) > core.playerRankInGroup then
-			--Player rank is lower than other players so not master addon
+		local trackingEnabled, playerRank, adddonVersionOtherPlayer = strsplit(",", message);
+		--(addonVersion ..  " : " .. adddonVersionOtherPlayer)
+		if trackingEnabled == "true" and tonumber(playerRank) > core.playerRankInGroup and addonVersion<= tonumber(adddonVersionOtherPlayer) then
+			--Player rank is lower than other players so not master addon and there addon version is higher or the same as yours
 			print("Not enabling tracking output since a player running the addon has a higher rank than you")
 			core.masterAddon = false
-		elseif trackingEnabled == "true" and tonumber(playerRank) < core.playerRankInGroup then
-			--Player rank is higher than other players so set it the master addon
+		elseif trackingEnabled == "true" and tonumber(playerRank) > core.playerRankInGroup and addonVersion> tonumber(adddonVersionOtherPlayer) then
+			--PLayer rank is lower than other players so not master addon but the addon version of your addon is higher so take control
+			print("Although rank is lower, you have a more updated version of the addon so promote yourself")
+			core.masterAddon = true
+
+			--Tell the user that was originally the leader they are no longer the leader
+			print("Asking " .. sender .. " to demote themselves")
+			SendAddonMessage("Whizzey", sender .. "-demote", "RAID")			
+		elseif trackingEnabled == "true" and tonumber(playerRank) < core.playerRankInGroup and addonVersion>= tonumber(adddonVersionOtherPlayer) then
+			--Player rank is higher than other players so set it the master addon and your addon version is higher or the same as theirs
 			print("Setting master addon since player has highest rank so far in group")
 			core.masterAddon = true
 
 			--Tell the user that was originally the leader they are no longer the leader
-			print(sender .. ": " .. "needs demoting")
+			print("Asking " .. sender .. " to demote themselves")
 			SendAddonMessage("Whizzey", sender .. "-demote", "RAID")
-		elseif trackingEnabled == "true" and tonumber(playerRank) == core.playerRankInGroup then
-			--Player rank is equal but other player is already running addon so let them run it instead
+		elseif trackingEnabled == "true" and tonumber(playerRank) < core.playerRankInGroup and addonVersion< tonumber(adddonVersionOtherPlayer) then
+			--PLayer rank is lower than other players so not master addon but the addon version is lower than the other player so do not take control
+			print("Although rank is higher, player is running an older version of the addon so not not promote")
+			core.masterAddon = false
+		elseif trackingEnabled == "true" and tonumber(playerRank) == core.playerRankInGroup and addonVersion<= tonumber(adddonVersionOtherPlayer) then
+			--Player rank is equal but other player is already running addon so let them run it instead and their addon version is higher or the same as yours
 			print("Another player with the same rank is already running the addon: (" .. playerRank .. " : " .. core.playerRankInGroup .. ") " .. sender)
 			core.masterAddon = false
+		elseif trackingEnabled == "true" and tonumber(playerRank) == core.playerRankInGroup and addonVersion> tonumber(adddonVersionOtherPlayer) then
+			--Player rank is equal but other player is already running addon but your addon version is higher so take control
+			print("Although another player with the same rank is already running the addon. You have a higher addon version number so take control")
+			core.masterAddon = true
+
+			--Tell the user that was originally the leader they are no longer the leader
+			--print("Asking " .. sender .. " to demote themselves")
+			SendAddonMessage("Whizzey", sender .. "-demote", "RAID")			
 		elseif trackingEnabled == "false" then
 			--No one else is currently running the addon so take control
 			print("Setting master addon since no one else is running the addon")
@@ -511,18 +527,18 @@ function enableAchievementTracking(self)
 	if core.groupSize == 1 then
 		--Player is not a group so run the addon
 		core.masterAddon = true
-		print(UnitName("Player") .. " is the master addon")
+		--print(UnitName("Player") .. " is the master addon")
 	else
 		--Get the permissions for the current player
 		for i = 1, core.groupSize do
 			local name, rank, subgroup, level, class, fileName, zone, online, isDead, role, isML = GetRaidRosterInfo(i)
 			if name == UnitName("Player") then
-				print("Found: " .. name)
+				--print("Found: " .. name)
 
-				print("Setting rank to: " .. rank)
+				--print("Setting rank to: " .. rank)
 				core.playerRankInGroup = rank
 				
-				print("Sending Addon Message")
+				--print("Sending Addon Message")
 				SendAddonMessage("Whizzey", "enabledCheck", "RAID")
 				enabledCheckSent = true
 			end
@@ -540,7 +556,7 @@ function events:ADDON_LOADED(event, name)
 	SLASH_MENU1 = "/at"
 	SlashCmdList.MENU = core.Config.Toggle
 
-	print(name .. " loaded. Version: " .. addonVersion)
+	core:printMessage("loaded. Version: " .. tonumber(addonVersion))
 end
 
 function events:PLAYER_REGEN_DISABLED()
@@ -703,6 +719,10 @@ function core:sendMessage(message)
 		--DEBUG
 		print("Cannot Send Message: " .. message)
 	end
+end
+
+function core:printMessage(message)
+	print("|cff00ccffAchievement Tracker: |cffffffff" .. message)
 end
 
 --Display the "Tracking {achievement} for achievements"
