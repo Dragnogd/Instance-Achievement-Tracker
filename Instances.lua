@@ -2111,7 +2111,7 @@ core.Instances = {
             },
 
             ShadoPanMonastery = {
-                name = "ShadoPan Monastery",
+                name = "Shado Pan Monastery",
                 boss1 = {
                     name = "Master Snowdrift",
                     bossIDs = {},
@@ -2124,22 +2124,22 @@ core.Instances = {
                 },
                 boss2 = {
                     name = "Sha of Violence",
-                    bossIDs = {},
+                    bossIDs = {56719},
                     achievement = 6472,
                     players = {},
                     tactics = "",
-                    enabled = false,
-                    track = nil,
+                    enabled = true,
+                    track = function() core.ShadoPanMonastery:ShaOfViolence() end,
 					partial = false,
                 },
                 boss3 = {
                     name = "Taran Zhu",
-                    bossIDs = {},
+                    bossIDs = {56884},
                     achievement = 6471,
                     players = {},
                     tactics = "",
-                    enabled = false,
-                    track = nil,
+                    enabled = true,
+                    track = function() core.ShadoPanMonastery:TaranZhu() end,
 					partial = false,
                 },
             },

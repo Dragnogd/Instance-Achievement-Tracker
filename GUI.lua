@@ -385,7 +385,7 @@ function Instance_OnClick(self)
         end
     else
         --Button needs updating for current instance
-
+        
         if core.Instances[Config.currentExpansion].Raids[Config.InstanceName] ~= nil then
             instanceLocation = core.Instances[Config.currentExpansion].Raids[Config.InstanceName]
         else

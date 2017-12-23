@@ -362,10 +362,11 @@ function events:PLAYER_ENTERING_WORLD()
 	if isInstance == true and (instanceType == "party" or instanceType == "raid") then
 		local str = string.gsub(" "..name, "%W%l", string.upper):sub(2)
 		str = str:gsub("%s+", "")
+		str = str:gsub("%-", "")
 		core.currentZoneID = 1448 
 		instanceName = str
 		instanceNameSpaces = name
-		
+
 		--Ask the user whether they want to enable Achievement Tracking in the instance
 		createEnableAchievementTrackingUI()
 	end 
@@ -627,6 +628,8 @@ function getCombatStatus()
 	end
 end
 
+local tempStore = {}
+
 function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 	--If the current boss is nil then get the type of group the user is in and the boss they are currently attacking
 	
@@ -639,6 +642,11 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 	--For a Player
 	core.unitTypePlayer, core.destIDPlayer, core.spawn_uid_dest_Player = strsplit("-", core.destGUID);
 	
+	-- if tempStore[core.sourceID] == nil then
+	-- 	print(core.sourceName .. ": " .. core.sourceID)
+	-- 	tempStore[core.sourceID] = true
+	-- end
+
 	--print(...)
 
 	--If the boss has been found then we can load the tracker for that particular boss
