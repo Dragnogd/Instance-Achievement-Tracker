@@ -120,23 +120,31 @@ function updateDebugTable()
 	--DEBUG END	
 end
 
+function core:getGroupSize()
+	local size = GetNumGroupMembers()
+
+	if size == 0 then
+		--If the size is 0 then player is not in a group. However we need to still set it to 1 since 0 players doesn't make sense
+		core.groupSize = 1
+	else
+		core.groupSize = size
+	end
+end
+
 function getPlayersInGroup()
 	print("Starting Player Achievement Scan for " .. instanceNameSpaces .. "...")
+	core:getGroupSize()
 	scanInProgress = true
 	core.scanFinished = false
 	local currentGroup = {}
-	core.groupSize = GetNumGroupMembers()
-	if core.groupSize == 0 then
-		core.groupSize = 1
-	end
 
-	if GetNumGroupMembers() > 0 then
+	if core.groupSize > 1 then
 		--We are in a group
 		local currentUnit
 		core:detectGroupType()
-		for i = 1, GetNumGroupMembers() do
+		for i = 1, core.groupSize do
 			if core.chatType == "PARTY" then
-				if i < GetNumGroupMembers() then
+				if i < core.groupSize then
 					currentUnit = "party" .. i
 				else
 					currentUnit = "player"				
@@ -220,7 +228,7 @@ function getPlayersInGroup()
 		--print("Calling getInstanceAchievements from getPlayersInGroup since scanning of players has finished")
 		getInstanceAchievements()
 	else
-		print("Achievment Scanning Finished (" .. #playersScanned .. "/" .. GetNumGroupMembers() .. ")")
+		print("Achievment Scanning Finished (" .. #playersScanned .. "/" .. core.groupSize .. ")")
 		scanInProgress = false
 		core.scanFinished = true
 	end	
@@ -244,12 +252,12 @@ function getInstanceAchievements()
 				if #playersToScan > 0 then
 					getInstanceAchievements()
 				elseif #playersToScan == 0 and rescanNeeded == false then
-					print("Achievment Scanning Finished (" .. #playersScanned .. "/" .. GetNumGroupMembers() .. ")")
+					print("Achievment Scanning Finished (" .. #playersScanned .. "/" .. core.groupSize .. ")")
 					scanInProgress = false
 					core.scanFinished = true
 					updateDebugTable()
 				elseif #playersToScan == 0 and rescanNeeded == true then
-					print("Achievement Scanning Finished but some players still need scanning. Waiting 20 seconds then trying again (" .. #playersScanned .. "/" .. GetNumGroupMembers() .. ")")
+					print("Achievement Scanning Finished but some players still need scanning. Waiting 20 seconds then trying again (" .. #playersScanned .. "/" .. core.groupSize .. ")")
 					C_Timer.After(10, function()
 						scanInProgress = true
 						getPlayersInGroup()
@@ -266,7 +274,7 @@ function getInstanceAchievements()
 				if #playersToScan > 0 then
 					getInstanceAchievements()
 				elseif #playersToScan == 0 and rescanNeeded == true then
-					print("Achievement Scanning Finished but some players still need scanning. Waiting 20 seconds then trying again (" .. #playersScanned .. "/" .. GetNumGroupMembers() .. ")")
+					print("Achievement Scanning Finished but some players still need scanning. Waiting 20 seconds then trying again (" .. #playersScanned .. "/" .. core.groupSize .. ")")
 					C_Timer.After(10, function()
 						scanInProgress = true
 						getPlayersInGroup()
@@ -294,11 +302,8 @@ function events:GROUP_ROSTER_UPDATE()
 		rescanNeeded = true
 	end
 
-	--Save the current number of players in group to the namespace
-	core.groupSize = GetNumGroupMembers()	
-	if core.groupSize == 0 then
-		core.groupSize = 1
-	end
+	--Update the group size whenever the composition of the group changes
+	core:getGroupSize()
 end
 
 function events:INSPECT_ACHIEVEMENT_READY()
@@ -569,13 +574,13 @@ end
 
 function getCombatStatus()
 	local playerInCombat = false
-	if GetNumGroupMembers() > 0 then
+	if core.groupSize > 1 then
 		--We are in a group
 		local currentUnit
 		core:detectGroupType()
-		for i = 1, GetNumGroupMembers() do
+		for i = 1, core.groupSize do
 			if core.chatType == "PARTY" then
-				if i < GetNumGroupMembers() then
+				if i < core.groupSize then
 					currentUnit = "party" .. i
 				else
 					currentUnit = "player"				
