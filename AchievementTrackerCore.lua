@@ -372,7 +372,9 @@ function events:PLAYER_ENTERING_WORLD()
 end
 
 function events:ZONE_CHANGED_NEW_AREA()
-	UIConfig:Hide()
+	if UIConfig ~= nil then
+		UIConfig:Hide()
+	end
 	local name, _, difficultyID, _, maxPlayers, _, _, mapID, _ = GetInstanceInfo()
 	playerCount = maxPlayers
 	core.currentZoneID = mapID
@@ -635,7 +637,9 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 	core.unitType, _, _, _, _, core.destID, core.spawn_uid_dest = strsplit("-", core.destGUID);
 
 	--For a Player
-	core.unitTypePlayer, core.destIDPlayer, core.spawn_uid_dest_Player = strsplit("-", core.destGUID);		
+	core.unitTypePlayer, core.destIDPlayer, core.spawn_uid_dest_Player = strsplit("-", core.destGUID);
+	
+	--print(...)
 
 	--If the boss has been found then we can load the tracker for that particular boss
 	if currentBoss ~= nil then			
