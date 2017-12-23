@@ -385,7 +385,7 @@ function Instance_OnClick(self)
         end
     else
         --Button needs updating for current instance
-        
+
         if core.Instances[Config.currentExpansion].Raids[Config.InstanceName] ~= nil then
             instanceLocation = core.Instances[Config.currentExpansion].Raids[Config.InstanceName]
         else
@@ -597,7 +597,16 @@ function Enabled_OnClick(self)
                 for boss,_ in pairs(core.Instances[expansion][instanceType][instance]) do
                     if core.Instances[expansion][instanceType][instance][boss].name == parent.headerText:GetText() then
                         core.Instances[expansion][instanceType][instance][boss].enabled = self:GetChecked()
-                        --print(core.Instances[expansion][instanceType][instance][boss].enabled)
+
+                        --Print to chat
+                        local status = nil
+                        if core.Instances[expansion][instanceType][instance][boss].enabled == false then
+                            status = "Disabled"
+                        else
+                            status = "Enabled"
+                        end
+                        core:printMessage(GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " Tracking " .. status)
+                        print()
                     end
                 end
 			end
