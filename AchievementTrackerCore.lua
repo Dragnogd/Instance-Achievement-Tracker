@@ -363,7 +363,8 @@ function events:PLAYER_ENTERING_WORLD()
 		local str = string.gsub(" "..name, "%W%l", string.upper):sub(2)
 		str = str:gsub("%s+", "")
 		str = str:gsub("%-", "")
-		core.currentZoneID = 1448 
+		str = str:gsub("%'", "")
+		core.currentZoneID = mapID 
 		instanceName = str
 		instanceNameSpaces = name
 
@@ -391,7 +392,9 @@ function events:ZONE_CHANGED_NEW_AREA()
 	if isInstance == true and (instanceType == "party" or instanceType == "raid") then
 		local str = string.gsub(" "..name, "%W%l", string.upper):sub(2)
 		str = str:gsub("%s+", "")
-		core.currentZoneID = 1448 
+		str = str:gsub("%-", "")
+		str = str:gsub("%'", "")
+		core.currentZoneID = mapID 
 		instanceName = str
 		
 		--Ask the user whether they want to enable Achievement Tracking in the instance

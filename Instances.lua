@@ -2076,8 +2076,8 @@ core.Instances = {
                 },
             },
 
-            MogushanPalace = {
-                name = "Mogushan Palace",
+            MoguShanPalace = {
+                name = "MoguShan Palace",
                 boss1 = {
                     name = "Gekkan",
                     bossIDs = {},
@@ -2090,12 +2090,12 @@ core.Instances = {
                 },
                 boss2 = {
                     name = "Xin the Weaponmaster",
-                    bossIDs = {},
+                    bossIDs = {61398},
                     achievement = 6736,
                     players = {},
                     tactics = "",
-                    enabled = false,
-                    track = nil,
+                    enabled = true,
+                    track = function() core.MoguShanPalace.XinTheWeaponmaster() end,
 					partial = false,
                 },
                 boss3 = {
