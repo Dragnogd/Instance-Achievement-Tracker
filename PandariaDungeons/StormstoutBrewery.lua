@@ -54,7 +54,7 @@ function core.StormstoutBrewery:Hoptallus()
 			virmenTable[core.spawn_uid_dest] = nil
 			virmenCounter = virmenCounter - 1
 			if virmenCounter - math.floor(virmenCounter/10)*10 == 0 then
-				SendChatMessage("[WIP] Virmen Counter (" .. virmenCounter .. "/100)",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+				--SendChatMessage("[WIP] Virmen Counter (" .. virmenCounter .. "/100)",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
 			end
 		end
 
