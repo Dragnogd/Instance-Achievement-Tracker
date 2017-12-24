@@ -34,6 +34,7 @@ events:RegisterEvent("CHAT_MSG_ADDON")						--Allows the addon to communicate wi
 RegisterAddonMessagePrefix("Whizzey")						--Register events to listen out for client-client communication
 
 events:SetScript("OnEvent", function(self, event, ...)
+	--print(event .. " happened")
    return self[event] and self[event](self, event, ...) 	--Allow event arguments to be called from seperate functions
 end)
 
@@ -137,6 +138,8 @@ function getPlayersInGroup()
 	scanInProgress = true
 	core.scanFinished = false
 	local currentGroup = {}
+
+	print(core.currentZoneID)
 
 	if core.groupSize > 1 then
 		--We are in a group
@@ -631,8 +634,6 @@ function getCombatStatus()
 	end
 end
 
-local tempStore = {}
-
 function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 	--If the current boss is nil then get the type of group the user is in and the boss they are currently attacking
 	
@@ -650,7 +651,9 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 	-- 	tempStore[core.sourceID] = true
 	-- end
 
-	--print(...)
+    if core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_REMOVED" or core.type == "SPELL_CAST_SUCCESS" then
+        --print(...)
+    end
 
 	--If the boss has been found then we can load the tracker for that particular boss
 	if currentBoss ~= nil then			
