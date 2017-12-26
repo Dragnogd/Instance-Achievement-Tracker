@@ -14,6 +14,11 @@ core.ScarletMonastery = {}
 local empoweredZombieCounter = 0
 local empoweredZombieTable = {}
 
+------------------------------------------------------
+---- High Inquisitor Whitemane
+------------------------------------------------------
+local scarletJudicatorCounter = 0
+
 function core.ScarletMonastery:ThalnosTheSoulrender()
     if core.type == "SPELL_SUMMON" and core.destID == "59930" and empoweredZombieTable[core.spawn_uid_dest] == nil then
         empoweredZombieCounter = empoweredZombieCounter + 1
@@ -43,9 +48,27 @@ function core.ScarletMonastery:ThalnosTheSoulrender()
     end
 end
 
+function core.ScarletMonastery:HighInquisitorWhitemane()
+    if core.type == "UNIT_DIED" and core.destID == "58605" then
+        scarletJudicatorCounter = scarletJudicatorCounter + 1
+        if scarletJudicatorCounter <= 13 then
+            core:sendMessage("Scarlet Judicator Counter (" .. scarletJudicatorCounter .. "/13)")
+        end
+    end
+
+    if scarletJudicatorCounter == 13 then
+        core:getAchievementSuccess()
+    end
+end
+
 function core.ScarletMonastery:ClearVariables()
     ------------------------------------------------------
     ---- Thalnos the Soulrender
     ------------------------------------------------------
     empoweredZombieCounter = 0
+
+    ------------------------------------------------------
+    ---- High Inquisitor Whitemane
+    ------------------------------------------------------
+    scarletJudicatorCounter = 0
 end

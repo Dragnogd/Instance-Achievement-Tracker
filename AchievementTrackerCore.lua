@@ -34,8 +34,7 @@ events:RegisterEvent("CHAT_MSG_ADDON")						--Allows the addon to communicate wi
 RegisterAddonMessagePrefix("Whizzey")						--Register events to listen out for client-client communication
 
 events:SetScript("OnEvent", function(self, event, ...)
-	--print(event .. " happened")
-   return self[event] and self[event](self, event, ...) 	--Allow event arguments to be called from seperate functions
+    return self[event] and self[event](self, event, ...) 	--Allow event arguments to be called from seperate functions
 end)
 
 function events:onUpdate(sinceLastUpdate)
@@ -652,7 +651,7 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 	-- end
 
     if core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_REMOVED" or core.type == "SPELL_CAST_SUCCESS" then
-        --print(...)
+       ---print(...)
     end
 
 	--If the boss has been found then we can load the tracker for that particular boss
