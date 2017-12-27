@@ -636,7 +636,11 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 	
 	core.timeStamp, core.type, core.hideCaster, core.sourceGUID, core.sourceName, core.sourceFlags, core.sourceRaidFlags, core.destGUID, core.destName, core.destFlags, core.destRaidFlags, core.spellId, core.spellName, core.spellSchool, core.amount, core.overkill, core.school, core.resisted, core.blocked, core.absorbed, core.critical, core.glancing, core.crushing = ...
 
+	--SWING_DAMAGE
 	core.swingDamage = core.spellName
+
+	--SPELL_AURA_APPLIED_DOSE
+	core.doseAmount = core.overkill
 
 	--For a Creature
 	core.unitTypeSrc, _, _, _, _, core.sourceID, core.spawn_uid = strsplit("-", core.sourceGUID);
