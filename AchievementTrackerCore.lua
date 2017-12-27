@@ -33,8 +33,18 @@ events:RegisterEvent("ZONE_CHANGED_NEW_AREA")				--Used to detect if player is i
 events:RegisterEvent("CHAT_MSG_ADDON")						--Allows the addon to communicate with other addons in the same party/raid
 events:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 RegisterAddonMessagePrefix("Whizzey")						--Register events to listen out for client-client communication
+events:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+
+local temp2 = {}
 
 events:SetScript("OnEvent", function(self, event, ...)
+	if event == "aaaUNIT_SPELLCAST_SUCCEEDED" then
+		local unitID, spell, rank, lineID, spellID = ...
+		if core:has_value(temp2, spellID) == false then
+			print(...)
+			table.insert(temp2, spellID)	
+		end
+	end
     return self[event] and self[event](self, event, ...) 	--Allow event arguments to be called from seperate functions
 end)
 
