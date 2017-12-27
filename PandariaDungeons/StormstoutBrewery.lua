@@ -35,7 +35,6 @@ end
 
 
 function core.StormstoutBrewery:Hoptallus()
-	core:displayAchievementsToTrackCurrent(6420)
 	--Detect amount of virmen currently on target
 	if (core.type == "SWING_DAMAGE" or core.type == "SWING_MISSED") and (core.sourceID == "59426" or core.sourceID == "59460" or core.sourceID == "56718" or core.sourceID == "59459" or core.sourceID == "59461" or core.sourceID == "59551") and (core.spawn_uid ~= nil) then
 		if virmenTable[core.spawn_uid] == nil then
@@ -66,7 +65,7 @@ function core.StormstoutBrewery:Hoptallus()
 
 	--Detect when user can kill virmen with hammer
 	if virmenCounter >= 100 and core.achievementCompleted == false then
-		core:getAchievementSuccess(6420)
+		core:getAchievementSuccess()
 	end
 
 	-- --Detect how many virmen player has killed with hammer
