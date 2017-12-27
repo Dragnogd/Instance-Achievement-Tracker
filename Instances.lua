@@ -1919,6 +1919,15 @@ core.Instances = {
                     partial = false,
                 },
                 boss2 = {
+                    name = "Other",
+                    bossIDs = {},
+                    achievement = 6400,
+                    players = {},
+                    tactics = "",
+                    enabled = nil,
+                    partial = false,
+                },                
+                boss3 = {
                     name = "Hoptallus",
                     bossIDs = {59426, 59460, 56718, 59459, 59461, 59551},
                     achievement = 6420,
@@ -1928,7 +1937,7 @@ core.Instances = {
                     track = function() core.StormstoutBrewery:Hoptallus() end,
                     partial = false,
                 },
-                boss3 = {
+                boss4 = {
                     name = "Other",
                     bossIDs = {},
                     achievement = 6402,
