@@ -31,6 +31,7 @@ events:RegisterEvent("ADDON_LOADED")						--Used to setup the slash commands for
 events:RegisterEvent("PLAYER_ENTERING_WORLD")				--Used to detect if player is inside an instance when they enter the world
 events:RegisterEvent("ZONE_CHANGED_NEW_AREA")				--Used to detect if player is inside an instance when they change zone
 events:RegisterEvent("CHAT_MSG_ADDON")						--Allows the addon to communicate with other addons in the same party/raid
+events:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 RegisterAddonMessagePrefix("Whizzey")						--Register events to listen out for client-client communication
 
 events:SetScript("OnEvent", function(self, event, ...)
@@ -47,7 +48,6 @@ function events:onUpdate(sinceLastUpdate)
 			clearVariables()
 			print("Left Combat")
 			events:SetScript("OnUpdate",nil)
-			events:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 		end
 	end
 end
@@ -85,7 +85,8 @@ local instance = nil							--Name of the instance the player is currently in
 local instanceNameSpaces						--Instance name with spaces
 local combatTimerStarted = false				--Used to determine if players in the group are still in combat with a boss
 local lastMessageSent = ""   					--Stores the last message sent to the chat. This is used to prevent the same message being sent more than once in case of an error and to prevent unwanted spam
-local enabledCheckSent = false
+local enabledCheckSent = false					--Store whether the current addon sent the request to enable itself or not for achievement tracking
+local mobCache = {}								--Stores a list of mobs that have been checked to see whether or not they need to be tracked or not
 
 --------------------------------------
 -- Achievement Functions
@@ -411,7 +412,6 @@ function events:ZONE_CHANGED_NEW_AREA()
 		events:UnregisterEvent("GROUP_ROSTER_UPDATE")					
 		events:UnregisterEvent("PLAYER_REGEN_DISABLED")				
 		events:UnregisterEvent("PLAYER_REGEN_ENABLED")				
-		events:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")	
 	end		
 end
 
@@ -573,9 +573,9 @@ function events:PLAYER_REGEN_DISABLED()
 	print("Entered Combat")
 
 	local isInstance, instanceType = IsInInstance()
-	if isInstance == true and (instanceType == "party" or instanceType == "raid") and core.masterAddon == true then
-		events:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
-	end
+	-- if isInstance == true and (instanceType == "party" or instanceType == "raid") and core.masterAddon == true then
+		
+	-- end
 
 	--DEBUG
  	----print(UnitGUID("Boss1"))
@@ -588,10 +588,8 @@ function events:PLAYER_REGEN_ENABLED()
 		clearVariables()
 		print("Left Combat")
 		events:SetScript("OnUpdate",nil)
-		events:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 	else
 		--Someone in the group is still in combat. Wait 1 second then check again
-		
 		events:SetScript("OnUpdate",events.onUpdate)
 	end
 end
@@ -638,6 +636,8 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 	
 	core.timeStamp, core.type, core.hideCaster, core.sourceGUID, core.sourceName, core.sourceFlags, core.sourceRaidFlags, core.destGUID, core.destName, core.destFlags, core.destRaidFlags, core.spellId, core.spellName, core.spellSchool, core.amount, core.overkill, core.school, core.resisted, core.blocked, core.absorbed, core.critical, core.glancing, core.crushing = ...
 
+	core.swingDamage = core.spellName
+
 	--For a Creature
 	core.unitTypeSrc, _, _, _, _, core.sourceID, core.spawn_uid = strsplit("-", core.sourceGUID);
 	core.unitType, _, _, _, _, core.destID, core.spawn_uid_dest = strsplit("-", core.destGUID);
@@ -650,9 +650,12 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 	-- 	tempStore[core.sourceID] = true
 	-- end
 
+
     if core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_REMOVED" or core.type == "SPELL_CAST_SUCCESS" then
        ---print(...)
-    end
+	end
+
+	--print(...)
 
 	--If the boss has been found then we can load the tracker for that particular boss
 	if currentBoss ~= nil then			
@@ -662,6 +665,13 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 		end
 	else
 		detectBoss()
+
+		--If boss was found then track the boss
+		if currentBoss ~= nil then
+			if currentBoss.enabled then			
+				currentBoss.track()
+			end	
+		end
 	end
 end
 
@@ -718,6 +728,16 @@ function detectBoss()
 										core:getAchievementToTrack()
 									end
 								end
+							elseif core.destID ~= nil then
+								if string.find(core.destID, bossID) then
+									currentBoss = core.Instances[expansion][instanceType][instance][boss]
+									core.currentAchievementID = core.Instances[expansion][instanceType][instance][boss].achievement
+
+									--Display tracking achievement for that boss if partial variable is not false
+									if core.Instances[expansion][instanceType][instance][boss].partial == false then
+										core:getAchievementToTrack()
+									end
+								end							
 							end
 						end
 					end					
