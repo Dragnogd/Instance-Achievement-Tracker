@@ -1397,12 +1397,12 @@ core.Instances = {
                 },
                 boss2 = {
                     name = "Bonemaw",
-                    bossIDs = {},
+                    bossIDs = {77006, 75452},
                     achievement = 9025,
                     players = {},
                     tactics = "",
-                    enabled = false,
-                    track = nil,
+                    enabled = true,
+                    track = function() core.ShadowmoonBurialGrounds:Bonemaw() end,
 					partial = false,
                 },
                 boss3 = {

@@ -669,7 +669,10 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
        ---print(...)
 	end
 
-	--print(...)
+	-- if core:has_value(temp2, core.spellId) == false then
+	-- 	print(...)
+	-- 	table.insert(temp2, core.spellId)	
+	-- end
 
 	--If the boss has been found then we can load the tracker for that particular boss
 	if currentBoss ~= nil then			
