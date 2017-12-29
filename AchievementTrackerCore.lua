@@ -34,15 +34,30 @@ events:RegisterEvent("CHAT_MSG_ADDON")						--Allows the addon to communicate wi
 events:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 RegisterAddonMessagePrefix("Whizzey")						--Register events to listen out for client-client communication
 events:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+events:RegisterEvent("UNIT_HEALTH")
+
 
 local temp2 = {}
 
 events:SetScript("OnEvent", function(self, event, ...)
-	if event == "aaaUNIT_SPELLCAST_SUCCEEDED" then
+	if event == "aaaUNIT_HEALTH" then
+		print(UnitName(...) .. " : " .. UnitHealth(...))
+	end
+	if event == "UNIT_SPELLCAST_SUCCEEDED" then
 		local unitID, spell, rank, lineID, spellID = ...
-		if core:has_value(temp2, spellID) == false then
-			print(...)
-			table.insert(temp2, spellID)	
+
+		local unitTypeSrc, _, _, _, _, sourceID, spawn_uid = strsplit("-", UnitGUID(unitID))
+		if unitTypeSrc == "Creature" then
+			if core:has_value(temp2, spawn_uid) == false then
+				print(UnitGUID(unitID) .. " : " .. UnitName(unitID) .. " : " .. spell .. " : " .. spellID)
+				table.insert(temp2, spawn_uid)
+			end			
+		end
+
+
+
+		if spellID == 166930 then
+			print("Battle Mage Died")
 		end
 	end
     return self[event] and self[event](self, event, ...) 	--Allow event arguments to be called from seperate functions
