@@ -640,7 +640,6 @@ function getCombatStatus()
 		return false
 	end
 end
-
 function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 	--If the current boss is nil then get the type of group the user is in and the boss they are currently attacking
 	
@@ -669,10 +668,12 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
        ---print(...)
 	end
 
-	-- if core:has_value(temp2, core.spellId) == false then
-	-- 	print(...)
-	-- 	table.insert(temp2, core.spellId)	
-	-- end
+	if core.spellId == nil and (core.type ~= "SWING_DAMAGE" and core.type ~= "SWING_MISSED") then
+		if core:has_value(temp2, core.spellId) == false then
+			print(...)
+			table.insert(temp2, core.spellId)	
+		end
+	end
 
 	--If the boss has been found then we can load the tracker for that particular boss
 	if currentBoss ~= nil then			

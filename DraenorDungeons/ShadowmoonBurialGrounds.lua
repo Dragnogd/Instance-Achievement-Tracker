@@ -13,40 +13,36 @@ core.ShadowmoonBurialGrounds = {}
 ------------------------------------------------------
 local corpseSkitterlingUID = {}
 local corpseSkitterlingCounter = 0
-local corpseSkitterlingCounter2 = 0
 local corpseSkitterlingAnnounced = false
-local inhaledFinished = false
+
+------------------------------------------------------
+---- Ner'zhul
+------------------------------------------------------
+local ritualOfBonesCounter = 0
+local timerStarted = false
 
 function core.ShadowmoonBurialGrounds:Bonemaw()
     --Corpse Skitterlings Alive
     if (core.type == "SWING_DAMAGE" or core.type == "SWING_MISSED") and core.sourceID == "77006" then
-        --print(core.sourceName)
-        if inhaledFinished == true then
-            corpseSkitterlingUID = {}
-            corpseSkitterlingCounter2 = corpseSkitterlingCounter
-            corpseSkitterlingCounter = 0
-        end
-
         if corpseSkitterlingUID[core.spawn_uid] == nil then
             corpseSkitterlingUID[core.spawn_uid] = core.spawn_uid
             corpseSkitterlingCounter = corpseSkitterlingCounter + 1
-            print(corpseSkitterlingCounter)
+            print(core.spawn_uid .. " : " .. corpseSkitterlingCounter)
         end
     end
 
     --Corpse Skitterlings Dead
     if core.type == "UNIT_DIED" and core.destID == "77006" then
-        corpseSkitterlingUID[core.spawn_uid] = false
+        corpseSkitterlingUID[core.spawn_uid_dest] = false
         corpseSkitterlingCounter = corpseSkitterlingCounter - 1
-        print(corpseSkitterlingCounter)
+        print(core.spawn_uid_dest .. " : " .. corpseSkitterlingCounter)
     end
 
     --Corpse Skitterlings Sucked up by boss
     if core.type == "SPELL_AURA_REMOVED" and core.spellId == 153804 then
-        inhaledFinished = true
         C_Timer.After(5, function()
-            core:sendMessage(GetAchievementLink(core.currentAchievementID) .. " " .. corpseSkitterlingCounter - corpseSkitterlingCounter2 .. " /25 Corpse Skitterlings inhaled by the boss")
-            if corpseSkitterlingCounter - corpseSkitterlingCounter2 >= 25 then
+            core:sendMessage(GetAchievementLink(core.currentAchievementID) .. " " .. corpseSkitterlingCounter .. " /25 Corpse Skitterlings inhaled by the boss")
+            if corpseSkitterlingCounter >= 25 then
                 core:getAchievementSuccess()
             else
                 core:getAchievementFailed()
@@ -61,13 +57,33 @@ function core.ShadowmoonBurialGrounds:Bonemaw()
     end
 end
 
+function core.ShadowmoonBurialGrounds:Nerzhul()
+    if core.type == "UNIT_DIED" and core.destID == "76518" then
+        ritualOfBonesCounter = ritualOfBonesCounter + 1
+        if timerStarted == false then
+            timerStarted = true
+            C_Timer.After(5, function()
+                if ritualOfBonesCounter >= 2 then
+                    core:getAchievementSuccess()
+                else
+                    ritualOfBonesCounter = 0
+                end
+            end)
+        end
+    end
+end
+
 function core.ShadowmoonBurialGrounds:ClearVariables()
     ------------------------------------------------------
     ---- Bonemaw
     ------------------------------------------------------
     corpseSkitterlingUID = {}
     corpseSkitterlingCounter = 0
-    corpseSkitterlingCounter2 = 0
     corpseSkitterlingAnnounced = false
-    inhaledFinished = false
+
+    ------------------------------------------------------
+    ---- Ner'zhul
+    ------------------------------------------------------
+    ritualOfBonesCounter = 0
+    timerStarted = false
 end
