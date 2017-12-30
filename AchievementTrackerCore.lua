@@ -44,21 +44,23 @@ events:SetScript("OnEvent", function(self, event, ...)
 		print(UnitName(...) .. " : " .. UnitHealth(...))
 	end
 	if event == "aaaUNIT_SPELLCAST_SUCCEEDED" then
-		local unitID, spell, rank, lineID, spellID = ...
+		-- local unitID, spell, rank, lineID, spellID = ...
 
-		local unitTypeSrc, _, _, _, _, sourceID, spawn_uid = strsplit("-", UnitGUID(unitID))
-		if unitTypeSrc == "Creature" then
-			if core:has_value(temp2, spawn_uid) == false then
-				print(UnitGUID(unitID) .. " : " .. UnitName(unitID) .. " : " .. spell .. " : " .. spellID)
-				table.insert(temp2, spawn_uid)
-			end			
-		end
+		-- local unitTypeSrc, _, _, _, _, sourceID, spawn_uid = strsplit("-", UnitGUID(unitID))
+		-- if unitTypeSrc == "Creature" then
+		-- 	if core:has_value(temp2, spawn_uid) == false then
+		-- 		print(UnitGUID(unitID) .. " : " .. UnitName(unitID) .. " : " .. spell .. " : " .. spellID)
+		-- 		table.insert(temp2, spawn_uid)
+		-- 	end			
+		-- end
 
 
 
-		if spellID == 166930 then
-			print("Battle Mage Died")
-		end
+		-- if spellID == 166930 then
+		-- 	print("Battle Mage Died")
+		-- end
+
+		--print(...)
 	end
     return self[event] and self[event](self, event, ...) 	--Allow event arguments to be called from seperate functions
 end)
@@ -678,9 +680,10 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 	-- 	tempStore[core.sourceID] = true
 	-- end
 
-
-    if core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_REMOVED" or core.type == "SPELL_CAST_SUCCESS" then
-       ---print(...)
+	--print(...)
+	
+    if core.type == "UNIT_DIED"then
+      -- print(...)
 	end
 
 	if core.spellId == nil and (core.type ~= "SWING_DAMAGE" and core.type ~= "SWING_MISSED") then
