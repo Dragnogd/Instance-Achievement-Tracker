@@ -43,7 +43,7 @@ events:SetScript("OnEvent", function(self, event, ...)
 	if event == "aaaUNIT_HEALTH" then
 		print(UnitName(...) .. " : " .. UnitHealth(...))
 	end
-	if event == "UNIT_SPELLCAST_SUCCEEDED" then
+	if event == "aaaUNIT_SPELLCAST_SUCCEEDED" then
 		local unitID, spell, rank, lineID, spellID = ...
 
 		local unitTypeSrc, _, _, _, _, sourceID, spawn_uid = strsplit("-", UnitGUID(unitID))
