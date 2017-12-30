@@ -1329,12 +1329,12 @@ core.Instances = {
                 name = "Grimrail Depot",
                 boss1 = {
                     name = "Rocketspark and Borka",
-                    bossIDs = {},
+                    bossIDs = {77803,77816},
                     achievement = 9024,
                     players = {},
                     tactics = "",
-                    enabled = false,
-                    track = nil,
+                    enabled = true,
+                    track = function() core.GrimrailDepot:RocketsparkAndBorka() end,
 					partial = false,
                 },
                 boss2 = {
