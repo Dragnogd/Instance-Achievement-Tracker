@@ -1182,6 +1182,16 @@ core.Instances = {
             BloodmaulSlagMines = {
                 name = "Bloodmaul Slag Mines",
                 boss1 = {
+                    name = "Other",
+                    bossIDs = {},
+                    achievement = 9005,
+                    players = {},
+                    tactics = "",
+                    enabled = false,
+                    track = nil,
+					partial = false,
+                },
+                boss2 = {
                     name = "Magmolatus",
                     bossIDs = {74366},
                     achievement = 8993,
@@ -1189,16 +1199,6 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.BloodmaulSlagMines:Magmolatus() end,
-					partial = false,
-                },
-                boss2 = {
-                    name = "Gug'rokk",
-                    bossIDs = {},
-                    achievement = 9005,
-                    players = {},
-                    tactics = "",
-                    enabled = false,
-                    track = nil,
 					partial = false,
                 },
                 boss3 = {
