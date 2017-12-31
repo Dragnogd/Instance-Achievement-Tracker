@@ -47,14 +47,10 @@ events:SetScript("OnEvent", function(self, event, ...)
 
 		local unitID, spell, rank, lineID, spellID = ...
 
-		-- if core:has_value(temp2, spellID) == false then
-		-- 	print(...)
-		-- 	table.insert(temp2, spellID)
-		-- end			
-		
-		if spellID == 164736 then
+		if core:has_value(temp2, spellID) == false then
 			print(...)
-		end
+			table.insert(temp2, spellID)
+		end			
 
 	end
     return self[event] and self[event](self, event, ...) 	--Allow event arguments to be called from seperate functions
@@ -109,7 +105,7 @@ local combatTimerStarted = false				--Used to determine if players in the group 
 local lastMessageSent = ""   					--Stores the last message sent to the chat. This is used to prevent the same message being sent more than once in case of an error and to prevent unwanted spam
 local enabledCheckSent = false					--Store whether the current addon sent the request to enable itself or not for achievement tracking
 local mobCache = {}								--Stores a list of mobs that have been checked to see whether or not they need to be tracked or not
-
+local scanAnnounced = false
 --------------------------------------
 -- Achievement Functions
 --------------------------------------
@@ -155,11 +151,16 @@ function core:getGroupSize()
 end
 
 function getPlayersInGroup()
-	core:printMessage("Starting Achievement Scan For " .. instanceNameSpaces .. " (This may lag your game for a few seconds)")
+	if scanAnnounced == false then
+		core:printMessage("Starting Achievement Scan For " .. instanceNameSpaces .. " (This may lag your game for a few seconds)")
+		scanAnnounced = true
+	end
 	core:getGroupSize()
 	scanInProgress = true
 	core.scanFinished = false
 	local currentGroup = {}
+
+	--instanceName = "BlackrockFoundary"
 
 	print(core.currentZoneID)
 
@@ -340,7 +341,7 @@ function events:INSPECT_ACHIEVEMENT_READY()
 
 								--If the player has not completed the achievement then add them to the players string to display in the GUI
 								--Temp: will show completed achievements in GUI since I've already completed all the achievements
-								if completed ~= false then
+								if completed ~= true then
 									local name, _ = UnitName(playersToScan[1])
 									table.insert(core.Instances[expansion][instanceType][instance][boss].players, name)
 								end

@@ -993,7 +993,7 @@ core.Instances = {
                 },
                 boss6 = {
                     name = "Kromog",
-                    bossIDs = {},
+                    bossIDs = {77692},
                     achievement = 8983,
                     players = {},
                     tactics = "",

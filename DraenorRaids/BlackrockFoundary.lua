@@ -35,7 +35,7 @@ local graspingEarthKilled = 0
 
 function core.BlackrockFoundary:BeastlordDarmac()
 	if (core.sourceID == "76884" or core.sourceID == "76874" or core.sourceID == "76945") then
-		core:getAchievementSuccessWithCustomMessage(core.sourceName .. " Mounted First' part of " .. GetAchievementLink(core.achievementTrackingEnabled) .. " will be completed once boss is killed")	
+		core:getAchievementSuccessWithCustomMessage(core.sourceName .. " Mounted First' part of " .. GetAchievementLink(core.currentAchievementID) .. " will be completed once boss is killed")	
 	end
 end
 
