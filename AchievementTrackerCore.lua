@@ -372,65 +372,53 @@ function events:INSPECT_ACHIEVEMENT_READY()
 	updateDebugTable()
 end
 
-function events:PLAYER_ENTERING_WORLD()
-	local name, _, difficultyID, _, maxPlayers, _, _, mapID, _ = GetInstanceInfo()
-	playerCount = maxPlayers
-	core.currentZoneID = mapID
-	----print(currentZoneID)
+function getInstanceInfomation()
+	if IsInInstance() then
+		core.instanceNameSpaces, _, core.difficultyID, _, core.maxPlayers, _, _, core.currentZoneID, _ = GetInstanceInfo()
 
-	if(difficultyID == 5 or difficultyID == 6) then
-		mode = "heroic"
-	else
-		mode = "normal"
-	end
+		if core.difficultyID == 2 then
+			mode = "dungeon"
+		elseif core.difficultyID == 3 or core.difficultyID == 5 then
+			mode = "legacy10"
+		elseif core.difficultyID == 4 or core.difficultyID == 6 then
+			mode = "legacy25"
+		elseif core.difficultyID == 11 or core.difficultyID == 12 then
+			mode = "scenerio"
+		elseif core.difficultyID == 13 or core.difficultyID == 14 or core.difficultyID == 15 then
+			mode = "current"
+		end
 
-	local isInstance, instanceType = IsInInstance()
-	if isInstance == true and (instanceType == "party" or instanceType == "raid") then
+		--Used to find correct table in the core.instances table
 		local str = string.gsub(" "..name, "%W%l", string.upper):sub(2)
 		str = str:gsub("%s+", "")
 		str = str:gsub("%-", "")
 		str = str:gsub("%'", "")
-		core.currentZoneID = mapID 
 		instanceName = str
-		instanceNameSpaces = name
 
-		--Ask the user whether they want to enable Achievement Tracking in the instance
-		createEnableAchievementTrackingUI()
-	end 
-end
-
-function events:ZONE_CHANGED_NEW_AREA()
-	if UIConfig ~= nil then
-		UIConfig:Hide()
-	end
-	local name, _, difficultyID, _, maxPlayers, _, _, mapID, _ = GetInstanceInfo()
-	playerCount = maxPlayers
-	core.currentZoneID = mapID
-	----print(currentZoneID)
-
-	if(difficultyID == 5 or difficultyID == 6) then
-		mode = "heroic"
-	else
-		mode = "normal"
-	end
-
-	local isInstance, instanceType = IsInInstance()
-	if isInstance == true and (instanceType == "party" or instanceType == "raid") then
-		local str = string.gsub(" "..name, "%W%l", string.upper):sub(2)
-		str = str:gsub("%s+", "")
-		str = str:gsub("%-", "")
-		str = str:gsub("%'", "")
-		core.currentZoneID = mapID 
-		instanceName = str
-		
 		--Ask the user whether they want to enable Achievement Tracking in the instance
 		if UICreated == false then
 			createEnableAchievementTrackingUI()
 		else
 			UIConfig:Show()
 		end
-	else
+	end
+
+end
+
+function events:PLAYER_ENTERING_WORLD()
+	getInstanceInfomation()
+end
+
+function events:ZONE_CHANGED_NEW_AREA()
+	if UIConfig ~= nil then
+		UIConfig:Hide()
+	end
+
+	getInstanceInfomation()
+	
+	if IsInInstance() == false then
 		--If user has left the instance then unregister events if they were registered
+		print("Player has left instance. Unregestering events")
 		events:UnregisterEvent("INSPECT_ACHIEVEMENT_READY") 			
 		events:UnregisterEvent("GROUP_ROSTER_UPDATE")					
 		events:UnregisterEvent("PLAYER_REGEN_DISABLED")				
@@ -653,6 +641,7 @@ function getCombatStatus()
 		return false
 	end
 end
+
 function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 	--All Events
 	core.timeStamp, core.type, core.hideCaster, core.sourceGUID, core.sourceName, core.sourceFlags, core.sourceRaidFlags, core.destGUID, core.destName, core.destFlags, core.destRaidFlags = ...
