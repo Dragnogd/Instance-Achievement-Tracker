@@ -44,7 +44,7 @@ events:SetScript("OnEvent", function(self, event, ...)
 	if event == "aaaUNIT_HEALTH" then
 		print(UnitName(...) .. " : " .. UnitHealth(...))
 	end
-	if event == "UNIT_SPELLCAST_SUCCEEDED" then
+	if event == "aaaUNIT_SPELLCAST_SUCCEEDED" then
 
 		local unitID, spell, rank, lineID, spellID = ...
 
@@ -785,32 +785,36 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 	end
 
 	--Boss Detection!
-	if currentBoss ~= nil then			
+	if core.foundBoss == true then			
 		--Start tracking the particular boss if the user has not disabled tracking for that boss
-		if currentBoss.enabled then
+		if core.currentBoss[].enabled then
 			currentBoss.track()
 		end
+
+		--TODO loop through each boss here aswell to run tracking
 	else
 		--Check if any of the 5 nameplates have caches boss ID and whether source and dest GUID have been stored or not
 		for i = 1, 5 do
 			if UnitGUID("boss" .. i) ~= nil then
 				local _, _, _, _, _, bossID, _ = strsplit("-", UnitGUID("boss" .. i))
 				if bossID ~= nil then
-					if core:has_value(mobCache, bossID) == false then
+					if core:has_value(core.mobCache, bossID) == false then
 						detectBoss()
 					end
 				end
 			end
 		end
-			
+
 		if core.sourceID ~= nil then
-			if core:has_value(mobCache, core.sourceID) then
+			--print(core.sourceID)
+			if core:has_value(core.mobCache, core.sourceID) == false then
 				detectBoss()
 			end
 		end	
 		
 		if core.destID ~= nil then
-			if core:has_value(mobCache, core.destID) then
+			--print(core.destID)
+			if core:has_value(core.mobCache, core.destID) == false then
 				detectBoss()
 			end
 		end
@@ -851,37 +855,47 @@ function detectBoss()
 				local bossID = core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs[i]
 				for j = 1, 5 do
 					if UnitGUID("boss" .. j) ~= nil then
+						print(UnitGUID("boss" .. j))
 						if string.find(UnitGUID("boss" .. j), bossID) then
 							table.insert(core.currentBosses, core.Instances[core.expansion][core.instanceType][core.instance][boss])
 							table.insert(core.achievementIDs, core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
 							core.foundBoss = true
+							print("Found Boss: ")
+							print(core.Instances[core.expansion][core.instanceType][core.instance][boss])
 						else
 							--This boss does not have tracking so add to mob cache
 							local _, _, _, _, _, bossID2, _ = strsplit("-", UnitGUID("boss" .. j))
-							table.insert(mobCache, bossID2)
+							table.insert(core.mobCache, bossID2)
+							print("Adding to cache: " .. bossID2)
 						end
 					end
 				end
 
 				--If boss does not have a nameplate then check the GUID for the id of the attacking unit
-				if core.sourceID ~= nil then
-					if string.find(core.sourceID, bossID) then
-						table.insert(core.currentBosses, core.Instances[core.expansion][core.instanceType][core.instance][boss])
-						table.insert(core.achievementIDs, core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
-						core.foundBoss = true
-					else
-						--This boss does not have tracking so add to mob cache
-						table.insert(mobCache, core.sourceID)
-					end
-				elseif core.destID ~= nil then
-					if string.find(core.destID, bossID) then
-						table.insert(core.currentBosses, core.Instances[core.expansion][core.instanceType][core.instance][boss])
-						table.insert(core.achievementIDs, core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
-						core.foundBoss = true
-					else
-						--This mob does not have tracking so add to mob cache
-						table.insert(mobCache, core.destID)
-					end							
+				if core.foundBoss == false then
+					if core.sourceID ~= nil then
+						if string.find(core.sourceID, bossID) then
+							table.insert(core.currentBosses, core.Instances[core.expansion][core.instanceType][core.instance][boss])
+							table.insert(core.achievementIDs, core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
+							core.foundBoss = true
+							print("Found Boss:")
+						else
+							--This boss does not have tracking so add to mob cache
+							table.insert(core.mobCache, core.sourceID)
+							print("Adding to cache: " .. core.sourceID)
+						end
+					elseif core.destID ~= nil then
+						if string.find(core.destID, bossID) then
+							table.insert(core.currentBosses, core.Instances[core.expansion][core.instanceType][core.instance][boss])
+							table.insert(core.achievementIDs, core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
+							core.foundBoss = true
+							print("Found Boss:")
+						else
+							--This mob does not have tracking so add to mob cache
+							table.insert(core.mobCache, core.destID)
+							print("Adding to cache: " .. core.destID)
+						end							
+					end				
 				end
 			end
 		end					
@@ -911,8 +925,10 @@ end
 --Display the "Tracking {achievement} for achievements"
 function core:getAchievementToTrack()
 	if core.achievementTrackedMessageShown == false then
+		print("Length of array: " .. #core.currentBosses)
 		for i = 1, #core.currentBosses do
-			if core.Instances[core.expansion][core.instanceType][core.instance][core.currentBosses[i]].partial == false and core.Instances[core.expansion][core.instanceType][core.instance][core.currentBosses[i]].enabled == true then
+			print(core.currentBosses[i].partial)
+			if core.currentBosses[i].partial == false and core.currentBosses[i].enabled == true then
 				core:sendMessage("Tracking: "  .. GetAchievementLink(core.achievementIDs[i]))
 				core.achievementTrackedMessageShown = true
 			end

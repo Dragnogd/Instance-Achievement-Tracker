@@ -27,7 +27,7 @@ function core.TempleOfTheJadeSerpent:WiseMari()
             --Check if the player actually needs the achievement
             if core:has_value(core.Instances.MistsOfPandaria.Dungeons.TempleOfTheJadeSerpent.boss1.players, core.destName) then
                 --Player needs achievement but has failed it
-                core:sendMessage(core.destName .. " has failed " .. GetAchievementLink(core.currentAchievementID) .. " (Personal Achievement)")
+                core:sendMessage(core.destName .. " has failed " .. GetAchievementLink(core.achievementIDs[1]) .. " (Personal Achievement)")
             end
             playersHit[core.destName] = true
         end
@@ -39,7 +39,7 @@ function core.TempleOfTheJadeSerpent:ShaOfDoubt()
     if (core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_APPLIED_DOSE") and core.spellId == 123916 and core.destName == name then
         local _, _, _, count = UnitDebuff("Player", GetSpellInfo(123916))
         ShaOfDoubtCounter = count
-        core:sendMessage(GetAchievementLink(core.currentAchievementID) .. " Sha of Doubt Counter (" .. ShaOfDoubtCounter .. "/4)")
+        core:sendMessage(GetAchievementLink(core.achievementIDs[1]) .. " Sha of Doubt Counter (" .. ShaOfDoubtCounter .. "/4)")
     end
 
     if ShaOfDoubtCounter == 4 then
