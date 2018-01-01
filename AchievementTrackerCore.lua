@@ -654,60 +654,137 @@ function getCombatStatus()
 	end
 end
 function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
-	--If the current boss is nil then get the type of group the user is in and the boss they are currently attacking
+	--All Events
+	core.timeStamp, core.type, core.hideCaster, core.sourceGUID, core.sourceName, core.sourceFlags, core.sourceRaidFlags, core.destGUID, core.destName, core.destFlags, core.destRaidFlags = ...
 	
-	core.timeStamp, core.type, core.hideCaster, core.sourceGUID, core.sourceName, core.sourceFlags, core.sourceRaidFlags, core.destGUID, core.destName, core.destFlags, core.destRaidFlags, core.spellId, core.spellName, core.spellSchool, core.amount, core.overkill, core.school, core.resisted, core.blocked, core.absorbed, core.critical, core.glancing, core.crushing = ...
+	if string.match(core.type, "RANGE_") or string.match(core.type, "SPELL_") or string.match(core.type, "SPELL_PERIODIC_") or string.match(core.type, "SPELL_BUILDING_") then
+		core.spellId, core.spellName, core.spellSchool = select(12, ...)
 
-	--SWING_DAMAGE
-	core.swingDamage = core.spellName
-	core.swingOverkill = core.spellName
+		if string.match(core.type, "_DAMAGE") then
+			core.amount, core.overkill, core.school, core.resisted, core.blocked, core.absorbed, core.critical, core.glancing, core.crushing = select(15, ...)
+		elseif string.match(core.type, "_MISSED") then
+			core.missType, core.isOffHand, core.amountMissed = select(15, ...)
+		elseif string.match(core.type, "_HEAL") then
+			core.amount, core.overhealing, core.absorbed, core.critical = select(15, ...)
+		elseif string.match(core.type, "_ENERGIZE") then
+			core.amount, core.powerType = select(15, ...)
+		elseif string.match(core.type, "_DRAIN") or string.match(core.type, "_LEECH") then
+			core.amount, core.powerType, core.extraAmount = select(15, ...)
+		elseif string.match(core.type, "_INTERRUPT") or string.match(core.type, "_DISPEL_FAILED") then
+			core.extraSpellId, core.extraSpellName,	core.extraSchool = select(15, ...)
+		elseif string.match(core.type, "_DISPEL") or string.match(core.type, "_STOLEN") then
+			core.extraSpellId, core.extraSpellName, core.extraSchool, core.auraType = select(15, ...)
+		elseif string.match(core.type, "_EXTRA_ATTACKS") then
+			core.amount = select(15, ...)
+		elseif string.match(core.type, "_AURA_APPLIED") or string.match(core.type, "_AURA_REMOVED") or string.match(core.type, "_AURA_APPLIED_DOSE") or string.match(core.type, "_AURA_REMOVED_DOSE") or string.match(core.type, "_AURA_REFRESH") then
+			core.auraType, core.amount = select(15, ...)
+		elseif string.match(core.type, "_AURA_BROKEN") then
+			core.auraType = select(15, ...)
+		elseif string.match(core.type, "_AURA_BROKEN_SPELL") then
+			core.extraSpellId, core.extraSpellName, core.extraSchool, core.auraType = select(15, ...)
+		elseif string.match(core.type, "_CAST_FAILED") then
+			core.failedType = select(15, ...)
+		end
+	elseif string.match(core.type, "SWING_") then
+		if string.match(core.type, "_DAMAGE") then
+			core.amount, core.overkill, core.school, core.resisted, core.blocked, core.absorbed, core.critical, core.glancing, core.crushing = select(12, ...)
+		elseif string.match(core.type, "_MISSED") then
+			core.missType, core.isOffHand, core.amountMissed = select(12, ...)
+		elseif string.match(core.type, "_HEAL") then
+			core.amount, core.overhealing, core.absorbed, core.critical = select(12, ...)
+		elseif string.match(core.type, "_ENERGIZE") then
+			core.amount, core.powerType = select(12, ...)
+		elseif string.match(core.type, "_DRAIN") or string.match(core.type, "_LEECH") then
+			core.amount, core.powerType, core.extraAmount = select(12, ...)
+		elseif string.match(core.type, "_INTERRUPT") or string.match(core.type, "_DISPEL_FAILED") then
+			core.extraSpellId, core.extraSpellName,	core.extraSchool = select(12, ...)
+		elseif string.match(core.type, "_DISPEL") or string.match(core.type, "_STOLEN") then
+			core.extraSpellId, core.extraSpellName, core.extraSchool, core.auraType = select(12, ...)
+		elseif string.match(core.type, "_EXTRA_ATTACKS") then
+			core.amount = select(12, ...)
+		elseif string.match(core.type, "_AURA_APPLIED") or string.match(core.type, "_AURA_REMOVED") or string.match(core.type, "_AURA_APPLIED_DOSE") or string.match(core.type, "_AURA_REMOVED_DOSE") or string.match(core.type, "_AURA_REFRESH") then
+			core.auraType, core.amount = select(12, ...)
+		elseif string.match(core.type, "_AURA_BROKEN") then
+			core.auraType = select(12, ...)
+		elseif string.match(core.type, "_AURA_BROKEN_SPELL") then
+			core.extraSpellId, core.extraSpellName, core.extraSchool, core.auraType = select(12, ...)
+		elseif string.match(core.type, "_CAST_FAILED") then
+			core.failedType = select(12, ...)
+		end		
+	elseif string.match(core.type, "ENVIRONMENTAL_") then
+		core.environmentalType = select(12, ...)
 
-	--Spell Interrupt
-	core.extraSpellId = core.amount
-	core.extraSpellName = core.overkill
-
-	--SPELL_AURA_APPLIED_DOSE
-	core.doseAmount = core.overkill
-
-	--For a Creature
-	core.unitTypeSrc, _, _, _, _, core.sourceID, core.spawn_uid = strsplit("-", core.sourceGUID);
-	core.unitType, _, _, _, _, core.destID, core.spawn_uid_dest = strsplit("-", core.destGUID);
-
-	--For a Player
-	core.unitTypePlayer, core.destIDPlayer, core.spawn_uid_dest_Player = strsplit("-", core.destGUID);
-	
-	-- if tempStore[core.sourceID] == nil then
-	-- 	print(core.sourceName .. ": " .. core.sourceID)
-	-- 	tempStore[core.sourceID] = true
-	-- end
-
-	--print(...)
-	
-    if core.type == "UNIT_DIED"then
-      -- print(...)
-	end
-
-	if core.spellId == nil and (core.type ~= "SWING_DAMAGE" and core.type ~= "SWING_MISSED") then
-		if core:has_value(temp2, core.spellId) == false then
-			print(...)
-			table.insert(temp2, core.spellId)	
+		if string.match(core.type, "_DAMAGE") then
+			core.amount, core.overkill, core.school, core.resisted, core.blocked, core.absorbed, core.critical, core.glancing, core.crushing = select(13, ...)
+		elseif string.match(core.type, "_MISSED") then
+			core.missType, core.isOffHand, core.amountMissed = select(13, ...)
+		elseif string.match(core.type, "_HEAL") then
+			core.amount, core.overhealing, core.absorbed, core.critical = select(13, ...)
+		elseif string.match(core.type, "_ENERGIZE") then
+			core.amount, core.powerType = select(13, ...)
+		elseif string.match(core.type, "_DRAIN") or string.match(core.type, "_LEECH") then
+			core.amount, core.powerType, core.extraAmount = select(13, ...)
+		elseif string.match(core.type, "_INTERRUPT") or string.match(core.type, "_DISPEL_FAILED") then
+			core.extraSpellId, core.extraSpellName,	core.extraSchool = select(13, ...)
+		elseif string.match(core.type, "_DISPEL") or string.match(core.type, "_STOLEN") then
+			core.extraSpellId, core.extraSpellName, core.extraSchool, core.auraType = select(13, ...)
+		elseif string.match(core.type, "_EXTRA_ATTACKS") then
+			core.amount = select(13, ...)
+		elseif string.match(core.type, "_AURA_APPLIED") or string.match(core.type, "_AURA_REMOVED") or string.match(core.type, "_AURA_APPLIED_DOSE") or string.match(core.type, "_AURA_REMOVED_DOSE") or string.match(core.type, "_AURA_REFRESH") then
+			core.auraType, core.amount = select(13, ...)
+		elseif string.match(core.type, "_AURA_BROKEN") then
+			core.auraType = select(13, ...)
+		elseif string.match(core.type, "_AURA_BROKEN_SPELL") then
+			core.extraSpellId, core.extraSpellName, core.extraSchool, core.auraType = select(13, ...)
+		elseif string.match(core.type, "_CAST_FAILED") then
+			core.failedType = select(13, ...)
 		end
 	end
 
-	--If the boss has been found then we can load the tracker for that particular boss
+	if string.match(core.sourceGUID, "Creature") or string.match(core.destGUID, "Creature") then
+		--GUID for a creature
+		core.unitTypeSrc, _, _, _, _, core.sourceID, core.spawn_uid = strsplit("-", core.sourceGUID)
+		core.unitType, _, _, _, _, core.destID, core.spawn_uid_dest = strsplit("-", core.destGUID)	
+	elseif 	string.match(core.sourceGUID, "Player") or string.match(core.destGUID, "Player") then
+		--GUID for a player
+		core.unitTypeSrcPlayer, _, _, _, _, core.sourceIDPlayer, core.spawn_uidPlayer = strsplit("-", core.sourceGUID)
+		core.unitTypePlayer, core.destIDPlayer, core.spawn_uid_dest_Player = strsplit("-", core.destGUID)
+	end
+
+	--Boss Detection!
 	if currentBoss ~= nil then			
 		--Start tracking the particular boss if the user has not disabled tracking for that boss
 		if currentBoss.enabled then
 			currentBoss.track()
 		end
 	else
-		detectBoss()
+		--Check if any of the 5 nameplates have caches boss ID and whether source and dest GUID have been stored or not
+		for i = 1, 5 do
+			local _, _, _, _, _, bossID, _ = strsplit("-", UnitGUID("boss" .. i))
+			if bossID ~= nil then
+				if core:has_value(mobCache, bossID) == false then
+					detectBoss()
+				end
+			end
+		end
+			
+		if core.sourceID ~= nil then
+			if core:has_value(mobCache, core.sourceID) then
+				detectBoss()
+			end
+		end	
+		
+		if core.destID ~= nil then
+			if core:has_value(mobCache, core.destID) then
+				detectBoss()
+			end
+		end
 
 		--If boss was found then track the boss
 		if currentBoss ~= nil then
 			if currentBoss.enabled then			
 				currentBoss.track()
-			end	
+			end
 		end
 	end
 end
@@ -750,6 +827,10 @@ function detectBoss()
 										if core.Instances[expansion][instanceType][instance][boss].partial == false then
 											core:getAchievementToTrack()
 										end
+									else
+										--This boss does not have tracking so add to mob cache
+										local _, _, _, _, _, bossID2, _ = strsplit("-", UnitGUID("boss" .. j))
+										table.insert(mobCache, bossID2)
 									end
 								end
 							end
@@ -764,6 +845,9 @@ function detectBoss()
 									if core.Instances[expansion][instanceType][instance][boss].partial == false then
 										core:getAchievementToTrack()
 									end
+								else
+									--This boss does not have tracking so add to mob cache
+									table.insert(mobCache, core.sourceID)
 								end
 							elseif core.destID ~= nil then
 								if string.find(core.destID, bossID) then
@@ -774,6 +858,9 @@ function detectBoss()
 									if core.Instances[expansion][instanceType][instance][boss].partial == false then
 										core:getAchievementToTrack()
 									end
+								else
+									--This mob does not have tracking so add to mob cache
+									table.insert(mobCache, core.destID)
 								end							
 							end
 						end
