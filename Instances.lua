@@ -2233,7 +2233,7 @@ core.Instances = {
         },
     },
 
-    Catacalysm = {
+    Cataclysm = {
         Raids = {
             DragonSoul = {
                 name = "Dragon Soul",

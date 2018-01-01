@@ -96,16 +96,21 @@ core.achievementTrackedMessageShown = false		--Set to true when the message "Tra
 core.groupSize = 1								--Amount of players currently in the group. Set to 1 by default
 core.currentAchievementID = nil					--The ID for the current boss achievement
 core.achievementTrackingEnabled = false			--Whether the user wants to track achievements for the particular instance or not
-local currentBoss = nil							--The current boss the player is attacking. Can only be one of the bosses listed in the instances.lua file
-local expansion = nil							--Current expansion of the particular instance
-local instanceType = nil						--Whether the instance is a dungeon or a raid
-local instance = nil							--Name of the instance the player is currently in
-local instanceNameSpaces						--Instance name with spaces
 local combatTimerStarted = false				--Used to determine if players in the group are still in combat with a boss
 local lastMessageSent = ""   					--Stores the last message sent to the chat. This is used to prevent the same message being sent more than once in case of an error and to prevent unwanted spam
 local enabledCheckSent = false					--Store whether the current addon sent the request to enable itself or not for achievement tracking
-local mobCache = {}								--Stores a list of mobs that have been checked to see whether or not they need to be tracked or not
 local scanAnnounced = false
+
+--------------------------------------
+-- Current Instance Variables
+--------------------------------------
+core.expansion = nil							--Current expansion of the particular instance
+core.instanceType = nil							--Whether the instance is a dungeon or a raid
+core.instance = nil								--Name of the instance the player is currently in
+core.instanceNameSpaces = nil					--Instance name with spaces
+core.currentBoss = nil							--The current boss the player is attacking. Can only be one of the bosses listed in the instances.lua file
+core.mobCache = {}								--Stores a list of mobs that have been checked to see whether or not they need to be tracked or not
+
 --------------------------------------
 -- Achievement Functions
 --------------------------------------
@@ -152,7 +157,7 @@ end
 
 function getPlayersInGroup()
 	if scanAnnounced == false then
-		core:printMessage("Starting Achievement Scan For " .. instanceNameSpaces .. " (This may lag your game for a few seconds)")
+		core:printMessage("Starting Achievement Scan For " .. core.instanceNameSpaces .. " (This may lag your game for a few seconds)")
 		scanAnnounced = true
 	end
 	core:getGroupSize()
@@ -213,23 +218,10 @@ function getPlayersInGroup()
 		for i = #playersScanned, 1, -1 do
 			if core:has_value(currentGroup, playersScanned[i]) == false then
 				--Remove player from the table that generates the UI for that achievement
-				for expansion,_ in pairs(core.Instances) do
-					for instanceType,_ in pairs(core.Instances[expansion]) do
-						for instance,_ in pairs(core.Instances[expansion][instanceType]) do
-							if instance == instanceName then
-								for boss,_ in pairs(core.Instances[expansion][instanceType][instance]) do
-									if boss ~= "name" then
-										local name, _ = UnitName(playersScanned[i])
-										table.remove(core.Instances[expansion][instanceType][instance][boss].players, name)
-
-										--Set the expansion and instance name
-										core.Config.currentExpansion = expansion
-										core.Config.InstanceName = instanceName
-										core.Config.currentTab = expansion
-									end
-								end
-							end
-						end
+				for boss,_ in pairs(core.Instances[core.expansion][core.instanceType][core.instance]) do
+					if boss ~= "name" then
+						local name, _ = UnitName(playersScanned[i])
+						table.remove(core.Instances[core.expansion][core.instanceType][core.instance][boss].players, name)
 					end
 				end
 
@@ -330,29 +322,16 @@ end
 function events:INSPECT_ACHIEVEMENT_READY()
 	--Find the achievements for the raid the user has entered
 	if UnitName(playerCurrentlyScanning) ~= nil then
-		for expansion,_ in pairs(core.Instances) do
-			for instanceType,_ in pairs(core.Instances[expansion]) do
-				for instance,_ in pairs(core.Instances[expansion][instanceType]) do
-					if instance == instanceName then
-						for boss,_ in pairs(core.Instances[expansion][instanceType][instance]) do
-							if boss ~= "name" then
-								local completed, month, day, year = GetAchievementComparisonInfo(core.Instances[expansion][instanceType][instance][boss].achievement)
-								--print(GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " completed: " .. tostring(completed))
+		for boss,_ in pairs(core.Instances[core.expansion][core.instanceType][core.instance]) do
+			if boss ~= "name" then
+				local completed, month, day, year = GetAchievementComparisonInfo(core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
+				--print(GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " completed: " .. tostring(completed))
 
-								--If the player has not completed the achievement then add them to the players string to display in the GUI
-								--Temp: will show completed achievements in GUI since I've already completed all the achievements
-								if completed ~= false then
-									local name, _ = UnitName(playersToScan[1])
-									table.insert(core.Instances[expansion][instanceType][instance][boss].players, name)
-								end
-
-								--Set the expansion and instance name
-								core.Config.currentExpansion = expansion
-								core.Config.InstanceName = instanceName
-								core.Config.currentTab = expansion
-							end
-						end
-					end
+				--If the player has not completed the achievement then add them to the players string to display in the GUI
+				--Temp: will show completed achievements in GUI since I've already completed all the achievements
+				if completed ~= false then
+					local name, _ = UnitName(playersToScan[1])
+					table.insert(core.Instances[core.expansion][core.instanceType][core.instance][boss].players, name)
 				end
 			end
 		end
@@ -374,6 +353,7 @@ end
 
 function getInstanceInfomation()
 	if IsInInstance() then
+		print("Player is in an instance")
 		core.instanceNameSpaces, _, core.difficultyID, _, core.maxPlayers, _, _, core.currentZoneID, _ = GetInstanceInfo()
 
 		if core.difficultyID == 2 then
@@ -389,11 +369,28 @@ function getInstanceInfomation()
 		end
 
 		--Used to find correct table in the core.instances table
-		local str = string.gsub(" "..name, "%W%l", string.upper):sub(2)
+		local str = string.gsub(" " .. core.instanceNameSpaces, "%W%l", string.upper):sub(2)
 		str = str:gsub("%s+", "")
 		str = str:gsub("%-", "")
 		str = str:gsub("%'", "")
-		instanceName = str
+		core.instance = str
+
+		--Find the instance in the core.instances table so we can cache the value to be used later
+		for expansion,_ in pairs(core.Instances) do
+			for instanceType,_ in pairs(core.Instances[expansion]) do
+				for instance,_ in pairs(core.Instances[expansion][instanceType]) do
+					if instance == core.instance then
+						core.expansion = expansion
+						core.instanceType = instanceType
+						core.instance = instance
+
+						print("Expansion: " .. core.expansion)
+						print("Instance Type: " .. core.instanceType)
+						print("Instance: " .. core.instance)
+					end
+				end
+			end
+		end		
 
 		--Ask the user whether they want to enable Achievement Tracking in the instance
 		if UICreated == false then
@@ -402,7 +399,6 @@ function getInstanceInfomation()
 			UIConfig:Show()
 		end
 	end
-
 end
 
 function events:PLAYER_ENTERING_WORLD()
@@ -418,11 +414,18 @@ function events:ZONE_CHANGED_NEW_AREA()
 	
 	if IsInInstance() == false then
 		--If user has left the instance then unregister events if they were registered
-		print("Player has left instance. Unregestering events")
+		print("Player has left instance. Unregestering events and resetting variables")
 		events:UnregisterEvent("INSPECT_ACHIEVEMENT_READY") 			
 		events:UnregisterEvent("GROUP_ROSTER_UPDATE")					
 		events:UnregisterEvent("PLAYER_REGEN_DISABLED")				
-		events:UnregisterEvent("PLAYER_REGEN_ENABLED")				
+		events:UnregisterEvent("PLAYER_REGEN_ENABLED")
+		
+		core.expansion = nil							--Current expansion of the particular instance
+		core.instanceType = nil							--Whether the instance is a dungeon or a raid
+		core.instance = nil								--Name of the instance the player is currently in
+		core.instanceNameSpaces = nil					--Instance name with spaces
+		core.currentBoss = nil							--The current boss the player is attacking. Can only be one of the bosses listed in the instances.lua file
+		core.mobCache = {}								--Stores a list of mobs that have been checked to see whether or not they need to be tracked or not
 	end		
 end
 
@@ -442,7 +445,7 @@ function createEnableAchievementTrackingUI()
 	--Content
 	UIConfig.content = UIConfig:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
 	UIConfig.content:SetPoint("TOPLEFT", AchievementTrackerCheckDialogBG, "TOPLEFT", 0, -5);
-	UIConfig.content:SetText("Do you want to enable achievement tracking for: " .. instanceNameSpaces);
+	UIConfig.content:SetText("Do you want to enable achievement tracking for: " .. core.instanceNameSpaces);
 	UIConfig.content:SetWidth(185)
 
 	UIConfig.btnYes = CreateFrame("Button", nil, UIConfig, "GameMenuButtonTemplate");
@@ -749,10 +752,12 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 	else
 		--Check if any of the 5 nameplates have caches boss ID and whether source and dest GUID have been stored or not
 		for i = 1, 5 do
-			local _, _, _, _, _, bossID, _ = strsplit("-", UnitGUID("boss" .. i))
-			if bossID ~= nil then
-				if core:has_value(mobCache, bossID) == false then
-					detectBoss()
+			if UnitGUID("boss" .. i) ~= nil then
+				local _, _, _, _, _, bossID, _ = strsplit("-", UnitGUID("boss" .. i))
+				if bossID ~= nil then
+					if core:has_value(mobCache, bossID) == false then
+						detectBoss()
+					end
 				end
 			end
 		end

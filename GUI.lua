@@ -5,18 +5,14 @@ local _, core = ...
 core.Config = {} --adds a Config able to the addon namespace
 
 local Config = core.Config
-
-Config.InstanceName = nil
-Config.currentExpansion = nil
-
 local LegionContent
 local LegionContentButtons = {}
 local WarlordsOfDraenorContent
 local WarlordsOfDraenorContentButtons = {}
 local MistsOfPandariaContent
 local MistsOfPandariaContentButtons = {}
-local CatacalysmContent
-local CatacalysmContentButtons = {}
+local CataclysmContent
+local CataclysmContentButtons = {}
 local WrathOfTheLichKingContent
 local WrathOfTheLichKingContentButtons = {}
 
@@ -171,7 +167,7 @@ function Config:CreateGUI()
      UIConfig.ScrollFrame2.ScrollBar:SetPoint("BOTTOMRIGHT", UIConfig.ScrollFrame2, "BOTTOMRIGHT", -7, 18)    
 
     --Tabs
-    content1, LegionNav, LegionContent, WarlordsOfDraenorNav, WarlordsOfDraenorContent, MistsOfPandariaNav, MistsOfPandariaContent, CatacalysmNav, CatacalysmContent, WrathOfTheLichKingNav, WrathOfTheLichKingContent = SetTabs(UIConfig, 6, "Main", "Legion", "Warlords of Draenor", "Mists of Pandaria", "Catacalysm", "Wrath of the Lich King")
+    content1, LegionNav, LegionContent, WarlordsOfDraenorNav, WarlordsOfDraenorContent, MistsOfPandariaNav, MistsOfPandariaContent, CataclysmNav, CataclysmContent, WrathOfTheLichKingNav, WrathOfTheLichKingContent = SetTabs(UIConfig, 6, "Main", "Legion", "Warlords of Draenor", "Mists of Pandaria", "Cataclysm", "Wrath of the Lich King")
 
     --Content (Main)
 	--content1.saveBtn = self:CreateButton("CENTER", content1, "TOP", -70, "Save");
@@ -180,7 +176,7 @@ function Config:CreateGUI()
 	content1.title:SetText("Welcome to Achievement Tracker V1.0");
 
     --Create the navigation buttons for each expansion
-    local expansions = {"Legion", "WarlordsOfDraenor", "MistsOfPandaria", "Catacalysm", "WrathOfTheLichKing"}
+    local expansions = {"Legion", "WarlordsOfDraenor", "MistsOfPandaria", "Cataclysm", "WrathOfTheLichKing"}
     for i = 1, #expansions do
         --Raids
         local firstRaid = false
@@ -196,9 +192,9 @@ function Config:CreateGUI()
                 elseif expansions[i] == "MistsOfPandaria" then
                     MistsOfPandariaNav[instance] = self:CreateButton("TOPLEFT", MistsOfPandariaNav, "TOPLEFT", 0, core.Instances[expansions[i]].Raids[instance].name);
                     MistsOfPandariaNav[instance]:SetScript("OnClick", Instance_OnClick);
-                elseif expansions[i] == "Catacalysm" then
-                    CatacalysmNav[instance] = self:CreateButton("TOPLEFT", CatacalysmNav, "TOPLEFT", 0, core.Instances[expansions[i]].Raids[instance].name);
-                    CatacalysmNav[instance]:SetScript("OnClick", Instance_OnClick);
+                elseif expansions[i] == "Cataclysm" then
+                    CataclysmNav[instance] = self:CreateButton("TOPLEFT", CataclysmNav, "TOPLEFT", 0, core.Instances[expansions[i]].Raids[instance].name);
+                    CataclysmNav[instance]:SetScript("OnClick", Instance_OnClick);
                 elseif expansions[i] == "WrathOfTheLichKing" then
                     WrathOfTheLichKingNav[instance] = self:CreateButton("TOPLEFT", WrathOfTheLichKingNav, "TOPLEFT", 0, core.Instances[expansions[i]].Raids[instance].name);
                     WrathOfTheLichKingNav[instance]:SetScript("OnClick", Instance_OnClick);
@@ -215,9 +211,9 @@ function Config:CreateGUI()
                 elseif expansions[i] == "MistsOfPandaria" then
                     MistsOfPandariaNav[instance] = self:CreateButton("TOPLEFT", MistsOfPandariaNav[previousInstance], "TOPLEFT", -32, core.Instances[expansions[i]].Raids[instance].name);
                     MistsOfPandariaNav[instance]:SetScript("OnClick", Instance_OnClick);
-                elseif expansions[i] == "Catacalysm" then
-                    CatacalysmNav[instance] = self:CreateButton("TOPLEFT", CatacalysmNav[previousInstance], "TOPLEFT", -32, core.Instances[expansions[i]].Raids[instance].name);
-                    CatacalysmNav[instance]:SetScript("OnClick", Instance_OnClick);
+                elseif expansions[i] == "Cataclysm" then
+                    CataclysmNav[instance] = self:CreateButton("TOPLEFT", CataclysmNav[previousInstance], "TOPLEFT", -32, core.Instances[expansions[i]].Raids[instance].name);
+                    CataclysmNav[instance]:SetScript("OnClick", Instance_OnClick);
                 elseif expansions[i] == "WrathOfTheLichKing" then
                     WrathOfTheLichKingNav[instance] = self:CreateButton("TOPLEFT", WrathOfTheLichKingNav[previousInstance], "TOPLEFT", -32, core.Instances[expansions[i]].Raids[instance].name);
                     WrathOfTheLichKingNav[instance]:SetScript("OnClick", Instance_OnClick);
@@ -238,9 +234,9 @@ function Config:CreateGUI()
                 elseif expansions[i] == "MistsOfPandaria" then
                     MistsOfPandariaNav[instance] = self:CreateButton("TOPLEFT", MistsOfPandariaNav[previousInstance], "TOPLEFT", -40, core.Instances[expansions[i]].Dungeons[instance].name);
                     MistsOfPandariaNav[instance]:SetScript("OnClick", Instance_OnClick);
-                elseif expansions[i] == "Catacalysm" then
-                    CatacalysmNav[instance] = self:CreateButton("TOPLEFT", CatacalysmNav[previousInstance], "TOPLEFT", -40, core.Instances[expansions[i]].Dungeons[instance].name);
-                    CatacalysmNav[instance]:SetScript("OnClick", Instance_OnClick);
+                elseif expansions[i] == "Cataclysm" then
+                    CataclysmNav[instance] = self:CreateButton("TOPLEFT", CataclysmNav[previousInstance], "TOPLEFT", -40, core.Instances[expansions[i]].Dungeons[instance].name);
+                    CataclysmNav[instance]:SetScript("OnClick", Instance_OnClick);
                 elseif expansions[i] == "WrathOfTheLichKing" then
                     WrathOfTheLichKingNav[instance] = self:CreateButton("TOPLEFT", WrathOfTheLichKingNav[previousInstance], "TOPLEFT", -40, core.Instances[expansions[i]].Dungeons[instance].name);
                     WrathOfTheLichKingNav[instance]:SetScript("OnClick", Instance_OnClick);
@@ -257,9 +253,9 @@ function Config:CreateGUI()
                 elseif expansions[i] == "MistsOfPandaria" then
                     MistsOfPandariaNav[instance] = self:CreateButton("TOPLEFT", MistsOfPandariaNav[previousInstance], "TOPLEFT", -32, core.Instances[expansions[i]].Dungeons[instance].name);
                     MistsOfPandariaNav[instance]:SetScript("OnClick", Instance_OnClick);
-                elseif expansions[i] == "Catacalysm" then
-                    CatacalysmNav[instance] = self:CreateButton("TOPLEFT", CatacalysmNav[previousInstance], "TOPLEFT", -32, core.Instances[expansions[i]].Dungeons[instance].name);
-                    CatacalysmNav[instance]:SetScript("OnClick", Instance_OnClick);
+                elseif expansions[i] == "Cataclysm" then
+                    CataclysmNav[instance] = self:CreateButton("TOPLEFT", CataclysmNav[previousInstance], "TOPLEFT", -32, core.Instances[expansions[i]].Dungeons[instance].name);
+                    CataclysmNav[instance]:SetScript("OnClick", Instance_OnClick);
                 elseif expansions[i] == "WrathOfTheLichKing" then
                     WrathOfTheLichKingNav[instance] = self:CreateButton("TOPLEFT", WrathOfTheLichKingNav[previousInstance], "TOPLEFT", -32, core.Instances[expansions[i]].Dungeons[instance].name);
                     WrathOfTheLichKingNav[instance]:SetScript("OnClick", Instance_OnClick);
@@ -302,14 +298,14 @@ function Config:CreateGUI()
                 else
                     button:SetPoint("TOPLEFT",MistsOfPandariaContentButtons[i-1],"BOTTOMLEFT",0,0)
                 end
-            elseif expansions[j] == "Catacalysm" then
-                CatacalysmContentButtons[i] = CreateFrame("Button",nil,CatacalysmContent)
-                button = CatacalysmContentButtons[i]
-                button:SetSize(CatacalysmContent:GetWidth()-18,buttonHeight)
+            elseif expansions[j] == "Cataclysm" then
+                CataclysmContentButtons[i] = CreateFrame("Button",nil,CataclysmContent)
+                button = CataclysmContentButtons[i]
+                button:SetSize(CataclysmContent:GetWidth()-18,buttonHeight)
                 if i == 1 then
                     button:SetPoint("TOPLEFT",0,0-(i-1)*buttonHeight)
                 else
-                    button:SetPoint("TOPLEFT",CatacalysmContentButtons[i-1],"BOTTOMLEFT",0,0)
+                    button:SetPoint("TOPLEFT",CataclysmContentButtons[i-1],"BOTTOMLEFT",0,0)
                 end
             elseif expansions[j] == "WrathOfTheLichKing" then
                 WrathOfTheLichKingContentButtons[i] = CreateFrame("Button",nil,WrathOfTheLichKingContent)
@@ -360,7 +356,6 @@ function Config:Instance_OnClickAutomatic()
     Instance_OnClick(nil)
 end
 
-
 function Instance_OnClick(self)
     --print("Clicked: " .. self:GetText())
     local instanceLocation
@@ -373,24 +368,26 @@ function Instance_OnClick(self)
 
     if type(self) == "table" then
         --Button has been pressed by the user
-        str = string.gsub(" "..self:GetText(), "%W%l", string.upper):sub(2)
-        Config.InstanceName = str:gsub("%s+", "")
+        str = string.gsub(" " .. self:GetText(), "%W%l", string.upper):sub(2)
+        local InstanceName = str:gsub("%s+", "")
 
-        currentTabCompressed = string.gsub(" "..Config.currentTab, "%W%l", string.upper):sub(2)
+        currentTabCompressed = string.gsub(" " .. Config.currentTab, "%W%l", string.upper):sub(2)
         currentTabCompressed = currentTabCompressed:gsub("%s+", "")
-        if core.Instances[currentTabCompressed].Raids[Config.InstanceName] ~= nil then
-            instanceLocation = core.Instances[currentTabCompressed].Raids[Config.InstanceName]
+        if core.Instances[currentTabCompressed].Raids[InstanceName] ~= nil then
+            instanceLocation = core.Instances[currentTabCompressed].Raids[InstanceName]
         else
-            instanceLocation = core.Instances[currentTabCompressed].Dungeons[Config.InstanceName]
+            instanceLocation = core.Instances[currentTabCompressed].Dungeons[InstanceName]
         end
     else
         --Button needs updating for current instance
+        if core.instanceType == "Raids" then
+            instanceLocation = core.Instances[core.expansion].Raids[core.instance]
+        elseif core.instanceType == "Dungeons" then
+            instanceLocation = core.Instances[core.expansion].Dungeons[core.instance]
+        end        
 
-        if core.Instances[Config.currentExpansion].Raids[Config.InstanceName] ~= nil then
-            instanceLocation = core.Instances[Config.currentExpansion].Raids[Config.InstanceName]
-        else
-            instanceLocation = core.Instances[Config.currentExpansion].Dungeons[Config.InstanceName]
-        end 
+        --Set the current tab to the expansion of the current instance
+        Config.currentTab = core.expansion
     end
 
     for bossName,v in pairs(instanceLocation) do
@@ -404,8 +401,8 @@ function Instance_OnClick(self)
                 button = WarlordsOfDraenorContentButtons[counter]
             elseif Config.currentTab == "Mists of Pandaria" or Config.currentTab == "MistsOfPandaria" then
                 button = MistsOfPandariaContentButtons[counter]
-            elseif Config.currentTab == "Catacalysm" then
-                button = CatacalysmContentButtons[counter]
+            elseif Config.currentTab == "Cataclysm" then
+                button = CataclysmContentButtons[counter]
             elseif Config.currentTab == "Wrath of the Lich King" or Config.currentTab == "WrathOfTheLichKing" then
                 button = WrathOfTheLichKingContentButtons[counter]
             end
@@ -418,8 +415,8 @@ function Instance_OnClick(self)
                     button:SetPoint("TOPLEFT",WarlordsOfDraenorContentButtons[counter-1],"BOTTOMLEFT",0,30-heightDifference)
                 elseif Config.currentTab == "Mists of Pandaria" or Config.currentTab == "MistsOfPandaria" then
                     button:SetPoint("TOPLEFT",MistsOfPandariaContentButtons[counter-1],"BOTTOMLEFT",0,30-heightDifference)
-                elseif Config.currentTab == "Catacalysm" then
-                    button:SetPoint("TOPLEFT",CatacalysmContentButtons[counter-1],"BOTTOMLEFT",0,30-heightDifference)
+                elseif Config.currentTab == "Cataclysm" then
+                    button:SetPoint("TOPLEFT",CataclysmContentButtons[counter-1],"BOTTOMLEFT",0,30-heightDifference)
                 elseif Config.currentTab == "Wrath of the Lich King" or Config.currentTab == "WrathOfTheLichKing" then
                     button:SetPoint("TOPLEFT",WrathOfTheLichKingContentButtons[counter-1],"BOTTOMLEFT",0,30-heightDifference)
                 end                
@@ -456,8 +453,8 @@ function Instance_OnClick(self)
                 button = WarlordsOfDraenorContentButtons[counter]
             elseif Config.currentTab == "Mists of Pandaria" or Config.currentTab == "MistsOfPandaria" then
                 button = MistsOfPandariaContentButtons[counter]
-            elseif Config.currentTab == "Catacalysm" then
-                button = CatacalysmContentButtons[counter]
+            elseif Config.currentTab == "Cataclysm" then
+                button = CataclysmContentButtons[counter]
             elseif Config.currentTab == "Wrath of the Lich King" or Config.currentTab == "WrathOfTheLichKing" then
                 button = WrathOfTheLichKingContentButtons[counter]
             end
@@ -497,8 +494,8 @@ function Instance_OnClick(self)
             button = WarlordsOfDraenorContentButtons[i]
         elseif Config.currentTab == "Mists of Pandaria" or Config.currentTab == "MistsOfPandaria" then
             button = MistsOfPandariaContentButtons[i]
-        elseif Config.currentTab == "Catacalysm" then
-            button = CatacalysmContentButtons[i]
+        elseif Config.currentTab == "Cataclysm" then
+            button = CataclysmContentButtons[i]
         elseif Config.currentTab == "Wrath of the Lich King" or Config.currentTab == "WrathOfTheLichKing" then
             button = WrathOfTheLichKingContentButtons[i]
         end  
