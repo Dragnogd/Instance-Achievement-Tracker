@@ -7,3 +7,7 @@ local _, core = ...
 ---- End Time Bosses
 ------------------------------------------------------
 core.EndTime = {}
+
+function core.EndTime:ClearVariables()
+    
+end

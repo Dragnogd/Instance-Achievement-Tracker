@@ -341,7 +341,7 @@ function events:INSPECT_ACHIEVEMENT_READY()
 
 								--If the player has not completed the achievement then add them to the players string to display in the GUI
 								--Temp: will show completed achievements in GUI since I've already completed all the achievements
-								if completed ~= true then
+								if completed ~= false then
 									local name, _ = UnitName(playersToScan[1])
 									table.insert(core.Instances[expansion][instanceType][instance][boss].players, name)
 								end
@@ -661,6 +661,10 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 	--SWING_DAMAGE
 	core.swingDamage = core.spellName
 	core.swingOverkill = core.spellName
+
+	--Spell Interrupt
+	core.extraSpellId = core.amount
+	core.extraSpellName = core.overkill
 
 	--SPELL_AURA_APPLIED_DOSE
 	core.doseAmount = core.overkill
