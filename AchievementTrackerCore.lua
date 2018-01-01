@@ -80,6 +80,7 @@ local rescanNeeded = false						--Set to true if a rescan is needed during a cur
 local playerCurrentlyScanning = nil				--This is set to the current player that is being scanned
 local scanInProgress = false					--Set to true when a scan of the group has started
 local scanFinished = false						--Set to true when everyone in the group has been scanned successfully and no rescan is needed. Part of core so it can be accessed by the GUI
+local scanAnnounced = false						--Whether the achievement scanning has been announced to the chat
 
 --------------------------------------
 -- Main Variables
@@ -99,7 +100,7 @@ core.achievementTrackingEnabled = false			--Whether the user wants to track achi
 local combatTimerStarted = false				--Used to determine if players in the group are still in combat with a boss
 local lastMessageSent = ""   					--Stores the last message sent to the chat. This is used to prevent the same message being sent more than once in case of an error and to prevent unwanted spam
 local enabledCheckSent = false					--Store whether the current addon sent the request to enable itself or not for achievement tracking
-local scanAnnounced = false
+
 
 --------------------------------------
 -- Current Instance Variables
@@ -449,7 +450,16 @@ function events:ZONE_CHANGED_NEW_AREA()
 		core.instanceNameSpaces = nil					
 		core.currentBosses = {}
 		core.foundBoss = false							
-		core.mobCache = {}								
+		core.mobCache = {}
+		
+		--Reset Achievement Variabless
+		playersToScan = {}						
+		playersScanned = {}						
+		rescanNeeded = false						
+		playerCurrentlyScanning = nil				
+		scanInProgress = false					
+		scanFinished = false						
+		scanAnnounced = false						
 	end		
 end
 
