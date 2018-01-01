@@ -399,13 +399,19 @@ function getInstanceInfomation()
 				instanceCompatible = true
 			end
 		elseif core.difficultyID == 3 or core.difficultyID == 5 then
-			--mode = "legacy10"
+			--legacy10
+			instanceCompatible = true
 		elseif core.difficultyID == 4 or core.difficultyID == 6 then
-			--mode = "legacy25"
+			--legacy25
+			instanceCompatible = true
 		elseif core.difficultyID == 11 or core.difficultyID == 12 then
-			--mode = "scenerio"
+			--scenerios"
+			if core.expansion == "MistsOfPandaria" then
+				instanceCompatible = true
+			end
 		elseif core.difficultyID == 13 or core.difficultyID == 14 or core.difficultyID == 15 then
-			--mode = "current"
+			--current
+			instanceCompatible = true
 		end		
 
 		if instanceCompatible == true then
