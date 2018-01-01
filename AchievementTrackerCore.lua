@@ -660,6 +660,7 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 
 	--SWING_DAMAGE
 	core.swingDamage = core.spellName
+	core.swingOverkill = core.spellName
 
 	--SPELL_AURA_APPLIED_DOSE
 	core.doseAmount = core.overkill
