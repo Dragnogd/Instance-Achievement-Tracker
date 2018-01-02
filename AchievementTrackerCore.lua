@@ -389,6 +389,7 @@ function getInstanceInfomation()
 		
 		--Check whether achievements can be earned for the instance the player has entered
 		print("DifficultyID: " .. core.difficultyID)
+		print(core.instance)
 		if core.difficultyID == 2 then
 			--WOTLK/Cata/Mop/Wod heroic dungeons
 			if core.expansion == "WrathOfTheLichKing" or core.expansion == "Cataclysm" or core.expansion == "MistsOfPandaria" or core.expansion == "WarlordsOfDraenor" then
@@ -810,7 +811,7 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 				if bossID ~= nil then
 					if core:has_value(core.mobCache, bossID) == false then
 						print("Calling Detect Boss 1: " .. bossID)
-						detectBoss(UnitGUID("boss" .. i))
+						detectBoss(bossID)
 					end
 				end
 			end
