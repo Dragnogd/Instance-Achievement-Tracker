@@ -2609,8 +2609,8 @@ core.Instances = {
                 },               
             },
 
-            VortexPinnacle = {
-                name = "Vortex Pinnacle",
+            TheVortexPinnacle = {
+                name = "The Vortex Pinnacle",
                 boss1 = {
                     name = "Asaad",
                     bossIDs = {},
