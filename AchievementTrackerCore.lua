@@ -31,6 +31,7 @@ events:RegisterEvent("ADDON_LOADED")						--Used to setup the slash commands for
 events:RegisterEvent("PLAYER_ENTERING_WORLD")				--Used to detect if player is inside an instance when they enter the world
 events:RegisterEvent("ZONE_CHANGED_NEW_AREA")				--Used to detect if player is inside an instance when they change zone
 events:RegisterEvent("CHAT_MSG_ADDON")						--Allows the addon to communicate with other addons in the same party/raid
+events:RegisterEvent("ENCOUNTER_END")
 RegisterAddonMessagePrefix("Whizzey")						--Register events to listen out for client-client communication
 
 --DEBUG
@@ -320,6 +321,12 @@ function events:GROUP_ROSTER_UPDATE()
 
 	--Update the group size whenever the composition of the group changes
 	core:getGroupSize()
+end
+
+function events:ENCOUNTER_END()
+	print("Encounter Ended")
+	core.inCombat = false
+	core.foundBoss = false
 end
 
 function events:INSPECT_ACHIEVEMENT_READY()
