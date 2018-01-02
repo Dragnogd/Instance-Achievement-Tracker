@@ -430,10 +430,11 @@ function getInstanceInfomation()
 end
 
 function initialInstanceSetup()
-	if core[core.instance]:InitialSetup() ~= nil then
+	if pcall(function() core[core.instance]:InitialSetup() end) == true then
 		core[core.instance]:InitialSetup()
 	end
 end
+
 
 function events:PLAYER_ENTERING_WORLD()
 	getInstanceInfomation()
@@ -877,8 +878,10 @@ function detectBoss()
 						else
 							--This boss does not have tracking so add to mob cache
 							local _, _, _, _, _, bossID2, _ = strsplit("-", UnitGUID("boss" .. j))
-							table.insert(core.mobCache, bossID2)
-							print("Adding to cache: " .. bossID2)
+							if core:has_value(core.mobCache, bossID2) == false then
+								table.insert(core.mobCache, bossID2)
+								print("Adding to cache: " .. bossID2)
+							end
 						end
 					end
 				end
@@ -893,8 +896,10 @@ function detectBoss()
 							print("Found Boss:")
 						else
 							--This boss does not have tracking so add to mob cache
-							table.insert(core.mobCache, core.sourceID)
-							print("Adding to cache: " .. core.sourceID)
+							if core:has_value(core.mobCache, core.sourceID) == false then
+								table.insert(core.mobCache, core.sourceID)
+								print("Adding to cache: " .. core.sourceID)
+							end
 						end
 					elseif core.destID ~= nil then
 						if string.find(core.destID, bossID) then
@@ -904,8 +909,10 @@ function detectBoss()
 							print("Found Boss:")
 						else
 							--This mob does not have tracking so add to mob cache
-							table.insert(core.mobCache, core.destID)
-							print("Adding to cache: " .. core.destID)
+							if core:has_value(core.mobCache, core.destID) == false then
+								table.insert(core.mobCache, core.destID)
+								print("Adding to cache: " .. core.destID)
+							end
 						end							
 					end				
 				end
