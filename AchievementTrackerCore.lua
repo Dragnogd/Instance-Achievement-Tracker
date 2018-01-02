@@ -90,8 +90,8 @@ core.playerRankInGroup = -1						--The rank of the player is the group. Used to 
 core.currentZoneID = nil						--The ID of the current instance the player is in
 core.playerCount = 0							--The amount of players the instance lock can hold
 core.inCombat = false							--Whether anyone in the current group is in combat with boss/mobs
-core.achievementFailed = false					--Set to true when the requirements for a tracked achievement has failed
-core.achievementCompleted = false				--Set to true when the requrements for a tracked achievement have been met
+core.achievementsFailed = {}					--Set to true when the requirements for a tracked achievement has failed
+core.achievementsCompleted = {}					--Set to true when the requrements for a tracked achievement have been met
 core.chatType = nil								--The chat type for the current group (say/party/raid)
 core.achievementTrackedMessageShown = false		--Set to true when the message "Tracking {achievement}" is output to the chat so that it only outputs once per fight
 core.groupSize = 1								--Amount of players currently in the group. Set to 1 by default
@@ -429,6 +429,12 @@ function getInstanceInfomation()
 	end
 end
 
+function initialInstanceSetup()
+	if core[core.instance]:InitialSetup() ~= nil then
+		core[core.instance]:InitialSetup()
+	end
+end
+
 function events:PLAYER_ENTERING_WORLD()
 	getInstanceInfomation()
 end
@@ -574,6 +580,8 @@ function events:CHAT_MSG_ADDON(self, prefix, message, channel, sender)
 			print("Setting master addon since no one else is running the addon")
 			core.masterAddon = true
 		end
+
+		initialInstanceSetup()
 	end
 end
 
@@ -591,6 +599,7 @@ function enableAchievementTracking(self)
 		--Player is not a group so run the addon
 		core.masterAddon = true
 		--print(UnitName("Player") .. " is the master addon")
+		initialInstanceSetup()
 	else
 		--Get the permissions for the current player
 		for i = 1, core.groupSize do
@@ -787,11 +796,11 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 	--Boss Detection!
 	if core.foundBoss == true then			
 		--Start tracking the particular boss if the user has not disabled tracking for that boss
-		if core.currentBoss[].enabled then
-			currentBoss.track()
+		for i = 1, #core.currentBosses do
+			if core.currentBosses[i].enabled == true then
+				core.currentBosses[i].track()
+			end
 		end
-
-		--TODO loop through each boss here aswell to run tracking
 	else
 		--Check if any of the 5 nameplates have caches boss ID and whether source and dest GUID have been stored or not
 		for i = 1, 5 do
@@ -799,6 +808,7 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 				local _, _, _, _, _, bossID, _ = strsplit("-", UnitGUID("boss" .. i))
 				if bossID ~= nil then
 					if core:has_value(core.mobCache, bossID) == false then
+						print("Calling Detect Boss")
 						detectBoss()
 					end
 				end
@@ -808,6 +818,7 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 		if core.sourceID ~= nil then
 			--print(core.sourceID)
 			if core:has_value(core.mobCache, core.sourceID) == false then
+				print("Calling Detect Boss")
 				detectBoss()
 			end
 		end	
@@ -815,14 +826,15 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 		if core.destID ~= nil then
 			--print(core.destID)
 			if core:has_value(core.mobCache, core.destID) == false then
+				print("Calling Detect Boss")
 				detectBoss()
 			end
 		end
 
-		--If boss was found then track the boss
-		if currentBoss ~= nil then
-			if currentBoss.enabled then			
-				currentBoss.track()
+		--Start tracking the particular boss if the user has not disabled tracking for that boss
+		for i = 1, #core.currentBosses do
+			if core.currentBosses[i].enabled == true then
+				core.currentBosses[i].track()
 			end
 		end
 	end
@@ -932,80 +944,121 @@ function core:getAchievementToTrack()
 				core:sendMessage("Tracking: "  .. GetAchievementLink(core.achievementIDs[i]))
 				core.achievementTrackedMessageShown = true
 			end
+
+			--Setup failed and completed achievements table
+			table.insert(core.achievementsFailed, false)
+			table.insert(core.achievementsCompleted, false)
 		end
 	end
 end
 
 --Display the failed achievement message for achievements
-function core:getAchievementFailed()
-	if core.achievementFailed == false then
-		core:sendMessage(GetAchievementLink(core.currentAchievementID) .. " FAILED!")
-		core.achievementFailed = true
+function core:getAchievementFailed(index)
+	local value = index
+	if index == nil then
+		value = 1
+	end
+	if core.achievementsFailed[value] == false then
+		core:sendMessage(GetAchievementLink(core.achievementIDs[value]) .. " FAILED!")
+		core.achievementsFailed[value] = true
 	end
 end
 
 --Display the failed achievement message for achievements with message before
 function core:getAchievementFailedWithMessageBefore(message)
-	if core.achievementFailed == false then
-		core:sendMessage(message .. " " .. GetAchievementLink(core.currentAchievementID) .. " FAILED!")
-		core.achievementFailed = true
+	local value = index
+	if index == nil then
+		value = 1
+	end
+	if core.achievementsFailed[value] == false then
+
+		core:sendMessage(message .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " FAILED!")
+		core.achievementsFailed[value] = true
 	end
 end
 
 --Display the failed achievement message for achievements with message after
 function core:getAchievementFailedWithMessageAfter(message)
-	if core.achievementFailed == false then
-		core:sendMessage(GetAchievementLink(core.currentAchievementID) .. " FAILED! " .. message)
-		core.achievementFailed = true
+	local value = index
+	if index == nil then
+		value = 1
+	end
+	if core.achievementsFailed[value] == false then
+		core:sendMessage(GetAchievementLink(core.achievementIDs[value]) .. " FAILED! " .. message)
+		core.achievementsFailed[value] = true
 	end
 end
 
 --Display the failed achievement message for achievements with message before and after
 function core:getAchievementFailedWithMessageBeforeAndAfter(messageBefore, messageAfter)
-	if core.achievementFailed == false then
-		core:sendMessage(messageBefore .. " " .. GetAchievementLink(core.currentAchievementID) .. " FAILED! " .. messageAfter)
-		core.achievementFailed = true
+	local value = index
+	if index == nil then
+		value = 1
+	end
+	if core.achievementsFailed[value] == false then
+		core:sendMessage(messageBefore .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " FAILED! " .. messageAfter)
+		core.achievementsFailed[value] = true
 	end
 end
 
 --Display the requirements completed message for achievements
 function core:getAchievementSuccess()
-	if core.achievementCompleted == false then
-		core:sendMessage(GetAchievementLink(core.currentAchievementID) .. " requirements have been met. Boss can now be killed!")
-		core.achievementCompleted = true
-	end	
+	local value = index
+	if index == nil then
+		value = 1
+	end
+	if core.achievementsCompleted[value] == false then
+		core:sendMessage(GetAchievementLink(core.achievementIDs[value]) .. " requirements have been met. Boss can now be killed!")
+		core.achievementsCompleted[value] = true
+	end
 end
 
 --Display the requirements completed message for achievements with message before
 function core:getAchievementSuccessWithMessageBefore(message)
-	if core.achievementCompleted == false then
-		core:sendMessage(message .. " " .. GetAchievementLink(core.currentAchievementID) .. " requirements have been met. Boss can now be killed!")
-		core.achievementCompleted = true
-	end	
+	local value = index
+	if index == nil then
+		value = 1
+	end
+	if core.achievementsCompleted[value] == false then
+		core:sendMessage(message .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " requirements have been met. Boss can now be killed!")		
+		core.achievementsCompleted[value] = true
+	end
 end
 
 --Display the requirements completed message for achievements with message after
 function core:getAchievementSuccessWithMessageAfter(message)
-	if core.achievementCompleted == false then
-		core:sendMessage(GetAchievementLink(core.currentAchievementID) .. " requirements have been met. Boss can now be killed! " .. message)
-		core.achievementCompleted = true
-	end	
+	local value = index
+	if index == nil then
+		value = 1
+	end
+	if core.achievementsCompleted[value] == false then
+		core:sendMessage(GetAchievementLink(core.achievementIDs[value]) .. " requirements have been met. Boss can now be killed! " .. message)				
+		core.achievementsCompleted[value] = true
+	end
 end
 
 --Display the requirements completed message for achievements with message before and after
 function core:getAchievementSuccessWithMessageBeforeAndAfter(messageBefore, messageAfter)
-	if core.achievementCompleted == false then
-		core:sendMessage(messageBefore .. " " .. GetAchievementLink(core.currentAchievementID) .. " requirements have been met. Boss can now be killed!" .. messageAfter)
-		core.achievementCompleted = true
-	end	
+	local value = index
+	if index == nil then
+		value = 1
+	end
+	if core.achievementsCompleted[value] == false then		
+		core:sendMessage(messageBefore .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " requirements have been met. Boss can now be killed!" .. messageAfter)				
+		core.achievementsCompleted[value] = true
+	end
 end
 
 --Display the requirements completed message for achievements with custom message
 function core:getAchievementSuccessWithCustomMessage(messageBefore, messageAfter)
-	if core.achievementCompleted == false then
-		core:sendMessage(messageBefore .. " " .. GetAchievementLink(core.currentAchievementID) .. " " .. messageAfter)
-		core.achievementCompleted = true
-	end	
+	local value = index
+	if index == nil then
+		value = 1
+	end
+	if core.achievementsCompleted[value] == false then			
+		core:sendMessage(messageBefore .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " " .. messageAfter)			
+		core.achievementsCompleted[value] = true
+	end
 end
 
 function clearVariables()
@@ -1015,10 +1068,11 @@ function clearVariables()
 	print("Resetting Variables")
 
 	core.inCombat = false
-	core.achievementFailed = false
-	core.achievementCompleted = false
+	core.achievementsFailed = {}
+	core.achievementsCompleted = {}
 	core.achievementTrackedMessageShown = false
 	core.lastMessageSent = nil
+	core.foundBoss = false
 
 	--If a boss was pulled then clear the variables for that raid
 	print(core.instance)
