@@ -814,8 +814,9 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 		end
 	else
 		--Check if any of the 5 nameplates have caches boss ID and whether source and dest GUID have been stored or not
+		local doNotTrack = false
 		for i = 1, 5 do
-			if UnitGUID("boss" .. i) ~= nil then
+			if UnitGUID("boss" .. i) ~= nil and UnitIsDead("boss" .. i) == false and UnitIsEnemy("Player", "boss" .. i) == true then
 				local _, _, _, _, _, bossID, _ = strsplit("-", UnitGUID("boss" .. i))
 				if bossID ~= nil then
 					if core:has_value(core.mobCache, bossID) == false then
@@ -823,10 +824,12 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 						detectBoss(bossID)
 					end
 				end
+			elseif UnitIsDead("boss" .. i) == true or UnitIsEnemy("Player", "boss" .. i) == false then
+				doNotTrack = true
 			end
 		end
 
-		if core.sourceID ~= nil then
+		if core.sourceID ~= nil and doNotTrack == false then
 			--print(core.sourceID)
 			if core:has_value(core.mobCache, core.sourceID) ~= true then
 				print("Calling Detect Boss 2: " .. core.sourceID)
@@ -835,7 +838,7 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 			end
 		end	
 		
-		if core.destID ~= nil then
+		if core.destID ~= nil and doNotTrack == false then
 			--print(core.destID)
 			if core:has_value(core.mobCache, core.destID) == false then
 				print("Calling Detect Boss 3: " .. core.destID)
