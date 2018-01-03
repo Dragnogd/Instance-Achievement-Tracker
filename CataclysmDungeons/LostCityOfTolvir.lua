@@ -23,6 +23,12 @@ local timerStarted = false
 local burningSoulCounter = 0
 local buringSoulAuraUID = {}
 
+------------------------------------------------------
+---- Siamat
+------------------------------------------------------
+local lightningChargeCounter = 0
+local lightingChargeUID = {}
+
 function core.LostCityOfTheTolVir:Lockmaw()
     if core.sourceID == "43658" then
         if frenziedCrocoliskUID[core.spawn_uid] == nil then
@@ -100,7 +106,25 @@ function core.LostCityOfTheTolVir:HighProphetBarim()
 end
 
 function core.LostCityOfTheTolVir:Siamat()
-    if core.type == "SPELL_AURA_APPLIED_DOSE"
+    --Met Requirements
+    if core.type == "SPELL_AURA_APPLIED_DOSE" and core.spellId == 93959 and core.amount == 2 and lightingChargeUID[core.spawn_uid_dest_Player] == nil then
+        lightningChargeCounter = lightningChargeCounter + 1
+        core:sendMessage(core.destName .. " has met the requirements for " .. GetAchievementLink(core.achievementIDs[1]) .. " (" .. lightningChargeCounter .. "/" .. core.groupSize .. ")")
+        lightingChargeUID[core.spawn_uid_dest_Player] = core.spawn_uid_dest_Player
+        
+    end
+
+    --Failed Requirements
+    if core.type == "SPELL_AURA_REMOVED" and core.spellId == 93959 and lightingChargeUID[core.spawn_uid_dest_Player] ~= nil then
+        lightningChargeCounter = lightningChargeCounter - 1
+        core:sendMessage(core.destName .. " no longers meets the requirements for " .. GetAchievementLink(core.achievementIDs[1]) .. " (" .. lightningChargeCounter .. "/" .. core.groupSize .. ")")
+        lightingChargeUID[core.spawn_uid_dest_Player] = nil
+        core.achievementsCompleted[1] = false
+    end
+
+    if lightningChargeCounter == core.groupSize then
+        core:getAchievementSuccess()
+    end
 end
 
 function core.LostCityOfTheTolVir:ClearVariables()
@@ -118,4 +142,10 @@ function core.LostCityOfTheTolVir:ClearVariables()
     ------------------------------------------------------
     burningSoulCounter = 0
     buringSoulAuraUID = {}
+
+    ------------------------------------------------------
+    ---- Siamat
+    ------------------------------------------------------
+    lightningChargeCounter = 0
+    lightingChargeUID = {}
 end

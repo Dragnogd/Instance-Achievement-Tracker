@@ -796,7 +796,9 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 		--GUID for a creature
 		core.unitTypeSrc, _, _, _, _, core.sourceID, core.spawn_uid = strsplit("-", core.sourceGUID)
 		core.unitType, _, _, _, _, core.destID, core.spawn_uid_dest = strsplit("-", core.destGUID)	
-	elseif 	string.match(core.sourceGUID, "Player") or string.match(core.destGUID, "Player") then
+	end
+	
+	if 	string.match(core.sourceGUID, "Player") or string.match(core.destGUID, "Player") then
 		--GUID for a player
 		core.unitTypeSrcPlayer, _, _, _, _, core.sourceIDPlayer, core.spawn_uidPlayer = strsplit("-", core.sourceGUID)
 		core.unitTypePlayer, core.destIDPlayer, core.spawn_uid_dest_Player = strsplit("-", core.destGUID)
