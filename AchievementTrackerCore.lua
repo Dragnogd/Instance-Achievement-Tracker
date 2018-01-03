@@ -923,6 +923,12 @@ function core:sendMessage(message)
 	end
 end
 
+function core:sendMessageDelay(message, counter, interval)
+	if counter - math.floor(counter/interval)*interval == 0 then
+		core:sendMessage(message)
+	end
+end
+
 function core:printMessage(message)
 	print("|cff00ccffAchievement Tracker: |cffffffff" .. message)
 end

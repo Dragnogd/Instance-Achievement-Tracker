@@ -25,7 +25,7 @@ function core.TempleOfTheJadeSerpent:WiseMari()
         if playersHit[core.destName] == nil then
             --Players has not been hit already
             --Check if the player actually needs the achievement
-            if core:has_value(core.Instances.MistsOfPandaria.Dungeons.TempleOfTheJadeSerpent.boss1.players, core.destName) then
+            if core:has_value(core.currentBosses[1].players, core.destName) then
                 --Player needs achievement but has failed it
                 core:sendMessage(core.destName .. " has failed " .. GetAchievementLink(core.achievementIDs[1]) .. " (Personal Achievement)")
             end

@@ -2735,26 +2735,26 @@ core.Instances = {
                 },           
             },
 
-            TheDeadmines = {
-                name = "The Deadmines",
+            Deadmines = {
+                name = "Deadmines",
                 boss1 = {
                     name = "Glubtok",
-                    bossIDs = {},
+                    bossIDs = {47162},
                     achievement = 5366,
                     players = {},
                     tactics = "",
-                    enabled = false,
-                    track = nil,
+                    enabled = true,
+                    track = function() core.Deadmines:Glubtok() end,
 					partial = false,
                 },
                 boss2 = {
                     name = "Helix Gearbreaker",
-                    bossIDs = {},
+                    bossIDs = {47296},
                     achievement = 5367,
                     players = {},
                     tactics = "",
-                    enabled = false,
-                    track = nil,
+                    enabled = true,
+                    track = function() core.Deadmines:HelixGearbreaker() end,
 					partial = false,
                 },  
                 boss3 = {
