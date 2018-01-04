@@ -805,6 +805,10 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 		core.unitTypePlayer, core.destIDPlayer, core.spawn_uid_dest_Player = strsplit("-", core.destGUID)
 	end
 
+	if core.type == "UNIT_DIED" then
+		print(core.destName .. " : " .. core.destID)
+	end
+
 	--Boss Detection!
 	if core.foundBoss == true then			
 		--Start tracking the particular boss if the user has not disabled tracking for that boss
@@ -825,7 +829,7 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 						detectBoss(bossID)
 					end
 				end
-			elseif UnitIsDead("boss" .. i) == true or UnitIsEnemy("Player", "boss" .. i) == false then
+			elseif UnitIsDead("boss" .. i) == true then
 				doNotTrack = true
 			end
 		end
