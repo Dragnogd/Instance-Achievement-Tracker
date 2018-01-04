@@ -98,6 +98,7 @@ core.achievementTrackedMessageShown = false		--Set to true when the message "Tra
 core.groupSize = 1								--Amount of players currently in the group. Set to 1 by default
 core.achievementIDs = {}						--Stores a list of the achievements to track for the current boss
 core.achievementTrackingEnabled = false			--Whether the user wants to track achievements for the particular instance or not
+core.playersFailedPersonal = {}					--List of players that have failed a personal achievement. Resets when you exit combat
 local combatTimerStarted = false				--Used to determine if players in the group are still in combat with a boss
 local lastMessageSent = ""   					--Stores the last message sent to the chat. This is used to prevent the same message being sent more than once in case of an error and to prevent unwanted spam
 local enabledCheckSent = false					--Store whether the current addon sent the request to enable itself or not for achievement tracking
@@ -964,7 +965,7 @@ function core:getAchievementFailed(index)
 end
 
 --Display the failed achievement message for achievements with message before
-function core:getAchievementFailedWithMessageBefore(message)
+function core:getAchievementFailedWithMessageBefore(message, index)
 	local value = index
 	if index == nil then
 		value = 1
@@ -977,7 +978,7 @@ function core:getAchievementFailedWithMessageBefore(message)
 end
 
 --Display the failed achievement message for achievements with message after
-function core:getAchievementFailedWithMessageAfter(message)
+function core:getAchievementFailedWithMessageAfter(message, index)
 	local value = index
 	if index == nil then
 		value = 1
@@ -989,7 +990,7 @@ function core:getAchievementFailedWithMessageAfter(message)
 end
 
 --Display the failed achievement message for achievements with message before and after
-function core:getAchievementFailedWithMessageBeforeAndAfter(messageBefore, messageAfter)
+function core:getAchievementFailedWithMessageBeforeAndAfter(messageBefore, messageAfter, index)
 	local value = index
 	if index == nil then
 		value = 1
@@ -1000,8 +1001,25 @@ function core:getAchievementFailedWithMessageBeforeAndAfter(messageBefore, messa
 	end
 end
 
+--Display the failed achievement message for personal achievements
+function core:getAchievementFailedPersonal(index)
+	local value = index
+	if index == nil then
+		value = 1
+	end
+	if core.playersFailedPersonal[core.destName] == nil then
+		--Players has not been hit already
+		--Check if the player actually needs the achievement
+		if core:has_value(core.currentBosses[value].players, core.destName) then
+			--Player needs achievement but has failed it
+			core:sendMessage(core.destName .. " has failed " .. GetAchievementLink(core.achievementIDs[value]) .. " (Personal Achievement)")
+		end
+		core.playersFailedPersonal[core.destName] = true
+	end
+end
+
 --Display the requirements completed message for achievements
-function core:getAchievementSuccess()
+function core:getAchievementSuccess(index)
 	local value = index
 	if index == nil then
 		value = 1
@@ -1013,7 +1031,7 @@ function core:getAchievementSuccess()
 end
 
 --Display the requirements completed message for achievements with message before
-function core:getAchievementSuccessWithMessageBefore(message)
+function core:getAchievementSuccessWithMessageBefore(message, index)
 	local value = index
 	if index == nil then
 		value = 1
@@ -1025,7 +1043,7 @@ function core:getAchievementSuccessWithMessageBefore(message)
 end
 
 --Display the requirements completed message for achievements with message after
-function core:getAchievementSuccessWithMessageAfter(message)
+function core:getAchievementSuccessWithMessageAfter(message, index)
 	local value = index
 	if index == nil then
 		value = 1
@@ -1037,7 +1055,7 @@ function core:getAchievementSuccessWithMessageAfter(message)
 end
 
 --Display the requirements completed message for achievements with message before and after
-function core:getAchievementSuccessWithMessageBeforeAndAfter(messageBefore, messageAfter)
+function core:getAchievementSuccessWithMessageBeforeAndAfter(messageBefore, messageAfter, index)
 	local value = index
 	if index == nil then
 		value = 1
@@ -1049,7 +1067,7 @@ function core:getAchievementSuccessWithMessageBeforeAndAfter(messageBefore, mess
 end
 
 --Display the requirements completed message for achievements with custom message
-function core:getAchievementSuccessWithCustomMessage(messageBefore, messageAfter)
+function core:getAchievementSuccessWithCustomMessage(messageBefore, messageAfter, index)
 	local value = index
 	if index == nil then
 		value = 1
@@ -1072,6 +1090,7 @@ function clearVariables()
 	core.achievementTrackedMessageShown = false
 	core.lastMessageSent = nil
 	core.foundBoss = false
+	core.playersFailedPersonal = {}
 
 	--If a boss was pulled then clear the variables for that raid
 	print(core.instance)
