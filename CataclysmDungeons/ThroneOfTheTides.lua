@@ -26,18 +26,23 @@ function core.ThroneOfTheTides:Ozumat()
         requirementsMetAnnounced = true
     end
 
-    if (core.destID == "40792" or core.sourceID == "40792") and core.type ~= "UNIT_DIED" then
-        print("Found add : " .. core.sourceID)
+    if core.destName == "Unyielding Behemoth" then
+        print(core.type)
+    end
+
+    if core.destName == "Unyielding Behemoth" and core.type ~= "UNIT_DIED" then
+        print("Found")
         unyieldingBehemothAlive = true
     end
 
-    if core.type == "UNIT_DIED" and core.destID == "40792" and requirementsMetAnnounced == true then
+    if core.type == "UNIT_DIED" and core.destName == "Unyielding Behemoth" and requirementsMetAnnounced == true then
         print("Success")
         core:getAchievementSuccess()
-    elseif core.type == "UNIT_DIED" and core.destID == "40792" and requirementsMetAnnounced == false then
-        print("Failed")
+    elseif core.type == "UNIT_DIED" and core.destName == "Unyielding Behemoth" and requirementsMetAnnounced == false then
+        unyieldingBehemothAlive = false
         core:getAchievementFailed()
     end
+    
 end
 
 function core.ThroneOfTheTides:ClearVariables()
