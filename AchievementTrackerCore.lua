@@ -31,6 +31,7 @@ events:RegisterEvent("ADDON_LOADED")						--Used to setup the slash commands for
 events:RegisterEvent("PLAYER_ENTERING_WORLD")				--Used to detect if player is inside an instance when they enter the world
 events:RegisterEvent("ZONE_CHANGED_NEW_AREA")				--Used to detect if player is inside an instance when they change zone
 events:RegisterEvent("CHAT_MSG_ADDON")						--Allows the addon to communicate with other addons in the same party/raid
+events:RegisterEvent("ENCOUNTER_START")
 events:RegisterEvent("ENCOUNTER_END")
 RegisterAddonMessagePrefix("Whizzey")						--Register events to listen out for client-client communication
 
@@ -102,7 +103,7 @@ core.playersFailedPersonal = {}					--List of players that have failed a persona
 local combatTimerStarted = false				--Used to determine if players in the group are still in combat with a boss
 local lastMessageSent = ""   					--Stores the last message sent to the chat. This is used to prevent the same message being sent more than once in case of an error and to prevent unwanted spam
 local enabledCheckSent = false					--Store whether the current addon sent the request to enable itself or not for achievement tracking
-
+local enableDisplayAchievement = false
 
 --------------------------------------
 -- Current Instance Variables
@@ -324,10 +325,16 @@ function events:GROUP_ROSTER_UPDATE()
 	core:getGroupSize()
 end
 
+function events:ENCOUNTER_START()
+	print("Encounter Started")
+	enableDisplayAchievement = true
+end
+
 function events:ENCOUNTER_END()
 	print("Encounter Ended")
 	core.inCombat = false
 	core.foundBoss = false
+	enableDisplayAchievement = false
 end
 
 function events:INSPECT_ACHIEVEMENT_READY()
@@ -1013,6 +1020,23 @@ function core:getAchievementFailedPersonal(index)
 		if core:has_value(core.currentBosses[value].players, core.destName) then
 			--Player needs achievement but has failed it
 			core:sendMessage(core.destName .. " has failed " .. GetAchievementLink(core.achievementIDs[value]) .. " (Personal Achievement)")
+		end
+		core.playersFailedPersonal[core.destName] = true
+	end
+end
+
+--Display the failed achievement message for personal achievements with reason
+function core:getAchievementFailedPersonalWithReason(reason, index)
+	local value = index
+	if index == nil then
+		value = 1
+	end
+	if core.playersFailedPersonal[core.destName] == nil then
+		--Players has not been hit already
+		--Check if the player actually needs the achievement
+		if core:has_value(core.currentBosses[value].players, core.destName) then
+			--Player needs achievement but has failed it
+			core:sendMessage(core.destName .. " has failed " .. GetAchievementLink(core.achievementIDs[value]) .. " (Personal Achievement) (Reason: " .. reason .. ")")
 		end
 		core.playersFailedPersonal[core.destName] = true
 	end
