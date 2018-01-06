@@ -49,7 +49,7 @@ end
 
 function core.ThroneOfThunder:Tortos()
 	--Kick Shell Started so start 5 second timer to capture all hits
-	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 134031 and core.achievementCompleted == false then
+	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 134031 and core.achievementsCompleted[1] == false then
 		if timerStarted == false then
 			timerStarted = true
 			C_Timer.After(5, function()
@@ -79,11 +79,11 @@ function core.ThroneOfThunder:JiKun()
 		end)		
 	end
 
-	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 139168 and core.achievementCompleted == false then
+	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 139168 and core.achievementsCompleted[1] == false then
 		--Wait 3 seconds to make sure the player has landed on the platform successfully
-		SendChatMessage("[WIP] CATCH " .. core.destName .. " NOW! ",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+		core:sendMessage("CATCH " .. core.destName .. " NOW! ")
 		C_Timer.After(5, function()
-			if core.achievementFailed == false then
+			if core.achievementsFailed[1] == false then
 				core:getAchievementSuccessWithCustomMessage("", core.destName .. " caught. Boss can now be killed!")
 			end
 		end)
@@ -125,49 +125,49 @@ end
 function core.ThroneOfThunder:IronQon()
 	--Burning Cinders
 	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 137668 and burningCindersFailed == false then
-		core:sendMessage("'Burning Cinders' part of "  .. GetAchievementLink(core.currentAchievementID) .. " FAILED! by (" .. core.destName .. ")")
+		core:sendMessage("'Burning Cinders' part of "  .. GetAchievementLink(core.achievementIDs[1]) .. " FAILED! by (" .. core.destName .. ")")
 		burningCindersFailed = true
 	end
 
 	--Storm Cloud
 	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 137669 and stormCloudFailed == false then
-		core:sendMessage("'Storm Cloud' part of "  .. GetAchievementLink(core.currentAchievementID) .. " FAILED! by (" .. core.destName .. ")")
+		core:sendMessage("'Storm Cloud' part of "  .. GetAchievementLink(core.achievementIDs[1]) .. " FAILED! by (" .. core.destName .. ")")
 		stormCloudFailed = true	
 	end
 	
 	--Rushing Winds
 	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 137654 and rushingWindsFailed == false then
-		core:sendMessage("'Rushing Winds' part of "  .. GetAchievementLink(core.currentAchievementID) .. " FAILED! by (" .. core.destName .. ")")
+		core:sendMessage("'Rushing Winds' part of "  .. GetAchievementLink(core.achievementIDs[1]) .. " FAILED! by (" .. core.destName .. ")")
 		rushingWindsFailed = true		
 	end
 
 	--Frozen Blood
 	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 137664 and frozenBloodFailed == false then
-		core:sendMessage("'Frozen Blood' part of "  .. GetAchievementLink(core.currentAchievementID) .. " FAILED! by (" .. core.destName .. ")")
+		core:sendMessage("'Frozen Blood' part of "  .. GetAchievementLink(core.achievementIDs[1]) .. " FAILED! by (" .. core.destName .. ")")
 		frozenBloodFailed = true		
 	end
 
 	--Frozen Solid!
 	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 136892 and frozenSolidFailed == false then
-		core:sendMessage("'Frozen Solid!' part of "  .. GetAchievementLink(core.currentAchievementID) .. " FAILED! by (" .. core.destName .. ")")
+		core:sendMessage("'Frozen Solid!' part of "  .. GetAchievementLink(core.achievementIDs[1]) .. " FAILED! by (" .. core.destName .. ")")
 		frozenSolidFailed = true	
 	end
 end
 
 function core.ThroneOfThunder:TwinConsorts()
-	--Find Suen
-	for i = 1, 4 do
-		if UnitName("boss" .. i) == "Suen" then
-			suenHealth = (UnitHealth("boss" .. i) / UnitHealthMax("boss" .. i)) * 100
-		end 
-	end
+	-- --Find Suen
+	-- for i = 1, 4 do
+	-- 	if UnitName("boss" .. i) == "Suen" then
+	-- 		suenHealth = (UnitHealth("boss" .. i) / UnitHealthMax("boss" .. i)) * 100
+	-- 	end 
+	-- end
 
-	if core.type == "UNIT_DIED" and core.destID == "68905" and core.achievementFailed == false then
-		if suenHealth < 30 then
-			SendChatMessage("[WIP] "  .. GetAchievementLink(8086) .. " FAILED!",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
-			core.achievementFailed = true			
-		end
-	end
+	-- if core.type == "UNIT_DIED" and core.destID == "68905" and core.achievementFailed == false then
+	-- 	if suenHealth < 30 then
+	-- 		SendChatMessage("[WIP] "  .. GetAchievementLink(8086) .. " FAILED!",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+	-- 		core.achievementFailed = true			
+	-- 	end
+	-- end
 
 	--When Lu'lin dies. If suen health is below 30% then achievement has failed
 
