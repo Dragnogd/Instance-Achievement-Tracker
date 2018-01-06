@@ -8,20 +8,11 @@ local _, core = ...
 ------------------------------------------------------
 core.HeartOfFear = {}
 
-local f = CreateFrame ("Frame")
-f:RegisterEvent("UNIT_AURA")
-f:RegisterEvent("UNIT_AURA_APPLIED")
-f:RegisterEvent("CRITERIA_COMPLETE")
-f:RegisterEvent("CRITERIA_EARNED")
-f:RegisterEvent("CRITERIA_UPDATE")
-
-
 ------------------------------------------------------
 ---- Imperial Vizier Zor'lok
 ------------------------------------------------------
 local parasitePlayers = {}
 local parasiteCounter = 0
-local groupSize = 0
 
 ------------------------------------------------------
 ---- Grand Empress Shek'zeer
@@ -31,24 +22,21 @@ local reaversKilled = 0
 
 function core.HeartOfFear:ImperialVizierZorlok()
 	if core.type == "UNIT_DIED" and core.unitTypePlayer == "Player" then
-		if core.achievementCompleted == true then
+		--If the player was holding a parasite then reduce counter by 1
+		if parasitePlayers[core.spawn_uid_dest_Player] ~= nil then
 			parasiteCounter = parasiteCounter - 1
 			parasitePlayers[core.spawn_uid_dest_Player] = nil
-			core.achievementCompleted = false	
-		end
-		core:sendMessage(GetAchievementLink(core.currentAchievementID) .. " FAILED! (" .. core.destName .. " has died) DO NOT KILL BOSS!")
-	end
 
-	--If the player is not in a group
-	local unitType, destID, spawn_uid_dest = strsplit("-",UnitGUID("Player"));
-	if UnitDebuff("Player", GetSpellInfo(125785)) and parasitePlayers[spawn_uid_dest] == nil then
-		parasiteCounter = parasiteCounter + 1
-		core:sendMessage(UnitName("Player") .. " has got the Zealous Parasite debuff (" .. parasiteCounter .. "/" .. core.groupSize .. ")")
-		parasitePlayers[spawn_uid_dest] = spawn_uid_dest
+			--If achievement had already completed then fail it
+			if core.achievementsCompleted[1] == true then
+				core:getAchievementFailedWithMessageAfter("(Reason: " .. core.destName .. " has died) DO NOT KILL BOSS!")
+				core.achievementsCompleted[1] = false
+			end
+		end
 	end
 
 	--If player is in a group
-	if core.groupSize > 0 then
+	if core.groupSize > 1 then
 		for i = 1, core.groupSize do
 			local unit = nil
 			if core.chatType == "PARTY" then
@@ -70,6 +58,14 @@ function core.HeartOfFear:ImperialVizierZorlok()
 				end
 			end
 		end
+	else
+		--Player is not in a group
+		local unitType, destID, spawn_uid_dest = strsplit("-",UnitGUID("Player"));
+		if UnitDebuff("Player", GetSpellInfo(125785)) and parasitePlayers[spawn_uid_dest] == nil then
+			parasiteCounter = parasiteCounter + 1
+			core:sendMessage(UnitName("Player") .. " has got the Zealous Parasite debuff (" .. parasiteCounter .. "/" .. core.groupSize .. ")")
+			parasitePlayers[spawn_uid_dest] = spawn_uid_dest
+		end
 	end
 
 	if parasiteCounter == core.groupSize then
@@ -89,12 +85,14 @@ function core.HeartOfFear:GrandEmpressShekzeer()
 		if timerStarted == false then
 			timerStarted = true
 			C_Timer.After(10, function()
-				if reaversKilled == 2 then
-					core:getAchievementSuccess()
-				else
-					core:sendMessage(GetAchievementLink(core.currentAchievementID) .. " FAILED! (" .. reaversKilled .. "/2) reavers killed in time.")
-					reaversKilled = 0
-					timerStarted = false					
+				if core.inCombat == true then
+					if reaversKilled == 2 then
+						core:getAchievementSuccess()
+					else
+						core:sendMessage(GetAchievementLink(core.currentAchievementID) .. " FAILED! (" .. reaversKilled .. "/2) reavers killed in time.")
+						reaversKilled = 0
+						timerStarted = false					
+					end		
 				end
 			end)
 		end
