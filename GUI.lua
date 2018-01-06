@@ -514,22 +514,26 @@ function Player_OnClick(self)
                 for boss,_ in pairs(core.Instances[expansion][instanceType][instance]) do
                     if core.Instances[expansion][instanceType][instance][boss].name == parent.headerText:GetText() then
                         local players
-                        if #core.Instances[expansion][instanceType][instance][boss].players > 0 then
-                            players = GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " Players who need Achievement: "
+                        if core.inInstance == true then
+                            if #core.Instances[expansion][instanceType][instance][boss].players > 0 then
+                                players = GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " Players who need Achievement: "
 
-                            for i = 1, #core.Instances[expansion][instanceType][instance][boss].players do
-                                players = players .. core.Instances[expansion][instanceType][instance][boss].players[i] .. ", "
-                            end
+                                for i = 1, #core.Instances[expansion][instanceType][instance][boss].players do
+                                    players = players .. core.Instances[expansion][instanceType][instance][boss].players[i] .. ", "
+                                end
 
-                            if core.scanFinished == false then
-                                players = players .. " (scan still in progress)"
+                                if core.scanFinished == false then
+                                    players = players .. " (scan still in progress)"
+                                end
+                            else
+                                if core.scanFinished == true then
+                                    players = GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " No one in this group needs this achievement: "
+                                else
+                                    players = GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " No one in this group needs this achievement (scan still in progress): "                        
+                                end
                             end
                         else
-                            if core.scanFinished == true then
-                                players = GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " No one in this group needs this achievement: "
-                            else
-                                players = GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " No one in this group needs this achievement (scan still in progress): "                        
-                            end
+                            players = GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement)
                         end
                         
                         local message, pattern, position;

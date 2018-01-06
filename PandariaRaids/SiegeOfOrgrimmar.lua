@@ -77,9 +77,9 @@ local warbringersKilled = 0
 local warbringersKilledIds = {}
 
 function core.SiegeOfOrgrimmar:Immerseus()
-	if core.type == "UNIT_DIED" and core.destName == "Tears of the Vale" and core.achievementCompleted == false then
+	if core.type == "UNIT_DIED" and core.destName == "Tears of the Vale" and tearsOfTheValeKilled < 10 then
 		tearsOfTheValeKilled = tearsOfTheValeKilled + 1
-		SendChatMessage("[WIP] Tears of the Vale Killed ("  .. tearsOfTheValeKilled .. "/10)",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+		core:sendMessage("Tears of the Vale Killed ("  .. tearsOfTheValeKilled .. "/10)")
 	end
 
 	if tearsOfTheValeKilled == 10 then
@@ -93,14 +93,14 @@ function core.SiegeOfOrgrimmar:TheFallenProtectors()
 		table.insert(playersRecievedMark, core.spawn_uid_dest_Player)
 	end
 
-	if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 143842 and core:has_value(playersRecievedMark, core.spawn_uid_dest_Player) == false and core.achievementCompleted == false then
+	if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 143842 and core:has_value(playersRecievedMark, core.spawn_uid_dest_Player) == false and core.achievementsCompleted[1] == false then
 		table.insert(playersRecievedMark, core.spawn_uid_dest_Player)
 		playersRecievedMarkCounter = playersRecievedMarkCounter + 1
 		core:sendMessage("Unique Players Recieved Mark of Anguish ("  .. playersRecievedMarkCounter .. "/5)")
 	end
 
 	if playersRecievedMarkCounter == 5 then
-		core:getAchievementSuccessWithCustomMessage(GetAchievementLink(core.currentAchievementID) .. " '5 unique players recieved Mark of Anguish' part of the achievement complete. Make sure 200yards have also been covered before killing boss'")
+		core:getAchievementSuccessWithCustomMessage(GetAchievementLink(core.achievementIDs[1]) .. " '5 unique players recieved Mark of Anguish' part of the achievement complete. Make sure 200yards have also been covered before killing boss'")
 	end
 end
 
@@ -117,7 +117,7 @@ function core.SiegeOfOrgrimmar:ShaOfPride()
 	end
 
 	--Last Word
-	if core.type == "UNIT_DIED" and core.destID == "71946" and core.achievementFailed == false then
+	if core.type == "UNIT_DIED" and core.destID == "71946" and core.achievementsFailed[1] == false then
 		core:sendMessage("WARNING: Manifestation of Pride has died. If the closest 2 players to the add did not have " .. GetSpellLink(146595) .. " then the achievement has FAILED")
 	end
 end
@@ -146,7 +146,7 @@ function core.SiegeOfOrgrimmar:IronJuggernaut()
 			detonationStarted = false
 			if superheatedCrawlerMinesTemp > 0 then
 				superheatedCrawlerMinesSquashed = superheatedCrawlerMinesSquashed + superheatedCrawlerMinesTemp
-				core:sendMessage(GetAchievementLink(core.currentAchievementID) .. " (" .. superheatedCrawlerMinesSquashed .. "/6) Superheated Crawler Mines Stomped")		
+				core:sendMessage(GetAchievementLink(core.achievementIDs[1]) .. " (" .. superheatedCrawlerMinesSquashed .. "/6) Superheated Crawler Mines Stomped")		
 				superheatedCrawlerMinesTemp = 0
 				superheatedCrawlerMines = {}
 			end
@@ -190,15 +190,9 @@ end
 
 function core.SiegeOfOrgrimmar:SecuredStockpileOfPandarenSpoils()
 	local unitTypeSrc, sourceID, spawn_uid = strsplit("-",core.sourceGUID);
-	local overkillTemp = overkill
 
 	if core.type == "SWING_DAMAGE" or core.type == "RANGE_DAMAGE" or core.type == "SPELL_DAMAGE" or core.type == "SPELL_PERIODIC_DAMAGE" then
-		if core.type == "SWING_DAMAGE" then
-			--TODO: Overkill value not working on swing damage
-			overkillTemp = core.spellSchool
-		end
-
-		if overkillTemp > 0 then
+		if core.overkill > 0 then
 			if playersSide[spawn_uid] == nil then
 				if core:has_value(mantridMobs, core.destID) then
 					print("Adding " .. core.sourceName .. " to Mantrid")
@@ -288,7 +282,7 @@ function core.SiegeOfOrgrimmar:Paragons()
 end
 
 function core.SiegeOfOrgrimmar:GarroshHellscream()
-	if core.achievementCompleted == false then
+	if core.achievementsCompleted[1] == false then
 		if (core.type == "SWING_DAMAGE" or core.type == "SWING_MISSED") and core.sourceID == "71979" then
 			if warbringersIds[core.spawn_uid] == nil then
 				warbringersIds[core.spawn_uid] = core.spawn_uid
@@ -298,7 +292,7 @@ function core.SiegeOfOrgrimmar:GarroshHellscream()
 		end
 
 		if warbringersCounter == 18 and step1Complete == false then
-			core:sendMessage(GetAchievementLink(core.currentAchievementID) .. " 18 Kor'kron Warbringers Alive. They can now be killed with a single Iron Star")
+			core:sendMessage(GetAchievementLink(core.achievementIDs[1]) .. " 18 Kor'kron Warbringers Alive. They can now be killed with a single Iron Star")
 			step1Complete = true		
 		end
 
@@ -312,14 +306,14 @@ function core.SiegeOfOrgrimmar:GarroshHellscream()
 		end
 
 		--If a Warbringer was killed by an iron star impact
-		if core.type == "SPELL_DAMAGE" and core.destID == "71979" and core.spellId == 144653 and core.overkill > 0 and core.achievementCompleted == false then
+		if core.type == "SPELL_DAMAGE" and core.destID == "71979" and core.spellId == 144653 and core.overkill > 0 and core.achievementsCompleted[1] == false then
 			if warbringersKilledIds[core.spawn_uid_dest] == 1 then
 				warbringersKilled = warbringersKilled + 1
 				warbringersIds[core.spawn_uid_dest] = nil
 				warbringersCounter = warbringersCounter - 1
 				if timerStarted == false then
 					timerStarted = true
-					SendChatMessage("[WIP] Timer Started! ",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+					core:sendMessage("Timer Started! 10 seconds remaining")
 					C_Timer.After(10, function()
 						if warbringersKilled < 18 then
 							core:getAchievementFailedWithMessageAfter("(" .. warbringersKilled .. "/18) killed in time (This achievement can be repeated)")
