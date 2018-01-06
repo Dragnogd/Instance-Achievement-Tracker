@@ -55,9 +55,9 @@ function core.TerraceOfEndlessSpring:LeiShi()
 		core:sendMessage(core.destName .. " LOST Parasitic Clutch (" .. parasiticClutchCounter .. "/" .. core.groupSize .. ")")	
 		
 		--If the achievement was already completed then alert the user not to kill the boss
-		if core.achievementCompleted == true then
+		if core.achievementsCompleted[1] == true then
 			core:sendMessage("DO NOT KILL BOSS. (Wait for " .. core.destName .. " to collect another Parasitic Clutch)")
-			core.achievementCompleted = false
+			core.achievementsCompleted[1] = false
 		end
 	end
 
