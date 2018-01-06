@@ -35,7 +35,7 @@ local graspingEarthKilled = 0
 
 function core.BlackrockFoundary:BeastlordDarmac()
 	if (core.sourceID == "76884" or core.sourceID == "76874" or core.sourceID == "76945") then
-		core:getAchievementSuccessWithCustomMessage(core.sourceName .. " Mounted First' part of " .. GetAchievementLink(core.currentAchievementID) .. " will be completed once boss is killed")	
+		core:getAchievementSuccessWithCustomMessage(core.sourceName .. " Mounted First' part of " .. GetAchievementLink(core.achievementIDs[1]) .. " will be completed once boss is killed")	
 	end
 end
 
@@ -57,7 +57,7 @@ function core.BlackrockFoundary:OperatorThogar()
 			core:sendMessage("Place Your Toy Train Set Then Wind-Up Train Wrecker NOW")								
 		end)
 		C_Timer.After(25, function()
-			if core.achievementCompleted == false then
+			if core.achievementsCompleted[1] == false then
 				core:sendMessage("Your Toy Train Set Then Wind-Up Train Wrecker were not placed in time. Achievement can still be earned but WIP will not tell you when to place it")
 			end									
 		end)
@@ -97,7 +97,7 @@ function core.BlackrockFoundary:TheIronMaidens()
 end
 
 function core.BlackrockFoundary:BlastFurnace()
-	if core.type == "UNIT_DIED" and core.destID == "76815" and core.achievementFailed == false and core.achievementCompleted == false then
+	if core.type == "UNIT_DIED" and core.destID == "76815" and core.achievementsFailed[1] == false and core.achievementsCompleted[1] == false then
 		primalElementalistsKilled = primalElementalistsKilled + 1
 		core:sendMessage("Primal Elementalists killed: (" .. primalElementalistsKilled .. "/4)")
 		if timerStarted == false then
@@ -115,7 +115,7 @@ function core.BlackrockFoundary:BlastFurnace()
 end
 
 function core.BlackrockFoundary:Kromog()
-	if core.type == "UNIT_DIED" and core.destID == "77893" and core.achievementFailed == false and core.achievementCompleted == false then
+	if core.type == "UNIT_DIED" and core.destID == "77893" and core.achievementsFailed[1] == false and core.achievementsCompleted[1] == false then
 		graspingEarthKilled = graspingEarthKilled + 1
 		core:sendMessage("Grasping Earth Hands killed: (" .. graspingEarthKilled .. "/10)")
 		if timerStarted == false then
