@@ -27,7 +27,7 @@ function core.EndTime:EchoOfSylvanas()
     end
 end
 
-function core:EndTime:EchoOfTyrande()
+function core.EndTime:EchoOfTyrande()
 	-- if core.groupSize > 1 then
 	-- 	--We are in a group
 	-- 	local currentUnit
