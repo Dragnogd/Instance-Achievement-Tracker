@@ -38,6 +38,7 @@ RegisterAddonMessagePrefix("Whizzey")						--Register events to listen out for c
 --DEBUG
 events:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
 events:RegisterEvent("UNIT_HEALTH")
+events:RegisterEvent("UNIT_AURA")
 
 
 local temp2 = {}
@@ -46,7 +47,7 @@ events:SetScript("OnEvent", function(self, event, ...)
 	if event == "aaaUNIT_HEALTH" then
 		print(UnitName(...) .. " : " .. UnitHealth(...))
 	end
-	if event == "aaaUNIT_SPELLCAST_SUCCEEDED" then
+	if event == "UNIT_SPELLCAST_SUCCEEDED" then
 
 		local unitID, spell, rank, lineID, spellID = ...
 
@@ -54,7 +55,9 @@ events:SetScript("OnEvent", function(self, event, ...)
 			print(...)
 			table.insert(temp2, spellID)
 		end			
-
+	end
+	if event == "UNIT_AURA" then
+		
 	end
     return self[event] and self[event](self, event, ...) 	--Allow event arguments to be called from seperate functions
 end)
@@ -376,14 +379,24 @@ function getInstanceInfomation()
 		core.inInstance = true
 		core.instanceNameSpaces, _, core.difficultyID, _, core.maxPlayers, _, _, core.currentZoneID, _ = GetInstanceInfo()
 
-
-
 		--Used to find correct table in the core.instances table
 		local str = string.gsub(" " .. core.instanceNameSpaces, "%W%l", string.upper):sub(2)
 		str = str:gsub("%s+", "")
 		str = str:gsub("%-", "")
 		str = str:gsub("%'", "")
 		core.instance = str
+		core.instanceClear = core.instance
+
+		--If the raid is in the lich king expansion then detect whether player is on the 10man or 25man difficulty
+		if core.instance == "Ulduar" then
+			if core.difficultyID == 3 then
+				--10 Man
+				core.instance = core.instance .. "10Man"
+			elseif core.difficultyID == 4 then
+				--25 Man
+				core.instance = core.instance .. "25Man"
+			end
+		end
 
 		--Find the instance in the core.instances table so we can cache the value to be used later
 		for expansion,_ in pairs(core.Instances) do
@@ -446,8 +459,9 @@ function getInstanceInfomation()
 end
 
 function initialInstanceSetup()
-	if pcall(function() core[core.instance]:InitialSetup() end) == true then
-		core[core.instance]:InitialSetup()
+	print("Pcall: " .. core.instanceClear)
+	if pcall(function() core[core.instanceClear]:InitialSetup() end) == true then
+		core[core.instanceClear]:InitialSetup()
 	end
 end
 
@@ -941,6 +955,15 @@ function core:printMessage(message)
 	print("|cff00ccffAchievement Tracker: |cffffffff" .. message)
 end
 
+function core:getAchievement(index)
+	local value = index
+	if index == nil then
+		value = 1
+	end
+	return GetAchievementLink(core.achievementIDs[value])
+end
+
+
 --Display the "Tracking {achievement} for achievements"
 function core:getAchievementToTrack()
 	if core.achievementTrackedMessageShown == false then
@@ -1119,7 +1142,7 @@ function clearVariables()
 	--If a boss was pulled then clear the variables for that raid
 	print(core.instance)
 	if core.instance ~= nil then
-		core[core.instance]:ClearVariables()
+		core[core.instanceClear]:ClearVariables()
 	end
 
 	currentBoss = nil

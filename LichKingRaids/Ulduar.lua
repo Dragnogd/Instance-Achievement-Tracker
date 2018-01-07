@@ -1,8 +1,127 @@
--- ------------------------------------------------------
--- ---- Ulduar Bosses
--- ------------------------------------------------------
+--------------------------------------
+-- Namespaces
+--------------------------------------
+local _, core = ...
 
--- local f = CreateFrame ("Frame")
+------------------------------------------------------
+---- Ulduar Bosses
+------------------------------------------------------
+core.Ulduar = {}
+core.Ulduar.Events = CreateFrame("Frame")
+
+------------------------------------------------------
+---- Dwarfageddon
+------------------------------------------------------
+local steelforgedDefenderUID = {}
+local steelforgedDefenderCounter = 0
+local steelforgedDefenderKilled = 0
+local timerStarted = false
+local steelforgedDefenderAnnounced = false
+
+------------------------------------------------------
+---- Unbroken
+------------------------------------------------------
+local repairedAnnounced = false
+
+
+function core.Ulduar:Dwarfageddon()
+    --Add killed
+    if core.type == "UNIT_DIED" then
+        steelforgedDefenderUID[core.spawn_uid_dest] = nil
+        steelforgedDefenderCounter = steelforgedDefenderCounter - 1
+
+        --Only start the timer if enough adds have been collected.
+        if steelforgedDefenderAnnounced == true then
+            steelforgedDefenderKilled = steelforgedDefenderKilled + 1
+            if timerStarted == false then
+                timerStarted = true
+                core:sendMessage("Timer Started! 10 seconds remaining" ,AchievementTracker_chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+                C_Timer.After(10, function()
+                    if steelforgedDefenderKilled >= 100 then
+                        core:sendMessage(core:getAchievement() .. " COMPLETED! Steelforged Defenders were killed in time (" .. steelforgedDefenderKilled .. "/100)") 
+                    else
+                        core:sendMessage(core.getAchievement() .. " FAILED! Steelforged Defenders were not killed in time (" .. steelforgedDefenderKilled .. "/100). This achievement can be attempted again.")
+                        steelforgedDefenderKilled = 0
+                        timerStarted = false
+                        steelforgedDefenderAnnounced = false
+                    end
+                end)
+            end
+        end
+    end
+
+    --Add detected
+    if core.sourceID == "33572" and steelforgedDefenderCounter <= 100 and steelforgedDefenderAnnounced == false then
+        if steelforgedDefenderUID[core.spawn_uid] == nil then
+            steelforgedDefenderUID[core.spawn_uid] = core.spawn_uid
+            steelforgedDefenderCounter = steelforgedDefenderCounter + 1
+            core:sendMessageDelay("Steelforged Defender Counter (" .. steelforgedDefenderCounter .. "/100)",steelforgedDefenderCounter,10)
+        end
+    end
+    if core.destID == "33572" and steelforgedDefenderCounter <= 100 and steelforgedDefenderAnnounced == false then
+        if steelforgedDefenderUID[core.spawn_uid_dest] == nil then
+            steelforgedDefenderUID[core.spawn_uid_dest] = core.spawn_uid_dest
+            steelforgedDefenderCounter = steelforgedDefenderCounter + 1
+            core:sendMessageDelay("Steelforged Defender Counter (" .. steelforgedDefenderCounter .. "/100)",steelforgedDefenderCounter,10)
+        end
+    end
+
+    --Requirements Met
+    if steelforgedDefenderCounter >= 100 and steelforgedDefenderAnnounced == false then
+        steelforgedDefenderAnnounced = true
+        if core.difficultyID == 4 then
+            core:sendMessage("[WIP] "  .. core:getAchievement() .. " requirements have been met. Adds can now be killed!")
+        elseif core.difficultyID == 3 then
+            core:sendMessage("[WIP] " .. core:getAchievement() .. " requirements have been met. Adds can now be killed!")
+        end
+    end
+end
+
+
+function core.Ulduar:ClearVariables()
+end
+
+function core.Ulduar:InitialSetup()
+    print("Setting up Ulduar")
+    core.Ulduar.Events:RegisterEvent("UNIT_AURA")
+end
+
+core.Ulduar.Events:SetScript("OnEvent", function(self, event, ...)
+    return self[event] and self[event](self, event, ...)
+end)
+
+function core.Ulduar.Events:UNIT_AURA(self, unitID, ...)
+    if UnitBuff(unitID, GetSpellInfo(62705)) ~= nil and repairedAnnounced == false then
+        core:sendMessage(GetAchievementLink(2905) .. " FAILED! A player has repaired their vechile")
+        repairedAnnounced = true
+    end
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- 
 -- f:RegisterEvent("UNIT_ENTERED_VEHICLE")
 -- f:RegisterEvent("UNIT_EXITED_VEHICLE")
 -- f:RegisterEvent("CHAT_MSG_MONSTER_YELL")
@@ -17,16 +136,12 @@
 -- local towerOfStormsFound = false
 -- local towerOfFlamesFound = false
 -- local buffCount = 0
--- local steelforgedDefenderList = {}
--- local steelforgedDefenderCounter = 0
--- local steelforgedDefenderCounterKilled = 0
--- local timerStarted = false
+
 
 -- ------------------------------------------------------
 -- ---- EVENTS
 -- ------------------------------------------------------
 -- f:SetScript("OnEvent", function(self, event, ...)
---     AchievementTracker_detectGroupType()
 
 -- 	if event == "CHAT_MSG_MONSTER_YELL" then
 -- 		local message, sender = select(1,...)
@@ -36,71 +151,9 @@
 -- 		end
 --     end
 
---     if event == "UNIT_HEALTH" then
--- 		local unitID = select(1,...)
 
---         local name, rank, icon, count, dispelType, duration, expires, caster, isStealable, nameplateShowPersonal, spellID, canApplyAura, isBossDebuff, _, nameplateShowAll, timeMod, value1, value2, value3 = UnitBuff(unitID, "Auto-repair")
-
---         if spellID == 62705 and AchievementTracker_achievementFailed == false then
---             AchievementTracker_achievementFailed = true
---             AchievementTracker_getAchievementFailedWrath(2906,2905)
---         end
---     end
 -- end)
 
-
-
--- function Ulduar_FlameLeviathanTrash(spawn_uid, sourceID, type, spawn_uid_dest)
---     --Achievements to track for trash
---     if AchievementTracker_displayTracked2 == false then
---         AchievementTracker_getAchievementsToTrackWrathNew(3098,3097) --Dwarfageddon
---         AchievementTracker_getAchievementsToTrackWrathNew(2906,2905) --Unbroken
---         AchievementTracker_displayTracked2 = true
---     end
-
---     --Dwarfageddon
---     if type == "UNIT_DIED" then
---         steelforgedDefenderList[spawn_uid_dest] = nil
---         steelforgedDefenderCounter = steelforgedDefenderCounter - 1
---         if steelforgedDefenderCounter - math.floor(steelforgedDefenderCounter/10)*10 == 0 and timerStarted == false then
---             SendChatMessage("[WIP] Steelforged Defenders: " .. steelforgedDefenderCounter,AchievementTracker_chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
---         end
---         steelforgedDefenderCounterKilled = steelforgedDefenderCounterKilled + 1
-
---         if AchievementTracker_achievementCompleted == true and timerStarted == false then
---             --Check that the adds were killed in time
---             SendChatMessage("[WIP] Timer Started!" ,AchievementTracker_chatType,DEFAULT_CHAT_FRAME.editBox.languageID) 
---             timerStarted = true
---             C_Timer.After(10, function()
---                 if steelforgedDefenderCounterKilled >= 100 then
---                     SendChatMessage("[WIP] COMPLETED! Steelforged Defenders were killed in time (" .. steelforgedDefenderCounterKilled .. "/100)" ,AchievementTracker_chatType,DEFAULT_CHAT_FRAME.editBox.languageID) 
---                 else
---                     SendChatMessage("[WIP] FAILED! Steelforged Defenders were not killed in time (" .. steelforgedDefenderCounterKilled .. "/100). This achievement can be attempted again." ,AchievementTracker_chatType,DEFAULT_CHAT_FRAME.editBox.languageID) 
---                     steelforgedDefenderCounterKilled = 0
---                     AchievementTracker_achievementCompleted = false
---                     timerStarted = false
---                 end
---             end)
---         end
---     end
---     if sourceID == "33572" and AchievementTracker_achievementCompleted == false then
---         if steelforgedDefenderList[spawn_uid] == nil then
---             steelforgedDefenderList[spawn_uid] = spawn_uid
---             steelforgedDefenderCounter = steelforgedDefenderCounter + 1
---             if steelforgedDefenderCounter - math.floor(steelforgedDefenderCounter/10)*10 == 0 then
---                 SendChatMessage("[WIP] Steelforged Defenders: " .. steelforgedDefenderCounter,AchievementTracker_chatType,DEFAULT_CHAT_FRAME.editBox.languageID)            
---             end
---         end
---     end
---     if steelforgedDefenderCounter == 100 and AchievementTracker_achievementCompleted == false then
---         if(AchievementTracker_playerCount == 25) then
---             SendChatMessage("[WIP] "  .. GetAchievementLink(3098) .. " requirements have been met. Adds can now be killed!",AchievementTracker_chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
---         elseif AchievementTracker_playerCount == 10 then
---             SendChatMessage("[WIP] " .. GetAchievementLink(3097) .. " requirements have been met. Adds can now be killed!",AchievementTracker_chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
---         end
---         AchievementTracker_achievementCompleted = true
---     end
--- end
 
 -- function Ulduar_FlameLeviathan(type, spellId, destID, sourceName)
 --     ------------------------------------------------------
@@ -199,9 +252,9 @@
 --     towerOfStormsFound = false
 --     towerOfFlamesFound = false
 --     buffCount = 0
---     steelforgedDefenderList = {}
+--     steelforgedDefenderUID = {}
 --     steelforgedDefenderCounter = 0
---     steelforgedDefenderCounterKilled = 0
+--     steelforgedDefenderKilled = 0
 --     timerStarted = false
 
 -- end
