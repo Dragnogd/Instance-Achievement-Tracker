@@ -2891,12 +2891,12 @@ core.Instances = {
                 name = "Zul Aman",
                 boss1 = {
                     name = "Halazzi",
-                    bossIDs = {},
+                    bossIDs = {23577},
                     achievement = 5750,
                     players = {},
                     tactics = "",
-                    enabled = false,
-                    track = nil,
+                    enabled = true,
+                    track = function() core.ZulAman:Halazzi() end,
 					partial = false,
                 },
                 boss2 = {
