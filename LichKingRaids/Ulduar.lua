@@ -8,6 +8,8 @@ local _, core = ...
 ------------------------------------------------------
 core.Ulduar = {}
 core.Ulduar.Events = CreateFrame("Frame")
+local timerStarted = false
+local timerStarted2 = false
 
 ------------------------------------------------------
 ---- Dwarfageddon
@@ -15,7 +17,6 @@ core.Ulduar.Events = CreateFrame("Frame")
 local steelforgedDefenderUID = {}
 local steelforgedDefenderCounter = 0
 local steelforgedDefenderKilled = 0
-local timerStarted = false
 local steelforgedDefenderAnnounced = false
 
 ------------------------------------------------------
@@ -23,6 +24,26 @@ local steelforgedDefenderAnnounced = false
 ------------------------------------------------------
 local repairedAnnounced = false
 
+------------------------------------------------------
+---- Iron Dwarf, Medium Rare 
+------------------------------------------------------
+local darkRuneGuardianKilled = 0
+
+------------------------------------------------------
+---- A Quick Shave
+------------------------------------------------------
+local takeOff = 0
+
+------------------------------------------------------
+---- Shattered
+------------------------------------------------------
+local brittleTargets = 0
+local brittleTargetsKilled = 0
+
+------------------------------------------------------
+---- Stokin' the Furnace
+------------------------------------------------------
+local timer
 
 function core.Ulduar:Dwarfageddon()
     --Add killed
@@ -77,12 +98,114 @@ function core.Ulduar:Dwarfageddon()
     end
 end
 
+function core.Ulduar:FlameLeviathanTakeOutThoseTurrets()
+    if core.type == "PARTY_KILL" and core.destID == 33142 then
+        core:getAchievementSuccessPersonal()
+    end
+end
+
+function core.Ulduar:FlameLeviathanShutout()
+    if core.type == "SPELL_AURA_APPLIED" and core.spellID == 62475 then
+        core:getAchievementFailed(2)
+    end
+end
+
+function core.Ulduar:RazorscaleIronDwarfMediumRare()
+    if core.type == "UNIT_DIED" and core.spellId == 63317 and core.destID == "33388" then
+        darkRuneGuardianKilled = darkRuneGuardianKilled + 1
+        print(darkRuneGuardianKilled)
+        core:sendMessageDelay("Dark Rune Guardian Killed (" .. darkRuneGuardianKilled .. "/25)",darkRuneGuardianKilled,5)
+    end
+
+    core:trackMob("33388", "Dark Rune Guardian", 25, "25 Dark Rune Guardian have spawned!",5)
+
+    if darkRuneGuardianKilled >= 25 then
+        core:getAchievementSuccess()
+    end
+end
+
+function core.Ulduar:RazorscaleAQuickShave()
+    if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 62666 and (UnitHealth("boss1") / UnitHealthMax("boss1") * 100) > 50 then
+        takeOff = takeOff + 1
+        print(takeOff)
+    end
+
+    if takeOff == 2 then
+        core:getAchievementFailed()
+    end
+end
+
+function core.Ulduar:IgnisTheFurnaceMasterShattered()
+    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 62383 then
+        brittleTargetsKilled = brittleTargetsKilled + 1
+        if timerStarted == false then
+            timerStarted = true
+            C_Timer.After(5, function()
+                if brittleTargetsKilled >= 2 then
+                    core:getAchievementSuccess()
+                else
+                    core:sendMessage(core:getAchievement() .. "(" .. brittleTargetsKilled .. "/2) Brittle Targets killed in time")
+                    brittleTargetsKilled = 0
+                    timerStarted = false
+                end
+            end)
+        end
+    end
+end
+
+function core.Ulduar:IgnisTheFurnaceMasterStokinTheFurnace()
+    if timerStarted2 == false then
+        timerStarted2 = true
+        timer = C_Timer.NewTimer(240, function() 
+            core:getAchievementFailed(2)
+        end)
+    end
+    
+end
+
+function core.Ulduar:XT002DeconstructorNerfEngineering()
+    if core.type == "SPELL_INSTAKILL" and core.spellId == 62834 then
+        core:getAchievementFailed()
+    end
+end
+
+function core.Ulduar:XT002DeconstructorHeartbreaker()
+    if core.type == "PARTY_KILL" and core.destID == "33329" then
+        core:getAchievementSuccess(5)
+        print("Success")
+        print()
+    end
+end
 
 function core.Ulduar:ClearVariables()
+    timerStarted = false
+    timerStarted2 = false
+
+    ------------------------------------------------------
+    ---- Iron Dwarf, Medium Rare 
+    ------------------------------------------------------
+    darkRuneGuardianKilled = 0
+
+    ------------------------------------------------------
+    ---- A Quick Shave
+    ------------------------------------------------------
+    takeOff = 0
+
+    ------------------------------------------------------
+    ---- Shattered
+    ------------------------------------------------------
+    brittleTargets = 0
+    moltenTargets = 0
+
+    ------------------------------------------------------
+    ---- Stokin' the Furnace
+    ------------------------------------------------------
+    if timer ~= nil then
+        timer:Cancel()
+    end
 end
 
 function core.Ulduar:InitialSetup()
-    print("Setting up Ulduar")
     core.Ulduar.Events:RegisterEvent("UNIT_AURA")
 end
 
@@ -96,165 +219,3 @@ function core.Ulduar.Events:UNIT_AURA(self, unitID, ...)
         repairedAnnounced = true
     end
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
--- 
--- f:RegisterEvent("UNIT_ENTERED_VEHICLE")
--- f:RegisterEvent("UNIT_EXITED_VEHICLE")
--- f:RegisterEvent("CHAT_MSG_MONSTER_YELL")
--- f:RegisterEvent("UNIT_HEALTH")
-
--- ------------------------------------------------------
--- ---- Flame Leviathan
--- ------------------------------------------------------
--- local hardModeActivated =  false
--- local towerOfFrostFound = false
--- local towerOfLifeFound = false
--- local towerOfStormsFound = false
--- local towerOfFlamesFound = false
--- local buffCount = 0
-
-
--- ------------------------------------------------------
--- ---- EVENTS
--- ------------------------------------------------------
--- f:SetScript("OnEvent", function(self, event, ...)
-
--- 	if event == "CHAT_MSG_MONSTER_YELL" then
--- 		local message, sender = select(1,...)
-
--- 		if string.find(message, "Orbital countermeasures enabled") then
--- 			hardModeActivated = true
--- 		end
---     end
-
-
--- end)
-
-
--- function Ulduar_FlameLeviathan(type, spellId, destID, sourceName)
---     ------------------------------------------------------
---     ---- Flame Leviathan
---     ------------------------------------------------------
-
---     --Achievements to track if hardmode is activated
---     if AchievementTracker_displayTracked3 == false then
---         AchievementTracker_getAchievementsToTrackWrathNew(2912,2911) --Shutout
---         AchievementTracker_getAchievementsToTrackWrathNew(2910,2909) --Take Out Those Turrets
---         AchievementTracker_displayTracked3 = true
---     end
-
---     --Orbital Defence Achievements
---     if hardModeActivated == true then
---         if AchievementTracker_displayTracked == false then
---             AchievementTracker_getAchievementsToTrackWrathNew(3057,3056) --Orbit-uary
---             AchievementTracker_getAchievementsToTrackWrathNew(2917,2915) --Nuked from Orbit
---             AchievementTracker_getAchievementsToTrackWrathNew(2918,2913) --Orbital Bombardment
---             AchievementTracker_getAchievementsToTrackWrathNew(2916,2914) --Orbital Devastation
---             AchievementTracker_displayTracked = true
---         end
-
---         for i = 1, 5 do
---             if UnitName("boss1") ~= nil then
---                 local name, realm = UnitName("boss" .. i)
---                 if UnitBuff("boss1", GetSpellInfo(65077)) and towerOfFrostFound == false then
---                     towerOfFrostFound = true
---                     buffCount = buffCount  + 1
---                 elseif UnitBuff("boss1", GetSpellInfo(64482)) and towerOfLifeFound == false then
---                     towerOfLifeFound = true
---                     buffCount = buffCount  + 1
---                 elseif UnitBuff("boss1", GetSpellInfo(65076)) and towerOfStormsFound == false then
---                     towerOfStormsFound = true
---                     buffCount = buffCount  + 1
---                 elseif UnitBuff("boss1", GetSpellInfo(65075)) and towerOfFlamesFound == false then
---                     towerOfFlamesFound = true
---                     buffCount = buffCount  + 1
---                 end
---             end
---         end
-
-
---         --print(AchievementTracker_inCombat)
---         if AchievementTracker_inCombat then
---             if buffCount < 4 and AchievementTracker_achievementFailed == false then
---                 --1 Achievemnt failed
---                 AchievementTracker_getAchievementFailedWrath(3057,3056)
---                 AchievementTracker_achievementFailed = true
---             end
-
---             if buffCount < 3 and AchievementTracker_achievementFailed2 == false then
---                 --2 Achievements failed
---                 AchievementTracker_getAchievementFailedWrath(2917,2915)
---                 AchievementTracker_achievementFailed2 = true
---             end
-
---             if buffCount < 2 and AchievementTracker_achievementFailed3 == false then
---                 --3 Achievements failed
---                 AchievementTracker_getAchievementFailedWrath(2916,2914)
---                 AchievementTracker_achievementFailed3 = true
---             end
-
---             if buffCount < 1 and AchievementTracker_achievementFailed4 == false then
---                 --4 Achievements failed
---                 AchievementTracker_getAchievementFailedWrath(2918,2913)
---                 AchievementTracker_achievementFailed4 = true
---             end  
---         end 
---     end
-
---     --Shutout
---     if type == "SPELL_AURA_APPLIED" and AchievementTracker_achievementFailed5 == false then
---         print(spellID)
---         if spellID == 62475 then
---             AchievementTracker_getAchievementFailedWrath(2912,2911)
---             AchievementTracker_achievementFailed5 = true
---         end
---     end
-
---     -- --Take Out Those Turrets
---     -- if type == "PARTY_KILL" then
---     --     print(destID)
---     --     if destID == 33142 then
---     --         AchievementTracker_getAchievementSuccessWrathPersonal(2912,2911,sourceName)
---     --     end
---     -- end
--- end
-
--- function Ulduar_ClearVariables()
---     ------------------------------------------------------
---     ---- Flame Leviathan
---     ------------------------------------------------------
---     towerOfFrostFound = false
---     towerOfLifeFound = false
---     towerOfStormsFound = false
---     towerOfFlamesFound = false
---     buffCount = 0
---     steelforgedDefenderUID = {}
---     steelforgedDefenderCounter = 0
---     steelforgedDefenderKilled = 0
---     timerStarted = false
-
--- end

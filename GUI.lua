@@ -17,6 +17,7 @@ local WrathOfTheLichKingContent
 local WrathOfTheLichKingContentButtons = {}
 
 Config.currentTab = nil
+Config.currentInstance = nil
 
 --------------------------------------
 -- Config functions
@@ -370,6 +371,7 @@ function Instance_OnClick(self)
         --Button has been pressed by the user
         str = string.gsub(" " .. self:GetText(), "%W%l", string.upper):sub(2)
         local InstanceName = str:gsub("%s+", "")
+        Config.currentInstance = InstanceName
 
         currentTabCompressed = string.gsub(" " .. Config.currentTab, "%W%l", string.upper):sub(2)
         currentTabCompressed = currentTabCompressed:gsub("%s+", "")
@@ -508,46 +510,52 @@ function Player_OnClick(self)
     core:detectGroupType()
     local parent = self:GetParent()
     parent = parent:GetParent()
+
+    print(parent.headerText:GetText())
+
 	for expansion,_ in pairs(core.Instances) do
 		for instanceType,_ in pairs(core.Instances[expansion]) do
-			for instance,_ in pairs(core.Instances[expansion][instanceType]) do
-                for boss,_ in pairs(core.Instances[expansion][instanceType][instance]) do
-                    if core.Instances[expansion][instanceType][instance][boss].name == parent.headerText:GetText() then
-                        local players
-                        if core.inInstance == true then
-                            if #core.Instances[expansion][instanceType][instance][boss].players > 0 then
-                                players = GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " Players who need Achievement: "
+            for instance,_ in pairs(core.Instances[expansion][instanceType]) do
+                if instance == Config.currentInstance then
+                    for boss,_ in pairs(core.Instances[expansion][instanceType][instance]) do
+                        if core.Instances[expansion][instanceType][instance][boss].name == parent.headerText:GetText() then
+                            
+                            local players
+                            if core.inInstance == true then
+                                if #core.Instances[expansion][instanceType][instance][boss].players > 0 then
+                                    players = GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " Players who need Achievement: "
 
-                                for i = 1, #core.Instances[expansion][instanceType][instance][boss].players do
-                                    players = players .. core.Instances[expansion][instanceType][instance][boss].players[i] .. ", "
-                                end
+                                    for i = 1, #core.Instances[expansion][instanceType][instance][boss].players do
+                                        players = players .. core.Instances[expansion][instanceType][instance][boss].players[i] .. ", "
+                                    end
 
-                                if core.scanFinished == false then
-                                    players = players .. " (scan still in progress)"
-                                end
-                            else
-                                if core.scanFinished == true then
-                                    players = GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " No one in this group needs this achievement: "
+                                    if core.scanFinished == false then
+                                        players = players .. " (scan still in progress)"
+                                    end
                                 else
-                                    players = GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " No one in this group needs this achievement (scan still in progress): "                        
+                                    if core.scanFinished == true then
+                                        players = GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " No one in this group needs this achievement: "
+                                    else
+                                        players = GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " No one in this group needs this achievement (scan still in progress): "                        
+                                    end
                                 end
-                            end
-                        else
-                            players = GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement)
-                        end
-                        
-                        local message, pattern, position;
-                        position = 1;
-                        for i = 1, #players, 249 do
-                            message = players:sub(position, position + 248);
-                            if #message < 249 then
-                                pattern = ".+";
                             else
-                                pattern = "(.+)%s";
+                                players = GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement)
                             end
-                            for capture in message:gmatch(pattern) do
-                                SendChatMessage("[WIP] " .. capture, core.chatType);
-                                position = position + #capture + 1;
+                            
+                            local message, pattern, position;
+                            position = 1;
+                            for i = 1, #players, 249 do
+                                message = players:sub(position, position + 248);
+                                if #message < 249 then
+                                    pattern = ".+";
+                                else
+                                    pattern = "(.+)%s";
+                                end
+                                for capture in message:gmatch(pattern) do
+                                    SendChatMessage("[WIP] " .. capture, core.chatType);
+                                    position = position + #capture + 1;
+                                end
                             end
                         end
                     end

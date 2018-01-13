@@ -56,7 +56,7 @@ events:SetScript("OnEvent", function(self, event, ...)
 			table.insert(temp2, spellID)
 		end			
 	end
-	if event == "UNIT_AURA" then
+	if event == "aaaUNIT_AURA" then
 		
 	end
     return self[event] and self[event](self, event, ...) 	--Allow event arguments to be called from seperate functions
@@ -103,6 +103,7 @@ core.groupSize = 1								--Amount of players currently in the group. Set to 1 b
 core.achievementIDs = {}						--Stores a list of the achievements to track for the current boss
 core.achievementTrackingEnabled = false			--Whether the user wants to track achievements for the particular instance or not
 core.playersFailedPersonal = {}					--List of players that have failed a personal achievement. Resets when you exit combat
+core.playersSuccessPersonal = {}
 local combatTimerStarted = false				--Used to determine if players in the group are still in combat with a boss
 local lastMessageSent = ""   					--Stores the last message sent to the chat. This is used to prevent the same message being sent more than once in case of an error and to prevent unwanted spam
 local enabledCheckSent = false					--Store whether the current addon sent the request to enable itself or not for achievement tracking
@@ -119,6 +120,13 @@ core.instanceNameSpaces = nil					--Instance name with spaces
 core.foundBoss = false							--Whether or not a boss has been found to track or not
 core.currentBosses = {}							--Stores a list of the bosses the player is currently attacking. (Can be mutliple if one boss has multiple achievements)
 core.mobCache = {}								--Stores a list of mobs that have been checked to see whether or not they need to be tracked or not
+
+--------------------------------------
+-- Boss functions
+--------------------------------------
+core.mobCounter = 0								--Used in the trackMob function to see how many of a certain type of mob have currently spawned
+core.mobUID = {}								--Used in the trackMob function to store the unique UID of each mob of a certain type that has spawned
+core.thresholdAnnounced = false					--Used to check whether the trackMob funciton has announced the requirements have been met
 
 --------------------------------------
 -- Achievement Functions
@@ -459,7 +467,6 @@ function getInstanceInfomation()
 end
 
 function initialInstanceSetup()
-	print("Pcall: " .. core.instanceClear)
 	if pcall(function() core[core.instanceClear]:InitialSetup() end) == true then
 		core[core.instanceClear]:InitialSetup()
 	end
@@ -814,6 +821,8 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 		end
 	end
 
+	--print(...)
+
 	if string.match(core.sourceGUID, "Creature") or string.match(core.destGUID, "Creature") then
 		--GUID for a creature
 		core.unitTypeSrc, _, _, _, _, core.sourceID, core.spawn_uid = strsplit("-", core.sourceGUID)
@@ -901,20 +910,14 @@ function detectBoss(id)
 	for boss,_ in pairs(core.Instances[core.expansion][core.instanceType][core.instance]) do
 		if core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs ~= nil then
 			if #core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs > 0 then
-				print("Made in here")
 				print(#core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs)
 				for i = 1, #core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs do
 					local bossID = core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs[i]
-	
-					print("Before found boss")
-					if core.foundBoss == false then
-						print("Boss not found")
-						if string.find(id, bossID) then
-							table.insert(core.currentBosses, core.Instances[core.expansion][core.instanceType][core.instance][boss])
-							table.insert(core.achievementIDs, core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
-							core.foundBoss = true
-							print("Found Boss:")
-						end
+					if string.find(id, bossID) then
+						table.insert(core.currentBosses, core.Instances[core.expansion][core.instanceType][core.instance][boss])
+						table.insert(core.achievementIDs, core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
+						core.foundBoss = true
+						print("Found Boss: " .. core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
 					end
 				end			
 			end
@@ -925,7 +928,7 @@ function detectBoss(id)
 		--Display tracking achievement for that boss if partial variable is not false and boss was found and tracking is enabled
 		core:getAchievementToTrack()
 	else
-		print("ID not found. Need to add to cache")
+		--print("ID not found. Need to add to cache")
 		--This boss does not have tracking so add to mob cache
 		if core:has_value(core.mobCache, id) ~= true then
 			table.insert(core.mobCache, id)
@@ -969,9 +972,9 @@ function core:getAchievementToTrack()
 	if core.achievementTrackedMessageShown == false then
 		print("Length of array: " .. #core.currentBosses)
 		for i = 1, #core.currentBosses do
-			print(core.currentBosses[i].partial)
+			print("Achievement: " .. core.currentBosses[i].achievement)
 			if core.currentBosses[i].partial == false and core.currentBosses[i].enabled == true then
-				core:sendMessage("Tracking: "  .. GetAchievementLink(core.achievementIDs[i]))
+				core:sendMessage("Tracking: "  .. GetAchievementLink(core.currentBosses[i].achievement))
 				core.achievementTrackedMessageShown = true
 			end
 
@@ -1125,6 +1128,56 @@ function core:getAchievementSuccessWithCustomMessage(messageBefore, messageAfter
 	end
 end
 
+--Display the failed achievement message for personal achievements
+function core:getAchievementSuccessPersonal(index)
+	local value = index
+	if index == nil then
+		value = 1
+	end
+	if core.playersSuccessPersonal[core.destName] == nil then
+		--Players has not been hit already
+		--Check if the player actually needs the achievement
+		if core:has_value(core.currentBosses[value].players, core.destName) then
+			--Player needs achievement but has failed it
+			core:sendMessage(core.destName .. " has completed " .. GetAchievementLink(core.achievementIDs[value]) .. " (Personal Achievement)")
+		end
+		core.playersSuccessPersonal[core.destName] = true
+	end
+end
+
+function core:trackMob(mobID, mobName, threshold, message, interval)
+    --Add detected
+    if core.sourceID == mobID and core.mobCounter <= threshold and core.thresholdAnnounced == false then
+        if core.mobUID[core.spawn_uid] == nil and core.mobUID[core.spawn_uid] ~= "Dead" then
+            core.mobUID[core.spawn_uid] = core.spawn_uid
+            core.mobCounter = core.mobCounter + 1
+			core:sendMessageDelay(mobName ..  " Counter (" .. core.mobCounter .. "/" .. threshold .. ")",core.mobCounter,interval)
+			print(core.mobCounter)
+        end
+    end
+    if core.destID == mobID and core.mobCounter <= threshold and core.thresholdAnnounced == false then
+        if core.mobUID[core.spawn_uid_dest] == nil and core.mobUID[core.spawn_uid_dest] ~= "Dead" then
+            core.mobUID[core.spawn_uid_dest] = core.spawn_uid_dest
+            core.mobCounter = core.mobCounter + 1
+			core:sendMessageDelay(mobName .. " Counter (" .. core.mobCounter .. "/" .. threshold ..")",core.mobCounter,interval)
+			print(core.mobCounter)
+        end
+	end
+
+	--Unit Died
+	if core.type == "UNIT_DIED" and core.destID == mobID and core.mobCounter > 0 then
+        core.mobUID[core.spawn_uid_dest] = "Dead"
+		core.mobCounter = core.mobCounter - 1
+		print(core.mobCounter)
+	end
+	
+	--Requirements Met
+	if core.mobCounter >= threshold and core.thresholdAnnounced == false then
+		core.thresholdAnnounced = true
+		core:sendMessage(core:getAchievement() .. message)
+	end
+end
+
 function clearVariables()
 	------------------------------------------------------
 	---- Reset Variables
@@ -1138,6 +1191,10 @@ function clearVariables()
 	core.lastMessageSent = nil
 	core.foundBoss = false
 	core.playersFailedPersonal = {}
+
+	core.mobCounter = 0
+	core.mobUID = {}
+	core.thresholdAnnounced = false
 
 	--If a boss was pulled then clear the variables for that raid
 	print(core.instance)
