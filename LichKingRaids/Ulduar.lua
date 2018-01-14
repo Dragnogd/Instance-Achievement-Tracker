@@ -10,6 +10,7 @@ core.Ulduar = {}
 core.Ulduar.Events = CreateFrame("Frame")
 local timerStarted = false
 local timerStarted2 = false
+local timerStarted3 = false
 
 ------------------------------------------------------
 ---- Dwarfageddon
@@ -44,6 +45,16 @@ local brittleTargetsKilled = 0
 ---- Stokin' the Furnace
 ------------------------------------------------------
 local timer
+
+------------------------------------------------------
+---- Must Deconstruct Faster
+------------------------------------------------------
+local timer2
+
+------------------------------------------------------
+---- Nerf Scrapbots
+------------------------------------------------------
+local scrapbotsKilled = 0
 
 function core.Ulduar:Dwarfageddon()
     --Add killed
@@ -159,21 +170,53 @@ function core.Ulduar:IgnisTheFurnaceMasterStokinTheFurnace()
         timer = C_Timer.NewTimer(240, function() 
             core:getAchievementFailed(2)
         end)
-    end
-    
+    end  
 end
 
 function core.Ulduar:XT002DeconstructorNerfEngineering()
     if core.type == "SPELL_INSTAKILL" and core.spellId == 62834 then
-        core:getAchievementFailed()
+        core:getAchievementFailed(4)
     end
 end
 
 function core.Ulduar:XT002DeconstructorHeartbreaker()
     if core.type == "PARTY_KILL" and core.destID == "33329" then
-        core:getAchievementSuccess(5)
-        print("Success")
-        print()
+        core:getAchievementSuccess(3)
+    end
+end
+
+function core.Ulduar:XT002DeconstructorMustDeconstructFaster()
+    if timerStarted3 == false then
+        timerStarted3 = truew
+        timer2 = C_Timer.NewTimer(205, function() 
+            core:getAchievementFailed(1)
+        end)
+    end  
+end
+
+function core.Ulduar:XT002DeconstructorNerfGravityBombs()
+    if (core.type == "SPELL_DAMAGE" or core.type == "SPELL_PERIODIC_DAMAGE") and core.spellId == 63024 and core.overkill > 0 then
+        core:getAchievementFailed(2)
+    end
+end
+
+function core.Ulduar:XT002DeconstructorNerfScrapbots()
+    core:trackMob("33343", "XS-013 Scrapbot", 20, "20 XS-013 Scrapbots have spawned!",5)
+
+    if core.type == "SPELL_DAMAGE" and core.destID == "33343" and core.spellId == 62834 and core.overkill > 0 then
+        scrapbotsKilled = scrapbotsKilled + 1
+        if timerStarted == false then
+            timerStarted = true
+            C_Timer.After(12, function() 
+                if scrapbotsKilled >= 20 then
+                    core:getAchievementSuccess(5)
+                else
+                    core:sendMessage(core:getAchievement(5) .. " (" .. scrapbotsKilled .. "/20) Scrapbots killed in time")
+                    timerStarted = false
+                    scrapbotsKilled = 0
+                end
+            end)
+        end
     end
 end
 
@@ -202,6 +245,13 @@ function core.Ulduar:ClearVariables()
     ------------------------------------------------------
     if timer ~= nil then
         timer:Cancel()
+    end
+
+    ------------------------------------------------------
+    ---- Must Deconstruct Faster
+    ------------------------------------------------------
+    if timer2 ~= nil then
+        timer2:Cancel()
     end
 end
 
