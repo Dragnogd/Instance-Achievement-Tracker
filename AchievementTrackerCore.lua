@@ -47,7 +47,7 @@ events:SetScript("OnEvent", function(self, event, ...)
 	if event == "aaaUNIT_HEALTH" then
 		print(UnitName(...) .. " : " .. UnitHealth(...))
 	end
-	if event == "UNIT_SPELLCAST_SUCCEEDED" then
+	if event == "aaaUNIT_SPELLCAST_SUCCEEDED" then
 
 		local unitID, spell, rank, lineID, spellID = ...
 
@@ -396,15 +396,15 @@ function getInstanceInfomation()
 		core.instanceClear = core.instance
 
 		--If the raid is in the lich king expansion then detect whether player is on the 10man or 25man difficulty
-		if core.instance == "Ulduar" then
-			if core.difficultyID == 3 then
-				--10 Man
-				core.instance = core.instance .. "10Man"
-			elseif core.difficultyID == 4 then
-				--25 Man
-				core.instance = core.instance .. "25Man"
-			end
-		end
+		-- if core.instance == "Ulduar" then
+		-- 	if core.difficultyID == 3 then
+		-- 		--10 Man
+		-- 		core.instance = core.instance .. "10Man"
+		-- 	elseif core.difficultyID == 4 then
+		-- 		--25 Man
+		-- 		core.instance = core.instance .. "25Man"
+		-- 	end
+		-- end
 
 		--Find the instance in the core.instances table so we can cache the value to be used later
 		for expansion,_ in pairs(core.Instances) do
@@ -821,19 +821,19 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 		end
 	end
 
-	--print(...)
-
-	if string.match(core.sourceGUID, "Creature") or string.match(core.destGUID, "Creature") then
+	if string.match(core.sourceGUID, "Creature") or string.match(core.destGUID, "Creature") or string.match(core.sourceGUID, "Vehicle") or string.match(core.destGUID, "Vehicle") then
 		--GUID for a creature
 		core.unitTypeSrc, _, _, _, _, core.sourceID, core.spawn_uid = strsplit("-", core.sourceGUID)
 		core.unitType, _, _, _, _, core.destID, core.spawn_uid_dest = strsplit("-", core.destGUID)	
 	end
 	
-	if 	string.match(core.sourceGUID, "Player") or string.match(core.destGUID, "Player") then
+	if string.match(core.sourceGUID, "Player") or string.match(core.destGUID, "Player") then
 		--GUID for a player
 		core.unitTypeSrcPlayer, _, _, _, _, core.sourceIDPlayer, core.spawn_uidPlayer = strsplit("-", core.sourceGUID)
 		core.unitTypePlayer, core.destIDPlayer, core.spawn_uid_dest_Player = strsplit("-", core.destGUID)
 	end
+
+	--print(...)
 
 	--Boss Detection!
 	if core.foundBoss == true then			
@@ -1148,7 +1148,7 @@ function core:getAchievementSuccessPersonal(index)
 	end
 end
 
-function core:trackMob(mobID, mobName, threshold, message, interval)
+function core:trackMob(mobID, mobName, threshold, message, interval, trackAchiev, id)
     --Add detected
     if core.sourceID == mobID and core.mobCounter <= threshold and core.thresholdAnnounced == false then
         if core.mobUID[core.spawn_uid] == nil and core.mobUID[core.spawn_uid] ~= "Dead" then
@@ -1168,16 +1168,18 @@ function core:trackMob(mobID, mobName, threshold, message, interval)
 	end
 
 	--Unit Died
-	if core.type == "UNIT_DIED" and core.destID == mobID and core.mobCounter > 0 then
+	if core.type == "UNIT_DIED" and core.destID == mobID and core.mobCounter > 0 and trackAchiev == nil then
         core.mobUID[core.spawn_uid_dest] = "Dead"
 		core.mobCounter = core.mobCounter - 1
 		print(core.mobCounter)
 	end
 	
 	--Requirements Met
-	if core.mobCounter >= threshold and core.thresholdAnnounced == false then
+	if core.mobCounter >= threshold and core.thresholdAnnounced == false and trackAchiev == nil then
 		core.thresholdAnnounced = true
 		core:sendMessage(core:getAchievement() .. message)
+	elseif core.mobCounter >= threshold and core.thresholdAnnounced == false and trackAchiev ~= nil then
+		core:getAchievementSuccess(id)
 	end
 end
 

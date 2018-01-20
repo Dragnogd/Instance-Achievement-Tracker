@@ -56,6 +56,11 @@ local timer2
 ------------------------------------------------------
 local scrapbotsKilled = 0
 
+------------------------------------------------------
+---- Kologarn Rubble And Roll
+------------------------------------------------------
+local rubbleCounter = 0
+
 function core.Ulduar:Dwarfageddon()
     --Add killed
     if core.type == "UNIT_DIED" then
@@ -217,6 +222,22 @@ function core.Ulduar:XT002DeconstructorNerfScrapbots()
                 end
             end)
         end
+    end
+end
+
+function core.Ulduar:KologarnIfLooksCouldKill()
+    if core.type == "SPELL_DAMAGE" and core.spellId == 63346 then
+        core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")")
+    end
+end
+
+function core.Ulduar:KologarnRubbleAndRoll()
+    core:trackMob("33768", "Rubble", 25, "25 Rubble have spawned!",5,true,3)
+end
+
+function core.Ulduar:KologarnWithOpenArms()
+    if core.type == "UNIT_DIED" and (core.destID == "32934" or core.destID == "32933") then
+        core:getAchievementFailed(2)
     end
 end
 
