@@ -61,6 +61,26 @@ local scrapbotsKilled = 0
 ------------------------------------------------------
 local rubbleCounter = 0
 
+------------------------------------------------------
+---- Nine Lives
+------------------------------------------------------
+local feralDefenderCounter = 9
+
+------------------------------------------------------
+---- Set Up Us The Bomb
+------------------------------------------------------
+local proximityMineFailed = false
+local rocketStrikeFailed = false
+local bombBotFailed = false
+
+------------------------------------------------------
+---- I Choose You...
+------------------------------------------------------
+local steelbreakerKilled = false
+local stormcallerBrundirKilled = false
+local runemasterMolgeimKilled = false
+local messageAnnounced = false
+
 function core.Ulduar:Dwarfageddon()
     --Add killed
     if core.type == "UNIT_DIED" then
@@ -241,6 +261,143 @@ function core.Ulduar:KologarnWithOpenArms()
     end
 end
 
+function core.Ulduar:AuriayaNineLives()
+    if core.type == "UNIT_DIED" and core.destID == "34035" and timerStarted == false then
+        timerStarted = true
+        feralDefenderCounter = feralDefenderCounter - 1
+        core:sendMessage(core:getAchievement(1) .. " Feral Defender Lives Remianing: " .. feralDefenderCounter)
+        C_Timer.After(5, function() 
+            timerStarted = false
+        end)
+    end
+
+    if feralDefenderCounter == 0 then
+        core:getAchievementSuccess(1)
+    end
+end
+
+function core.Ulduar:AuriayaCrazyCatLady()
+    if core.type == "UNIT_DIED" and core.destID == "34014" then
+        core:getAchievementFailed(2)
+    end
+end
+
+function core.Ulduar:MimironSetUpUsTheBomb()
+    --Proximity Mine
+    if (core.type == "SPELL_DAMAGE" or core.type == "SPELL_MISSED") and core.spellId == 63009 and proximityMineFailed == false then
+        proximityMineFailed = true
+        core:sendMessage("Proximity Mine part of " .. core:getAchievement(1) .. " FAILED")
+    end
+
+    --Rocket Strike
+    if (core.type == "SPELL_DAMAGE" or core.type == "SPELL_MISSED") and core.spellId == 63041 and rocketstrikeFailed ~= true then
+        rocketstrikeFailed = true
+        core:sendMessage("Rocket Strike part of " .. core:getAchievement(1) .. " FAILED")       
+    end
+    
+    --Bomb Bot
+    if (core.type == "SPELL_DAMAGE" or core.type == "SPELL_MISSED") and core.spellId == 63801 and bombBotFailed == false then
+        bombBotFailed = true
+        core:sendMessage("Bomb Bot part of " .. core:getAchievement(1) .. " FAILED")           
+    end
+end
+
+function core.Ulduar:MimironNotSoFriendlyFire()
+    if core.type == "SPELL_DAMAGE" and core.spellId == 63041 and core.destID == "34057" then
+        core:getAchievementSuccess(3)
+    end
+end
+
+function core.Ulduar:AssemblyOfIronIChooseYouSteelbreaker()
+    --4
+    if core.type == "UNIT_DIED" and core.destID == "32867" then
+        steelbreakerKilled = true
+    elseif core.type == "UNIT_DIED" and core.destID == "32927" then
+        runemasterMolgeimKilled = true
+    elseif core.type == "UNIT_DIED" and core.destID == "32857" then
+        stormcallerBrundirKilled = true
+    end
+
+    if runemasterMolgeimKilled == true and stormcallerBrundirKilled == true and messageAnnounced == false then
+        messageAnnounced = true
+        core:getAchievementSuccess(4)
+    end
+end
+
+function core.Ulduar:AssemblyOfIronIChooseYouStormcallerBrundir()
+    --3
+    if core.type == "UNIT_DIED" and core.destID == "32867" then
+        steelbreakerKilled = true
+    elseif core.type == "UNIT_DIED" and core.destID == "32927" then
+        runemasterMolgeimKilled = true
+    elseif core.type == "UNIT_DIED" and core.destID == "32857" then
+        stormcallerBrundirKilled = true
+    end
+
+    if runemasterMolgeimKilled == true and steelbreakerKilled == true and messageAnnounced == false then
+        messageAnnounced = true
+        core:getAchievementSuccess(3)
+    end
+end
+
+function core.Ulduar:AssemblyOfIronIChooseYouRunemasterMolgeim()
+    --2
+    if core.type == "UNIT_DIED" and core.destID == "32867" then
+        steelbreakerKilled = true
+    elseif core.type == "UNIT_DIED" and core.destID == "32927" then
+        runemasterMolgeimKilled = true
+    elseif core.type == "UNIT_DIED" and core.destID == "32857" then
+        stormcallerBrundirKilled = true
+    end
+
+    if stormcallerBrundirKilled == true and steelbreakerKilled == true and messageAnnounced == false then
+        messageAnnounced = true
+        core:getAchievementSuccess(2)
+    end
+end
+
+function core.Ulduar:AssemblyOfIronCantDoThatWhileStunned()
+    --1
+    if core.type == "SPELL_DAMAGE" and core.spellId == 63479 then
+        core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")",1)
+    end
+end
+
+function core.Ulduar:HodirCheeseTheFreeze()
+    --4
+    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 61969 and core.currentUnit == "Player" then
+        core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")",4)
+    end
+end
+
+function core.Ulduar:HodirIHaveTheCoolestFriends()
+    --1
+    if core.type == "UNIT_DIED" and core.unitType == "Creature" and core.destID ~= "32845" then
+        core:getAchievementFailedWithMessageAfter("(Reason: " .. core.destName .. " has died)",1)
+    end
+end
+
+function core.Ulduar:HodirGettingColdInHere()
+    --2
+    if core:trackAura(62038, 3, "debuff") == true then
+        core:getAchievementFailed(2)
+    end
+end
+
+function core.Ulduar:HodirICouldSayThatThisCacheWasRare()
+    --3
+    if timerStarted == false then
+        timerStarted = true
+        timer = C_Timer.NewTimer(120, function() 
+            core:getAchievementFailed(3)
+        end)
+    end 
+end
+
+function core.Ulduar:HodirStayingBuffedAllWinter()
+    --2
+end
+
 function core.Ulduar:ClearVariables()
     timerStarted = false
     timerStarted2 = false
@@ -274,10 +431,41 @@ function core.Ulduar:ClearVariables()
     if timer2 ~= nil then
         timer2:Cancel()
     end
+
+    ------------------------------------------------------
+    ---- Nerf Scrapbots
+    ------------------------------------------------------
+    scrapbotsKilled = 0
+
+    ------------------------------------------------------
+    ---- Kologarn Rubble And Roll
+    ------------------------------------------------------
+    rubbleCounter = 0
+
+    ------------------------------------------------------
+    ---- Nine Lives
+    ------------------------------------------------------
+    feralDefenderCounter = 9
+
+    ------------------------------------------------------
+    ---- Set Up Us The Bomb
+    ------------------------------------------------------
+    proximityMineFailed = false
+    rocketStrikeFailed = false
+    bombBotFailed = false
+
+    ------------------------------------------------------
+    ---- I Choose You...
+    ------------------------------------------------------
+    steelbreakerKilled = false
+    stormcallerBrundirKilled = false
+    runemasterMolgeimKilled = false
+    messageAnnounced = false
 end
 
 function core.Ulduar:InitialSetup()
     core.Ulduar.Events:RegisterEvent("UNIT_AURA")
+    core.Ulduar.Events:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 end
 
 core.Ulduar.Events:SetScript("OnEvent", function(self, event, ...)
@@ -288,5 +476,11 @@ function core.Ulduar.Events:UNIT_AURA(self, unitID, ...)
     if UnitBuff(unitID, GetSpellInfo(62705)) ~= nil and repairedAnnounced == false then
         core:sendMessage(GetAchievementLink(2905) .. " FAILED! A player has repaired their vechile")
         repairedAnnounced = true
+    end
+end
+
+function core.Ulduar.Events:CHAT_MSG_MONSTER_YELL(self, message, sender, language, channelString, target, flags, unknown, channelNumber, channelName, unknown, counter, ...)
+    if message == "Now, why would you go and do something like that? Didn't you see the sign that said, \"DO NOT PUSH THIS BUTTON!\"? How will we finish testing with the self-destruct mechanism active?" then
+        core:getAchievementSuccess(2)
     end
 end

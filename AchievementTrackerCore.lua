@@ -184,7 +184,7 @@ function getPlayersInGroup()
 
 	--instanceName = "BlackrockFoundary"
 
-	print(core.currentZoneID)
+	--print(core.currentZoneID)
 
 	if core.groupSize > 1 then
 		--We are in a group
@@ -824,14 +824,18 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 	if string.match(core.sourceGUID, "Creature") or string.match(core.destGUID, "Creature") or string.match(core.sourceGUID, "Vehicle") or string.match(core.destGUID, "Vehicle") then
 		--GUID for a creature
 		core.unitTypeSrc, _, _, _, _, core.sourceID, core.spawn_uid = strsplit("-", core.sourceGUID)
-		core.unitType, _, _, _, _, core.destID, core.spawn_uid_dest = strsplit("-", core.destGUID)	
+		core.unitType, _, _, _, _, core.destID, core.spawn_uid_dest = strsplit("-", core.destGUID)
+		core.currentUnit = "Creature"	
 	end
 	
 	if string.match(core.sourceGUID, "Player") or string.match(core.destGUID, "Player") then
 		--GUID for a player
 		core.unitTypeSrcPlayer, _, _, _, _, core.sourceIDPlayer, core.spawn_uidPlayer = strsplit("-", core.sourceGUID)
 		core.unitTypePlayer, core.destIDPlayer, core.spawn_uid_dest_Player = strsplit("-", core.destGUID)
+		core.currentUnit = "Player"
 	end
+
+	
 
 	--print(...)
 
@@ -851,7 +855,7 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 				local _, _, _, _, _, bossID, _ = strsplit("-", UnitGUID("boss" .. i))
 				if bossID ~= nil then
 					if core:has_value(core.mobCache, bossID) == false then
-						print("Calling Detect Boss 1: " .. bossID)
+						--print("Calling Detect Boss 1: " .. bossID)
 						detectBoss(bossID)
 					end
 				end
@@ -863,8 +867,8 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 		if core.sourceID ~= nil and doNotTrack == false then
 			--print(core.sourceID)
 			if core:has_value(core.mobCache, core.sourceID) ~= true then
-				print("Calling Detect Boss 2: " .. core.sourceID)
-				print(core.sourceID)
+				--print("Calling Detect Boss 2: " .. core.sourceID)
+				--print(core.sourceID)
 				detectBoss(core.sourceID)
 			end
 		end	
@@ -872,7 +876,7 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 		if core.destID ~= nil and doNotTrack == false then
 			--print(core.destID)
 			if core:has_value(core.mobCache, core.destID) == false then
-				print("Calling Detect Boss 3: " .. core.destID)
+				--print("Calling Detect Boss 3: " .. core.destID)
 				detectBoss(core.destID)
 			end
 		end
@@ -911,16 +915,16 @@ function detectBoss(id)
 	for boss,_ in pairs(core.Instances[core.expansion][core.instanceType][core.instance]) do
 		if core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs ~= nil then
 			if #core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs > 0 then
-				print(#core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs)
+				--print(#core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs)
 				for i = 1, #core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs do
 					local bossID = core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs[i]
 					if string.find(id, bossID) then
 						table.insert(core.currentBosses, core.Instances[core.expansion][core.instanceType][core.instance][boss])
 						num = num + 1
-						print("Adding ID at position: " .. num)
+						--print("Adding ID at position: " .. num)
 						table.insert(core.achievementIDs, core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
 						core.foundBoss = true
-						print("Found Boss: " .. core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
+						--print("Found Boss: " .. core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
 					end
 				end			
 			end
@@ -935,7 +939,7 @@ function detectBoss(id)
 		--This boss does not have tracking so add to mob cache
 		if core:has_value(core.mobCache, id) ~= true then
 			table.insert(core.mobCache, id)
-			print("Adding to cache: " .. id)
+			--print("Adding to cache: " .. id)
 		end
 	end
 end
@@ -973,7 +977,7 @@ end
 --Display the "Tracking {achievement} for achievements"
 function core:getAchievementToTrack()
 	if core.achievementTrackedMessageShown == false then
-		print("Length of array: " .. #core.currentBosses)
+		--print("Length of array: " .. #core.currentBosses)
 		for i = 1, #core.currentBosses do
 			print("Achievement: " .. core.currentBosses[i].achievement)
 			if core.currentBosses[i].partial == false and core.currentBosses[i].enabled == true then
@@ -1155,7 +1159,7 @@ function core:trackMob(mobID, mobName, threshold, message, interval, trackAchiev
             core.mobUID[core.spawn_uid] = core.spawn_uid
             core.mobCounter = core.mobCounter + 1
 			core:sendMessageDelay(mobName ..  " Counter (" .. core.mobCounter .. "/" .. threshold .. ")",core.mobCounter,interval)
-			print(core.mobCounter)
+			--print(core.mobCounter)
         end
     end
     if core.destID == mobID and core.mobCounter <= threshold and core.thresholdAnnounced == false then
@@ -1163,7 +1167,7 @@ function core:trackMob(mobID, mobName, threshold, message, interval, trackAchiev
             core.mobUID[core.spawn_uid_dest] = core.spawn_uid_dest
             core.mobCounter = core.mobCounter + 1
 			core:sendMessageDelay(mobName .. " Counter (" .. core.mobCounter .. "/" .. threshold ..")",core.mobCounter,interval)
-			print(core.mobCounter)
+			--print(core.mobCounter)
         end
 	end
 
@@ -1171,7 +1175,7 @@ function core:trackMob(mobID, mobName, threshold, message, interval, trackAchiev
 	if core.type == "UNIT_DIED" and core.destID == mobID and core.mobCounter > 0 and trackAchiev == nil then
         core.mobUID[core.spawn_uid_dest] = "Dead"
 		core.mobCounter = core.mobCounter - 1
-		print(core.mobCounter)
+		--print(core.mobCounter)
 	end
 	
 	--Requirements Met
@@ -1180,6 +1184,38 @@ function core:trackMob(mobID, mobName, threshold, message, interval, trackAchiev
 		core:sendMessage(core:getAchievement() .. message)
 	elseif core.mobCounter >= threshold and core.thresholdAnnounced == false and trackAchiev ~= nil then
 		core:getAchievementSuccess(id)
+	end
+end
+
+function core:trackAura(auraID, maxCount, type)
+	core:detectGroupType()
+	for i = 1, core.groupSize do
+		local unit = nil
+		if core.chatType == "PARTY" then
+			if i < core.groupSize then
+				unit = "party" .. i
+			else
+				unit = "player"
+			end
+		elseif core.chatType == "RAID" then
+			unit = "raid" .. i
+		elseif core.chatType == "SAY" then
+			unit = "player"
+		end
+
+		local count = 0
+		local name, rank, icon, castingTime, minRange, maxRange, spellID = GetSpellInfo(auraID)
+		if type == "debuff" then
+			if unit ~= nil then
+				_, _, _, count, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _ = UnitDebuff(unit, name)
+			end
+		end
+
+		if count ~= nil then
+			if count >= maxCount then
+				return true
+			end
+		end
 	end
 end
 
