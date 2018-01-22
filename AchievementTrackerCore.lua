@@ -910,7 +910,6 @@ function core:detectGroupType()
 end
 
 --Where the player enters combat, check if any of the mobs/bosses need to be tracked or not
-local num = 0
 function detectBoss(id)
 	for boss,_ in pairs(core.Instances[core.expansion][core.instanceType][core.instance]) do
 		if core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs ~= nil then
@@ -919,12 +918,13 @@ function detectBoss(id)
 				for i = 1, #core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs do
 					local bossID = core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs[i]
 					if string.find(id, bossID) then
-						table.insert(core.currentBosses, core.Instances[core.expansion][core.instanceType][core.instance][boss])
-						num = num + 1
-						--print("Adding ID at position: " .. num)
-						table.insert(core.achievementIDs, core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
+						if core:has_value(core.currentBosses, core.currentBosses, core.Instances[core.expansion][core.instanceType][core.instance][boss]) == false then
+							table.insert(core.currentBosses, core.Instances[core.expansion][core.instanceType][core.instance][boss])						
+						end
+						if core:has_value(core.achievementIDs, core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement) == false then
+							table.insert(core.achievementIDs, core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)						
+						end
 						core.foundBoss = true
-						--print("Found Boss: " .. core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
 					end
 				end			
 			end
