@@ -50,6 +50,10 @@ function core.HallsOfLightning:ClearVariables()
     ------------------------------------------------------
     brittleGolemsShattered = 0
 
+    ------------------------------------------------------
+    ---- Loken
+    ------------------------------------------------------
+    timerStarted = false
     if timer ~= nil then
         timer:Cancel()
     end
