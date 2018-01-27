@@ -81,6 +81,24 @@ local stormcallerBrundirKilled = false
 local runemasterMolgeimKilled = false
 local messageAnnounced = false
 
+------------------------------------------------------
+---- Con-speed-atory
+------------------------------------------------------
+local freyaTrashedStarted = false
+
+------------------------------------------------------
+---- Lumberjacked
+------------------------------------------------------
+local bossesKilled = 0
+local bossKilled = false
+
+------------------------------------------------------
+---- Deforestation
+------------------------------------------------------
+local ancientWaterSpiritsKilled = 0
+local stormLashersKilled = 0
+local snaplashersKilled = 0
+
 function core.Ulduar:Dwarfageddon()
     --Add killed
     if core.type == "UNIT_DIED" then
@@ -394,8 +412,96 @@ function core.Ulduar:HodirICouldSayThatThisCacheWasRare()
     end 
 end
 
-function core.Ulduar:HodirStayingBuffedAllWinter()
+function core.Ulduar:FreyaConSpeedAtory()
+    local freyaTrashIDs = {"33430", "33431", "33528", "33527", "33526", "33525", "32914", "32913", "33354", "33355", "32915"}
+    if core.type == "UNIT_DIED" and timerStarted == false and freyaTrashedStarted == false and core:has_value(freyaTrashIDs, core.destID) == true then
+        if timerStarted == false then
+            timerStarted = true
+            freyaTrashedStarted = true
+            core:sendMessage("Tracking: " .. core:getAchievement() .. " 20 Minutes Remaining")
+            timer = C_Timer.NewTimer(1200, function() 
+                if freyaKilled == false then 
+                    core:sendMessage(GetAchievementLink(12361) .. " FAILED!")
+                end
+            end)
+        end  
+    end
+
+    --TODO: Stop timer when Freya has been killed
+    --Freya has been killed so stop timer
+    -- if timer ~= nil then
+    --     timer:Cancel()
+    -- end
+end
+
+function core.Ulduar:FreyaLumberjacked()
+    --Elder Stonebark
+    if core.type == "UNIT_DIED" and core.destID == "32914" then
+        bossesKilled = bossesKilled + 1
+    end
+
+    --Elder Ironbranch
+    if core.type == "UNIT_DIED" and core.destID == "32913" then
+        bossesKilled = bossesKilled + 1
+    end
+
+    --Elder Brightleaf
+    if core.type == "UNIT_DIED" and core.destID == "32915" then
+        bossesKilled = bossesKilled + 1
+    end
+
+    if bossesKilled > 0 and timerStarted2 == false and bossKilled == false then
+        timerStarted2 = true
+        bossKilled = true
+        C_Timer.After(15, function()
+            if bossesKilled == 3 then
+                core:sendMessage(GetAchievementLink(12360) .. " Critera Met")
+            elseif bossesKilled < 3 then
+                core:sendMessage(GetAchievementLink(12360) .. " FAILED!")
+            end
+        end)
+    end
+end
+
+function core.Ulduar:FreyaGettingBackToNature()
     --2
+    if core.type == "SPELL_AURA_REMOVED_DOSE" and core.amount < 25 then
+        print("Getting back to nature failed")
+        core:getAchievementFailed(2)
+    end
+end
+
+function core.Ulduar:FreyaDeforestation()
+    --1
+    --Ancient Water Spirit
+    if core.type == "UNIT_DIED" and core.destID == "33202" then
+        ancientWaterSpiritsKilled = ancientWaterSpiritsKilled + 1
+    end
+
+    --Storm Lashers
+    if core.type == "UNIT_DIED" and core.destID == "32919" then
+        stormLashersKilled = stormLashersKilled + 1
+    end
+
+    --Snaplashers
+    if core.type == "UNIT_DIED" and core.destID == "32916" then
+        snaplashersKilled = snaplashersKilled + 1
+    end
+
+    if core.type == "UNIT_DIED" and (core.destID == "33202" or core.destID == "32919" or core.destID == "32916") and timerStarted3 == false then
+        timerStarted3 = true
+        C_Timer.After(10, function()
+            if ancientWaterSpiritsKilled >= 2 and stormLashersKilled >= 2 and snaplashersKilled >= 2 then
+                core:getAchievementSuccess()
+            else
+                core:sendMessage(core:getAchievement() .. " FAILED! Ancient Water Spirits (" .. ancientWaterSpiritsKilled .. "/2) Storm Lashers (" .. stormLashersKilled .. "/2) Snaplashers (" .. snaplashersKilled .. "/2)")
+                ancientWaterSpiritsKilled = 0
+                stormLashersKilled = 0
+                snaplashersKilled = 0
+                timerStarted3 = false
+            end
+        end)
+    end
 end
 
 function core.Ulduar:ClearVariables()
@@ -461,6 +567,18 @@ function core.Ulduar:ClearVariables()
     stormcallerBrundirKilled = false
     runemasterMolgeimKilled = false
     messageAnnounced = false
+
+    ------------------------------------------------------
+    ---- Con-speed-atory
+    ------------------------------------------------------
+    freyaTrashedStarted = false
+
+    ------------------------------------------------------
+    ---- Deforestation
+    ------------------------------------------------------
+    ancientWaterSpiritsKilled = 0
+    stormLashersKilled = 0
+    snaplashersKilled = 0
 end
 
 function core.Ulduar:InitialSetup()

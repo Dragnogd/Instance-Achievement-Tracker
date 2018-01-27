@@ -107,7 +107,8 @@ core.playersSuccessPersonal = {}
 local combatTimerStarted = false				--Used to determine if players in the group are still in combat with a boss
 local lastMessageSent = ""   					--Stores the last message sent to the chat. This is used to prevent the same message being sent more than once in case of an error and to prevent unwanted spam
 local enabledCheckSent = false					--Store whether the current addon sent the request to enable itself or not for achievement tracking
-local enableDisplayAchievement = false
+local enableDisplayAchievement = true
+local currentBossNums = {}
 
 --------------------------------------
 -- Current Instance Variables
@@ -338,14 +339,21 @@ end
 
 function events:ENCOUNTER_START()
 	print("Encounter Started")
-	enableDisplayAchievement = true
+
+	if enableDisplayAchievement == true then
+		enableDisplayAchievement = false
+		C_Timer.After(1, function()
+			core:getAchievementToTrack()	
+		end)
+	end
+
 end
 
 function events:ENCOUNTER_END()
 	print("Encounter Ended")
 	core.inCombat = false
 	core.foundBoss = false
-	enableDisplayAchievement = false
+	enableDisplayAchievement = true
 end
 
 function events:INSPECT_ACHIEVEMENT_READY()
@@ -918,10 +926,13 @@ function detectBoss(id)
 				for i = 1, #core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs do
 					local bossID = core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs[i]
 					if string.find(id, bossID) then
-						if core:has_value(core.currentBosses, core.currentBosses, core.Instances[core.expansion][core.instanceType][core.instance][boss]) == false then
-							table.insert(core.currentBosses, core.Instances[core.expansion][core.instanceType][core.instance][boss])						
+						if core:has_value(currentBossNums, boss) == false then
+							print("Adding the following boss: " .. boss)
+							table.insert(core.currentBosses, core.Instances[core.expansion][core.instanceType][core.instance][boss])
+							table.insert(currentBossNums, boss)						
 						end
 						if core:has_value(core.achievementIDs, core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement) == false then
+							print("Adding the following achievement ID beacuse it doesn't exist: " .. core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
 							table.insert(core.achievementIDs, core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)						
 						end
 						core.foundBoss = true
@@ -933,7 +944,7 @@ function detectBoss(id)
 	
 	if core.foundBoss == true then
 		--Display tracking achievement for that boss if partial variable is not false and boss was found and tracking is enabled
-		core:getAchievementToTrack()
+		--core:getAchievementToTrack()
 	else
 		--print("ID not found. Need to add to cache")
 		--This boss does not have tracking so add to mob cache
@@ -977,7 +988,7 @@ end
 --Display the "Tracking {achievement} for achievements"
 function core:getAchievementToTrack()
 	if core.achievementTrackedMessageShown == false then
-		--print("Length of array: " .. #core.currentBosses)
+		print("Length of array: " .. #core.currentBosses)
 		for i = 1, #core.currentBosses do
 			print("Achievement: " .. core.currentBosses[i].achievement)
 			if core.currentBosses[i].partial == false and core.currentBosses[i].enabled == true then
@@ -1236,6 +1247,10 @@ function clearVariables()
 	core.mobCounter = 0
 	core.mobUID = {}
 	core.thresholdAnnounced = false
+
+	core.currentBosses = {}
+	core.achievementIDs = {}
+	currentBossNums = {}
 
 	--If a boss was pulled then clear the variables for that raid
 	print(core.instance)
