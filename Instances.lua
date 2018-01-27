@@ -3741,12 +3741,12 @@ core.Instances = {
                 }, 
                 boss36 = {
                     name = "Thorim 1",
-                    bossIDs = {},
+                    bossIDs = {32865},
                     achievement = 12348,
                     players = {},
                     tactics = "",
-                    enabled = false,
-                    track = nil,
+                    enabled = true,
+                    track = function() core.Ulduar:ThorimDontStandInTheLightning() end,
 					partial = false,
                 }, 
                 boss37 = {

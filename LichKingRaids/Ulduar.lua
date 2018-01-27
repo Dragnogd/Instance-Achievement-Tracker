@@ -504,6 +504,24 @@ function core.Ulduar:FreyaDeforestation()
     end
 end
 
+function core.Ulduar:ThorimDontStandInTheLightning()
+    if (core.type == "SPELL_DAMAGE" or core.type == "SPELL_MISSED") and core.spellId == 62466 then
+        core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")")
+    end
+end
+
+function core.Ulduar:ThorimIllTakeYouAllOn()
+
+end 
+
+function core.Ulduar:ThorimWhoNeedsBloodlust()
+
+end
+
+function core.Ulduar:ThorimSiffed()
+
+end
+
 function core.Ulduar:ClearVariables()
     timerStarted = false
     timerStarted2 = false
