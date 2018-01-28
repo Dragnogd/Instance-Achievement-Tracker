@@ -7,6 +7,7 @@ local _, core = ...
 ---- Siege Of Orgrimmar Bosses
 ------------------------------------------------------
 core.SiegeOfOrgrimmar = {}
+core.SiegeOfOrgrimmar.Events = CreateFrame("Frame")
 
 local f = CreateFrame ("Frame")
 f:RegisterEvent("UNIT_HEALTH")
@@ -39,7 +40,8 @@ local superheatedCrawlerMinesTemp = 0
 ------------------------------------------------------
 ---- Kor'kron Dark Shaman
 ------------------------------------------------------
-local subzone = nil
+local rescueRaidersFailed = false
+local rescueRaidersCompleted = false
 local unitsSaved = 0
 local theramoreCitizenKilled = false
 local orcsKilled = false
@@ -340,149 +342,93 @@ function core.SiegeOfOrgrimmar:GarroshHellscream()
 	end
 end
 
---Only Run this script when in Siege of Orgrimmar
-local _, _, difficultyID, _, maxPlayers, _, _, mapID, _ = GetInstanceInfo()
-local currentZoneID = mapID
+function core.SiegeOfOrgrimmar:TrackAdditional()
+	------------------------------------------------------
+	---- Rescue Raiders
+	------------------------------------------------------
 
-f:SetScript("OnEvent", function(self, event, ...)
-	--TODO: Does not work inside buildings since subzone changes
-	if event == "ZONE_CHANGED" then
-		subzone = GetSubZoneText()
-		if subzone == "Gates of Orgrimmar" or subzone == "Valley of Strength" then
-			core:displayAchievementsToTrackCurrent(8453)
-		elseif subzone == "The Drag" then
-			core:displayAchievementsToTrackCurrent(8448)
-		elseif subzone == "Kor'kron Barracks" then
-			core:displayAchievementsToTrackCurrent(8538)
-		end
+	--Ji Firepaw died
+	if core.type == "UNIT_DIED" and core.destID == "62445" and rescueRaidersFailed == false then
+		core:sendMessage(GetAchievementLink(8453) .. " FAILED Reason: (Ji Firepaw has died")
 	end
 
-	if event == "PLAYER_ENTERING_WORLD" then
-		subzone = GetSubZoneText()
-		if subzone == "Gates of Orgrimmar" or subzone == "Valley of Strength" then
-			core:displayAchievementsToTrackCurrent(8453)
-		elseif subzone == "The Drag" then
-			core:displayAchievementsToTrackCurrent(8448)
-		elseif subzone == "Kor'kron Barracks" then
-			core:displayAchievementsToTrackCurrent(8538)
-		end		
+	--Ji Firepaw saved
+	if core.type == "UNIT_DIED" and core.destID == "72455" and rescueRaidersFailed == false then
+		unitsSaved = unitsSaved + 1
+		core:sendMessage("Save Ji Firepaw part of "  .. GetAchievementLink(8453) .. " Completed (" .. unitsSaved .. "/3)")
 	end
 
-	if subzone == "Gates of Orgrimmar" or subzone == "Valley of Strength" then
-		local timestamp, type, _, sourceGUID, sourceName, _, _, destGUID, destName, _, _ = ...
-		if event == "COMBAT_LOG_EVENT_UNFILTERED" then
-			local spellId, spellName, spellSchool, amount, overkill, school, resisted, blocked, absorbed, critical, glancing, crushing = select(12, ...)
-			local unitType, _, _, _, _, destID, spawn_uid_dest = strsplit("-",destGUID);
+	--Mokvar the Treasurer Killed
+	if core.type == "UNIT_DIED" and core.destID == "72433" then
+		core:sendMessage("Mokvar the Treasurer Killed. Use the key to rescue a set of caged prisoners")
+	end
 
-			if destName ~= nil and destID ~= nil then
-				--print(type .. " " .. destName .. " " .. destID)
-			end
+	---Alliance---
 
-			--Ji Firepaw died
-			if type == "UNIT_DIED" and destID == "62445" and core.achievementFailed == false then
-				SendChatMessage("[WIP] "  .. GetAchievementLink(8453) .. " FAILED Reason: (Ji Firepaw has died)",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
-				core.achievementFailed = true		
-			end
-
-			--Ji Firepaw saved
-			if type == "UNIT_DIED" and destID == "72455" and core.achievementFailed == false then
+	--Overseer Thathung Killed
+	if core.type == "UNIT_DIED" and core.destID == "72496" then
+		C_Timer.After(3, function()
+			if theramoreCitizenKilled == false and citizensSaved == false then
 				unitsSaved = unitsSaved + 1
-				SendChatMessage("[WIP] Save Ji Firepaw part of "  .. GetAchievementLink(8453) .. " Completed (" .. unitsSaved .. "/3)",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+				citizensSaved = true
+				core:sendMessage("Save 'A group of unwilling combat participants' part of "  .. GetAchievementLink(8453) .. " Completed (" .. unitsSaved .. "/3)")				
 			end
+		end)
+	end
 
-			--Mokvar the Treasurer Killed
-			if type == "UNIT_DIED" and destID == "72433" then
-				SendChatMessage("[WIP] Mokvar the Treasurer Killed. Use the key to rescue a set of caged prisoners",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+	--Theramore Citizens Killed
+	if core.type == "UNIT_DIED" and core.destID == "72498" and theramoreCitizenKilled == false then
+		theramoreCitizenKilled = true
+		core:sendMessage(GetAchievementLink(8453) .. " FAILED Reason: (Theramore Citizens killed)")
+	end
+
+	---Horde---
+
+	---Overseer Mojka---
+	if core.type == "UNIT_DIED" and core.destID == "72490" then
+		C_Timer.After(3, function()
+			if orcsKilled == false and citizensSaved == false then
+				unitsSaved = unitsSaved + 1
+				citizensSaved = true
+				core:sendMessage("Save 'A group of unwilling combat participants' part of "  .. GetAchievementLink(8453) .. " Completed (" .. unitsSaved .. "/3)")				
 			end
+		end)		
+	end
 
-			---Alliance---
+	--Orcs Killed---
+	if core.type == "UNIT_DIED" and (core.destID == "72492" or core.destID == "72493" or core.destID == "72484" or core.destID == "72485" or core.destID == "72483") and orcsKilled == false then
+		orcsKilled = true
+		core:sendMessage(GetAchievementLink(8453) .. " FAILED Reason: (Orcs killed)")
+	end
 
-			--Overseer Thathung Killed
-			if type == "UNIT_DIED" and destID == "72496" then
-				C_Timer.After(3, function()
-					if theramoreCitizenKilled == false and citizensSaved == false then
-						unitsSaved = unitsSaved + 1
-						citizensSaved = true
-						SendChatMessage("[WIP] Save 'A group of unwilling combat participants' part of "  .. GetAchievementLink(8453) .. " Completed (" .. unitsSaved .. "/3)",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)				
-					end
-				end)
-			end
+	--Requirements Met
+	if unitsSaved == 3 and rescueRaidersCompleted == false then
+		rescueRaidersCompleted = true
+		core:sendMessage(GetAchievementLink(8453) .. " requirements have been met. Boss can now be killed!")
+	end
+end
 
-			--Theramore Citizens Killed
-			if type == "UNIT_DIED" and destID == "72498" and theramoreCitizenKilled == false then
-				theramoreCitizenKilled = true
-				SendChatMessage("[WIP] "  .. GetAchievementLink(8453) .. " FAILED Reason: (Theramore Citizens killed)",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
-			end
+function core.SiegeOfOrgrimmar:InitialSetup()
+    core.SiegeOfOrgrimmar.Events:RegisterEvent("UNIT_AURA")
+end
 
-			---Horde---
+core.SiegeOfOrgrimmar.Events:SetScript("OnEvent", function(self, event, ...)
+    return self[event] and self[event](self, event, ...)
+end)
 
-			---Overseer Mojka---
-			if type == "UNIT_DIED" and destID == "72490" then
-				C_Timer.After(3, function()
-					if orcsKilled == false and citizensSaved == false then
-						unitsSaved = unitsSaved + 1
-						citizensSaved = true
-						SendChatMessage("[WIP] Save 'A group of unwilling combat participants' part of "  .. GetAchievementLink(8453) .. " Completed (" .. unitsSaved .. "/3)",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)				
-					end
-				end)		
-			end
-
-			--Orcs Killed---
-			if type == "UNIT_DIED" and (destID == "72492" or destID == "72493" or destID == "72484" or destID == "72485" or destID == "72483") and orcsKilled == false then
-				orcsKilled = true
-				SendChatMessage("[WIP] "  .. GetAchievementLink(8453) .. " FAILED Reason: (Orcs killed)",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
-			end
-
-			if unitsSaved == 3 and core.achievementCompleted == false then
-				SendChatMessage("[WIP] "  .. GetAchievementLink(8453) .. " requirements have been met. Boss can now be killed!",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
-				core.achievementCompleted = true
-			end
-		end
-
-		-- if event == "UNIT_SPELLCAST_SUCCEEDED" then
-		-- 	local unitID, spell, rank, lineID, core.spellId = select(1,...)
-		-- 	--print(UnitName(unitID) .. " " .. spell)
-		-- 	if spell == "Unlocking" then
-		-- 		unitsSaved = unitsSaved + 1
-		-- 		SendChatMessage("[WIP] 'Rescue a set of caged prisoners,' part of "  .. GetAchievementLink(8453) .. " Completed (" .. unitsSaved .. "/3)",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
-		-- 	end
-		-- end
-
-		if UnitAura("Player", "Resistance Totem") and prisonersRescued == false then
-			prisonersRescued = true
-			unitsSaved = unitsSaved + 1
-			SendChatMessage("[WIP] 'Rescue a set of caged prisoners,' part of "  .. GetAchievementLink(8453) .. " Completed (" .. unitsSaved .. "/3)",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
-		end
-	elseif subzone == "The Drag" then
-		--TODO: Stop this sending message twice
-		if event == "UNIT_SPELLCAST_SUCCEEDED" then
-			local unitID, spell, rank, lineID, spellId = select(1,...)
-			--print(UnitName(unitID) .. " " .. spell)
-			if spell == "Unlock Chains" then
-				SendChatMessage("[WIP] Gamon Freed!. Wait for him to reach boss before pulling",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
-			end
-		end
-	elseif subzone == "Kor'kron Barracks" then
-		local timestamp, type, _, sourceGUID, sourceName, _, _, destGUID, destName, _, _ = ...
-		if event == "COMBAT_LOG_EVENT_UNFILTERED" then
-			local spellId, spellName, spellSchool, amount, overkill, school, resisted, blocked, absorbed, critical, glancing, crushing = select(12, ...)
-			local unitType, _, _, _, _, destID, spawn_uid_dest = strsplit("-",destGUID);
-			
-			--Corrupted Skullsplitter Pulled
-			if destID == "73033" and corruptedSkullsplitterPulled == false then
-				corruptedSkullsplitterPulled = true
-				SendChatMessage("[WIP] Corrupted Skullsplitter Pulled",chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
-			end
-
-			--Corrupted Skullsplitter Killed
-			if type == "UNIT_DIED" and destID == "73033" and core.achievementFailed == false then
-				SendChatMessage("[WIP] "  .. GetAchievementLink(8538) .. " FAILED",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
-				core.achievementFailed = true							
-			end
-
+function core.SiegeOfOrgrimmar.Events:UNIT_AURA(self, unitID, ...)
+	if UnitAura("Player", "Resistance Totem") and prisonersRescued == false then
+		prisonersRescued = true
+		unitsSaved = unitsSaved + 1
+		core:sendMessage("'Rescue a set of caged prisoners,' part of "  .. GetAchievementLink(8453) .. " Completed (" .. unitsSaved .. "/3)")
+	
+		--Requirements Met
+		if unitsSaved == 3 and rescueRaidersCompleted == false then
+			rescueRaidersCompleted = true
+			core:sendMessage(GetAchievementLink(8453) .. " requirements have been met. Boss can now be killed!")
 		end
 	end
-end)
+end
 
 function core.SiegeOfOrgrimmar:ClearVariables()
 	------------------------------------------------------
@@ -527,3 +473,24 @@ function core.SiegeOfOrgrimmar:ClearVariables()
 	timerStarted = false
 	warbringersKilled = 0
 end
+
+-- elseif subzone == "Kor'kron Barracks" then
+-- 	local timestamp, type, _, sourceGUID, sourceName, _, _, destGUID, destName, _, _ = ...
+-- 	if event == "COMBAT_LOG_EVENT_UNFILTERED" then
+-- 		local spellId, spellName, spellSchool, amount, overkill, school, resisted, blocked, absorbed, critical, glancing, crushing = select(12, ...)
+-- 		local unitType, _, _, _, _, destID, spawn_uid_dest = strsplit("-",destGUID);
+		
+-- 		--Corrupted Skullsplitter Pulled
+-- 		if destID == "73033" and corruptedSkullsplitterPulled == false then
+-- 			corruptedSkullsplitterPulled = true
+-- 			SendChatMessage("[WIP] Corrupted Skullsplitter Pulled",chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+-- 		end
+
+-- 		--Corrupted Skullsplitter Killed
+-- 		if type == "UNIT_DIED" and destID == "73033" and core.achievementFailed == false then
+-- 			SendChatMessage("[WIP] "  .. GetAchievementLink(8538) .. " FAILED",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+-- 			core.achievementFailed = true							
+-- 		end
+
+-- 	end
+-- end
