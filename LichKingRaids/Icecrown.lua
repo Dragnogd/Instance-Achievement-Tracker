@@ -61,26 +61,22 @@ local playersCompleted = {}
 ------------------------------------------------------
 ---- Lich King
 ------------------------------------------------------
-local necroticPlagueStack = 0   
+local necroticPlagueStack = 0
+local necroticPlagueCompletedAnnounced = false   
 
-function core.Icecrown:LordMarrowgar()
-    core:getAchievementsToTrackWrath(4610,4534)						
-	if core.type == "SPELL_AURA_APPLIED" and core.achievementFailed ~= true then
-		if(core.spellId == 69065) then
-			SendChatMessage("[WIP] " .. core.destName .. " has been Impaled",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
-			C_Timer.After(8, function()
-                local name, _, _, _, _, _, _ = GetSpellInfo(69065)
-                if UnitDebuff(core.destName, name) then
-                    core:getAchievementFailedWrath(4610,4534,nil)
-                    core.achievementFailed = true
-                end
-			end)
-		end
-	end
+function core.Icecrown:LordMarrowgar()					
+	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 69065 then
+        core:SendMessage(core.destName .. " has been Impaled")
+        C_Timer.After(8, function()
+            local name, _, _, _, _, _, _ = GetSpellInfo(69065)
+            if UnitDebuff(core.destName, name) then
+                core:getAchievementFailed()
+            end
+        end)
+    end
 end
 
 function core.Icecrown:LadyDeathwhisper()
-    core:getAchievementsToTrackWrath(4611,4535)
     local CultFanatic = {"Cult Fanatic", "Fanático del Culto"}
     local CultAdherent = {"Cult Adherent", "Partidario del Culto"}
     local DeformedFanatic = {"Deformed Fanatic", "Fanático deformado"}
@@ -126,26 +122,26 @@ function core.Icecrown:LadyDeathwhisper()
             CultFanaticFound = true
             AddCounter = AddCounter + 1
             if CultFanaticWait == false then
-                SendChatMessage("[WIP] Cult Fanatic found (" .. AddCounter .. "/5)",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+                core:sendMessage("Cult Fanatic found (" .. AddCounter .. "/5)")
             end
         elseif currentAddSource == "Cult Adherent" and CultAdherentFound == false then
             CultAdherentFound = true
             AddCounter = AddCounter + 1
             if CultAdherentWait == false then
-                SendChatMessage("[WIP] Cult Adherent found (" .. AddCounter .. "/5)",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+                core:sendMessage("Cult Adherent found (" .. AddCounter .. "/5)")
             end
         elseif currentAddSource == "Deformed Fanatic" and DeformedFanaticFound == false then
             DeformedFanaticFound = true
             AddCounter = AddCounter + 1
-            SendChatMessage("[WIP] Deformed Fanatic found (" .. AddCounter .. "/5)",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+            core:sendMessage("Deformed Fanatic found (" .. AddCounter .. "/5)")
         elseif currentAddSource == "Reanimated Fanatic" and ReanimatedFanaticFound == false then
             ReanimatedFanaticFound = true
             AddCounter = AddCounter + 1
-            SendChatMessage("[WIP] Reanimated Fanatic found (" .. AddCounter .. "/5)",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+            core:sendMessage("Reanimated Fanatic found (" .. AddCounter .. "/5)")
         elseif currentAddSource == "Reanimated Adherent" and ReanimatedAdherentFound == false then
             ReanimatedAdherentFound = true
             AddCounter = AddCounter + 1
-            SendChatMessage("[WIP] Reanimated Adherent found (" .. AddCounter .. "/5)",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+            core:sendMessage("Reanimated Adherent found (" .. AddCounter .. "/5)")
         end
     end
 
@@ -157,13 +153,11 @@ function core.Icecrown:LadyDeathwhisper()
                     if currentAddDest == "Reanimated Adherent" then
                         ReanimatedAdherentFound = false
                         AddCounter = AddCounter - 1
-                        SendChatMessage("[WIP] Reanimated Adherent has died. Looking for another add. DO NOT KILL BOSS (" .. AddCounter .. "/5)",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
-                        core.achievementCompleted = false
+                        core:sendMessage("Reanimated Adherent has died. Looking for another add. DO NOT KILL BOSS (" .. AddCounter .. "/5)")
                     elseif currentAddDest == "Reanimated Fanatic" then
                         ReanimatedFanaticFound = false
                         AddCounter = AddCounter - 1
-                        SendChatMessage("[WIP] Reanimated Fanatic has died. Looking for another add. DO NOT KILL BOSS (" .. AddCounter .. "/5)",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
-                        core.achievementCompleted = false
+                        core:sendMessage("[WIP] Reanimated Fanatic has died. Looking for another add. DO NOT KILL BOSS (" .. AddCounter .. "/5)")
                     end
                 end            
             end
@@ -177,8 +171,7 @@ function core.Icecrown:LadyDeathwhisper()
             AddCounter = AddCounter - 1
             C_Timer.After(2, function()
                 if CultFanaticFound == false then
-                    SendChatMessage("[WIP] Cult Fanatic has died. Looking for another add. DO NOT KILL BOSS (" .. AddCounter .. "/5)",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
-                    core.achievementCompleted = false
+                    core:sendMessage("Cult Fanatic has died. Looking for another add. DO NOT KILL BOSS (" .. AddCounter .. "/5)")
                     CultFanaticWait = false
                 end
             end)
@@ -188,44 +181,38 @@ function core.Icecrown:LadyDeathwhisper()
             AddCounter = AddCounter - 1
             C_Timer.After(2, function()
                 if CultAdherentFound == false then
-                    SendChatMessage("[WIP] Cult Adherent has died. Looking for another add. DO NOT KILL BOSS (" .. AddCounter .. "/5)",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
-                    core.achievementCompleted = false
+                    core:sendMessage("Cult Adherent has died. Looking for another add. DO NOT KILL BOSS (" .. AddCounter .. "/5)")
                     CultAdherentWait = false
                 end
             end)
         elseif currentAddDest == "Deformed Fanatic" and DeformedFanaticFound == true then
             DeformedFanaticFound = false
             AddCounter = AddCounter - 1
-            SendChatMessage("[WIP] Deformed Fanatic has died. Looking for another add. DO NOT KILL BOSS (" .. AddCounter .. "/5)",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
-            core.achievementCompleted = false							
+            core:sendMessage("Deformed Fanatic has died. Looking for another add. DO NOT KILL BOSS (" .. AddCounter .. "/5)")						
         end
     end
 
-    if AddCounter == 5 and core.achievementCompleted == false then
-        core:getAchievementSuccessWrath(4611,4535)
-        core.achievementCompleted = true
+    if AddCounter == 5 then
+        core:getAchievementSuccess()
     end
 end
 
 function core.Icecrown:GunshipBattle()
-    --core:getAchievementsToTrackWrath(4612,4536)
-    
     if core.type == "SPELL_DAMAGE" then
         if (core.spellId == 69192 or core.spellId == 69193) and core.achievementFailed == false then --Rocket Burst
-            if players[core.sourceName] and timestamp ~= currentTimestamp then
+            if players[core.sourceName] and core.timestamp ~= currentTimestamp then
                 players[core.sourceName] = players[sourceName] + 1
                 currentTimestamp = timestamp
-                SendChatMessage("[WIP] " .. core.sourceName .. " has gone to the enemy ship " .. players[core.sourceName] .. " times",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+                core:sendMessage(core.sourceName .. " has gone to the enemy ship " .. players[core.sourceName] .. " times")
             elseif timestamp ~= currentTimestamp then
                 players[core.sourceName] = 1
-                currentTimestamp = timestamp
-                SendChatMessage("[WIP] " .. core.sourceName .. " has gone to the enemy ship " .. players[sourceName] .. " times",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+                currentTimestamp = core.timestamp
+                SendChatMessage(core.sourceName .. " has gone to the enemy ship " .. players[sourceName] .. " times")
             end
 
             if players[core.sourceName] ~= nil then
-                if players[core.sourceName] > 2 and core.achievementFailed == false then
-                    core:getAchievementFailedWrath(4612,4536,core.sourceName)
-                    core.achievementFailed = true
+                if players[core.sourceName] > 2 then
+                    core:getAchievementFailedWithMessageAfter("(" .. sourceName .. ")")
                 end           
             end
         end
@@ -234,27 +221,19 @@ function core.Icecrown:GunshipBattle()
 end
 
 function core.Icecrown:DeathbringerSaurfang()
-    core:getAchievementsToTrackWrath(4613,4537)
-    --detect if mark of the fallen champion has been cast
-    if core.type == "SPELL_CAST_START" then
-        if core.spellId == 72293 and markOfTheFallenChampionCounter ~= 5 then
+    --Detect if mark of the fallen champion has been cast
+    if core.type == "SPELL_CAST_START" and core.spellId == 72293 and markOfTheFallenChampionCounter ~= 5 then
             markOfTheFallenChampionCounter = markOfTheFallenChampionCounter + 1
-        end
     end	
 
     --if counter reaches 5 then the achievement has failed
-    if markOfTheFallenChampionCounter == 5 and core.achievementFailed == false then
-        core:getAchievementFailedWrath(4613,4537, nil)
-        core.achievementFailed = true
+    if markOfTheFallenChampionCounter == 5 then
+        core:getAchievementFailed()
     end
 end
 
 -- function Icecrown_ValithriaDreamwalker(portalsActive)
---     ------------------------------------------------------
---     ---- Valithria Dreamwalker
---     ------------------------------------------------------
---     if portalsActive == false and core.achievementFailed == false then
---         core:getAchievementsToTrackWrath(4619,4579)
+--     if portalsActive == false then
 --         if noteDisplayed == false then
 --             SendChatMessage("[WIP] Note: Healing the boss before the portals spawn will also grant the achievement. Portals spawn 45 seconds after the boss is engaged",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
 --             noteDisplayed = true
@@ -334,95 +313,63 @@ end
 -- end
 
 function core.Icecrown:Sindragosa()
-    core:getAchievementsToTrackWrath(4620,4580)
+    if core.type == "SPELL_AURA_APPLIED_DOSE" or core.type == "SPELL_AURA_APPLIED" then
+        if core.spellId == 70127 and core.unitType ~= "Pet" then
+            if core.amount == nil then
+                core.amount = 1
+            end
+            core:sendMessage(core.destName .. " has " .. core.amount .. " stacks of Mystic Buffet")          
 
-    if core.achievementFailed == false then
-        if core.type == "SPELL_AURA_APPLIED_DOSE" or core.type == "SPELL_AURA_APPLIED" then
-            if core.spellId == 70127 and core.unitType ~= "Pet" then
-                if core.amount == nil then
-                    core.amount = 1
-                end
-                SendChatMessage("[WIP] " .. core.destName .. " has " .. core.amount .. " stacks of Mystic Buffet",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)          
+            --Get the highest stack of Mystic Buffet and save to variable
+            if core.amount > mysticBuffetStack and mysticBuffetStack < 6 then
+                mysticBuffetStack = core.amount
+            end  
 
-                --Get the highest stack of Mystic Buffet and save to variable
-                if core.amount > mysticBuffetStack and mysticBuffetStack < 6 then
-                    mysticBuffetStack = core.amount
-                end  
-
-                if mysticBuffetStack > 5 then
-                    core:getAchievementFailedWrath(4620,4580, core.destName)
-                    core.achievementFailed = true
-                end
+            if mysticBuffetStack > 5 then
+                core:getAchievementFailed()
+                core.achievementFailed = true
             end
         end
     end
 end
 
 function core.Icecrown:Festergut()
-    core:getAchievementsToTrackWrath(4615,4577)
+    if core.type == "SPELL_AURA_APPLIED_DOSE" or core.type == "SPELL_AURA_APPLIED" then
+        if core.spellId == 69291 and core.unitType ~= "Pet" then
+            if core.amount == nil then
+                core.amount = 1
+            end  
 
-    if core.achievementFailed == false then
-        if core.type == "SPELL_AURA_APPLIED_DOSE" or core.type == "SPELL_AURA_APPLIED" then
-            if core.spellId == 69291 and core.unitType ~= "Pet" then
-                if core.amount == nil then
-                    core.amount = 1
-                end  
+            --Get the highest stack of Mystic Buffet and save to variable
+            if core.amount > InoculatedStack and InoculatedStack < 3 then
+                InoculatedStack = core.amount
+                core:sendMessage(core.destName .. " has " .. core.amount .. " stacks of Inoculated")     
+            end  
 
-                --Get the highest stack of Mystic Buffet and save to variable
-                if core.amount > InoculatedStack and InoculatedStack < 3 then
-                    InoculatedStack = core.amount
-                    SendChatMessage("[WIP] " .. core.destName .. " has " .. core.amount .. " stacks of Inoculated",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)     
-                end  
-
-                if InoculatedStack > 2 then
-                    core:getAchievementFailedWrath(4615,4577, core.destName)
-                    core.achievementFailed = true
-                end
+            if InoculatedStack > 2 then
+                core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")")
             end
         end
-    end 
+    end
 end
 
 function core.Icecrown:Rotface()
-    core:getAchievementsToTrackWrath(4614,4538)
-
-    if core.type == "SPELL_CAST_START" and core.spellId == 69839 and core.achievementFailed == false then
-        core:getAchievementFailedWrath(4614,4538)
-        core.achievementFailed = true
+    if core.type == "SPELL_CAST_START" and core.spellId == 69839 then
+        core:getAchievementFailed()
     end
 end
 
 function core.Icecrown:ProfessorPutricide()
-    core:getAchievementsToTrackWrath(4616,4578)
-
-    if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 70539 and core.achievementFailed == false then
-        core:getAchievementFailedWrath(4616,4578)
-        core.achievementFailed = true        
+    if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 70539 then
+        core:getAchievementFailed()
     end
 end
 
 function core.Icecrown:BloodPrinceCouncil()
-    ------------------------------------------------------
-    ---- Blood Prince Council
-    ------------------------------------------------------
-    core:getAchievementsToTrackWrath(4617,4582)
-
-    if (core.type == "SPELL_DAMAGE" or core.type == "SPELL_PERIODIC_DAMAGE") and core.unitType == "Player" and core.achievementFailed == false then
-        if core.amount ~= nil then
-            if core.amount > 23000 then
-                core:getAchievementFailedWrath(4617,4582, core.destName)
-                core.achievementFailed = true
-            end       
-        end
-    end
-
-    if core.type == "SWING_DAMAGE" and core.unitType == "Player" and core.achievementFailed == false then
-        if core.swingAmount ~= nil then
-            if core.swingAmount > 23000 then
-                core:getAchievementFailedWrath(4617,4582, destName)
-                core.achievementFailed = true
-            end       
-        end
+    if core.amount ~= nil then
+        if core.amount > 23000 then
+            core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")")
+        end       
     end
 end
 
@@ -653,11 +600,10 @@ end
 -- end
 
 function core.Icecrown:LichKing()
-    core:getAchievementsToTrackWrath(4621,4601)
-    for i = 1, GetNumGroupMembers() do
+    for i = 1, core.groupSize do
         local unit = nil
         if core.chatType == "PARTY" then
-            if i < GetNumGroupMembers() then
+            if i < core.groupSize then
                 unit = "party" .. i
             else
                 unit = "player"
@@ -669,20 +615,19 @@ function core.Icecrown:LichKing()
         end
 
         local name, _, _, count, _, _, _, _, _, _, spellID, _, _, _, _, _, _, _, _ = UnitDebuff(unit, "Necrotic Plague")
-        if core.spellID == 70338 and count > necroticPlagueStack and core.achievementCompleted == false then
+        if core.spellID == 70338 and count > necroticPlagueStack and necroticPlagueCompletedAnnounced == false then
             necroticPlagueStack = count
-            SendChatMessage("[WIP] Necrotic Plague at " .. necroticPlagueStack .. " stacks",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+            core:sendMessage("Necrotic Plague at " .. necroticPlagueStack .. " stacks")
         end
         
         local name, _, _, count, _, _, _, _, _, _, spellID, _, _, _, _, _, _, _, _ = UnitDebuff(unit .. "target", "Necrotic Plague")
-        if core.spellID == 70338 and count > necroticPlagueStack and core.achievementCompleted == false then
+        if core.spellID == 70338 and count > necroticPlagueStack and necroticPlagueCompletedAnnounced == false then
             necroticPlagueStack = count
-            SendChatMessage("[WIP] Necrotic Plague at " .. necroticPlagueStack .. " stacks",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+            core:sendMessage("Necrotic Plague at " .. necroticPlagueStack .. " stacks")
         end
 
-        if necroticPlagueStack >= 30 and core.achievementCompleted == false then
-            core:getAchievementSuccessWrath(4621,4601)
-            core.achievementCompleted = true
+        if necroticPlagueStack >= 30 then
+            core:getAchievementSuccess()
         end
     end	
 end
@@ -737,5 +682,6 @@ function Icecrown_ClearVariables()
     ------------------------------------------------------
     ---- Lich King
     ------------------------------------------------------
-    necroticPlagueStack = 0   
+    necroticPlagueStack = 0 
+    necroticPlagueCompletedAnnounced = false  
 end
