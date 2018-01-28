@@ -895,6 +895,11 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 				core.currentBosses[i].track()
 			end
 		end
+
+		--Track additional variables for the instance if they are not tied to a boss/encounter
+		if pcall(function() core[core.instanceClear]:TrackAdditional() end) == true then	
+			core[core.instanceClear]:TrackAdditional()
+		end	
 	end
 end
 
