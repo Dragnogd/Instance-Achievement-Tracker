@@ -400,6 +400,7 @@ function getInstanceInfomation()
 		str = str:gsub("%s+", "")
 		str = str:gsub("%-", "")
 		str = str:gsub("%'", "")
+		str = str:gsub("%:", "")
 		core.instance = str
 		core.instanceClear = core.instance
 
