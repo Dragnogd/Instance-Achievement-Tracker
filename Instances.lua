@@ -3245,12 +3245,12 @@ core.Instances = {
                 name = "Trial of the Crusader 10 Man",
                 boss1 = {
                     name = "Icehowl",
-                    bossIDs = {},
+                    bossIDs = {34796},
                     achievement = 3797,
                     players = {},
                     tactics = "",
-                    enabled = false,
-                    track = nil,
+                    enabled = true,
+                    track = function() core.TrialOfTheCrusader:UpperBackPain() end,
 					partial = false,
                 },
                 boss2 = {

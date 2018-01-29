@@ -7,6 +7,7 @@ local events = CreateFrame("Frame")
 local UIConfig
 local UICreated = false
 local addonVersion = 1
+local debugMode = true
 
 -- local events = CreateFrame("Frame", "AchievementTracker2", UIParent, "UIPanelDialogTemplate")
 -- events:SetSize(800, 500)
@@ -405,15 +406,15 @@ function getInstanceInfomation()
 		core.instanceClear = core.instance
 
 		--If the raid is in the lich king expansion then detect whether player is on the 10man or 25man difficulty
-		-- if core.instance == "Ulduar" then
-		-- 	if core.difficultyID == 3 then
-		-- 		--10 Man
-		-- 		core.instance = core.instance .. "10Man"
-		-- 	elseif core.difficultyID == 4 then
-		-- 		--25 Man
-		-- 		core.instance = core.instance .. "25Man"
-		-- 	end
-		-- end
+		if core.instance == "TrialOfTheCrusader" then
+			if core.difficultyID == 3 then
+				--10 Man
+				core.instance = core.instance .. "10Man"
+			elseif core.difficultyID == 4 then
+				--25 Man
+				core.instance = core.instance .. "25Man"
+			end
+		end
 
 		--Find the instance in the core.instances table so we can cache the value to be used later
 		for expansion,_ in pairs(core.Instances) do
@@ -676,6 +677,10 @@ function events:ADDON_LOADED(event, name)
 	SlashCmdList.MENU = core.Config.Toggle
 
 	core:printMessage("loaded. Version: " .. tonumber(addonVersion))
+
+	if debugMode == true then
+		core:sendMessage("Debugging Enabled")
+	end
 end
 
 function events:PLAYER_REGEN_DISABLED()
@@ -964,7 +969,11 @@ end
 --Handle the output of messages to the chat system
 function core:sendMessage(message)
 	if message ~= lastMessageSent then
-		SendChatMessage("[WIP] " .. message,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+		if debugMode == false then
+			SendChatMessage("[WIP] " .. message,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+		elseif debugMode == true then
+			print("[DEBUG] " .. message)
+		end
 		lastMessageSent = message
 	else
 		--DEBUG
@@ -1192,7 +1201,7 @@ function core:trackMob(mobID, mobName, threshold, message, interval, trackAchiev
 	if core.type == "UNIT_DIED" and core.destID == mobID and core.mobCounter > 0 and trackAchiev == nil then
         core.mobUID[core.spawn_uid_dest] = "Dead"
 		core.mobCounter = core.mobCounter - 1
-		--print(core.mobCounter)
+		print(core.mobCounter)
 	end
 	
 	--Requirements Met
