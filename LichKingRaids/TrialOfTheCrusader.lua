@@ -188,4 +188,10 @@ function core.TrialOfTheCrusader:ClearVariables()
         print("Timer Cancelled")
         timer:Cancel()
     end
+
+    ------------------------------------------------------
+    ---- Anub'arak
+    ------------------------------------------------------
+    swarmScarabCounterReached = false
+    swarmScarabKilled = 0
 end
