@@ -1198,10 +1198,10 @@ function core:trackMob(mobID, mobName, threshold, message, interval, trackAchiev
 	end
 
 	--Unit Died
-	if core.type == "UNIT_DIED" and core.destID == mobID and core.mobCounter > 0 and trackAchiev == nil then
+	if core.type == "UNIT_DIED" and core.destID == mobID and core.mobCounter > 0 then
         core.mobUID[core.spawn_uid_dest] = "Dead"
 		core.mobCounter = core.mobCounter - 1
-		print(core.mobCounter)
+		--print(core.mobCounter)
 	end
 	
 	--Requirements Met
