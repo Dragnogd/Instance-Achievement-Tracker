@@ -406,7 +406,7 @@ function getInstanceInfomation()
 		core.instanceClear = core.instance
 
 		--If the raid is in the lich king expansion then detect whether player is on the 10man or 25man difficulty
-		if core.instance == "TrialOfTheCrusader" then
+		if core.instance == "TrialOfTheCrusader" or core.instance == "Naxxramas" then
 			if core.difficultyID == 3 then
 				--10 Man
 				core.instance = core.instance .. "10Man"
