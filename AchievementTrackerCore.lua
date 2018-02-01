@@ -7,7 +7,7 @@ local events = CreateFrame("Frame")
 local UIConfig
 local UICreated = false
 local addonVersion = 1
-local debugMode = true
+local debugMode = false
 
 -- local events = CreateFrame("Frame", "AchievementTracker2", UIParent, "UIPanelDialogTemplate")
 -- events:SetSize(800, 500)

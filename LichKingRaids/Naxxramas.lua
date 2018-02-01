@@ -20,6 +20,11 @@ local timer
 local timer2Started = false
 local timer2
 
+------------------------------------------------------
+---- Kel'Thuzad
+------------------------------------------------------
+local abominationsKilled = 0
+
 function core.Naxxramas:HeiganTheUnclean()
     if core.type == "UNIT_DIED" and core.currentUnit == "Player" then
         core:getAchievementFailed()
@@ -71,6 +76,10 @@ function core.Naxxramas:GrandWidowFaerlina()
 end
 
 function core.Naxxramas:Subtraction()
+    if core.inCombat == true then
+        core:getAchievementToTrack()
+    end
+
     if core.difficultyID == 3 then
         --10 Man
         if core.groupSize < 9 then
@@ -88,7 +97,45 @@ function core.Naxxramas:Subtraction()
     end
 end
 
+function core.Naxxramas:Shocking()
+    if core.inCombat == true then
+        core:getAchievementToTrack()
+    end
 
+    if core.spellId == 28085 or core.spellId == 28059 then
+        core:getAchievementFailed(2)
+    end
+end
+
+function core.Naxxramas:FourHorsemen()
+    if core.inCombat == true then
+        core:getAchievementToTrack()
+    end
+
+    if core.type == "UNIT_DIED" and (core.destID == "16063" or core.destID == "16064" or core.destID == "16065" or core.destID == "30549") then
+        if timerStarted == false then
+            timerStarted = true
+            timer = C_Timer.NewTimer(15, function() 
+                core:getAchievementFailed()
+            end)
+        end  
+    end
+end
+
+function core.Naxxramas:KelThuzad()
+    if core.inCombat == true then
+        core:getAchievementToTrack()
+    end
+
+    if core.type == "UNIT_DIED" and (core.destID == "23562" or core.destID == "16428") and abominationsKilled < 18 then
+        abominationsKilled = abominationsKilled + 1
+        core:sendMessageDelay("Unstoppable Abomination Killed (" .. abominationsKilled .. "/18)", abominationsKilled, 3)
+    end
+
+    if abominationsKilled >= 18 then
+        core:getAchievementSuccess()
+    end
+end
 
 function core.Naxxramas:ClearVariables()
     ------------------------------------------------------
@@ -98,4 +145,9 @@ function core.Naxxramas:ClearVariables()
         print("Timer Cancelled")
         timer:Cancel()
     end
+
+    ------------------------------------------------------
+    ---- Kel'Thuzad
+    ------------------------------------------------------
+    abominationsKilled = 0
 end
