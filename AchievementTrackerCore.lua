@@ -52,7 +52,7 @@ events:SetScript("OnEvent", function(self, event, ...)
 	if event == "aaaUNIT_HEALTH" then
 		print(UnitName(...) .. " : " .. UnitHealth(...))
 	end
-	if event == "UNIT_SPELLCAST_SUCCEEDED" then
+	if event == "aaaUNIT_SPELLCAST_SUCCEEDED" then
 
 		local unitID, spell, rank, lineID, spellID = ...
 
@@ -126,6 +126,7 @@ core.instanceNameSpaces = nil					--Instance name with spaces
 core.foundBoss = false							--Whether or not a boss has been found to track or not
 core.currentBosses = {}							--Stores a list of the bosses the player is currently attacking. (Can be mutliple if one boss has multiple achievements)
 core.mobCache = {}								--Stores a list of mobs that have been checked to see whether or not they need to be tracked or not
+core.instanceVariablesReset = false				--Whether the instance variables have reset after leaving an instance
 
 --------------------------------------
 -- Boss functions
@@ -133,6 +134,8 @@ core.mobCache = {}								--Stores a list of mobs that have been checked to see 
 core.mobCounter = 0								--Used in the trackMob function to see how many of a certain type of mob have currently spawned
 core.mobUID = {}								--Used in the trackMob function to store the unique UID of each mob of a certain type that has spawned
 core.thresholdAnnounced = false					--Used to check whether the trackMob funciton has announced the requirements have been met
+core.encounterStarted = false
+core.displayAchievements = false
 
 --------------------------------------
 -- Achievement Functions
@@ -343,22 +346,18 @@ function events:GROUP_ROSTER_UPDATE()
 end
 
 function events:ENCOUNTER_START()
-	print("Encounter Started")
+	core:sendDebugMessage("---Encounter Started---")
+	core.encounterStarted = true
 
-	if enableDisplayAchievement == true then
-		enableDisplayAchievement = false
-		C_Timer.After(1, function()
-			core:getAchievementToTrack()	
-		end)
+	if core.displayAchievements == true then
+		core:getAchievementToTrack()
+		core.disableAchievementTracking = false
 	end
-
 end
 
 function events:ENCOUNTER_END()
-	print("Encounter Ended")
-	core.inCombat = false
-	core.foundBoss = false
-	enableDisplayAchievement = true
+	core:sendDebugMessage("Encounter Ended")
+	core.encounterStarted = false
 end
 
 function events:INSPECT_ACHIEVEMENT_READY()
@@ -371,7 +370,7 @@ function events:INSPECT_ACHIEVEMENT_READY()
 
 				--If the player has not completed the achievement then add them to the players string to display in the GUI
 				--Temp: will show completed achievements in GUI since I've already completed all the achievements
-				if completed ~= true then
+				if completed == false then
 					local name, _ = UnitName(playersToScan[1])
 					table.insert(core.Instances[core.expansion][core.instanceType][core.instance][boss].players, name)
 				end
@@ -395,9 +394,10 @@ end
 
 function getInstanceInfomation()
 	if IsInInstance() then
-		print("Player is in an instance")
-		local instanceCompatible = false
+		core:sendDebugMessage("Player has entered instance")
+		local instanceCompatible = false --Check whether player is on correct difficulty to earn achievements
 		core.inInstance = true
+		core.instanceVariablesReset = false
 		core.instanceNameSpaces, _, core.difficultyID, _, core.maxPlayers, _, _, core.currentZoneID, _ = GetInstanceInfo()
 
 		--Used to find correct table in the core.instances table
@@ -407,10 +407,11 @@ function getInstanceInfomation()
 		str = str:gsub("%'", "")
 		str = str:gsub("%:", "")
 
-		core.instance = str
-		core.instanceClear = core.instance
+		core.instance = str --Instance name without any puntuation
+		core.instanceClear = core.instance --Instance name with puntuation
 
 		--If the raid is in the lich king expansion then detect whether player is on the 10man or 25man difficulty
+		--This is only needed for raids that have seperate achievements for 10man and 25man. Happens for the majority of WOTLK raids
 		if core.instance == "TrialOfTheCrusader" or core.instance == "Naxxramas" then
 			if core.difficultyID == 3 then
 				--10 Man
@@ -430,17 +431,16 @@ function getInstanceInfomation()
 						core.instanceType = instanceType
 						core.instance = instance
 
-						print("Expansion: " .. core.expansion)
-						print("Instance Type: " .. core.instanceType)
-						print("Instance: " .. core.instance)
+						core:sendDebugMessage("Expansion: " .. core.expansion)
+						core:sendDebugMessage("Instance Type: " .. core.instanceType)
+						core:sendDebugMessage("Instance: " .. core.instance)
 					end
 				end
 			end
 		end	
 		
 		--Check whether achievements can be earned for the instance the player has entered
-		print("DifficultyID: " .. core.difficultyID)
-		print(core.instance)
+		core:sendDebugMessage("DifficultyID: " .. core.difficultyID)
 		if core.difficultyID == 2 then
 			--WOTLK/Cata/Mop/Wod heroic dungeons
 			if core.expansion == "WrathOfTheLichKing" or core.expansion == "Cataclysm" or core.expansion == "MistsOfPandaria" or core.expansion == "WarlordsOfDraenor" then
@@ -476,7 +476,7 @@ function getInstanceInfomation()
 				UIConfig:Show()
 			end
 		else
-			print("You are not on the correct mode to earn achievements for this instance")
+			core:sendDebugMessage("Achievements cannot be earned for the following difficulty " .. core.difficultyID)
 		end
 	else
 		core.inInstance = false
@@ -484,6 +484,7 @@ function getInstanceInfomation()
 end
 
 function initialInstanceSetup()
+	--Used to start certain events for some instances so we don't have to run them when they are not needed
 	if pcall(function() core[core.instanceClear]:InitialSetup() end) == true then	
 		core[core.instanceClear]:InitialSetup()
 	end
@@ -501,9 +502,9 @@ function events:ZONE_CHANGED_NEW_AREA()
 
 	getInstanceInfomation()
 	
-	if core.inInstance == false then
+	if core.inInstance == false and core.instanceVariablesReset == false then
 		--If user has left the instance then unregister events if they were registered
-		print("Player has left instance. Unregestering events and resetting variables")
+		core:sendDebugMessage("Player has left instance. Unregestering events and resetting variables")
 		events:UnregisterEvent("INSPECT_ACHIEVEMENT_READY") 			
 		events:UnregisterEvent("GROUP_ROSTER_UPDATE")					
 		events:UnregisterEvent("PLAYER_REGEN_DISABLED")				
@@ -518,6 +519,7 @@ function events:ZONE_CHANGED_NEW_AREA()
 		core.currentBosses = {}
 		core.foundBoss = false							
 		core.mobCache = {}
+		core.instanceVariablesReset = true --This is done so we only reset instance variables once, rather than everytime the player changes zone
 		
 		--Reset Achievement Variabless
 		playersToScan = {}						
@@ -596,43 +598,43 @@ function events:CHAT_MSG_ADDON(self, prefix, message, channel, sender)
 		--(addonVersion ..  " : " .. adddonVersionOtherPlayer)
 		if trackingEnabled == "true" and tonumber(playerRank) > core.playerRankInGroup and addonVersion<= tonumber(adddonVersionOtherPlayer) then
 			--Player rank is lower than other players so not master addon and there addon version is higher or the same as yours
-			print("Not enabling tracking output since a player running the addon has a higher rank than you")
+			core:sendDebugMessage("Not enabling tracking output since a player running the addon has a higher rank than you")
 			core.masterAddon = false
 		elseif trackingEnabled == "true" and tonumber(playerRank) > core.playerRankInGroup and addonVersion> tonumber(adddonVersionOtherPlayer) then
 			--PLayer rank is lower than other players so not master addon but the addon version of your addon is higher so take control
-			print("Although rank is lower, you have a more updated version of the addon so promote yourself")
+			core:sendDebugMessage("Although rank is lower, you have a more updated version of the addon so promote yourself")
 			core.masterAddon = true
 
 			--Tell the user that was originally the leader they are no longer the leader
-			print("Asking " .. sender .. " to demote themselves")
+			core:sendDebugMessage("Asking " .. sender .. " to demote themselves")
 			SendAddonMessage("Whizzey", sender .. "-demote", "RAID")			
 		elseif trackingEnabled == "true" and tonumber(playerRank) < core.playerRankInGroup and addonVersion>= tonumber(adddonVersionOtherPlayer) then
 			--Player rank is higher than other players so set it the master addon and your addon version is higher or the same as theirs
-			print("Setting master addon since player has highest rank so far in group")
+			core:sendDebugMessage("Setting master addon since player has highest rank so far in group")
 			core.masterAddon = true
 
 			--Tell the user that was originally the leader they are no longer the leader
-			print("Asking " .. sender .. " to demote themselves")
+			core:sendDebugMessage("Asking " .. sender .. " to demote themselves")
 			SendAddonMessage("Whizzey", sender .. "-demote", "RAID")
 		elseif trackingEnabled == "true" and tonumber(playerRank) < core.playerRankInGroup and addonVersion< tonumber(adddonVersionOtherPlayer) then
 			--PLayer rank is lower than other players so not master addon but the addon version is lower than the other player so do not take control
-			print("Although rank is higher, player is running an older version of the addon so not not promote")
+				core:sendDebugMessage("Although rank is higher, player is running an older version of the addon so not not promote")
 			core.masterAddon = false
 		elseif trackingEnabled == "true" and tonumber(playerRank) == core.playerRankInGroup and addonVersion<= tonumber(adddonVersionOtherPlayer) then
 			--Player rank is equal but other player is already running addon so let them run it instead and their addon version is higher or the same as yours
-			print("Another player with the same rank is already running the addon: (" .. playerRank .. " : " .. core.playerRankInGroup .. ") " .. sender)
+			core:sendDebugMessage("Another player with the same rank is already running the addon: (" .. playerRank .. " : " .. core.playerRankInGroup .. ") " .. sender)
 			core.masterAddon = false
 		elseif trackingEnabled == "true" and tonumber(playerRank) == core.playerRankInGroup and addonVersion> tonumber(adddonVersionOtherPlayer) then
 			--Player rank is equal but other player is already running addon but your addon version is higher so take control
-			print("Although another player with the same rank is already running the addon. You have a higher addon version number so take control")
+			core:sendDebugMessage("Although another player with the same rank is already running the addon. You have a higher addon version number so take control")
 			core.masterAddon = true
 
 			--Tell the user that was originally the leader they are no longer the leader
-			--print("Asking " .. sender .. " to demote themselves")
+			--core:sendDebugMessage("Asking " .. sender .. " to demote themselves")
 			SendAddonMessage("Whizzey", sender .. "-demote", "RAID")			
 		elseif trackingEnabled == "false" then
 			--No one else is currently running the addon so take control
-			print("Setting master addon since no one else is running the addon")
+			core:sendDebugMessage("Setting master addon since no one else is running the addon")
 			core.masterAddon = true
 		end
 
@@ -653,19 +655,19 @@ function enableAchievementTracking(self)
 	if core.groupSize == 1 then
 		--Player is not a group so run the addon
 		core.masterAddon = true
-		--print(UnitName("Player") .. " is the master addon")
+		--core:sendDebugMessage(UnitName("Player") .. " is the master addon")
 		initialInstanceSetup()
 	else
 		--Get the permissions for the current player
 		for i = 1, core.groupSize do
 			local name, rank, subgroup, level, class, fileName, zone, online, isDead, role, isML = GetRaidRosterInfo(i)
 			if name == UnitName("Player") then
-				--print("Found: " .. name)
+				--core:sendDebugMessage("Found: " .. name)
 
-				--print("Setting rank to: " .. rank)
+				--core:sendDebugMessage("Setting rank to: " .. rank)
 				core.playerRankInGroup = rank
 				
-				--print("Sending Addon Message")
+				--core:sendDebugMessage("Sending Addon Message")
 				SendAddonMessage("Whizzey", "enabledCheck", "RAID")
 				enabledCheckSent = true
 			end
@@ -693,23 +695,18 @@ end
 function events:PLAYER_REGEN_DISABLED()
  	core.inCombat = true
  	core:detectGroupType()
-	print("Entered Combat")
-
-	local isInstance, instanceType = IsInInstance()
-	-- if isInstance == true and (instanceType == "party" or instanceType == "raid") and core.masterAddon == true then
-		
-	-- end
+	core:sendDebugMessage("Entered Combat")
 
 	--DEBUG
- 	----print(UnitGUID("Boss1"))
- 	----print(UnitGUID("Boss2"))		
+ 	----core:sendDebugMessage(UnitGUID("Boss1"))
+ 	----core:sendDebugMessage(UnitGUID("Boss2"))		
 end
 
 function events:PLAYER_REGEN_ENABLED()
 	--Although the player running the addon has left combat, the boss could still be in combat with other players. Check everyone else in the group to see if anyone is still in combat with the boss
 	if getCombatStatus() == false then
 		clearVariables()
-		print("Left Combat")
+		core:sendDebugMessage("Left Combat")
 		events:SetScript("OnUpdate",nil)
 	else
 		--Someone in the group is still in combat. Wait 1 second then check again
@@ -858,7 +855,7 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 
 	
 
-	--print(...)
+	--core:sendDebugMessage(...)
 
 	--Boss Detection!
 	if core.foundBoss == true then			
@@ -886,18 +883,18 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 		end
 
 		if core.sourceID ~= nil and doNotTrack == false then
-			--print(core.sourceID)
+			--core:sendDebugMessage(core.sourceID)
 			if core:has_value(core.mobCache, core.sourceID) ~= true then
-				--print("Calling Detect Boss 2: " .. core.sourceID)
-				--print(core.sourceID)
+				--core:sendDebugMessage("Calling Detect Boss 2: " .. core.sourceID)
+				--core:sendDebugMessage(core.sourceID)
 				detectBoss(core.sourceID)
 			end
 		end	
 		
 		if core.destID ~= nil and doNotTrack == false then
-			--print(core.destID)
+			--core:sendDebugMessage(core.destID)
 			if core:has_value(core.mobCache, core.destID) == false then
-				--print("Calling Detect Boss 3: " .. core.destID)
+				--core:sendDebugMessage("Calling Detect Boss 3: " .. core.destID)
 				detectBoss(core.destID)
 			end
 		end
@@ -940,17 +937,17 @@ function detectBoss(id)
 	for boss,_ in pairs(core.Instances[core.expansion][core.instanceType][core.instance]) do
 		if core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs ~= nil then
 			if #core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs > 0 then
-				--print(#core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs)
+				--core:sendDebugMessage(#core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs)
 				for i = 1, #core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs do
 					local bossID = core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs[i]
 					if string.find(id, bossID) then
 						if core:has_value(currentBossNums, boss) == false then
-							print("Adding the following boss: " .. boss)
+							core:sendDebugMessage("Adding the following boss: " .. boss)
 							table.insert(core.currentBosses, core.Instances[core.expansion][core.instanceType][core.instance][boss])
 							table.insert(currentBossNums, boss)						
 						end
 						if core:has_value(core.achievementIDs, core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement) == false then
-							print("Adding the following achievement ID beacuse it doesn't exist: " .. core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
+							core:sendDebugMessage("Adding the following achievement ID beacuse it doesn't exist: " .. core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
 							table.insert(core.achievementIDs, core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)						
 						end
 						core.foundBoss = true
@@ -961,14 +958,18 @@ function detectBoss(id)
 	end
 	
 	if core.foundBoss == true then
-		--Display tracking achievement for that boss if partial variable is not false and boss was found and tracking is enabled
-		--core:getAchievementToTrack()
+		--Display tracking achievement for that boss if partial variable is not false and boss was found and tracking is enabled and encounter has started
+		if core.encounterStarted == true then
+			core:getAchievementToTrack()
+		else
+			core.displayAchievements = true
+		end
 	else
-		--print("ID not found. Need to add to cache")
+		--core:sendDebugMessage("ID not found. Need to add to cache")
 		--This boss does not have tracking so add to mob cache
 		if core:has_value(core.mobCache, id) ~= true then
 			table.insert(core.mobCache, id)
-			--print("Adding to cache: " .. id)
+			--core:sendDebugMessage("Adding to cache: " .. id)
 		end
 	end
 end
@@ -979,18 +980,24 @@ function core:sendMessage(message)
 		if debugMode == false then
 			SendChatMessage("[WIP] " .. message,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
 		elseif debugMode == true then
-			print("[DEBUG] " .. message)
+			core:sendDebugMessage("[DEBUG] " .. message)
 		end
 		lastMessageSent = message
 	else
 		--DEBUG
-		print("Cannot Send Message: " .. message)
+		core:sendDebugMessage("Cannot Send Message: " .. message)
 	end
 end
 
 function core:sendMessageDelay(message, counter, interval)
 	if counter - math.floor(counter/interval)*interval == 0 then
 		core:sendMessage(message)
+	end
+end
+
+function core:sendDebugMessage(message)
+	if debugMode == true then
+		print("[DEBUG] " .. message)
 	end
 end
 
@@ -1010,9 +1017,9 @@ end
 --Display the "Tracking {achievement} for achievements"
 function core:getAchievementToTrack()
 	if core.achievementTrackedMessageShown == false then
-		print("Length of array: " .. #core.currentBosses)
+		core:sendDebugMessage("Length of array: " .. #core.currentBosses)
 		for i = 1, #core.currentBosses do
-			print("Achievement: " .. core.currentBosses[i].achievement)
+			core:sendDebugMessage("Achievement: " .. core.currentBosses[i].achievement)
 			if core.currentBosses[i].partial == false and core.currentBosses[i].enabled == true then
 				core:sendMessage("Tracking: "  .. GetAchievementLink(core.currentBosses[i].achievement))
 				core.achievementTrackedMessageShown = true
@@ -1192,7 +1199,7 @@ function core:trackMob(mobID, mobName, threshold, message, interval, trackAchiev
             core.mobUID[core.spawn_uid] = core.spawn_uid
             core.mobCounter = core.mobCounter + 1
 			core:sendMessageDelay(mobName ..  " Counter (" .. core.mobCounter .. "/" .. threshold .. ")",core.mobCounter,interval)
-			--print(core.mobCounter)
+			--core:sendDebugMessage(core.mobCounter)
         end
     end
     if core.destID == mobID and core.mobCounter <= threshold and core.thresholdAnnounced == false then
@@ -1200,7 +1207,7 @@ function core:trackMob(mobID, mobName, threshold, message, interval, trackAchiev
             core.mobUID[core.spawn_uid_dest] = core.spawn_uid_dest
             core.mobCounter = core.mobCounter + 1
 			core:sendMessageDelay(mobName .. " Counter (" .. core.mobCounter .. "/" .. threshold ..")",core.mobCounter,interval)
-			--print(core.mobCounter)
+			--core:sendDebugMessage(core.mobCounter)
         end
 	end
 
@@ -1208,7 +1215,7 @@ function core:trackMob(mobID, mobName, threshold, message, interval, trackAchiev
 	if core.type == "UNIT_DIED" and core.destID == mobID and core.mobCounter > 0 then
         core.mobUID[core.spawn_uid_dest] = "Dead"
 		core.mobCounter = core.mobCounter - 1
-		--print(core.mobCounter)
+		--core:sendDebugMessage(core.mobCounter)
 	end
 	
 	--Requirements Met
@@ -1256,7 +1263,7 @@ function clearVariables()
 	------------------------------------------------------
 	---- Reset Variables
 	------------------------------------------------------
-	print("Resetting Variables")
+	core:sendDebugMessage("Resetting Variables")
 
 	core.inCombat = false
 	core.achievementsFailed = {}
@@ -1269,13 +1276,14 @@ function clearVariables()
 	core.mobCounter = 0
 	core.mobUID = {}
 	core.thresholdAnnounced = false
+	core.displayAchievements = false
 
 	core.currentBosses = {}
 	core.achievementIDs = {}
 	currentBossNums = {}
 
 	--If a boss was pulled then clear the variables for that raid
-	print(core.instance)
+	core:sendDebugMessage(core.instance)
 	if core.instance ~= nil then
 		core[core.instanceClear]:ClearVariables()
 	end
