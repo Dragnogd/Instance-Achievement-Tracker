@@ -7,7 +7,7 @@ local events = CreateFrame("Frame")
 local UIConfig
 local UICreated = false
 local addonVersion = 1
-local debugMode = false
+local debugMode = true
 
 -- local events = CreateFrame("Frame", "AchievementTracker2", UIParent, "UIPanelDialogTemplate")
 -- events:SetSize(800, 500)
@@ -27,6 +27,10 @@ local debugMode = false
 -- playersWaitingToScanFontstring:SetPoint("TOPLEFT",12,-300)
 -- playersWaitingToScanFontstring:SetText("Test 12345")
 -- playersWaitingToScanFontstring:SetWidth(500)
+
+-- local events = CreateFrame("Frame", "AchievementTracker2", UIParent, "OptionsFrameListTemplate")
+-- events:SetSize(800, 500)
+-- events:SetPoint("CENTER") --Center of the screen
 
 events:RegisterEvent("ADDON_LOADED")						--Used to setup the slash commands for the addon
 events:RegisterEvent("PLAYER_ENTERING_WORLD")				--Used to detect if player is inside an instance when they enter the world
@@ -367,7 +371,7 @@ function events:INSPECT_ACHIEVEMENT_READY()
 
 				--If the player has not completed the achievement then add them to the players string to display in the GUI
 				--Temp: will show completed achievements in GUI since I've already completed all the achievements
-				if completed ~= false then
+				if completed ~= true then
 					local name, _ = UnitName(playersToScan[1])
 					table.insert(core.Instances[core.expansion][core.instanceType][core.instance][boss].players, name)
 				end
@@ -402,6 +406,7 @@ function getInstanceInfomation()
 		str = str:gsub("%-", "")
 		str = str:gsub("%'", "")
 		str = str:gsub("%:", "")
+
 		core.instance = str
 		core.instanceClear = core.instance
 
@@ -458,6 +463,8 @@ function getInstanceInfomation()
 			end
 		elseif core.difficultyID == 13 or core.difficultyID == 14 or core.difficultyID == 15 then
 			--current
+			instanceCompatible = true
+		elseif core.difficultyID == 7 or core.difficultyID == 17 and debugMode == true then
 			instanceCompatible = true
 		end		
 

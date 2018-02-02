@@ -6,16 +6,17 @@ local _, core = ...
 ------------------------------------------------------
 ---- Nighthold Bosses
 ------------------------------------------------------
-core.Nighthold = {}
+core.TheNighthold = {}
 
 ------------------------------------------------------
 ---- Trilliax
 ------------------------------------------------------
 local toxicSliceCounter = 0
 
-function core.Nighthold:Trilliax()
-    if core.type == "SPELL_AURA_APPLIED" and core.spellName == "Toxic Slice" then
+function core.TheNighthold:Trilliax()
+    if (core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_APPLIED_DOSE") and core.spellId == 206798 then
         toxicSliceCounter = toxicSliceCounter + 1
+        print(toxicSliceCounter)
     end			
 
     if toxicSliceCounter >= 20 then
@@ -23,13 +24,13 @@ function core.Nighthold:Trilliax()
     end
 end
 
-function core.Nighthold:Tichondrius()
-    if core.type == "SPELL_DAMAGE" and core.spellName == "Echoes of the Void" then
+function core.TheNighthold:Tichondrius()
+    if core.type == "SPELL_DAMAGE" and core.spellId == 213534 then
         core:getAchievementFailedPersonal()
     end
 end
 
-function core.Nighthold:ClearVariables()
+function core.TheNighthold:ClearVariables()
     ------------------------------------------------------
     ---- Trilliax
     ------------------------------------------------------
