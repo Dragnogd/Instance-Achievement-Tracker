@@ -138,9 +138,8 @@ core.thresholdAnnounced = false					--Used to check whether the trackMob funcito
 core.encounterStarted = false
 core.displayAchievements = false
 
---------------------------------------
--- Achievement Functions
---------------------------------------
+
+--OLD used to create a seperate table for tracking current table values
 function updateDebugTable()
 	--DEBUG START
 	-- local tmpPlayersToScanOutput = "ToScan: "
@@ -171,6 +170,7 @@ function updateDebugTable()
 	--DEBUG END	
 end
 
+--Get the current size of the group
 function core:getGroupSize()
 	local size = GetNumGroupMembers()
 
@@ -182,6 +182,12 @@ function core:getGroupSize()
 	end
 end
 
+------------------------------------------------------
+---- Players Achievements Functions
+------------------------------------------------------
+
+--Get a list of all the players currently in the group. This is used so we can scan all the players in the group to see which achievements they need
+--This is run everytime the composition of the group changes so we always have an up to date list of players who need a certain achievement
 function getPlayersInGroup()
 	if scanAnnounced == false then
 		core:printMessage("Starting Achievement Scan For " .. core.instanceNameSpaces .. " (This may lag your game for a few seconds)")
@@ -273,6 +279,8 @@ function getPlayersInGroup()
 	end	
 end
 
+--Used to fetch achievement information for each player in the group. This is used so players can see and output which players in the group are missing which achievements
+--TODO: have a limit on the amount of times a certain player is scanned. This is needed so we are not constantly scanning players that are offline or players who never enter the instance
 function getInstanceAchievements()
 	ClearAchievementComparisonUnit()
 	--Make sure the player we are about to scan is still in the group
@@ -329,70 +337,11 @@ function getInstanceAchievements()
 	end
 end
 
-function events:GROUP_ROSTER_UPDATE()
-	--When player enters the world in an instance start the achievement scanner. Only start the scanner if the raid size has changed
-	if GetNumGroupMembers() ~= core.groupSize then
-		if scanInProgress == false then
-			--print("Scan not in progress. Starting scan...")
-			scanInProgress = true
-			getPlayersInGroup()
-		else
-			--print("Scan in progress asking for rescan since group size has changed")
-			rescanNeeded = true
-		end
-	end
+------------------------------------------------------
+---- Achievement Tracking Setup
+------------------------------------------------------
 
-	--Update the group size whenever the composition of the group changes
-	core:getGroupSize()
-end
-
-function events:ENCOUNTER_START()
-	core:sendDebugMessage("---Encounter Started---")
-	core.encounterStarted = true
-
-	if core.displayAchievements == true then
-		core:getAchievementToTrack()
-		core.disableAchievementTracking = false
-	end
-end
-
-function events:ENCOUNTER_END()
-	core:sendDebugMessage("Encounter Ended")
-	core.encounterStarted = false
-end
-
-function events:INSPECT_ACHIEVEMENT_READY()
-	--Find the achievements for the raid the user has entered
-	if UnitName(playerCurrentlyScanning) ~= nil then
-		for boss,_ in pairs(core.Instances[core.expansion][core.instanceType][core.instance]) do
-			if boss ~= "name" then
-				local completed, month, day, year = GetAchievementComparisonInfo(core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
-				--print(GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " completed: " .. tostring(completed))
-
-				--If the player has not completed the achievement then add them to the players string to display in the GUI
-				--Temp: will show completed achievements in GUI since I've already completed all the achievements
-				if completed == false then
-					local name, _ = UnitName(playersToScan[1])
-					table.insert(core.Instances[core.expansion][core.instanceType][core.instance][boss].players, name)
-				end
-			end
-		end
-
-		--print("Scanned " .. UnitName(playersToScan[1]))
-		table.insert(playersScanned, playersToScan[1])
-		table.remove(playersToScan, 1)
-
-		--Update the GUI
-		core.Config:Instance_OnClickAutomatic()
-
-		playerCurrentlyScanning = nil
-	else
-		rescanNeeded = true
-	end
-
-	updateDebugTable()
-end
-
+--Run when the player initially enters an instance to setup variables such as instanceName, expansion etc so we can track the correct bosses
 function getInstanceInfomation()
 	if IsInInstance() and core.inInstance == false then
 		core:sendDebugMessage("Player has entered instance")
@@ -501,6 +450,7 @@ function getInstanceInfomation()
 	end
 end
 
+--Run if we need to setup additional events/variables for a certain instance. For example if we need to track additional events such as messages from bosses
 function initialInstanceSetup()
 	--Used to start certain events for some instances so we don't have to run them when they are not needed
 	if pcall(function() core[core.instanceClear]:InitialSetup() end) == true then	
@@ -508,49 +458,9 @@ function initialInstanceSetup()
 	end
 end
 
-
-function events:PLAYER_ENTERING_WORLD()
-	getInstanceInfomation()
-end
-
-function events:ZONE_CHANGED_NEW_AREA()
-	if UIConfig ~= nil and core.inInstance == false then
-		core:sendDebugMessage("Hiding Tracking UI")
-		UIConfig:Hide()
-	end
-	
-	getInstanceInfomation()
-	
-	if core.inInstance == false and core.instanceVariablesReset == false then
-		--If user has left the instance then unregister events if they were registered
-		core:sendDebugMessage("Player has left instance. Unregestering events and resetting variables")
-		events:UnregisterEvent("INSPECT_ACHIEVEMENT_READY") 			
-		events:UnregisterEvent("GROUP_ROSTER_UPDATE")					
-		events:UnregisterEvent("PLAYER_REGEN_DISABLED")				
-		events:UnregisterEvent("PLAYER_REGEN_ENABLED")
-		events:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
-		
-		--Reset Instance Variables
-		core.expansion = nil							
-		core.instanceType = nil							
-		core.instance = nil								
-		core.instanceNameSpaces = nil					
-		core.currentBosses = {}
-		core.foundBoss = false							
-		core.mobCache = {}
-		core.instanceVariablesReset = true --This is done so we only reset instance variables once, rather than everytime the player changes zone
-		
-		--Reset Achievement Variabless
-		playersToScan = {}						
-		playersScanned = {}						
-		rescanNeeded = false						
-		playerCurrentlyScanning = nil				
-		scanInProgress = false					
-		scanFinished = false						
-		scanAnnounced = false						
-	end		
-end
-
+--Create the achievement tracking UI if it is not already been created
+--This will ask the user if they want to enable acheivement tracking for the current instance the player has entered
+--It will only show in instances where there are achievements to be tracked and they are on the correct difficulty to earn acheivements
 function createEnableAchievementTrackingUI()
 	UICreated = true
 
@@ -589,6 +499,225 @@ function createEnableAchievementTrackingUI()
 	UIConfig.btnNo:SetScript("OnClick", disableAchievementTracking);
 end
 
+--Shown the achievement tracking UI if its already been created and the player has entered an instance
+function enableAchievementTracking(self)
+	UIConfig:Hide()
+	events:RegisterEvent("INSPECT_ACHIEVEMENT_READY") 			--Used for scanning players in the group to see which achievements they are missing
+	events:RegisterEvent("GROUP_ROSTER_UPDATE")					--Used to find out when the group size has changed and to therefore initiate an achievement scan of the group
+	events:RegisterEvent("PLAYER_REGEN_DISABLED")				--Used to detect when the player has entered combat and to reset tracked variables for bosses
+	events:RegisterEvent("PLAYER_REGEN_ENABLED")				--Used to track when the player has left combat
+	events:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+	getPlayersInGroup()
+
+	--Check if there is already someone else running the addon in the group / whether the priority is higher for the current player than other players running the addon
+	if core.groupSize == 1 then
+		--Player is not a group so run the addon
+		core.masterAddon = true
+		--core:sendDebugMessage(UnitName("Player") .. " is the master addon")
+		initialInstanceSetup()
+	else
+		--Get the permissions for the current player
+		for i = 1, core.groupSize do
+			local name, rank, subgroup, level, class, fileName, zone, online, isDead, role, isML = GetRaidRosterInfo(i)
+			if name == UnitName("Player") then
+				--core:sendDebugMessage("Found: " .. name)
+
+				--core:sendDebugMessage("Setting rank to: " .. rank)
+				core.playerRankInGroup = rank
+				
+				--core:sendDebugMessage("Sending Addon Message")
+				SendAddonMessage("Whizzey", "enabledCheck", "RAID")
+				enabledCheckSent = true
+			end
+		end
+	end
+end
+
+--Hide the achievment tracking UI once the player has left the instance
+function disableAchievementTracking(self)
+	UIConfig:Hide()
+end
+
+--Used to detect when everyone in the group has left combat so we can reset global and instance variables
+function getCombatStatus()
+	local playerInCombat = false
+	if core.groupSize > 1 then
+		--We are in a group
+		local currentUnit
+		core:detectGroupType()
+		for i = 1, core.groupSize do
+			if core.chatType == "PARTY" then
+				if i < core.groupSize then
+					currentUnit = "party" .. i
+				else
+					currentUnit = "player"				
+				end
+			elseif core.chatType == "RAID" then
+				currentUnit = "raid" .. i
+			end
+			
+			if currentUnit ~= nil then
+				if UnitAffectingCombat(currentUnit) == true then
+					playerInCombat = true
+				end
+			end
+		end
+
+		if playerInCombat == false then
+			--Everyone in the group has left combat so we can clear the tracking variables
+			return false
+		else
+			--Someone in the group is still in combat
+			return true
+		end
+	else
+		--Player is not in a group therefore, they must of left combat so clear variables
+		return false
+	end
+end
+
+------------------------------------------------------
+---- Events
+------------------------------------------------------
+
+--Setup Slash Commands
+function events:ADDON_LOADED(event, name)
+	if name ~= "AchievementTracker" then return end
+
+	SLASH_MENU1 = "/at"
+	SlashCmdList.MENU = core.Config.Toggle
+
+	core:printMessage("loaded. Version: " .. tonumber(addonVersion))
+
+	if debugMode == true then
+		core:sendMessage("Debugging Enabled")
+	end
+end
+
+--Fired whenever the composition of the group changes.
+--Used to alter size of group variables and which player in group is running the master addon
+function events:GROUP_ROSTER_UPDATE()
+	--When player enters the world in an instance start the achievement scanner. Only start the scanner if the raid size has changed
+	if GetNumGroupMembers() ~= core.groupSize then
+		if scanInProgress == false then
+			--print("Scan not in progress. Starting scan...")
+			scanInProgress = true
+			getPlayersInGroup()
+		else
+			--print("Scan in progress asking for rescan since group size has changed")
+			rescanNeeded = true
+		end
+	end
+
+	--Update the group size whenever the composition of the group changes
+	core:getGroupSize()
+end
+
+--Fired when a user engages a boss. Used to output to chat which achievement is currently being tracked
+--Does not fire for all bosses or sometimes fires too late into the fight so some fight manually call the achievement tracking functions
+--Does not get called for achievements which are not part of a boss fight so achievement tracking is calling manually once per session for those achievements
+function events:ENCOUNTER_START()
+	core:sendDebugMessage("---Encounter Started---")
+	core.encounterStarted = true
+
+	if core.displayAchievements == true then
+		core:getAchievementToTrack()
+		core.disableAchievementTracking = false
+	end
+end
+
+--Fired when a users has finished engaging a boss. This is used to make sure achievement tracking is not fired when the player is not attacking a boss
+function events:ENCOUNTER_END()
+	core:sendDebugMessage("Encounter Ended")
+	core.encounterStarted = false
+end
+
+--This event is used to scan players in the group to see which achievements they are currently missing
+function events:INSPECT_ACHIEVEMENT_READY()
+	--Find the achievements for the raid the user has entered
+	if UnitName(playerCurrentlyScanning) ~= nil then
+		for boss,_ in pairs(core.Instances[core.expansion][core.instanceType][core.instance]) do
+			if boss ~= "name" then
+				local completed, month, day, year = GetAchievementComparisonInfo(core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
+				--print(GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " completed: " .. tostring(completed))
+
+				--If the player has not completed the achievement then add them to the players string to display in the GUI
+				--Temp: will show completed achievements in GUI since I've already completed all the achievements
+				if completed == false then
+					local name, _ = UnitName(playersToScan[1])
+					table.insert(core.Instances[core.expansion][core.instanceType][core.instance][boss].players, name)
+				end
+			end
+		end
+
+		--print("Scanned " .. UnitName(playersToScan[1]))
+		table.insert(playersScanned, playersToScan[1])
+		table.remove(playersToScan, 1)
+
+		--Update the GUI
+		core.Config:Instance_OnClickAutomatic()
+
+		playerCurrentlyScanning = nil
+	else
+		rescanNeeded = true
+	end
+
+	updateDebugTable()
+end
+
+--Fired when the players has finished loading in the world.
+--Used to detect whether the player is in an instance and if so it will setup the instance variables for that instance
+--This is done so we know which achievements we need to be tracking and so we know which achievements to scan the players in the group for
+function events:PLAYER_ENTERING_WORLD()
+	getInstanceInfomation()
+end
+
+--Fired when the player enters a new zone.
+--Used to detect whether the player is in an instance and if so it will setup the instance variables for that instance
+--This is done so we know which achievements we need to be tracking and so we know which achievements to scan the players in the group for
+--It is also used to disable tracking for a instance once the player has left that particular instance
+function events:ZONE_CHANGED_NEW_AREA()
+	if UIConfig ~= nil and core.inInstance == false then
+		core:sendDebugMessage("Hiding Tracking UI")
+		UIConfig:Hide()
+	end
+	
+	getInstanceInfomation()
+	
+	if core.inInstance == false and core.instanceVariablesReset == false then
+		--If user has left the instance then unregister events if they were registered
+		core:sendDebugMessage("Player has left instance. Unregestering events and resetting variables")
+		events:UnregisterEvent("INSPECT_ACHIEVEMENT_READY") 			
+		events:UnregisterEvent("GROUP_ROSTER_UPDATE")					
+		events:UnregisterEvent("PLAYER_REGEN_DISABLED")				
+		events:UnregisterEvent("PLAYER_REGEN_ENABLED")
+		events:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+		
+		--Reset Instance Variables
+		core.expansion = nil							
+		core.instanceType = nil							
+		core.instance = nil								
+		core.instanceNameSpaces = nil					
+		core.currentBosses = {}
+		core.foundBoss = false							
+		core.mobCache = {}
+		core.instanceVariablesReset = true --This is done so we only reset instance variables once, rather than everytime the player changes zone
+		
+		--Reset Achievement Variabless
+		playersToScan = {}						
+		playersScanned = {}						
+		rescanNeeded = false						
+		playerCurrentlyScanning = nil				
+		scanInProgress = false					
+		scanFinished = false						
+		scanAnnounced = false						
+	end		
+end
+
+--Used to communicate between everyone in the group using the addon to decide which addon is the master addon
+--We only want one master addon otherwise we will get duplicate messages for all the achievement tracking and this will create a lot of spam
+--TODO: track when a player leaves the instance and reassign master addon to someone else
+--TODO: track when someones rank in the group changes and they need to take control of the master addon
 function events:CHAT_MSG_ADDON(self, prefix, message, channel, sender)	
 	--Addon is checking who should be leader
 	local name, realm = UnitName("Player")
@@ -661,116 +790,32 @@ function events:CHAT_MSG_ADDON(self, prefix, message, channel, sender)
 	end
 end
 
-function enableAchievementTracking(self)
-	UIConfig:Hide()
-	events:RegisterEvent("INSPECT_ACHIEVEMENT_READY") 			--Used for scanning players in the group to see which achievements they are missing
-	events:RegisterEvent("GROUP_ROSTER_UPDATE")					--Used to find out when the group size has changed and to therefore initiate an achievement scan of the group
-	events:RegisterEvent("PLAYER_REGEN_DISABLED")				--Used to detect when the player has entered combat and to reset tracked variables for bosses
-	events:RegisterEvent("PLAYER_REGEN_ENABLED")				--Used to track when the player has left combat
-	events:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
-	getPlayersInGroup()
-
-	--Check if there is already someone else running the addon in the group / whether the priority is higher for the current player than other players running the addon
-	if core.groupSize == 1 then
-		--Player is not a group so run the addon
-		core.masterAddon = true
-		--core:sendDebugMessage(UnitName("Player") .. " is the master addon")
-		initialInstanceSetup()
-	else
-		--Get the permissions for the current player
-		for i = 1, core.groupSize do
-			local name, rank, subgroup, level, class, fileName, zone, online, isDead, role, isML = GetRaidRosterInfo(i)
-			if name == UnitName("Player") then
-				--core:sendDebugMessage("Found: " .. name)
-
-				--core:sendDebugMessage("Setting rank to: " .. rank)
-				core.playerRankInGroup = rank
-				
-				--core:sendDebugMessage("Sending Addon Message")
-				SendAddonMessage("Whizzey", "enabledCheck", "RAID")
-				enabledCheckSent = true
-			end
-		end
-	end
-end
-
-function disableAchievementTracking(self)
-	UIConfig:Hide()
-end
-
-function events:ADDON_LOADED(event, name)
-	if name ~= "AchievementTracker" then return end
-
-	SLASH_MENU1 = "/at"
-	SlashCmdList.MENU = core.Config.Toggle
-
-	core:printMessage("loaded. Version: " .. tonumber(addonVersion))
-
-	if debugMode == true then
-		core:sendMessage("Debugging Enabled")
-	end
-end
-
+--Fired when a player has entered combat. Used to detect bosses and when we need to reset variables between boss fights
 function events:PLAYER_REGEN_DISABLED()
- 	core.inCombat = true
- 	core:detectGroupType()
-	core:sendDebugMessage("Entered Combat")
+	core.inCombat = true
+	core:detectGroupType()
+   	core:sendDebugMessage("Entered Combat")
 
-	--DEBUG
- 	----core:sendDebugMessage(UnitGUID("Boss1"))
- 	----core:sendDebugMessage(UnitGUID("Boss2"))		
+   --DEBUG
+	----core:sendDebugMessage(UnitGUID("Boss1"))
+	----core:sendDebugMessage(UnitGUID("Boss2"))		
 end
 
+--Fired when a player has left combat. Used to reset variables between boss fights
 function events:PLAYER_REGEN_ENABLED()
-	--Although the player running the addon has left combat, the boss could still be in combat with other players. Check everyone else in the group to see if anyone is still in combat with the boss
-	if getCombatStatus() == false then
-		clearInstanceVariables()
-		clearVariables()
-		core:sendDebugMessage("Left Combat")
-		events:SetScript("OnUpdate",nil)
-	else
-		--Someone in the group is still in combat. Wait 1 second then check again
-		events:SetScript("OnUpdate",events.onUpdate)
-	end
+   --Although the player running the addon has left combat, the boss could still be in combat with other players. Check everyone else in the group to see if anyone is still in combat with the boss
+   if getCombatStatus() == false then
+	   clearInstanceVariables()
+	   clearVariables()
+	   core:sendDebugMessage("Left Combat")
+	   events:SetScript("OnUpdate",nil)
+   else
+	   --Someone in the group is still in combat. Wait 1 second then check again
+	   events:SetScript("OnUpdate",events.onUpdate)
+   end
 end
 
-function getCombatStatus()
-	local playerInCombat = false
-	if core.groupSize > 1 then
-		--We are in a group
-		local currentUnit
-		core:detectGroupType()
-		for i = 1, core.groupSize do
-			if core.chatType == "PARTY" then
-				if i < core.groupSize then
-					currentUnit = "party" .. i
-				else
-					currentUnit = "player"				
-				end
-			elseif core.chatType == "RAID" then
-				currentUnit = "raid" .. i
-			end
-			
-			if currentUnit ~= nil then
-				if UnitAffectingCombat(currentUnit) == true then
-					playerInCombat = true
-				end
-			end
-		end
-
-		if playerInCombat == false then
-			--Everyone in the group has left combat so we can clear the tracking variables
-			return false
-		else
-			--Someone in the group is still in combat
-			return true
-		end
-	else
-		--Player is not in a group therefore, they must of left combat so clear variables
-		return false
-	end
-end
-
+--Used to monitor the combat log so we can track achievements. The variables change depending on the information being recieved from the combat log
 function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 	--All Events
 	core.timeStamp, core.type, core.hideCaster, core.sourceGUID, core.sourceName, core.sourceFlags, core.sourceRaidFlags, core.destGUID, core.destName, core.destFlags, core.destRaidFlags = ...
@@ -995,6 +1040,25 @@ function detectBoss(id)
 	end
 end
 
+--Display the "Tracking {achievement} for achievements"
+--TODO: concatenate multiple achievements to print out in 1 message / split up to reduce amount of messages being sent
+function core:getAchievementToTrack()
+	if core.achievementTrackedMessageShown == false then
+		core:sendDebugMessage("Length of array: " .. #core.currentBosses)
+		for i = 1, #core.currentBosses do
+			core:sendDebugMessage("Achievement: " .. core.currentBosses[i].achievement)
+			if core.currentBosses[i].partial == false and core.currentBosses[i].enabled == true then
+				core:sendMessage("Tracking: "  .. GetAchievementLink(core.currentBosses[i].achievement))
+				core.achievementTrackedMessageShown = true
+			end
+
+			--Setup failed and completed achievements table
+			table.insert(core.achievementsFailed, false)
+			table.insert(core.achievementsCompleted, false)
+		end
+	end
+end
+
 ------------------------------------------------------
 ---- Messaging Functions
 ------------------------------------------------------
@@ -1021,16 +1085,19 @@ function core:sendMessageDelay(message, counter, interval)
 	end
 end
 
+--Output debug messages to the chat for testing purposes
 function core:sendDebugMessage(message)
 	if debugMode == true then
 		print("[DEBUG] " .. message)
 	end
 end
 
+--TODO: tidy this up so it can print out any colour
 function core:printMessage(message)
 	print("|cff00ccffAchievement Tracker: |cffffffff" .. message)
 end
 
+--Get the current achievement being tracked for custom output messages
 function core:getAchievement(index)
 	local value = index
 	if index == nil then
@@ -1039,24 +1106,9 @@ function core:getAchievement(index)
 	return GetAchievementLink(core.achievementIDs[value])
 end
 
-
---Display the "Tracking {achievement} for achievements"
-function core:getAchievementToTrack()
-	if core.achievementTrackedMessageShown == false then
-		core:sendDebugMessage("Length of array: " .. #core.currentBosses)
-		for i = 1, #core.currentBosses do
-			core:sendDebugMessage("Achievement: " .. core.currentBosses[i].achievement)
-			if core.currentBosses[i].partial == false and core.currentBosses[i].enabled == true then
-				core:sendMessage("Tracking: "  .. GetAchievementLink(core.currentBosses[i].achievement))
-				core.achievementTrackedMessageShown = true
-			end
-
-			--Setup failed and completed achievements table
-			table.insert(core.achievementsFailed, false)
-			table.insert(core.achievementsCompleted, false)
-		end
-	end
-end
+------------------------------------------------------
+---- Failed Achievment Functions
+------------------------------------------------------
 
 --Display the failed achievement message for achievements
 function core:getAchievementFailed(index)
@@ -1141,6 +1193,10 @@ function core:getAchievementFailedPersonalWithReason(reason, index)
 	end
 end
 
+------------------------------------------------------
+---- Completed Achievment Functions
+------------------------------------------------------
+
 --Display the requirements completed message for achievements
 function core:getAchievementSuccess(index)
 	local value = index
@@ -1218,6 +1274,10 @@ function core:getAchievementSuccessPersonal(index)
 	end
 end
 
+------------------------------------------------------
+---- Tracking certain achievement objectives
+------------------------------------------------------
+
 function core:trackMob(mobID, mobName, threshold, message, interval, trackAchiev, id)
     --Add detected
     if core.sourceID == mobID and core.mobCounter <= threshold and core.thresholdAnnounced == false then
@@ -1285,6 +1345,11 @@ function core:trackAura(auraID, maxCount, type)
 	end
 end
 
+------------------------------------------------------
+---- Resetting variables between fights
+------------------------------------------------------
+
+--Clears global variables between fights such as the current boss/achievement being tracked
 function clearVariables()
 	------------------------------------------------------
 	---- Reset Variables
@@ -1311,12 +1376,17 @@ function clearVariables()
 	currentBoss = nil
 end
 
+--Clears variables for the current instance the player is in
 function clearInstanceVariables()
 	--If a boss was pulled then clear the variables for that raid
 	if core.instance ~= nil then
 		core[core.instanceClear]:ClearVariables()
 	end
 end
+
+------------------------------------------------------
+---- Utility Functions
+------------------------------------------------------
 
 --Check whether a table contains a certain value
 function core:has_value(tab, val)
