@@ -126,7 +126,7 @@ core.instanceNameSpaces = nil					--Instance name with spaces
 core.foundBoss = false							--Whether or not a boss has been found to track or not
 core.currentBosses = {}							--Stores a list of the bosses the player is currently attacking. (Can be mutliple if one boss has multiple achievements)
 core.mobCache = {}								--Stores a list of mobs that have been checked to see whether or not they need to be tracked or not
-core.instanceVariablesReset = false				--Whether the instance variables have reset after leaving an instance
+core.instanceVariablesReset = true				--Whether the instance variables have reset after leaving an instance
 
 --------------------------------------
 -- Boss functions
@@ -393,7 +393,7 @@ function events:INSPECT_ACHIEVEMENT_READY()
 end
 
 function getInstanceInfomation()
-	if IsInInstance() then
+	if IsInInstance() and core.inInstance == false then
 		core:sendDebugMessage("Player has entered instance")
 		local instanceCompatible = false --Check whether player is on correct difficulty to earn achievements
 		core.inInstance = true
@@ -409,6 +409,8 @@ function getInstanceInfomation()
 
 		core.instance = str --Instance name without any puntuation
 		core.instanceClear = core.instance --Instance name with puntuation
+
+		core:sendDebugMessage("Offical Instance Name: " .. core.instance .. " " .. core.instanceClear)
 
 		--If the raid is in the lich king expansion then detect whether player is on the 10man or 25man difficulty
 		--This is only needed for raids that have seperate achievements for 10man and 25man. Happens for the majority of WOTLK raids
@@ -469,16 +471,31 @@ function getInstanceInfomation()
 		end		
 
 		if instanceCompatible == true then
-			--Ask the user whether they want to enable Achievement Tracking in the instance
-			if UICreated == false then
-				createEnableAchievementTrackingUI()
+			--Check if the instance has any achievements to actually track
+			local foundTracking = false
+			for boss,_ in pairs(core.Instances[core.expansion][core.instanceType][core.instance]) do
+				if core.Instances[core.expansion][core.instanceType][core.instance][boss].track ~= nil then
+					foundTracking = true
+				end
+			end
+
+			--Ask the user whether they want to enable Achievement Tracking in the instance. Only do this if there is any achievements to track for the particular instance
+			if foundTracking == true then
+				core:sendDebugMessage("Asking user whether they want to track this instance")
+				if UICreated == false then
+					core:sendDebugMessage("Creating Tracking UI")
+					createEnableAchievementTrackingUI()
+				else
+					core:sendDebugMessage("Displaying Tracking UI since it was already created")
+					UIConfig:Show()
+				end
 			else
-				UIConfig:Show()
+				core:sendDebugMessage("No Achievements to track for this instance")
 			end
 		else
 			core:sendDebugMessage("Achievements cannot be earned for the following difficulty " .. core.difficultyID)
 		end
-	else
+	elseif IsInInstance() == false and core.inInstance == true then
 		core.inInstance = false
 	end
 end
@@ -496,10 +513,11 @@ function events:PLAYER_ENTERING_WORLD()
 end
 
 function events:ZONE_CHANGED_NEW_AREA()
-	if UIConfig ~= nil then
+	if UIConfig ~= nil and core.inInstance == false then
+		core:sendDebugMessage("Hiding Tracking UI")
 		UIConfig:Hide()
 	end
-
+	
 	getInstanceInfomation()
 	
 	if core.inInstance == false and core.instanceVariablesReset == false then

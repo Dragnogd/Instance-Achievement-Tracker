@@ -4,6 +4,10 @@
 local _, core = ...
 
 ------------------------------------------------------
----- The Violet Hold Bosses
+---- Violet Hold Bosses
 ------------------------------------------------------
-core.TheVioletHold = {}
+core.VioletHold = {}
+
+function core.VioletHold:ClearVariables()
+
+end

@@ -4683,8 +4683,8 @@ core.Instances = {
                 },
             },
 
-            TheVioletHold = {
-                name = "The Violet Hold",
+            VioletHold = {
+                name = "Violet Hold",
                 boss1 = {
                     name = "Cyanigosa",
                     bossIDs = {},
