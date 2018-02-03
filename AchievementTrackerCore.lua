@@ -74,14 +74,15 @@ function events:onUpdate(sinceLastUpdate)
 		self.sinceLastUpdate = 0;
 		local combatStatus = getCombatStatus()
 		if combatStatus == false then
+			clearInstanceVariables()
 			clearVariables()
-			print("Left Combat")
+			core:sendDebugMessage("Left Combat")
 			events:SetScript("OnUpdate",nil)
 		end
 	end
 end
 
---------------------------------------
+--------------------------------------w
 -- Achievement Scanning Variables
 --------------------------------------
 local playersToScan = {}						--List of players that still need to be scanned to see which achievements they are missing for the current instance
@@ -723,6 +724,7 @@ end
 function events:PLAYER_REGEN_ENABLED()
 	--Although the player running the addon has left combat, the boss could still be in combat with other players. Check everyone else in the group to see if anyone is still in combat with the boss
 	if getCombatStatus() == false then
+		clearInstanceVariables()
 		clearVariables()
 		core:sendDebugMessage("Left Combat")
 		events:SetScript("OnUpdate",nil)
@@ -773,6 +775,8 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 	--All Events
 	core.timeStamp, core.type, core.hideCaster, core.sourceGUID, core.sourceName, core.sourceFlags, core.sourceRaidFlags, core.destGUID, core.destName, core.destFlags, core.destRaidFlags = ...
 	
+	--core:sendDebugMessage(core.type .. " " .. core.sourceName .. " " .. core.destName)
+
 	if string.match(core.type, "RANGE_") or string.match(core.type, "SPELL_") or string.match(core.type, "SPELL_PERIODIC_") or string.match(core.type, "SPELL_BUILDING_") then
 		core.spellId, core.spellName, core.spellSchool = select(12, ...)
 
@@ -871,10 +875,6 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 		core.currentUnit = "Player"
 	end
 
-	
-
-	--core:sendDebugMessage(...)
-
 	--Boss Detection!
 	if core.foundBoss == true then			
 		--Start tracking the particular boss if the user has not disabled tracking for that boss
@@ -891,7 +891,7 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 				local _, _, _, _, _, bossID, _ = strsplit("-", UnitGUID("boss" .. i))
 				if bossID ~= nil then
 					if core:has_value(core.mobCache, bossID) == false then
-						--print("Calling Detect Boss 1: " .. bossID)
+						core:sendDebugMessage("Calling Detect Boss 1: " .. bossID)
 						detectBoss(bossID)
 					end
 				end
@@ -900,19 +900,21 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 			end
 		end
 
-		if core.sourceID ~= nil and doNotTrack == false then
+		if core.sourceID ~= nil and doNotTrack == false and core.currentUnit == "Creature" then
 			--core:sendDebugMessage(core.sourceID)
 			if core:has_value(core.mobCache, core.sourceID) ~= true then
-				--core:sendDebugMessage("Calling Detect Boss 2: " .. core.sourceID)
-				--core:sendDebugMessage(core.sourceID)
+				core:sendDebugMessage("Calling Detect Boss 2: " .. core.sourceID)
+				--print(...)
 				detectBoss(core.sourceID)
 			end
 		end	
 		
-		if core.destID ~= nil and doNotTrack == false then
+		if core.destID ~= nil and doNotTrack == false and core.currentUnit == "Creature" then
 			--core:sendDebugMessage(core.destID)
+			
 			if core:has_value(core.mobCache, core.destID) == false then
-				--core:sendDebugMessage("Calling Detect Boss 3: " .. core.destID)
+				core:sendDebugMessage("Calling Detect Boss 3: " .. core.destID)
+				--print(...)
 				detectBoss(core.destID)
 			end
 		end
@@ -932,7 +934,7 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 end
 
 ------------------------------------------------------
----- Core Functions
+---- Detection Function
 ------------------------------------------------------
 
 --Detect whether the user is in a party/raid or alone. This is used to output messages to the right chat channel.
@@ -952,6 +954,7 @@ end
 
 --Where the player enters combat, check if any of the mobs/bosses need to be tracked or not
 function detectBoss(id)
+	core:sendDebugMessage("Found the following boss ID: " .. id)
 	for boss,_ in pairs(core.Instances[core.expansion][core.instanceType][core.instance]) do
 		if core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs ~= nil then
 			if #core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs > 0 then
@@ -992,7 +995,11 @@ function detectBoss(id)
 	end
 end
 
---Handle the output of messages to the chat system
+------------------------------------------------------
+---- Messaging Functions
+------------------------------------------------------
+
+--Output messages to the chat. All messages get sent this function for easy management
 function core:sendMessage(message)
 	if message ~= lastMessageSent then
 		if debugMode == false then
@@ -1007,6 +1014,7 @@ function core:sendMessage(message)
 	end
 end
 
+--Output messages depending on a counter and the specified interval
 function core:sendMessageDelay(message, counter, interval)
 	if counter - math.floor(counter/interval)*interval == 0 then
 		core:sendMessage(message)
@@ -1281,15 +1289,15 @@ function clearVariables()
 	------------------------------------------------------
 	---- Reset Variables
 	------------------------------------------------------
-	core:sendDebugMessage("Resetting Variables")
+	core:sendDebugMessage("Resetting Global Variables")
 
 	core.inCombat = false
 	core.achievementsFailed = {}
 	core.achievementsCompleted = {}
 	core.achievementTrackedMessageShown = false
-	core.lastMessageSent = nil
 	core.foundBoss = false
 	core.playersFailedPersonal = {}
+	lastMessageSent = nil
 
 	core.mobCounter = 0
 	core.mobUID = {}
@@ -1300,13 +1308,14 @@ function clearVariables()
 	core.achievementIDs = {}
 	currentBossNums = {}
 
+	currentBoss = nil
+end
+
+function clearInstanceVariables()
 	--If a boss was pulled then clear the variables for that raid
-	core:sendDebugMessage(core.instance)
 	if core.instance ~= nil then
 		core[core.instanceClear]:ClearVariables()
 	end
-
-	currentBoss = nil
 end
 
 --Check whether a table contains a certain value
