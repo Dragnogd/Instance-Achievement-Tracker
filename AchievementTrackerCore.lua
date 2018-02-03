@@ -6,7 +6,6 @@ local _, core = ...
 local events = CreateFrame("Frame")
 local UIConfig
 local UICreated = false
-local addonVersion = 1
 local debugMode = true
 
 -- local events = CreateFrame("Frame", "AchievementTracker2", UIParent, "UIPanelDialogTemplate")
@@ -36,8 +35,6 @@ events:RegisterEvent("ADDON_LOADED")						--Used to setup the slash commands for
 events:RegisterEvent("PLAYER_ENTERING_WORLD")				--Used to detect if player is inside an instance when they enter the world
 events:RegisterEvent("ZONE_CHANGED_NEW_AREA")				--Used to detect if player is inside an instance when they change zone
 events:RegisterEvent("CHAT_MSG_ADDON")						--Allows the addon to communicate with other addons in the same party/raid
-events:RegisterEvent("ENCOUNTER_START")
-events:RegisterEvent("ENCOUNTER_END")
 RegisterAddonMessagePrefix("Whizzey")						--Register events to listen out for client-client communication
 
 --DEBUG
@@ -96,8 +93,6 @@ local scanAnnounced = false						--Whether the achievement scanning has been ann
 --------------------------------------
 -- Main Variables
 --------------------------------------
-core.masterAddon = false						--The master addon for the group. This stop multiple people with the addon outputting identical messages
-core.playerRankInGroup = -1						--The rank of the player is the group. Used to sync multiple addons in the group
 core.currentZoneID = nil						--The ID of the current instance the player is in
 core.playerCount = 0							--The amount of players the instance lock can hold
 core.inCombat = false							--Whether anyone in the current group is in combat with boss/mobs
@@ -137,6 +132,16 @@ core.mobUID = {}								--Used in the trackMob function to store the unique UID 
 core.thresholdAnnounced = false					--Used to check whether the trackMob funciton has announced the requirements have been met
 core.encounterStarted = false
 core.displayAchievements = false
+
+--------------------------------------
+-- Addon Syncing
+--------------------------------------
+local majorVersion = 0
+local minorVersion = 1
+local revisionVersion = 0
+local masterAddon = false						--The master addon for the group. This stop multiple people with the addon outputting identical messages
+local playerRank = -1						--The rank of the player is the group. Used to sync multiple addons in the group
+local addonPlayers = {}
 
 
 --OLD used to create a seperate table for tracking current table values
@@ -197,10 +202,6 @@ function getPlayersInGroup()
 	scanInProgress = true
 	scanFinished = false
 	local currentGroup = {}
-
-	--instanceName = "BlackrockFoundary"
-
-	--print(core.currentZoneID)
 
 	if core.groupSize > 1 then
 		--We are in a group
@@ -499,21 +500,34 @@ function createEnableAchievementTrackingUI()
 	UIConfig.btnNo:SetScript("OnClick", disableAchievementTracking);
 end
 
---Shown the achievement tracking UI if its already been created and the player has entered an instance
+--Players wants to track achievements for this instance
 function enableAchievementTracking(self)
+	core.achievementTrackingEnabled = true
 	UIConfig:Hide()
+
+	--Register Events
 	events:RegisterEvent("INSPECT_ACHIEVEMENT_READY") 			--Used for scanning players in the group to see which achievements they are missing
 	events:RegisterEvent("GROUP_ROSTER_UPDATE")					--Used to find out when the group size has changed and to therefore initiate an achievement scan of the group
 	events:RegisterEvent("PLAYER_REGEN_DISABLED")				--Used to detect when the player has entered combat and to reset tracked variables for bosses
 	events:RegisterEvent("PLAYER_REGEN_ENABLED")				--Used to track when the player has left combat
-	events:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+	events:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")			--Used to track the completion/failiure of achievements
+	events:RegisterEvent("ENCOUNTER_START")						--Used to detect the start of a boss fight
+	events:RegisterEvent("ENCOUNTER_END")						--Used to detect the end of a boss fight
+
+	--Start the achievement scan
 	getPlayersInGroup()
+
+	--Addon Syncing Priority:
+	--1.) Highest Version Number of addon
+	--2.) Raid Leader / Party Leader
+	--3.) Raid Assistant
+	--4.) Member
 
 	--Check if there is already someone else running the addon in the group / whether the priority is higher for the current player than other players running the addon
 	if core.groupSize == 1 then
-		--Player is not a group so run the addon
+		--Player is not a group so set the player to the master addon
 		core.masterAddon = true
-		--core:sendDebugMessage(UnitName("Player") .. " is the master addon")
+		core:printMessage("Achievement Tracking Enabled for " .. core.instanceNameSpaces)
 		initialInstanceSetup()
 	else
 		--Get the permissions for the current player
@@ -521,11 +535,16 @@ function enableAchievementTracking(self)
 			local name, rank, subgroup, level, class, fileName, zone, online, isDead, role, isML = GetRaidRosterInfo(i)
 			if name == UnitName("Player") then
 				--core:sendDebugMessage("Found: " .. name)
-
 				--core:sendDebugMessage("Setting rank to: " .. rank)
-				core.playerRankInGroup = rank
-				
 				--core:sendDebugMessage("Sending Addon Message")
+				
+				--Send out message so other adds can add new player to their arrays
+				local message = "setup," .. majorVersion .. "," .. minorVersion .. "," .. revisionVersion .. "," .. rank .. "," .. instanceName
+				
+				--Setup addonPlayers array for all players currently running the addon
+				SendAddonMessage("Whizzey",message,"RAID")
+
+				--Request information about all others players running the addon in the raid to see whether current addons needs to be master addon
 				SendAddonMessage("Whizzey", "enabledCheck", "RAID")
 				enabledCheckSent = true
 			end
@@ -587,7 +606,7 @@ function events:ADDON_LOADED(event, name)
 	SLASH_MENU1 = "/at"
 	SlashCmdList.MENU = core.Config.Toggle
 
-	core:printMessage("loaded. Version: " .. tonumber(addonVersion))
+	core:printMessage("loaded. Version: V" .. majorVersion .. "." .. minorVersion .. "." .. revisionVersion)
 
 	if debugMode == true then
 		core:sendMessage("Debugging Enabled")
@@ -728,20 +747,30 @@ function events:CHAT_MSG_ADDON(self, prefix, message, channel, sender)
 			enabledCheckSent = false
 		else
 			--Another addon is requesting info about the addon
-			SendAddonMessage("Whizzey", tostring(core.masterAddon) .. "," .. core.playerRankInGroup .. "," .. tostring(addonVersion), "RAID")
+			--SendAddonMessage("Whizzey", tostring(core.masterAddon) .. "," .. core.playerRankInGroup .. "," .. tostring(addonVersion), "RAID")
+
+			SendAddonMessage("Whizzey",addonPlayers[UnitName("Player")],"RAID")
 		end
 	elseif string.match(message, "demote") then
+		--Another addon has requested that this adodn demotes itself
 		local nameFetched, realmFetched, message = strsplit("-", message)
 		
 		if nameFetched == name then
 			--Demote this player
-			--print("Demoting Myself...")
+			core:sendDebugMessage("Demoting Myself...")
 			core.masterAddon = false
 		end
-	elseif nameSend ~= name then
+	elseif string.match(message, "promote") then
+		--The master addon has left the instance so request the next highest player promotes themself
+		--TODO
+	elseif nameSend == 123 then
 		--Other addons have returned the requested info
 
 		--If the rank of other player is lower and they have addon enabled then let them to continue to run the addon
+		
+		--Add the players to the addon table if they are not already in the table
+		
+		
 		local trackingEnabled, playerRank, adddonVersionOtherPlayer = strsplit(",", message);
 		--(addonVersion ..  " : " .. adddonVersionOtherPlayer)
 		if trackingEnabled == "true" and tonumber(playerRank) > core.playerRankInGroup and addonVersion<= tonumber(adddonVersionOtherPlayer) then
@@ -787,6 +816,21 @@ function events:CHAT_MSG_ADDON(self, prefix, message, channel, sender)
 		end
 
 		initialInstanceSetup()
+	elseif string.match(message, "setup") then
+		--Add new character to addonPlayers array
+		local setup, major, minor, revision, rank, instance = strsplit(",", message)
+
+		addonPlayers[name].major = major
+		addonPlayers[name].minor = minor
+		addonPlayers[name].revision = revision
+		addonPlayers[name].rank = rank
+		addonPlayers[name].instance = instance
+
+		core:sendDebugMessage("Major: " .. addonPlayers[name].major)
+		core:sendDebugMessage("Minor: " .. addonPlayers[name].minor)
+		core:sendDebugMessage("Revision: " .. addonPlayers[name].revision)
+		core:sendDebugMessage("Rank: " .. addonPlayers[name].rank)
+		core:sendDebugMessage("Instnace: " .. addonPlayers[name].instance)
 	end
 end
 
