@@ -139,7 +139,7 @@ function Config:CreateGUI()
     --Title
     UIConfig.title = UIConfig:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
 	UIConfig.title:SetPoint("CENTER", AchievementTrackerTitleBG, "CENTER", 6, 1);
-	UIConfig.title:SetText("Achievement Tracker V1.0");
+	UIConfig.title:SetText("Achievement Tracker v0.1.0a");
 
     --Scroll Frame
     UIConfig.ScrollFrame = CreateFrame("ScrollFrame", nil, UIConfig, "UIPanelScrollFrameTemplate")
@@ -517,7 +517,7 @@ function Player_OnClick(self)
     local parent = self:GetParent()
     parent = parent:GetParent()
 
-    core:sendDebugMessagerint(parent.headerText:GetText())
+    core:sendDebugMessage(parent.headerText:GetText())
 
 	for expansion,_ in pairs(core.Instances) do
 		for instanceType,_ in pairs(core.Instances[expansion]) do

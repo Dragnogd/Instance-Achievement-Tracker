@@ -600,6 +600,17 @@ function events:ADDON_LOADED(event, name)
 	SLASH_MENU1 = "/at"
 	SlashCmdList.MENU = core.Config.Toggle
 
+	SLASH_MENU2 = "/debug"
+	SlashCmdList.DEBUG = function()
+		if debugMode == true then
+			core:printMessage("Debugging Disabled")
+			debugmode = false
+		else
+			core:printMessage("Debugging Enabled")
+			debugMode = true
+		end
+	end
+
 	core:printMessage("loaded. Version: V" .. majorVersion .. "." .. minorVersion .. "." .. revisionVersion)
 
 	if debugMode == true then
@@ -666,7 +677,7 @@ function events:INSPECT_ACHIEVEMENT_READY()
 
 				--If the player has not completed the achievement then add them to the players string to display in the GUI
 				--Temp: will show completed achievements in GUI since I've already completed all the achievements
-				if completed == false then
+				if completed == true then
 					local name, _ = UnitName(playersToScan[1])
 					table.insert(core.Instances[core.expansion][core.instanceType][core.instance][boss].players, name)
 				end
@@ -1135,7 +1146,11 @@ function core:sendMessage(message)
 end
 
 function core:sendMessage2(message)
-	SendChatMessage("[WIP] " .. message,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+	if debugMode == false then
+		SendChatMessage("[WIP] " .. message,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+	else
+		print("[DEBUG] " .. message)
+	end
 end
 
 --Output messages depending on a counter and the specified interval
