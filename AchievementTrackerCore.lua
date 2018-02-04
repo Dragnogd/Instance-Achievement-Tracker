@@ -79,7 +79,7 @@ function events:onUpdate(sinceLastUpdate)
 	end
 end
 
---------------------------------------w
+--------------------------------------
 -- Achievement Scanning Variables
 --------------------------------------
 local playersToScan = {}						--List of players that still need to be scanned to see which achievements they are missing for the current instance
@@ -87,7 +87,7 @@ local playersScanned = {}						--List of players that have been successfully sca
 local rescanNeeded = false						--Set to true if a rescan is needed during a current scan. This is fired if the group size changes during a scan
 local playerCurrentlyScanning = nil				--This is set to the current player that is being scanned
 local scanInProgress = false					--Set to true when a scan of the group has started
-local scanFinished = false						--Set to true when everyone in the group has been scanned successfully and no rescan is needed. Part of core so it can be accessed by the GUI
+core.scanFinished = false						--Set to true when everyone in the group has been scanned successfully and no rescan is needed. Part of core so it can be accessed by the GUI
 local scanAnnounced = false						--Whether the achievement scanning has been announced to the chat
 
 --------------------------------------
@@ -200,7 +200,7 @@ function getPlayersInGroup()
 	end
 	core:getGroupSize()
 	scanInProgress = true
-	scanFinished = false
+	core.scanFinished = false
 	local currentGroup = {}
 
 	if core.groupSize > 1 then
@@ -276,7 +276,7 @@ function getPlayersInGroup()
 	else
 		core:printMessage("Achievment Scanning Finished (" .. #playersScanned .. "/" .. core.groupSize .. ")")
 		scanInProgress = false
-		scanFinished = true
+		core.scanFinished = true
 	end
 end
 
@@ -301,7 +301,7 @@ function getInstanceAchievements()
 				elseif #playersToScan == 0 and rescanNeeded == false then
 					core:printMessage("Achievment Scanning Finished (" .. #playersScanned .. "/" .. core.groupSize .. ")")
 					scanInProgress = false
-					scanFinished = true
+					core.scanFinished = true
 					updateDebugTable()
 				elseif #playersToScan == 0 and rescanNeeded == true then
 					--print("Achievement Scanning Finished but some players still need scanning. Waiting 20 seconds then trying again (" .. #playersScanned .. "/" .. core.groupSize .. ")")
@@ -526,7 +526,7 @@ function enableAchievementTracking(self)
 	--Setup the instance events if required
 	initialInstanceSetup()
 
-	--Get a random ID between 1 and 10,000
+	--Get a random ID between 1 and 100,000
 	addonID = random(1,100000)
 
 	--Check if there is already someone else running the addon in the group / whether the priority is higher for the current player than other players running the addon
@@ -732,7 +732,7 @@ function events:ZONE_CHANGED_NEW_AREA()
 		rescanNeeded = false
 		playerCurrentlyScanning = nil
 		scanInProgress = false
-		scanFinished = false
+		core.scanFinished = false
 		scanAnnounced = false
 	end
 end
@@ -1111,7 +1111,7 @@ function core:sendMessage(message)
 					local name, realm = UnitName("Player")
 					SendAddonMessage("Whizzey", "info," .. tostring(addonID) .. "," .. name .. "," .. tostring(masterAddon) .. "," .. tostring(playerRank) .. "," .. tostring(majorVersion) .. "," .. tostring(minorVersion), "RAID")
 
-					C_Timer.After(2, function()
+					C_Timer.After(3, function()
 						if masterAddon == true then
 							core:printMessage("This addon is in charge of outputting messages")
 							SendChatMessage("[WIP] " .. message,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
@@ -1134,9 +1134,9 @@ function core:sendMessage(message)
 	--The master addon check will be reset after every boss fight so we don't have to worry about players out of range/offline players etc
 end
 
--- function print(message)
--- 	SendChatMessage("[WIP] " .. message,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
--- end
+function core:sendMessage2(message)
+	SendChatMessage("[WIP] " .. message,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+end
 
 --Output messages depending on a counter and the specified interval
 function core:sendMessageDelay(message, counter, interval)

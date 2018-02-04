@@ -358,7 +358,7 @@ function Config:Instance_OnClickAutomatic()
 end
 
 function Instance_OnClick(self)
-    --print("Clicked: " .. self:GetText())
+    
     local instanceLocation
     local currentTabCompressed
     local str
@@ -369,6 +369,7 @@ function Instance_OnClick(self)
 
     if type(self) == "table" then
         --Button has been pressed by the user
+        core:sendDebugMessage("Clicked: " .. self:GetText())
         str = string.gsub(" " .. self:GetText(), "%W%l", string.upper):sub(2)
         local InstanceName = str:gsub("%s+", "")
         Config.currentInstance = InstanceName
@@ -390,6 +391,11 @@ function Instance_OnClick(self)
 
         --Set the current tab to the expansion of the current instance
         Config.currentTab = core.expansion
+
+        --Set the current instance
+        Config.currentInstance = core.instance
+
+        core:sendDebugMessage("Clicked: " .. Config.currentInstance)
     end
 
     for bossName,v in pairs(instanceLocation) do
@@ -511,7 +517,7 @@ function Player_OnClick(self)
     local parent = self:GetParent()
     parent = parent:GetParent()
 
-    print(parent.headerText:GetText())
+    core:sendDebugMessagerint(parent.headerText:GetText())
 
 	for expansion,_ in pairs(core.Instances) do
 		for instanceType,_ in pairs(core.Instances[expansion]) do
@@ -553,7 +559,7 @@ function Player_OnClick(self)
                                     pattern = "(.+)%s";
                                 end
                                 for capture in message:gmatch(pattern) do
-                                    SendChatMessage("[WIP] " .. capture, core.chatType);
+                                    core:sendMessage2(capture);
                                     position = position + #capture + 1;
                                 end
                             end
@@ -585,7 +591,7 @@ function Tactics_OnClick(self)
                                 pattern = "(.+)%s";
                             end
                             for capture in message:gmatch(pattern) do
-                                SendChatMessage("[WIP] " .. capture, core.chatType);
+                                core:sendMessage2(capture);
                                 position = position + #capture + 1;
                             end
                         end
@@ -615,7 +621,6 @@ function Enabled_OnClick(self)
                             status = "Enabled"
                         end
                         core:printMessage(GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " Tracking " .. status)
-                        print()
                     end
                 end
 			end
