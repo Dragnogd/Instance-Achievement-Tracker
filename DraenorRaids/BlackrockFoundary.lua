@@ -33,9 +33,15 @@ local primalElementalistsKilled = 0
 ------------------------------------------------------
 local graspingEarthKilled = 0
 
+------------------------------------------------------
+---- Beastlord Darmac
+------------------------------------------------------
+local messageSent = false
+
 function core.BlackrockFoundary:BeastlordDarmac()
-	if (core.sourceID == "76884" or core.sourceID == "76874" or core.sourceID == "76945") then
-		core:getAchievementSuccessWithCustomMessage(core.sourceName .. " Mounted First' part of " .. GetAchievementLink(core.achievementIDs[1]) .. " will be completed once boss is killed")	
+	if (core.sourceID == "76884" or core.sourceID == "76874" or core.sourceID == "76945") and messageSent == false then
+		core:sendMessage(core.sourceName .. " Mounted First' part of " .. GetAchievementLink(core.achievementIDs[1]) .. " will be completed once boss is killed")
+		messageSent = true	
 	end
 end
 
@@ -157,4 +163,9 @@ function core.BlackrockFoundary:ClearVariables()
 	---- Kromog
 	------------------------------------------------------
 	graspingEarthKilled = 0
+
+	------------------------------------------------------
+	---- Beastlord Darmac
+	------------------------------------------------------
+	messageSent = false
 end
