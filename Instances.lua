@@ -948,7 +948,7 @@ core.Instances = {
                     players = {},
                     tactics = "Takes 3 kills to complete. Boss will mount the beast that is closest to him. DPS the boss down slowly and wait for boss to mount beast before killing.",
                     enabled = true,
-                    track = function() core.BlackrockFoundary:BeastlordDarmac() end,
+                    track = function() core.BlackrockFoundry:BeastlordDarmac() end,
                     partial = false,
                 },
                 boss2 = {
@@ -958,7 +958,7 @@ core.Instances = {
                     players = {},
                     tactics = "Wait 10 seconds after pulling the boss then place Toy train set and then immediately after the wind up train wrecker on the first set of tracks as you enter the boss room. Achievement will be earned as soon as the requirements have been met.",
                     enabled = true,
-                    track = function() core.BlackrockFoundary:OperatorThogar() end,
+                    track = function() core.BlackrockFoundry:OperatorThogar() end,
                     partial = false,
                 },
                 boss3 = {
@@ -968,7 +968,7 @@ core.Instances = {
                     players = {},
                     tactics = "Nuke all 3 bosses within 10 seconds of one another",
                     enabled = true,
-                    track = function() core.BlackrockFoundary:TheIronMaidens() end,
+                    track = function() core.BlackrockFoundry:TheIronMaidens() end,
                     partial = false,
                 },
                 boss4 = {
@@ -978,7 +978,7 @@ core.Instances = {
                     players = {},
                     tactics = "Nuke boss down as quick as possible without anyone in the group getting hit by a stamping press. The stamping press display an orange glow on the floor a few seconds before stamping.",
                     enabled = true,
-                    track = function() core.BlackrockFoundary:HansgarFranzok() end,
+                    track = function() core.BlackrockFoundry:HansgarFranzok() end,
                     partial = false,
                 },
                 boss5 = {
@@ -988,7 +988,7 @@ core.Instances = {
                     players = {},
                     tactics = "1 person tank Aknor Stellbringer away from the boss.  Everyone else single target the boss down.",
                     enabled = true,
-                    track = function() core.BlackrockFoundary:FlamebenderKagraz() end,
+                    track = function() core.BlackrockFoundry:FlamebenderKagraz() end,
                     partial = false,
                 },
                 boss6 = {
@@ -998,7 +998,7 @@ core.Instances = {
                     players = {},
                     tactics = "Requires atleast 10 players but more players makes achievement easier. Spread out around the room and wait for orange runes to spawn. When they spawn each player stand on their own rune. When hands spawn from runes and grab players nuke hands down as quickly as possible.",
                     enabled = true,
-                    track = function() core.BlackrockFoundary:Kromog() end,
+                    track = function() core.BlackrockFoundry:Kromog() end,
                     partial = false,
                 },
                 boss7 = {
@@ -1028,7 +1028,7 @@ core.Instances = {
                     players = {},
                     tactics = "This achievement is completed during phase 2 of the encounter. During phase 2 random players will be targeted by slag elementals. If you have a slag elemental following you, run to one of the primal elementalists which doesn’t have a slag elemental already on. Once there is slag elemental on each primal elementalists you can nuke down the slag elemental then primal elementalists as quick as possible. Getting all 4 primal elementalists down within 10 seconds will reward this achievement. ",
                     enabled = true,
-                    track = function() core.BlackrockFoundary:BlastFurnace() end,
+                    track = function() core.BlackrockFoundry:BlastFurnace() end,
                     partial = false,
                 },
                 boss10 = {
@@ -1038,7 +1038,7 @@ core.Instances = {
                     players = {},
                     tactics = "DPS the boss down to 30% to reach phase 3. Ashes will then start falling from the ceiling. Spread out around the platform and stand underneath the falling ashes until it lands on you. Once the group has collected 20 falling ashes you can nuke boss. The more players you have the easy this achievement is.",
                     enabled = true,
-                    track = function() core.BlackrockFoundary:Blackhand() end,
+                    track = function() core.BlackrockFoundry:Blackhand() end,
                     partial = false,
                 },
             },
