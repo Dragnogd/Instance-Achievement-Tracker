@@ -595,7 +595,7 @@ end
 
 --Setup Slash Commands
 function events:ADDON_LOADED(event, name)
-	if name ~= "AchievementTracker" then return end
+	if name ~= "InstanceAchievementTracker" then return end
 
 	SLASH_MENU1 = "/at"
 	SlashCmdList.MENU = core.Config.Toggle
@@ -627,9 +627,9 @@ function events:ADDON_LOADED(event, name)
 	if not LibStub:GetLibrary("LibDataBroker-1.1", true) then return end
 
 	--Make an LDB object
-	local MiniMapLDB = LibStub:GetLibrary("LibDataBroker-1.1"):NewDataObject("AchievementTracker", {
+	local MiniMapLDB = LibStub:GetLibrary("LibDataBroker-1.1"):NewDataObject("InstanceAchievementTracker", {
 		type = "launcher",
-		text = "AchievementTracker",
+		text = "InstanceAchievementTracker",
 		icon = "Interface\\Icons\\ACHIEVEMENT_GUILDPERK_MRPOPULARITY",
 		OnTooltipShow = function(tooltip)
 			tooltip:AddLine("|cff00FF00" .. "Instance Achievement Tracker" .. "|r");
@@ -640,10 +640,10 @@ function events:ADDON_LOADED(event, name)
 	})
 
 	--Register Minimap Icon
-	ATButton:Register("AchievementTracker", MiniMapLDB, nil);
+	ATButton:Register("InstanceAchievementTracker", MiniMapLDB, nil);
 
 	--Show Minimap Icon
-	ATButton:Show("AchievementTracker")
+	ATButton:Show("InstanceAchievementTracker")
 end
 
 --Fired whenever the composition of the group changes.
