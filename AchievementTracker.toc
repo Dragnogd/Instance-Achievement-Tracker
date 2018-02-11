@@ -2,6 +2,13 @@
 ## Title: Achievement Tracker
 ## Author: Whizzey
 ## Version: 1.0
+## OptionalDeps: LibStub, CallbackHandler-1.0, LibDBIcon-1.0
+
+Libs\LibStub\LibStub.lua
+Libs\CallbackHandler-1.0\CallbackHandler-1.0.lua
+Libs\LibDataBroker-1.1\LibDataBroker-1.1.lua
+Libs\LibDBIcon-1.0\LibDBIcon-1.0.lua
+
 
 LegionRaids\AntorusTheBurningThrone.lua
 LegionRaids\EmeraldNightmare.lua

@@ -616,6 +616,34 @@ function events:ADDON_LOADED(event, name)
 	if debugMode == true then
 		core:sendMessage("Debugging Enabled")
 	end
+
+	--------------------------------------
+	-- Minimap Icon
+	--------------------------------------
+	local ATButton = LibStub("LibDBIcon-1.0")
+	local profile
+
+	-- LDB
+	if not LibStub:GetLibrary("LibDataBroker-1.1", true) then return end
+
+	--Make an LDB object
+	local MiniMapLDB = LibStub:GetLibrary("LibDataBroker-1.1"):NewDataObject("AchievementTracker", {
+		type = "launcher",
+		text = "AchievementTracker",
+		icon = "Interface\\Icons\\ACHIEVEMENT_GUILDPERK_MRPOPULARITY",
+		OnTooltipShow = function(tooltip)
+			tooltip:AddLine("|cff00FF00" .. "Instance Achievement Tracker" .. "|r");
+		end,
+		OnClick = function(self, button)
+			core.Config.Toggle()
+		end,
+	})
+
+	--Register Minimap Icon
+	ATButton:Register("AchievementTracker", MiniMapLDB, nil);
+
+	--Show Minimap Icon
+	ATButton:Show("AchievementTracker")
 end
 
 --Fired whenever the composition of the group changes.
@@ -1112,7 +1140,7 @@ function core:sendMessage(message)
 	if message ~= lastMessageSent then
 		if debugMode == false then
 			if masterAddon == true then
-				SendChatMessage("[WIP] " .. message,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+				SendChatMessage("[IAT] " .. message,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
 			else
 				if requestToRun == false then
 					requestToRun = true
@@ -1125,7 +1153,7 @@ function core:sendMessage(message)
 					C_Timer.After(3, function()
 						if masterAddon == true then
 							core:printMessage("This addon is in charge of outputting messages")
-							SendChatMessage("[WIP] " .. message,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+							SendChatMessage("[IAT] " .. message,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
 						else
 							core:printMessage("Another addon is currently in charge of outputting messages for this fight")
 						end
@@ -1147,7 +1175,7 @@ end
 
 function core:sendMessage2(message)
 	if debugMode == false then
-		SendChatMessage("[WIP] " .. message,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+		SendChatMessage("[IAT] " .. message,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
 	else
 		print("[DEBUG] " .. message)
 	end
