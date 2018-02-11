@@ -134,7 +134,7 @@ core.encounterStarted = false
 core.displayAchievements = false
 
 --------------------------------------
--- Addon Syncing
+-- Addon Syncing V1.0.1a
 --------------------------------------
 local majorVersion = 0						--Addon with a higher major version change have priority over a lower major version
 local minorVersion = 1						--Addon with a minor version change have prioirty over a lower minor version
