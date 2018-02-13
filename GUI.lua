@@ -412,7 +412,7 @@ function Instance_OnClick(self)
         --Set the current instance
         Config.currentInstance = core.instance
 
-        core:sendDebugMessage("Clicked: " .. Config.currentInstance)
+        --core:sendDebugMessage("Clicked: " .. Config.currentInstance)
     end
 
     for bossName,v in pairs(instanceLocation) do

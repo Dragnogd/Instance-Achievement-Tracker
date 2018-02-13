@@ -6,7 +6,7 @@ local _, core = ...
 local events = CreateFrame("Frame")
 local UIConfig
 local UICreated = false
-local debugMode = false
+local debugMode = true
 
 -- local events = CreateFrame("Frame", "AchievementTracker2", UIParent, "UIPanelDialogTemplate")
 -- events:SetSize(800, 500)
@@ -57,6 +57,7 @@ events:SetScript("OnEvent", function(self, event, ...)
 			print(...)
 			table.insert(temp2, spellID)
 		end
+
 	end
 	if event == "aaaUNIT_AURA" then
 
@@ -357,6 +358,7 @@ function getInstanceInfomation()
 		str = str:gsub("%-", "")
 		str = str:gsub("%'", "")
 		str = str:gsub("%:", "")
+		str = str:gsub("%,", "")
 
 		core.instance = str --Instance name without any puntuation
 		core.instanceClear = core.instance --Instance name with puntuation
@@ -705,14 +707,14 @@ function events:INSPECT_ACHIEVEMENT_READY()
 
 				--If the player has not completed the achievement then add them to the players string to display in the GUI
 				--Temp: will show completed achievements in GUI since I've already completed all the achievements
-				if completed == false then
+				if completed ~= true then
 					local name, _ = UnitName(playersToScan[1])
 					table.insert(core.Instances[core.expansion][core.instanceType][core.instance][boss].players, name)
 				end
 			end
 		end
 
-		--print("Scanned " .. UnitName(playersToScan[1]))
+		print("Scanned " .. UnitName(playersToScan[1]))
 		table.insert(playersScanned, playersToScan[1])
 		table.remove(playersToScan, 1)
 
