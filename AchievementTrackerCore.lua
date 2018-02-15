@@ -53,6 +53,8 @@ events:SetScript("OnEvent", function(self, event, ...)
 
 		local unitID, spell, rank, lineID, spellID = ...
 
+		--print(spellID)
+
 		if core:has_value(temp2, spellID) == false then
 			print(...)
 			table.insert(temp2, spellID)
