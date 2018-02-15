@@ -337,7 +337,7 @@ core.Instances = {
                 },
                 boss3 = {
                     name = "Antoran High Command",
-                    bossIDs = {122367},
+                    bossIDs = {122367,130184,122369},
                     achievement = 12129,
                     players = {},
                     tactics = "",

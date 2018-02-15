@@ -44,22 +44,25 @@ events:RegisterEvent("UNIT_AURA")
 
 
 local temp2 = {}
+TargetLogData = {}
 
 events:SetScript("OnEvent", function(self, event, ...)
 	if event == "aaaUNIT_HEALTH" then
 		print(UnitName(...) .. " : " .. UnitHealth(...))
 	end
-	if event == "aaaUNIT_SPELLCAST_SUCCEEDED" then
+	if event == "UNIT_SPELLCAST_SUCCEEDED" then
 
 		local unitID, spell, rank, lineID, spellID = ...
 
 		--print(spellID)
 
 		if core:has_value(temp2, spellID) == false then
-			print(...)
+			--print(...)
 			table.insert(temp2, spellID)
+			table.insert(TargetLogData, spell .. " : " .. spellID)
 		end
 
+		
 	end
 	if event == "aaaUNIT_AURA" then
 
