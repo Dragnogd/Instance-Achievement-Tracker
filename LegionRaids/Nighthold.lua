@@ -190,4 +190,10 @@ function core.TheNighthold:ClearVariables()
     ------------------------------------------------------
     eyeOfGuldanKilled = 0
     timerStarted = false
+
+    ------------------------------------------------------
+    ---- High Botanist Tel'arn
+    ------------------------------------------------------
+    mysteriousFruitCounter = 0
+    mysteriousFruitPlayers = {}
 end
