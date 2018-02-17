@@ -70,6 +70,7 @@ function core.HeartOfFear:ImperialVizierZorlok()
 
 	if parasiteCounter == core.groupSize then
 		core:getAchievementSuccess()
+		core.achievementsFailed[1] = false
 	end
 end
 
