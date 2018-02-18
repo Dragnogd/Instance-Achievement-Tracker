@@ -150,10 +150,13 @@ function core.TheNighthold:Tichondrius()
 end
 
 function core.TheNighthold:Guldan()
+    core:trackMob("105630", "Eye of Gul'dan", 16, "16 Eye of Gul'dan have spawned. AOE them down now", 4, nil, nil)
+
     if core.type == "UNIT_DIED" and core.destID == "105630" then
         eyeOfGuldanKilled = eyeOfGuldanKilled + 1
-        if timerStarted == false then
+        if timerStarted == false and core.mobCounter >= 16 then
             timerStarted = true
+            core:sendMessage(core:getAchievement() .. " Timer Started! 3 seconds remaining")
             C_Timer.After(3, function()
                 if core.inCombat == true then
                     if eyeOfGuldanKilled >= 16 then
