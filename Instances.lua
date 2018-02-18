@@ -1736,12 +1736,12 @@ core.Instances = {
                 },
                 boss11 = {
                     name = "Thok the Bloodthirsty",
-                    bossIDs = {71529},
+                    bossIDs = {},
                     achievement = 8527,
                     players = {},
                     tactics = "",
-                    enabled = true,
-                    track = function() core.SiegeOfOrgrimmar:ThokTheBloodthirsty() end,
+                    enabled = false,
+                    track = nil,
                     partial = false,
                 },
                 boss12 = {
