@@ -139,7 +139,7 @@ function Config:CreateGUI()
     --Title
     UIConfig.title = UIConfig:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
 	UIConfig.title:SetPoint("CENTER", AchievementTrackerTitleBG, "CENTER", 6, 1);
-	UIConfig.title:SetText("Instance Achievement Tracker v0.1.0a");
+	UIConfig.title:SetText("Instance Achievement Tracker v0.2.0a");
 
     --Scroll Frame
     UIConfig.ScrollFrame = CreateFrame("ScrollFrame", nil, UIConfig, "UIPanelScrollFrameTemplate")

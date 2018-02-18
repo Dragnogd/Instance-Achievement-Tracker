@@ -321,8 +321,8 @@ core.Instances = {
                     achievement = 11930,
                     players = {},
                     tactics = "",
-                    enabled = true,
-                    track = function() core.AntorusTheBurningThrone:GarothiWorldbreaker() end,
+                    enabled = false,
+                    track = nil,
 					partial = false,
                 },
                 boss2 = {
