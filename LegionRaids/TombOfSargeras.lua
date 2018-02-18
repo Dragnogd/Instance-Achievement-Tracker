@@ -25,7 +25,7 @@ function core.TombOfSargeras:SistersOfTheMoon()
         healthPercentageReached = true
 
         if healthPercentageReached == false then
-            print("Health Percentage Reached")
+            --print("Health Percentage Reached")
         end
     end
 

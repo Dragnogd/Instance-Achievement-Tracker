@@ -52,13 +52,13 @@ function core.AntorusTheBurningThrone:FelhoundsOfSargeras()
     --F'harg
     if core.type == "SPELL_AURA_APPLIED_DOSE" and core.destID == "126916" and core.spellId == 253602 and core.amount == 5 then
         fhargComplete = true
-        print("Fharg Complete")
+        --print("Fharg Complete")
     end
 
     --Shatug
     if core.type == "SPELL_AURA_APPLIED_DOSE" and core.destID == "126915" and core.destID == "126916" and core.spellId == 253602 and core.amount == 5 then
         shatugComplete = true
-        print("Shatug Complete")
+        --print("Shatug Complete")
     end
 
     if fhargComplete == true and shatugComplete == true then
@@ -107,10 +107,10 @@ function core.AntorusTheBurningThrone.Events:UNIT_SPELLCAST_SUCCEEDED(self, unit
     if core.Instances.Legion.Raids.AntorusTheBurningThrone.boss7.enabled == true then
         if spellID == 248214 then
             diabolicBombCounter = diabolicBombCounter + 1
-            print(diabolicBombCounter)
+            --print(diabolicBombCounter)
         elseif spellID == 246779 then
             diabolicBombCounter = diabolicBombCounter - 1
-            print(diabolicBombCounter)
+            --print(diabolicBombCounter)
     
             --If achievemnt has already been completed then announce achievement is no longer complete
             core:getAchievementFailedWithMessageAfter("Achievement can still be completed by waiting for more diabolic bombs")

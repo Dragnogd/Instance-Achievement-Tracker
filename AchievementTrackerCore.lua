@@ -6,7 +6,7 @@ local _, core = ...
 local events = CreateFrame("Frame")
 local UIConfig
 local UICreated = false
-local debugMode = true
+local debugMode = false
 
 -- local events = CreateFrame("Frame", "AchievementTracker2", UIParent, "UIPanelDialogTemplate")
 -- events:SetSize(800, 500)
@@ -719,7 +719,7 @@ function events:INSPECT_ACHIEVEMENT_READY()
 			end
 		end
 
-		print("Scanned " .. UnitName(playersToScan[1]))
+		--print("Scanned " .. UnitName(playersToScan[1]))
 		table.insert(playersScanned, playersToScan[1])
 		table.remove(playersToScan, 1)
 

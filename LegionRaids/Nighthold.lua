@@ -39,14 +39,14 @@ local mysteriousFruitPlayers = {}
 function core.TheNighthold:Skorpyron()
     if core.type == "SPELL_DAMAGE" and core.spellId == 210074 then
         core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")")
-        print(core.destName .. " got hit")
+        --print(core.destName .. " got hit")
     end
 end
 
 function core.TheNighthold:Trilliax()
     if (core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_APPLIED_DOSE") and core.spellId == 206798 then
         toxicSliceCounter = toxicSliceCounter + 1
-        print(toxicSliceCounter)
+        --print(toxicSliceCounter)
     end			
 
     if toxicSliceCounter >= 20 then
@@ -60,7 +60,7 @@ function core.TheNighthold:StarAugurEtraeus()
         healthPercentageReached = true
 
         if healthPercentageReached == false then
-            print("Health Percentage Reached")
+            --print("Health Percentage Reached")
         end
     end
 
@@ -132,7 +132,7 @@ function core.TheNighthold:Krosus()
     if core.type == "UNIT_DIED" and core.destID == "104262" and core.destFlags ~= 0xa48 then
         --If burning embers were not killed by a player than increment counter by 1
         burningEmbersKilled = burningEmbersKilled + 1
-        print(burningEmbersKilled)
+        --print(burningEmbersKilled)
         core:sendMessageDelay(core:getAchievement() .. " Burning Embers Killed (" .. burningEmbersKilled .. "/15)", burningEmbersKilled, 5)
     end
 end
