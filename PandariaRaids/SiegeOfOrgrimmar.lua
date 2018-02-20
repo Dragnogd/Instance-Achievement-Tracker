@@ -301,61 +301,63 @@ function core.SiegeOfOrgrimmar:Paragons()
 end
 
 function core.SiegeOfOrgrimmar:GarroshHellscream()
-	if core.achievementsCompleted[1] == false then
-		if (core.type == "SWING_DAMAGE" or core.type == "SWING_MISSED") and core.sourceID == "71979" then
-			if warbringersIds[core.spawn_uid] == nil then
-				warbringersIds[core.spawn_uid] = core.spawn_uid
-				warbringersCounter = warbringersCounter + 1
-				core:sendMessage("Kor'kron Warbringer (" .. warbringersCounter .. "/18)")
-			end
-		end
 
-		if warbringersCounter == 18 and step1Complete == false then
-			core:sendMessage(GetAchievementLink(core.achievementIDs[1]) .. " 18 Kor'kron Warbringers Alive. They can now be killed with a single Iron Star")
-			step1Complete = true		
+	--Detect mob
+	if (core.type == "SWING_DAMAGE" or core.type == "SWING_MISSED") and core.sourceID == "71979" then
+		if warbringersIds[core.spawn_uid] == nil then
+			warbringersIds[core.spawn_uid] = core.spawn_uid
+			warbringersCounter = warbringersCounter + 1
+			core:sendMessageDelay(core:getAchievement() .. "Kor'kron Warbringer (" .. warbringersCounter .. "/18)", warbringersCounter, 3)
+			print("Adding: " .. core.spawn_uid ..  " with a ID of " .. core.sourceID)
 		end
+	end
 
-		--Make sure a Warbringer is not hit by multiple Iron Stars
-		if core.type == "SPELL_DAMAGE" and core.destID == "71979" and core.spellId == 144653 then
-			if warbringersKilledIds[core.spawn_uid_dest] == nil then
-				warbringersKilledIds[core.spawn_uid_dest] = 1
-			else
-				warbringersKilledIds[core.spawn_uid_dest] = 2
-			end
-		end
+	if warbringersCounter >= 18 and step1Complete == false then
+		core:sendMessage(core:getAchievement() .. warbringersCounter .. " Kor'kron Warbringers Alive. They can now be killed with a single Iron Star")
+		step1Complete = true		
+	end
 
-		--If a Warbringer was killed by an iron star impact
-		if core.type == "SPELL_DAMAGE" and core.destID == "71979" and core.spellId == 144653 and core.overkill > 0 and core.achievementsCompleted[1] == false then
-			if warbringersKilledIds[core.spawn_uid_dest] == 1 then
-				warbringersKilled = warbringersKilled + 1
-				warbringersIds[core.spawn_uid_dest] = nil
-				warbringersCounter = warbringersCounter - 1
-				if timerStarted == false then
-					timerStarted = true
-					core:sendMessage("Timer Started! 10 seconds remaining")
-					C_Timer.After(10, function()
-						if warbringersKilled < 18 then
-							core:getAchievementFailedWithMessageAfter("(" .. warbringersKilled .. "/18) killed in time (This achievement can be repeated)")
-							step1Complete = false
-							timerStarted = false
-							warbringersKilled = 0
-							warbringersKilledIds = {}
-						elseif warbringersKilled >= 18 then
-							core:getAchievementSuccess()										
-						end
-					end)			
-				end
-			else
-				warbringersIds[core.spawn_uid_dest] = nil
-				warbringersCounter = warbringersCounter - 1
-			end
-		end
+	--Make sure a Warbringer is not hit by multiple Iron Stars
+	-- if core.type == "SPELL_DAMAGE" and core.destID == "71979" and core.spellId == 144653 then
+	-- 	if warbringersKilledIds[core.spawn_uid_dest] == nil then
+	-- 		warbringersKilledIds[core.spawn_uid_dest] = 1
+	-- 	else
+	-- 		warbringersKilledIds[core.spawn_uid_dest] = 2
+	-- 	end
+	-- end
 
-		if core.type == "UNIT_DIED" and core.destID == "71979" and timerStarted == false then
+	--If a Warbringer was killed by an iron star impact
+	if core.type == "SPELL_DAMAGE" and core.destID == "71979" and core.spellId == 144653 and core.overkill > 0 and core.achievementsCompleted[1] == false then
+		if warbringersKilledIds[core.spawn_uid_dest] == 1 then
+			warbringersKilled = warbringersKilled + 1
 			warbringersIds[core.spawn_uid_dest] = nil
 			warbringersCounter = warbringersCounter - 1
-			core:sendMessage("Kor'kron Warbringer DIED (" .. warbringersCounter .. "/18)")
+			if timerStarted == false and step1Complete == true then
+				timerStarted = true
+				core:sendMessage(core:getAchievement() .. " Timer Started! 10 seconds remaining")
+				C_Timer.After(10, function()
+					if warbringersKilled < 18 then
+						core:getAchievementFailedWithMessageAfter("(" .. warbringersKilled .. "/18) killed in time (This achievement can be repeated)")
+						step1Complete = false
+						timerStarted = false
+						warbringersKilled = 0
+						warbringersKilledIds = {}
+					elseif warbringersKilled >= 18 then
+						core:getAchievementSuccess()										
+					end
+				end)			
+			end
+		else
+			warbringersIds[core.spawn_uid_dest] = nil
+			warbringersCounter = warbringersCounter - 1
 		end
+	end
+
+	--When add dies, decrement counter if a timer has not already been started
+	if core.type == "UNIT_DIED" and core.destID == "71979" and timerStarted == false then
+		warbringersIds[core.spawn_uid_dest] = nil
+		warbringersCounter = warbringersCounter - 1
+		core:sendMessageDelay(core:getAchievement() .. "Kor'kron Warbringer DIED (" .. warbringersCounter .. "/18)", warbringersCounter, 3)
 	end
 end
 
