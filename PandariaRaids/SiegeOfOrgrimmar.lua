@@ -78,6 +78,16 @@ local timerStarted = false
 local warbringersKilled = 0
 local warbringersKilledIds = {}
 
+------------------------------------------------------
+---- Rescue Raiders
+------------------------------------------------------
+local jiFirepawComplete = false
+
+------------------------------------------------------
+---- General Nazgrim
+------------------------------------------------------
+local gamonDead = false
+
 function core.SiegeOfOrgrimmar:Immerseus()
 	if core.type == "UNIT_DIED" and core.destName == "Tears of the Vale" and tearsOfTheValeKilled < 10 then
 		tearsOfTheValeKilled = tearsOfTheValeKilled + 1
@@ -174,8 +184,15 @@ function core.SiegeOfOrgrimmar:IronJuggernaut()
 end
 
 function core.SiegeOfOrgrimmar:GeneralNazgrim()
+	--Gamon Died
 	if core.type == "UNIT_DIED" and core.destID == "72192" then
-		getAchievementFailed()
+		core:getAchievementFailed()
+		gamonDead = true
+	end
+
+	--Gamon Found
+	if (core.sourceID == "72192" or core.destID == "72192") and gamonDead == false then
+		core:getAchievementSuccess()
 	end
 end
 
@@ -185,7 +202,7 @@ function core.SiegeOfOrgrimmar:Malkorok()
 	end
 
 	--Corrupted Skullsplitter/Amalgamation Killed
-	if core.type == "UNIT_DIED" and core.destID == "72983" then
+	if core.type == "UNIT_DIED" and core.destID == "72983" and core.achievementsCompleted[1] == false then
 		core:getAchievementFailedWithMessageAfter("Do not kill boss (This achievement can be repeated)")						
 	end
 end
@@ -348,13 +365,15 @@ function core.SiegeOfOrgrimmar:TrackAdditional()
 	------------------------------------------------------
 
 	--Ji Firepaw died
-	if core.type == "UNIT_DIED" and core.destID == "62445" and rescueRaidersFailed == false then
+	if core.type == "UNIT_DIED" and core.destID == "62445" and rescueRaidersFailed == false and jiFirepawComplete == false then
 		core:sendMessage(GetAchievementLink(8453) .. " FAILED Reason: (Ji Firepaw has died")
+		jiFirepawComplete = true
 	end
 
 	--Ji Firepaw saved
-	if core.type == "UNIT_DIED" and core.destID == "72455" and rescueRaidersFailed == false then
+	if core.type == "UNIT_DIED" and core.destID == "72455" and rescueRaidersFailed == false and jiFirepawComplete == false then
 		unitsSaved = unitsSaved + 1
+		jiFirepawComplete = true
 		core:sendMessage("Save Ji Firepaw part of "  .. GetAchievementLink(8453) .. " Completed (" .. unitsSaved .. "/3)")
 	end
 
@@ -472,6 +491,11 @@ function core.SiegeOfOrgrimmar:ClearVariables()
 	step1Complete = false
 	timerStarted = false
 	warbringersKilled = 0
+
+	------------------------------------------------------
+	---- General Nazgrim
+	------------------------------------------------------
+	gamonDead = false
 end
 
 -- elseif subzone == "Kor'kron Barracks" then
