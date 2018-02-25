@@ -119,12 +119,12 @@ core.Instances = {
                 name = "The Nighthold",
                 boss1 = {
                     name = "Skorpyron",
-                    bossIDs = {102263},
+                    bossIDs = {}, --102263
                     achievement = 10678,
                     players = {},
                     tactics = "",
-                    enabled = true,
-                    track = function() core.TheNighthold:Skorpyron() end,
+                    enabled = false,
+                    track = nil,
 					partial = false,
                 },
                 boss2 = {
