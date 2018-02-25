@@ -57,7 +57,7 @@ events:SetScript("OnEvent", function(self, event, ...)
 		--print(spellID)
 
 		if core:has_value(temp2, spellID) == false then
-			--print(...)
+			print(...)
 			table.insert(temp2, spellID)
 			table.insert(TargetLogData, spell .. " : " .. spellID)
 		end
@@ -687,6 +687,7 @@ end
 --Does not get called for achievements which are not part of a boss fight so achievement tracking is calling manually once per session for those achievements
 function events:ENCOUNTER_START()
 	core:sendDebugMessage("---Encounter Started---")
+	table.insert(TargetLogData, "---Encounter Started---")
 	core.encounterStarted = true
 
 	if core.displayAchievements == true then
@@ -697,7 +698,8 @@ end
 
 --Fired when a users has finished engaging a boss. This is used to make sure achievement tracking is not fired when the player is not attacking a boss
 function events:ENCOUNTER_END()
-	core:sendDebugMessage("Encounter Ended")
+	core:sendDebugMessage("---Encounter Ended---")
+	table.insert(TargetLogData, "---Encounter Ended---")
 	core.encounterStarted = false
 end
 
