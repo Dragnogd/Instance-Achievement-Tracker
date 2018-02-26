@@ -1514,3 +1514,7 @@ function core:has_value(tab, val)
 
     return false
 end
+
+function core:getHealthPercent(boss)
+	return (UnitHealth(boss) / UnitHealthMax(boss)) * 100
+end

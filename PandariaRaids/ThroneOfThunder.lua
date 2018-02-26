@@ -7,6 +7,7 @@ local _, core = ...
 ---- Throne of Thunder Bosses
 ------------------------------------------------------
 core.ThroneOfThunder = {}
+core.ThroneOfThunder.Events = CreateFrame("Frame")
 
 ------------------------------------------------------
 ---- Durumu the Forgotten
@@ -26,6 +27,7 @@ local timerStarted = false
 ---- Ji-Kun
 ------------------------------------------------------
 local initalCounterDisplayed = false
+local eggCaught = false
 
 ------------------------------------------------------
 ---- Iron-Qon
@@ -37,9 +39,9 @@ local frozenBloodFailed = false
 local frozenSolidFailed = false
 
 ------------------------------------------------------
----- IronQon
+---- Twin Consorts
 ------------------------------------------------------
-local suenHealth = 0
+local lulinKilled = false
 
 function core.ThroneOfThunder:Horridon()
 	if core.type == "UNIT_DIED" and core.destID == "69221" then
@@ -82,6 +84,7 @@ function core.ThroneOfThunder:JiKun()
 	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 139168 and core.achievementsCompleted[1] == false then
 		--Wait 3 seconds to make sure the player has landed on the platform successfully
 		core:sendMessage("CATCH " .. core.destName .. " NOW! ")
+		eggCaught = true
 		C_Timer.After(5, function()
 			if core.achievementsFailed[1] == false then
 				core:getAchievementSuccessWithCustomMessage("", core.destName .. " caught. Boss can now be killed!")
@@ -92,6 +95,13 @@ function core.ThroneOfThunder:JiKun()
 	if core.type == "SPELL_AURA_REMOVED" and core.spellId == 139168 then
 		core:getAchievementFailed()
 	end
+
+	--If egg has not been caught after 30 seconds then fail achievement
+	C_Timer.After(30, function()
+		if core.achievementsFailed[1] == false and core.achievementsCompleted[1] == false and eggCaught == false then
+			core:getAchievementFailed()
+		end
+	end)
 end
 
 function core.ThroneOfThunder:DurumuTheForgotten()
@@ -155,23 +165,10 @@ function core.ThroneOfThunder:IronQon()
 end
 
 function core.ThroneOfThunder:TwinConsorts()
-	-- --Find Suen
-	-- for i = 1, 4 do
-	-- 	if UnitName("boss" .. i) == "Suen" then
-	-- 		suenHealth = (UnitHealth("boss" .. i) / UnitHealthMax("boss" .. i)) * 100
-	-- 	end 
-	-- end
-
-	-- if core.type == "UNIT_DIED" and core.destID == "68905" and core.achievementFailed == false then
-	-- 	if suenHealth < 30 then
-	-- 		SendChatMessage("[WIP] "  .. GetAchievementLink(8086) .. " FAILED!",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
-	-- 		core.achievementFailed = true			
-	-- 	end
-	-- end
-
-	--When Lu'lin dies. If suen health is below 30% then achievement has failed
-
-	--Defeat Lu'lin before Suen falls below 30% health
+	if core.type == "UNIT_DIED" and core.destID == "68905" then
+		print("Lulin Killed")
+		lulinKilled = true
+	end
 end
 
 function core.ThroneOfThunder:ClearVariables()
@@ -193,6 +190,7 @@ function core.ThroneOfThunder:ClearVariables()
 	---- Ji-Kun
 	------------------------------------------------------
 	initalCounterDisplayed = false
+	eggCaught = false
 
 	------------------------------------------------------
 	---- IronQon
@@ -206,5 +204,37 @@ function core.ThroneOfThunder:ClearVariables()
 	------------------------------------------------------
 	---- IronQon
 	------------------------------------------------------
-	LulinKilled = false
+	lulinKilled = false
 end
+
+function core.ThroneOfThunder:InitialSetup()
+	core.ThroneOfThunder.Events:RegisterEvent("UNIT_HEALTH")
+	core.ThroneOfThunder.Events:RegisterEvent("UNIT_POWER")
+end
+
+core.ThroneOfThunder.Events:SetScript("OnEvent", function(self, event, ...)
+    return self[event] and self[event](self, event, ...)
+end)
+
+function core.ThroneOfThunder.Events:UNIT_HEALTH(self, UnitID)
+	if core.Instances.MistsOfPandaria.Raids.ThroneOfThunder.boss11.enabled == true then
+		if UnitName(UnitID) == "Suen" then
+			if core:getHealthPercent(UnitID) < 30 then		
+				if lulinKilled == false then
+					core:getAchievementFailed()
+				end
+			end	
+		end	
+	end
+end
+
+function core.ThroneOfThunder.Events:UNIT_POWER(self, UnitID, powerType)
+	if core.Instances.MistsOfPandaria.Raids.ThroneOfThunder.boss12.enabled == true then
+		if UnitIsPlayer(UnitID) == false then
+			if UnitPower(UnitID, ALTERNATE_POWER_INDEX) == 3 then
+				core:getAchievementSuccessWithCustomMessage(UnitName(UnitID) .. " Disabled First part of","will be completed once boss is killed")
+			end
+		end
+	end
+end
+
