@@ -4,7 +4,6 @@
 local _, core = ...
 
 core.Instances = {
-    --Create a nested table for each instance
     Legion = {
         Raids = {
             EmeraldNightmare = {
