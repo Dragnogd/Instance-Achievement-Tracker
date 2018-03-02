@@ -121,9 +121,9 @@ function core.BlackrockFoundry:BlastFurnace()
 end
 
 function core.BlackrockFoundry:Kromog()
-	if core.type == "UNIT_DIED" and core.destID == "77893" and core.achievementsFailed[1] == false and core.achievementsCompleted[1] == false then
+	if core.type == "UNIT_DIED" and core.destID == "77893" and core.achievementsCompleted[1] == false then
 		graspingEarthKilled = graspingEarthKilled + 1
-		core:sendMessage("Grasping Earth Hands killed: (" .. graspingEarthKilled .. "/10)")
+		core:sendMessageDelay("Grasping Earth Hands killed: (" .. graspingEarthKilled .. "/10)", graspingEarthKilled, 2)
 		if timerStarted == false then
 			timerStarted = true
 			core:sendMessage("Timer Started!")
@@ -131,7 +131,9 @@ function core.BlackrockFoundry:Kromog()
 				if graspingEarthKilled >= 10 then
 					core.getAchievementSuccess()
 				elseif graspingEarthKilled < 10 then
-					core.getAchievementFailedWithMessageAfter("(" .. graspingEarthKilled .. "/10) Grasping Earth Hands killed in time")			
+					core.sendMessage("(" .. graspingEarthKilled .. "/10) Grasping Earth Hands killed in time")
+					graspingEarthKilled = 0
+					timerStarted = false			
 				end
 			end)
 		end

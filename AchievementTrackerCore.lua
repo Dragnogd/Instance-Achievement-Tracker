@@ -6,7 +6,7 @@ local _, core = ...
 local events = CreateFrame("Frame")
 local UIConfig
 local UICreated = false
-local debugMode = true
+local debugMode = false
 
 -- local events = CreateFrame("Frame", "AchievementTracker2", UIParent, "UIPanelDialogTemplate")
 -- events:SetSize(800, 500)
@@ -1129,7 +1129,7 @@ function core:getAchievementToTrack()
 		for i = 1, #core.currentBosses do
 			core:sendDebugMessage("Achievement: " .. core.currentBosses[i].achievement)
 			if core.currentBosses[i].partial == false and core.currentBosses[i].enabled == true then
-				core:sendMessage("Tracking: "  .. GetAchievementLink(core.currentBosses[i].achievement))
+				core:printMessage("Tracking: "  .. GetAchievementLink(core.currentBosses[i].achievement))
 				core.achievementTrackedMessageShown = true
 			end
 
