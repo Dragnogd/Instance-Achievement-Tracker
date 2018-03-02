@@ -7,10 +7,7 @@ local _, core = ...
 ---- Hellfire Citadel Bosses
 ------------------------------------------------------
 core.HellfireCitadel = {}
-
-local f = CreateFrame ("Frame")
-f:RegisterEvent("UNIT_HEALTH")
-f:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+core.HellfireCitadel.Events = CreateFrame("Frame")
 
 ------------------------------------------------------
 ---- Iron Reaver
@@ -34,22 +31,15 @@ local firstPickup = false
 ------------------------------------------------------
 local hauntingSoulsKilled = 0
 
-function core.HellfireCitadel:HellfireAssualt()
-	f:SetScript("OnEvent", function(self, event, unitID)
-		local unitType, _, _, _, _, destID, spawn_uid_dest = strsplit("-", UnitGUID(unitID));
-		if event == "UNIT_HEALTH" and destID == "90018" then
-			--If health is less than 90% then fail the achievement
-			if (UnitHealth(unitID) / UnitHealthMax(unitID)) * 100 < 90 then
-				core:getAchievementFailed()			
-			end
-		end
-	end)
-end
+------------------------------------------------------
+---- Archimonde
+------------------------------------------------------
+local doomfireSpawned = false
 
 function core.HellfireCitadel:IronReaver()
-	if core.type == "SPELL_INSTAKILL" and core.destID == "94985" and core.achievementsCompleted[1] == false then
+	if core.type == "SPELL_INSTAKILL" and core.destID == "94985" and hellfireGuardianKilled < 10 then
 		hellfireGuardianKilled = hellfireGuardianKilled + 1
-		core:sendMessage("Hellfire Guardians Killed (" .. hellfireGuardianKilled .. "/10)")
+		core:sendMessage(core:getAchievement() .. " Hellfire Guardians Killed (" .. hellfireGuardianKilled .. "/10)")
 	end
 
 	if hellfireGuardianKilled == 10 then
@@ -61,7 +51,7 @@ function core.HellfireCitadel:HellfireHighCouncil()
 	if core.type == "UNIT_DIED" and (core.destID == "92142" or core.destID == "92146" or core.destID == "92144") then
 		unitsKilled = unitsKilled + 1
 		if timerStarted == false then
-			core:sendMessage("Timer Started! 10 seconds remaining")
+			core:sendMessage(core:getAchievement() .. " Timer Started! 10 seconds remaining to kill bosses")
 			timerStarted = true
 			C_Timer.After(10, function()
 				if unitsKilled ~= 3 and core.inCombat == true then
@@ -70,14 +60,6 @@ function core.HellfireCitadel:HellfireHighCouncil()
 			end)
 		end
 	end
-end
-
-function core.HellfireCitadel:KilroggDeadeye()
-	f:SetScript("OnEvent", function(self, event, message, sender)
-		if event == "CHAT_MSG_MONSTER_YELL" and message == "GHHAAAaaa!!!" then
-			core:getAchievementFailed()				
-		end
-	end)
 end
 
 function core.HellfireCitadel:Kormrok()
@@ -195,6 +177,41 @@ function core.HellfireCitadel:Mannoroth()
 	end
 end
 
+function core.HellfireCitadel:Archimonde()
+	if core.type == "SPELL_SUMMON" and core.destID == "92208" then
+		doomfireSpawned = true
+		core:getAchievementSuccess()
+
+		--Cancel the timer if started
+		if timer ~= nil then
+			core:sendMessage(core:getAchievement() .. " Timer paused. Doomfire has spawned")
+			timer:Cancel()
+			timerStarted = false
+		end
+	end
+
+	if core.destID == "92208" and core.overkill > 0 then
+		--Cancel the timer if has already started
+		if timerStarted == false then
+			timerStarted = true
+			core:sendMessage(core:getAchievement() .. " Timer Started 120 seconds to kill boss. (Timer will restart if another Doomfire spawns)")
+			timer = C_Timer.NewTimer(120, function()
+				--If boss health is above 40% then wait for another Doomfire to spawn
+				if core:getHealthPercent("boss1") > 40 then
+					core:sendMessage(core:getAchievement() .. " FAILED!. Wait for another Doomfire to spawn before taking boss below 40% health")
+				else
+					core:getAchievementFailed()
+				end 
+			end)
+		end
+	end
+
+	--If boss health is below 40% and no Doomfire has spawned then fail the achievement
+	if core:getHealthPercent("boss1") < 40 and doomfireSpawned == false then
+		core:getAchievementFailed()
+	end
+end
+
 function core.HellfireCitadel:ClearVariables()
 	------------------------------------------------------
 	---- Iron Reaver
@@ -217,4 +234,39 @@ function core.HellfireCitadel:ClearVariables()
 	---- Socrethar the Eternal
 	------------------------------------------------------
 	hauntingSoulsKilled = 0
+
+	------------------------------------------------------
+	---- Archimonde
+	------------------------------------------------------
+	doomfireSpawned = false
+	if timer ~= nil then
+        timer:Cancel()
+    end
+end
+
+function core.HellfireCitadel:InitialSetup()
+	core.HellfireCitadel.Events:RegisterEvent("UNIT_HEALTH")
+	core.HellfireCitadel.Events:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+end
+
+core.HellfireCitadel.Events:SetScript("OnEvent", function(self, event, ...)
+    return self[event] and self[event](self, event, ...)
+end)
+
+function core.HellfireCitadel.Events:UNIT_HEALTH(self, unitID)
+	if core.Instances.WarlordsOfDraenor.Raids.HellfireCitadel.boss1.enabled == true then
+		local unitType, _, _, _, _, destID, spawn_uid_dest = strsplit("-", UnitGUID(unitID));
+		if destID == "90018" then
+			--If health is less than 90% then fail the achievement
+			if core:getHealthPercent(unitID) < 90 then
+				core:getAchievementFailed()			
+			end
+		end
+	end
+end
+
+function core.HellfireCitadel.Events:CHAT_MSG_MONSTER_YELL(self, message, sender)
+	if message == "GHHAAAaaa!!!" then
+		core:getAchievementFailed()				
+	end
 end
