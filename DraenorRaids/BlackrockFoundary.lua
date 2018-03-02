@@ -126,7 +126,7 @@ function core.BlackrockFoundry:Kromog()
 		core:sendMessageDelay("Grasping Earth Hands killed: (" .. graspingEarthKilled .. "/10)", graspingEarthKilled, 2)
 		if timerStarted == false then
 			timerStarted = true
-			core:sendMessage("Timer Started!")
+			core:sendMessage(core:getAchievement() .. " Timer Started! 5 seconds remaining")
 			C_Timer.After(5, function()
 				if graspingEarthKilled >= 10 then
 					core.getAchievementSuccess()
