@@ -161,7 +161,7 @@ end
 
 function core.Firelands.TrackAdditional()
 	--Only The Pentient
-	if core.Instances.Cataclysm.Raids.HellfireCitadel.boss1.enabled == true then
+	if core.Instances.Cataclysm.Raids.Firelands.boss1.enabled == true then
 		if onlyThePenitentFailed == false then
 			if (core.type == "SPELL_DAMAGE" or core.type == "SPELL_MISSED") and core.spellId == 99705 then
 				core:sendMessage(GetAchievementLink(5799) .. " FAILED! (" .. core.destName .. ")")
