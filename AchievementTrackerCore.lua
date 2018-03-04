@@ -57,16 +57,10 @@ events:SetScript("OnEvent", function(self, event, ...)
 		--print(spellID)
 
 		if core:has_value(temp2, spellID) == false then
-			--print(...)
+			print(...)
 			table.insert(temp2, spellID)
 			table.insert(TargetLogData, spell .. " : " .. spellID)
-		end
-
-		if spellID == 208116 then
-			print(...)
-		end
-
-		
+		end	
 	end
 	if event == "aaaUNIT_AURA" then
 
@@ -938,6 +932,8 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 			core.extraSpellId, core.extraSpellName, core.extraSchool, core.auraType = select(15, ...)
 		elseif string.match(core.type, "_CAST_FAILED") then
 			core.failedType = select(15, ...)
+		elseif string.match(core.type, "_ABSORBED") then
+			core.addDestGUID, core.addDestName, core.addDestFlags, core.addDestRaidFlags, core.addSpellId, core.addSpellName, core.addSpellSchool = select(15, ...)
 		end
 	elseif string.match(core.type, "SWING_") then
 		if string.match(core.type, "_DAMAGE") then
@@ -1138,6 +1134,7 @@ function core:getAchievementToTrack()
 			core:sendDebugMessage("Achievement: " .. core.currentBosses[i].achievement)
 			if core.currentBosses[i].partial == false and core.currentBosses[i].enabled == true then
 				core:printMessage("Tracking: "  .. GetAchievementLink(core.currentBosses[i].achievement))
+				core:sendMessage("setup")
 				core.achievementTrackedMessageShown = true
 			end
 
@@ -1157,7 +1154,9 @@ function core:sendMessage(message)
 	if message ~= lastMessageSent then
 		if debugMode == false then
 			if masterAddon == true then
-				SendChatMessage("[IAT] " .. message,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+				if message ~= "setup" then
+					SendChatMessage("[IAT] " .. message,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+				end
 			else
 				if requestToRun == false then
 					requestToRun = true
@@ -1170,7 +1169,10 @@ function core:sendMessage(message)
 					C_Timer.After(3, function()
 						if masterAddon == true then
 							core:printMessage("This addon is in charge of outputting messages")
-							SendChatMessage("[IAT] " .. message,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+							
+							if message ~= "setup" then
+								SendChatMessage("[IAT] " .. message,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+							end
 						else
 							core:printMessage("Another addon is currently in charge of outputting messages for this fight")
 						end
