@@ -6,7 +6,7 @@ local _, core = ...
 local events = CreateFrame("Frame")
 local UIConfig
 local UICreated = false
-local debugMode = false
+local debugMode = true
 
 -- local events = CreateFrame("Frame", "AchievementTracker2", UIParent, "UIPanelDialogTemplate")
 -- events:SetSize(800, 500)
@@ -57,9 +57,13 @@ events:SetScript("OnEvent", function(self, event, ...)
 		--print(spellID)
 
 		if core:has_value(temp2, spellID) == false then
-			print(...)
+			--print(...)
 			table.insert(temp2, spellID)
 			table.insert(TargetLogData, spell .. " : " .. spellID)
+		end
+
+		if spellID == 208116 then
+			print(...)
 		end
 
 		

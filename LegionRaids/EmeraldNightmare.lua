@@ -6,7 +6,8 @@ local _, core = ...
 ------------------------------------------------------
 ---- Emerald Nightmare Bosses
 ------------------------------------------------------
-core.EmeraldNightmare = {}
+core.TheEmeraldNightmare = {}
+core.TheEmeraldNightmare.Events = CreateFrame("Frame")
 
 ------------------------------------------------------
 ---- Nythendra
@@ -20,20 +21,19 @@ local bugsUID = {}
 local playersUID = {}
 local playersBuffCounter = 0
 
-function core.EmeraldNightmare:Nythendra()
-    if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 208119 and core:has_value(bugsUID, core.spawn_uid_dest) == false then
-        table.insert(bugsUID, core.spawn_uid_dest)
-        bugsSquished = bugsSquished + 1
-        core:sendMessageDelay(core:getAchievement() .. " Glow Bugs Sqished (" .. bugsSquished .. "/15)", bugsSquished, 5)
-        print(bugsSquished)
-    end
+function core.TheEmeraldNightmare:Nythendra()
+    -- if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 208119 then
+    --     bugsSquished = bugsSquished + 1
+    --     core:sendMessageDelay(core:getAchievement() .. " Glow Bugs Sqished (" .. bugsSquished .. "/15)", bugsSquished, 1)
+    --     print(bugsSquished)
+    -- end
 
     if bugsSquished >= 15 then
         core:getAchievementSuccess()
     end
 end
 
-function core.EmeraldNightmare:DragonsOfNightmare()
+function core.TheEmeraldNightmare:DragonsOfNightmare()
     --Loop through every player in the group. Once each player has got all 4 buffs. Increment count by 1. Once counter equals group size then complete achievement
 	if core.groupSize > 1 then
 		for i = 1, core.groupSize do
@@ -72,15 +72,13 @@ function core.EmeraldNightmare:DragonsOfNightmare()
     end
 end
 
-function core.EmeraldNightmare:Ursoc()
+function core.TheEmeraldNightmare:Ursoc()
     if core.type == "UNIT_DIED" and core.destID == "111263" then
         core:getAchievementFailed()
     end
 end
 
-
-
-function core.EmeraldNightmare:ClearVariables()
+function core.TheEmeraldNightmare:ClearVariables()
     ------------------------------------------------------
     ---- Nythendra
     ------------------------------------------------------
@@ -92,4 +90,23 @@ function core.EmeraldNightmare:ClearVariables()
     ------------------------------------------------------
     playersUID = {}
     playersBuffCounter = 0
+end
+
+function core.TheEmeraldNightmare:InitialSetup()
+	core.TheEmeraldNightmare.Events:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+end
+
+core.TheEmeraldNightmare.Events:SetScript("OnEvent", function(self, event, ...)
+    return self[event] and self[event](self, event, ...)
+end)
+
+function core.TheEmeraldNightmare.Events:UNIT_SPELLCAST_SUCCEEDED(self, unitID, spell, rank, lineID, spellID)
+    if core.Instances.Legion.Raids.TheEmeraldNightmare.boss1.enabled then
+        if spellID == 208116 and bugsUID[lineID] == nil then
+            bugsUID[lineID] = lineID
+            bugsSquished = bugsSquished + 1
+            core:sendMessageDelay(core:getAchievement() .. " Glow Bugs Sqished (" .. bugsSquished .. "/15)", bugsSquished, 1)
+            print(bugsSquished)
+        end
+    end
 end
