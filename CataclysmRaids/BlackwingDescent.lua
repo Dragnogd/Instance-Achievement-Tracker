@@ -52,19 +52,19 @@ end
 function core.BlackwingDescent:OminitronDefenseSystem()
 	--Arcane Annihilator
 	if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 79710 and arcaneAnnihilatorFailed == false then
-		core:sendMessage(core.spellName .. " part of " .. GetAchievementLink(core.currentAchievementID) .. " FAILED! by (" .. core.destName .. ")")
+		core:sendMessage(core.spellName .. " part of " .. core:getAchievement() .. " FAILED! by (" .. core.destName .. ")")
 		arcaneAnnihilatorFailed = true
 	end
 
 	--Static Shock
 	if (core.type == "SPELL_ABSORBED" or core.type == "SPELL_DAMAGE" or core.type == "SPELL_MISSED") and core.spellId == 79912 and staticShockFailed == false then
-		core:sendMessage(core.spellName .. " part of " .. GetAchievementLink(core.currentAchievementID) .. " FAILED! by (" .. core.destName .. ")")
+		core:sendMessage(core.spellName .. " part of " .. core:getAchievement() .. " FAILED! by (" .. core.destName .. ")")
 		staticShockFailed = true
 	end
 
 	--Poison Bomb
 	if (core.type == "SPELL_DAMAGE" or core.type == "SPELL_MISSED") and core.spellId == 80092 and poisonBombFailed == false then
-		core:sendMessage(core.spellName .. " part of " .. GetAchievementLink(core.currentAchievementID) .. " FAILED! by (" .. core.destName .. ")")
+		core:sendMessage(core.spellName .. " part of " .. core:getAchievement() .. " FAILED! by (" .. core.destName .. ")")
 		poisonBombFailed = true
 	end
 
@@ -81,7 +81,7 @@ function core.BlackwingDescent:OminitronDefenseSystem()
 		else
 			if core.destName ~= flameThrowerPlayer then
 				--More than one person has got hit by the flamethrower
-				core:sendMessage(core.spellName .. " part of " .. GetAchievementLink(core.currentAchievementID) .. " FAILED! by (" .. core.destName .. ")")
+				core:sendMessage(core.spellName .. " part of " .. core:getAchievement() .. " FAILED! by (" .. core.destName .. ")")
 				flameThrowerFailed = true
 			end
 		end	
@@ -93,7 +93,7 @@ function core.BlackwingDescent:Maloriak()
         aberrationsList[core.spawn_uid_dest] = nil
         aberrationsCounter = aberrationsCounter - 1
         if timerStarted == false then
-            SendChatMessage("[WIP] Aberrations: " .. aberrationsCounter,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+            core:sendMessage("Aberrations: " .. aberrationsCounter)
         end
         aberrationsCounterKilled = aberrationsCounterKilled + 1
 
@@ -105,7 +105,7 @@ function core.BlackwingDescent:Maloriak()
 				if aberrationsCounterKilled >= 12 then
 					core:getAchievementSuccess()
 				else
-					core:sendMessage(GetAchievementLink(core.currentAchievementID) .. " FAILED! Aberrations were not killed in time (" .. aberrationsCounterKilled .. "/12)")
+					core:sendMessage(core:getAchievement() .. " FAILED! Aberrations were not killed in time (" .. aberrationsCounterKilled .. "/12)")
                     aberrationsCounterKilled = 0
                     timerStarted = false
                 end
@@ -113,7 +113,7 @@ function core.BlackwingDescent:Maloriak()
         end
     end
 
-    if core.sourceID == "41440" and core.achievementCompleted == false then
+    if core.sourceID == "41440" and core.achievementsCompleted[1] == false then
         if aberrationsList[core.spawn_uid] == nil then
             aberrationsList[core.spawn_uid] = spawn_uid
 			aberrationsCounter = aberrationsCounter + 1            
@@ -121,7 +121,7 @@ function core.BlackwingDescent:Maloriak()
     end
 
 	if aberrationsCounter == 12 and startTimer == false then
-		core:sendMessage(GetAchievementLink(core.currentAchievementID) .. " requirements have been met. Adds can now be killed!")
+		core:sendMessage(core:getAchievement() .. " requirements have been met. Adds can now be killed!")
 		startTimer = true
     end	
 end
@@ -174,7 +174,7 @@ function core.BlackwingDescent:Nefarian()
 		step1Announced = true
 	end
 
-	if nefarianPercentage ~= nil and core.achievementFailed == false then
+	if nefarianPercentage ~= nil and core.achievementsFailed[1] == false then
 		--Step 1: Damage Nefarian to atleast 60% but not lower than 50%
 		if nefarianPercentage > 50 and nefarianPercentage < 65 and onyxiaPercentage > 0 and step1Complete == false then
 			core:sendMessage("Step 1: Complete")
