@@ -432,6 +432,10 @@ function getInstanceInfomation()
 			instanceCompatible = true
 		end
 
+		if debugMode == true then
+			instanceCompatible = true
+		end
+
 		if instanceCompatible == true then
 			--Check if the instance has any achievements to actually track
 			local foundTracking = false
