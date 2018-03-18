@@ -60,6 +60,13 @@ function Config:CreateText(point, relativeFrame, relativePoint, xOffset, yOffset
     return text
 end
 
+function Config:CreateText2(point, relativeFrame, relativePoint, xOffset, yOffset, textString, size)
+    local text = UIConfig:CreateFontString(nil, relativeFrame, size)
+    text:SetPoint(point, relativeFrame, relativePoint, xOffset, yOffset)
+    text:SetText(textString)
+    return text
+end
+
 local function Tab_OnClick(self)
     Config.currentTab = self:GetText();
     PanelTemplates_SetTab(self:GetParent(), self:GetID())
@@ -80,6 +87,78 @@ local function Tab_OnClick(self)
 
     if self.contenta ~= nil then
         self.contenta:Show()    
+    end
+
+    print(Config.currentTab)
+
+    if Config.currentTab == "Main" then
+        print("Found Main")
+        UIConfig.ScrollFrame:Hide()
+        UIConfig.ScrollFrame2:Hide()
+        
+        --Add UI elements to main tab
+        if UIConfig.Main then
+            UIConfig.Main:Show()
+            UIConfig.Main2:Show()
+            
+            UIConfig.Main2.features:Show()
+            UIConfig.Main2.features1:Show()
+            UIConfig.Main2.features2:Show()
+            UIConfig.Main2.features3:Show()
+            UIConfig.Main2.features4:Show()
+            UIConfig.Main2.features5:Show()
+            UIConfig.Main2.features6:Show()
+            
+            UIConfig.Main2.options:Show() 
+            UIConfig.Main2.options1:Show()
+        else
+            --Heading
+            UIConfig.Main = Config:CreateText2("TOP", AchievementTrackerDialogBG, "TOP", 0, -10, "Welcome to Instance Achievement Tracker Addon. Please report any issues with the addon on the curseforge website","GameFontHighlightLarge")
+            UIConfig.Main:SetWidth(750)
+    
+            --Currently tracking
+            UIConfig.Main2 = Config:CreateText2("TOPLEFT", UIConfig.Main, "TOPLEFT", 0, -45, "Currently Tracking:","GameFontHighlightLarge")            
+            UIConfig.Main2:SetWidth(300)
+            UIConfig.Main2:SetJustifyH("LEFT")
+            UIConfig.Main2.content = Config:CreateText2("TOPLEFT", UIConfig.Main2, "TOPLEFT", 0, -20, "296 Achievements","GameFontHighlight")
+            UIConfig.Main2.content2 = Config:CreateText2("TOPLEFT", UIConfig.Main2.content, "TOPLEFT", 0, -15, "227 Tactics","GameFontHighlight") 
+            
+            --Features
+            UIConfig.Main2.features = Config:CreateText2("TOPLEFT", UIConfig.Main2.content, "TOPLEFT", 0, -40, "Features:","GameFontHighlightLarge")  
+            UIConfig.Main2.features:SetWidth(750)    
+            UIConfig.Main2.features:SetJustifyH("LEFT")        
+            UIConfig.Main2.features1 = Config:CreateText2("TOPLEFT", UIConfig.Main2.features, "TOPLEFT", 0, -20, "- Tracks when the criteria of instance achievements have been met and output this to chat","GameFontHighlight")   
+            UIConfig.Main2.features2 = Config:CreateText2("TOPLEFT", UIConfig.Main2.features1, "TOPLEFT", 0, -20, "- Tracks when the criteria of instance achievements has been failed and outputs this to chat","GameFontHighlight")   
+            UIConfig.Main2.features3 = Config:CreateText2("TOPLEFT", UIConfig.Main2.features2, "TOPLEFT", 0, -20, "- Keeps track of achievements which require you to kill so many mobs within a certain time period. It will announce to chat when enough mobs have spawned and whether they were killed in the time period.","GameFontHighlight")   
+            UIConfig.Main2.features4 = Config:CreateText2("TOPLEFT", UIConfig.Main2.features3, "TOPLEFT", 0, -30, "- Scans all players in the group to see which achievements each player is missing for the current instance","GameFontHighlight")   
+            UIConfig.Main2.features5 = Config:CreateText2("TOPLEFT", UIConfig.Main2.features4, "TOPLEFT", 0, -20, "- Announce to chat players who are missing achievements for certain bosses","GameFontHighlight")   
+            UIConfig.Main2.features6 = Config:CreateText2("TOPLEFT", UIConfig.Main2.features5, "TOPLEFT", 0, -20, "- Announce to chat tactics for a certain boss","GameFontHighlight")   
+            UIConfig.Main2.features3:SetWidth(750)
+            UIConfig.Main2.features3:SetJustifyH("LEFT") 
+
+            --Options
+            UIConfig.Main2.options = Config:CreateText2("TOPLEFT", UIConfig.Main2.features6, "TOPLEFT", 0, -30, "Options:","GameFontHighlightLarge")
+            UIConfig.Main2.options:SetWidth(750)    
+            UIConfig.Main2.options:SetJustifyH("LEFT")
+            UIConfig.Main2.options1 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options, "TOPLEFT", 0, -20, "Coming Soon","GameFontHighlight")                  
+        end
+    else
+        UIConfig.ScrollFrame:Show()
+        UIConfig.ScrollFrame2:Show()
+        
+        UIConfig.Main:Hide()
+        UIConfig.Main2:Hide()
+
+        UIConfig.Main2.features:Hide()
+        UIConfig.Main2.features1:Hide()
+        UIConfig.Main2.features2:Hide()
+        UIConfig.Main2.features3:Hide()
+        UIConfig.Main2.features4:Hide()
+        UIConfig.Main2.features5:Hide()
+        UIConfig.Main2.features6:Hide()
+        
+        UIConfig.Main2.options:Hide() 
+        UIConfig.Main2.options1:Hide() 
     end
 end
 
