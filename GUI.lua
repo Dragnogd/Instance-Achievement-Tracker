@@ -92,7 +92,6 @@ local function Tab_OnClick(self)
     --print(Config.currentTab)
 
     if Config.currentTab == "Main" then
-        print("Found Main")
         UIConfig.ScrollFrame:Hide()
         UIConfig.ScrollFrame2:Hide()
         
@@ -111,20 +110,25 @@ local function Tab_OnClick(self)
             
             UIConfig.Main2.options:Show() 
             UIConfig.Main2.options1:Show()
+
+            UIConfig.Main.author:Show()
         else
             --Heading
-            UIConfig.Main = Config:CreateText2("TOP", AchievementTrackerDialogBG, "TOP", 0, -10, "Welcome to Instance Achievement Tracker. Please report any issues with the addon on the curseforge website","GameFontHighlightLarge")
+            UIConfig.Main = Config:CreateText2("TOP", AchievementTrackerDialogBG, "TOP", 0, -10, "Instance Achievement Tracker v0.4.0 (alpha)", "GameFontNormalLarge")
             UIConfig.Main:SetWidth(750)
+
+            --Author
+            UIConfig.Main.author = Config:CreateText2("BOTTOMRIGHT", AchievementTrackerDialogBG, "BOTTOMRIGHT", -5, 5, "(EU) Whizzey-Doomhammer","GameFontNormal")         
     
             --Currently tracking
-            UIConfig.Main2 = Config:CreateText2("TOPLEFT", UIConfig.Main, "TOPLEFT", 0, -45, "Currently Tracking:","GameFontHighlightLarge")            
+            UIConfig.Main2 = Config:CreateText2("TOPLEFT", UIConfig.Main, "TOPLEFT", 0, -45, "Currently Tracking:","GameFontNormalLarge")            
             UIConfig.Main2:SetWidth(300)
             UIConfig.Main2:SetJustifyH("LEFT")
             UIConfig.Main2.content = Config:CreateText2("TOPLEFT", UIConfig.Main2, "TOPLEFT", 0, -20, "243 Achievements","GameFontHighlight")
-            UIConfig.Main2.content2 = Config:CreateText2("TOPLEFT", UIConfig.Main2.content, "TOPLEFT", 0, -15, "227 Tactics","GameFontHighlight") 
+            UIConfig.Main2.content2 = Config:CreateText2("TOPLEFT", UIConfig.Main2.content, "TOPLEFT", 0, -15, "232 Tactics","GameFontHighlight") 
             
             --Features
-            UIConfig.Main2.features = Config:CreateText2("TOPLEFT", UIConfig.Main2.content, "TOPLEFT", 0, -40, "Features:","GameFontHighlightLarge")  
+            UIConfig.Main2.features = Config:CreateText2("TOPLEFT", UIConfig.Main2.content, "TOPLEFT", 0, -40, "Features:","GameFontNormalLarge")  
             UIConfig.Main2.features:SetWidth(750)    
             UIConfig.Main2.features:SetJustifyH("LEFT")        
             UIConfig.Main2.features1 = Config:CreateText2("TOPLEFT", UIConfig.Main2.features, "TOPLEFT", 0, -20, "- Tracks when the criteria of instance achievements have been met and output this to chat","GameFontHighlight")   
@@ -137,7 +141,7 @@ local function Tab_OnClick(self)
             UIConfig.Main2.features3:SetJustifyH("LEFT") 
 
             --Options
-            UIConfig.Main2.options = Config:CreateText2("TOPLEFT", UIConfig.Main2.features6, "TOPLEFT", 0, -30, "Options:","GameFontHighlightLarge")
+            UIConfig.Main2.options = Config:CreateText2("TOPLEFT", UIConfig.Main2.features6, "TOPLEFT", 0, -30, "Options:","GameFontNormalLarge")
             UIConfig.Main2.options:SetWidth(750)    
             UIConfig.Main2.options:SetJustifyH("LEFT")
             UIConfig.Main2.options1 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options, "TOPLEFT", 0, -20, "Coming Soon","GameFontHighlight")                  
@@ -158,7 +162,9 @@ local function Tab_OnClick(self)
         UIConfig.Main2.features6:Hide()
         
         UIConfig.Main2.options:Hide() 
-        UIConfig.Main2.options1:Hide() 
+        UIConfig.Main2.options1:Hide()
+        
+        UIConfig.Main.author:Hide()
     end
 end
 
@@ -218,7 +224,7 @@ function Config:CreateGUI()
     --Title
     UIConfig.title = UIConfig:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
 	UIConfig.title:SetPoint("CENTER", AchievementTrackerTitleBG, "CENTER", 6, 1);
-	UIConfig.title:SetText("Instance Achievement Tracker v0.3.0a");
+	UIConfig.title:SetText("Instance Achievement Tracker v0.4.0a");
 
     --Scroll Frame
     UIConfig.ScrollFrame = CreateFrame("ScrollFrame", nil, UIConfig, "UIPanelScrollFrameTemplate")

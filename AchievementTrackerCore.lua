@@ -50,7 +50,7 @@ events:SetScript("OnEvent", function(self, event, ...)
 	if event == "aaaUNIT_HEALTH" then
 		print(UnitName(...) .. " : " .. UnitHealth(...))
 	end
-	if event == "UNIT_SPELLCAST_SUCCEEDED" then
+	if event == "aaaUNIT_SPELLCAST_SUCCEEDED" then
 
 		local unitID, spell, rank, lineID, spellID = ...
 
@@ -141,7 +141,7 @@ core.displayAchievements = false
 -- Addon Syncing V1.0.1a
 --------------------------------------
 local majorVersion = 0						--Addon with a higher major version change have priority over a lower major version
-local minorVersion = 3						--Addon with a minor version change have prioirty over a lower minor version
+local minorVersion = 4						--Addon with a minor version change have prioirty over a lower minor version
 local revisionVersion = 0					--Addon with a revision change have the same priorty as a lower revision verison
 local masterAddon = false					--The master addon for the group. This stop multiple people with the addon outputting identical messages. Reset at the end of every fight
 local playerRank = -1						--The rank of the player is the group. Players with higher rank get priorty over outputting messages unless they have an outdated addon
