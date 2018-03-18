@@ -96,6 +96,10 @@ function core.HeartOfFear:GrandEmpressShekzeer()
 					end		
 				end
 			end)
+		else
+			if reaversKilled == 2 then
+				core:getAchievementSuccess()
+			end
 		end
 	end
 end

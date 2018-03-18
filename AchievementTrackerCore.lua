@@ -1326,7 +1326,7 @@ function core:getAchievementSuccess(index)
 		value = 1
 	end
 	if core.achievementsCompleted[value] == false then
-		core:sendMessage(GetAchievementLink(core.achievementIDs[value]) .. " requirements have been met. Boss can now be killed!")
+		core:sendMessage(GetAchievementLink(core.achievementIDs[value]) .. " Criteria has been met. Boss can now be killed!")
 		core.achievementsCompleted[value] = true
 	end
 end
@@ -1338,7 +1338,7 @@ function core:getAchievementSuccessWithMessageBefore(message, index)
 		value = 1
 	end
 	if core.achievementsCompleted[value] == false then
-		core:sendMessage(message .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " requirements have been met. Boss can now be killed!")
+		core:sendMessage(message .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " Criteria has been met. Boss can now be killed!")
 		core.achievementsCompleted[value] = true
 	end
 end
@@ -1350,7 +1350,7 @@ function core:getAchievementSuccessWithMessageAfter(message, index)
 		value = 1
 	end
 	if core.achievementsCompleted[value] == false then
-		core:sendMessage(GetAchievementLink(core.achievementIDs[value]) .. " requirements have been met. Boss can now be killed! " .. message)
+		core:sendMessage(GetAchievementLink(core.achievementIDs[value]) .. " Criteria has been met. Boss can now be killed! " .. message)
 		core.achievementsCompleted[value] = true
 	end
 end
@@ -1362,7 +1362,7 @@ function core:getAchievementSuccessWithMessageBeforeAndAfter(messageBefore, mess
 		value = 1
 	end
 	if core.achievementsCompleted[value] == false then
-		core:sendMessage(messageBefore .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " requirements have been met. Boss can now be killed!" .. messageAfter)
+		core:sendMessage(messageBefore .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " Criteria has been met. Boss can now be killed!" .. messageAfter)
 		core.achievementsCompleted[value] = true
 	end
 end

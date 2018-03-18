@@ -89,7 +89,7 @@ local function Tab_OnClick(self)
         self.contenta:Show()    
     end
 
-    print(Config.currentTab)
+    --print(Config.currentTab)
 
     if Config.currentTab == "Main" then
         print("Found Main")
@@ -113,14 +113,14 @@ local function Tab_OnClick(self)
             UIConfig.Main2.options1:Show()
         else
             --Heading
-            UIConfig.Main = Config:CreateText2("TOP", AchievementTrackerDialogBG, "TOP", 0, -10, "Welcome to Instance Achievement Tracker Addon. Please report any issues with the addon on the curseforge website","GameFontHighlightLarge")
+            UIConfig.Main = Config:CreateText2("TOP", AchievementTrackerDialogBG, "TOP", 0, -10, "Welcome to Instance Achievement Tracker. Please report any issues with the addon on the curseforge website","GameFontHighlightLarge")
             UIConfig.Main:SetWidth(750)
     
             --Currently tracking
             UIConfig.Main2 = Config:CreateText2("TOPLEFT", UIConfig.Main, "TOPLEFT", 0, -45, "Currently Tracking:","GameFontHighlightLarge")            
             UIConfig.Main2:SetWidth(300)
             UIConfig.Main2:SetJustifyH("LEFT")
-            UIConfig.Main2.content = Config:CreateText2("TOPLEFT", UIConfig.Main2, "TOPLEFT", 0, -20, "296 Achievements","GameFontHighlight")
+            UIConfig.Main2.content = Config:CreateText2("TOPLEFT", UIConfig.Main2, "TOPLEFT", 0, -20, "243 Achievements","GameFontHighlight")
             UIConfig.Main2.content2 = Config:CreateText2("TOPLEFT", UIConfig.Main2.content, "TOPLEFT", 0, -15, "227 Tactics","GameFontHighlight") 
             
             --Features
