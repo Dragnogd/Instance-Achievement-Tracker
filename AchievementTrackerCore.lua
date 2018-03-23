@@ -6,7 +6,7 @@ local _, core = ...
 local events = CreateFrame("Frame")
 local UIConfig
 local UICreated = false
-local debugMode = false
+local debugMode = true
 
 -- local events = CreateFrame("Frame", "AchievementTracker2", UIParent, "UIPanelDialogTemplate")
 -- events:SetSize(800, 500)
@@ -422,10 +422,10 @@ function getInstanceInfomation()
 		--If the raid is in the lich king expansion then detect whether player is on the 10man or 25man difficulty
 		--This is only needed for raids that have seperate achievements for 10man and 25man. Happens for the majority of WOTLK raids
 		if core.instance == "TrialOfTheCrusader" or core.instance == "Naxxramas" or core.instance == "IcecrownCitadel" then
-			if core.difficultyID == 3 then
+			if core.difficultyID == 3 or core.difficultyID == 5 then
 				--10 Man
 				core.instance = core.instance .. "10Man"
-			elseif core.difficultyID == 4 then
+			elseif core.difficultyID == 4 or core.difficultyID == 6 then
 				--25 Man
 				core.instance = core.instance .. "25Man"
 			end
