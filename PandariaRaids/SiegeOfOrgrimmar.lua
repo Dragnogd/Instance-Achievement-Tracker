@@ -87,6 +87,15 @@ local jiFirepawComplete = false
 ------------------------------------------------------
 local gamonDead = false
 
+------------------------------------------------------
+---- Garrosh Hellscream
+------------------------------------------------------
+local warbringersIds = {}
+local warbringersCounter = 0
+local step1Complete = false
+local warbringersKilled = 0
+local killedTimestamp = nil
+
 function core.SiegeOfOrgrimmar:Immerseus()
 	if core.type == "UNIT_DIED" and core.destName == "Tears of the Vale" and tearsOfTheValeKilled < 10 then
 		tearsOfTheValeKilled = tearsOfTheValeKilled + 1
@@ -300,9 +309,69 @@ function core.SiegeOfOrgrimmar:Paragons()
 end
 
 function core.SiegeOfOrgrimmar:GarroshHellscream()
+	--core:trackMob("71979", "Kor'kron Warbringer", 18, "18 Kor'kron Warbringers Alive. They can now be killed with a single Iron Star", 3, nil, nil)
 
-	core:trackMob("71979", "Kor'kron Warbringer", 18, "18 Kor'kron Warbringers Alive. They can now be killed with a single Iron Star", 3, nil, nil)
+	if core.achievementsCompleted[1] == false then
+		if (core.type == "SWING_DAMAGE" or core.type == "SWING_MISSED") and core.sourceID == "71979" then
+			if warbringersIds[core.spawn_uid] == nil then
+				warbringersIds[core.spawn_uid] = core.spawn_uid
+				warbringersCounter = warbringersCounter + 1
+				core:sendMessageDelay("Kor'kron Warbringer (" .. warbringersCounter .. "/18)", warbringersCounter, 3)
+			end
+		end
 
+		if warbringersCounter == 18 and step1Complete == false then
+			core:sendMessage(core:getAchievement() .. " 18 Kor'kron Warbringers Alive. They can now be killed with a single Iron Star")
+			step1Complete = true		
+		end
+
+		--If a Warbringer was killed by an iron star impact and we currently have enough adds to start achievement tracking
+		if core.type == "SPELL_DAMAGE" and core.destID == "71979" and core.spellId == 144653 and core.overkill > 0 and warbringersCounter >= 18 then
+			if warbringersIds[core.spawn_uid_dest] ~= nil then
+				warbringersIds[core.spawn_uid_dest] = nil
+				warbringersCounter = warbringersCounter - 1
+				--core:sendMessage("Kor'kron Warbringer DIED (" .. warbringersCounter .. "/18)")
+			end
+
+			--Get timestamp of first kill and compare for rest of kills. If adds are killed with same timestamp we can assume that it was the same iron star
+			local timeCorrect = false
+			if killedTimestamp == nil then
+				killedTimestamp = math.floor(core.timeStamp)
+				timeCorrect = true
+			elseif killedTimestamp == math.floor(core.timeStamp) then
+				timeCorrect = true
+			end
+
+			--print("Add Died At: " .. math.floor(core.timeStamp) .. " Cached time was: " .. killedTimestamp)
+
+			if timeCorrect == true then
+				warbringersKilled = warbringersKilled + 1
+				if timerStarted == false then
+					timerStarted = true
+					C_Timer.After(2, function()
+						if warbringersKilled < 18 then
+							core:sendMessage("(" .. warbringersKilled .. "/18) killed in time (This achievement can be repeated)")
+							step1Complete = false
+							timerStarted = false
+							warbringersKilled = 0
+							killedTimestamp = nil
+						elseif warbringersKilled >= 18 then
+							core:getAchievementSuccess()										
+						end
+					end)
+				end
+			else
+				--print("Time not correct")			
+			end
+		elseif core.type == "UNIT_DIED" and core.destID == "71979" then
+			--print("Player has killed add")
+			if warbringersIds[core.spawn_uid_dest] ~= nil then
+				warbringersIds[core.spawn_uid_dest] = nil
+				warbringersCounter = warbringersCounter - 1
+				core:sendMessage("Kor'kron Warbringer DIED (" .. warbringersCounter .. "/18)")
+			end			 
+		end
+	end
 	-- --Detect Iron Star Impact
 	-- if core.type == "UNIT_DIED" and core.destID == "71985" then
 	-- 	print("Iron Star Killed")
@@ -378,6 +447,11 @@ function core.SiegeOfOrgrimmar:GarroshHellscream()
 	-- 	warbringersIds[core.spawn_uid_dest] = nil
 	-- 	core:sendMessageDelay(core:getAchievement() .. "Kor'kron Warbringer DIED (" .. warbringersCounter .. "/18)", warbringersCounter, 3)
 	-- end
+
+	--local vehicleX, vehicleY, unitName, isPossessed, vehicleType, orientation, isPlayer, isAlive = GetBattlefieldVehicleInfo(1)
+
+	--print(vehicleX)
+	--print(unitName)
 end
 
 function core.SiegeOfOrgrimmar:TrackAdditional()
@@ -517,6 +591,15 @@ function core.SiegeOfOrgrimmar:ClearVariables()
 	---- General Nazgrim
 	------------------------------------------------------
 	gamonDead = false
+
+	------------------------------------------------------
+	---- Garrosh Hellscream
+	------------------------------------------------------
+	warbringersIds = {}
+	warbringersCounter = 0
+	step1Complete = false
+	warbringersKilled = 0
+	killedTimestamp = nil
 end
 
 -- elseif subzone == "Kor'kron Barracks" then

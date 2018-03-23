@@ -41,7 +41,8 @@ RegisterAddonMessagePrefix("Whizzey")						--Register events to listen out for c
 events:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
 events:RegisterEvent("UNIT_HEALTH")
 events:RegisterEvent("UNIT_AURA")
-
+events:RegisterEvent("UNIT_ABSORB_AMOUNT_CHANGED")
+events:RegisterEvent("NAME_PLATE_UNIT_REMOVED")
 
 local temp2 = {}
 TargetLogData = {}
@@ -50,7 +51,7 @@ events:SetScript("OnEvent", function(self, event, ...)
 	if event == "aaaUNIT_HEALTH" then
 		print(UnitName(...) .. " : " .. UnitHealth(...))
 	end
-	if event == "aaaUNIT_SPELLCAST_SUCCEEDED" then
+	if event == "UNIT_SPELLCAST_SUCCEEDED" then
 
 		local unitID, spell, rank, lineID, spellID = ...
 
@@ -62,8 +63,58 @@ events:SetScript("OnEvent", function(self, event, ...)
 			table.insert(TargetLogData, spell .. " : " .. spellID)
 		end	
 	end
-	if event == "aaaUNIT_AURA" then
+	if event == "UNIT_AURA" then
+		local unitID = ...
 
+		-- if UnitName(unitID) ~= "Whizzey" then
+		-- 	print("Aura Detected FROM: " .. UnitName(unitID))
+
+		-- 	-- for i = 148200, 148700 do
+		-- 	-- 	if UnitAura(unitID, i) or UnitBuff(unitID, i) or UnitDebuff(unitID, i) then
+		-- 	-- 		print("Aura Found: " .. i)
+		-- 	-- 	else
+		-- 	-- 		print("Aura not at " .. i)
+		-- 	-- 	end
+		-- 	-- end
+
+		-- 	for i = 144600, 144900 do
+		-- 		if UnitAura(unitID, GetSpellInfo(i)) then
+		-- 			print(i)
+		-- 		end
+		-- 	end
+		-- end
+
+
+		--print(unitID)
+
+		-- if UnitAura(unitID, GetSpellInfo(169045)) then
+		-- 	print("Found 1")
+		-- elseif UnitAura(unitID, GetSpellInfo(168218)) then
+		-- 	print("Found 2")
+		-- elseif UnitAura(unitID, GetSpellInfo(168217)) then
+		-- 	print("Found 3")
+		-- elseif UnitAura(unitID, GetSpellInfo(179530)) then
+		-- 	print("Found 4")
+		-- elseif UnitAura(unitID, GetSpellInfo(179531)) then
+		-- 	print("Found 5")
+		-- elseif UnitAura(unitID, GetSpellInfo(155693)) then
+		-- 	print("Found 6")
+		-- elseif UnitAura(unitID, GetSpellInfo(169067)) then
+		-- 	print("Found 7")
+		-- end
+
+		--local nameSpell, rank, icon, castTime, minRange, maxRange, spellId = GetSpellInfo(144653)
+
+		--name, rank, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, nameplateShowPersonal, spellId, canApplyAura, isBossDebuff, nameplateShowAll, timeMod, value1, value2, value3 = UnitDebuff(unitID, nameSpell)
+
+
+		--print(name)
+	end
+	if event == "UNIT_ABSORB_AMOUNT_CHANGED" then
+		--print(...)
+	end
+	if event == "NAME_PLATE_UNIT_REMOVED" then
+		--print(...)
 	end
     return self[event] and self[event](self, event, ...) 	--Allow event arguments to be called from seperate functions
 end)
@@ -370,7 +421,7 @@ function getInstanceInfomation()
 
 		--If the raid is in the lich king expansion then detect whether player is on the 10man or 25man difficulty
 		--This is only needed for raids that have seperate achievements for 10man and 25man. Happens for the majority of WOTLK raids
-		if core.instance == "TrialOfTheCrusader" or core.instance == "Naxxramas" then
+		if core.instance == "TrialOfTheCrusader" or core.instance == "Naxxramas" or core.instance == "IcecrownCitadel" then
 			if core.difficultyID == 3 then
 				--10 Man
 				core.instance = core.instance .. "10Man"
@@ -379,6 +430,11 @@ function getInstanceInfomation()
 				core.instance = core.instance .. "25Man"
 			end
 		end
+
+		print(core.difficultyID)
+		print(core.instance)
+
+		--core.instance = "IcecrownCitadel10Man"
 
 		--Find the instance in the core.instances table so we can cache the value to be used later
 		for expansion,_ in pairs(core.Instances) do
@@ -900,8 +956,12 @@ end
 
 --Used to monitor the combat log so we can track achievements. The variables change depending on the information being recieved from the combat log
 function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
+	
+
 	--All Events
 	core.timeStamp, core.type, core.hideCaster, core.sourceGUID, core.sourceName, core.sourceFlags, core.sourceRaidFlags, core.destGUID, core.destName, core.destFlags, core.destRaidFlags = ...
+
+	--print(...)
 
 	--core:sendDebugMessage(core.type .. " " .. core.sourceName .. " " .. core.destName)
 

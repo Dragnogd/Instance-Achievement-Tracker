@@ -19,6 +19,8 @@ local WrathOfTheLichKingContentButtons = {}
 Config.currentTab = nil
 Config.currentInstance = nil
 
+Config.enableAddon = true
+
 --------------------------------------
 -- Config functions
 --------------------------------------
@@ -109,7 +111,9 @@ local function Tab_OnClick(self)
             UIConfig.Main2.features6:Show()
             
             UIConfig.Main2.options:Show() 
-            UIConfig.Main2.options1:Show()
+            UIConfig.Main2.options:Show()
+            UIConfig.Main2.options2:Show()
+            UIConfig.Main2.options3:Show()
 
             UIConfig.Main.author:Show()
         else
@@ -144,7 +148,9 @@ local function Tab_OnClick(self)
             UIConfig.Main2.options = Config:CreateText2("TOPLEFT", UIConfig.Main2.features6, "TOPLEFT", 0, -30, "Options:","GameFontNormalLarge")
             UIConfig.Main2.options:SetWidth(750)    
             UIConfig.Main2.options:SetJustifyH("LEFT")
-            UIConfig.Main2.options1 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options, "TOPLEFT", 0, -20, "Coming Soon","GameFontHighlight")                  
+            UIConfig.Main2.options2 = Config:CreateCheckBox("TOPLEFT", UIConfig, "TOPLEFT", 20, -320)
+            UIConfig.Main2.options2:SetChecked(Config.enableAddon)
+            UIConfig.Main2.options3 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options2, "TOPLEFT", 30, -9, "Enable Addon","GameFontHighlight")
         end
     else
         UIConfig.ScrollFrame:Show()
@@ -162,7 +168,9 @@ local function Tab_OnClick(self)
         UIConfig.Main2.features6:Hide()
         
         UIConfig.Main2.options:Hide() 
-        UIConfig.Main2.options1:Hide()
+        UIConfig.Main2.options:Hide()
+        UIConfig.Main2.options2:Hide()
+        UIConfig.Main2.options3:Hide()
         
         UIConfig.Main.author:Hide()
     end
