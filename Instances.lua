@@ -3172,7 +3172,7 @@ core.Instances = {
                 },                             
             },
 
-            OnyxiasLair10Man = {
+            OnyxiaSLair10Man = {
                 name = "Onyxias Lair 10 Man",
                 boss1 = {
                     name = "Onyxia 1",
@@ -3206,7 +3206,7 @@ core.Instances = {
                 },                          
             },
 
-            OnyxiasLair25Man = {
+            OnyxiaSLair25Man = {
                 name = "Onyxias Lair 25 Man",
                 boss1 = {
                     name = "Onyxia 1",
@@ -3220,7 +3220,7 @@ core.Instances = {
                 },
                 boss2 = {
                     name = "Onyxia 2",
-                    bossIDs = {},
+                    bossIDs = {}, --10184
                     achievement = 4406,
                     players = {},
                     tactics = "",

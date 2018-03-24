@@ -8,6 +8,8 @@ local UIConfig
 local UICreated = false
 local debugMode = true
 
+events:RegisterEvent("INSPECT_ACHIEVEMENT_READY")
+
 -- local events = CreateFrame("Frame", "AchievementTracker2", UIParent, "UIPanelDialogTemplate")
 -- events:SetSize(800, 500)
 -- events:SetPoint("CENTER") --Center of the screen
@@ -42,16 +44,18 @@ events:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
 events:RegisterEvent("UNIT_HEALTH")
 events:RegisterEvent("UNIT_AURA")
 events:RegisterEvent("UNIT_ABSORB_AMOUNT_CHANGED")
-events:RegisterEvent("NAME_PLATE_UNIT_REMOVED")
+events:RegisterEvent("NAME_PLATE_UNIT_ADDED")
 
 local temp2 = {}
 TargetLogData = {}
+
+local tempCounter = 0
 
 events:SetScript("OnEvent", function(self, event, ...)
 	if event == "aaaUNIT_HEALTH" then
 		print(UnitName(...) .. " : " .. UnitHealth(...))
 	end
-	if event == "UNIT_SPELLCAST_SUCCEEDED" then
+	if event == "aaaUNIT_SPELLCAST_SUCCEEDED" then
 
 		local unitID, spell, rank, lineID, spellID = ...
 
@@ -63,8 +67,14 @@ events:SetScript("OnEvent", function(self, event, ...)
 			table.insert(TargetLogData, spell .. " : " .. spellID)
 		end	
 	end
-	if event == "UNIT_AURA" then
+	if event == "aaaUNIT_AURA" then
 		local unitID = ...
+
+		print("FIRED")
+
+		if UnitAura(unitID, GetSpellInfo(69004)) or UnitAura(unitID, GetSpellInfo(69005)) or UnitAura(unitID, GetSpellInfo(69006)) then
+			print("Hatch")
+		end
 
 		-- if UnitName(unitID) ~= "Whizzey" then
 		-- 	print("Aura Detected FROM: " .. UnitName(unitID))
@@ -113,8 +123,9 @@ events:SetScript("OnEvent", function(self, event, ...)
 	if event == "UNIT_ABSORB_AMOUNT_CHANGED" then
 		--print(...)
 	end
-	if event == "NAME_PLATE_UNIT_REMOVED" then
-		--print(...)
+	if event == "NAME_PLATE_UNIT_ADDED" then
+		tempCounter = tempCounter + 1
+		--print(tempCounter)
 	end
     return self[event] and self[event](self, event, ...) 	--Allow event arguments to be called from seperate functions
 end)
@@ -343,11 +354,13 @@ function getInstanceAchievements()
 	updateDebugTable()
 	if UnitName(playersToScan[1]) ~= nil then
 		playerCurrentlyScanning = playersToScan[1]
+		core:sendDebugMessage("Setting Comparison Unit to: " .. UnitName(playersToScan[1]))
+		core.currentComparisonUnit = UnitName(playersToScan[1])
 		SetAchievementComparisonUnit(playersToScan[1])
 
 		--Wait 2 seconds then check if the achievement information was returned successfully. If playerCurrentlyScanning is nil then we can assume the information was returned successfully
 		--If playerCurrentlyScanning still has a value then INSPECT_ACHIEVEMNT_READY event has not run and the information for that player was not fetched
-		C_Timer.After(2, function()
+		C_Timer.After(4, function()
 			--Make sure the player we are about to scan is still in the group
 			if playerCurrentlyScanning == nil then
 				--Last player scan was successfully. Check if we need to continue scanning
@@ -399,6 +412,22 @@ end
 
 --Run when the player initially enters an instance to setup variables such as instanceName, expansion etc so we can track the correct bosses
 function getInstanceInfomation()
+	--DEBUG
+	if debugMode == true then
+		-- core.instance = "Ulduar"
+		-- core.instanceClear = "Ulduar"
+		-- core.instanceNameSpaces = "Ulduar"
+		-- core.expansion = "WrathOfTheLichKing"
+		-- core.instanceType = "Raids"
+		-- if UICreated == false then
+		-- 	core:sendDebugMessage("Creating Tracking UI")
+		-- 	createEnableAchievementTrackingUI()
+		-- else
+		-- 	core:sendDebugMessage("Displaying Tracking UI since it was already created")
+		-- 	UIConfig:Show()
+		-- end
+	end
+
 	if IsInInstance() and core.inInstance == false then
 		core:sendDebugMessage("Player has entered instance")
 		local instanceCompatible = false --Check whether player is on correct difficulty to earn achievements
@@ -421,7 +450,7 @@ function getInstanceInfomation()
 
 		--If the raid is in the lich king expansion then detect whether player is on the 10man or 25man difficulty
 		--This is only needed for raids that have seperate achievements for 10man and 25man. Happens for the majority of WOTLK raids
-		if core.instance == "TrialOfTheCrusader" or core.instance == "Naxxramas" or core.instance == "IcecrownCitadel" then
+		if core.instance == "TrialOfTheCrusader" or core.instance == "Naxxramas" or core.instance == "IcecrownCitadel" or core.instance == "OnyxiaSLair" then
 			if core.difficultyID == 3 or core.difficultyID == 5 then
 				--10 Man
 				core.instance = core.instance .. "10Man"
@@ -762,36 +791,46 @@ function events:ENCOUNTER_END()
 end
 
 --This event is used to scan players in the group to see which achievements they are currently missing
-function events:INSPECT_ACHIEVEMENT_READY()
-	--Find the achievements for the raid the user has entered
-	if UnitName(playerCurrentlyScanning) ~= nil then
-		for boss,_ in pairs(core.Instances[core.expansion][core.instanceType][core.instance]) do
-			if boss ~= "name" then
-				local completed, month, day, year = GetAchievementComparisonInfo(core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
-				--print(GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " completed: " .. tostring(completed))
+function events:INSPECT_ACHIEVEMENT_READY(self, GUID)
 
-				--If the player has not completed the achievement then add them to the players string to display in the GUI
-				--Temp: will show completed achievements in GUI since I've already completed all the achievements
-				if completed ~= true then
-					local name, _ = UnitName(playersToScan[1])
-					table.insert(core.Instances[core.expansion][core.instanceType][core.instance][boss].players, name)
+	local class, classFilename, race, raceFilename, sex, name, realm = GetPlayerInfoByGUID(GUID)
+
+	core:sendDebugMessage("INSPECT_ACHIEVEMENT_READY FIRED. INFORMATION FOR: " .. name)
+
+	--Check if the Inspect_Achievement_Ready was from a request that we made and not from another addon
+	if core.currentComparisonUnit == name then
+		--Find the achievements for the raid the user has entered
+		if UnitName(playerCurrentlyScanning) ~= nil then
+			for boss,_ in pairs(core.Instances[core.expansion][core.instanceType][core.instance]) do
+				if boss ~= "name" then
+					local completed, month, day, year = GetAchievementComparisonInfo(core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
+					--print(GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " completed: " .. tostring(completed))
+
+					--If the player has not completed the achievement then add them to the players string to display in the GUI
+					--Temp: will show completed achievements in GUI since I've already completed all the achievements
+					if completed ~= true then
+						local name, _ = UnitName(playersToScan[1])
+						table.insert(core.Instances[core.expansion][core.instanceType][core.instance][boss].players, name)
+					end
 				end
 			end
+
+			--print("Scanned " .. UnitName(playersToScan[1]))
+			table.insert(playersScanned, playersToScan[1])
+			table.remove(playersToScan, 1)
+
+			--Update the GUI
+			core.Config:Instance_OnClickAutomatic()
+
+			playerCurrentlyScanning = nil
+		else
+			rescanNeeded = true
 		end
 
-		--print("Scanned " .. UnitName(playersToScan[1]))
-		table.insert(playersScanned, playersToScan[1])
-		table.remove(playersToScan, 1)
-
-		--Update the GUI
-		core.Config:Instance_OnClickAutomatic()
-
-		playerCurrentlyScanning = nil
+		updateDebugTable()
 	else
-		rescanNeeded = true
+		core:sendDebugMessage("Incorrect INSPECT_ACHIEVEMENT_READY call for " .. name)
 	end
-
-	updateDebugTable()
 end
 
 --Fired when the players has finished loading in the world.
@@ -816,7 +855,7 @@ function events:ZONE_CHANGED_NEW_AREA()
 	if core.inInstance == false and core.instanceVariablesReset == false then
 		--If user has left the instance then unregister events if they were registered
 		core:sendDebugMessage("Player has left instance. Unregestering events and resetting variables")
-		events:UnregisterEvent("INSPECT_ACHIEVEMENT_READY")
+		--events:UnregisterEvent("INSPECT_ACHIEVEMENT_READY")
 		events:UnregisterEvent("GROUP_ROSTER_UPDATE")
 		events:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		events:UnregisterEvent("PLAYER_REGEN_ENABLED")

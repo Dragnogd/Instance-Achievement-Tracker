@@ -596,10 +596,18 @@ function Instance_OnClick(self)
             button.players:Hide()
             button.enabled:Hide()
             button.enabledText:Hide()
-            
+
+            button.achievementID = instanceLocation["boss" .. counter2].achievement
+
+            button:SetScript("OnEnter", Achievement_OnEnter)
+
             button:Show()
+
+            --Save updated info back to table
+            LegionContentButtons[counter] = button
+
             counter = counter + 1
-            counter2 = counter2 + 1       
+            counter2 = counter2 + 1
         end
     end
 
@@ -618,6 +626,50 @@ function Instance_OnClick(self)
             button = WrathOfTheLichKingContentButtons[i]
         end  
         button:Hide()
+    end  
+end
+
+function Achievement_OnEnter(self)
+    if Config.currentTab == "Legion" then
+        for i = 1, #LegionContentButtons do
+            if MouseIsOver(LegionContentButtons[i]) then
+                GameTooltip:SetOwner(UIConfig, "ANCHOR_TOPRIGHT")
+                GameTooltip:SetHyperlink(GetAchievementLink(LegionContentButtons[i].achievementID))
+                GameTooltip:Show()
+            end
+        end
+    elseif Config.currentTab == "Warlords of Draenor" or Config.currentTab == "WarlordsOfDraenor" then
+        for i = 1, #WarlordsOfDraenorContentButtons do
+            if MouseIsOver(WarlordsOfDraenorContentButtons[i]) then
+                GameTooltip:SetOwner(UIConfig, "ANCHOR_TOPRIGHT")
+                GameTooltip:SetHyperlink(GetAchievementLink(WarlordsOfDraenorContentButtons[i].achievementID))
+                GameTooltip:Show()
+            end
+        end
+    elseif Config.currentTab == "Mists of Pandaria" or Config.currentTab == "MistsOfPandaria" then
+        for i = 1, #MistsOfPandariaContentButtons do
+            if MouseIsOver(MistsOfPandariaContentButtons[i]) then
+                GameTooltip:SetOwner(UIConfig, "ANCHOR_TOPRIGHT")
+                GameTooltip:SetHyperlink(GetAchievementLink(MistsOfPandariaContentButtons[i].achievementID))
+                GameTooltip:Show()
+            end
+        end
+    elseif Config.currentTab == "Cataclysm" then
+        for i = 1, #CataclysmContentButtons do
+            if MouseIsOver(CataclysmContentButtons[i]) then
+                GameTooltip:SetOwner(UIConfig, "ANCHOR_TOPRIGHT")
+                GameTooltip:SetHyperlink(GetAchievementLink(CataclysmContentButtons[i].achievementID))
+                GameTooltip:Show()
+            end
+        end
+    elseif Config.currentTab == "Wrath of the Lich King" or Config.currentTab == "WrathOfTheLichKing" then
+        for i = 1, #WrathOfTheLichKingContentButtons do
+            if MouseIsOver(WrathOfTheLichKingContentButtons[i]) then
+                GameTooltip:SetOwner(UIConfig, "ANCHOR_TOPRIGHT")
+                GameTooltip:SetHyperlink(GetAchievementLink(WrathOfTheLichKingContentButtons[i].achievementID))
+                GameTooltip:Show()
+            end
+        end
     end  
 end
 
