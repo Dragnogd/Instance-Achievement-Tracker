@@ -12,50 +12,38 @@ core.OnyxiaSLair = {}
 ------------------------------------------------------
 ---- Onyxia
 ------------------------------------------------------
+local timerStarted = false
+local timer
 -- local whelpsUID = {}
 -- local whelpsCounter = 0
--- local timerStarted = false
 
-function core.OnyxiaSLair:Onyxia()
-    --Detect whelps that spawn
-        --Start timer if not started
-        --After 10 seconds check if 50 whelps have spawned
 
-    -- if core.sourceID == "11262"then
-    --     if whelpsUID[core.spawn_uid] == nil then
-    --         whelpsUID[core.spawn_uid] = core.spawn_uid
-    --         whelpsCounter = whelpsCounter + 1
-    --         core:sendMessageDelay(core:getAchievement() .. " Whelps Hatched (" .. whelpsCounter .. "/50)", whelpsCounter, 5)
+function core.OnyxiaSLair:Onyxia1()
+    if core.type == "SPELL_DAMAGE" and core.spellName == "Breath" then
+        core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")", 2)
+    end
+end
 
-    --         if timerStarted == false then
-    --             timerStarted = true
-    --             C_Timer.After(10, function() 
-    --                 if whelpsCounter >= 50 then
-    --                     core:getAchievementSuccess()
-    --                 else
-    --                     core:getAchievementFailedWithMessageAfter("(" .. whelpsCounter .. "/50) Whelps killed in time")
-    --                 end
-    --             end)
-    --         end
-    --     end
-    -- end
-
-    -- if core.destID == "11262"then
-    --     if whelpsUID[core.spawn_uid_dest] == nil then
-    --         whelpsUID[core.spawn_uid_dest] = core.spawn_uid_dest
-    --         whelpsCounter = whelpsCounter + 1
-    --         core:sendMessageDelay(core:getAchievement() .. " Whelps Hatched (" .. whelpsCounter .. "50)", whelpsCounter, 5)
-    --     end
-    -- end
+function core.OnyxiaSLair:Onyxia2()
+    if timerStarted == false then
+        timerStarted = true
+        timer = C_Timer.NewTimer(300, function() 
+            core:getAchievementFailed(1)
+        end)
+    end 
 end
 
 function core.OnyxiaSLair:ClearVariables()
     ------------------------------------------------------
     ---- Onyxia
     ------------------------------------------------------
-    whelpsUID = {}
-    whelpsCounter = 0
+    --whelpsUID = {}
+    --whelpsCounter = 0
     timerStarted = false
+    
+    if timer ~= nil then
+        timer:Cancel()
+    end
 end
 
 -- function core.OnyxiaSLair:InitialSetup()
