@@ -19,7 +19,7 @@ local WrathOfTheLichKingContentButtons = {}
 Config.currentTab = nil
 Config.currentInstance = nil
 
-Config.enableAddon = true
+AchievementTrackerOptions = {}
 
 --------------------------------------
 -- Config functions
@@ -39,8 +39,8 @@ function Config:CreateButton(point, relativeFrame, relativePoint, yOffset, text)
 	return btn;
 end
 
-function Config:CreateCheckBox(point, relativeFrame, relativePoint, xOffset, yOffset)
-    local chk = CreateFrame("CheckButton", nil, relativeFrame, "UICheckButtonTemplate")
+function Config:CreateCheckBox(point, relativeFrame, relativePoint, xOffset, yOffset, checkboxName)
+    local chk = CreateFrame("CheckButton", checkboxName, relativeFrame, "UICheckButtonTemplate")
 	chk:SetPoint(point, relativeFrame, relativePoint, xOffset, yOffset);
 	return chk;
 end
@@ -54,6 +54,7 @@ function Config:CreateButton2(point, relativeFrame, relativePoint, xOffset, yOff
 	btn:SetHighlightFontObject("GameFontHighlight");
 	return btn;
 end
+
 
 function Config:CreateText(point, relativeFrame, relativePoint, xOffset, yOffset, textString)
     local text = relativeFrame:CreateFontString(nil, relativeFrame, "GameFontHighlightSmall")
@@ -148,9 +149,18 @@ local function Tab_OnClick(self)
             UIConfig.Main2.options = Config:CreateText2("TOPLEFT", UIConfig.Main2.features6, "TOPLEFT", 0, -30, "Options:","GameFontNormalLarge")
             UIConfig.Main2.options:SetWidth(750)    
             UIConfig.Main2.options:SetJustifyH("LEFT")
-            UIConfig.Main2.options2 = Config:CreateCheckBox("TOPLEFT", UIConfig, "TOPLEFT", 20, -320)
-            UIConfig.Main2.options2:SetChecked(Config.enableAddon)
+            UIConfig.Main2.options2 = Config:CreateCheckBox("TOPLEFT", UIConfig, "TOPLEFT", 20, -320, "AchievementTracker_EnableAddon")
+            UIConfig.Main2.options2:SetScript("OnClick", enableAddon_OnClick)
             UIConfig.Main2.options3 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options2, "TOPLEFT", 30, -9, "Enable Addon","GameFontHighlight")
+
+            -- print("Addon State: " .. AchievementTrackerOptions["enableAddon"])
+
+            -- if AchievementTrackerOptions["enableAddon"] == nil or AchievementTrackerOptions["enableAddon"] == true then
+            --     UIConfig.Main2.options2:SetChecked(true)
+            -- else
+            --     UIConfig.Main2.options2:SetChecked(false)
+            -- end
+            
         end
     else
         UIConfig.ScrollFrame:Show()
@@ -174,6 +184,10 @@ local function Tab_OnClick(self)
         
         UIConfig.Main.author:Hide()
     end
+end
+
+function enableAddon_OnClick(self)
+    AchievementTrackerOptions["enableAddon"] = self:GetChecked()
 end
 
 local function SetTabs(frame, numTabs, ...)

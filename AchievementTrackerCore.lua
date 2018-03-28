@@ -8,7 +8,9 @@ local UIConfig
 local UICreated = false
 local debugMode = true
 
-events:RegisterEvent("INSPECT_ACHIEVEMENT_READY")
+AchievementTrackerOptions = {}
+
+-- events:RegisterEvent("INSPECT_ACHIEVEMENT_READY")
 
 -- local events = CreateFrame("Frame", "AchievementTracker2", UIParent, "UIPanelDialogTemplate")
 -- events:SetSize(800, 500)
@@ -47,7 +49,7 @@ events:RegisterEvent("UNIT_ABSORB_AMOUNT_CHANGED")
 events:RegisterEvent("NAME_PLATE_UNIT_ADDED")
 
 local temp2 = {}
-TargetLogData = {}
+--s = {}
 
 local tempCounter = 0
 
@@ -64,7 +66,7 @@ events:SetScript("OnEvent", function(self, event, ...)
 		if core:has_value(temp2, spellID) == false then
 			print(...)
 			table.insert(temp2, spellID)
-			table.insert(TargetLogData, spell .. " : " .. spellID)
+			--table.insert(TargetLogData, spell .. " : " .. spellID)
 		end	
 	end
 	if event == "aaaUNIT_AURA" then
@@ -691,6 +693,13 @@ end
 function events:ADDON_LOADED(event, name)
 	if name ~= "InstanceAchievementTracker" then return end
 
+	--Check if the options have been setup
+	if AchievementTrackerOptions["enableAddon"] == nil then
+		print("Setting Initial Settings")
+		AchievementTrackerOptions["enableAddon"] = true
+	end
+	_G["AchievementTracker_EnableAddon"]:SetChecked(AchievementTrackerOptions["enableAddon"])
+
 	SLASH_MENU1 = "/at"
 	SlashCmdList.MENU = core.Config.Toggle
 
@@ -715,7 +724,7 @@ function events:ADDON_LOADED(event, name)
 	-- Minimap Icon
 	--------------------------------------
 	local ATButton = LibStub("LibDBIcon-1.0")
-	local profile
+	--local profile
 
 	-- LDB
 	if not LibStub:GetLibrary("LibDataBroker-1.1", true) then return end
@@ -734,7 +743,7 @@ function events:ADDON_LOADED(event, name)
 	})
 
 	--Register Minimap Icon
-	ATButton:Register("InstanceAchievementTracker", MiniMapLDB, nil);
+	ATButton:Register("InstanceAchievementTracker", MiniMapLDB, AchievementTrackerOptions);
 
 	--Show Minimap Icon
 	ATButton:Show("InstanceAchievementTracker")
@@ -774,7 +783,7 @@ end
 --Does not get called for achievements which are not part of a boss fight so achievement tracking is calling manually once per session for those achievements
 function events:ENCOUNTER_START()
 	core:sendDebugMessage("---Encounter Started---")
-	table.insert(TargetLogData, "---Encounter Started---")
+	--table.insert(--TargetLogData, "---Encounter Started---")
 	core.encounterStarted = true
 
 	if core.displayAchievements == true then
@@ -786,7 +795,7 @@ end
 --Fired when a users has finished engaging a boss. This is used to make sure achievement tracking is not fired when the player is not attacking a boss
 function events:ENCOUNTER_END()
 	core:sendDebugMessage("---Encounter Ended---")
-	table.insert(TargetLogData, "---Encounter Ended---")
+	--table.insert(--TargetLogData, "---Encounter Ended---")
 	core.encounterStarted = false
 end
 
