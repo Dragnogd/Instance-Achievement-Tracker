@@ -36,10 +36,6 @@ AchievementTrackerOptions = {}
 -- events:SetPoint("CENTER") --Center of the screen
 
 events:RegisterEvent("ADDON_LOADED")						--Used to setup the slash commands for the addon
-events:RegisterEvent("PLAYER_ENTERING_WORLD")				--Used to detect if player is inside an instance when they enter the world
-events:RegisterEvent("ZONE_CHANGED_NEW_AREA")				--Used to detect if player is inside an instance when they change zone
-events:RegisterEvent("CHAT_MSG_ADDON")						--Allows the addon to communicate with other addons in the same party/raid
-RegisterAddonMessagePrefix("Whizzey")						--Register events to listen out for client-client communication
 
 --DEBUG
 events:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
@@ -747,6 +743,24 @@ function events:ADDON_LOADED(event, name)
 
 	--Show Minimap Icon
 	ATButton:Show("InstanceAchievementTracker")
+
+	--Set whether addon should be enabled or disabled
+	setAddonEnabled(AchievementTrackerOptions["enableAddon"])
+end
+
+function setAddonEnabled(addonEnabled)
+	if addonEnabled then
+		core:sendDebugMessage("Enabling Addon")
+		events:RegisterEvent("PLAYER_ENTERING_WORLD")				--Used to detect if player is inside an instance when they enter the world
+		events:RegisterEvent("ZONE_CHANGED_NEW_AREA")				--Used to detect if player is inside an instance when they change zone
+		events:RegisterEvent("CHAT_MSG_ADDON")						--Allows the addon to communicate with other addons in the same party/raid
+		RegisterAddonMessagePrefix("Whizzey")						--Register events to listen out for client-client communication
+	else
+		core:sendDebugMessage("Disabling Addon")
+		events:UnregisterEvent("PLAYER_ENTERING_WORLD")				
+		events:UnregisterEvent("ZONE_CHANGED_NEW_AREA")				
+		events:UnregisterEvent("CHAT_MSG_ADDON")						
+	end
 end
 
 --Fired whenever the composition of the group changes.

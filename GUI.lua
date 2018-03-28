@@ -188,6 +188,8 @@ end
 
 function enableAddon_OnClick(self)
     AchievementTrackerOptions["enableAddon"] = self:GetChecked()
+
+    setAddonEnabled(self:GetChecked())
 end
 
 local function SetTabs(frame, numTabs, ...)
