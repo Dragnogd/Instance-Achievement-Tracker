@@ -262,15 +262,15 @@ function getPlayersInGroup()
 		core:printMessage("Starting Achievement Scan For " .. core.instanceNameSpaces .. " (This may lag your game for a few seconds)")
 		scanAnnounced = true
 	end
-	core:getGroupSize()
+	core:getGroupSize() --Get current size of the group
 	scanInProgress = true
 	core.scanFinished = false
-	local currentGroup = {}
+	local currentGroup = {} --Create a local copy of the group so we can then compare it to the current group to see what changes there are.
 
 	if core.groupSize > 1 then
 		--We are in a group
 		local currentUnit
-		core:detectGroupType()
+		core:detectGroupType() --Detect the type of group the player is in so we can do the appropriate scanning
 		for i = 1, core.groupSize do
 			if core.chatType == "PARTY" then
 				if i < core.groupSize then
@@ -315,11 +315,19 @@ function getPlayersInGroup()
 	if #playersScanned > 0 then
 		for i = #playersScanned, 1, -1 do
 			if core:has_value(currentGroup, playersScanned[i]) == false then
-				--Remove player from the table that generates the UI for that achievement
+				--Remove player from the table that generates the UI for that achievementw
 				for boss,_ in pairs(core.Instances[core.expansion][core.instanceType][core.instance]) do
 					if boss ~= "name" then
-						local name, _ = UnitName(playersScanned[i])
-						table.remove(core.Instances[core.expansion][core.instanceType][core.instance][boss].players, name)
+						local name = playersScanned[i]
+						print("Removing: " .. name)
+
+						--Check if player was added the table
+						for j = 1, #core.Instances[core.expansion][core.instanceType][core.instance][boss].players do
+							if core.Instances[core.expansion][core.instanceType][core.instance][boss].players[j] == name then
+								table.remove(core.Instances[core.expansion][core.instanceType][core.instance][boss].players, j)
+								print("Removed: " .. name)
+							end
+						end
 					end
 				end
 
@@ -358,7 +366,7 @@ function getInstanceAchievements()
 
 		--Wait 2 seconds then check if the achievement information was returned successfully. If playerCurrentlyScanning is nil then we can assume the information was returned successfully
 		--If playerCurrentlyScanning still has a value then INSPECT_ACHIEVEMNT_READY event has not run and the information for that player was not fetched
-		C_Timer.After(4, function()
+		C_Timer.After(2, function()
 			--Make sure the player we are about to scan is still in the group
 			if playerCurrentlyScanning == nil then
 				--Last player scan was successfully. Check if we need to continue scanning
@@ -412,18 +420,18 @@ end
 function getInstanceInfomation()
 	--DEBUG
 	if debugMode == true then
-		-- core.instance = "Ulduar"
-		-- core.instanceClear = "Ulduar"
-		-- core.instanceNameSpaces = "Ulduar"
-		-- core.expansion = "WrathOfTheLichKing"
-		-- core.instanceType = "Raids"
-		-- if UICreated == false then
-		-- 	core:sendDebugMessage("Creating Tracking UI")
-		-- 	createEnableAchievementTrackingUI()
-		-- else
-		-- 	core:sendDebugMessage("Displaying Tracking UI since it was already created")
-		-- 	UIConfig:Show()
-		-- end
+		core.instance = "Ulduar"
+		core.instanceClear = "Ulduar"
+		core.instanceNameSpaces = "Ulduar"
+		core.expansion = "WrathOfTheLichKing"
+		core.instanceType = "Raids"
+		if UICreated == false then
+			core:sendDebugMessage("Creating Tracking UI")
+			createEnableAchievementTrackingUI()
+		else
+			core:sendDebugMessage("Displaying Tracking UI since it was already created")
+			UIConfig:Show()
+		end
 	end
 
 	if IsInInstance() and core.inInstance == false then
