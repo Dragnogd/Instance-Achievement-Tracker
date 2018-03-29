@@ -141,8 +141,30 @@ local function Tab_OnClick(self)
             UIConfig.Main2 = Config:CreateText2("TOPLEFT", UIConfig.Main, "TOPLEFT", 0, -45, "Currently Tracking:","GameFontNormalLarge")            
             UIConfig.Main2:SetWidth(300)
             UIConfig.Main2:SetJustifyH("LEFT")
-            UIConfig.Main2.content = Config:CreateText2("TOPLEFT", UIConfig.Main2, "TOPLEFT", 0, -20, "243 Achievements","GameFontHighlight")
-            UIConfig.Main2.content2 = Config:CreateText2("TOPLEFT", UIConfig.Main2.content, "TOPLEFT", 0, -15, "232 Tactics","GameFontHighlight") 
+
+            --Work out how many achievements and tactics are currently being tracked
+            local achievementsTracked = 0
+            local tacticsTracked = 0
+
+            for expansion, _ in pairs(core.Instances) do
+                for instanceType, _ in pairs(core.Instances[expansion]) do
+                    for instance, _ in pairs(core.Instances[expansion][instanceType]) do
+                        for boss, _ in pairs(core.Instances[expansion][instanceType][instance]) do
+                            if boss ~= "name" then
+                                if core.Instances[expansion][instanceType][instance][boss].track ~= nil then
+                                    achievementsTracked = achievementsTracked + 1
+                                end
+                                if #core.Instances[expansion][instanceType][instance][boss].tactics > 1 then
+                                    tacticsTracked = tacticsTracked + 1
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+
+            UIConfig.Main2.content = Config:CreateText2("TOPLEFT", UIConfig.Main2, "TOPLEFT", 0, -20, achievementsTracked .. " Achievements","GameFontHighlight")
+            UIConfig.Main2.content2 = Config:CreateText2("TOPLEFT", UIConfig.Main2.content, "TOPLEFT", 0, -15, tacticsTracked .. " Tactics","GameFontHighlight") 
             
             --Features
             UIConfig.Main2.features = Config:CreateText2("TOPLEFT", UIConfig.Main2.content, "TOPLEFT", 0, -40, "Features:","GameFontNormalLarge")  

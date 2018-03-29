@@ -839,20 +839,29 @@ function events:INSPECT_ACHIEVEMENT_READY(self, GUID)
 					
 					--print(completed)
 
+					--Make sure initial text is removed
+					if core.Instances[core.expansion][core.instanceType][core.instance][boss].players[1] == "(Enter instance to start scanning)" then
+						table.remove(core.Instances[core.expansion][core.instanceType][core.instance][boss].players, 1)
+					end
+
 					--If the player has not completed the achievement then add them to the players string to display in the GUI
 					--Temp: will show completed achievements in GUI since I've already completed all the achievements
 					if completed == nil then
-						--Make sure initial text is removed
-						-- if core.Instances[core.expansion][core.instanceType][core.instance][boss].players[1] == "(Enter instance to start scan)" then
-						-- 	table.remove(core.Instances[core.expansion][core.instanceType][core.instance][boss].players, 1)
-						-- end
-						
 						local name, _ = UnitName(playersToScan[1])
 						table.insert(core.Instances[core.expansion][core.instanceType][core.instance][boss].players, name)
 							
 						AchievementTrackerDebug[UnitName(playerCurrentlyScanning)][core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement] = "Incomplete"
 					elseif completed == true then
 						AchievementTrackerDebug[UnitName(playerCurrentlyScanning)][core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement] = "Complete"
+					end
+				end
+			end
+
+			--Check if any of the achievements have been achieved by every player in the group
+			for boss,_ in pairs(core.Instances[core.expansion][core.instanceType][core.instance]) do
+				if boss ~= "name" then
+					if #core.Instances[core.expansion][core.instanceType][core.instance][boss].players == 0 then
+						table.insert(core.Instances[core.expansion][core.instanceType][core.instance][boss].players, "(No Players in the group need this achievement)")
 					end
 				end
 			end
@@ -895,6 +904,16 @@ function events:ZONE_CHANGED_NEW_AREA()
 	getInstanceInfomation()
 
 	if core.inInstance == false and core.instanceVariablesReset == false then
+		--Update achievement tracking
+		for boss,_ in pairs(core.Instances[core.expansion][core.instanceType][core.instance]) do
+			if boss ~= "name" then
+				core.Instances[core.expansion][core.instanceType][core.instance][boss].players = {"(Enter instance to start scanning)"}
+			end
+		end
+
+		--Update the GUI
+		core.Config:Instance_OnClickAutomatic()
+
 		--If user has left the instance then unregister events if they were registered
 		core:sendDebugMessage("Player has left instance. Unregestering events and resetting variables")
 		--events:UnregisterEvent("INSPECT_ACHIEVEMENT_READY")
