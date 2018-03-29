@@ -592,12 +592,18 @@ function Instance_OnClick(self)
             elseif Config.currentTab == "Wrath of the Lich King" or Config.currentTab == "WrathOfTheLichKing" then
                 button = WrathOfTheLichKingContentButtons[counter]
             end
+
+            --instanceLocation["boss" .. counter2].players[1] = "(Enter instance to start scan)"
+
             local players = "Players: "
             for i = 1, #instanceLocation["boss" .. counter2].players do
                 players = players .. instanceLocation["boss" .. counter2].players[i] .. ", "
                 --print(players)
             end
-            button.contentText:SetText("Achievement: " .. GetAchievementLink(instanceLocation["boss" .. counter2].achievement) .. "\n\n" .. players .. " (Enter instance to start scan)\n\nTactics: " .. instanceLocation["boss" .. counter2].tactics)
+
+            
+
+            button.contentText:SetText("Achievement: " .. GetAchievementLink(instanceLocation["boss" .. counter2].achievement) .. "\n\n" .. players .. "\n\nTactics: " .. instanceLocation["boss" .. counter2].tactics)
             button.contentText:Show()
             button.headerText:Hide()
             button:SetNormalTexture(nil)

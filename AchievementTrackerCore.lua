@@ -6,9 +6,10 @@ local _, core = ...
 local events = CreateFrame("Frame")
 local UIConfig
 local UICreated = false
-local debugMode = true
+local debugMode = false
 
 AchievementTrackerOptions = {}
+AchievementTrackerDebug = {}
 
 -- events:RegisterEvent("INSPECT_ACHIEVEMENT_READY")
 
@@ -419,20 +420,20 @@ end
 --Run when the player initially enters an instance to setup variables such as instanceName, expansion etc so we can track the correct bosses
 function getInstanceInfomation()
 	--DEBUG
-	if debugMode == true then
-		core.instance = "Ulduar"
-		core.instanceClear = "Ulduar"
-		core.instanceNameSpaces = "Ulduar"
-		core.expansion = "WrathOfTheLichKing"
-		core.instanceType = "Raids"
-		if UICreated == false then
-			core:sendDebugMessage("Creating Tracking UI")
-			createEnableAchievementTrackingUI()
-		else
-			core:sendDebugMessage("Displaying Tracking UI since it was already created")
-			UIConfig:Show()
-		end
-	end
+	-- if debugMode == true then
+	-- 	core.instance = "Ulduar"
+	-- 	core.instanceClear = "Ulduar"
+	-- 	core.instanceNameSpaces = "Ulduar"
+	-- 	core.expansion = "WrathOfTheLichKing"
+	-- 	core.instanceType = "Raids"
+	-- 	if UICreated == false then
+	-- 		core:sendDebugMessage("Creating Tracking UI")
+	-- 		createEnableAchievementTrackingUI()
+	-- 	else
+	-- 		core:sendDebugMessage("Displaying Tracking UI since it was already created")
+	-- 		UIConfig:Show()
+	-- 	end
+	-- end
 
 	if IsInInstance() and core.inInstance == false then
 		core:sendDebugMessage("Player has entered instance")
@@ -832,16 +833,30 @@ function events:INSPECT_ACHIEVEMENT_READY(self, GUID)
 	if core.currentComparisonUnit == name then
 		--Find the achievements for the raid the user has entered
 		if UnitName(playerCurrentlyScanning) ~= nil then
+			local name2, realm2 = UnitName(playerCurrentlyScanning)
+			AchievementTrackerDebug[name2] = {}
+
 			for boss,_ in pairs(core.Instances[core.expansion][core.instanceType][core.instance]) do
 				if boss ~= "name" then
 					local completed, month, day, year = GetAchievementComparisonInfo(core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
 					--print(GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " completed: " .. tostring(completed))
+					
+					--print(completed)
 
 					--If the player has not completed the achievement then add them to the players string to display in the GUI
 					--Temp: will show completed achievements in GUI since I've already completed all the achievements
-					if completed ~= true then
+					if completed == nil then
+						--Make sure initial text is removed
+						-- if core.Instances[core.expansion][core.instanceType][core.instance][boss].players[1] == "(Enter instance to start scan)" then
+						-- 	table.remove(core.Instances[core.expansion][core.instanceType][core.instance][boss].players, 1)
+						-- end
+						
 						local name, _ = UnitName(playersToScan[1])
 						table.insert(core.Instances[core.expansion][core.instanceType][core.instance][boss].players, name)
+							
+						AchievementTrackerDebug[UnitName(playerCurrentlyScanning)][core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement] = "Incomplete"
+					elseif completed == true then
+						AchievementTrackerDebug[UnitName(playerCurrentlyScanning)][core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement] = "Complete"
 					end
 				end
 			end
