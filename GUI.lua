@@ -560,6 +560,20 @@ function Instance_OnClick(self)
         Config.currentInstance = core.instance
 
         --core:sendDebugMessage("Clicked: " .. Config.currentInstance)
+
+        --Set the current tab
+        if Config.currentTab == "Legion" then
+            _G["AchievementTrackerTab2"]:Click("LeftButton", true)
+        elseif Config.currentTab == "Warlords of Draenor" or Config.currentTab == "WarlordsOfDraenor" then
+            _G["AchievementTrackerTab3"]:Click("LeftButton", true)
+        elseif Config.currentTab == "Mists of Pandaria" or Config.currentTab == "MistsOfPandaria" then
+            _G["AchievementTrackerTab4"]:Click("LeftButton", true)
+        elseif Config.currentTab == "Cataclysm" then
+            _G["AchievementTrackerTab5"]:Click("LeftButton", true)
+        elseif Config.currentTab == "Wrath of the Lich King" or Config.currentTab == "WrathOfTheLichKing" then
+            _G["AchievementTrackerTab6"]:Click("LeftButton", true)
+        end
+        
     end
 
     for bossName,v in pairs(instanceLocation) do
