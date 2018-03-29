@@ -201,13 +201,9 @@ core.displayAchievements = false
 --------------------------------------
 -- Addon Syncing V1.0.1a
 --------------------------------------
-local majorVersion = 0						--Addon with a higher major version change have priority over a lower major version
-local minorVersion = 4						--Addon with a minor version change have prioirty over a lower minor version
-local revisionVersion = 0					--Addon with a revision change have the same priorty as a lower revision verison
 local masterAddon = false					--The master addon for the group. This stop multiple people with the addon outputting identical messages. Reset at the end of every fight
 local playerRank = -1						--The rank of the player is the group. Players with higher rank get priorty over outputting messages unless they have an outdated addon
 local addonID = 0
-
 
 --OLD used to create a seperate table for tracking current table values
 function updateDebugTable()
@@ -719,7 +715,7 @@ function events:ADDON_LOADED(event, name)
 		end
 	end
 
-	core:printMessage("loaded. Version: V" .. majorVersion .. "." .. minorVersion .. "." .. revisionVersion)
+	core:printMessage("loaded. Version: V" .. core.Config.majorVersion .. "." .. core.Config.minorVersion .. "." .. core.Config.revisionVersion)
 
 	if debugMode == true then
 		core:sendMessage("Debugging Enabled")
@@ -956,32 +952,32 @@ function events:CHAT_MSG_ADDON(self, prefix, message, channel, sender)
 				core:sendDebugMessage("AddonID: " .. addonIDRecieved .. " : " .. tostring(addonID))
 				core:sendDebugMessage("Master Addon: " .. masterAddonRecieved .. " : " .. tostring(masterAddon))
 				core:sendDebugMessage("Player Rank: " .. playerRankRecieved .. " : " .. tostring(playerRank))
-				core:sendDebugMessage("Major Version: " .. majorVersionRecieved .. " : " .. tostring(majorVersion))
-				core:sendDebugMessage("Minor Version: " .. minorVersionRecieved .. " : " .. tostring(minorVersion))
+				core:sendDebugMessage("Major Version: " .. majorVersionRecieved .. " : " .. tostring(core.Config.majorVersion))
+				core:sendDebugMessage("Minor Version: " .. minorVersionRecieved .. " : " .. tostring(core.Config.minorVersion))
 			end
 
 			if masterAddonRecieved == "true" then
-				if tonumber(majorVersionRecieved) < majorVersion then
+				if tonumber(majorVersionRecieved) < core.Config.majorVersion then
 					--Major version recieved from other player is lower so set this addon to the master addon
 					core:sendDebugMessage("1: " .. sender .. " has a lower major version. Setting this addon to master")
 					masterAddon = true
 					demotionRequired = true
-				elseif tonumber(majorVersionRecieved) == majorVersion and tonumber(minorVersionRecieved) < minorVersion then
+				elseif tonumber(majorVersionRecieved) == core.Config.majorVersion and tonumber(minorVersionRecieved) < core.Config.minorVersion then
 					--Major version recieved from other player is the same but other player has lower minor version so set this addon to the master addon
 					core:sendDebugMessage("2: " .. sender .. " has a lower minor version. Setting this addon to master")
 					masterAddon = true
 					demotionRequired = true
-				elseif tonumber(majorVersionRecieved) == majorVersion and tonumber(minorVersionRecieved) == minorVersion and tonumber(playerRankRecieved) < playerRank then
+				elseif tonumber(majorVersionRecieved) == core.Config.majorVersion and tonumber(minorVersionRecieved) == core.Config.minorVersion and tonumber(playerRankRecieved) < playerRank then
 					core:sendDebugMessage("3: " .. sender .. " has a lower rank. Setting this addon to master")
 					--Other player has same major and minor version but has lower rank than this addon so set this addon to the master addon
 					masterAddon = true
 					demotionRequired = true
-				elseif tonumber(majorVersionRecieved) == majorVersion and tonumber(minorVersionRecieved) == minorVersion and tonumber(playerRankRecieved) == playerRank and tonumber(addonIDRecieved) < addonID then
+				elseif tonumber(majorVersionRecieved) == core.Config.majorVersion and tonumber(minorVersionRecieved) == core.Config.minorVersion and tonumber(playerRankRecieved) == playerRank and tonumber(addonIDRecieved) < addonID then
 					--Other player has exact same requirements but has lower addonID so set this addon to the master addon
 					core:sendDebugMessage("3: " .. sender .. " has a lower Addon ID. Setting this addon to master")
 					masterAddon = true
 					demotionRequired = true
-				elseif tonumber(majorVersionRecieved) == majorVersion and tonumber(minorVersionRecieved) == minorVersion and tonumber(playerRankRecieved) == playerRank and tonumber(addonIDRecieved) == addonID then
+				elseif tonumber(majorVersionRecieved) == core.Config.majorVersion and tonumber(minorVersionRecieved) == core.Config.minorVersion and tonumber(playerRankRecieved) == playerRank and tonumber(addonIDRecieved) == addonID then
 					--Everything about the 2 addons are completely identical. Keep rolling for a random new addonID number until it's different from the one recieved
 					core:sendDebugMessage("5: " .. sender .. " Both addon have the same requirements. Rolling random Addon ID number until a difference is found")
 					while addonIDRecieved == addonID do
@@ -1309,7 +1305,7 @@ function core:sendMessage(message)
 					--Broadcast addon info to decide whether it should be the master addon or not
 					masterAddon = true
 					local name, realm = UnitName("Player")
-					SendAddonMessage("Whizzey", "info," .. tostring(addonID) .. "," .. name .. "," .. tostring(masterAddon) .. "," .. tostring(playerRank) .. "," .. tostring(majorVersion) .. "," .. tostring(minorVersion), "RAID")
+					SendAddonMessage("Whizzey", "info," .. tostring(addonID) .. "," .. name .. "," .. tostring(masterAddon) .. "," .. tostring(playerRank) .. "," .. tostring(core.Config.majorVersion) .. "," .. tostring(core.Config.minorVersion), "RAID")
 
 					C_Timer.After(3, function()
 						if masterAddon == true then

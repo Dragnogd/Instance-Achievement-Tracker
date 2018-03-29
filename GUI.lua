@@ -21,6 +21,11 @@ Config.currentInstance = nil
 
 AchievementTrackerOptions = {}
 
+Config.majorVersion = 0						--Addon with a higher major version change have priority over a lower major version
+Config.minorVersion = 4						--Addon with a minor version change have prioirty over a lower minor version
+Config.revisionVersion = 0					--Addon with a revision change have the same priorty as a lower revision verison
+Config.releaseType = "a"                    --Release type (Alpha, Beta, Release)
+
 --------------------------------------
 -- Config functions
 --------------------------------------
@@ -119,11 +124,14 @@ local function Tab_OnClick(self)
             UIConfig.Main.author:Show()
         else
             --Heading
-            UIConfig.Main = Config:CreateText2("TOP", AchievementTrackerDialogBG, "TOP", 0, -10, "Instance Achievement Tracker v0.4.0 (alpha)", "GameFontNormalLarge")
+            UIConfig.Main = Config:CreateText2("TOP", AchievementTrackerDialogBG, "TOP", 0, -10, "Instance Achievement Tracker", "GameFontNormalLarge")
             UIConfig.Main:SetWidth(750)
 
             --Author
-            UIConfig.Main.author = Config:CreateText2("BOTTOMRIGHT", AchievementTrackerDialogBG, "BOTTOMRIGHT", -5, 5, "(EU) Whizzey-Doomhammer","GameFontNormal")         
+            UIConfig.Main.author = Config:CreateText2("BOTTOMRIGHT", AchievementTrackerDialogBG, "BOTTOMRIGHT", -5, 5, "(EU) Whizzey-Doomhammer","GameFontNormal")
+            
+            --Version
+            UIConfig.Main.author = Config:CreateText2("BOTTOMLEFT", AchievementTrackerDialogBG, "BOTTOMLEFT", 5, 5, "v" .. Config.majorVersion .. "." .. Config.minorVersion .. "." .. Config.revisionVersion .. Config.releaseType,"GameFontNormal")
     
             --Currently tracking
             UIConfig.Main2 = Config:CreateText2("TOPLEFT", UIConfig.Main, "TOPLEFT", 0, -45, "Currently Tracking:","GameFontNormalLarge")            
@@ -248,7 +256,7 @@ function Config:CreateGUI()
     --Title
     UIConfig.title = UIConfig:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
 	UIConfig.title:SetPoint("CENTER", AchievementTrackerTitleBG, "CENTER", 6, 1);
-	UIConfig.title:SetText("Instance Achievement Tracker v0.4.0a");
+	UIConfig.title:SetText("Instance Achievement Tracker");
 
     --Scroll Frame
     UIConfig.ScrollFrame = CreateFrame("ScrollFrame", nil, UIConfig, "UIPanelScrollFrameTemplate")
