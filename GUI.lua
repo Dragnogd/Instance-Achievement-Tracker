@@ -122,6 +122,10 @@ local function Tab_OnClick(self)
             UIConfig.Main2.options3:Show()
 
             UIConfig.Main.author:Show()
+            UIConfig.Main.verison:Show()
+
+            UIConfig.Main2.content:Show()
+            UIConfig.Main2.content2:Show()
         else
             --Heading
             UIConfig.Main = Config:CreateText2("TOP", AchievementTrackerDialogBG, "TOP", 0, -10, "Instance Achievement Tracker", "GameFontNormalLarge")
@@ -131,7 +135,7 @@ local function Tab_OnClick(self)
             UIConfig.Main.author = Config:CreateText2("BOTTOMRIGHT", AchievementTrackerDialogBG, "BOTTOMRIGHT", -5, 5, "(EU) Whizzey-Doomhammer","GameFontNormal")
             
             --Version
-            UIConfig.Main.author = Config:CreateText2("BOTTOMLEFT", AchievementTrackerDialogBG, "BOTTOMLEFT", 5, 5, "v" .. Config.majorVersion .. "." .. Config.minorVersion .. "." .. Config.revisionVersion .. Config.releaseType,"GameFontNormal")
+            UIConfig.Main.verison = Config:CreateText2("BOTTOMLEFT", AchievementTrackerDialogBG, "BOTTOMLEFT", 5, 5, "v" .. Config.majorVersion .. "." .. Config.minorVersion .. "." .. Config.revisionVersion .. Config.releaseType,"GameFontNormal")
     
             --Currently tracking
             UIConfig.Main2 = Config:CreateText2("TOPLEFT", UIConfig.Main, "TOPLEFT", 0, -45, "Currently Tracking:","GameFontNormalLarge")            
@@ -191,6 +195,10 @@ local function Tab_OnClick(self)
         UIConfig.Main2.options3:Hide()
         
         UIConfig.Main.author:Hide()
+        UIConfig.Main.verison:Hide()
+
+        UIConfig.Main2.content:Hide()
+        UIConfig.Main2.content2:Hide()
     end
 end
 

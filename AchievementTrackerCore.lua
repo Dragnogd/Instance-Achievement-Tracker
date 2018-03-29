@@ -696,7 +696,7 @@ function events:ADDON_LOADED(event, name)
 
 	--Check if the options have been setup
 	if AchievementTrackerOptions["enableAddon"] == nil then
-		print("Setting Initial Settings")
+		core:sendDebugMessage("Setting Initial Settings")
 		AchievementTrackerOptions["enableAddon"] = true
 	end
 	_G["AchievementTracker_EnableAddon"]:SetChecked(AchievementTrackerOptions["enableAddon"])
@@ -715,7 +715,7 @@ function events:ADDON_LOADED(event, name)
 		end
 	end
 
-	core:printMessage("loaded. Version: V" .. core.Config.majorVersion .. "." .. core.Config.minorVersion .. "." .. core.Config.revisionVersion)
+	--core:printMessage("loaded. Version: V" .. core.Config.majorVersion .. "." .. core.Config.minorVersion .. "." .. core.Config.revisionVersion)
 
 	if debugMode == true then
 		core:sendMessage("Debugging Enabled")
