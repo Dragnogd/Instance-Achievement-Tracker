@@ -602,6 +602,19 @@ function enableAchievementTracking(self)
 	core.achievementTrackingEnabled = true
 	UIConfig:Hide()
 
+	--Switch to correct tab in GUI
+	if core.expansion == "Legion" then
+		Tab_OnClick(_G["AchievementTrackerTab4"])
+	elseif core.expansion == "Warlords of Draenor" or core.expansion == "WarlordsOfDraenor" then
+		Tab_OnClick(_G["AchievementTrackerTab4"])
+	elseif core.expansion == "Mists of Pandaria" or core.expansion == "MistsOfPandaria" then
+		Tab_OnClick(_G["AchievementTrackerTab4"])
+	elseif core.expansion == "Cataclysm" then
+		Tab_OnClick(_G["AchievementTrackerTab4"])
+	elseif core.expansion == "Wrath of the Lich King" or core.expansion == "WrathOfTheLichKing" then
+		Tab_OnClick(_G["AchievementTrackerTab4"])
+	end
+
 	--Register Events
 	events:RegisterEvent("INSPECT_ACHIEVEMENT_READY") 			--Used for scanning players in the group to see which achievements they are missing
 	events:RegisterEvent("GROUP_ROSTER_UPDATE")					--Used to find out when the group size has changed and to therefore initiate an achievement scan of the group
@@ -861,7 +874,7 @@ function events:INSPECT_ACHIEVEMENT_READY(self, GUID)
 			for boss,_ in pairs(core.Instances[core.expansion][core.instanceType][core.instance]) do
 				if boss ~= "name" then
 					if #core.Instances[core.expansion][core.instanceType][core.instance][boss].players == 0 then
-						table.insert(core.Instances[core.expansion][core.instanceType][core.instance][boss].players, "(No Players in the group need this achievement)")
+						table.insert(core.Instances[core.expansion][core.instanceType][core.instance][boss].players, "(No players in the group need this achievement)")
 					end
 				end
 			end

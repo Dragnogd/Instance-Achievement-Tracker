@@ -75,7 +75,7 @@ function Config:CreateText2(point, relativeFrame, relativePoint, xOffset, yOffse
     return text
 end
 
-local function Tab_OnClick(self)
+function Tab_OnClick(self)
     Config.currentTab = self:GetText();
     PanelTemplates_SetTab(self:GetParent(), self:GetID())
 
@@ -183,9 +183,16 @@ local function Tab_OnClick(self)
             UIConfig.Main2.options = Config:CreateText2("TOPLEFT", UIConfig.Main2.features6, "TOPLEFT", 0, -30, "Options:","GameFontNormalLarge")
             UIConfig.Main2.options:SetWidth(750)    
             UIConfig.Main2.options:SetJustifyH("LEFT")
+
+            --Enable Addon
             UIConfig.Main2.options2 = Config:CreateCheckBox("TOPLEFT", UIConfig, "TOPLEFT", 20, -320, "AchievementTracker_EnableAddon")
             UIConfig.Main2.options2:SetScript("OnClick", enableAddon_OnClick)
             UIConfig.Main2.options3 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options2, "TOPLEFT", 30, -9, "Enable Addon","GameFontHighlight")
+
+            -- --Enable Achievement Scan
+            -- UIConfig.Main2.options4 = Config:CreateCheckBox("TOPLEFT", UIConfig.Main2.options2, "TOPLEFT", 0, -25, "AchievementTracker_EnableAchievementScan")
+            -- UIConfig.Main2.options4:SetScript("OnClick", EnableAchievementScan_OnClick)
+            -- UIConfig.Main2.options5 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options4, "TOPLEFT", 30, -9, "Enable Achievement Scanning","GameFontHighlight")            
 
             -- print("Addon State: " .. AchievementTrackerOptions["enableAddon"])
 
@@ -559,21 +566,7 @@ function Instance_OnClick(self)
         --Set the current instance
         Config.currentInstance = core.instance
 
-        --core:sendDebugMessage("Clicked: " .. Config.currentInstance)
-
-        --Set the current tab
-        if Config.currentTab == "Legion" then
-            _G["AchievementTrackerTab2"]:Click("LeftButton", true)
-        elseif Config.currentTab == "Warlords of Draenor" or Config.currentTab == "WarlordsOfDraenor" then
-            _G["AchievementTrackerTab3"]:Click("LeftButton", true)
-        elseif Config.currentTab == "Mists of Pandaria" or Config.currentTab == "MistsOfPandaria" then
-            _G["AchievementTrackerTab4"]:Click("LeftButton", true)
-        elseif Config.currentTab == "Cataclysm" then
-            _G["AchievementTrackerTab5"]:Click("LeftButton", true)
-        elseif Config.currentTab == "Wrath of the Lich King" or Config.currentTab == "WrathOfTheLichKing" then
-            _G["AchievementTrackerTab6"]:Click("LeftButton", true)
-        end
-        
+        --core:sendDebugMessage("Clicked: " .. Config.currentInstance)        
     end
 
     for bossName,v in pairs(instanceLocation) do
@@ -678,7 +671,7 @@ function Instance_OnClick(self)
             button:Show()
 
             --Save updated info back to table
-            LegionContentButtons[counter] = button
+            --LegionContentButtons[counter] = button
 
             counter = counter + 1
             counter2 = counter2 + 1
