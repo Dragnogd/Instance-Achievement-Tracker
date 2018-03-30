@@ -757,7 +757,7 @@ function Player_OnClick(self)
                             
                             local players
                             if core.inInstance == true then
-                                if #core.Instances[expansion][instanceType][instance][boss].players > 0 then
+                                if core.Instances[expansion][instanceType][instance][boss].players[1] ~= "(Enter instance to start scanning)" then
                                     players = GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " Players who need Achievement: "
 
                                     for i = 1, #core.Instances[expansion][instanceType][instance][boss].players do
@@ -767,12 +767,14 @@ function Player_OnClick(self)
                                     if core.scanFinished == false then
                                         players = players .. " (scan still in progress)"
                                     end
-                                else
+                                elseif core.Instances[expansion][instanceType][instance][boss].players[1] == "(No players in the group need this achievement)" then
                                     if core.scanFinished == true then
                                         players = GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " No one in this group needs this achievement: "
                                     else
                                         players = GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " No one in this group needs this achievement (scan still in progress): "                        
                                     end
+                                else
+                                    players = GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement)                                    
                                 end
                             else
                                 players = GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement)
@@ -810,7 +812,7 @@ function Tactics_OnClick(self)
                 for boss,_ in pairs(core.Instances[expansion][instanceType][instance]) do
                     if core.Instances[expansion][instanceType][instance][boss].name == parent.headerText:GetText() then
                         local message, pattern, position;
-                        local tactics = core.Instances[expansion][instanceType][instance][boss].tactics
+                        local tactics = GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " " .. core.Instances[expansion][instanceType][instance][boss].tactics
                         position = 1;
                         for i = 1, #tactics, 249 do
                             message = tactics:sub(position, position + 248);
