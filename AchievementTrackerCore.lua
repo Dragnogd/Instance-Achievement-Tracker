@@ -172,6 +172,7 @@ core.achievementIDs = {}						--Stores a list of the achievements to track for t
 core.achievementTrackingEnabled = false			--Whether the user wants to track achievements for the particular instance or not
 core.playersFailedPersonal = {}					--List of players that have failed a personal achievement. Resets when you exit combat
 core.playersSuccessPersonal = {}
+core.enableAchievementScanning = true			--Whether the addon is allowed to scan for achievements
 local combatTimerStarted = false				--Used to determine if players in the group are still in combat with a boss
 local lastMessageSent = ""   					--Stores the last message sent to the chat. This is used to prevent the same message being sent more than once in case of an error and to prevent unwanted spam
 local requestToRun = false					--Store whether the current addon sent the request to enable itself or not for achievement tracking
@@ -190,6 +191,7 @@ core.foundBoss = false							--Whether or not a boss has been found to track or 
 core.currentBosses = {}							--Stores a list of the bosses the player is currently attacking. (Can be mutliple if one boss has multiple achievements)
 core.mobCache = {}								--Stores a list of mobs that have been checked to see whether or not they need to be tracked or not
 core.instanceVariablesReset = true				--Whether the instance variables have reset after leaving an instance
+
 
 --------------------------------------
 -- Boss functions
@@ -318,13 +320,13 @@ function getPlayersInGroup()
 				for boss,_ in pairs(core.Instances[core.expansion][core.instanceType][core.instance]) do
 					if boss ~= "name" then
 						local name = playersScanned[i]
-						print("Removing: " .. name)
+						--print("Removing: " .. name)
 
 						--Check if player was added the table
 						for j = 1, #core.Instances[core.expansion][core.instanceType][core.instance][boss].players do
 							if core.Instances[core.expansion][core.instanceType][core.instance][boss].players[j] == name then
 								table.remove(core.Instances[core.expansion][core.instanceType][core.instance][boss].players, j)
-								print("Removed: " .. name)
+								--print("Removed: " .. name)
 							end
 						end
 					end
@@ -436,7 +438,7 @@ function getInstanceInfomation()
 
 	if IsInInstance() and core.inInstance == false then
 		core:sendDebugMessage("Player has entered instance")
-		print("Instance")
+		--print("Instance")
 		local instanceCompatible = false --Check whether player is on correct difficulty to earn achievements
 		core.inInstance = true
 		core.instanceVariablesReset = false
@@ -467,8 +469,8 @@ function getInstanceInfomation()
 			end
 		end
 
-		print(core.difficultyID)
-		print(core.instance)
+		--print(core.difficultyID)
+		--print(core.instance)
 
 		--core.instance = "IcecrownCitadel10Man"
 
@@ -629,7 +631,11 @@ function enableAchievementTracking(self)
 	events:RegisterEvent("ENCOUNTER_END")						--Used to detect the end of a boss fight
 
 	--Start the achievement scan
-	getPlayersInGroup()
+	if core.enableAchievementScanning == true then
+		getPlayersInGroup()
+	else
+		core:sendDebugMessage("Achievement Scanning Disabled")	
+	end
 
 	--Addon Syncing Priority:
 	--1.) Highest Version Number of addon
@@ -658,6 +664,9 @@ function enableAchievementTracking(self)
 			end
 		end
 	end
+
+	--Make sure right instance is selected
+	core.Config:Instance_OnClickAutomatic()
 end
 
 --Hide the achievment tracking UI once the player has left the instance
@@ -717,6 +726,15 @@ function events:ADDON_LOADED(event, name)
 		AchievementTrackerOptions["enableAddon"] = true
 	end
 	_G["AchievementTracker_EnableAddon"]:SetChecked(AchievementTrackerOptions["enableAddon"])
+
+	-- if AchievementTrackerOptions["enableAchievementScan"] == nil then
+	-- 	core:sendDebugMessage("Setting Initial Settings")
+	-- 	AchievementTrackerOptions["enableAchievementScan"] = true
+	-- end
+	-- _G["AchievementTracker_EnableAchievementScan"]:SetChecked(AchievementTrackerOptions["enableAchievementScan"])
+	-- core.enableAchievementScanning = _G["AchievementTracker_EnableAchievementScan"]:GetChecked()
+	
+    -- core.Config:SetupAchievementTracking(core.enableAchievementScanning)
 
 	SLASH_MENU1 = "/at"
 	SlashCmdList.MENU = core.Config.Toggle
@@ -785,19 +803,35 @@ function setAddonEnabled(addonEnabled)
 	end
 end
 
+function setAchievementScanEnabled(setAchievementScanEnabled)
+	if setAchievementScanEnabled then
+		core.enableAchievementScanning = true
+	else
+		core.enableAchievementScanning = false						
+	end
+end
+
+function core:getPlayersInGroup2()
+	getPlayersInGroup()
+end
+
 --Fired whenever the composition of the group changes.
 --Used to alter size of group variables and which player in group is running the master addon
 function events:GROUP_ROSTER_UPDATE()
 	--When player enters the world in an instance start the achievement scanner. Only start the scanner if the raid size has changed
-	if GetNumGroupMembers() ~= core.groupSize then
-		if scanInProgress == false then
-			--print("Scan not in progress. Starting scan...")
-			scanInProgress = true
-			getPlayersInGroup()
-		else
-			--print("Scan in progress asking for rescan since group size has changed")
-			rescanNeeded = true
+	if core.enableAchievementScanning == true then
+		if GetNumGroupMembers() ~= core.groupSize then
+			if scanInProgress == false then
+				--print("Scan not in progress. Starting scan...")
+				scanInProgress = true
+				getPlayersInGroup()
+			else
+				--print("Scan in progress asking for rescan since group size has changed")
+				rescanNeeded = true
+			end
 		end
+	else
+		core:sendDebugMessage("Achievement Scanning is disabled")
 	end
 
 	--Update the group size whenever the composition of the group changes

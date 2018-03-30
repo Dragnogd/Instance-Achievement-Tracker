@@ -33,7 +33,7 @@ function Config:Toggle()
     local GUI = UIConfig or Config:CreateGUI()
     GUI:SetShown(not GUI:IsShown())
 
-    print("Hide")
+    --print("Hide")
     GameTooltip:Hide()
 end
 
@@ -123,6 +123,8 @@ function Tab_OnClick(self)
             UIConfig.Main2.options:Show()
             UIConfig.Main2.options2:Show()
             UIConfig.Main2.options3:Show()
+            -- UIConfig.Main2.options4:Show()
+            -- UIConfig.Main2.options5:Show()
 
             UIConfig.Main.author:Show()
             UIConfig.Main.verison:Show()
@@ -192,7 +194,7 @@ function Tab_OnClick(self)
             UIConfig.Main2.options2:SetScript("OnClick", enableAddon_OnClick)
             UIConfig.Main2.options3 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options2, "TOPLEFT", 30, -9, "Enable Addon","GameFontHighlight")
 
-            -- --Enable Achievement Scan
+            --Enable Achievement Scan
             -- UIConfig.Main2.options4 = Config:CreateCheckBox("TOPLEFT", UIConfig.Main2.options2, "TOPLEFT", 0, -25, "AchievementTracker_EnableAchievementScan")
             -- UIConfig.Main2.options4:SetScript("OnClick", EnableAchievementScan_OnClick)
             -- UIConfig.Main2.options5 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options4, "TOPLEFT", 30, -9, "Enable Achievement Scanning","GameFontHighlight")            
@@ -225,6 +227,8 @@ function Tab_OnClick(self)
         UIConfig.Main2.options:Hide()
         UIConfig.Main2.options2:Hide()
         UIConfig.Main2.options3:Hide()
+        -- UIConfig.Main2.options4:Hide()
+        -- UIConfig.Main2.options5:Hide()
         
         UIConfig.Main.author:Hide()
         UIConfig.Main.verison:Hide()
@@ -236,8 +240,46 @@ end
 
 function enableAddon_OnClick(self)
     AchievementTrackerOptions["enableAddon"] = self:GetChecked()
-
     setAddonEnabled(self:GetChecked())
+end
+
+function EnableAchievementScan_OnClick(self)
+    AchievementTrackerOptions["enableAchievementScan"] = self:GetChecked()
+    setAchievementScanEnabled(self:GetChecked())
+    --print("Here")
+    core.enableAchievementScanning = self:GetChecked()
+
+    Config:SetupAchievementTracking(core.enableAchievementScanning)
+end
+
+function Config:SetupAchievementTracking(mode)
+    --Update GUI to say achievement tracking is disabled
+    local instanceFound = false
+    for expansion,_ in pairs(core.Instances) do
+        for instanceType,_ in pairs(core.Instances[expansion]) do
+            for instance,_ in pairs(core.Instances[expansion][instanceType]) do
+                for boss,_ in pairs(core.Instances[expansion][instanceType][instance]) do
+                    if boss ~= "name" then
+                        if mode == false then
+                            --core:sendDebugMessage("Mode: False")
+                            core.Instances[expansion][instanceType][instance][boss].players = {}
+                            table.insert(core.Instances[expansion][instanceType][instance][boss].players, "(Achievement Tracking Disabled)")
+                        else
+                            --core:sendDebugMessage("Mode: True")
+                            core.Instances[expansion][instanceType][instance][boss].players = {}
+                            table.insert(core.Instances[expansion][instanceType][instance][boss].players, "(Enter instance to start scanning)")
+                            if core.inInstance == true then
+                                if core.instance == instance and instanceFound == false then
+                                    core:getPlayersInGroup2()
+                                    instanceFound = true
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    end
 end
 
 local function SetTabs(frame, numTabs, ...)
@@ -761,19 +803,19 @@ function Player_OnClick(self)
                             local players
                             --core.inInstance = true  --DEBUGGING only
                             if core.inInstance == true then
-                                print(core.Instances[expansion][instanceType][instance][boss].players[1])
+                                --print(core.Instances[expansion][instanceType][instance][boss].players[1])
                                 if core.Instances[expansion][instanceType][instance][boss].players[1] == "(No players in the group need this achievement)" then
-                                    print("1")
+                                    --print("1")
                                     if core.scanFinished == true then
                                         players = GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " No players in the group need this achievement"
                                     else
                                         players = GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " No players in the group need this achievement (scan still in progress)"                        
                                     end   
                                 elseif core.Instances[expansion][instanceType][instance][boss].players[1] == "(Enter instance to start scanning)" then
-                                    print("2")
+                                    --print("2")
                                     players = GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement)   
                                 else
-                                    print("3")
+                                    --print("3")
                                     players = GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " Players who need Achievement: "
 
                                     for i = 1, #core.Instances[expansion][instanceType][instance][boss].players do
@@ -785,7 +827,7 @@ function Player_OnClick(self)
                                     end
                                 end
                             else
-                                print("4")
+                                --print("4")
                                 players = GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement)
                             end
                             
