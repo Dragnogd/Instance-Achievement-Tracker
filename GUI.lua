@@ -32,6 +32,9 @@ Config.releaseType = "a"                    --Release type (Alpha, Beta, Release
 function Config:Toggle()
     local GUI = UIConfig or Config:CreateGUI()
     GUI:SetShown(not GUI:IsShown())
+
+    print("Hide")
+    GameTooltip:Hide()
 end
 
 function Config:CreateButton(point, relativeFrame, relativePoint, yOffset, text)
@@ -756,8 +759,21 @@ function Player_OnClick(self)
                         if core.Instances[expansion][instanceType][instance][boss].name == parent.headerText:GetText() then
                             
                             local players
+                            --core.inInstance = true  --DEBUGGING only
                             if core.inInstance == true then
-                                if core.Instances[expansion][instanceType][instance][boss].players[1] ~= "(Enter instance to start scanning)" and core.Instances[expansion][instanceType][instance][boss].players[1] ~= "(No players in the group need this achievement)" then
+                                print(core.Instances[expansion][instanceType][instance][boss].players[1])
+                                if core.Instances[expansion][instanceType][instance][boss].players[1] == "(No players in the group need this achievement)" then
+                                    print("1")
+                                    if core.scanFinished == true then
+                                        players = GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " No players in the group need this achievement"
+                                    else
+                                        players = GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " No players in the group need this achievement (scan still in progress)"                        
+                                    end   
+                                elseif core.Instances[expansion][instanceType][instance][boss].players[1] == "(Enter instance to start scanning)" then
+                                    print("2")
+                                    players = GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement)   
+                                else
+                                    print("3")
                                     players = GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " Players who need Achievement: "
 
                                     for i = 1, #core.Instances[expansion][instanceType][instance][boss].players do
@@ -767,16 +783,9 @@ function Player_OnClick(self)
                                     if core.scanFinished == false then
                                         players = players .. " (scan still in progress)"
                                     end
-                                elseif core.Instances[expansion][instanceType][instance][boss].players[1] == "(No players in the group need this achievement)" then
-                                    if core.scanFinished == true then
-                                        players = GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " No players in the group need this achievement"
-                                    else
-                                        players = GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " No players in the group need this achievement (scan still in progress)"                        
-                                    end
-                                else
-                                    players = GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement)                                    
                                 end
                             else
+                                print("4")
                                 players = GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement)
                             end
                             

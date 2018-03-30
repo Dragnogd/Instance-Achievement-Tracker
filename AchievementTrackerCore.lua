@@ -39,11 +39,13 @@ AchievementTrackerDebug = {}
 events:RegisterEvent("ADDON_LOADED")						--Used to setup the slash commands for the addon
 
 --DEBUG
-events:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
-events:RegisterEvent("UNIT_HEALTH")
-events:RegisterEvent("UNIT_AURA")
-events:RegisterEvent("UNIT_ABSORB_AMOUNT_CHANGED")
-events:RegisterEvent("NAME_PLATE_UNIT_ADDED")
+if debugMode == true then
+	events:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+	events:RegisterEvent("UNIT_HEALTH")
+	events:RegisterEvent("UNIT_AURA")
+	events:RegisterEvent("UNIT_ABSORB_AMOUNT_CHANGED")
+	events:RegisterEvent("NAME_PLATE_UNIT_ADDED")
+end
 
 local temp2 = {}
 --s = {}
@@ -422,6 +424,7 @@ function getInstanceInfomation()
 	-- 	core.instanceNameSpaces = "Ulduar"
 	-- 	core.expansion = "WrathOfTheLichKing"
 	-- 	core.instanceType = "Raids"
+	-- 	core.inInstance = true
 	-- 	if UICreated == false then
 	-- 		core:sendDebugMessage("Creating Tracking UI")
 	-- 		createEnableAchievementTrackingUI()
@@ -433,6 +436,7 @@ function getInstanceInfomation()
 
 	if IsInInstance() and core.inInstance == false then
 		core:sendDebugMessage("Player has entered instance")
+		print("Instance")
 		local instanceCompatible = false --Check whether player is on correct difficulty to earn achievements
 		core.inInstance = true
 		core.instanceVariablesReset = false
@@ -507,7 +511,7 @@ function getInstanceInfomation()
 			if core.expansion == "MistsOfPandaria" then
 				instanceCompatible = true
 			end
-		elseif core.difficultyID == 13 or core.difficultyID == 14 or core.difficultyID == 15 then
+		elseif core.difficultyID == 13 or core.difficultyID == 14 or core.difficultyID == 15 or core.difficultyID == 16 then
 			--current
 			instanceCompatible = true
 		elseif core.difficultyID == 7 or core.difficultyID == 17 and debugMode == true then
