@@ -853,7 +853,7 @@ function events:INSPECT_ACHIEVEMENT_READY(self, GUID)
 					--print(completed)
 
 					--Make sure initial text is removed
-					if core.Instances[core.expansion][core.instanceType][core.instance][boss].players[1] == "(Enter instance to start scanning)" then
+					if core.Instances[core.expansion][core.instanceType][core.instance][boss].players[1] == "(Enter instance to start scanning)" or core.Instances[core.expansion][core.instanceType][core.instance][boss].players[1] == "(No players in the group need this achievement)" then
 						table.remove(core.Instances[core.expansion][core.instanceType][core.instance][boss].players, 1)
 					end
 

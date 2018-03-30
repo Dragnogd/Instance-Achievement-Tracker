@@ -757,7 +757,7 @@ function Player_OnClick(self)
                             
                             local players
                             if core.inInstance == true then
-                                if core.Instances[expansion][instanceType][instance][boss].players[1] ~= "(Enter instance to start scanning)" then
+                                if core.Instances[expansion][instanceType][instance][boss].players[1] ~= "(Enter instance to start scanning)" and core.Instances[expansion][instanceType][instance][boss].players[1] ~= "(No players in the group need this achievement)" then
                                     players = GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " Players who need Achievement: "
 
                                     for i = 1, #core.Instances[expansion][instanceType][instance][boss].players do
@@ -769,9 +769,9 @@ function Player_OnClick(self)
                                     end
                                 elseif core.Instances[expansion][instanceType][instance][boss].players[1] == "(No players in the group need this achievement)" then
                                     if core.scanFinished == true then
-                                        players = GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " No one in this group needs this achievement: "
+                                        players = GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " No players in the group need this achievement"
                                     else
-                                        players = GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " No one in this group needs this achievement (scan still in progress): "                        
+                                        players = GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " No players in the group need this achievement (scan still in progress)"                        
                                     end
                                 else
                                     players = GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement)                                    
