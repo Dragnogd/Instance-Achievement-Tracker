@@ -1717,6 +1717,7 @@ end
 function clearInstanceVariables()
 	--If a boss was pulled then clear the variables for that raid
 	if core.instance ~= nil then
+		--print(core.instanceClear)
 		core[core.instanceClear]:ClearVariables()
 	end
 end

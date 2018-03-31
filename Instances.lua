@@ -4239,7 +4239,7 @@ core.Instances = {
             },
 
             IcecrownCitadel10Man = {
-                name = "Icecrown Citadel 10 Man",
+                name = "IcecrownCitadel Citadel 10 Man",
                 boss1 = {
                     name = "Lord Marrowgar",
                     bossIDs = {36612},
@@ -4247,7 +4247,7 @@ core.Instances = {
                     players = {"(Enter instance to start scanning)"},
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = true,
-                    track = function() core.Icecrown:LordMarrowgar() end,
+                    track = function() core.IcecrownCitadel:LordMarrowgar() end,
                     partial = false,
                 },
                 boss2 = {
@@ -4257,7 +4257,7 @@ core.Instances = {
                     players = {"(Enter instance to start scanning)"},
                     tactics = "",
                     enabled = true,
-                    track = function() core.Icecrown:LadyDeathwhisper() end,
+                    track = function() core.IcecrownCitadel:LadyDeathwhisper() end,
                     partial = false,
                 },     
                 boss3 = {
@@ -4267,7 +4267,7 @@ core.Instances = {
                     players = {"(Enter instance to start scanning)"},
                     tactics = "At 110, you can simply just complete the encounter as normal by firing the cannons at the enemy ship.",
                     enabled = true,
-                    track = function() core.Icecrown:GunshipBattle() end,
+                    track = function() core.IcecrownCitadel:GunshipBattle() end,
                     partial = false,
                 },     
                 boss4 = {
@@ -4277,7 +4277,7 @@ core.Instances = {
                     players = {"(Enter instance to start scanning)"},
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = true,
-                    track = function() core.Icecrown:DeathbringerSaurfang() end,
+                    track = function() core.IcecrownCitadel:DeathbringerSaurfang() end,
                     partial = false,
                 },     
                 boss5 = {
@@ -4287,7 +4287,7 @@ core.Instances = {
                     players = {"(Enter instance to start scanning)"},
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = true,
-                    track = function() core.Icecrown:Festergut() end,
+                    track = function() core.IcecrownCitadel:Festergut() end,
                     partial = false,
                 },     
                 boss6 = {
@@ -4297,7 +4297,7 @@ core.Instances = {
                     players = {"(Enter instance to start scanning)"},
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = true,
-                    track = function() core.Icecrown:Rotface() end,
+                    track = function() core.IcecrownCitadel:Rotface() end,
                     partial = false,
                 },     
                 boss7 = {
@@ -4307,7 +4307,7 @@ core.Instances = {
                     players = {"(Enter instance to start scanning)"},
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = true,
-                    track = function() core.Icecrown:ProfessorPutricide() end,
+                    track = function() core.IcecrownCitadel:ProfessorPutricide() end,
                     partial = false,
                 },     
                 boss8 = {
@@ -4327,7 +4327,7 @@ core.Instances = {
                     players = {"(Enter instance to start scanning)"},
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = true,
-                    track = function() core.Icecrown:Sindragosa() end,
+                    track = function() core.IcecrownCitadel:Sindragosa() end,
                     partial = false,
                 },     
                 boss10 = {
@@ -4337,7 +4337,7 @@ core.Instances = {
                     players = {"(Enter instance to start scanning)"},
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = true,
-                    track = function() core.Icecrown:BloodPrinceCouncil() end,
+                    track = function() core.IcecrownCitadel:BloodPrinceCouncil() end,
                     partial = false,
                 },     
                 boss11 = {
@@ -4357,7 +4357,7 @@ core.Instances = {
                     players = {"(Enter instance to start scanning)"},
                     tactics = "",
                     enabled = true,
-                    track = function() core.Icecrown:LichKing() end,
+                    track = function() core.IcecrownCitadel:LichKing() end,
                     partial = false,
                 },
                 boss13 = {
@@ -4373,7 +4373,7 @@ core.Instances = {
             },
 
             IcecrownCitadel25Man = {
-                name = "Icecrown Citadel 25 Man",
+                name = "IcecrownCitadel Citadel 25 Man",
                 boss1 = {
                     name = "Lord Marrowgar 25",
                     bossIDs = {36612},
@@ -4381,7 +4381,7 @@ core.Instances = {
                     players = {"(Enter instance to start scanning)"},
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = true,
-                    track = function() core.Icecrown:LordMarrowgar() end,
+                    track = function() core.IcecrownCitadel:LordMarrowgar() end,
                     partial = false,
                 },
                 boss2 = {
@@ -4391,7 +4391,7 @@ core.Instances = {
                     players = {"(Enter instance to start scanning)"},
                     tactics = "",
                     enabled = true,
-                    track = function() core.Icecrown:LadyDeathwhisper() end,
+                    track = function() core.IcecrownCitadel:LadyDeathwhisper() end,
                     partial = false,
                 },     
                 boss3 = {
@@ -4401,7 +4401,7 @@ core.Instances = {
                     players = {"(Enter instance to start scanning)"},
                     tactics = "At 110, you can simply just complete the encounter as normal by firing the cannons at the enemy ship.",
                     enabled = true,
-                    track = function() core.Icecrown:GunshipBattle() end,
+                    track = function() core.IcecrownCitadel:GunshipBattle() end,
                     partial = false,
                 },     
                 boss4 = {
@@ -4411,7 +4411,7 @@ core.Instances = {
                     players = {"(Enter instance to start scanning)"},
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = true,
-                    track = function() core.Icecrown:DeathbringerSaurfang() end,
+                    track = function() core.IcecrownCitadel:DeathbringerSaurfang() end,
                     partial = false,
                 },     
                 boss5 = {
@@ -4421,7 +4421,7 @@ core.Instances = {
                     players = {"(Enter instance to start scanning)"},
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = true,
-                    track = function() core.Icecrown:Festergut() end,
+                    track = function() core.IcecrownCitadel:Festergut() end,
                     partial = false,
                 },     
                 boss6 = {
@@ -4431,7 +4431,7 @@ core.Instances = {
                     players = {"(Enter instance to start scanning)"},
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = true,
-                    track = function() core.Icecrown:Rotface() end,
+                    track = function() core.IcecrownCitadel:Rotface() end,
                     partial = false,
                 },     
                 boss7 = {
@@ -4441,7 +4441,7 @@ core.Instances = {
                     players = {"(Enter instance to start scanning)"},
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = true,
-                    track = function() core.Icecrown:ProfessorPutricide() end,
+                    track = function() core.IcecrownCitadel:ProfessorPutricide() end,
                     partial = false,
                 },     
                 boss8 = {
@@ -4461,7 +4461,7 @@ core.Instances = {
                     players = {"(Enter instance to start scanning)"},
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = true,
-                    track = function() core.Icecrown:Sindragosa() end,
+                    track = function() core.IcecrownCitadel:Sindragosa() end,
                     partial = false,
                 },     
                 boss10 = {
@@ -4471,7 +4471,7 @@ core.Instances = {
                     players = {"(Enter instance to start scanning)"},
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = true,
-                    track = function() core.Icecrown:BloodPrinceCouncil() end,
+                    track = function() core.IcecrownCitadel:BloodPrinceCouncil() end,
                     partial = false,
                 },     
                 boss11 = {
@@ -4491,7 +4491,7 @@ core.Instances = {
                     players = {"(Enter instance to start scanning)"},
                     tactics = "",
                     enabled = true,
-                    track = function() core.Icecrown:LichKing() end,
+                    track = function() core.IcecrownCitadel:LichKing() end,
                     partial = false,
                 },
                 boss13 = {

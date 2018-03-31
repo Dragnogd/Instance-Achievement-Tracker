@@ -4,9 +4,9 @@
 local _, core = ...
 
 ------------------------------------------------------
----- Icecrown Citadel Bosses
+---- IcecrownCitadel Citadel Bosses
 ------------------------------------------------------
-core.Icecrown = {}
+core.IcecrownCitadel = {}
 
 ------------------------------------------------------
 ---- Lady Deathwhisper
@@ -21,7 +21,7 @@ local CultAdherentWait = false --When the mobs get transformed, wait 1 second be
 local AddCounter = 0
 
 ------------------------------------------------------
----- Icecrown Gunship Battle
+---- IcecrownCitadel Gunship Battle
 ------------------------------------------------------
 local currentTimestamp = nil
 
@@ -64,9 +64,9 @@ local playersCompleted = {}
 local necroticPlagueStack = 0
 local necroticPlagueCompletedAnnounced = false   
 
-function core.Icecrown:LordMarrowgar()					
+function core.IcecrownCitadel:LordMarrowgar()					
 	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 69065 then
-        core:SendMessage(core.destName .. " has been Impaled")
+        core:sendMessage(core.destName .. " has been Impaled")
         C_Timer.After(8, function()
             local name, _, _, _, _, _, _ = GetSpellInfo(69065)
             if UnitDebuff(core.destName, name) then
@@ -76,7 +76,7 @@ function core.Icecrown:LordMarrowgar()
     end
 end
 
-function core.Icecrown:LadyDeathwhisper()
+function core.IcecrownCitadel:LadyDeathwhisper()
     local CultFanatic = {"Cult Fanatic", "Fanático del Culto"}
     local CultAdherent = {"Cult Adherent", "Partidario del Culto"}
     local DeformedFanatic = {"Deformed Fanatic", "Fanático deformado"}
@@ -197,7 +197,7 @@ function core.Icecrown:LadyDeathwhisper()
     end
 end
 
-function core.Icecrown:GunshipBattle()
+function core.IcecrownCitadel:GunshipBattle()
     if core.type == "SPELL_DAMAGE" then
         if (core.spellId == 69192 or core.spellId == 69193) and core.achievementFailed == false then --Rocket Burst
             if players[core.sourceName] and core.timestamp ~= currentTimestamp then
@@ -220,7 +220,7 @@ function core.Icecrown:GunshipBattle()
 
 end
 
-function core.Icecrown:DeathbringerSaurfang()
+function core.IcecrownCitadel:DeathbringerSaurfang()
     --Detect if mark of the fallen champion has been cast
     if core.type == "SPELL_CAST_START" and core.spellId == 72293 and markOfTheFallenChampionCounter ~= 5 then
             markOfTheFallenChampionCounter = markOfTheFallenChampionCounter + 1
@@ -232,7 +232,7 @@ function core.Icecrown:DeathbringerSaurfang()
     end
 end
 
--- function Icecrown_ValithriaDreamwalker(portalsActive)
+-- function IcecrownCitadel_ValithriaDreamwalker(portalsActive)
 --     if portalsActive == false then
 --         if noteDisplayed == false then
 --             SendChatMessage("[WIP] Note: Healing the boss before the portals spawn will also grant the achievement. Portals spawn 45 seconds after the boss is engaged",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
@@ -312,7 +312,7 @@ end
 --     end
 -- end
 
-function core.Icecrown:Sindragosa()
+function core.IcecrownCitadel:Sindragosa()
     if core.type == "SPELL_AURA_APPLIED_DOSE" or core.type == "SPELL_AURA_APPLIED" then
         if core.spellId == 70127 and core.unitType ~= "Pet" then
             if core.amount == nil then
@@ -333,7 +333,7 @@ function core.Icecrown:Sindragosa()
     end
 end
 
-function core.Icecrown:Festergut()
+function core.IcecrownCitadel:Festergut()
     if core.type == "SPELL_AURA_APPLIED_DOSE" or core.type == "SPELL_AURA_APPLIED" then
         if core.spellId == 69291 and core.unitType ~= "Pet" then
             if core.amount == nil then
@@ -353,19 +353,19 @@ function core.Icecrown:Festergut()
     end
 end
 
-function core.Icecrown:Rotface()
+function core.IcecrownCitadel:Rotface()
     if core.type == "SPELL_CAST_START" and core.spellId == 69839 then
         core:getAchievementFailed()
     end
 end
 
-function core.Icecrown:ProfessorPutricide()
+function core.IcecrownCitadel:ProfessorPutricide()
     if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 70539 then
         core:getAchievementFailed()
     end
 end
 
-function core.Icecrown:BloodPrinceCouncil()
+function core.IcecrownCitadel:BloodPrinceCouncil()
     if core.amount ~= nil then
         if core.amount > 23000 then
             core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")")
@@ -373,7 +373,7 @@ function core.Icecrown:BloodPrinceCouncil()
     end
 end
 
--- function Icecrown_BloodQueenLanathel(displayPicker, vampireChecker,message,sender,type,spellId,destName)
+-- function IcecrownCitadel_BloodQueenLanathel(displayPicker, vampireChecker,message,sender,type,spellId,destName)
 --     ------------------------------------------------------
 --     ---- Blood Prince Council
 --     ------------------------------------------------------
@@ -599,7 +599,7 @@ end
 
 -- end
 
-function core.Icecrown:LichKing()
+function core.IcecrownCitadel:LichKing()
     for i = 1, core.groupSize do
         local unit = nil
         if core.chatType == "PARTY" then
@@ -632,9 +632,9 @@ function core.Icecrown:LichKing()
     end	
 end
 
-function Icecrown_ClearVariables()
+function core.IcecrownCitadel:ClearVariables()
     ------------------------------------------------------
-    ---- Icecrown Citadel Bosses
+    ---- IcecrownCitadel Citadel Bosses
     ------------------------------------------------------
     players = {}
 
@@ -651,7 +651,7 @@ function Icecrown_ClearVariables()
     AddCounter = 0
 
     ------------------------------------------------------
-    ---- Icecrown Gunship Battle
+    ---- IcecrownCitadel Gunship Battle
     ------------------------------------------------------
     currentTimestamp = nil 
 
