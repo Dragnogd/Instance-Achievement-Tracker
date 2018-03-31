@@ -4336,8 +4336,8 @@ core.Instances = {
                     achievement = 4582,
                     players = {"(Enter instance to start scanning)"},
                     tactics = "At 110, you can simply just nuke the boss down.",
-                    enabled = true,
-                    track = function() core.IcecrownCitadel:BloodPrinceCouncil() end,
+                    enabled = false,
+                    track = nil,
                     partial = false,
                 },     
                 boss11 = {
@@ -4470,8 +4470,8 @@ core.Instances = {
                     achievement = 4617,
                     players = {"(Enter instance to start scanning)"},
                     tactics = "At 110, you can simply just nuke the boss down.",
-                    enabled = true,
-                    track = function() core.IcecrownCitadel:BloodPrinceCouncil() end,
+                    enabled = false,
+                    track = nil,
                     partial = false,
                 },     
                 boss11 = {
