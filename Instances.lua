@@ -4266,8 +4266,8 @@ core.Instances = {
                     achievement = 4536,
                     players = {"(Enter instance to start scanning)"},
                     tactics = "At 110, you can simply just complete the encounter as normal by firing the cannons at the enemy ship.",
-                    enabled = true,
-                    track = function() core.IcecrownCitadel:GunshipBattle() end,
+                    enabled = false,
+                    track = nil,
                     partial = false,
                 },     
                 boss4 = {
@@ -4400,8 +4400,8 @@ core.Instances = {
                     achievement = 4612,
                     players = {"(Enter instance to start scanning)"},
                     tactics = "At 110, you can simply just complete the encounter as normal by firing the cannons at the enemy ship.",
-                    enabled = true,
-                    track = function() core.IcecrownCitadel:GunshipBattle() end,
+                    enabled = false,
+                    track = nil,
                     partial = false,
                 },     
                 boss4 = {

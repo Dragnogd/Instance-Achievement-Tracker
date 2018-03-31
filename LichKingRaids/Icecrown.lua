@@ -197,28 +197,27 @@ function core.IcecrownCitadel:LadyDeathwhisper()
     end
 end
 
-function core.IcecrownCitadel:GunshipBattle()
-    if core.type == "SPELL_DAMAGE" then
-        if (core.spellId == 69192 or core.spellId == 69193) and core.achievementFailed == false then --Rocket Burst
-            if players[core.sourceName] and core.timestamp ~= currentTimestamp then
-                players[core.sourceName] = players[sourceName] + 1
-                currentTimestamp = timestamp
-                core:sendMessage(core.sourceName .. " has gone to the enemy ship " .. players[core.sourceName] .. " times")
-            elseif timestamp ~= currentTimestamp then
-                players[core.sourceName] = 1
-                currentTimestamp = core.timestamp
-                SendChatMessage(core.sourceName .. " has gone to the enemy ship " .. players[sourceName] .. " times")
-            end
+-- function core.IcecrownCitadel:GunshipBattle()
+--     if core.type == "SPELL_DAMAGE" then
+--         if (core.spellId == 69192 or core.spellId == 69193) and core.achievementFailed == false then --Rocket Burst
+--             if players[core.sourceName] and core.timestamp ~= currentTimestamp then
+--                 players[core.sourceName] = players[sourceName] + 1
+--                 currentTimestamp = timestamp
+--                 core:sendMessage(core.sourceName .. " has gone to the enemy ship " .. players[core.sourceName] .. " times")
+--             elseif timestamp ~= currentTimestamp then
+--                 players[core.sourceName] = 1
+--                 currentTimestamp = core.timestamp
+--                 SendChatMessage(core.sourceName .. " has gone to the enemy ship " .. players[sourceName] .. " times")
+--             end
 
-            if players[core.sourceName] ~= nil then
-                if players[core.sourceName] > 2 then
-                    core:getAchievementFailedWithMessageAfter("(" .. sourceName .. ")")
-                end           
-            end
-        end
-    end
-
-end
+--             if players[core.sourceName] ~= nil then
+--                 if players[core.sourceName] > 2 then
+--                     core:getAchievementFailedWithMessageAfter("(" .. sourceName .. ")")
+--                 end           
+--             end
+--         end
+--     end
+-- end
 
 function core.IcecrownCitadel:DeathbringerSaurfang()
     --Detect if mark of the fallen champion has been cast
