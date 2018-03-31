@@ -197,28 +197,6 @@ function core.IcecrownCitadel:LadyDeathwhisper()
     end
 end
 
--- function core.IcecrownCitadel:GunshipBattle()
---     if core.type == "SPELL_DAMAGE" then
---         if (core.spellId == 69192 or core.spellId == 69193) and core.achievementFailed == false then --Rocket Burst
---             if players[core.sourceName] and core.timestamp ~= currentTimestamp then
---                 players[core.sourceName] = players[sourceName] + 1
---                 currentTimestamp = timestamp
---                 core:sendMessage(core.sourceName .. " has gone to the enemy ship " .. players[core.sourceName] .. " times")
---             elseif timestamp ~= currentTimestamp then
---                 players[core.sourceName] = 1
---                 currentTimestamp = core.timestamp
---                 SendChatMessage(core.sourceName .. " has gone to the enemy ship " .. players[sourceName] .. " times")
---             end
-
---             if players[core.sourceName] ~= nil then
---                 if players[core.sourceName] > 2 then
---                     core:getAchievementFailedWithMessageAfter("(" .. sourceName .. ")")
---                 end           
---             end
---         end
---     end
--- end
-
 function core.IcecrownCitadel:DeathbringerSaurfang()
     --Detect if mark of the fallen champion has been cast
     if core.type == "SPELL_CAST_START" and core.spellId == 72293 and markOfTheFallenChampionCounter ~= 5 then
@@ -364,13 +342,13 @@ function core.IcecrownCitadel:ProfessorPutricide()
     end
 end
 
-function core.IcecrownCitadel:BloodPrinceCouncil()
-    if core.amount ~= nil then
-        if core.amount > 23000 then
-            core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")")
-        end       
-    end
-end
+-- function core.IcecrownCitadel:BloodPrinceCouncil()
+--     if core.amount ~= nil and UnitIsPlayer(core.destName) and UnitIsPlayer(core.sourceName) ~= true then
+--         if core.amount > 23000 and core.type == "SPELL_DAMAGE" or core.type == "SPELL_PERIODIC_DAMAGE" or core.type == "SWING_DAMAGE" then
+--             core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")")
+--         end       
+--     end
+-- end
 
 -- function IcecrownCitadel_BloodQueenLanathel(displayPicker, vampireChecker,message,sender,type,spellId,destName)
 --     ------------------------------------------------------
@@ -684,3 +662,25 @@ function core.IcecrownCitadel:ClearVariables()
     necroticPlagueStack = 0 
     necroticPlagueCompletedAnnounced = false  
 end
+
+-- function core.IcecrownCitadel:GunshipBattle()
+--     if core.type == "SPELL_DAMAGE" then
+--         if (core.spellId == 69192 or core.spellId == 69193) and core.achievementFailed == false then --Rocket Burst
+--             if players[core.sourceName] and core.timestamp ~= currentTimestamp then
+--                 players[core.sourceName] = players[sourceName] + 1
+--                 currentTimestamp = timestamp
+--                 core:sendMessage(core.sourceName .. " has gone to the enemy ship " .. players[core.sourceName] .. " times")
+--             elseif timestamp ~= currentTimestamp then
+--                 players[core.sourceName] = 1
+--                 currentTimestamp = core.timestamp
+--                 SendChatMessage(core.sourceName .. " has gone to the enemy ship " .. players[sourceName] .. " times")
+--             end
+
+--             if players[core.sourceName] ~= nil then
+--                 if players[core.sourceName] > 2 then
+--                     core:getAchievementFailedWithMessageAfter("(" .. sourceName .. ")")
+--                 end           
+--             end
+--         end
+--     end
+-- end

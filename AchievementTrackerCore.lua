@@ -1207,6 +1207,12 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 		core.unitTypeSrc, _, _, _, _, core.sourceID, core.spawn_uid = strsplit("-", core.sourceGUID)
 		core.unitType, _, _, _, _, core.destID, core.spawn_uid_dest = strsplit("-", core.destGUID)
 		core.currentUnit = "Creature"
+
+		if string.match(core.sourceGUID, "Creature") or string.match(core.sourceGUID, "Vehicle") then
+			core.currentSource = "Creature"
+		elseif string.match(core.destGUID, "Creature") or string.match(core.destGUID, "Vehicle") then
+			core.currentDest = "Creature"
+		end
 	end
 
 	if string.match(core.sourceGUID, "Player") or string.match(core.destGUID, "Player") then
@@ -1214,6 +1220,12 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 		core.unitTypeSrcPlayer, _, _, _, _, core.sourceIDPlayer, core.spawn_uidPlayer = strsplit("-", core.sourceGUID)
 		core.unitTypePlayer, core.destIDPlayer, core.spawn_uid_dest_Player = strsplit("-", core.destGUID)
 		core.currentUnit = "Player"
+
+		if string.match(core.sourceGUID, "Player") then
+			core.currentSource = "Player"
+		elseif string.match(core.destGUID, "Player") then
+			core.currentDest = "Player"
+		end
 	end
 
 	--Boss Detection!
