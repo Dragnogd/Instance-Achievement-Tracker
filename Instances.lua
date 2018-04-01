@@ -4239,7 +4239,7 @@ core.Instances = {
             },
 
             IcecrownCitadel10Man = {
-                name = "IcecrownCitadel Citadel 10 Man",
+                name = "Icecrown Citadel 10 Man",
                 boss1 = {
                     name = "Lord Marrowgar",
                     bossIDs = {36612},
@@ -4373,7 +4373,7 @@ core.Instances = {
             },
 
             IcecrownCitadel25Man = {
-                name = "IcecrownCitadel Citadel 25 Man",
+                name = "Icecrown Citadel 25 Man",
                 boss1 = {
                     name = "Lord Marrowgar 25",
                     bossIDs = {36612},
