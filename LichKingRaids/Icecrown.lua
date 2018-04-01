@@ -577,28 +577,28 @@ end
 -- end
 
 function core.IcecrownCitadel:LichKing()
-    for i = 1, core.groupSize do
-        local unit = nil
-        if core.chatType == "PARTY" then
-            if i < core.groupSize then
-                unit = "party" .. i
-            else
-                unit = "player"
-            end
-        elseif core.chatType == "RAID" then
-            unit = "raid" .. i
-        elseif core.chatType == "SAY" then
-            unit = "player"
-        end
+	for i = 1, core.groupSize do
+		local unit = nil
+		if core.chatType == "PARTY" then
+			if i < core.groupSize then
+				unit = "party" .. i
+			else
+				unit = "player"
+			end
+		elseif core.chatType == "RAID" then
+			unit = "raid" .. i
+		elseif core.chatType == "SAY" then
+			unit = "player"
+		end
 
         local name, _, _, count, _, _, _, _, _, _, spellID, _, _, _, _, _, _, _, _ = UnitDebuff(unit, "Necrotic Plague")
-        if core.spellID == 70338 and count > necroticPlagueStack and necroticPlagueCompletedAnnounced == false then
+        if spellID == 70338 and count > necroticPlagueStack and necroticPlagueCompletedAnnounced == false then
             necroticPlagueStack = count
             core:sendMessage("Necrotic Plague at " .. necroticPlagueStack .. " stacks")
         end
         
         local name, _, _, count, _, _, _, _, _, _, spellID, _, _, _, _, _, _, _, _ = UnitDebuff(unit .. "target", "Necrotic Plague")
-        if core.spellID == 70338 and count > necroticPlagueStack and necroticPlagueCompletedAnnounced == false then
+        if spellID == 70338 and count > necroticPlagueStack and necroticPlagueCompletedAnnounced == false then
             necroticPlagueStack = count
             core:sendMessage("Necrotic Plague at " .. necroticPlagueStack .. " stacks")
         end
