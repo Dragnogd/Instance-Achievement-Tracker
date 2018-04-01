@@ -881,7 +881,7 @@ function events:INSPECT_ACHIEVEMENT_READY(self, GUID)
 		--Find the achievements for the raid the user has entered
 		if UnitName(playerCurrentlyScanning) ~= nil then
 			local name2, realm2 = UnitName(playerCurrentlyScanning)
-			AchievementTrackerDebug[name2] = {}
+			--AchievementTrackerDebug[name2] = {}
 
 			for boss,_ in pairs(core.Instances[core.expansion][core.instanceType][core.instance]) do
 				if boss ~= "name" then
@@ -901,9 +901,9 @@ function events:INSPECT_ACHIEVEMENT_READY(self, GUID)
 						local name, _ = UnitName(playersToScan[1])
 						table.insert(core.Instances[core.expansion][core.instanceType][core.instance][boss].players, name)
 							
-						AchievementTrackerDebug[UnitName(playerCurrentlyScanning)][core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement] = "Incomplete"
+						--AchievementTrackerDebug[UnitName(playerCurrentlyScanning)][core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement] = "Incomplete"
 					elseif completed == true then
-						AchievementTrackerDebug[UnitName(playerCurrentlyScanning)][core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement] = "Complete"
+						--AchievementTrackerDebug[UnitName(playerCurrentlyScanning)][core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement] = "Complete"
 					end
 				end
 			end
