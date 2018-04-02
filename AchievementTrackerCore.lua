@@ -347,7 +347,7 @@ function getPlayersInGroup()
 	if #playersToScan > 0 then
 		getInstanceAchievements()
 	else
-		core:printMessage("Achievment Scanning Finished (" .. #playersScanned .. "/" .. core.groupSize .. ")")
+		core:sendDebugMessage("Achievment Scanning Finished (" .. #playersScanned .. "/" .. core.groupSize .. ")")
 		scanInProgress = false
 		core.scanFinished = true
 	end
@@ -819,16 +819,18 @@ end
 --Used to alter size of group variables and which player in group is running the master addon
 function events:GROUP_ROSTER_UPDATE()
 	--When player enters the world in an instance start the achievement scanner. Only start the scanner if the raid size has changed
+	core:sendDebugMessage("Group Roster Update")
 	if core.enableAchievementScanning == true then
-		if GetNumGroupMembers() ~= core.groupSize then
-			if scanInProgress == false then
-				--print("Scan not in progress. Starting scan...")
-				scanInProgress = true
-				getPlayersInGroup()
-			else
-				--print("Scan in progress asking for rescan since group size has changed")
-				rescanNeeded = true
-			end
+		core:sendDebugMessage("Achievement Scanning Enabled")
+		if scanInProgress == false then
+			core:sendDebugMessage("Starting Scan")
+			--print("Scan not in progress. Starting scan...")
+			scanInProgress = true
+			getPlayersInGroup()
+		else
+			core:sendDebugMessage("Scan in progress. Asking for rescan")
+			--print("Scan in progress asking for rescan since group size has changed")
+			rescanNeeded = true
 		end
 	else
 		core:sendDebugMessage("Achievement Scanning is disabled")
