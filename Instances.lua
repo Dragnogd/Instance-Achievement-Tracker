@@ -376,7 +376,7 @@ core.Instances = {
                 },
                 boss7 = {
                     name = "Kin-garoth",
-                    bossIDs = {122578},
+                    bossIDs = {}, --122578
                     achievement = 12030,
                     players = {"(Enter instance to start scanning)"},
                     tactics = "",
@@ -674,12 +674,12 @@ core.Instances = {
                 name = "Maw of Souls",
                 boss1 = {
                     name = "Ymiron",
-                    bossIDs = {},
+                    bossIDs = {96756},
                     achievement = 10413,
                     players = {"(Enter instance to start scanning)"},
                     tactics = "",
-                    enabled = false,
-                    track = nil,
+                    enabled = true,
+                    track = function() core.MawOfSouls:Ymiron() end,
 					partial = false,
                 },
                 boss2 = {
