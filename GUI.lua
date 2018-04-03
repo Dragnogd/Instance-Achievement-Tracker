@@ -194,10 +194,10 @@ function Tab_OnClick(self)
             UIConfig.Main2.options2:SetScript("OnClick", enableAddon_OnClick)
             UIConfig.Main2.options3 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options2, "TOPLEFT", 30, -9, "Enable Addon","GameFontHighlight")
 
-            --Enable Achievement Scan
-            -- UIConfig.Main2.options4 = Config:CreateCheckBox("TOPLEFT", UIConfig.Main2.options2, "TOPLEFT", 0, -25, "AchievementTracker_EnableAchievementScan")
-            -- UIConfig.Main2.options4:SetScript("OnClick", EnableAchievementScan_OnClick)
-            -- UIConfig.Main2.options5 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options4, "TOPLEFT", 30, -9, "Enable Achievement Scanning","GameFontHighlight")            
+            --Toggle Minimap Icon
+            UIConfig.Main2.options4 = Config:CreateCheckBox("TOPLEFT", UIConfig.Main2.options2, "TOPLEFT", 0, -25, "AchievementTracker_ToggleMinimapIcon")
+            UIConfig.Main2.options4:SetScript("OnClick", ATToggleMinimapIcon_OnClick)
+            UIConfig.Main2.options5 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options4, "TOPLEFT", 30, -9, "Show Minimap Button","GameFontHighlight")            
 
             -- print("Addon State: " .. AchievementTrackerOptions["enableAddon"])
 
@@ -235,6 +235,16 @@ function Tab_OnClick(self)
 
         UIConfig.Main2.content:Hide()
         UIConfig.Main2.content2:Hide()
+    end
+end
+
+function ATToggleMinimapIcon_OnClick(self)
+    AchievementTrackerOptions["showMinimap"] = self:GetChecked()
+
+    if self:GetChecked() then
+        core.ATButton:Show("InstanceAchievementTracker")
+    else
+        core.ATButton:Hide("InstanceAchievementTracker")
     end
 end
 

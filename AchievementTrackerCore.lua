@@ -722,10 +722,14 @@ function events:ADDON_LOADED(event, name)
 
 	--Check if the options have been setup
 	if AchievementTrackerOptions["enableAddon"] == nil then
-		core:sendDebugMessage("Setting Initial Settings")
 		AchievementTrackerOptions["enableAddon"] = true
 	end
 	_G["AchievementTracker_EnableAddon"]:SetChecked(AchievementTrackerOptions["enableAddon"])
+
+	if AchievementTrackerOptions["showMinimap"] == nil then
+		AchievementTrackerOptions["showMinimap"] = true
+	end
+	_G["AchievementTracker_ToggleMinimapIcon"]:SetChecked(AchievementTrackerOptions["showMinimap"])
 
 	-- if AchievementTrackerOptions["enableAchievementScan"] == nil then
 	-- 	core:sendDebugMessage("Setting Initial Settings")
@@ -759,7 +763,7 @@ function events:ADDON_LOADED(event, name)
 	--------------------------------------
 	-- Minimap Icon
 	--------------------------------------
-	local ATButton = LibStub("LibDBIcon-1.0")
+	core.ATButton = LibStub("LibDBIcon-1.0")
 	--local profile
 
 	-- LDB
@@ -779,10 +783,18 @@ function events:ADDON_LOADED(event, name)
 	})
 
 	--Register Minimap Icon
-	ATButton:Register("InstanceAchievementTracker", MiniMapLDB, AchievementTrackerOptions);
+	core.ATButton:Register("InstanceAchievementTracker", MiniMapLDB, AchievementTrackerOptions);
 
 	--Show Minimap Icon
-	ATButton:Show("InstanceAchievementTracker")
+	if AchievementTrackerOptions["showMinimap"] then
+		core:sendDebugMessage("Showing Minimap Icon")
+        core.ATButton:Show("InstanceAchievementTracker")
+	else
+		core:sendDebugMessage("Hiding Minimap Icon")
+		C_Timer.After(1, function()
+			core.ATButton:Hide("InstanceAchievementTracker")		
+		end)
+    end
 
 	--Set whether addon should be enabled or disabled
 	setAddonEnabled(AchievementTrackerOptions["enableAddon"])
