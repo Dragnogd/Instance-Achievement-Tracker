@@ -9,7 +9,7 @@ local _, core = ...
 core.BlackRookHold = {}
 
 function core.BlackRookHold:AmalgamOfSouls()
-    if core.type == "UNIT_DIED" and core.destID == "99663" then
+    if core.type == "UNIT_DIED" and core.destID == "99664" then
         core:getAchievementSuccess()
     end
 end
