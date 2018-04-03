@@ -548,12 +548,12 @@ core.Instances = {
                 name = "Halls of Valor",
                 boss1 = {
                     name = "Other 1",
-                    bossIDs = {},
+                    bossIDs = {99891},
                     achievement = 10544,
                     players = {"(Enter instance to start scanning)"},
                     tactics = "",
-                    enabled = false,
-                    track = nil,
+                    enabled = true,
+                    track = function() core.HallsOfValor:StagParty() end,
 					partial = false,
                 },
                 boss2 = {
