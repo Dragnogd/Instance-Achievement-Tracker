@@ -18,5 +18,11 @@ function core.HallsOfValor:StagParty()
     end
 end
 
+function core.HallsOfValor:Odyn()
+    if core.type == "SPELL_CAST_SUCCESS" and core.spelld == 198750 then
+        core:getAchievementFailed()
+    end
+end
+
 function core.HallsOfValor:ClearVariables()
 end
