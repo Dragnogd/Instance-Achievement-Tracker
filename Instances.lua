@@ -578,7 +578,7 @@ core.Instances = {
                 },
             },
 
-            NeltharionsLair = {
+            NeltharionSLair = {
                 name = "Neltharions Lair",
                 boss1 = {
                     name = "Other 3",
@@ -597,7 +597,7 @@ core.Instances = {
                     players = {"(Enter instance to start scanning)"},
                     tactics = "",
                     enabled = true,
-                    track = function() core.NeltharionsLair:Naraxas() end,
+                    track = function() core.NeltharionSLair:Naraxas() end,
 					partial = false,
                 },
             },
