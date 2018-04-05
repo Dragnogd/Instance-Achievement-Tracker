@@ -18,11 +18,12 @@ local LightningFistsReversed = false
 local ArcaneVelocityReversed = false
 local itemsReversed = 0
 
-function core.MoguShanVaults:ShowMoves()
-	if core.type == "SPELL_DAMAGE" and core.spellId == 116809 then
-		print(core.destName .. " Got Hit")
-	end
-end
+------------------------------------------------------
+---- Will of The Emperor
+------------------------------------------------------
+local playerExecutedStrike = 0
+local playersFailCounter = {}
+local timerStarted = false
 
 function core.MoguShanVaults:FengTheAccursed()
 	if core.type == "SPELL_AURA_APPLIED" then
@@ -78,4 +79,59 @@ function core.MoguShanVaults:ClearVariables()
 	ArcaneVelocityReversed = false
 	LightningFistsReversed = false
 	itemsReversed = 0
+
+	------------------------------------------------------
+	---- Will of The Emperor
+	------------------------------------------------------
+	playerExecutedStrike = 0
+	playersFailCounter = {}
+	timerStarted = false
+end
+
+--Show Me Your Moves
+--When Boss casts first ability, Reset all counters
+--If player gets hits then fail achievement
+--Track how many times each player has failed achievement
+--Check how many players executed opportunistic strike on boss
+--If counter equals 10 or 25 then complete achievement
+
+function core.MoguShanVaults:WillOfTheEmperor()
+	--Hit by Devestating Arc
+	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 116835 then
+		if playersFailCounter[core.destName] == nil then
+			playersFailCounter[core.destName] = 1
+		else
+			playersFailCounter[core.destName] = playersFailCounter[core.destName] + 1
+		end
+		core:sendMessage(core.destName .. " hit by Devestating Arc (" .. playersFailCounter[core.destName] .. ")")
+	end
+
+	--Hit by Stomp
+	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 132425 then
+		if playersFailCounter[core.destName] == nil then
+			playersFailCounter[core.destName] = 1
+		else
+			playersFailCounter[core.destName] = playersFailCounter[core.destName] + 1
+		end
+		core:sendMessage(core.destName .. " hit by Devestating Arc (" .. playersFailCounter[core.destName] .. ")")
+	end
+
+	--Executed opportunistic strike
+	if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 116809 then
+		playerExecutedStrike = playerExecutedStrike + 1
+		if timerStarted == false then
+			timerStarted = true
+
+			C_Timer.After(10, function() 
+				if playerExecutedStrike == core.maxPlayers then
+					core:getAchievementSuccess()
+				else
+					core:sendMessage(core:getAchievement() .. " " .. playerExecutedStrike .. "/" .. core.maxPlayers .. " Opportunistic Strikes executed in time")
+				end
+	
+				playerExecutedStrike = 0
+				timerStarted = false
+			end)
+		end
+	end
 end

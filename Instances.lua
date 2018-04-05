@@ -1898,7 +1898,7 @@ core.Instances = {
                     players = {"(Enter instance to start scanning)"},
                     tactics = "",
                     enabled = true,
-                    track = function() core.MoguShanVaults:ShowMoves() end,
+                    track = function() core.MoguShanVaults:WillOfTheEmperor() end,
 					partial = false,
                 },
             },
