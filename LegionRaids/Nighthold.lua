@@ -56,16 +56,12 @@ end
 
 function core.TheNighthold:StarAugurEtraeus()
     --Check if boss has reached phase 3
-    if UnitHealth("boss1") / UnitHealthMax("boss") *100 <= 30 then
+    if core:getHealthPercent("boss1") <= 30 then
         healthPercentageReached = true
-
-        if healthPercentageReached == false then
-            --print("Health Percentage Reached")
-        end
     end
 
     --Add has died
-    if core.type == "UNIT_DIED" and core.destID == "111595" then
+    if core.type == "UNIT_DIED" and core.destID == "111587" then
         if healthPercentageReached == true then
             core:getAchievementSuccess()
         else

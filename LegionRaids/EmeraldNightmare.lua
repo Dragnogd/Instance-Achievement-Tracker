@@ -21,17 +21,50 @@ local bugsUID = {}
 local playersUID = {}
 local playersBuffCounter = 0
 
-function core.TheEmeraldNightmare:Nythendra()
-    -- if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 208119 then
-    --     bugsSquished = bugsSquished + 1
-    --     core:sendMessageDelay(core:getAchievement() .. " Glow Bugs Sqished (" .. bugsSquished .. "/15)", bugsSquished, 1)
-    --     print(bugsSquished)
-    -- end
+local nightmareExplosion = 0
+local nightmareKilled = 0
 
+local pulsingEggCounter = 0
+
+------------------------------------------------------
+---- Xavius
+------------------------------------------------------
+local creatureOfMadnessKilled = 0
+
+function core.TheEmeraldNightmare:Nythendra()
     if bugsSquished >= 15 then
         core:getAchievementSuccess()
     end
 end
+
+function core.TheEmeraldNightmare:Ursoc()
+    if core.type == "UNIT_DIED" and core.destID == "111263" then
+        core:getAchievementFailed()
+    end
+end
+
+function core.TheEmeraldNightmare:Ill()
+    core:trackMob(209471, "Nightmare Explosion Counter (" .. nightmareExplosion .. "/20)", 20, 1, false, nil)
+
+    if core.type == "UNIT_DIED" and core.destID == "209471" then
+        if timerStarted == false then
+            timerStarted = true
+            nightmareKilled = nightmareKilled + 1
+            C_Timer.After(10, function() 
+                print(nightmareKilled)
+                nightmareKilled = 0
+                timerStarted = false
+            end)
+        end
+    end
+end
+
+-- function core.TheEmeraldNightmare:Ele()
+--     if core.type == "SPELL_DAMAGE" and core.spellId == 215503 and core.sourceID == "112078" then
+--         pulsingEggCounter = pulsingEggCounter + 1
+--         print(pulsingEggCounter .. " Pulsing Egg Counter")
+--     end
+-- end
 
 function core.TheEmeraldNightmare:DragonsOfNightmare()
     --Loop through every player in the group. Once each player has got all 4 buffs. Increment count by 1. Once counter equals group size then complete achievement
@@ -72,9 +105,10 @@ function core.TheEmeraldNightmare:DragonsOfNightmare()
     end
 end
 
-function core.TheEmeraldNightmare:Ursoc()
-    if core.type == "UNIT_DIED" and core.destID == "111263" then
-        core:getAchievementFailed()
+function core.TheEmeraldNightmare:Xavius()
+    if core.type == "PARTY_KILL" and core.destID == "110732" then
+        creatureOfMadnessKilled = creatureOfMadnessKilled + 1
+        core:sendMessage(core:getAchievement() .. " Creature of Madness Killed (" .. creatureOfMadnessKilled .. "/3)")
     end
 end
 
@@ -90,6 +124,11 @@ function core.TheEmeraldNightmare:ClearVariables()
     ------------------------------------------------------
     playersUID = {}
     playersBuffCounter = 0
+
+    ------------------------------------------------------
+    ---- Xavius
+    ------------------------------------------------------
+    creatureOfMadnessKilled = 0
 end
 
 function core.TheEmeraldNightmare:InitialSetup()
@@ -106,7 +145,7 @@ function core.TheEmeraldNightmare.Events:UNIT_SPELLCAST_SUCCEEDED(self, unitID, 
             bugsUID[lineID] = lineID
             bugsSquished = bugsSquished + 1
             core:sendMessageDelay(core:getAchievement() .. " Glow Bugs Sqished (" .. bugsSquished .. "/15)", bugsSquished, 1)
-            print(bugsSquished)
+            --print(bugsSquished)
         end
     end
 end

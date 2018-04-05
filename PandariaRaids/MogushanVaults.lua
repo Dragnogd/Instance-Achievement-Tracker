@@ -6,7 +6,7 @@ local _, core = ...
 ------------------------------------------------------
 ---- Mogu'shan Vaults
 ------------------------------------------------------
-core.MogushanVaults = {}
+core.MoguShanVaults = {}
 
 ------------------------------------------------------
 ---- Feng The Accursed
@@ -18,7 +18,13 @@ local LightningFistsReversed = false
 local ArcaneVelocityReversed = false
 local itemsReversed = 0
 
-function core.MogushanVaults:FengTheAccursed()
+function core.MoguShanVaults:ShowMoves()
+	if core.type == "SPELL_DAMAGE" and core.spellId == 116809 then
+		print(core.destName .. " Got Hit")
+	end
+end
+
+function core.MoguShanVaults:FengTheAccursed()
 	if core.type == "SPELL_AURA_APPLIED" then
 		if core.spellId == 116936 and EpicenterReversed == false then
 			EpicenterReversed = true
@@ -50,7 +56,7 @@ function core.MogushanVaults:FengTheAccursed()
 	end
 end
 
-function MogushanVaults_TheSpiritKings()
+function MoguShanVaults_TheSpiritKings()
 	--If boss has cast pillage start timer
 
 	--If user dances and timer has started add to array and user is not already in the array
@@ -62,7 +68,7 @@ function MogushanVaults_TheSpiritKings()
 	--Announce in chat who did not dance in time.
 end
 
-function core.MogushanVaults:ClearVariables()
+function core.MoguShanVaults:ClearVariables()
 	------------------------------------------------------
 	---- Feng The Accursed
 	------------------------------------------------------
