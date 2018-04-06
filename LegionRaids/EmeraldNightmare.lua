@@ -21,10 +21,12 @@ local bugsUID = {}
 local playersUID = {}
 local playersBuffCounter = 0
 
-local nightmareExplosion = 0
+------------------------------------------------------
+---- Il'gynoth
+------------------------------------------------------
 local nightmareKilled = 0
-
-local pulsingEggCounter = 0
+local nightmareExplosionTrackKills = false
+local timerStarted = false
 
 ------------------------------------------------------
 ---- Xavius
@@ -43,18 +45,33 @@ function core.TheEmeraldNightmare:Ursoc()
     end
 end
 
-function core.TheEmeraldNightmare:Ill()
-    core:trackMob(209471, "Nightmare Explosion Counter (" .. nightmareExplosion .. "/20)", 20, 1, false, nil)
+function core.TheEmeraldNightmare:Ilgynoth()
+    --Track 20 Nightmare Explosion are alive
+    core:trackMob(209471, "Nightmare Explosion", 20, 1, false, nil)
 
-    if core.type == "UNIT_DIED" and core.destID == "209471" then
+    if core.mobCounter >= 20 and nightmareExplosionTrackKills = false then
+        core:sendMessage("20 Nightmare Explosion have spawned. They can now be killed at the eye")
+        nightmareExplosionTrackKills = true
+    end
+
+    --Only track kills once we have reached the correct number of mobs alive
+    if core.type == "SPELL_DAMAGE" and core.destID == "105906" and core.spellId == 210048 and nightmareExplosionTrackKills = true then
+        nightmareKilled = nightmareKilled + 1
         if timerStarted == false then
             timerStarted = true
-            nightmareKilled = nightmareKilled + 1
+            core:sendMessage(core:getAchievement() .. " Timer Started!. 10 seconds remaining")
             C_Timer.After(10, function() 
-                print(nightmareKilled)
+                if nightmareKilled >= 20 then
+                    core:getAchievementSuccess()
+                end
                 nightmareKilled = 0
+                nightmareExplosionTrackKills = false
                 timerStarted = false
             end)
+        else
+            if nightmareKilled >= 20 then
+                core:getAchievementSuccess()
+            end            
         end
     end
 end
@@ -129,6 +146,13 @@ function core.TheEmeraldNightmare:ClearVariables()
     ---- Xavius
     ------------------------------------------------------
     creatureOfMadnessKilled = 0
+
+    ------------------------------------------------------
+    ---- Il'gynoth
+    ------------------------------------------------------
+    nightmareKilled = 0
+    nightmareExplosionTrackKills = false
+    timerStarted = false
 end
 
 function core.TheEmeraldNightmare:InitialSetup()
@@ -145,7 +169,6 @@ function core.TheEmeraldNightmare.Events:UNIT_SPELLCAST_SUCCEEDED(self, unitID, 
             bugsUID[lineID] = lineID
             bugsSquished = bugsSquished + 1
             core:sendMessageDelay(core:getAchievement() .. " Glow Bugs Sqished (" .. bugsSquished .. "/15)", bugsSquished, 1)
-            --print(bugsSquished)
         end
     end
 end
