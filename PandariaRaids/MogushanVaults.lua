@@ -107,13 +107,13 @@ function core.MoguShanVaults:WillOfTheEmperor()
 	end
 
 	--Hit by Stomp
-	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 132425 then
+	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 116969 then
 		if playersFailCounter[core.destName] == nil then
 			playersFailCounter[core.destName] = 1
 		else
 			playersFailCounter[core.destName] = playersFailCounter[core.destName] + 1
 		end
-		core:sendMessage(core.destName .. " hit by Devestating Arc (" .. playersFailCounter[core.destName] .. ")")
+		core:sendMessage(core.destName .. " hit by Stomp (" .. playersFailCounter[core.destName] .. ")")
 	end
 
 	--Executed opportunistic strike
@@ -124,14 +124,19 @@ function core.MoguShanVaults:WillOfTheEmperor()
 
 			C_Timer.After(10, function() 
 				if playerExecutedStrike == core.maxPlayers then
+					--core:sendMessage(core:getAchievement() .. " (" .. playerExecutedStrike .. "/" .. core.maxPlayers .. ") Opportunistic Strikes executed in time")					
 					core:getAchievementSuccess()
 				else
-					core:sendMessage(core:getAchievement() .. " " .. playerExecutedStrike .. "/" .. core.maxPlayers .. " Opportunistic Strikes executed in time")
+					core:sendMessage(core:getAchievement() .. " (" .. playerExecutedStrike .. "/" .. core.maxPlayers .. ") Opportunistic Strikes executed in time")
 				end
 	
 				playerExecutedStrike = 0
 				timerStarted = false
 			end)
+		else
+			if playerExecutedStrike == core.maxPlayers then					
+				core:getAchievementSuccess()
+			end			
 		end
 	end
 end
