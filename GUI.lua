@@ -385,22 +385,22 @@ function Config:CreateGUI()
 	content1.title:SetPoint("CENTER", AchievementTrackerDialogBG, "CENTER", -2, 210);
     content1.title:SetText("Welcome to Achievement Tracker V1.0");
 
-    local menu = {
-        { text = "Select an Option", isTitle = true},
-        { text = "Option 1", func = function() print("You've chosen option 1"); end },
-        { text = "Option 2", func = function() print("You've chosen option 2"); end },
-        { text = "More Options", hasArrow = true,
-            menuList = {
-                { text = "Option 3", func = function() print("You've chosen option 3"); end }
-            } 
-        }
-    }
-    -- Note that this frame must be named for the dropdowns to work.
-    local menuFrame = CreateFrame("Frame", "ExampleMenuFrame", UIParent, "UIDropDownMenuTemplate")
+    -- local menu = {
+    --     { text = "Select an Option", isTitle = true},
+    --     { text = "Option 1", func = function() print("You've chosen option 1"); end },
+    --     { text = "Option 2", func = function() print("You've chosen option 2"); end },
+    --     { text = "More Options", hasArrow = true,
+    --         menuList = {
+    --             { text = "Option 3", func = function() print("You've chosen option 3"); end }
+    --         } 
+    --     }
+    -- }
+    -- -- Note that this frame must be named for the dropdowns to work.
+    -- local menuFrame = CreateFrame("Frame", "ExampleMenuFrame", UIParent, "UIDropDownMenuTemplate")
     
-    -- Or make the menu appear at the frame:
-    menuFrame:SetPoint("Center", UIParent, "Center")
-    EasyMenu(menu, menuFrame, menuFrame, 0 , 0, "MENU");
+    -- -- Or make the menu appear at the frame:
+    -- menuFrame:SetPoint("Center", UIParent, "Center")
+    -- EasyMenu(menu, menuFrame, menuFrame, 0 , 0, "MENU");
 
     --Create the navigation buttons for each expansion
     local expansions = {"Legion", "WarlordsOfDraenor", "MistsOfPandaria", "Cataclysm", "WrathOfTheLichKing"}
