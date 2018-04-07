@@ -49,13 +49,13 @@ function core.TheEmeraldNightmare:Ilgynoth()
     --Track 20 Nightmare Explosion are alive
     core:trackMob(209471, "Nightmare Explosion", 20, 1, false, nil)
 
-    if core.mobCounter >= 20 and nightmareExplosionTrackKills = false then
+    if core.mobCounter >= 20 and nightmareExplosionTrackKills == false then
         core:sendMessage("20 Nightmare Explosion have spawned. They can now be killed at the eye")
         nightmareExplosionTrackKills = true
     end
 
     --Only track kills once we have reached the correct number of mobs alive
-    if core.type == "SPELL_DAMAGE" and core.destID == "105906" and core.spellId == 210048 and nightmareExplosionTrackKills = true then
+    if core.type == "SPELL_DAMAGE" and core.destID == "105906" and core.spellId == 210048 and nightmareExplosionTrackKills == true then
         nightmareKilled = nightmareKilled + 1
         if timerStarted == false then
             timerStarted = true
