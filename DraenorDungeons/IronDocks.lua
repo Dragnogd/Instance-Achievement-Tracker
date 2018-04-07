@@ -19,19 +19,16 @@ local ChampionDrunaFound = false
 function core.IronDocks:FleshrenderNokgar()
     --Siegemaster Olugar
     if (core.sourceID == "83026" or core.destID == "83026") and SiegemasterOlugarFound == false then
-        print("Siegemaster Olugar Found")
         SiegemasterOlugarFound = true
     end
 
     --Pitwarden Gwarnok
     if (core.sourceID == "84520" or core.destID == "84520") and PitwardenGwarnokFound == false then
-        print("Pitwarden Gwarnok Found")
         PitwardenGwarnokFound = true
     end
 
     --Champion Druna
     if (core.sourceID == "81603" or core.destID == "81603") and ChampionDrunaFound == false then
-        print("Champion Druna Found")
         ChampionDrunaFound = true
     end
 
@@ -44,7 +41,6 @@ function core.IronDocks:FleshrenderNokgar()
         elseif core.destID == "81603" then
             reason = "Champion Druna"
         end
-        print("Unit Died")
         core:getAchievementFailedWithMessageAfter("(Reason: " .. reason .. " has died)")
     end
 

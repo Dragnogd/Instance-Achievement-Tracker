@@ -38,6 +38,10 @@ local mysteriousFruitPlayers = {}
 
 function core.TheNighthold:Skorpyron()
     --Shockwave cast
+
+    --If player has Broken Shard buff add them to table
+    --If player looses Broken Shard then remove them from table.
+
     if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 204316 then
         --Check every player in the group for the broken shard debuff
         local playersFailed = ""
