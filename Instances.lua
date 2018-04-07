@@ -118,12 +118,12 @@ core.Instances = {
                 name = "The Nighthold",
                 boss1 = {
                     name = "Skorpyron",
-                    bossIDs = {}, --102263
+                    bossIDs = {102263},
                     achievement = 10678,
                     players = {"(Enter instance to start scanning)"},
                     tactics = "",
-                    enabled = false,
-                    track = nil,
+                    enabled = true,
+                    track = function() core.TheNighthold:Skorpyron() end,
 					partial = false,
                 },
                 boss2 = {
@@ -138,7 +138,7 @@ core.Instances = {
                 },
                 boss3 = {
                     name = "Trilliax",
-                    bossIDs = {104288},
+                    bossIDs = {}, --104288
                     achievement = 10742,
                     players = {"(Enter instance to start scanning)"},
                     tactics = "",

@@ -37,9 +37,38 @@ local mysteriousFruitPlayers = {}
 
 
 function core.TheNighthold:Skorpyron()
-    if core.type == "SPELL_DAMAGE" and core.spellId == 210074 then
-        core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")")
-        print(core.destName .. " got hit")
+    --Shockwave cast
+    if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 204316 then
+        --Check every player in the group for the broken shard debuff
+        local playersFailed = ""
+        local playerHit = false
+        for i = 1, core.groupSize do
+            local unit = nil
+            if core.chatType == "PARTY" then
+                if i < core.groupSize then
+                    unit = "party" .. i
+                else
+                    unit = "player"
+                end
+            elseif core.chatType == "RAID" then
+                unit = "raid" .. i
+            elseif core.chatType == "SAY" then
+                unit = "player"
+            end
+
+            if UnitBuff(unit, "Broken Shard") then
+                print(UnitName(unit) .. " is save")
+            else
+                playersFailed = playersFailed .. UnitName(unit) .. ", "
+                playerHit = true
+                print(UnitName(unit) .. " got hit")
+            end
+        end
+        
+        if playerHit == true then
+            core:sendMessage(core:getAchievement() .. " Players hit by shockwave: " .. playersFailed)
+            print(playersFailed)
+        end
     end
 end
 
