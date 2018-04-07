@@ -40,12 +40,12 @@ core.Instances = {
                 },
                 boss4 = {
                     name = "Elerethe Renferal",
-                    bossIDs = {106087},
+                    bossIDs = {}, --106087
                     achievement = 10771,
                     players = {"(Enter instance to start scanning)"},
                     tactics = "",
-                    enabled = true,
-                    track = function() core.TheEmeraldNightmare:Ele() end,
+                    enabled = false,
+                    track = nil,
 					partial = false,
                 },
                 boss5 = {
