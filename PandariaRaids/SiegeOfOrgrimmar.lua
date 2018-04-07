@@ -22,6 +22,8 @@ f:RegisterEvent("PLAYER_ENTERING_WORLD")
 ------------------------------------------------------
 local tearsOfTheValeKilled = 0
 local mobSpawnIDs = {}
+local safeToKillTears = false --Achievement bugs out if the mob are killed too fast.
+local bossReformed = false
 
 ------------------------------------------------------
 ---- TheFallenProtectors
@@ -97,7 +99,20 @@ local warbringersKilled = 0
 local killedTimestamp = nil
 
 function core.SiegeOfOrgrimmar:Immerseus()
-	if core.type == "UNIT_DIED" and core.destName == "Tears of the Vale" and tearsOfTheValeKilled < 10 then
+	if (core.type == "SWING_DAMAGE_LANDED" or core.type == "SWING_DAMAGE" or core.type == "SPELL_DAMAGE" or core.type == "SPELL_MISSED" or core.type == "SPELL_ABSORBED") and bossReformed == true and core.sourceID == "71543" then
+		if timerStarted == false then
+			timerStarted = true
+			C_Timer.After(3, function()
+				if core.inCombat == true then 
+					core:sendMessage("Kill the Tears of the Vale Now")
+					safeToKillTears = true
+					timerStarted = false
+				end
+			end)
+		end
+	end
+
+	if core.type == "UNIT_DIED" and core.destName == "Tears of the Vale" and tearsOfTheValeKilled < 10 and safeToKillTears == true then
 		tearsOfTheValeKilled = tearsOfTheValeKilled + 1
 		core:sendMessage("Tears of the Vale Killed ("  .. tearsOfTheValeKilled .. "/10)")
 	end
@@ -309,8 +324,6 @@ function core.SiegeOfOrgrimmar:Paragons()
 end
 
 function core.SiegeOfOrgrimmar:GarroshHellscream()
-	--core:trackMob("71979", "Kor'kron Warbringer", 18, "18 Kor'kron Warbringers Alive. They can now be killed with a single Iron Star", 3, nil, nil)
-
 	if core.achievementsCompleted[1] == false then
 		if (core.type == "SWING_DAMAGE" or core.type == "SWING_MISSED") and core.sourceID == "71979" then
 			if warbringersIds[core.spawn_uid] == nil then
@@ -372,86 +385,6 @@ function core.SiegeOfOrgrimmar:GarroshHellscream()
 			end			 
 		end
 	end
-	-- --Detect Iron Star Impact
-	-- if core.type == "UNIT_DIED" and core.destID == "71985" then
-	-- 	print("Iron Star Killed")
-	-- end
-
-	-- if core.type == "UNIT_DIED" and core.destID == "71979" then
-	-- 	print("Warbringer Killed")
-	-- end
-
-
-	-- --Detect mob
-	-- if (core.type == "SWING_DAMAGE" or core.type == "SWING_MISSED") and core.sourceID == "71979" then
-	-- 	if warbringersIds[core.spawn_uid] == nil then
-	-- 		warbringersIds[core.spawn_uid] = core.spawn_uid
-	-- 		warbringersCounter = warbringersCounter + 1
-	-- 		core:sendMessageDelay(core:getAchievement() .. "Kor'kron Warbringer (" .. warbringersCounter .. "/18)", warbringersCounter, 3)
-	-- 		print("Adding: " .. core.spawn_uid ..  " with a ID of " .. core.sourceID)
-	-- 	end
-	-- end
-
-	-- --Stage 1 requirements of achievement met (collect 18 warbringers)
-	-- if warbringersCounter >= 18 and step1Complete == false then
-	-- 	core:sendMessage(core:getAchievement() .. warbringersCounter .. " Kor'kron Warbringers Alive. They can now be killed with a single Iron Star")
-	-- 	step1Complete = true		
-	-- end
-
-	-- --If a Warbringer was killed by an iron star impact
-	-- if core.type == "SPELL_DAMAGE" and core.destID == "71979" and core.spellId == 144653 and core.overkill > 0 then
-	-- 	--Warbinger Killed with an Iron Star
-	-- 	warbringersCounter = warbringersCounter - 1
-	-- 	warbringersIds[core.spawn_uid_dest] = nil
-
-	-- 	--Increment one to the counter of the particular Iron Star that killed the warbringer
-	-- 	if ironStarIds[core.spawn_uid] == nil then
-	-- 		ironStarIds[core.spawn_uid] = 1
-	-- 		print("Iron Star with ID " .. core.spawn_uid .. " killed a warbringer")
-	-- 	else
-	-- 		ironStarIds[core.spawn_uid] = ironStarIds[core.spawn_uid] + 1
-	-- 		print("Iron Star with ID " .. core.spawn_uid .. " killed a warbringer")
-	-- 	end
-
-	-- 	--If enough adds have spawned then start the timer
-	-- 	if timerStarted == false and step1Complete == true and core.achievementsCompleted[1] == false then
-	-- 		timerStarted = true
-	-- 		core:sendMessage(core:getAchievement() .. " Timer Started! 10 seconds remaining")
-	-- 		C_Timer.After(10, function()
-	-- 			--Loop through each Iron Star and check the amount of warbringers they killed
-	-- 			local achievFailed = true
-	-- 			local achievCounter = 0
-	-- 			for k, v in pairs(ironStarIds) do
-	-- 				print(k, v[1])
-	-- 				if v[1] >= 18 then
-	-- 					core:getAchievementSuccess()
-	-- 					achievFailed = false
-	-- 				else
-	-- 					if v[1] > achievCounter then
-	-- 						achievCounter = v[1]
-	-- 					end
-	-- 				end
-	-- 			end
-
-	-- 			if achievFailed == true then
-	-- 				core:getAchievementFailedWithMessageAfter("(" .. achievCounter .. "/18) killed in time (This achievement can be repeated)")
-	-- 				step1Complete = false
-	-- 				timerStarted = false
-	-- 				ironStarIds = {}
-	-- 			end
-	-- 		end)			
-	-- 	end
-	-- elseif core.type == "UNIT_DIED" and core.destID == "71979" then
-	-- 	--Warbinger killed without an Iron Star
-	-- 	warbringersCounter = warbringersCounter - 1
-	-- 	warbringersIds[core.spawn_uid_dest] = nil
-	-- 	core:sendMessageDelay(core:getAchievement() .. "Kor'kron Warbringer DIED (" .. warbringersCounter .. "/18)", warbringersCounter, 3)
-	-- end
-
-	--local vehicleX, vehicleY, unitName, isPossessed, vehicleType, orientation, isPlayer, isAlive = GetBattlefieldVehicleInfo(1)
-
-	--print(vehicleX)
-	--print(unitName)
 end
 
 function core.SiegeOfOrgrimmar:TrackAdditional()
@@ -524,11 +457,23 @@ end
 
 function core.SiegeOfOrgrimmar:InitialSetup()
     core.SiegeOfOrgrimmar.Events:RegisterEvent("UNIT_AURA")
+    core.SiegeOfOrgrimmar.Events:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 end
 
 core.SiegeOfOrgrimmar.Events:SetScript("OnEvent", function(self, event, ...)
     return self[event] and self[event](self, event, ...)
 end)
+
+function core.SiegeOfOrgrimmar.Events:CHAT_MSG_RAID_BOSS_EMOTE(self, message, sender, ...)
+	if string.match(message, "Reforms") then
+		bossReformed = true
+	end
+
+	if string.match(message, "Split") then
+		safeToKillTears = false
+		bossReformed = false
+	end
+end
 
 function core.SiegeOfOrgrimmar.Events:UNIT_AURA(self, unitID, ...)
 	if UnitAura("Player", "Resistance Totem") and prisonersRescued == false then
@@ -550,6 +495,8 @@ function core.SiegeOfOrgrimmar:ClearVariables()
 	------------------------------------------------------
 	tearsOfTheValeKilled = 0
 	mobSpawnIDs = {}
+	safeToKillTears = false
+	bossReformed = false
 
 	------------------------------------------------------
 	---- TheFallenProtectors

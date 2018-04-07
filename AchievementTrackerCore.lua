@@ -45,6 +45,7 @@ if debugMode == true then
 	events:RegisterEvent("UNIT_AURA")
 	events:RegisterEvent("UNIT_ABSORB_AMOUNT_CHANGED")
 	events:RegisterEvent("NAME_PLATE_UNIT_ADDED")
+	
 end
 
 local temp2 = {}
