@@ -84,7 +84,6 @@ function core.MoguShanVaults:ClearVariables()
 	---- Will of The Emperor
 	------------------------------------------------------
 	playerExecutedStrike = 0
-	playersFailCounter = {}
 	timerStarted = false
 end
 
