@@ -138,7 +138,7 @@ core.Instances = {
                 },
                 boss3 = {
                     name = "Trilliax",
-                    bossIDs = {}, --104288
+                    bossIDs = {104288},
                     achievement = 10742,
                     players = {"(Enter instance to start scanning)"},
                     tactics = "At 110, you can simply just nuke the boss down and ignore picking up the toxic slices.",
