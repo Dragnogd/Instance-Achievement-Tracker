@@ -616,12 +616,12 @@ core.Instances = {
                 },
                 boss2 = {
                     name = "Cordana",
-                    bossIDs = {},
+                    bossIDs = {95888},
                     achievement = 10680,
                     players = {"(Enter instance to start scanning)"},
                     tactics = "",
-                    enabled = false,
-                    track = nil,
+                    enabled = true,
+                    track = function() core.VaultOfTheWardens:Cordana() end,
 					partial = false,
                 },
                 boss3 = {

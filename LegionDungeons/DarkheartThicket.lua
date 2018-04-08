@@ -22,7 +22,7 @@ function core.DarkheartThicket:ShadeOfXavius()
     end
 
     --Apocalyptic Empowerment fell off boss after requirements have been met
-    if core.type == "SPELL_AURA_REMOVED" and core.spellId == 221315 and core.achievementsCompleted[1] == true then
+    if core.type == "SPELL_AURA_REMOVED" and core.spellId == 221315 and core.achievementsCompleted[1] == true and core.inCombat == true then
         core.achievementsCompleted[1] = false
         core:getAchievementFailedWithMessageAfter("Apocalyptic Empowerment stacks fallen off boss")
     end
