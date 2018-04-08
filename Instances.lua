@@ -579,7 +579,7 @@ core.Instances = {
             },
 
             NeltharionSLair = {
-                name = "Neltharions Lair",
+                name = "NeltharionS Lair",
                 boss1 = {
                     name = "Other 3",
                     bossIDs = {},
