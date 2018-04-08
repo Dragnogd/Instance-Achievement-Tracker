@@ -606,12 +606,12 @@ core.Instances = {
                 name = "Vault of the Wardens",
                 boss1 = {
                     name = "Ash'Golm",
-                    bossIDs = {},
+                    bossIDs = {95886},
                     achievement = 10679,
                     players = {"(Enter instance to start scanning)"},
                     tactics = "",
-                    enabled = false,
-                    track = nil,
+                    enabled = true,
+                    track = function() core.VaultOfTheWardens:AshGolm() end,
 					partial = false,
                 },
                 boss2 = {
