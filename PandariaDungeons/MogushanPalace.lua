@@ -11,19 +11,22 @@ core.MoguShanPalace = {}
 ------------------------------------------------------
 ---- Xin the Weaponmaster
 ------------------------------------------------------
-local gemsPressed = 0
+local achievementSuccess = false
 local timerStarted = false
 
 function core.MoguShanPalace.XinTheWeaponmaster()
+    --Achievement Success
+    if core.type == "SPELL_DAMAGE" and core.spellId == 124527 then
+        achievementSuccess = true
+    end
+
+    --Check if Achievement has Failed
     if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 124537 then
-        gemsPressed = gemsPressed + 1
         if timerStarted == false then
             timerStarted = true
             C_Timer.After(10, function()
-                if gemsPressed ~= 2 then
+                if achievementSuccess == false then
                     core:getAchievementFailed()
-                else
-                    core:getAchievementSuccess()
                 end
             end)
         end
@@ -34,6 +37,6 @@ function core.MoguShanPalace:ClearVariables()
     ------------------------------------------------------
     ---- Xin the Weaponmaster
     ------------------------------------------------------
-    gemsPressed = 0
     timerStarted = false
+    achievementSuccess = false
 end
