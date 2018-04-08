@@ -104,18 +104,21 @@ function core.TheNighthold:StarAugurEtraeus()
 end
 
 function core.TheNighthold:HighBotanistTelarn()
-	if core.type == "UNIT_DIED" and core.unitTypePlayer == "Player" then
-		--If the player was holding a parasite then reduce counter by 1
-		if mysteriousFruitPlayers[core.spawn_uid_dest_Player] ~= nil then
-			mysteriousFruitCounter = mysteriousFruitCounter - 1
-			mysteriousFruitPlayers[core.spawn_uid_dest_Player] = nil
+	if core.type == "UNIT_DIED" then
+        local name, realm = strsplit("-", core.destID)
+        if UnitIsPlayer(name) then
+            --If the player was holding a parasite then reduce counter by 1
+            if mysteriousFruitPlayers[core.spawn_uid_dest_Player] ~= nil then
+                mysteriousFruitCounter = mysteriousFruitCounter - 1
+                mysteriousFruitPlayers[core.spawn_uid_dest_Player] = nil
 
-			--If achievement had already completed then fail it
-			if core.achievementsCompleted[1] == true then
-				core:getAchievementFailedWithMessageAfter("(Reason: " .. core.destName .. " has died) DO NOT KILL BOSS!")
-				core.achievementsCompleted[1] = false
-			end
-		end
+                --If achievement had already completed then fail it
+                if core.achievementsCompleted[1] == true then
+                    core:getAchievementFailedWithMessageAfter("(Reason: " .. core.destName .. " has died) DO NOT KILL BOSS!")
+                    core.achievementsCompleted[1] = false
+                end
+            end
+        end
 	end
 
 	--If player is in a group
