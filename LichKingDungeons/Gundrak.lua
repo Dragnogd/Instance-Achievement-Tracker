@@ -33,7 +33,7 @@ function core.Gundrak:Galdarah()
     if core.type == "SPELL_AURA_APPLIED" and core.spellId == 59827 and core:has_value(playersImpaled, core.destName) == false then
         table.insert(playersImpaled, core.destName)
         impaleCounter = impaleCounter + 1
-        core:sendMessage(core:getAchievement() .. " Players Impaled (" .. impaleCounter .. "/5)")
+        core:sendMessage(core:getAchievement() .. core.destName .. " Impaled (" .. impaleCounter .. "/5)")
     end
 
     if impaleCounter == 5 then
