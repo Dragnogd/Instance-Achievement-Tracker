@@ -41,6 +41,7 @@ end
 
 function core.TombOfSargeras:Kiljaeden()
     if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 241702 then
+        --print("Failed Dark Souls")
         core:getAchievementFailed()
     end
 end

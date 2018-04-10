@@ -90,6 +90,7 @@ end
 function core.TheNighthold:StarAugurEtraeus()
     --Check if boss has reached phase 3
     if core:getHealthPercent("boss1") <= 30 then
+        core:sendMessage(core:getAchievement() .. " Kill the Well-Traveled Nether Elemental now")
         healthPercentageReached = true
     end
 

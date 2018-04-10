@@ -6,7 +6,7 @@ local _, core = ...
 local events = CreateFrame("Frame")
 local UIConfig
 local UICreated = false
-local debugMode = false
+local debugMode = true
 
 AchievementTrackerOptions = {}
 AchievementTrackerDebug = {}
@@ -886,68 +886,69 @@ end
 
 --This event is used to scan players in the group to see which achievements they are currently missing
 function events:INSPECT_ACHIEVEMENT_READY(self, GUID)
-
 	local class, classFilename, race, raceFilename, sex, name, realm = GetPlayerInfoByGUID(GUID)
+	C_Timer.After(1, function()
+		core:sendDebugMessage("INSPECT_ACHIEVEMENT_READY FIRED. INFORMATION FOR: " .. name)
 
-	core:sendDebugMessage("INSPECT_ACHIEVEMENT_READY FIRED. INFORMATION FOR: " .. name)
-
-	--Check if the Inspect_Achievement_Ready was from a request that we made and not from another addon
-	if core.currentComparisonUnit == name then
-		--Find the achievements for the raid the user has entered
-		if UnitName(playerCurrentlyScanning) ~= nil then
-			local name2, realm2 = UnitName(playerCurrentlyScanning)
-			--AchievementTrackerDebug[name2] = {}
-
-			for boss,_ in pairs(core.Instances[core.expansion][core.instanceType][core.instance]) do
-				if boss ~= "name" then
-					local completed, month, day, year = GetAchievementComparisonInfo(core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
-					--print(GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " completed: " .. tostring(completed))
-					
-					--print(completed)
-
-					--Make sure initial text is removed
-					if core.Instances[core.expansion][core.instanceType][core.instance][boss].players[1] == "(Enter instance to start scanning)" or core.Instances[core.expansion][core.instanceType][core.instance][boss].players[1] == "(No players in the group need this achievement)" then
-						table.remove(core.Instances[core.expansion][core.instanceType][core.instance][boss].players, 1)
-					end
-
-					--If the player has not completed the achievement then add them to the players string to display in the GUI
-					--Temp: will show completed achievements in GUI since I've already completed all the achievements
-					if completed == nil then
-						local name, _ = UnitName(playersToScan[1])
-						table.insert(core.Instances[core.expansion][core.instanceType][core.instance][boss].players, name)
-							
-						--AchievementTrackerDebug[UnitName(playerCurrentlyScanning)][core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement] = "Incomplete"
-					elseif completed == true then
-						--AchievementTrackerDebug[UnitName(playerCurrentlyScanning)][core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement] = "Complete"
-					end
-				end
-			end
-
-			--Check if any of the achievements have been achieved by every player in the group
-			for boss,_ in pairs(core.Instances[core.expansion][core.instanceType][core.instance]) do
-				if boss ~= "name" then
-					if #core.Instances[core.expansion][core.instanceType][core.instance][boss].players == 0 then
-						table.insert(core.Instances[core.expansion][core.instanceType][core.instance][boss].players, "(No players in the group need this achievement)")
+		--Check if the Inspect_Achievement_Ready was from a request that we made and not from another addon
+		if core.currentComparisonUnit == name then
+			--Find the achievements for the raid the user has entered
+			if UnitName(playerCurrentlyScanning) ~= nil then
+				local name2, realm2 = UnitName(playerCurrentlyScanning)
+				--AchievementTrackerDebug[name2] = {}
+	
+				for boss,_ in pairs(core.Instances[core.expansion][core.instanceType][core.instance]) do
+					if boss ~= "name" then
+						local completed, month, day, year = GetAchievementComparisonInfo(core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
+						--print(GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " completed: " .. tostring(completed))
+						
+						--print(completed)
+	
+						--Make sure initial text is removed
+						if core.Instances[core.expansion][core.instanceType][core.instance][boss].players[1] == "(Enter instance to start scanning)" or core.Instances[core.expansion][core.instanceType][core.instance][boss].players[1] == "(No players in the group need this achievement)" then
+							table.remove(core.Instances[core.expansion][core.instanceType][core.instance][boss].players, 1)
+						end
+	
+						--If the player has not completed the achievement then add them to the players string to display in the GUI
+						--Temp: will show completed achievements in GUI since I've already completed all the achievements
+						if completed == nil then
+							local name, _ = UnitName(playersToScan[1])
+							table.insert(core.Instances[core.expansion][core.instanceType][core.instance][boss].players, name)
+								
+							--AchievementTrackerDebug[UnitName(playerCurrentlyScanning)][core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement] = "Incomplete"
+						elseif completed == true then
+							--AchievementTrackerDebug[UnitName(playerCurrentlyScanning)][core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement] = "Complete"
+						end
 					end
 				end
+	
+				--Check if any of the achievements have been achieved by every player in the group
+				for boss,_ in pairs(core.Instances[core.expansion][core.instanceType][core.instance]) do
+					if boss ~= "name" then
+						if #core.Instances[core.expansion][core.instanceType][core.instance][boss].players == 0 then
+							table.insert(core.Instances[core.expansion][core.instanceType][core.instance][boss].players, "(No players in the group need this achievement)")
+						end
+					end
+				end
+	
+				--print("Scanned " .. UnitName(playersToScan[1]))
+				table.insert(playersScanned, playersToScan[1])
+				table.remove(playersToScan, 1)
+	
+				--Update the GUI
+				core.Config:Instance_OnClickAutomatic()
+	
+				playerCurrentlyScanning = nil
+			else
+				rescanNeeded = true
 			end
-
-			--print("Scanned " .. UnitName(playersToScan[1]))
-			table.insert(playersScanned, playersToScan[1])
-			table.remove(playersToScan, 1)
-
-			--Update the GUI
-			core.Config:Instance_OnClickAutomatic()
-
-			playerCurrentlyScanning = nil
+	
+			updateDebugTable()
 		else
-			rescanNeeded = true
+			core:sendDebugMessage("Incorrect INSPECT_ACHIEVEMENT_READY call for " .. name)
 		end
-
-		updateDebugTable()
-	else
-		core:sendDebugMessage("Incorrect INSPECT_ACHIEVEMENT_READY call for " .. name)
-	end
+	end)
+	
 end
 
 --Fired when the players has finished loading in the world.
