@@ -25,6 +25,7 @@ function core.TrialOfValor:Helya()
 
     if core.groupSize == (fetidcount - 1) then
         core:getAchievementSuccess()
+        core.achievementsFailed[1] = false
     end
 
     if core.type == "SPELL_AURA_REMOVED" and core.spellId == 193367 then
@@ -36,6 +37,7 @@ function core.TrialOfValor:Helya()
             --Fail achievement if compelted already
             if core.achievementsCompleted[1] == true then
                 core:getAchievementFailed()
+                core.achievementsCompleted[1] = false
             end
         end
     end  
