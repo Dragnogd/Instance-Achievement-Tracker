@@ -7,11 +7,20 @@ local _, core = ...
 ---- Trial of Valor Bosses
 ------------------------------------------------------
 core.TrialOfValor = {}
+core.TrialOfValor.Events = CreateFrame("Frame")
 
 ------------------------------------------------------
 ---- Odyn
 ------------------------------------------------------
 local odynKilled = false
+
+------------------------------------------------------
+---- Guarm
+------------------------------------------------------
+local fieryPhelgmComplete = false
+local saltySpittleComplete = false
+local darkDischargeComplete = false
+local breathCounter = 0
 
 ------------------------------------------------------
 ---- Helya
@@ -68,6 +77,7 @@ end
 
 function core.TrialOfValor:InitialSetup()
     odynKilled = false
+    core.Ulduar.Events:RegisterEvent("UNIT_AURA")
 end
 
 function core.TrialOfValor:ClearVariables()
@@ -76,4 +86,35 @@ function core.TrialOfValor:ClearVariables()
     ------------------------------------------------------
     fetidNames = {}
     fetidcount = 0
+end
+
+core.Ulduar.TrialOfValor:SetScript("OnEvent", function(self, event, ...)
+    return self[event] and self[event](self, event, ...)
+end)
+
+function core.TrialOfValor.Events:UNIT_AURA(self, unitID, ...)
+    --Player gained Fiery Phlegm
+    if UnitBuff(unitID, GetSpellInfo(231846)) and UnitBuff(unitID, GetSpellInfo(227539)) and fieryPhelgmComplete == false then
+        fieryPhelgmComplete = true
+        breathCounter= breathCounter + 1
+        core:sendMessage("Fiery Phelgm (Orange) part of " .. core:getAchievement() .. " Completed (" .. breathCounter .. "/3)")
+    end
+
+    --Player gained Salty Spittle
+    if UnitBuff(unitID, GetSpellInfo(231846)) and UnitBuff(unitID, GetSpellInfo(227566)) and fieryPhelgmComplete == false then
+        fieryPhelgmComplete = true
+        breathCounter= breathCounter + 1
+        core:sendMessage("Salty Spittle (Green) part of " .. core:getAchievement() .. " Completed (" .. breathCounter .. "/3)")
+    end
+
+    --Player gained Dark Discharge
+    if UnitBuff(unitID, GetSpellInfo(231846)) and UnitBuff(unitID, GetSpellInfo(227570)) and fieryPhelgmComplete == false then
+        fieryPhelgmComplete = true
+        breathCounter= breathCounter + 1
+        core:sendMessage("Dark Discharge (Purple) part of " .. core:getAchievement() .. " Completed (" .. breathCounter .. "/3)")
+    end
+
+    if breathCounter == 3 then
+        core:getAchievementSuccess()
+    end
 end

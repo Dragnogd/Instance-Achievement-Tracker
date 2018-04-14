@@ -94,12 +94,12 @@ core.Instances = {
                 },
                 boss2 = {
                     name = "Guarm",
-                    bossIDs = {},
+                    bossIDs = {114323},
                     achievement = 11386,
                     players = {"(Enter instance to start scanning)"},
                     tactics = "",
-                    enabled = false,
-                    track = nil,
+                    enabled = true,
+                    track = function() end,
 					partial = false,
                 },
                 boss3 = {
