@@ -232,12 +232,12 @@ core.Instances = {
                 },
                 boss2 = {
                     name = "Demonic Inquisition",
-                    bossIDs = {},
+                    bossIDs = {116689,116691},
                     achievement = 11696,
                     players = {"(Enter instance to start scanning)"},
                     tactics = "",
-                    enabled = false,
-                    track = nil,
+                    enabled = true,
+                    track = function() core.TombOfSargeras:DemonicInquisition() end,
 					partial = false,
                 },
                 boss3 = {
