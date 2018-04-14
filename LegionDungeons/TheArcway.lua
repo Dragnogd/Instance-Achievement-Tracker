@@ -26,7 +26,7 @@ function core.TheArcway:AdvisorVandros()
     end
 
     --Timeless Wraith killed
-    if core.type == "UNIT_DIED" and core.destID == "103130" and advisorVandrosKilled = false then
+    if core.type == "UNIT_DIED" and core.destID == "103130" and advisorVandrosKilled == false then
         core:getAchievementFailed()
     end
 end
