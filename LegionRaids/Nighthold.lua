@@ -9,6 +9,12 @@ local _, core = ...
 core.TheNighthold = {}
 
 ------------------------------------------------------
+---- Skorpyron
+------------------------------------------------------
+playersBrokenShard = {}
+playersBrokenShardCounter = 0
+
+------------------------------------------------------
 ---- Trilliax
 ------------------------------------------------------
 local toxicSliceCounter = 0
@@ -38,42 +44,58 @@ local mysteriousFruitPlayers = {}
 
 function core.TheNighthold:Skorpyron()
     --Shockwave cast
-
-    --If player has Broken Shard buff add them to table
-    --If player looses Broken Shard then remove them from table.
-
-    -- if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 204316 then
-    --     --Check every player in the group for the broken shard debuff
-    --     local playersFailed = ""
-    --     local playerHit = false
-    --     for i = 1, core.groupSize do
-    --         local unit = nil
-    --         if core.chatType == "PARTY" then
-    --             if i < core.groupSize then
-    --                 unit = "party" .. i
-    --             else
-    --                 unit = "player"
-    --             end
-    --         elseif core.chatType == "RAID" then
-    --             unit = "raid" .. i
-    --         elseif core.chatType == "SAY" then
-    --             unit = "player"
-    --         end
-
-    --         if UnitBuff(unit, "Broken Shard") then
-    --             print(UnitName(unit) .. " is save")
-    --         else
-    --             playersFailed = playersFailed .. UnitName(unit) .. ", "
-    --             playerHit = true
-    --             print(UnitName(unit) .. " got hit")
-    --         end
-    --     end
+    if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 204316 then
+        --Loop through all players in the group and make a list of all players that got hit by the shockwave
+        local playersFailed = ""
+        local playerHit = false
+        for i = 1, core.groupSize do
+            local unit = nil
+            if core.chatType == "PARTY" then
+                if i < core.groupSize then
+                    unit = "party" .. i
+                else
+                    unit = "player"
+                end
+            elseif core.chatType == "RAID" then
+                unit = "raid" .. i
+            elseif core.chatType == "SAY" then
+                unit = "player"
+            end
         
-    --     if playerHit == true then
-    --         core:sendMessage(core:getAchievement() .. " Players hit by shockwave: " .. playersFailed)
-    --         print(playersFailed)
-    --     end
-    -- end
+            local name, _ = UnitName(unit)
+            local realm = GetRealmName(unit)
+            local nameStr = name .. "-" .. realm
+            if playersBrokenShard[nameStr] == nil then
+                playerHit = true
+                playersFailed = playersFailed .. name .. ", "
+                core:sendDebugMessage(name .. " got hit")
+            else
+                core:sendDebugMessage(name .. " did not get hit")
+            end
+        end
+
+        if playerHit == true then
+            core:getAchievementFailedWithMessageAfter("Players Hit: " .. playersFailed)
+        end
+    end
+
+    --Player has gained Broken Shard buff
+    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 204284 then
+        if playersBrokenShard[core.destName] == nil then
+            playersBrokenShardCounter = playersBrokenShardCounter + 1
+            playersBrokenShard[core.destName] = core.destName
+            core:sendDebugMessage(core.destName .. " Gained Broken Shard")
+        end
+    end
+
+    --Player has lost Broken Shard buff
+    if core.type == "SPELL_AURA_REMOVED" and core.spellId == 204284 then
+        if playersBrokenShard[core.destName] ~= nil then
+            playersBrokenShardCounter = playersBrokenShardCounter - 1
+            playersBrokenShard[core.destName] = nil
+            core:sendDebugMessage(core.destName .. " Lost Broken Shard")   
+        end
+    end
 end
 
 function core.TheNighthold:Trilliax()
