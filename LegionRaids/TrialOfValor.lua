@@ -32,6 +32,11 @@ function core.TrialOfValor:Helya()
             fetidNames[core.destName] = nil
             fetidcount = fetidcount - 1
             --core:sendMessage(core.destName .. " Lost Fetid Rot (" .. fetidcount .. "/" .. core.groupSize .. ")")
+        
+            --Fail achievement if compelted already
+            if core.achievementsCompleted[1] == true then
+                core:getAchievementFailed()
+            end
         end
     end  
 end
