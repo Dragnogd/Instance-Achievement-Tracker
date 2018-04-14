@@ -708,13 +708,13 @@ core.Instances = {
                 name = "The Arcway",
                 boss1 = {
                     name = "Advisor Vandros",
-                    bossIDs = {},
+                    bossIDs = {98208},
                     achievement = 10776,
                     players = {"(Enter instance to start scanning)"},
                     tactics = "",
-                    enabled = false,
+                    enabled = true,
                     track = nil,
-					partial = false,
+					partial = function() core.TheArcway:AdvisorVandros() end,
                 },
                 boss2 = {
                     name = "Corstilax",
