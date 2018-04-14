@@ -733,8 +733,8 @@ core.Instances = {
                     players = {"(Enter instance to start scanning)"},
                     tactics = "",
                     enabled = true,
-                    track = nil,
-					partial = function() core.TheArcway:AdvisorVandros() end,
+                    track = function() core.TheArcway:AdvisorVandros() end,
+					partial = false,
                 },
             },
 
