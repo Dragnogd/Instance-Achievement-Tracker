@@ -88,7 +88,7 @@ function core.TrialOfValor:ClearVariables()
     fetidcount = 0
 end
 
-core.Ulduar.TrialOfValor:SetScript("OnEvent", function(self, event, ...)
+core.TrialOfValor:SetScript("OnEvent", function(self, event, ...)
     return self[event] and self[event](self, event, ...)
 end)
 
