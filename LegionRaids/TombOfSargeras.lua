@@ -21,12 +21,11 @@ end
 
 function core.TombOfSargeras:SistersOfTheMoon()
     --Check if boss has reached 20% health
-    if UnitHealth("boss1") / UnitHealthMax("boss") *100 <= 20 then
-        healthPercentageReached = true
-
+    if core:getHealthPercent("boss1") <= 20 then
         if healthPercentageReached == false then
-            --print("Health Percentage Reached")
+            core:sendMessage(core:getAchievement() .. " Kill the Waxing Twilight Soul now!")
         end
+        healthPercentageReached = true
     end
 
     --Add has died

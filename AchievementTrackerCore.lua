@@ -391,6 +391,7 @@ function getInstanceAchievements()
 				-- end
 
 				--Last player to scan was not successfull
+				core:sendDebugMessage("Last scan was unsuccessfull: " .. scanCounterloc)
 				rescanNeeded = true
 				if playersToScan[1] ~= nil then
 					--print("Cannot Scan " .. playersToScan[1])
@@ -406,6 +407,8 @@ function getInstanceAchievements()
 						getPlayersInGroup()
 					end)
 				end
+			else
+				core:sendDebugMessage("Cancelling: " .. scanCounterloc)
 			end
 			--updateDebugTable()
 		end)
