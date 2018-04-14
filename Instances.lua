@@ -84,12 +84,12 @@ core.Instances = {
                 name = "Trial of Valor",
                 boss1 = {
                     name = "Odyn",
-                    bossIDs = {},
+                    bossIDs = {114263},
                     achievement = 11337,
                     players = {"(Enter instance to start scanning)"},
                     tactics = "",
-                    enabled = false,
-                    track = nil,
+                    enabled = true,
+                    track = function() core.TrialOfValor:Odyn() end,
 					partial = false,
                 },
                 boss2 = {
