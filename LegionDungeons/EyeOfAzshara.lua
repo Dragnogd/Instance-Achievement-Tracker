@@ -27,6 +27,8 @@ function core.EyeOfAzshara:WarlordParjesh()
 end
 
 function core.EyeOfAzshara:LadyHatecoil()
+    core:trackMob("98293", "Saltsea Globule", 11, "Kill the Salsea Globules with Curse of The Witch Now", 1, nil, nil)
+
     if core.type == "SPELL_AURA_REMOVED" and core.spellId == 193698 then
         timerStarted = true
         C_Timer.After(3, function() 
@@ -42,7 +44,7 @@ function core.EyeOfAzshara:LadyHatecoil()
         end)
     end
 
-    if core.type == "UNIT_DIED" then
+    if core.type == "UNIT_DIED" and core.destID == "98293" then
         if timerStarted == true and core.destFlags == 0xa48 then
             saltseaGlobulesCounter = saltseaGlobulesCounter + 1
         end
