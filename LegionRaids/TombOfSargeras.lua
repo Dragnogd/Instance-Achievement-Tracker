@@ -25,7 +25,7 @@ function core.TombOfSargeras:DemonicInquisition()
         if playersTormentTable[core.destName] == nil then
             playersTorment = playersTorment + 1
             playersTormentTable[core.destName] = core.destName
-            core:sendMessage(core.destName .. " has gained Unbearable Torment (" .. playersTorment .. "/" .. core.groupSize .. ")")
+            --core:sendMessage(core.destName .. " has gained Unbearable Torment (" .. playersTorment .. "/" .. core.groupSize .. ")")
         end
     end
 
@@ -34,7 +34,7 @@ function core.TombOfSargeras:DemonicInquisition()
         if playersTormentTable[core.destName] ~= nil then
             playersTorment = playersTorment - 1
             playersTormentTable[core.destName] = nil
-            core:sendMessage(core.destName .. " has lost Unbearable Torment (" .. playersTorment .. "/" .. core.groupSize .. ")")
+            --core:sendMessage(core.destName .. " has lost Unbearable Torment (" .. playersTorment .. "/" .. core.groupSize .. ")")
         
             --If achievement was already completed then fail it
             if core.achievementsCompleted[1] == true then

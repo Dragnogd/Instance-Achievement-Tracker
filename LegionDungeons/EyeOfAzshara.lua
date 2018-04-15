@@ -49,8 +49,6 @@ function core.EyeOfAzshara:LadyHatecoil()
             saltseaGlobulesCounter = saltseaGlobulesCounter + 1
         end
     end
-    
-
 end
 
 function core.EyeOfAzshara:WrathOfAzshara()
