@@ -1858,7 +1858,7 @@ core.Instances = {
                     players = {"(Enter instance to start scanning)"},
                     tactics = "For this achievment you need to reverse the following abilities: " .. GetSpellLink(116936) .. " " .. GetSpellLink(118307) .. " " .. GetSpellLink(118194) .. " " .. GetSpellLink(115730) .. " " .. GetSpellLink(116938) .. ". To reverse these abilities a tank spec'ed player need to pick up the " .. GetSpellLink(115911) .. " which is located to left of the boss. Phase 1: 95%; Epicenter is cast by boss; Lighting fists has to be reversed on a player who gets stunned by soaking the ability. Phase 2: 66%; Wildfire Spark is cast on a player. Phase 3: At 33%; Arcane Velocity is cast by boss; Arcane Resonance is cast on a player. Once all 5 abilities have been reversed you can kill boss. Note: if you do the instance on heroic difficulty the phases may be in a different order",
                     enabled = true,
-                    track = function() core.MogushanVaults:FengTheAccursed() end,
+                    track = function() core.MoguShanVaults:FengTheAccursed() end,
                     partial = false,
                 },
                 boss3 = {

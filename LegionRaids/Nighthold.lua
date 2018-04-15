@@ -63,9 +63,9 @@ function core.TheNighthold:Skorpyron()
             end
         
             local name, _ = UnitName(unit)
-            local realm = GetRealmName(unit)
-            local nameStr = name .. "-" .. realm
-            if playersBrokenShard[nameStr] == nil then
+            --local realm = GetRealmName(unit)
+            --local nameStr = name .. "-" .. realm
+            if playersBrokenShard[name] == nil then
                 playerHit = true
                 playersFailed = playersFailed .. name .. ", "
                 core:sendDebugMessage(name .. " got hit")
@@ -81,19 +81,21 @@ function core.TheNighthold:Skorpyron()
 
     --Player has gained Broken Shard buff
     if core.type == "SPELL_AURA_APPLIED" and core.spellId == 204284 then
-        if playersBrokenShard[core.destName] == nil then
+        local name, realm = strsplit("-", core.destName)
+        if playersBrokenShard[name] == nil then
             playersBrokenShardCounter = playersBrokenShardCounter + 1
-            playersBrokenShard[core.destName] = core.destName
-            core:sendDebugMessage(core.destName .. " Gained Broken Shard")
+            playersBrokenShard[name] = name
+            core:sendDebugMessage(name .. " Gained Broken Shard")
         end
     end
 
     --Player has lost Broken Shard buff
     if core.type == "SPELL_AURA_REMOVED" and core.spellId == 204284 then
-        if playersBrokenShard[core.destName] ~= nil then
+        local name, realm = strsplit("-", core.destName)
+        if playersBrokenShard[name] ~= nil then
             playersBrokenShardCounter = playersBrokenShardCounter - 1
-            playersBrokenShard[core.destName] = nil
-            core:sendDebugMessage(core.destName .. " Lost Broken Shard")   
+            playersBrokenShard[name] = nil
+            core:sendDebugMessage(name .. " Lost Broken Shard")   
         end
     end
 end
