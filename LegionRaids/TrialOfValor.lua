@@ -101,14 +101,14 @@ function core.TrialOfValor.Events:UNIT_AURA(self, unitID, ...)
     end
 
     --Player gained Salty Spittle
-    if UnitBuff(unitID, GetSpellInfo(231846)) and UnitBuff(unitID, GetSpellInfo(227566)) and fieryPhelgmComplete == false then
+    if UnitBuff(unitID, GetSpellInfo(231846)) and UnitBuff(unitID, GetSpellInfo(227566)) and saltySpittleComplete == false then
         fieryPhelgmComplete = true
         breathCounter= breathCounter + 1
         core:sendMessage("Salty Spittle (Green) part of " .. core:getAchievement() .. " Completed (" .. breathCounter .. "/3)")
     end
 
     --Player gained Dark Discharge
-    if UnitBuff(unitID, GetSpellInfo(231846)) and UnitBuff(unitID, GetSpellInfo(227570)) and fieryPhelgmComplete == false then
+    if UnitBuff(unitID, GetSpellInfo(231846)) and UnitBuff(unitID, GetSpellInfo(227570)) and darkDischargeComplete == false then
         fieryPhelgmComplete = true
         breathCounter= breathCounter + 1
         core:sendMessage("Dark Discharge (Purple) part of " .. core:getAchievement() .. " Completed (" .. breathCounter .. "/3)")
