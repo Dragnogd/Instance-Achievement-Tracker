@@ -19,6 +19,12 @@ local ArcaneVelocityReversed = false
 local itemsReversed = 0
 
 ------------------------------------------------------
+---- Elegon
+------------------------------------------------------
+local empyrealFocusesDeactivated = 0
+local energyChargeKilled = false
+
+------------------------------------------------------
 ---- Will of The Emperor
 ------------------------------------------------------
 local playerExecutedStrike = 0
@@ -57,6 +63,30 @@ function core.MoguShanVaults:FengTheAccursed()
 	end
 end
 
+function core.MoguShanVaults:Elegon()
+	if core.type == "UNIT_DIED" and core.destID == "60913" then
+		energyChargeKilled = true
+	end
+
+	if core.type == "SPELL_CAST_SUCCESS" and core.sourceID == "60776" and core.spellId == 116989 and energyChargeKilled == false then
+		empyrealFocusesDeactivated = empyrealFocusesDeactivated + 1
+		if timerStarted = false then
+			timerStarted = true
+			C_Timer.After(10, function() 
+				if empyrealFocusesDeactivated == 6 then
+					core:getAchievementSuccess()
+				else
+					core:getAchievementFailedWithMessageAfter("(" .. empyrealFocusesDeactivated .. "/" .. ") Empyreal Focuses Deactivated in time")
+				end
+			end)
+		else
+			if empyrealFocusesDeactivated == 6 then
+				core:getAchievementSuccess()
+			end
+		end
+	end
+end
+
 function MoguShanVaults_TheSpiritKings()
 	--If boss has cast pillage start timer
 
@@ -79,6 +109,12 @@ function core.MoguShanVaults:ClearVariables()
 	ArcaneVelocityReversed = false
 	LightningFistsReversed = false
 	itemsReversed = 0
+
+	------------------------------------------------------
+	---- Elegon
+	------------------------------------------------------
+	empyrealFocusesDeactivated = 0
+	energyChargeKilled = false
 
 	------------------------------------------------------
 	---- Will of The Emperor

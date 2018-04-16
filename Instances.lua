@@ -1883,12 +1883,12 @@ core.Instances = {
                 },
                 boss5 = {
                     name = "Elegon",
-                    bossIDs = {},
+                    bossIDs = {60410},
                     achievement = 6686,
                     players = {"(Enter instance to start scanning)"},
                     tactics = "",
-                    enabled = false,
-                    track = nil,
+                    enabled = true,
+                    track = function() core.MoguShanVaults:Elegon() end,
 					partial = false,
                 },
                 boss6 = {
