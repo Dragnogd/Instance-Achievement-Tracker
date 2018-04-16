@@ -89,13 +89,9 @@ end
 
 function MoguShanVaults_TheSpiritKings()
 	--If boss has cast pillage start timer
-
 	--If user dances and timer has started add to array and user is not already in the array
-
 	--If player gets pillaged add to another array
-
 	--Compare 2 arrays once timer has finished. If they dance at the correct time and got hit by pillaged at the end they executed the move at the correct time
-
 	--Announce in chat who did not dance in time.
 end
 
