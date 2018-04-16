@@ -70,7 +70,7 @@ function core.MoguShanVaults:Elegon()
 
 	if core.type == "SPELL_CAST_SUCCESS" and core.sourceID == "60776" and core.spellId == 116989 and energyChargeKilled == false then
 		empyrealFocusesDeactivated = empyrealFocusesDeactivated + 1
-		if timerStarted = false then
+		if timerStarted == false then
 			timerStarted = true
 			C_Timer.After(10, function() 
 				if empyrealFocusesDeactivated == 6 then
