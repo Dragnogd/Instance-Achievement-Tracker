@@ -85,7 +85,7 @@ function core.TheNighthold:Skorpyron()
         if playersBrokenShard[name] == nil then
             playersBrokenShardCounter = playersBrokenShardCounter + 1
             playersBrokenShard[name] = name
-            core:sendDebugMessage(name .. " Gained Broken Shard")
+            --core:sendDebugMessage(name .. " Gained Broken Shard")
         end
     end
 
@@ -95,7 +95,7 @@ function core.TheNighthold:Skorpyron()
         if playersBrokenShard[name] ~= nil then
             playersBrokenShardCounter = playersBrokenShardCounter - 1
             playersBrokenShard[name] = nil
-            core:sendDebugMessage(name .. " Lost Broken Shard")   
+           --core:sendDebugMessage(name .. " Lost Broken Shard")   
         end
     end
 end
