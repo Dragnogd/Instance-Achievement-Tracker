@@ -118,7 +118,7 @@ core.Instances = {
                 name = "The Nighthold",
                 boss1 = {
                     name = "Skorpyron",
-                    bossIDs = {102263}, --
+                    bossIDs = {102263},
                     achievement = 10678,
                     players = {"(Enter instance to start scanning)"},
                     tactics = "Everyone in the group must stay in the inner ring of the boss room. When the boss cast shockwave, every player in the group must hide behind the crystalline fragments placed down by the boss, you should get a buff called Broken Shard which will prevent you getting knocked back from the shockwave. If any players get knocked out of the inner ring then the achievement will fail.",
@@ -138,7 +138,7 @@ core.Instances = {
                 },
                 boss3 = {
                     name = "Trilliax",
-                    bossIDs = {}, --104288
+                    bossIDs = {104288},
                     achievement = 10742,
                     players = {"(Enter instance to start scanning)"},
                     tactics = "At 110, you can simply just nuke the boss down and ignore picking up the toxic slices.",

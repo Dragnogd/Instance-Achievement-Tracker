@@ -6,7 +6,7 @@ local _, core = ...
 local events = CreateFrame("Frame")
 local UIConfig
 local UICreated = false
-local debugMode = false
+local debugMode = true
 
 AchievementTrackerOptions = {}
 AchievementTrackerDebug = {}
@@ -180,6 +180,7 @@ local lastMessageSent = ""   					--Stores the last message sent to the chat. Th
 local requestToRun = false					--Store whether the current addon sent the request to enable itself or not for achievement tracking
 local enableDisplayAchievement = true
 local currentBossNums = {}
+local detectBossWait = false
 
 --------------------------------------
 -- Current Instance Variables
@@ -1336,6 +1337,20 @@ end
 --Where the player enters combat, check if any of the mobs/bosses need to be tracked or not
 function detectBoss(id)
 	core:sendDebugMessage("Found the following boss ID: " .. id)
+
+	--There is a bug detecting Skopyron in Nighthold since the id for Trilliax is fire before.
+	--If Trilliax id is fired then compare this with the raid frame to confirm if we are actually attacking Trilliax or not
+	if id == 104288 or id == "104288" then
+		local unitType, _, _, _, _, sourceID, spawn_uid = strsplit("-", UnitGUID("boss1")) 
+		if sourceID == "102263" then
+			--Skorpyron
+			id = "102263"
+		elseif sourceID == "104288" then
+			--Trilliax
+			id = "104288"
+		end
+	end
+	
 	for boss,_ in pairs(core.Instances[core.expansion][core.instanceType][core.instance]) do
 		if core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs ~= nil then
 			if #core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs > 0 then
