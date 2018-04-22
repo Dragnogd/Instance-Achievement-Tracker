@@ -3104,7 +3104,7 @@ core.Instances = {
                 },                               
             },
 
-            EyeOfEternity10Man = {
+            TheEyeOfEternity10Man = {
                 name = "Eye of Eternity 10 Man",
                 boss1 = {
                     name = "Malygos 1",
@@ -3138,7 +3138,7 @@ core.Instances = {
                 },                             
             },
 
-            EyeOfEternity25Man = {
+            TheEyeOfEternity25Man = {
                 name = "Eye of Eternity 25 Man",
                 boss1 = {
                     name = "Malygos 1 25",
