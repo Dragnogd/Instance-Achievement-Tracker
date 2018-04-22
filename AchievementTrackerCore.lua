@@ -349,7 +349,7 @@ function getPlayersInGroup()
 	if #playersToScan > 0 then
 		getInstanceAchievements()
 	else
-		core:sendDebugMessage("Achievment Scanning Finished (" .. #playersScanned .. "/" .. core.groupSize .. ")")
+		core:sendDebugMessage("Achievement Scanning Finished (" .. #playersScanned .. "/" .. core.groupSize .. ")")
 		scanInProgress = false
 		core.scanFinished = true
 	end
