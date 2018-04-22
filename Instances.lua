@@ -406,12 +406,12 @@ core.Instances = {
                 },
                 boss10 = {
                     name = "Aggramar",
-                    bossIDs = {},
+                    bossIDs = {124691},
                     achievement = 11915,
                     players = {"(Enter instance to start scanning)"},
                     tactics = "",
-                    enabled = false,
-                    track = nil,
+                    enabled = true,
+                    track = function() core.AntorusTheBurningThrone:Aggramar() end,
 					partial = false,
                 },
                 boss11 = {

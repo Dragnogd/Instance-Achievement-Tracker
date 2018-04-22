@@ -103,6 +103,12 @@ function core.AntorusTheBurningThrone:KinGaroth()
     end 
 end
 
+function core.AntorusTheBurningThrone:Aggramar()
+    if core.type == "UNIT_DIED" and core.destName == "Manifestation of Taeshalach" then
+        core:getAchievementSuccess()
+    end
+end
+
 function core.AntorusTheBurningThrone:ClearVariables()
     ------------------------------------------------------
     ---- Kin-garoth
