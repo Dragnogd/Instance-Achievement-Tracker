@@ -230,7 +230,7 @@ end
 
 function core.Ulduar:XT002DeconstructorMustDeconstructFaster()
     if timerStarted3 == false then
-        timerStarted3 = truew
+        timerStarted3 = true
         timer2 = C_Timer.NewTimer(205, function() 
             core:getAchievementFailed(1)
         end)

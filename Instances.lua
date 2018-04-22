@@ -3105,15 +3105,15 @@ core.Instances = {
             },
 
             TheEyeOfEternity10Man = {
-                name = "Eye of Eternity 10 Man",
+                name = "The Eye of Eternity 10 Man",
                 boss1 = {
                     name = "Malygos 1",
-                    bossIDs = {},
+                    bossIDs = {28859},
                     achievement = 1874,
                     players = {"(Enter instance to start scanning)"},
                     tactics = "At 110, you can simply just nuke the boss down.",
-                    enabled = false,
-                    track = nil,
+                    enabled = true,
+                    track = function() core.TheEyeOfEternity:YouDontHaveAnEternity() end,
 					partial = false,
                 },
                 boss2 = {
@@ -3139,15 +3139,15 @@ core.Instances = {
             },
 
             TheEyeOfEternity25Man = {
-                name = "Eye of Eternity 25 Man",
+                name = "The Eye of Eternity 25 Man",
                 boss1 = {
                     name = "Malygos 1 25",
-                    bossIDs = {},
+                    bossIDs = {28859},
                     achievement = 1875,
                     players = {"(Enter instance to start scanning)"},
                     tactics = "At 110, you can simply just nuke the boss down.",
-                    enabled = false,
-                    track = nil,
+                    enabled = true,
+                    track = function() core.TheEyeOfEternity:YouDontHaveAnEternity() end,
 					partial = false,
                 },
                 boss2 = {
