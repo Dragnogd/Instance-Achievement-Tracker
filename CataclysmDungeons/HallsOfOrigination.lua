@@ -22,6 +22,10 @@ local playersHit = {}
 
 local playersVehicle = {}
 
+------------------------------------------------------
+---- Rajh
+------------------------------------------------------
+local blessingOfTheSunCounter = 0
 
 function core.HallsOfOrigination:TempleGuardianAnhuur()
     if core.type == "SPELL_AURA_APPLIED" and core.spellId == 75322 and reverberatingHymnTimerStarted == false then
@@ -37,6 +41,16 @@ function core.HallsOfOrigination:TempleGuardianAnhuur()
     if core.type == "SPELL_INTERRUPT" then
         if core.extraSpellId == 75322 then
             reverberatingHymnTimerStarted = false
+        end
+    end
+end
+
+function core.HallsOfOrigination:Rajh()
+    if core.type == "SPELL_PERIODIC_ENERGIZE" and core.spellId == 76355 then
+        blessingOfTheSunCounter = blessingOfTheSunCounter + 1
+
+        if blessingOfTheSunCounter == 21 then
+            core:getAchievementFailed()
         end
     end
 end
