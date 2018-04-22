@@ -467,7 +467,7 @@ function getInstanceInfomation()
 
 		--If the raid is in the lich king expansion then detect whether player is on the 10man or 25man difficulty
 		--This is only needed for raids that have seperate achievements for 10man and 25man. Happens for the majority of WOTLK raids
-		if core.instance == "TrialOfTheCrusader" or core.instance == "Naxxramas" or core.instance == "IcecrownCitadel" or core.instance == "OnyxiaSLair" then
+		if core.instance == "TrialOfTheCrusader" or core.instance == "Naxxramas" or core.instance == "IcecrownCitadel" or core.instance == "OnyxiaSLair" or core.instance == "TheEyeOfEternity" then
 			if core.difficultyID == 3 or core.difficultyID == 5 then
 				--10 Man
 				core.instance = core.instance .. "10Man"

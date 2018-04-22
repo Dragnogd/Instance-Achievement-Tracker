@@ -6,4 +6,8 @@ local _, core = ...
 ------------------------------------------------------
 ---- Eye of Eternity Bosses
 ------------------------------------------------------
-core.EyeOfEternity = {}
+core.TheEyeOfEternity = {}
+
+function core.TheEyeOfEternity:ClearVariables()
+
+end
