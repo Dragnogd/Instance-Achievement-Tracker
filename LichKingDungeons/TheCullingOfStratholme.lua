@@ -17,7 +17,7 @@ local zombieCounterReached = false
 local achievementCompleted = false
 
 function core.TheCullingOfStratholme:ZombieFest()
-    core:trackMob("27737", "Risen Zombie", 100, "(" .. core.mobCounter .. "/100) Risen Zombies Spawned)", 10, nil, nil)
+    core:trackMob("27737", "Risen Zombie", 100, " 100 Risen Zombies Spawned!", 10, nil, nil)
 
     if core.mobCounter >= 100 then
         zombieCounterReached = true
@@ -35,10 +35,12 @@ function core.TheCullingOfStratholme:ZombieFest()
                         achievementCompleted = true
                     end
                 else
-                    core:sendMessage(GetAchievementLink(1872) .. "(" .. zombieKilled .. "/100) Risen Zombies killed in time")
-                    zombieKilled = 0
-                    zombieCounterReached = false
-                    achievementCompleted = false
+                    if achievementCompleted == false then
+                        core:sendMessage(GetAchievementLink(1872) .. " (" .. zombieKilled .. "/100) Risen Zombies killed in time")
+                        zombieKilled = 0
+                        zombieCounterReached = false
+                        achievementCompleted = false
+                    end
                 end
             end)
         else
@@ -57,5 +59,4 @@ function core.TheCullingOfStratholme:ClearVariables()
     timerStarted = false
     zombieKilled = 0
     zombieCounterReached = false
-    achievementCompleted = false
 end

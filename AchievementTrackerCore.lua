@@ -1283,7 +1283,7 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 		end
 
 		if core.sourceID ~= nil and doNotTrack == false and core.currentSource == "Creature" then
-			core:sendDebugMessage(core.sourceID)
+			--core:sendDebugMessage(core.sourceID)
 			if core:has_value(core.mobCache, core.sourceID) ~= true then
 				core:sendDebugMessage("Calling Detect Boss 2: " .. core.sourceID)
 				--print(...)
@@ -1292,8 +1292,7 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 		end
 
 		if core.destID ~= nil and doNotTrack == false and core.currentDest == "Creature" then
-			core:sendDebugMessage(core.destID)
-
+			--core:sendDebugMessage(core.destID)
 			if core:has_value(core.mobCache, core.destID) == false then
 				core:sendDebugMessage("Calling Detect Boss 3: " .. core.destID)
 				--print(...)
