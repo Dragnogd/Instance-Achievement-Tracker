@@ -13,6 +13,8 @@ core.AntorusTheBurningThrone.Events = CreateFrame("Frame")
 ---- Kin-garoth
 ------------------------------------------------------
 local diabolicBombCounter = 0
+local diabolicBombSpawn = 0
+local timerStarted = false
 
 ------------------------------------------------------
 ---- Felhounds of Sargeras
@@ -72,6 +74,35 @@ function core.AntorusTheBurningThrone:Varimathras()
     end
 end
 
+function core.AntorusTheBurningThrone:KinGaroth()
+    --Check difficulty of the encounter to determine the number of bombs that spawn
+    if core.difficultyID == 14 or core.difficultyID == 17 then
+        --Normal/LFR Mode (for testing)
+        diabolicBombSpawn = 2
+    else
+        --Heroic Mode
+        diabolicBombSpawn = 3
+    end
+
+    --Detect when a bomb is destroyed
+    if (core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_REFRESH") and core.spellId == 181089 then
+        diabolicBombCounter = diabolicBombCounter - 1
+        core:sendMessage(core.destName .. " Absorbed Diabolic Bomb (" .. diabolicBombCounter .. "/9)")
+
+        --Achievement Failed (can be completed again during same encounter)
+        if core.achievementsCompleted[1] == true then
+            core:getAchievementFailedWithMessageAfter("Achievement can still be completed by waiting for more diabolic bombs")
+            core.achievementsCompleted[1] = false
+        end
+    end
+
+    --Achievement Success
+    if diabolicBombCounter >= 9 then
+        core:getAchievementSuccess()
+        core.achievementsFailed[1] = false
+    end 
+end
+
 function core.AntorusTheBurningThrone:ClearVariables()
     ------------------------------------------------------
     ---- Kin-garoth
@@ -105,21 +136,14 @@ end
 
 function core.AntorusTheBurningThrone.Events:UNIT_SPELLCAST_SUCCEEDED(self, unitID, spell, rank, lineID, spellID, ...)
     if core.Instances.Legion.Raids.AntorusTheBurningThrone.boss7.enabled == true then
-        if spellID == 248214 then
-            diabolicBombCounter = diabolicBombCounter + 1
-            --print(diabolicBombCounter)
-        elseif spellID == 246779 then
-            diabolicBombCounter = diabolicBombCounter - 1
-            --print(diabolicBombCounter)
-    
-            --If achievemnt has already been completed then announce achievement is no longer complete
-            core:getAchievementFailedWithMessageAfter("Achievement can still be completed by waiting for more diabolic bombs")
-            core.achievementsCompleted[1] = false
+        if spellID == 248214 and timerStarted == false then
+            --Diabolic Bomb Spawned
+            timerStarted = true
+            diabolicBombCounter = diabolicBombCounter + diabolicBombSpawn
+            core:sendMessage("Diabolic Bomb Gained (" .. diabolicBombCounter .. "/9)")
+            C_Timer.After(2, function() 
+                timerStarted = false
+            end)
         end
-    
-        if diabolicBombCounter >= 9 then
-            core:getAchievementSuccess()
-            core.achievementsFailed[1] = false
-        end      
     end
 end

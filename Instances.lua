@@ -376,12 +376,12 @@ core.Instances = {
                 },
                 boss7 = {
                     name = "Kin-garoth",
-                    bossIDs = {}, --122578
+                    bossIDs = {122578},
                     achievement = 12030,
                     players = {"(Enter instance to start scanning)"},
                     tactics = "",
                     enabled = true,
-                    track = nil,
+                    track = function() core.AntorusTheBurningThrone:KinGaroth() end,
 					partial = false,
                 },
                 boss8 = {
