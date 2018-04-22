@@ -15,9 +15,12 @@ local timer
 local timerStarted = false
 
 function core.TheEyeOfEternity:YouDontHaveAnEternity()
-    timer = C_Timer.NewTimer(360, function()
-        core:getAchievementFailed(2)
-    end) 
+    if timerStarted == false then
+        timerStarted = true
+        timer = C_Timer.NewTimer(360, function()
+            core:getAchievementFailed(2)
+        end) 
+    end
 end
 
 function core.TheEyeOfEternity:APokeInTheEye()
