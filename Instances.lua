@@ -4560,12 +4560,12 @@ core.Instances = {
                 name = "The Culling of Stratholme",
                 boss1 = {
                     name = "Other 27",
-                    bossIDs = {},
+                    bossIDs = {27737},
                     achievement = 1872,
                     players = {"(Enter instance to start scanning)"},
                     tactics = "",
-                    enabled = false,
-                    track = nil,
+                    enabled = true,
+                    track = function() core.TheCullingOfStratholme:ZombieFest() end,
 					partial = false,
                 },
                 boss2 = {
