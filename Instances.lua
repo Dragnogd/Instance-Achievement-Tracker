@@ -3118,12 +3118,12 @@ core.Instances = {
                 },
                 boss2 = {
                     name = "Malygos 2",
-                    bossIDs = {},
+                    bossIDs = {28859},
                     achievement = 1869,
                     players = {"(Enter instance to start scanning)"},
                     tactics = "Kill the boss with fewer than the 9 players in the group.",
-                    enabled = false,
-                    track = nil,
+                    enabled = true,
+                    track = function() core.TheEyeOfEternity:APokeInTheEye() end,
 					partial = false,
                 }, 
                 boss3 = {
@@ -3152,12 +3152,12 @@ core.Instances = {
                 },
                 boss2 = {
                     name = "Malygos 2 25",
-                    bossIDs = {},
+                    bossIDs = {28859},
                     achievement = 1870,
                     players = {"(Enter instance to start scanning)"},
                     tactics = "Kill the boss with fewer than the 21 players in the group.",
-                    enabled = false,
-                    track = nil,
+                    enabled = true,
+                    track = function() core.TheEyeOfEternity:APokeInTheEye() end,
 					partial = false,
                 }, 
                 boss3 = {

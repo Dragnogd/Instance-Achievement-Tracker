@@ -20,6 +20,24 @@ function core.TheEyeOfEternity:YouDontHaveAnEternity()
     end) 
 end
 
+function core.TheEyeOfEternity:APokeInTheEye()
+    if core.difficultyID == 3 then
+        --10 Man
+        if core.groupSize < 9 then
+            core:getAchievementSuccess()
+        else
+            core:getAchievementFailed()
+        end
+    elseif core.difficultyID == 4 then
+        --25 Man
+        if core.groupSize < 21 then
+            core:getAchievementSuccess()
+        else
+            core:getAchievementFailed()
+        end
+    end
+end
+
 function core.TheEyeOfEternity:ClearVariables()
     ------------------------------------------------------
     ---- You Don't Have an Eternity
