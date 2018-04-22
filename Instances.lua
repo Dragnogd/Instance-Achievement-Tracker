@@ -4856,8 +4856,8 @@ core.Instances = {
                     achievement = 1868,
                     players = {"(Enter instance to start scanning)"},
                     tactics = "",
-                    enabled = false,
-                    track = nil,
+                    enabled = true,
+                    track = function() end,
 					partial = false,
                 },
                 boss3 = {
