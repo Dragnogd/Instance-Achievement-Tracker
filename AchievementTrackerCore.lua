@@ -1647,19 +1647,34 @@ function core:getAchievementSuccessWithCustomMessage(messageBefore, messageAfter
 end
 
 --Display the failed achievement message for personal achievements
-function core:getAchievementSuccessPersonal(index)
+function core:getAchievementSuccessPersonal(index, location)
 	local value = index
 	if index == nil then
 		value = 1
 	end
-	if core.playersSuccessPersonal[core.destName] == nil then
-		--Players has not been hit already
-		--Check if the player actually needs the achievement
-		if core:has_value(core.currentBosses[value].players, core.destName) then
-			--Player needs achievement but has failed it
-			core:sendMessage(core.destName .. " has completed " .. GetAchievementLink(core.achievementIDs[value]) .. " (Personal Achievement)")
+	if location == nil then
+		location = "dest"
+	end
+	if location == "dest" then
+		if core.playersSuccessPersonal[core.destName] == nil then
+			--Players has not been hit already
+			--Check if the player actually needs the achievement
+			if core:has_value(core.currentBosses[value].players, core.destName) then
+				--Player needs achievement but has failed it
+				core:sendMessage(core.destName .. " has completed " .. GetAchievementLink(core.achievementIDs[value]) .. " (Personal Achievement)")
+			end
+			core.playersSuccessPersonal[core.destName] = true
 		end
-		core.playersSuccessPersonal[core.destName] = true
+	elseif location == "source" then
+		if core.playersSuccessPersonal[core.sourceName] == nil then
+			--Players has not been hit already
+			--Check if the player actually needs the achievement
+			if core:has_value(core.currentBosses[value].players, core.sourceName) then
+				--Player needs achievement but has failed it
+				core:sendMessage(core.sourceName .. " has completed " .. GetAchievementLink(core.achievementIDs[value]) .. " (Personal Achievement)")
+			end
+			core.playersSuccessPersonal[core.sourceName] = true
+		end	
 	end
 end
 

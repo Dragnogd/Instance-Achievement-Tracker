@@ -16,7 +16,7 @@ local timerStarted = false
 
 function core.TheEyeOfEternity:YouDontHaveAnEternity()
     timer = C_Timer.NewTimer(360, function()
-        core:getAchievementFailed()
+        core:getAchievementFailed(2)
     end) 
 end
 
@@ -35,6 +35,12 @@ function core.TheEyeOfEternity:APokeInTheEye()
         else
             core:getAchievementFailed()
         end
+    end
+end
+
+function core.TheEyeOfEternity:DenyinTheScion()
+    if core.type == "PARTY_KILL" and core.destID == "30249" and UnitControllingVehicle(core.sourceName) == true then
+        core:getAchievementSuccessPersonal(3,"source")
     end
 end
 
