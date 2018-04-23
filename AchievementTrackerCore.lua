@@ -352,6 +352,11 @@ function getPlayersInGroup()
 		core:sendDebugMessage("Achievement Scanning Finished (" .. #playersScanned .. "/" .. core.groupSize .. ")")
 		scanInProgress = false
 		core.scanFinished = true
+
+		if _G["AchievementFrameComparison"] ~= nil then
+			--Re-register this event so achievement ui and inspect achievement ui work as intended
+			_G["AchievementFrameComparison"]:RegisterEvent("INSPECT_ACHIEVEMENT_READY")
+		end
 	end
 end
 
@@ -365,7 +370,25 @@ function getInstanceAchievements()
 		playerCurrentlyScanning = playersToScan[1]
 		core:sendDebugMessage("Setting Comparison Unit to: " .. UnitName(playersToScan[1]))
 		core.currentComparisonUnit = UnitName(playersToScan[1])
-		SetAchievementComparisonUnit(playersToScan[1])
+
+		--Check if the achievement ui is open before setting the comparison unit
+		if _G["AchievementFrame"] then
+			if _G["AchievementFrame"]:IsShown() then
+				print("Close the achievement UI to continue scanning")
+			else
+				--The AchievementFrameComparison_OnEvent in Blizzard_AchievementUI does not check if the INSPECT_ACHIEVEMENT_READY event was fired from it's own addon or not
+				--Temporarily disable the event while we do our scanning.
+				--To protect against errors by disabling event, pause the scanning if the achievement ui or inspect achievement ui is shown
+				_G["AchievementFrameComparison"]:UnregisterEvent("INSPECT_ACHIEVEMENT_READY");
+				SetAchievementComparisonUnit(playersToScan[1])	
+			end
+		else
+			--The AchievementFrameComparison_OnEvent in Blizzard_AchievementUI does not check if the INSPECT_ACHIEVEMENT_READY event was fired from it's own addon or not
+			--Temporarily disable the event while we do our scanning.
+			--To protect against errors by disabling event, pause the scanning if the achievement ui or inspect achievement ui is shown
+			_G["AchievementFrameComparison"]:UnregisterEvent("INSPECT_ACHIEVEMENT_READY");
+			SetAchievementComparisonUnit(playersToScan[1])	
+		end
 
 		--Set the id to the current scanCounter so we can determine if the timer is still valid or not. If the scanCounter is higher than the local timer then ignore the output from the timer since it's no longer valid
 		local scanCounterloc = scanCounter
@@ -428,21 +451,21 @@ end
 --Run when the player initially enters an instance to setup variables such as instanceName, expansion etc so we can track the correct bosses
 function getInstanceInfomation()
 	--DEBUG
-	-- if debugMode == true then
-	-- 	core.instance = "Ulduar"
-	-- 	core.instanceClear = "Ulduar"
-	-- 	core.instanceNameSpaces = "Ulduar"
-	-- 	core.expansion = "WrathOfTheLichKing"
-	-- 	core.instanceType = "Raids"
-	-- 	core.inInstance = true
-	-- 	if UICreated == false then
-	-- 		core:sendDebugMessage("Creating Tracking UI")
-	-- 		createEnableAchievementTrackingUI()
-	-- 	else
-	-- 		core:sendDebugMessage("Displaying Tracking UI since it was already created")
-	-- 		UIConfig:Show()
-	-- 	end
-	-- end
+	if debugMode == true then
+		core.instance = "Ulduar"
+		core.instanceClear = "Ulduar"
+		core.instanceNameSpaces = "Ulduar"
+		core.expansion = "WrathOfTheLichKing"
+		core.instanceType = "Raids"
+		core.inInstance = true
+		if UICreated == false then
+			core:sendDebugMessage("Creating Tracking UI")
+			createEnableAchievementTrackingUI()
+		else
+			core:sendDebugMessage("Displaying Tracking UI since it was already created")
+			UIConfig:Show()
+		end
+	end
 
 	if IsInInstance() and core.inInstance == false then
 		core:sendDebugMessage("Player has entered instance")
@@ -721,6 +744,15 @@ end
 
 --Setup Slash Commands
 function events:ADDON_LOADED(event, name)
+	if name == "Blizzard_AchievementUI" then
+		print("Achiev UI Loaded")
+		-- local AchievementFrameComparison_UpdateStatusBars = AchievementFrameComparison_UpdateStatusBars; -- (1)
+		-- AchievementFrameComparison_UpdateStatusBars = function(...) -- (2)
+		-- 	print("Whizzey Addon")
+		-- 	return AchievementFrameComparison_UpdateStatusBars(...); -- (6)
+		-- end
+	end
+	
 	if name ~= "InstanceAchievementTracker" then return end
 
 	--Check if the options have been setup
