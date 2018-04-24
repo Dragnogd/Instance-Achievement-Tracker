@@ -943,7 +943,7 @@ function events:INSPECT_ACHIEVEMENT_READY(self, GUID)
 					end
 
 					--If the player has not completed the achievement then add them to the players string to display in the GUI
-					if completed ~= nil then
+					if completed == nil then
 						local name, _ = UnitName(playersToScan[1])
 						table.insert(core.Instances[core.expansion][core.instanceType][core.instance][boss].players, name)
 					end
@@ -973,7 +973,7 @@ function events:INSPECT_ACHIEVEMENT_READY(self, GUID)
 			if #playersToScan > 0 then
 				getInstanceAchievements()
 			elseif #playersToScan == 0 and rescanNeeded == false then
-				core:printMessage("Achievment Scanning Finished (" .. #playersScanned .. "/" .. core.groupSize .. ")")
+				core:printMessage("Achievement Scanning Finished (" .. #playersScanned .. "/" .. core.groupSize .. ")")
 				scanInProgress = false
 				core.scanFinished = true
 			elseif #playersToScan == 0 and rescanNeeded == true then
