@@ -158,6 +158,7 @@ local scanInProgress = false					--Set to true when a scan of the group has star
 core.scanFinished = false						--Set to true when everyone in the group has been scanned successfully and no rescan is needed. Part of core so it can be accessed by the GUI
 local scanAnnounced = false						--Whether the achievement scanning has been announced to the chat
 local scanCounter = 0							--Incremented everytime a scan completes so only scan timer waiting for a reponse are not used
+local achievementUIShown = false
 
 --------------------------------------
 -- Main Variables
@@ -261,8 +262,9 @@ end
 --Get a list of all the players currently in the group. This is used so we can scan all the players in the group to see which achievements they need
 --This is run everytime the composition of the group changes so we always have an up to date list of players who need a certain achievement
 function getPlayersInGroup()
+	--Only Announce the scanning once.
 	if scanAnnounced == false then
-		core:printMessage("Starting Achievement Scan For " .. core.instanceNameSpaces .. " (This may lag your game for a few seconds)")
+		core:printMessage("Starting Achievement Scan For " .. core.instanceNameSpaces .. " (This may freeze your game for a few seconds!)")
 		scanAnnounced = true
 	end
 	core:getGroupSize() --Get current size of the group
@@ -347,12 +349,14 @@ function getPlayersInGroup()
 
 	--Start the player scanning
 	if #playersToScan > 0 then
+		--Fetch information for the next person in the group
 		getInstanceAchievements()
 	else
 		core:sendDebugMessage("Achievement Scanning Finished (" .. #playersScanned .. "/" .. core.groupSize .. ")")
 		scanInProgress = false
 		core.scanFinished = true
 
+		--Once the achievement scanning has finished enable the achievement tab to start scanning again
 		if _G["AchievementFrameComparison"] ~= nil then
 			--Re-register this event so achievement ui and inspect achievement ui work as intended
 			_G["AchievementFrameComparison"]:RegisterEvent("INSPECT_ACHIEVEMENT_READY")
@@ -373,20 +377,13 @@ function getInstanceAchievements()
 
 		--Check if the achievement ui is open before setting the comparison unit
 		if _G["AchievementFrame"] then
-			if _G["AchievementFrame"]:IsShown() then
-				print("Close the achievement UI to continue scanning")
-			else
-				--The AchievementFrameComparison_OnEvent in Blizzard_AchievementUI does not check if the INSPECT_ACHIEVEMENT_READY event was fired from it's own addon or not
-				--Temporarily disable the event while we do our scanning.
-				--To protect against errors by disabling event, pause the scanning if the achievement ui or inspect achievement ui is shown
-				_G["AchievementFrameComparison"]:UnregisterEvent("INSPECT_ACHIEVEMENT_READY");
-				SetAchievementComparisonUnit(playersToScan[1])	
-			end
-		else
 			--The AchievementFrameComparison_OnEvent in Blizzard_AchievementUI does not check if the INSPECT_ACHIEVEMENT_READY event was fired from it's own addon or not
 			--Temporarily disable the event while we do our scanning.
 			--To protect against errors by disabling event, pause the scanning if the achievement ui or inspect achievement ui is shown
 			_G["AchievementFrameComparison"]:UnregisterEvent("INSPECT_ACHIEVEMENT_READY");
+			SetAchievementComparisonUnit(playersToScan[1])	
+		else
+			--Achievement Frame has not been loaded so go ahead and set the comparison unit
 			SetAchievementComparisonUnit(playersToScan[1])	
 		end
 
@@ -745,7 +742,7 @@ end
 --Setup Slash Commands
 function events:ADDON_LOADED(event, name)
 	if name == "Blizzard_AchievementUI" then
-		print("Achiev UI Loaded")
+		core:sendDebugMessage("Achiev UI Loaded")
 		-- local AchievementFrameComparison_UpdateStatusBars = AchievementFrameComparison_UpdateStatusBars; -- (1)
 		-- AchievementFrameComparison_UpdateStatusBars = function(...) -- (2)
 		-- 	print("Whizzey Addon")
@@ -971,17 +968,20 @@ function events:INSPECT_ACHIEVEMENT_READY(self, GUID)
 			--Last player scan was successfully. Check if we need to continue scanning
 			scanCounter = scanCounter + 1 --Stop previous timers from executing!
 			if #playersToScan > 0 then
+				--More players still need scanning
 				getInstanceAchievements()
-			elseif #playersToScan == 0 and rescanNeeded == false then
+			elseif #playersToScan == 0 and rescanNeeded == false and #playersScanned == core.groupSize then
 				core:printMessage("Achievement Scanning Finished (" .. #playersScanned .. "/" .. core.groupSize .. ")")
 				scanInProgress = false
 				core.scanFinished = true
 			elseif #playersToScan == 0 and rescanNeeded == true then
-				--print("Achievement Scanning Finished but some players still need scanning. Waiting 20 seconds then trying again (" .. #playersScanned .. "/" .. core.groupSize .. ")")
+				core:sendDebugMessage("Achievement Scanning Finished but some players still need scanning. Waiting 20 seconds then trying again (" .. #playersScanned .. "/" .. core.groupSize .. ")")
 				C_Timer.After(10, function()
-				 		scanInProgress = true
-				 		getPlayersInGroup()
+					scanInProgress = true
+					getPlayersInGroup()
 				end)
+			else
+				core:sendDebugMessage("UNKNOWN ERROR")
 			end
 		else
 			--Someone in the group cannot be scanned because they have gone offline since scanning took place, or they are not currently out of range of scanning.
@@ -1467,13 +1467,13 @@ function core:sendMessage(message)
 
 					C_Timer.After(3, function()
 						if masterAddon == true then
-							core:printMessage("This addon is in charge of outputting messages")
+							core:sendDebugMessage("This addon is in charge of outputting messages")
 							
 							if message ~= "setup" then
 								SendChatMessage("[IAT] " .. message,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
 							end
 						else
-							core:printMessage("Another addon is currently in charge of outputting messages for this fight")
+							core:sendDebugMessage("Another addon is currently in charge of outputting messages for this fight")
 						end
 					end)
 				end
@@ -1515,7 +1515,7 @@ end
 
 --TODO: tidy this up so it can print out any colour
 function core:printMessage(message)
-	print("|cff00ccffAchievement Tracker: |cffffffff" .. message)
+	print("|cff00ccffIAT: |cffffffff" .. message)
 end
 
 --Get the current achievement being tracked for custom output messages
