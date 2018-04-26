@@ -6,4 +6,7 @@ local _, core = ...
 ------------------------------------------------------
 ---- Stonecore Bosses
 ------------------------------------------------------
-core.Stonecore = {}
+core.TheStonecore = {}
+
+function core.TheStonecore:ClearVariables()
+end

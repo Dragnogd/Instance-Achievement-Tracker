@@ -158,7 +158,6 @@ local scanInProgress = false					--Set to true when a scan of the group has star
 core.scanFinished = false						--Set to true when everyone in the group has been scanned successfully and no rescan is needed. Part of core so it can be accessed by the GUI
 local scanAnnounced = false						--Whether the achievement scanning has been announced to the chat
 local scanCounter = 0							--Incremented everytime a scan completes so only scan timer waiting for a reponse are not used
-local achievementUIShown = false
 
 --------------------------------------
 -- Main Variables
@@ -449,19 +448,19 @@ end
 function getInstanceInfomation()
 	--DEBUG
 	if debugMode == true then
-		core.instance = "Ulduar"
-		core.instanceClear = "Ulduar"
-		core.instanceNameSpaces = "Ulduar"
-		core.expansion = "WrathOfTheLichKing"
-		core.instanceType = "Raids"
-		core.inInstance = true
-		if UICreated == false then
-			core:sendDebugMessage("Creating Tracking UI")
-			createEnableAchievementTrackingUI()
-		else
-			core:sendDebugMessage("Displaying Tracking UI since it was already created")
-			UIConfig:Show()
-		end
+		-- core.instance = "Ulduar"
+		-- core.instanceClear = "Ulduar"
+		-- core.instanceNameSpaces = "Ulduar"
+		-- core.expansion = "WrathOfTheLichKing"
+		-- core.instanceType = "Raids"
+		-- core.inInstance = true
+		-- if UICreated == false then
+		-- 	core:sendDebugMessage("Creating Tracking UI")
+		-- 	createEnableAchievementTrackingUI()
+		-- else
+		-- 	core:sendDebugMessage("Displaying Tracking UI since it was already created")
+		-- 	UIConfig:Show()
+		-- end
 	end
 
 	if IsInInstance() and core.inInstance == false then
@@ -974,8 +973,20 @@ function events:INSPECT_ACHIEVEMENT_READY(self, GUID)
 				core:printMessage("Achievement Scanning Finished (" .. #playersScanned .. "/" .. core.groupSize .. ")")
 				scanInProgress = false
 				core.scanFinished = true
+
+				--Once the achievement scanning has finished enable the achievement tab to start scanning again
+				if _G["AchievementFrameComparison"] ~= nil then
+					--Re-register this event so achievement ui and inspect achievement ui work as intended
+					_G["AchievementFrameComparison"]:RegisterEvent("INSPECT_ACHIEVEMENT_READY")
+				end
 			elseif #playersToScan == 0 and rescanNeeded == true then
 				core:sendDebugMessage("Achievement Scanning Finished but some players still need scanning. Waiting 20 seconds then trying again (" .. #playersScanned .. "/" .. core.groupSize .. ")")
+				--Once the achievement scanning has finished enable the achievement tab to start scanning again
+				if _G["AchievementFrameComparison"] ~= nil then
+					--Re-register this event so achievement ui and inspect achievement ui work as intended
+					_G["AchievementFrameComparison"]:RegisterEvent("INSPECT_ACHIEVEMENT_READY")
+				end
+
 				C_Timer.After(10, function()
 					scanInProgress = true
 					getPlayersInGroup()

@@ -2594,8 +2594,8 @@ core.Instances = {
                 },                  
             },
 
-            Stonecore = {
-                name = "Stonecore",
+            TheStonecore = {
+                name = "The Stonecore",
                 boss1 = {
                     name = "High Priestess Azil",
                     bossIDs = {},
