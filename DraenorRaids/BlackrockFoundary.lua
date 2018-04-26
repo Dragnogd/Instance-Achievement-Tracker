@@ -46,7 +46,7 @@ function core.BlackrockFoundry:BeastlordDarmac()
 end
 
 function core.BlackrockFoundry:Blackhand()
-	if core.type == "SPELL_AURA_APPLIED" and core.spellName == "Ashes" then
+	if (core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_APPLIED_DOSE") and core.spellId == 163324 then
 		ashCounter = ashCounter + 1
 		core:sendMessage(core.destName .. " caught Ashes  (" .. ashCounter .. "/20)")					
 	end
