@@ -1184,7 +1184,7 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 	--All Events
 	core.timeStamp, core.type, core.hideCaster, core.sourceGUID, core.sourceName, core.sourceFlags, core.sourceRaidFlags, core.destGUID, core.destName, core.destFlags, core.destRaidFlags = ...
 
-	--print(...)
+	core.all = ...
 
 	--core:sendDebugMessage(core.type .. " " .. core.sourceName .. " " .. core.destName)
 
