@@ -432,12 +432,12 @@ core.Instances = {
                 name = "Seat of the Triumvirate",
                 boss1 = {
                     name = "Zuraal the Ascended",
-                    bossIDs = {},
+                    bossIDs = {122313},
                     achievement = 12004,
                     players = {"(Enter instance to start scanning)"},
                     tactics = "",
-                    enabled = false,
-                    track = nil,
+                    enabled = true,
+                    track = function() core.SeatOfTheTriumvirate:ZuraalTheAscended() end,
 					partial = false,
                 },
                 boss2 = {
