@@ -840,12 +840,12 @@ core.Instances = {
                 },
                 boss2 = {
                     name = "Thrashbite the Scornful",
-                    bossIDs = {},
+                    bossIDs = {117194},
                     achievement = 11769,
                     players = {"(Enter instance to start scanning)"},
                     tactics = "",
-                    enabled = false,
-                    track = nil,
+                    enabled = true,
+                    track = function() core.CathedralOfEternalNight:ThrashbiteTheScornful() end,
 					partial = false,
                 },
                 boss3 = {
