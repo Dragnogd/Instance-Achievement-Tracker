@@ -22,7 +22,7 @@ end
 
 function core.SeatOfTheTriumvirate:Lura()
     if core.type == "UNIT_DIED" and core.destID == "124729" then
-        luraKilled = Triumvirate
+        luraKilled = true
     end
 
     if core.type == "SPELL_AURA_REMOVED" and core.spellId == 250821 and luraKilled == false then
