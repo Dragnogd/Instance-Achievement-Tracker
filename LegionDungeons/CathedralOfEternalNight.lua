@@ -36,7 +36,7 @@ function core.CathedralOfEternalNight:ThrashbiteTheScornful()
         volumeCounter = 4
     elseif core.type == "SPELL_SUMMON" and (core.spellId == 121776 or core.spellId == 121783 or core.spellId == 121784 or core.spellId == 121785) then
         --Books were read in the wrong order!!!
-        core:getAchievementFailed()
+        core:getAchievementFailedWithMessageAfter("Books read in the wrong order")
     end
 
     --Check if all players in group have read books
