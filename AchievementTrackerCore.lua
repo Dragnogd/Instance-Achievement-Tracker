@@ -6,7 +6,7 @@ local _, core = ...
 local events = CreateFrame("Frame")
 local UIConfig
 local UICreated = false
-local debugMode = false
+local debugMode = true
 
 AchievementTrackerOptions = {}
 AchievementTrackerDebug = {}
@@ -261,105 +261,109 @@ end
 --Get a list of all the players currently in the group. This is used so we can scan all the players in the group to see which achievements they need
 --This is run everytime the composition of the group changes so we always have an up to date list of players who need a certain achievement
 function getPlayersInGroup()
-	--Only Announce the scanning once.
-	if scanAnnounced == false then
-		core:printMessage("Starting Achievement Scan For " .. core.instanceNameSpaces .. " (This may freeze your game for a few seconds!)")
-		scanAnnounced = true
-	end
-	core:getGroupSize() --Get current size of the group
-	scanInProgress = true
-	core.scanFinished = false
-	local currentGroup = {} --Create a local copy of the group so we can then compare it to the current group to see what changes there are.
+	if core.inInstance == true then
+		--Only Announce the scanning once.
+		if scanAnnounced == false then
+			core:printMessage("Starting Achievement Scan For " .. core.instanceNameSpaces .. " (This may freeze your game for a few seconds!)")
+			scanAnnounced = true
+		end
+		core:getGroupSize() --Get current size of the group
+		scanInProgress = true
+		core.scanFinished = false
+		local currentGroup = {} --Create a local copy of the group so we can then compare it to the current group to see what changes there are.
 
-	if core.groupSize > 1 then
-		--We are in a group
-		local currentUnit
-		core:detectGroupType() --Detect the type of group the player is in so we can do the appropriate scanning
-		for i = 1, core.groupSize do
-			if core.chatType == "PARTY" then
-				if i < core.groupSize then
-					currentUnit = "party" .. i
-				else
-					currentUnit = "player"
+		if core.groupSize > 1 then
+			--We are in a group
+			local currentUnit
+			core:detectGroupType() --Detect the type of group the player is in so we can do the appropriate scanning
+			for i = 1, core.groupSize do
+				if core.chatType == "PARTY" then
+					if i < core.groupSize then
+						currentUnit = "party" .. i
+					else
+						currentUnit = "player"
+					end
+				elseif core.chatType == "RAID" then
+					currentUnit = "raid" .. i
 				end
-			elseif core.chatType == "RAID" then
-				currentUnit = "raid" .. i
-			end
 
+				local name, realm = UnitName(currentUnit)
+				if core:has_value(playersScanned, name) == false and core:has_value(playersToScan, name) == false and name ~= "Unknown" then
+					table.insert(playersToScan, name)
+				end
+
+				--Add to the current group so we can remove players that have left the group
+				if name ~= "Unknown" then
+					table.insert(currentGroup, name)
+				end
+			end
+		else
+			currentUnit = "player"
 			local name, realm = UnitName(currentUnit)
 			if core:has_value(playersScanned, name) == false and core:has_value(playersToScan, name) == false and name ~= "Unknown" then
 				table.insert(playersToScan, name)
 			end
+			table.insert(currentGroup, name)
+		end
 
-			--Add to the current group so we can remove players that have left the group
-			if name ~= "Unknown" then
-				table.insert(currentGroup, name)
+		--Check if anyone in the group has left that has already been scanned
+		--In playersToScan
+		if #playersToScan > 0 then
+			for i = #playersToScan, 1, -1 do
+				if core:has_value(currentGroup, playersToScan[i]) == false then
+					table.remove(playersToScan, i)
+				end
 			end
 		end
-	else
-		currentUnit = "player"
-		local name, realm = UnitName(currentUnit)
-		if core:has_value(playersScanned, name) == false and core:has_value(playersToScan, name) == false and name ~= "Unknown" then
-			table.insert(playersToScan, name)
-		end
-		table.insert(currentGroup, name)
-	end
 
-	--Check if anyone in the group has left that has already been scanned
-	--In playersToScan
-	if #playersToScan > 0 then
-		for i = #playersToScan, 1, -1 do
-			if core:has_value(currentGroup, playersToScan[i]) == false then
-				table.remove(playersToScan, i)
-			end
-		end
-	end
+		--In playersScanned
+		if #playersScanned > 0 then
+			for i = #playersScanned, 1, -1 do
+				if core:has_value(currentGroup, playersScanned[i]) == false then
+					--Remove player from the table that generates the UI for that achievementw
+					for boss,_ in pairs(core.Instances[core.expansion][core.instanceType][core.instance]) do
+						if boss ~= "name" then
+							local name = playersScanned[i]
+							--print("Removing: " .. name)
 
-	--In playersScanned
-	if #playersScanned > 0 then
-		for i = #playersScanned, 1, -1 do
-			if core:has_value(currentGroup, playersScanned[i]) == false then
-				--Remove player from the table that generates the UI for that achievementw
-				for boss,_ in pairs(core.Instances[core.expansion][core.instanceType][core.instance]) do
-					if boss ~= "name" then
-						local name = playersScanned[i]
-						--print("Removing: " .. name)
-
-						--Check if player was added the table
-						for j = 1, #core.Instances[core.expansion][core.instanceType][core.instance][boss].players do
-							if core.Instances[core.expansion][core.instanceType][core.instance][boss].players[j] == name then
-								table.remove(core.Instances[core.expansion][core.instanceType][core.instance][boss].players, j)
-								--print("Removed: " .. name)
+							--Check if player was added the table
+							for j = 1, #core.Instances[core.expansion][core.instanceType][core.instance][boss].players do
+								if core.Instances[core.expansion][core.instanceType][core.instance][boss].players[j] == name then
+									table.remove(core.Instances[core.expansion][core.instanceType][core.instance][boss].players, j)
+									--print("Removed: " .. name)
+								end
 							end
 						end
 					end
+
+					--Update the GUI
+					core.Config:Instance_OnClickAutomatic()
+
+					table.remove(playersScanned, i)
 				end
-
-				--Update the GUI
-				core.Config:Instance_OnClickAutomatic()
-
-				table.remove(playersScanned, i)
 			end
 		end
-	end
 
-	rescanNeeded = false
-	updateDebugTable()
+		rescanNeeded = false
+		updateDebugTable()
 
-	--Start the player scanning
-	if #playersToScan > 0 then
-		--Fetch information for the next person in the group
-		getInstanceAchievements()
-	else
-		core:sendDebugMessage("Achievement Scanning Finished (" .. #playersScanned .. "/" .. core.groupSize .. ")")
-		scanInProgress = false
-		core.scanFinished = true
+		--Start the player scanning
+		if #playersToScan > 0 then
+			--Fetch information for the next person in the group
+			getInstanceAchievements()
+		else
+			core:sendDebugMessage("Achievement Scanning Finished (" .. #playersScanned .. "/" .. core.groupSize .. ")")
+			scanInProgress = false
+			core.scanFinished = true
 
-		--Once the achievement scanning has finished enable the achievement tab to start scanning again
-		if _G["AchievementFrameComparison"] ~= nil then
-			--Re-register this event so achievement ui and inspect achievement ui work as intended
-			_G["AchievementFrameComparison"]:RegisterEvent("INSPECT_ACHIEVEMENT_READY")
+			--Once the achievement scanning has finished enable the achievement tab to start scanning again
+			if _G["AchievementFrameComparison"] ~= nil then
+				--Re-register this event so achievement ui and inspect achievement ui work as intended
+				_G["AchievementFrameComparison"]:RegisterEvent("INSPECT_ACHIEVEMENT_READY")
+			end
 		end
+	else
+		core:sendDebugMessage("Player is not in an instance. Cancelling scan")
 	end
 end
 
@@ -1066,6 +1070,7 @@ function events:ZONE_CHANGED_NEW_AREA()
 
 		--Unregister events if set
 		if pcall(function() core[core.instanceClear]:InstanceCleanup() end) == true then
+			core:sendDebugMessage("Cleaning up instance events")
 			core[core.instanceClear]:InstanceCleanup()
 		end
 	end
