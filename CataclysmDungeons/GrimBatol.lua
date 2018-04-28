@@ -25,5 +25,4 @@ function core.GrimBatol:Erudax()
 end
 
 function core.GrimBatol:ClearVariables()
-
 end

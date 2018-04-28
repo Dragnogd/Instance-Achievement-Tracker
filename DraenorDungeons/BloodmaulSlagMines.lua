@@ -23,5 +23,4 @@ function core.BloodmaulSlagMines:Gugrokk()
 end
 
 function core.BloodmaulSlagMines:ClearVariables()
-
 end

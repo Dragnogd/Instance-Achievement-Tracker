@@ -82,6 +82,11 @@ function core.Highmaul:ClearVariables()
     orbCounter = 15
 end
 
+function core.Highmaul:InstanceCleanup()
+    core.Highmaul.Events:UnregisterEvent("UNIT_HEALTH")
+    core.Highmaul.Events:UnregisterEvent("UNIT_POWER")
+end
+
 function core.Highmaul:InitialSetup()
 	core.Highmaul.Events:RegisterEvent("UNIT_HEALTH")
 	core.Highmaul.Events:RegisterEvent("UNIT_POWER")

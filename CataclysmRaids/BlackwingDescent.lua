@@ -7,8 +7,7 @@ local _, core = ...
 ---- Blackwing Descent Bosses
 ------------------------------------------------------
 core.BlackwingDescent = {}
-
-local f = CreateFrame ("Frame")
+core.BlackwingDescent.Events = CreateFrame("Frame")
 
 ------------------------------------------------------
 ---- Ominitron Defense System
@@ -136,19 +135,6 @@ function core.BlackwingDescent:Chimaeron()
 	end
 end
 
-function core.BlackwingDescent:Atramedes()
-	if f:IsEventRegistered("UNIT_POWER") == nil then
-		f:RegisterEvent("UNIT_POWER")
-	end
-	f:SetScript("OnEvent", function(self, event, unit, powerType)
-		if event == "UNIT_POWER" and powerType == "ALTERNATE" then
-			if UnitPower(unit, ALTERNATE_POWER_INDEX) > 50 then
-				core:getAchievementFailedWithMessageAfter("by (" .. UnitName(unit) .. ")")
-			end
-		end
-	end)
-end
-
 function core.BlackwingDescent:Nefarian()
 	if f:IsEventRegistered("CHAT_MSG_MONSTER_YELL") == nil then
 		f:RegisterEvent("CHAT_MSG_MONSTER_YELL")
@@ -200,20 +186,6 @@ function core.BlackwingDescent:Nefarian()
 			step3Complete = true
 			core:sendMessage("Step 4: When Nefarian has landed kill him")			
 		end
-
-		--Step 4: When landed kill Nefarian
-		f:SetScript("OnEvent", function(self, event, message, sender)
-			if event == "CHAT_MSG_MONSTER_YELL" and step3Complete == true and step4Complete == false then
-				if string.find(message, "I have tried to be an accommodating host, but you simply will not die! Time to throw all pretense aside and just... KILL YOU ALL!") then
-					C_Timer.After(3, function()
-						core:sendMessage("Step 4: Complete")
-						core:getAchievementSuccess()							
-					end)
-					step4Complete = true
-				end
-			end
-		end)
-		
 	end
 end
 
@@ -247,12 +219,42 @@ function core.BlackwingDescent:ClearVariables()
 	step2Complete = false
 	step3Complete = false
 	step4Complete = false
+end
 
-	if f:IsEventRegistered("UNIT_POWER") == true then
-		f:UnregisterEvent("UNIT_POWER")
-	end
-	
-	if f:IsEventRegistered("CHAT_MSG_MONSTER_YELL") == true then
-		f:UnregisterEvent("CHAT_MSG_MONSTER_YELL")
-	end
+function core.BlackwingDescent:InstanceCleanup()
+	core.BlackwingDescent.Events:UnregisterEvent("CHAT_MSG_MONSTER_YELL")
+	core.BlackwingDescent.Events:UnregisterEvent("UNIT_POWER")
+end
+
+function core.BlackwingDescent:InitialSetup()
+    core.BlackwingDescent.Events:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+    core.BlackwingDescent.Events:RegisterEvent("UNIT_POWER")
+end
+
+core.BlackwingDescent.Events:SetScript("OnEvent", function(self, event, ...)
+    return self[event] and self[event](self, event, ...)
+end)
+
+function core.BlackwingDescent.Events:CHAT_MSG_MONSTER_YELL(self, message, sender)
+    if core.Instances[core.expansion][core.instanceType][core.instance]["boss6"].enabled == true then
+		if step3Complete == true and step4Complete == false then
+			if string.find(message, "I have tried to be an accommodating host, but you simply will not die! Time to throw all pretense aside and just... KILL YOU ALL!") then
+				C_Timer.After(3, function()
+					core:sendMessage("Step 4: Complete")
+					core:getAchievementSuccess()							
+				end)
+				step4Complete = true
+			end
+		end
+    end
+end
+
+function core.BlackwingDescent.Events:UNIT_POWER(self, unit, powerType)
+    if core.Instances[core.expansion][core.instanceType][core.instance]["boss4"].enabled == true then
+		if powerType == "ALTERNATE" then
+			if UnitPower(unit, ALTERNATE_POWER_INDEX) > 50 then
+				core:getAchievementFailedWithMessageAfter("by (" .. UnitName(unit) .. ")")
+			end
+		end
+    end
 end

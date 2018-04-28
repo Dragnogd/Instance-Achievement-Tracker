@@ -36,5 +36,4 @@ function core.ShadowfangKeep:LordGodfrey()
 end
 
 function core.ShadowfangKeep:ClearVariables()
-
 end

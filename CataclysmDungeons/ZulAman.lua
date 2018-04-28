@@ -15,5 +15,4 @@ function core.ZulAman:Halazzi()
 end
 
 function core.ZulAman:ClearVariables()
-
 end

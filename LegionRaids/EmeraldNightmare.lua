@@ -155,6 +155,10 @@ function core.TheEmeraldNightmare:ClearVariables()
     timerStarted = false
 end
 
+function core.TheEmeraldNightmare:InstanceCleanup()
+    core.TheEmeraldNightmare.Events:UnregisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+end
+
 function core.TheEmeraldNightmare:InitialSetup()
 	core.TheEmeraldNightmare.Events:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
 end

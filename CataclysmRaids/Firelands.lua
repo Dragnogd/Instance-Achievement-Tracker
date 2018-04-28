@@ -128,6 +128,11 @@ function core.Firelands:ClearVariables()
 	livingMeteorIds = {}
 end
 
+function core.Firelands:InstanceCleanup()
+    core.Firelands.Events:UnregisterEvent("UNIT_POWER")
+    core.Firelands.Events:UnregisterEvent("UNIT_AURA")
+end
+
 function core.Firelands:InitialSetup()
 	core.Firelands.Events:RegisterEvent("UNIT_POWER")
     core.Firelands.Events:RegisterEvent("UNIT_AURA")	
@@ -161,7 +166,7 @@ end
 
 function core.Firelands.TrackAdditional()
 	--Only The Pentient
-	if core.Instances.Cataclysm.Raids.Firelands.boss1.enabled == true then
+	if core.Instances[core.expansion][core.instanceType][core.instance]["boss6"].enabled == true then
 		if onlyThePenitentFailed == false then
 			if (core.type == "SPELL_DAMAGE" or core.type == "SPELL_MISSED") and core.spellId == 99705 then
 				core:sendMessage(GetAchievementLink(5799) .. " FAILED! (" .. core.destName .. ")")

@@ -599,6 +599,11 @@ function core.Ulduar:ClearVariables()
     snaplashersKilled = 0
 end
 
+function core.Ulduar:InstanceCleanup()
+    core.Ulduar.Events:UnregisterEvent("UNIT_AURA")
+    core.Ulduar.Events:UnregisterEvent("CHAT_MSG_MONSTER_YELL")
+end
+
 function core.Ulduar:InitialSetup()
     core.Ulduar.Events:RegisterEvent("UNIT_AURA")
     core.Ulduar.Events:RegisterEvent("CHAT_MSG_MONSTER_YELL")

@@ -44,6 +44,10 @@ function core.UtgardePinnacle:ClearVariables()
     end
 end
 
+function core.UtgardePinnacle:InstanceCleanup()
+    core.UtgardePinnacle.Events:UnregisterEvent("CHAT_MSG_MONSTER_YELL")
+end
+
 function core.UtgardePinnacle:InitialSetup()
     core.UtgardePinnacle.Events:RegisterEvent("CHAT_MSG_MONSTER_YELL")
     --core.UtgardePinnacle.Events:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")

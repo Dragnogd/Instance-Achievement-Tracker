@@ -40,5 +40,4 @@ end
     
 
 function core.DarkheartThicket:ClearVariables()
-
 end

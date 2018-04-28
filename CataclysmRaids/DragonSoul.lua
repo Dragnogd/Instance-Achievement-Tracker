@@ -7,9 +7,7 @@ local _, core = ...
 ---- Dragon Soul Bosses
 ------------------------------------------------------
 core.DragonSoul = {}
-
-local f = CreateFrame ("Frame")
-f:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
+core.DragonSoul.Events = CreateFrame("Frame")
 
 ------------------------------------------------------
 ---- Warlord Zon'ozz
@@ -42,6 +40,11 @@ local hourOfTwilightPlayers = {}
 ------------------------------------------------------
 local lastRole = nil
 local rolesPerformed = 0
+
+------------------------------------------------------
+---- Deathwing
+------------------------------------------------------
+local platformAssualted = false
 
 function core.DragonSoul:WarlordZonozz()
 	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 106836 then
@@ -136,68 +139,11 @@ end
 
 function core.DragonSoul:SpineOfDeathwing()
 	f:SetScript("OnEvent", function(self, event, message, sender, language, channelString, target, flags, unknown, channelNumber, channelName, unknown, counter)
-		if event == "CHAT_MSG_RAID_BOSS_EMOTE" and core.achievementCompleted == false then
-			if message == "%s rolls right!" then
-				if lastRole == "right" or lastRole == nil then
-					rolesPerformed = 0
-					core:getAchievementFailedWithMessageAfter("(This Achievement Can be Attempted Again)")
-					core.achievementFailed = false
-					core:sendMessage("Roll the boss LEFT now! (" .. rolesPerformed .. "/4)")
-					lastRole = nil
-				elseif lastRole == "left" then
-					rolesPerformed = rolesPerformed + 1
-					core:sendMessage("Roll the boss LEFT now! (" .. rolesPerformed .. "/4)")
-					lastRole = "right"
-				end
-			elseif message == "%s rolls left!" then
-				if lastRole == nil then
-					rolesPerformed = rolesPerformed + 1
-					core:sendMessage("Roll the boss RIGHT now! (" .. rolesPerformed .. "/4)")
-					lastRole = "left"
-				elseif lastRole == "left" then
-					rolesPerformed = 1
-					core:getAchievementFailedWithMessageAfter("(This Achievement Can be Attempted Again)")
-					core.achievementFailed = false
-					core:sendMessage("Roll the boss RIGHT now! (" .. rolesPerformed .. "/4)")
-					lastRole = "left"
-				elseif lastRole == "right" then
-					rolesPerformed = rolesPerformed + 1
-					core:sendMessage("Roll the boss RIGHT now! (" .. rolesPerformed .. "/4)")
-					lastRole = "left"
-				end
-			end
-		end
-
 		if rolesPerformed == 4 then
 			core:getAchievementSuccess()
 		end
 	end)
 end
-
-
---Deathwing (Cannot use function since boss is not registered before assualting a platform)
-f:SetScript("OnEvent", function(self, event, message, sender, language, channelString, target, flags, unknown, channelNumber, channelName, unknown, counter)
-	if event == "CHAT_MSG_RAID_BOSS_EMOTE" and core.achievementCompleted == false then
-		if string.match(message, "Ysera") and core.achievementCompleted == false then
-			core:displayAchievementsToTrackCurrent(6180)
-			SendChatMessage("[WIP] 'Ysera Assualted First' part of " .. GetAchievementLink(6180) .. " will be completed once boss is killed",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
-			core.achievementCompleted = true
-		elseif string.match(message, "Nozdormu") and core.achievementCompleted == false then
-			core:displayAchievementsToTrackCurrent(6180)
-			SendChatMessage("[WIP] 'Nozdormu Assualted First' part of " .. GetAchievementLink(6180) .. " will be completed once boss is killed",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
-			core.achievementCompleted = true
-		elseif string.match(message, "Alexstrasza") and core.achievementCompleted == false then
-			core:displayAchievementsToTrackCurrent(6180)
-			SendChatMessage("[WIP] 'Alexstrasza Assualted First' part of " .. GetAchievementLink(6180) .. " will be completed once boss is killed",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
-			core.achievementCompleted = true
-		elseif string.match(message, "Kalecgos") and core.achievementCompleted == false then
-			core:displayAchievementsToTrackCurrent(6180)
-			SendChatMessage("[WIP] 'Kalecgos Assualted First' part of " .. GetAchievementLink(6180) .. " will be completed once boss is killed",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
-			core.achievementCompleted = true
-		end
-	end
-end)
-
 
 function core.DragonSoul:ClearVariables()
 	------------------------------------------------------
@@ -230,5 +176,72 @@ function core.DragonSoul:ClearVariables()
 	---- Spine Of Deathwing
 	------------------------------------------------------
 	lastRole = nil
-	rolesPerformed = 0		
+	rolesPerformed = 0
+	
+	------------------------------------------------------
+	---- Deathwing
+	------------------------------------------------------
+	platformAssualted = false
+end
+
+function core.DragonSoul:InstanceCleanup()
+    core.DragonSoul.Events:UnregisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
+end
+
+function core.DragonSoul:InitialSetup()
+    core.DragonSoul.Events:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
+end
+
+core.DragonSoul.Events:SetScript("OnEvent", function(self, event, ...)
+    return self[event] and self[event](self, event, ...)
+end)
+
+function core.DragonSoul.Events:CHAT_MSG_RAID_BOSS_EMOTE(self, message, sender, language, channelString, target, flags, unknown, channelNumber, channelName, unknown, counter)
+    if core.Instances[core.expansion][core.instanceType][core.instance]["boss8"].enabled == true then
+		if platformAssualted == false then
+			if string.match(message, "Ysera") and platformAssualted == false then
+				core:sendMessage("'Ysera Assualted First' part of " .. GetAchievementLink(6180) .. " will be completed once boss is killed")
+				platformAssualted = true
+			elseif string.match(message, "Nozdormu") and platformAssualted == false then
+				core:sendMessage("'Nozdormu Assualted First' part of " .. GetAchievementLink(6180) .. " will be completed once boss is killed")
+				platformAssualted = true
+			elseif string.match(message, "Alexstrasza") and core.platformAssualted == false then
+				core:sendMessage("'Alexstrasza Assualted First' part of " .. GetAchievementLink(6180) .. " will be completed once boss is killed")
+				platformAssualted = true
+			elseif string.match(message, "Kalecgos") and platformAssualted == false then
+				core:sendMessage("'Kalecgos Assualted First' part of " .. GetAchievementLink(6180) .. " will be completed once boss is killed")
+				platformAssualted = true
+			end
+		end
+	end
+
+	if core.Instances[core.expansion][core.instanceType][core.instance]["boss7"].enabled == true then
+		if message == "%s rolls right!" then
+			if lastRole == "right" or lastRole == nil then
+				rolesPerformed = 0
+				core:sendMessage("(This Achievement Can be Attempted Again)")
+				core:sendMessage("Roll the boss LEFT now! (" .. rolesPerformed .. "/4)")
+				lastRole = nil
+			elseif lastRole == "left" then
+				rolesPerformed = rolesPerformed + 1
+				core:sendMessage("Roll the boss LEFT now! (" .. rolesPerformed .. "/4)")
+				lastRole = "right"
+			end
+		elseif message == "%s rolls left!" then
+			if lastRole == nil then
+				rolesPerformed = rolesPerformed + 1
+				core:sendMessage("Roll the boss RIGHT now! (" .. rolesPerformed .. "/4)")
+				lastRole = "left"
+			elseif lastRole == "left" then
+				rolesPerformed = 1
+				core:sendMessage("(This Achievement Can be Attempted Again)")
+				core:sendMessage("Roll the boss RIGHT now! (" .. rolesPerformed .. "/4)")
+				lastRole = "left"
+			elseif lastRole == "right" then
+				rolesPerformed = rolesPerformed + 1
+				core:sendMessage("Roll the boss RIGHT now! (" .. rolesPerformed .. "/4)")
+				lastRole = "left"
+			end
+		end
+	end
 end

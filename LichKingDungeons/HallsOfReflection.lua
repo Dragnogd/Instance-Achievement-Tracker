@@ -9,5 +9,4 @@ local _, core = ...
 core.HallsOfReflection = {}
 
 function core.HallsOfReflection:ClearVariables()
-
 end

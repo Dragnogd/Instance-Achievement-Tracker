@@ -75,9 +75,13 @@ function core.TrialOfValor:Helya()
     end  
 end
 
+function core.TrialOfValor:InstanceCleanup()
+    core.TrialOfValor.Events:UnregisterEvent("UNIT_AURA")
+end
+
 function core.TrialOfValor:InitialSetup()
     odynKilled = false
-    core.Ulduar.Events:RegisterEvent("UNIT_AURA")
+    core.TrialOfValor.Events:RegisterEvent("UNIT_AURA")
 end
 
 function core.TrialOfValor:ClearVariables()

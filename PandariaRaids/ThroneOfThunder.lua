@@ -207,6 +207,11 @@ function core.ThroneOfThunder:ClearVariables()
 	lulinKilled = false
 end
 
+function core.ThroneOfThunder:InstanceCleanup()
+    core.ThroneOfThunder.Events:UnregisterEvent("UNIT_HEALTH")
+    core.ThroneOfThunder.Events:UnregisterEvent("UNIT_POWER")
+end
+
 function core.ThroneOfThunder:InitialSetup()
 	core.ThroneOfThunder.Events:RegisterEvent("UNIT_HEALTH")
 	core.ThroneOfThunder.Events:RegisterEvent("UNIT_POWER")

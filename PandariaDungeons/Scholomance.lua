@@ -26,5 +26,4 @@ function core.Scholomance:Sanguinarian()
 end
 
 function core.Scholomance:ClearVariables()
-
 end

@@ -132,6 +132,10 @@ function core.AntorusTheBurningThrone:ClearVariables()
     felshieldEmitterCounter = 3
 end
 
+function core.AntorusTheBurningThrone:InstanceCleanup()
+    core.AntorusTheBurningThrone.Events:UnregisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+end
+
 core.AntorusTheBurningThrone.Events:SetScript("OnEvent", function(self, event, ...)
     return self[event] and self[event](self, event, ...)
 end)

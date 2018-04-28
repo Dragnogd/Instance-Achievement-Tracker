@@ -244,6 +244,11 @@ function core.HellfireCitadel:ClearVariables()
     end
 end
 
+function core.HellfireCitadel:InstanceCleanup()
+    core.HellfireCitadel.Events:UnregisterEvent("UNIT_HEALTH")
+    core.HellfireCitadel.Events:UnregisterEvent("CHAT_MSG_MONSTER_YELL")
+end
+
 function core.HellfireCitadel:InitialSetup()
 	core.HellfireCitadel.Events:RegisterEvent("UNIT_HEALTH")
 	core.HellfireCitadel.Events:RegisterEvent("CHAT_MSG_MONSTER_YELL")

@@ -29,11 +29,7 @@ function core.PitOfSaron:TrackAdditional()
     end
 end
 
-function core.PitOfSaron:ClearVariables()
-    
+function core.PitOfSaron:ClearVariables() 
 end
 
-function core.PitOfSaron:InitialSetup()
-   
-end
 

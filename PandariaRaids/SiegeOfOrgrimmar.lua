@@ -455,6 +455,11 @@ function core.SiegeOfOrgrimmar:TrackAdditional()
 	end
 end
 
+function core.SiegeOfOrgrimmar:InstanceCleanup()
+    core.SiegeOfOrgrimmar.Events:UnregisterEvent("UNIT_AURA")
+    core.SiegeOfOrgrimmar.Events:UnregisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
+end
+
 function core.SiegeOfOrgrimmar:InitialSetup()
     core.SiegeOfOrgrimmar.Events:RegisterEvent("UNIT_AURA")
     core.SiegeOfOrgrimmar.Events:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")

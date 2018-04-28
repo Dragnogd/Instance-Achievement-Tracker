@@ -17,5 +17,4 @@ function core.UtgardeKeep:PrinceKeleseth()
 end
 
 function core.UtgardeKeep:ClearVariables()
-    
 end

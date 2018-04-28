@@ -25,5 +25,4 @@ function core.WellOfEternity:Mannoroth()
 end
 
 function core.WellOfEternity:ClearVariables()
-
 end

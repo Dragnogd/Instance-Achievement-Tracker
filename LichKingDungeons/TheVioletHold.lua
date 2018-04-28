@@ -23,6 +23,10 @@ end
 function core.VioletHold:ClearVariables()
 end
 
+function core.VioletHold:InstanceCleanup()
+    core.VioletHold.Events:UnregisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+end
+
 function core.VioletHold:InitialSetup()
     core.VioletHold.Events:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
 end

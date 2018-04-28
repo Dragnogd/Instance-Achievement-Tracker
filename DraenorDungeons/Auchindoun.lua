@@ -9,5 +9,4 @@ local _, core = ...
 core.Auchindoun = {}
 
 function core.Auchindoun:ClearVariables()
-
 end

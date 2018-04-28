@@ -89,6 +89,11 @@ function core.HallsOfOrigination:ClearVariables()
     playersHit = {}
 end
 
+function core.HallsOfOrigination:InstanceCleanup()
+    core.HallsOfOrigination.Events:UnregisterEvent("UNIT_ENTERING_VEHICLE")
+    core.HallsOfOrigination.Events:UnregisterEvent("UNIT_EXITING_VEHICLE")
+end
+
 core.HallsOfOrigination.Events:SetScript("OnEvent", function(self, event, ...)
     return self[event] and self[event](self, event, ...)
 end)

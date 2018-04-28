@@ -1372,7 +1372,7 @@ core.Instances = {
                 },
                 boss3 = {
                     name = "Yalnu",
-                    bossIDs = {83846},
+                    bossIDs = {}, --83846
                     achievement = 9223,
                     players = {"(Enter instance to start scanning)"},
                     tactics = "",
@@ -2357,7 +2357,7 @@ core.Instances = {
                     players = {"(Enter instance to start scanning)"},
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = true,
-                    track = function() core.BlackwingDescent:Atramedes() end,
+                    track = function() end,
                     partial = false,
                 },
                 boss5 = {
@@ -2421,7 +2421,7 @@ core.Instances = {
                     players = {"(Enter instance to start scanning)"},
                     tactics = "At 110, you can simply just nuke boss down.",
                     enabled = true,
-                    track = function() core.BastionOfTwilight:Chogall() end,
+                    track = function() end,
                     partial = false,
                 },
             },

@@ -1063,6 +1063,11 @@ function events:ZONE_CHANGED_NEW_AREA()
 		scanInProgress = false
 		core.scanFinished = false
 		scanAnnounced = false
+
+		--Unregister events if set
+		if pcall(function() core[core.instanceClear]:InstanceCleanup() end) == true then
+			core[core.instanceClear]:InstanceCleanup()
+		end
 	end
 end
 

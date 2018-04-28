@@ -107,8 +107,11 @@ function core.Deadmines:ClearVariables()
     coalesceCounter = 0
 end
 
+function core.Deadmines:InstanceCleanup()
+    core.Deadmines.Events:UnregisterEvent("CHAT_MSG_SYSTEM")
+end
+
 function core.Deadmines:InitialSetup()
-    print("Setting up Deadmines Events")
     events:RegisterEvent("CHAT_MSG_SYSTEM")
 end
 
