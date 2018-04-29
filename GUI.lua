@@ -24,7 +24,7 @@ AchievementTrackerOptions = {}
 Config.majorVersion = 1						--Addon with a higher major version change have priority over a lower major version
 Config.minorVersion = 0						--Addon with a minor version change have prioirty over a lower minor version
 Config.revisionVersion = 0					--Addon with a revision change have the same priorty as a lower revision verison
-Config.releaseType = "rn"                    --Release type (Alpha, Beta, Release)
+Config.releaseType = "r"                    --Release type (Alpha, Beta, Release)
 
 --------------------------------------
 -- Config functions
