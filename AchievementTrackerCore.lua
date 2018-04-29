@@ -452,19 +452,19 @@ end
 function getInstanceInfomation()
 	--DEBUG
 	if debugMode == true then
-		-- core.instance = "Ulduar"
-		-- core.instanceClear = "Ulduar"
-		-- core.instanceNameSpaces = "Ulduar"
-		-- core.expansion = "WrathOfTheLichKing"
-		-- core.instanceType = "Raids"
-		-- core.inInstance = true
-		-- if UICreated == false then
-		-- 	core:sendDebugMessage("Creating Tracking UI")
-		-- 	createEnableAchievementTrackingUI()
-		-- else
-		-- 	core:sendDebugMessage("Displaying Tracking UI since it was already created")
-		-- 	UIConfig:Show()
-		-- end
+		core.instance = "Ulduar"
+		core.instanceClear = "Ulduar"
+		core.instanceNameSpaces = "Ulduar"
+		core.expansion = "WrathOfTheLichKing"
+		core.instanceType = "Raids"
+		core.inInstance = true
+		if UICreated == false then
+			core:sendDebugMessage("Creating Tracking UI")
+			createEnableAchievementTrackingUI()
+		else
+			core:sendDebugMessage("Displaying Tracking UI since it was already created")
+			UIConfig:Show()
+		end
 	end
 
 	if IsInInstance() and core.inInstance == false then
@@ -650,6 +650,7 @@ function enableAchievementTracking(self)
 	--Register Events
 	events:RegisterEvent("INSPECT_ACHIEVEMENT_READY") 			--Used for scanning players in the group to see which achievements they are missing
 	events:RegisterEvent("GROUP_ROSTER_UPDATE")					--Used to find out when the group size has changed and to therefore initiate an achievement scan of the group
+	events:RegisterEvent("CHAT_MSG_SYSTEM")						--Used to find out when players join group to intiate an achievement scan of the group
 	events:RegisterEvent("PLAYER_REGEN_DISABLED")				--Used to detect when the player has entered combat and to reset tracked variables for bosses
 	events:RegisterEvent("PLAYER_REGEN_ENABLED")				--Used to track when the player has left combat
 	events:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")			--Used to track the completion/failiure of achievements
@@ -900,6 +901,32 @@ function events:GROUP_ROSTER_UPDATE()
 	end
 end
 
+function events:CHAT_MSG_SYSTEM(self, message)
+	local chatStrs = {"joins the party", "joined the instance group", "joined the raid group", "joined a raid group", "leaves the party", "left the instance group", "leaves the party", "left the raid group"}
+	for i = 1, #chatStrs do
+		if string.match(message, chatStrs[i]) then
+			if core.enableAchievementScanning == true then
+				core:sendDebugMessage("CHAT_MSG_SYSTEM: " .. message)
+				--Player has enabled acheivement scanning from the option menu
+				core:sendDebugMessage("Achievement Scanning Enabled 2")
+				if scanInProgress == false then
+					--There is currently no achievement scan in progress, so intiate a new acheivement scan
+					core:sendDebugMessage("Starting Scan")
+					scanInProgress = true
+					getPlayersInGroup()
+				else
+					--There is currently an achievement scan in progress. Ask for a rescan once the current achievement scan has finished
+					core:sendDebugMessage("Scan in progress. Asking for rescan")
+					rescanNeeded = true
+				end
+			else
+				--Player has disabled acheivement scanning from the option menu
+				core:sendDebugMessage("Achievement Scanning is disabled")
+			end
+		end
+	end
+end
+
 --Fired when a user engages a boss. Used to output to chat which achievement is currently being tracked
 --Does not fire for all bosses or sometimes fires too late into the fight so some fight manually call the achievement tracking functions
 --Does not get called for achievements which are not part of a boss fight so achievement tracking is calling manually once per session for those achievements
@@ -1045,6 +1072,7 @@ function events:ZONE_CHANGED_NEW_AREA()
 		core:sendDebugMessage("Player has left instance. Unregestering events and resetting variables")
 		--events:UnregisterEvent("INSPECT_ACHIEVEMENT_READY")
 		events:UnregisterEvent("GROUP_ROSTER_UPDATE")
+		events:UnregisterEvent("CHAT_MSG_SYSTEM")
 		events:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		events:UnregisterEvent("PLAYER_REGEN_ENABLED")
 		events:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
