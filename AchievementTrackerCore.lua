@@ -7,7 +7,6 @@ local events = CreateFrame("Frame")
 local UIConfig
 local UICreated = false
 local debugMode = false
-core.tocVersion = 80000
 
 AchievementTrackerOptions = {}
 AchievementTrackerDebug = {}
@@ -681,10 +680,6 @@ function events:ADDON_LOADED(event, name)
 	end
 	
 	if name ~= "InstanceAchievementTracker" then return end
-
-	--Get build info
-	local _, _, _, tocVersionloc = GetBuildInfo()
-	core.tocVersion = tocVersionloc
 
 	--Check if the options have been setup
 	if AchievementTrackerOptions["enableAddon"] == nil then

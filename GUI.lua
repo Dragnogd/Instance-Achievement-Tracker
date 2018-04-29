@@ -386,7 +386,6 @@ function Config:CreateGUI()
      UIConfig.ScrollFrame2.ScrollBar:SetPoint("BOTTOMRIGHT", UIConfig.ScrollFrame2, "BOTTOMRIGHT", -7, 18)    
 
     --Tabs
-    print(core.tocVersion)
     content1, BattleForAzerothNav, BattleForAzerothContent, LegionNav, LegionContent, WarlordsOfDraenorNav, WarlordsOfDraenorContent, MistsOfPandariaNav, MistsOfPandariaContent, CataclysmNav, CataclysmContent, WrathOfTheLichKingNav, WrathOfTheLichKingContent = nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil
     if core.tocVersion == 70300 then
         content1, LegionNav, LegionContent, WarlordsOfDraenorNav, WarlordsOfDraenorContent, MistsOfPandariaNav, MistsOfPandariaContent, CataclysmNav, CataclysmContent, WrathOfTheLichKingNav, WrathOfTheLichKingContent = SetTabs(UIConfig, 6, "Main", "Legion", "Warlords of Draenor", "Mists of Pandaria", "Cataclysm", "Wrath of the Lich King")
@@ -668,8 +667,8 @@ function Instance_OnClick(self)
         if bossName ~= "name" then
             local button
 
-            --Header            
-            if Config.currentTab == "BattleForAzeroth" then
+            --Header
+            if Config.currentTab == "Battle for Azeroth" then
                 button = BattleForAzerothContentButtons[counter]               
             elseif Config.currentTab == "Legion" then
                 button = LegionContentButtons[counter]
@@ -685,7 +684,7 @@ function Instance_OnClick(self)
             button:Show()
             if counter > 1 then
                 button:ClearAllPoints()
-                if Config.currentTab == "BattleForAzeroth" then
+                if Config.currentTab == "Battle for Azeroth" then
                     button:SetPoint("TOPLEFT",BattleForAzerothContentButtons[counter-1],"BOTTOMLEFT",0,30-heightDifference)
                 elseif Config.currentTab == "Legion" then
                     button:SetPoint("TOPLEFT",LegionContentButtons[counter-1],"BOTTOMLEFT",0,30-heightDifference)
@@ -725,7 +724,7 @@ function Instance_OnClick(self)
 
             --Content
             --print(Config.currentTab)            
-            if Config.currentTab == "BattleForAzeroth" then
+            if Config.currentTab == "Battle for Azeroth" then
                 button = BattleForAzerothContentButtons[counter]
             elseif Config.currentTab == "Legion" then
                 button = LegionContentButtons[counter]
@@ -782,7 +781,7 @@ function Instance_OnClick(self)
     --Hide the remaining buttons
     for i = counter, numButtons do
         local button
-        if Config.currentTab == "BattleForAzeroth" then
+        if Config.currentTab == "Battle for Azeroth" then
             button = BattleForAzerothContentButtons[i]        
         elseif Config.currentTab == "Legion" then
             button = LegionContentButtons[i]
@@ -800,7 +799,7 @@ function Instance_OnClick(self)
 end
 
 function Achievement_OnEnter(self)
-    if Config.currentTab == "BattleForAzeroth" then
+    if Config.currentTab == "Battle for Azeroth" or Config.currentTab == "BattleForAzeroth" then
         for i = 1, #BattleForAzerothContentButtons do
             if MouseIsOver(BattleForAzerothContentButtons[i]) then
                 GameTooltip:SetOwner(UIConfig, "ANCHOR_TOPRIGHT")
