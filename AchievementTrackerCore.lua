@@ -701,7 +701,7 @@ function events:ADDON_LOADED(event, name)
 	
     -- core.Config:SetupAchievementTracking(core.enableAchievementScanning)
 
-	SLASH_MENU1 = "/at"
+	SLASH_MENU1 = "/iat"
 	SlashCmdList.MENU = core.Config.Toggle
 
 	SLASH_MENU2 = "/debug"
