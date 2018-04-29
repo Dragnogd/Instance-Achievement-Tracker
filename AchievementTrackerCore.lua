@@ -7,6 +7,7 @@ local events = CreateFrame("Frame")
 local UIConfig
 local UICreated = false
 local debugMode = false
+local tocVersion = nil
 
 AchievementTrackerOptions = {}
 AchievementTrackerDebug = {}
@@ -681,6 +682,10 @@ function events:ADDON_LOADED(event, name)
 	
 	if name ~= "InstanceAchievementTracker" then return end
 
+	--Get build info
+	local _, _, _, tocversionloc = GetBuildInfo()
+	tocVersion = tocversionloc
+
 	--Check if the options have been setup
 	if AchievementTrackerOptions["enableAddon"] == nil then
 		AchievementTrackerOptions["enableAddon"] = true
@@ -767,7 +772,12 @@ function setAddonEnabled(addonEnabled)
 		events:RegisterEvent("PLAYER_ENTERING_WORLD")				--Used to detect if player is inside an instance when they enter the world
 		events:RegisterEvent("ZONE_CHANGED_NEW_AREA")				--Used to detect if player is inside an instance when they change zone
 		events:RegisterEvent("CHAT_MSG_ADDON")						--Allows the addon to communicate with other addons in the same party/raid
-		RegisterAddonMessagePrefix("Whizzey")						--Register events to listen out for client-client communication
+
+		if tocVersion == 70300 then
+			RegisterAddonMessagePrefix("Whizzey")						--Register events to listen out for client-client communication
+		elseif tocVersion == 80000 then
+			C_ChatInfo.RegisterAddonMessagePrefix("Whizzey")
+		end
 	else
 		core:sendDebugMessage("Disabling Addon")
 		events:UnregisterEvent("PLAYER_ENTERING_WORLD")				
