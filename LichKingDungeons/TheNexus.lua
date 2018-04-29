@@ -21,15 +21,15 @@ function core.TheNexus:GrandMagusTelestra()
     if core.overkill ~= nil then
         if core.overkill > 0 then
             if core.destID == "26928" and mob1Killed == false then
-                print("Mob 1 Killed")
+                --print("Mob 1 Killed")
                 mob1Killed = true
                 imageCounter = imageCounter + 1
             elseif core.destID == "26929" and mob2Killed == false then
-                print("Mob 2 Killed")
+                --print("Mob 2 Killed")
                 mob2Killed = true
                 imageCounter = imageCounter + 1
             elseif core.destID == "26930" and mob3Killed == false then
-                print("Mob 3 Killed")
+                --print("Mob 3 Killed")
                 mob3Killed = true
                 imageCounter = imageCounter + 1
             end

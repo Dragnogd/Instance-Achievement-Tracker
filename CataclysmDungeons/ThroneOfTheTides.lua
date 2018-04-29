@@ -27,16 +27,16 @@ function core.ThroneOfTheTides:Ozumat()
     end
 
     if core.destName == "Unyielding Behemoth" then
-        print(core.type)
+        --print(core.type)
     end
 
     if core.destName == "Unyielding Behemoth" and core.type ~= "UNIT_DIED" then
-        print("Found")
+        --print("Found")
         unyieldingBehemothAlive = true
     end
 
     if core.type == "UNIT_DIED" and core.destName == "Unyielding Behemoth" and requirementsMetAnnounced == true then
-        print("Success")
+        --print("Success")
         core:getAchievementSuccess()
     elseif core.type == "UNIT_DIED" and core.destName == "Unyielding Behemoth" and requirementsMetAnnounced == false then
         unyieldingBehemothAlive = false

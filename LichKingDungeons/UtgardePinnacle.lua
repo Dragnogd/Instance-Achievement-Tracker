@@ -29,7 +29,7 @@ end
 
 function core.UtgardePinnacle:KingYmiron()
     if (core.type == "SPELL_DAMAGE" or core.type == "SPELL_MISSED") and (core.spellId == 48295 or core.spellId == 59302) then
-        print("Failed")
+        --print("Failed")
         core:getAchievementFailed()
     end
 end
@@ -39,7 +39,7 @@ function core.UtgardePinnacle:ClearVariables()
     ---- Skadi the Ruthless
     ------------------------------------------------------
     if timer ~= nil then
-        print("Timer Cancelled")
+        --print("Timer Cancelled")
         timer:Cancel()
     end
 end

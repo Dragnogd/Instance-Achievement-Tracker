@@ -167,7 +167,7 @@ end
 function core.Ulduar:RazorscaleIronDwarfMediumRare()
     if core.type == "UNIT_DIED" and core.spellId == 63317 and core.destID == "33388" then
         darkRuneGuardianKilled = darkRuneGuardianKilled + 1
-        print(darkRuneGuardianKilled)
+        --print(darkRuneGuardianKilled)
         core:sendMessageDelay("Dark Rune Guardian Killed (" .. darkRuneGuardianKilled .. "/25)",darkRuneGuardianKilled,5)
     end
 
@@ -181,7 +181,7 @@ end
 function core.Ulduar:RazorscaleAQuickShave()
     if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 62666 and (UnitHealth("boss1") / UnitHealthMax("boss1") * 100) > 50 then
         takeOff = takeOff + 1
-        print(takeOff)
+        --print(takeOff)
     end
 
     if takeOff == 2 then
@@ -466,7 +466,7 @@ end
 function core.Ulduar:FreyaGettingBackToNature()
     --2
     if core.type == "SPELL_AURA_REMOVED_DOSE" and core.amount < 25 then
-        print("Getting back to nature failed")
+        --print("Getting back to nature failed")
         core:getAchievementFailed(2)
     end
 end

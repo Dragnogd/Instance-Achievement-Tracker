@@ -166,7 +166,6 @@ end
 
 function core.ThroneOfThunder:TwinConsorts()
 	if core.type == "UNIT_DIED" and core.destID == "68905" then
-		print("Lulin Killed")
 		lulinKilled = true
 	end
 end

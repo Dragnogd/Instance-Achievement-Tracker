@@ -50,7 +50,7 @@ function core.Naxxramas:Arachnophobia()
     if core.type == "UNIT_DIED" and core.destID == "15956" then
         if timerStarted2 == false then
             timerStarted2 = true
-            print("20 Minutes remaining to kill boss")
+            core:sendMessage(GetAchievementLink(1858) .. " 20 Minutes remaining to kill boss")
             timer2 = C_Timer.NewTimer(1200, function()
                 if core.difficultyID == 3 then
                     core:sendMessage(GetAchievementLink(1858) .. " FAILED!")               
@@ -63,7 +63,7 @@ function core.Naxxramas:Arachnophobia()
 
     if core.type == "UNIT_DIED" and core.destID == "15952" then
         if timer2 ~= nil then
-            print("Timer Cancelled")
+            --print("Timer Cancelled")
             timer2:Cancel()
         end
     end
@@ -142,7 +142,7 @@ function core.Naxxramas:ClearVariables()
     ---- Patchwerk
     ------------------------------------------------------
     if timer ~= nil then
-        print("Timer Cancelled")
+        --print("Timer Cancelled")
         timer:Cancel()
     end
 

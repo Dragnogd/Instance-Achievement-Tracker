@@ -23,13 +23,13 @@ local hazeOfHateCounter = 0
 function core.ShadoPanMonastery:ShaOfViolence()
     if core.type == "UNIT_DIED" and core.destID == "56765" then
         destroyingShaCounter = destroyingShaCounter + 1
-        print("Destroying Sha: " .. destroyingShaCounter)
+        --print("Destroying Sha: " .. destroyingShaCounter)
     elseif core.type == "UNIT_DIED" and core.destID == "58201" then
         shaManifestationCounter = shaManifestationCounter + 1
-        print("Sha Manifestation: " .. shaManifestationCounter)
+        --print("Sha Manifestation: " .. shaManifestationCounter)
     elseif core.type == "UNIT_DIED" and core.destID == "56766" then
         volatileEnergyCounter = volatileEnergyCounter + 1
-        print("Volatile Energy: " .. volatileEnergyCounter)
+        --print("Volatile Energy: " .. volatileEnergyCounter)
     end
 
     if destroyingShaCounter == 2 and shaManifestationCounter == 1 and volatileEnergyCounter == 5 then

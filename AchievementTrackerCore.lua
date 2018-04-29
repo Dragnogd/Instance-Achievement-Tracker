@@ -6,7 +6,7 @@ local _, core = ...
 local events = CreateFrame("Frame")
 local UIConfig
 local UICreated = false
-local debugMode = true
+local debugMode = false
 
 AchievementTrackerOptions = {}
 AchievementTrackerDebug = {}
@@ -54,81 +54,6 @@ local temp2 = {}
 local tempCounter = 0
 
 events:SetScript("OnEvent", function(self, event, ...)
-	if event == "aaaUNIT_HEALTH" then
-		print(UnitName(...) .. " : " .. UnitHealth(...))
-	end
-	if event == "aaaUNIT_SPELLCAST_SUCCEEDED" then
-
-		local unitID, spell, rank, lineID, spellID = ...
-
-		--print(spellID)
-
-		if core:has_value(temp2, spellID) == false then
-			print(...)
-			table.insert(temp2, spellID)
-			--table.insert(TargetLogData, spell .. " : " .. spellID)
-		end	
-	end
-	if event == "aaaUNIT_AURA" then
-		local unitID = ...
-
-		print("FIRED")
-
-		if UnitAura(unitID, GetSpellInfo(69004)) or UnitAura(unitID, GetSpellInfo(69005)) or UnitAura(unitID, GetSpellInfo(69006)) then
-			print("Hatch")
-		end
-
-		-- if UnitName(unitID) ~= "Whizzey" then
-		-- 	print("Aura Detected FROM: " .. UnitName(unitID))
-
-		-- 	-- for i = 148200, 148700 do
-		-- 	-- 	if UnitAura(unitID, i) or UnitBuff(unitID, i) or UnitDebuff(unitID, i) then
-		-- 	-- 		print("Aura Found: " .. i)
-		-- 	-- 	else
-		-- 	-- 		print("Aura not at " .. i)
-		-- 	-- 	end
-		-- 	-- end
-
-		-- 	for i = 144600, 144900 do
-		-- 		if UnitAura(unitID, GetSpellInfo(i)) then
-		-- 			print(i)
-		-- 		end
-		-- 	end
-		-- end
-
-
-		--print(unitID)
-
-		-- if UnitAura(unitID, GetSpellInfo(169045)) then
-		-- 	print("Found 1")
-		-- elseif UnitAura(unitID, GetSpellInfo(168218)) then
-		-- 	print("Found 2")
-		-- elseif UnitAura(unitID, GetSpellInfo(168217)) then
-		-- 	print("Found 3")
-		-- elseif UnitAura(unitID, GetSpellInfo(179530)) then
-		-- 	print("Found 4")
-		-- elseif UnitAura(unitID, GetSpellInfo(179531)) then
-		-- 	print("Found 5")
-		-- elseif UnitAura(unitID, GetSpellInfo(155693)) then
-		-- 	print("Found 6")
-		-- elseif UnitAura(unitID, GetSpellInfo(169067)) then
-		-- 	print("Found 7")
-		-- end
-
-		--local nameSpell, rank, icon, castTime, minRange, maxRange, spellId = GetSpellInfo(144653)
-
-		--name, rank, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, nameplateShowPersonal, spellId, canApplyAura, isBossDebuff, nameplateShowAll, timeMod, value1, value2, value3 = UnitDebuff(unitID, nameSpell)
-
-
-		--print(name)
-	end
-	if event == "UNIT_ABSORB_AMOUNT_CHANGED" then
-		--print(...)
-	end
-	if event == "NAME_PLATE_UNIT_ADDED" then
-		tempCounter = tempCounter + 1
-		--print(tempCounter)
-	end
     return self[event] and self[event](self, event, ...) 	--Allow event arguments to be called from seperate functions
 end)
 
@@ -451,21 +376,21 @@ end
 --Run when the player initially enters an instance to setup variables such as instanceName, expansion etc so we can track the correct bosses
 function getInstanceInfomation()
 	--DEBUG
-	if debugMode == true then
-		core.instance = "Ulduar"
-		core.instanceClear = "Ulduar"
-		core.instanceNameSpaces = "Ulduar"
-		core.expansion = "WrathOfTheLichKing"
-		core.instanceType = "Raids"
-		core.inInstance = true
-		if UICreated == false then
-			core:sendDebugMessage("Creating Tracking UI")
-			createEnableAchievementTrackingUI()
-		else
-			core:sendDebugMessage("Displaying Tracking UI since it was already created")
-			UIConfig:Show()
-		end
-	end
+	-- if debugMode == true then
+	-- 	core.instance = "Ulduar"
+	-- 	core.instanceClear = "Ulduar"
+	-- 	core.instanceNameSpaces = "Ulduar"
+	-- 	core.expansion = "WrathOfTheLichKing"
+	-- 	core.instanceType = "Raids"
+	-- 	core.inInstance = true
+	-- 	if UICreated == false then
+	-- 		core:sendDebugMessage("Creating Tracking UI")
+	-- 		createEnableAchievementTrackingUI()
+	-- 	else
+	-- 		core:sendDebugMessage("Displaying Tracking UI since it was already created")
+	-- 		UIConfig:Show()
+	-- 	end
+	-- end
 
 	if IsInInstance() and core.inInstance == false then
 		core:sendDebugMessage("Player has entered instance")

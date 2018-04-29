@@ -237,10 +237,10 @@ function core.SiegeOfOrgrimmar:SecuredStockpileOfPandarenSpoils()
 		if core.overkill > 0 then
 			if playersSide[spawn_uid] == nil then
 				if core:has_value(mantridMobs, core.destID) then
-					print("Adding " .. core.sourceName .. " to Mantrid")
+					--print("Adding " .. core.sourceName .. " to Mantrid")
 					playersSide[spawn_uid] = "Mantrid"
 				elseif core:has_value(moguMobs, core.destID) then
-					print("Adding " .. core.sourceName .. " to Mogu")
+					--print("Adding " .. core.sourceName .. " to Mogu")
 					playersSide[spawn_uid] = "Mogu"
 				end
 			elseif playersSide[spawn_uid] ~= nil then

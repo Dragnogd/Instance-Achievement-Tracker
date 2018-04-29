@@ -61,7 +61,7 @@ function core.TrialOfTheCrusader:NotOneButTwoJormungars()
 
     --Acidmaw killed
     if core.type == "UNIT_DIED" and core.destID == "35144" then
-        print("Acidmaw Died")
+        --print("Acidmaw Died")
         AcidmawKilled = true
 
         C_Timer.After(10, function()  
@@ -75,7 +75,7 @@ function core.TrialOfTheCrusader:NotOneButTwoJormungars()
 
     --Dreadscale killed
     if core.type == "UNIT_DIED" and core.destID == "34799" then
-        print("Dreadscale Died")
+        --print("Dreadscale Died")
         DreadscaleKilled = true
 
         C_Timer.After(10, function()
@@ -185,7 +185,7 @@ function core.TrialOfTheCrusader:ClearVariables()
     ------------------------------------------------------
     timerStarted = false
     if timer ~= nil then
-        print("Timer Cancelled")
+        --print("Timer Cancelled")
         timer:Cancel()
     end
 

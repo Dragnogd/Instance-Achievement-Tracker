@@ -27,7 +27,7 @@ function core.ShadowmoonBurialGrounds:Bonemaw()
         if corpseSkitterlingUID[core.spawn_uid] == nil then
             corpseSkitterlingUID[core.spawn_uid] = core.spawn_uid
             corpseSkitterlingCounter = corpseSkitterlingCounter + 1
-            print(core.spawn_uid .. " : " .. corpseSkitterlingCounter)
+            --print(core.spawn_uid .. " : " .. corpseSkitterlingCounter)
         end
     end
 
@@ -35,7 +35,7 @@ function core.ShadowmoonBurialGrounds:Bonemaw()
     if core.type == "UNIT_DIED" and core.destID == "77006" then
         corpseSkitterlingUID[core.spawn_uid_dest] = false
         corpseSkitterlingCounter = corpseSkitterlingCounter - 1
-        print(core.spawn_uid_dest .. " : " .. corpseSkitterlingCounter)
+        --print(core.spawn_uid_dest .. " : " .. corpseSkitterlingCounter)
     end
 
     --Corpse Skitterlings Sucked up by boss

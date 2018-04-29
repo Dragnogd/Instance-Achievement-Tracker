@@ -34,7 +34,7 @@ function core.LostCityOfTheTolVir:Lockmaw()
         if frenziedCrocoliskUID[core.spawn_uid] == nil then
             frenziedCrocoliskUID[core.spawn_uid] = core.spawn_uid
             frenziedCrocoliskCounter = frenziedCrocoliskCounter + 1
-            print(frenziedCrocoliskCounter)
+            --print(frenziedCrocoliskCounter)
             if frenziedCrocoliskCounter - math.floor(frenziedCrocoliskCounter/5)*5 == 0 and frenziedCrocoliskCounter <= 20 then
                 core:sendMessage("Frenzied Crocolisk Counter (" .. frenziedCrocoliskCounter .. "/20)")
             end
@@ -43,7 +43,7 @@ function core.LostCityOfTheTolVir:Lockmaw()
         if frenziedCrocoliskUID[core.spawn_uid_dest] == nil then
             frenziedCrocoliskUID[core.spawn_uid_dest] = core.spawn_uid_dest
             frenziedCrocoliskCounter = frenziedCrocoliskCounter + 1
-            print(frenziedCrocoliskCounter)
+            --print(frenziedCrocoliskCounter)
             if frenziedCrocoliskCounter - math.floor(frenziedCrocoliskCounter/5)*5 == 0 and frenziedCrocoliskCounter <= 20 then
                 core:sendMessage("Frenzied Crocolisk Counter (" .. frenziedCrocoliskCounter .. "/20)")
             end
@@ -53,7 +53,7 @@ function core.LostCityOfTheTolVir:Lockmaw()
     if core.type == "UNIT_DIED" and core.destID == "43658" then
         frenziedCrocoliskCounter = frenziedCrocoliskCounter - 1
         frenziedCrocoliskUID[core.spawn_uid_dest] = nil
-        print(frenziedCrocoliskCounter)
+        --print(frenziedCrocoliskCounter)
 
         if frenziedCrocoliskAnnounced == true then
             frenziedCrocoliskKilled = frenziedCrocoliskKilled + 1

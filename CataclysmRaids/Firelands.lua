@@ -94,7 +94,7 @@ function core.Firelands:Ragnaros()
 		lavaLoggedCounter = lavaLoggedCounter + 1
 		livingMeteorIds[core.spawn_uid_dest] = core.spawn_uid_dest
 		core:sendMessage(core:getAchievement() .. " Living Meteors ignited by Lava Wave (" .. lavaLoggedCounter .. "/3")
-		print(lavaLoggedCounter)
+		--print(lavaLoggedCounter)
 	end
 
 	if lavaLoggedCounter == 3 then
