@@ -4,6 +4,120 @@
 local _, core = ...
 
 core.Instances = {
+    BattleForAzeroth = {
+        Raids = {
+            TheEmeraldNightmare = {
+                name = "The Emerald Nightmare",
+                boss1 = {
+                    name = "Nythendra",
+                    bossIDs = {102672},
+                    achievement = 10555,
+                    players = {"(Enter instance to start scanning)"},
+                    tactics = "",
+                    enabled = true,
+                    track = function() core.TheEmeraldNightmare:Nythendra() end,
+					partial = false,
+                },
+                boss2 = {
+                    name = "Ursoc",
+                    bossIDs = {100497},
+                    achievement = 10753,
+                    players = {"(Enter instance to start scanning)"},
+                    tactics = "",
+                    enabled = true,
+                    track = function() core.TheEmeraldNightmare:Ursoc() end,
+					partial = false,
+                },
+                boss3 = {
+                    name = "Dragons of Nightmare",
+                    bossIDs = {102683,102682,102681,102679},
+                    achievement = 10663,
+                    players = {"(Enter instance to start scanning)"},
+                    tactics = "",
+                    enabled = true,
+                    track = function() core.TheEmeraldNightmare:DragonsOfNightmare() end,
+					partial = false,
+                },
+                boss4 = {
+                    name = "Elerethe Renferal",
+                    bossIDs = {}, --106087
+                    achievement = 10771,
+                    players = {"(Enter instance to start scanning)"},
+                    tactics = "",
+                    enabled = false,
+                    track = nil,
+					partial = false,
+                },
+                boss5 = {
+                    name = "Il'gynoth, Heart of Corruption",
+                    bossIDs = {209471},
+                    achievement = 10830,
+                    players = {"(Enter instance to start scanning)"},
+                    tactics = "",
+                    enabled = true,
+                    track = function() core.TheEmeraldNightmare:Ill() end,
+					partial = false,
+                },
+                boss6 = {
+                    name = "Cenarius",
+                    bossIDs = {},
+                    achievement = 10772,
+                    players = {"(Enter instance to start scanning)"},
+                    tactics = "",
+                    enabled = false,
+                    track = nil,
+					partial = false,
+                },
+                boss7 = {
+                    name = "Xavius",
+                    bossIDs = {103769},
+                    achievement = 10755,
+                    players = {"(Enter instance to start scanning)"},
+                    tactics = "",
+                    enabled = true,
+                    track = function() core.TheEmeraldNightmare:Xavius() end,
+					partial = false,
+                },
+            },
+        },
+
+        Dungeons = {
+            SeatOfTheTriumvirate = {
+                name = "Seat of the Triumvirate",
+                boss1 = {
+                    name = "Zuraal the Ascended",
+                    bossIDs = {122313},
+                    achievement = 12004,
+                    players = {"(Enter instance to start scanning)"},
+                    tactics = "",
+                    enabled = true,
+                    track = function() core.SeatOfTheTriumvirate:ZuraalTheAscended() end,
+					partial = false,
+                },
+                boss2 = {
+                    name = "Saprish",
+                    bossIDs = {},
+                    achievement = 12005,
+                    players = {"(Enter instance to start scanning)"},
+                    tactics = "",
+                    enabled = false,
+                    track = nil,
+					partial = false,
+                },
+                boss3 = {
+                    name = "L'ura",
+                    bossIDs = {124729},
+                    achievement = 12009,
+                    players = {"(Enter instance to start scanning)"},
+                    tactics = "",
+                    enabled = true,
+                    track = function() core.SeatOfTheTriumvirate:Lura() end,
+					partial = false,
+                },
+            },
+        },
+    },
+
     Legion = {
         Raids = {
             TheEmeraldNightmare = {

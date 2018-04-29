@@ -5,6 +5,8 @@ local _, core = ...
 core.Config = {} --adds a Config able to the addon namespace
 
 local Config = core.Config
+local BattleForAzerothContent
+local BattleForAzerothContentButtons = {}
 local LegionContent
 local LegionContentButtons = {}
 local WarlordsOfDraenorContent
@@ -25,6 +27,13 @@ Config.majorVersion = 1						--Addon with a higher major version change have pri
 Config.minorVersion = 0						--Addon with a minor version change have prioirty over a lower minor version
 Config.revisionVersion = 0					--Addon with a revision change have the same priorty as a lower revision verison
 Config.releaseType = "r"                    --Release type (Alpha, Beta, Release)
+
+--Get build info
+local _, _, _, tocVersionloc = GetBuildInfo()
+core.tocVersion = tocVersionloc
+
+--core.tocVersion = 80000
+--core.tocVersion = 70300
 
 --------------------------------------
 -- Config functions
@@ -377,8 +386,13 @@ function Config:CreateGUI()
      UIConfig.ScrollFrame2.ScrollBar:SetPoint("BOTTOMRIGHT", UIConfig.ScrollFrame2, "BOTTOMRIGHT", -7, 18)    
 
     --Tabs
-    content1, LegionNav, LegionContent, WarlordsOfDraenorNav, WarlordsOfDraenorContent, MistsOfPandariaNav, MistsOfPandariaContent, CataclysmNav, CataclysmContent, WrathOfTheLichKingNav, WrathOfTheLichKingContent = SetTabs(UIConfig, 6, "Main", "Legion", "Warlords of Draenor", "Mists of Pandaria", "Cataclysm", "Wrath of the Lich King")
-
+    print(core.tocVersion)
+    content1, BattleForAzerothNav, BattleForAzerothContent, LegionNav, LegionContent, WarlordsOfDraenorNav, WarlordsOfDraenorContent, MistsOfPandariaNav, MistsOfPandariaContent, CataclysmNav, CataclysmContent, WrathOfTheLichKingNav, WrathOfTheLichKingContent = nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil
+    if core.tocVersion == 70300 then
+        content1, LegionNav, LegionContent, WarlordsOfDraenorNav, WarlordsOfDraenorContent, MistsOfPandariaNav, MistsOfPandariaContent, CataclysmNav, CataclysmContent, WrathOfTheLichKingNav, WrathOfTheLichKingContent = SetTabs(UIConfig, 6, "Main", "Legion", "Warlords of Draenor", "Mists of Pandaria", "Cataclysm", "Wrath of the Lich King")
+    elseif core.tocVersion == 80000 then
+        content1, BattleForAzerothNav, BattleForAzerothContent, LegionNav, LegionContent, WarlordsOfDraenorNav, WarlordsOfDraenorContent, MistsOfPandariaNav, MistsOfPandariaContent, CataclysmNav, CataclysmContent, WrathOfTheLichKingNav, WrathOfTheLichKingContent = SetTabs(UIConfig, 7, "Main", "Battle for Azeroth", "Legion", "Warlords of Draenor", "Mists of Pandaria", "Cataclysm", "Wrath of the Lich King")    
+    end
     --Content (Main)
 	--content1.saveBtn = self:CreateButton("CENTER", content1, "TOP", -70, "Save");
     content1.title = content1:CreateFontString(nil, "OVERLAY", "GameFontHighlightLarge")
@@ -403,14 +417,22 @@ function Config:CreateGUI()
     -- EasyMenu(menu, menuFrame, menuFrame, 0 , 0, "MENU");
 
     --Create the navigation buttons for each expansion
-    local expansions = {"Legion", "WarlordsOfDraenor", "MistsOfPandaria", "Cataclysm", "WrathOfTheLichKing"}
+    local expansions = nil
+    if core.tocVersion == 70300 then
+        expansions = {"Legion", "WarlordsOfDraenor", "MistsOfPandaria", "Cataclysm", "WrathOfTheLichKing"}    
+    elseif core.tocVersion == 80000 then
+        expansions = {"BattleForAzeroth", "Legion", "WarlordsOfDraenor", "MistsOfPandaria", "Cataclysm", "WrathOfTheLichKing"}
+    end
     for i = 1, #expansions do
         --Raids
         local firstRaid = false
         local previousInstance
         for instance,v in pairs(core.Instances[expansions[i]].Raids) do
             if firstRaid == false then
-                if expansions[i] == "Legion" then
+                if expansions[i] == "BattleForAzeroth" then
+                    BattleForAzerothNav[instance] = self:CreateButton("TOPLEFT", BattleForAzerothNav, "TOPLEFT", 0, core.Instances[expansions[i]].Raids[instance].name);
+                    BattleForAzerothNav[instance]:SetScript("OnClick", Instance_OnClick);                
+                elseif expansions[i] == "Legion" then
                     LegionNav[instance] = self:CreateButton("TOPLEFT", LegionNav, "TOPLEFT", 0, core.Instances[expansions[i]].Raids[instance].name);
                     LegionNav[instance]:SetScript("OnClick", Instance_OnClick);
                 elseif expansions[i] == "WarlordsOfDraenor" then
@@ -429,7 +451,10 @@ function Config:CreateGUI()
                 firstRaid = true
                 previousInstance = instance
             else
-                if expansions[i] == "Legion" then
+                if expansions[i] == "BattleForAzeroth" then
+                    BattleForAzerothNav[instance] = self:CreateButton("TOPLEFT", BattleForAzerothNav[previousInstance], "TOPLEFT", -32, core.Instances[expansions[i]].Raids[instance].name);
+                    BattleForAzerothNav[instance]:SetScript("OnClick", Instance_OnClick);
+                elseif expansions[i] == "Legion" then
                     LegionNav[instance] = self:CreateButton("TOPLEFT", LegionNav[previousInstance], "TOPLEFT", -32, core.Instances[expansions[i]].Raids[instance].name);
                     LegionNav[instance]:SetScript("OnClick", Instance_OnClick);
                 elseif expansions[i] == "WarlordsOfDraenor" then
@@ -452,7 +477,10 @@ function Config:CreateGUI()
         local firstDungeon = false
         for instance,v in pairs(core.Instances[expansions[i]].Dungeons) do
             if firstDungeon == false then
-                if expansions[i] == "Legion" then
+                if expansions[i] == "BattleForAzeroth" then
+                    BattleForAzerothNav[instance] = self:CreateButton("TOPLEFT", BattleForAzerothNav[previousInstance], "TOPLEFT", -40, core.Instances[expansions[i]].Dungeons[instance].name);
+                    BattleForAzerothNav[instance]:SetScript("OnClick", Instance_OnClick);
+                elseif expansions[i] == "Legion" then
                     LegionNav[instance] = self:CreateButton("TOPLEFT", LegionNav[previousInstance], "TOPLEFT", -40, core.Instances[expansions[i]].Dungeons[instance].name);
                     LegionNav[instance]:SetScript("OnClick", Instance_OnClick);
                 elseif expansions[i] == "WarlordsOfDraenor" then
@@ -471,7 +499,10 @@ function Config:CreateGUI()
                 firstDungeon = true
                 previousInstance = instance
             else
-                if expansions[i] == "Legion" then
+                if expansions[i] == "BattleForAzeroth" then
+                    BattleForAzerothNav[instance] = self:CreateButton("TOPLEFT", BattleForAzerothNav[previousInstance], "TOPLEFT", -32, core.Instances[expansions[i]].Dungeons[instance].name);
+                    BattleForAzerothNav[instance]:SetScript("OnClick", Instance_OnClick);
+                elseif expansions[i] == "Legion" then
                     LegionNav[instance] = self:CreateButton("TOPLEFT", LegionNav[previousInstance], "TOPLEFT", -32, core.Instances[expansions[i]].Dungeons[instance].name);
                     LegionNav[instance]:SetScript("OnClick", Instance_OnClick);
                 elseif expansions[i] == "WarlordsOfDraenor" then
@@ -498,7 +529,16 @@ function Config:CreateGUI()
     --Create the maximun number of buttons we could possible need for any instance
     for j = 1, #expansions do
         for i = 1, numButtons do
-            if expansions[j] == "Legion" then
+            if expansions[j] == "BattleForAzeroth" then
+                BattleForAzerothContentButtons[i] = CreateFrame("Button",nil,BattleForAzerothContent)
+                button = BattleForAzerothContentButtons[i]
+                button:SetSize(BattleForAzerothContent:GetWidth()-18,buttonHeight)
+                if i == 1 then
+                    button:SetPoint("TOPLEFT",0,0-(i-1)*buttonHeight)
+                else
+                    button:SetPoint("TOPLEFT",BattleForAzerothContentButtons[i-1],"BOTTOMLEFT",0,0)
+                end
+            elseif expansions[j] == "Legion" then
                 LegionContentButtons[i] = CreateFrame("Button",nil,LegionContent)
                 button = LegionContentButtons[i]
                 button:SetSize(LegionContent:GetWidth()-18,buttonHeight)
@@ -628,8 +668,10 @@ function Instance_OnClick(self)
         if bossName ~= "name" then
             local button
 
-            --Header    
-            if Config.currentTab == "Legion" then
+            --Header            
+            if Config.currentTab == "BattleForAzeroth" then
+                button = BattleForAzerothContentButtons[counter]               
+            elseif Config.currentTab == "Legion" then
                 button = LegionContentButtons[counter]
             elseif Config.currentTab == "Warlords of Draenor" or Config.currentTab == "WarlordsOfDraenor" then
                 button = WarlordsOfDraenorContentButtons[counter]
@@ -643,7 +685,9 @@ function Instance_OnClick(self)
             button:Show()
             if counter > 1 then
                 button:ClearAllPoints()
-                if Config.currentTab == "Legion" then
+                if Config.currentTab == "BattleForAzeroth" then
+                    button:SetPoint("TOPLEFT",BattleForAzerothContentButtons[counter-1],"BOTTOMLEFT",0,30-heightDifference)
+                elseif Config.currentTab == "Legion" then
                     button:SetPoint("TOPLEFT",LegionContentButtons[counter-1],"BOTTOMLEFT",0,30-heightDifference)
                 elseif Config.currentTab == "Warlords of Draenor" or Config.currentTab == "WarlordsOfDraenor" then
                     button:SetPoint("TOPLEFT",WarlordsOfDraenorContentButtons[counter-1],"BOTTOMLEFT",0,30-heightDifference)
@@ -680,8 +724,10 @@ function Instance_OnClick(self)
             counter = counter + 1  
 
             --Content
-            --print(Config.currentTab)
-            if Config.currentTab == "Legion" then
+            --print(Config.currentTab)            
+            if Config.currentTab == "BattleForAzeroth" then
+                button = BattleForAzerothContentButtons[counter]
+            elseif Config.currentTab == "Legion" then
                 button = LegionContentButtons[counter]
             elseif Config.currentTab == "Warlords of Draenor" or Config.currentTab == "WarlordsOfDraenor" then
                 button = WarlordsOfDraenorContentButtons[counter]
@@ -736,7 +782,9 @@ function Instance_OnClick(self)
     --Hide the remaining buttons
     for i = counter, numButtons do
         local button
-        if Config.currentTab == "Legion" then
+        if Config.currentTab == "BattleForAzeroth" then
+            button = BattleForAzerothContentButtons[i]        
+        elseif Config.currentTab == "Legion" then
             button = LegionContentButtons[i]
         elseif Config.currentTab == "Warlords of Draenor" or Config.currentTab == "WarlordsOfDraenor" then
             button = WarlordsOfDraenorContentButtons[i]
@@ -752,7 +800,15 @@ function Instance_OnClick(self)
 end
 
 function Achievement_OnEnter(self)
-    if Config.currentTab == "Legion" then
+    if Config.currentTab == "BattleForAzeroth" then
+        for i = 1, #BattleForAzerothContentButtons do
+            if MouseIsOver(BattleForAzerothContentButtons[i]) then
+                GameTooltip:SetOwner(UIConfig, "ANCHOR_TOPRIGHT")
+                GameTooltip:SetHyperlink(GetAchievementLink(BattleForAzerothContentButtons[i].achievementID))
+                GameTooltip:Show()
+            end
+        end
+    elseif Config.currentTab == "Legion" then
         for i = 1, #LegionContentButtons do
             if MouseIsOver(LegionContentButtons[i]) then
                 GameTooltip:SetOwner(UIConfig, "ANCHOR_TOPRIGHT")
