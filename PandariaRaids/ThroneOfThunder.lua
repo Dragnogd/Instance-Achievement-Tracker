@@ -24,6 +24,13 @@ local kickShellCounter = 0
 local timerStarted = false
 
 ------------------------------------------------------
+---- Megaera
+------------------------------------------------------
+local frozenHeadKilled = false
+local flamingHeadKilled = false
+local venmousHeadKilled = false
+
+------------------------------------------------------
 ---- Ji-Kun
 ------------------------------------------------------
 local initalCounterDisplayed = false
@@ -70,6 +77,26 @@ function core.ThroneOfThunder:Tortos()
 	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 136431 and core.destID == "67966" then
 		kickShellCounter = kickShellCounter + 1
 		core:sendMessage("Whirl Turtles Concussion (" .. kickShellCounter .. "/5)")
+	end
+end
+
+function core.ThroneOfThunder:Megaera()
+	if core.type == "UNIT_DIED" and core.destID == "70235" then
+		frozenHeadKilled = true
+	elseif core.type == "UNIT_DIED" and core.destID == "70212" then
+		flamingHeadKilled = true
+	elseif core.type == "UNIT_DIED" and core.destID == "70247" then
+		venmousHeadKilled = true
+	end
+
+	if frozenHeadKilled == true and flamingHeadKilled == true and venmousHeadKilled == true then
+		core:getAchievementFailed()
+	elseif frozenHeadKilled == true and flamingHeadKilled == true then
+		core:getAchievementSuccessWithCustomMessage("'Venomous part of'", "will be completed once boss is killed")
+	elseif venmousHeadKilled == true and flamingHeadKilled == true then
+		core:getAchievementSuccessWithCustomMessage("'Frozen part of'", "will be completed once boss is killed")
+	elseif frozenHeadKilled == true and venmousHeadKilled == true then	
+		core:getAchievementSuccessWithCustomMessage("'Flaming part of'", "will be completed once boss is killed")
 	end
 end
 
@@ -190,6 +217,13 @@ function core.ThroneOfThunder:ClearVariables()
 	------------------------------------------------------
 	initalCounterDisplayed = false
 	eggCaught = false
+
+	------------------------------------------------------
+	---- Megaera
+	------------------------------------------------------
+	frozenHeadKilled = false
+	flamingHeadKilled = false
+	venmousHeadKilled = false
 
 	------------------------------------------------------
 	---- IronQon
