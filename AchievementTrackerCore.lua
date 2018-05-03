@@ -189,7 +189,7 @@ function getPlayersInGroup()
 	if core.inInstance == true then
 		--Only Announce the scanning once.
 		if scanAnnounced == false then
-			core:printMessage("Starting Achievement Scan For " .. core.instanceNameSpaces .. " (This may freeze your game for a few seconds!)")
+			printMessage("Starting Achievement Scan For " .. core.instanceNameSpaces .. " (This may freeze your game for a few seconds!)")
 			scanAnnounced = true
 		end
 		core:getGroupSize() --Get current size of the group
@@ -327,7 +327,7 @@ function getInstanceAchievements()
 				-- if #playersToScan > 0 then
 				-- 	getInstanceAchievements()
 				-- elseif #playersToScan == 0 and rescanNeeded == false then
-				-- 	core:printMessage("Achievment Scanning Finished (" .. #playersScanned .. "/" .. core.groupSize .. ")")
+				-- 	printMessage("Achievment Scanning Finished (" .. #playersScanned .. "/" .. core.groupSize .. ")")
 				-- 	scanInProgress = false
 				-- 	core.scanFinished = true
 				-- 	updateDebugTable()
@@ -605,7 +605,7 @@ function enableAchievementTracking(self)
 	if core.groupSize == 1 then
 		--Player is not a group so set the player to the master addon
 		core.masterAddon = true
-		core:printMessage("Achievement Tracking Enabled for " .. core.instanceNameSpaces)
+		printMessage("Achievement Tracking Enabled for " .. core.instanceNameSpaces)
 	else
 		--Get the rank for the current player
 		for i = 1, core.groupSize do
@@ -664,11 +664,65 @@ function getCombatStatus()
 	end
 end
 
+--------------------------------------
+---- Custom Slash Command
+--------------------------------------
+core.commands = {
+	["help"] = function()
+		printMessage("List of slash commands:")
+		printMessage("/iat help|r - shows help info")
+		printMessage("/iat enable|r - enable/disable IAT achievement tracking")
+	end,
+
+	["enable"] = function()
+		print("Enable/Disable addon")
+	end,
+
+	["debug"] = function()
+		print("Enable/Disable addon")
+	end,
+};
+
+local function HandleSlashCommands(str)	
+	if (#str == 0) then	
+		-- User just entered "/iat" with no additional args.
+		core.Config.Toggle()
+		return;		
+	end	
+	
+	local args = {};
+	for _, arg in ipairs({ string.split(' ', str) }) do
+		if (#arg > 0) then
+			table.insert(args, arg);
+		end
+	end
+	
+	local path = core.commands; -- required for updating found table.
+	
+	for id, arg in ipairs(args) do
+		if (#arg > 0) then -- if string length is greater than 0.
+			arg = arg:lower();			
+			if (path[arg]) then
+				if (type(path[arg]) == "function") then				
+					-- all remaining args passed to our function!
+					path[arg](select(id + 1, unpack(args))); 
+					return;					
+				elseif (type(path[arg]) == "table") then				
+					path = path[arg]; -- another sub-table found!
+				end
+			else
+				-- does not exist!
+				core.commands.help();
+				return;
+			end
+		end
+	end
+end
+
 ------------------------------------------------------
 ---- Events
 ------------------------------------------------------
 
---Setup Slash Commands
 function events:ADDON_LOADED(event, name)
 	if name == "Blizzard_AchievementUI" then
 		core:sendDebugMessage("Achiev UI Loaded")
@@ -701,21 +755,10 @@ function events:ADDON_LOADED(event, name)
 	
     -- core.Config:SetupAchievementTracking(core.enableAchievementScanning)
 
-	SLASH_MENU1 = "/iat"
-	SlashCmdList.MENU = core.Config.Toggle
+	SLASH_IAT1 = "/iat";
+	SlashCmdList.IAT = HandleSlashCommands;
 
-	SLASH_MENU2 = "/debug"
-	SlashCmdList.DEBUG = function()
-		if debugMode == true then
-			core:printMessage("Debugging Disabled")
-			debugmode = false
-		else
-			core:printMessage("Debugging Enabled")
-			debugMode = true
-		end
-	end
-
-	--core:printMessage("loaded. Version: V" .. core.Config.majorVersion .. "." .. core.Config.minorVersion .. "." .. core.Config.revisionVersion)
+	--printMessage("loaded. Version: V" .. core.Config.majorVersion .. "." .. core.Config.minorVersion .. "." .. core.Config.revisionVersion)
 
 	if debugMode == true then
 		core:sendMessage("Debugging Enabled")
@@ -931,7 +974,7 @@ function events:INSPECT_ACHIEVEMENT_READY(self, GUID)
 				--More players still need scanning
 				getInstanceAchievements()
 			elseif #playersToScan == 0 and rescanNeeded == false and #playersScanned == core.groupSize then
-				core:printMessage("Achievement Scanning Finished (" .. #playersScanned .. "/" .. core.groupSize .. ")")
+				printMessage("Achievement Scanning Finished (" .. #playersScanned .. "/" .. core.groupSize .. ")")
 				scanInProgress = false
 				core.scanFinished = true
 
@@ -1411,7 +1454,7 @@ function core:getAchievementToTrack()
 		for i = 1, #core.currentBosses do
 			core:sendDebugMessage("Achievement: " .. core.currentBosses[i].achievement)
 			if core.currentBosses[i].partial == false and core.currentBosses[i].enabled == true then
-				core:printMessage("Tracking: "  .. GetAchievementLink(core.currentBosses[i].achievement))
+				printMessage("Tracking: "  .. GetAchievementLink(core.currentBosses[i].achievement))
 				core:sendMessage("setup")
 				core.achievementTrackedMessageShown = true
 			end
@@ -1493,7 +1536,7 @@ function core:sendDebugMessage(message)
 end
 
 --TODO: tidy this up so it can print out any colour
-function core:printMessage(message)
+function printMessage(message)
 	print("|cff00ccffIAT: |cffffffff" .. message)
 end
 
