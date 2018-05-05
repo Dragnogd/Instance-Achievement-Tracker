@@ -21,6 +21,7 @@ local timerStarted = false
 ------------------------------------------------------
 local fhargComplete = false
 local shatugComplete = false
+local felhoundsKilled = false
 
 ------------------------------------------------------
 ---- Antoran High Command
@@ -42,20 +43,53 @@ function core.AntorusTheBurningThrone:AntoranHighCommand()
 end
 
 function core.AntorusTheBurningThrone:FelhoundsOfSargeras()
-    --F'harg
-    if core.type == "SPELL_AURA_APPLIED_DOSE" and core.destID == "126916" and core.spellId == 253602 and core.amount == 5 then
-        fhargComplete = true
-        --print("Fharg Complete")
+    --Detect boss death
+    if core.type == "UNIT_DIED" and (core.destID == "122477" or core.destID == "122135") then
+        felhoundsKilled = true
     end
 
-    --Shatug
-    if core.type == "SPELL_AURA_APPLIED_DOSE" and core.destID == "126915" and core.destID == "126916" and core.spellId == 253602 and core.amount == 5 then
-        shatugComplete = true
-        --print("Shatug Complete")
-    end
+    if felhoundsKilled == false then
+        --F'harg
+        if core.type == "SPELL_AURA_APPLIED_DOSE" and core.destID == "122477" and core.spellId == 253602 then
+            core:sendMessage("F'harg Fel Imbuement Counter (" .. core.amount .. "/5)")
 
-    if fhargComplete == true and shatugComplete == true then
-        core:getAchievementSuccess()
+            if core.amount == 5 then
+                fhargComplete = true
+            end
+        elseif core.type == "SPELL_AURA_APPLIED" and core.destID == "122477" and core.spellId == 253602 then
+            core:sendMessage("F'harg Fel Imbuement Counter (1/5)")        
+        elseif core.type == "SPELL_AURA_REMOVED" and core.destID == "122477" and core.spellId == 253602 then
+            core:sendMessage("F'harg Fel Imbuement Counter (0/5)")
+            fhargComplete = false
+            
+            if core.achievementsCompleted[1] == true then
+                core:sendMessage(core:getAchievement() .. " FAILED! (F'harg has lost Fel Imbuement stacks)")
+                core.achievementsCompleted[1] = false
+            end
+        end
+
+        --Shatug
+        if core.type == "SPELL_AURA_APPLIED_DOSE" and core.destID == "122135" and core.spellId == 253602 then
+            core:sendMessage("Shatug Fel Imbuement Counter (" .. core.amount .. "/5)")
+
+            if core.amount == 5 then
+                shatugComplete = true
+            end
+        elseif core.type == "SPELL_AURA_APPLIED" and core.destID == "122135" and core.spellId == 253602 then
+            core:sendMessage("Shatug Fel Imbuement Counter (1/5)")        
+        elseif core.type == "SPELL_AURA_REMOVED" and core.destID == "122135" and core.spellId == 253602 then
+            core:sendMessage("Shatug Fel Imbuement Counter (0/5)")
+            shatugComplete = false
+            
+            if core.achievementsCompleted[1] == true then
+                core:sendMessage(core:getAchievement() .. " FAILED! (Shatug has lost Fel Imbuement stacks)")
+                core.achievementsCompleted[1] = false
+            end
+        end
+
+        if fhargComplete == true and shatugComplete == true then
+            core:getAchievementSuccess()
+        end
     end
 end
 
@@ -150,7 +184,9 @@ function core.AntorusTheBurningThrone.Events:UNIT_SPELLCAST_SUCCEEDED(self, unit
 end
 
 function core.AntorusTheBurningThrone:InstanceCleanup()
-	core.AntorusTheBurningThrone.Events:UnregisterEvent("UNIT_POWER")
+    core.AntorusTheBurningThrone.Events:UnregisterEvent("UNIT_POWER")
+    
+    felhoundsKilled = false
 end
 
 function core.AntorusTheBurningThrone:InitialSetup()

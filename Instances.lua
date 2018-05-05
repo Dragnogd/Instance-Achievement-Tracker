@@ -523,7 +523,7 @@ core.Instances = {
                 },
                 boss2 = {
                     name = "Felhounds of Sargeras",
-                    bossIDs = {126916,126915},
+                    bossIDs = {122477,122135},
                     achievement = 12065,
                     players = {"(Enter instance to start scanning)"},
                     tactics = "",
