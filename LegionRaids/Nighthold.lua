@@ -34,13 +34,13 @@ local burningEmbersKilled = 0
 ------------------------------------------------------
 local eyeOfGuldanKilled = 0
 local timerStarted = false
+local eyeTarget = false
 
 ------------------------------------------------------
 ---- High Botanist Tel'arn
 ------------------------------------------------------
 local mysteriousFruitCounter = 0
 local mysteriousFruitPlayers = {}
-
 
 function core.TheNighthold:Skorpyron()
     --Shockwave cast
@@ -185,8 +185,21 @@ function core.TheNighthold:HighBotanistTelarn()
 	end
 end
 
+local burningEmbersUID = {}
+
 function core.TheNighthold:Krosus()
-    if core.type == "UNIT_DIED" and core.destID == "104262" and core.destFlags ~= 0xa48 then
+    if core.overkill > 0 and core.destID == "104262" and core.destName ~= nil then
+        core:sendDebugMessage("Burning Ember Killed by (2): " .. core.destName)
+    else
+        --core:sendDebugMessage("Burning Ember Killed By Water")        
+    end
+
+    if core.type == "UNIT_DIED" and core.destID == "104262" then
+        if core.destName ~= nil then
+            core:sendDebugMessage("Burning Ember Killed By: " .. core.destName)
+        else
+            --core:sendDebugMessage("Burning Ember Killed By Water")
+        end
         --If burning embers were not killed by a player than increment counter by 1
         burningEmbersKilled = burningEmbersKilled + 1
         --print(burningEmbersKilled)
@@ -209,9 +222,14 @@ end
 function core.TheNighthold:Guldan()
     core:trackMob("105630", "Eye of Gul'dan", 16, "16 Eye of Gul'dan have spawned. AOE them down now", 4, nil, nil)
 
+    --Enough eyes have spawn so track next kill
+    if core.mobCounter >= 16 then
+        eyeTarget = true
+    end
+
     if core.type == "UNIT_DIED" and core.destID == "105630" then
         eyeOfGuldanKilled = eyeOfGuldanKilled + 1
-        if timerStarted == false and core.mobCounter >= 16 then
+        if timerStarted == false and eyeTarget == true then
             timerStarted = true
             core:sendMessage(core:getAchievement() .. " Timer Started! 3 seconds remaining")
             C_Timer.After(3, function()
@@ -222,6 +240,7 @@ function core.TheNighthold:Guldan()
                         core:sendMessage(core:getAchievement() .. "(" .. eyeOfGuldanKilled .. "/16) Eyes of Gul'dan Killed in time")
                         timerStarted = false
                         eyeOfGuldanKilled = 0
+                        eyeTarget = false
                     end
                 end
             end)
@@ -250,6 +269,7 @@ function core.TheNighthold:ClearVariables()
     ------------------------------------------------------
     eyeOfGuldanKilled = 0
     timerStarted = false
+    eyeTarget = false
 
     ------------------------------------------------------
     ---- High Botanist Tel'arn

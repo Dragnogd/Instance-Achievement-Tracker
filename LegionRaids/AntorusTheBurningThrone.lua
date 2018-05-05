@@ -165,6 +165,7 @@ end
 
 function core.AntorusTheBurningThrone:InstanceCleanup()
     core.AntorusTheBurningThrone.Events:UnregisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+    felhoundsKilled = false
 end
 
 core.AntorusTheBurningThrone.Events:SetScript("OnEvent", function(self, event, ...)
@@ -173,6 +174,7 @@ end)
 
 function core.AntorusTheBurningThrone:InitialSetup()
     core.AntorusTheBurningThrone.Events:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+    core.AntorusTheBurningThrone.Events:RegisterEvent("UNIT_POWER")
 end
 
 function core.AntorusTheBurningThrone.Events:UNIT_SPELLCAST_SUCCEEDED(self, unitID, spell, rank, lineID, spellID, ...)
@@ -188,20 +190,6 @@ function core.AntorusTheBurningThrone.Events:UNIT_SPELLCAST_SUCCEEDED(self, unit
         end
     end
 end
-
-function core.AntorusTheBurningThrone:InstanceCleanup()
-    core.AntorusTheBurningThrone.Events:UnregisterEvent("UNIT_POWER")
-    
-    felhoundsKilled = false
-end
-
-function core.AntorusTheBurningThrone:InitialSetup()
-    core.AntorusTheBurningThrone.Events:RegisterEvent("UNIT_POWER")
-end
-
-core.AntorusTheBurningThrone.Events:SetScript("OnEvent", function(self, event, ...)
-    return self[event] and self[event](self, event, ...)
-end)
 
 function core.AntorusTheBurningThrone.Events:UNIT_POWER(self, unit, powerType)
     if powerType == "ALTERNATE" and unit == "boss2" then
