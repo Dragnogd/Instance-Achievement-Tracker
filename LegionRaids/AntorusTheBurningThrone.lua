@@ -23,21 +23,12 @@ local fhargComplete = false
 local shatugComplete = false
 
 ------------------------------------------------------
----- Garothi Worldbreaker
-------------------------------------------------------
-local blightscaleWormsKilled = 0
-
-------------------------------------------------------
 ---- Antoran High Command
 ------------------------------------------------------
 local felshieldEmitterCounter = 3
 
-function core.AntorusTheBurningThrone:GarothiWorldbreaker()
-    if core.type == "UNIT_DIED" and core.destID == "124436" then
-        blightscaleWormsKilled = blightscaleWormsKilled + 1
-        core:sendMessageDelay("Blightscale Worms Killed (" .. blightscaleWormsKilled .. "/16)", blightscaleWormsKilled, 4)
-    end
-end
+local tempPower = 0
+local tempPowerStart
 
 function core.AntorusTheBurningThrone:AntoranHighCommand()
     if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 244902 then
@@ -154,6 +145,44 @@ function core.AntorusTheBurningThrone.Events:UNIT_SPELLCAST_SUCCEEDED(self, unit
             C_Timer.After(2, function() 
                 timerStarted = false
             end)
+        end
+    end
+end
+
+function core.AntorusTheBurningThrone:InstanceCleanup()
+	core.AntorusTheBurningThrone.Events:UnregisterEvent("UNIT_POWER")
+end
+
+function core.AntorusTheBurningThrone:InitialSetup()
+    core.AntorusTheBurningThrone.Events:RegisterEvent("UNIT_POWER")
+end
+
+core.AntorusTheBurningThrone.Events:SetScript("OnEvent", function(self, event, ...)
+    return self[event] and self[event](self, event, ...)
+end)
+
+function core.AntorusTheBurningThrone.Events:UNIT_POWER(self, unit, powerType)
+    if powerType == "ALTERNATE" and unit == "boss2" then
+        print(UnitName(unit))
+        if timerStarted == false then
+            timerStarted = true
+            tempPowerStart = UnitPower(unit, ALTERNATE_POWER_INDEX)
+            core:sendMessage(core:getAchievement() .. " Timer Started!")
+            C_Timer.After(5, function()
+                if tempPowerStart - tempPowerStart >= 80 then
+                    local powdif = tempPowerStart - tempPowerStart
+                    print("SUCCESS: " .. powdif)
+                    core:getAchievementSuccess()
+                else
+                    local powdif = tempPowerStart - tempPowerStart
+                    print("FAILED: " .. powdif)
+                    tempPowerStart = 0
+                    tempPower = 0
+                    timerStarted = false
+                end
+            end)
+        else
+            tempPower = UnitPower(unit, ALTERNATE_POWER_INDEX)
         end
     end
 end
