@@ -6,7 +6,7 @@ local _, core = ...
 local events = CreateFrame("Frame")
 local UIConfig
 local UICreated = false
-local debugMode = true
+local debugMode = false
 
 AchievementTrackerOptions = {}
 AchievementTrackerDebug = {}
@@ -679,7 +679,12 @@ core.commands = {
 	end,
 
 	["debug"] = function()
-		print("Enable/Disable addon")
+		if debugMode == true then
+			debugMode = false
+		else
+			debugMode = true
+		end
+		print(debugMode)
 	end,
 };
 

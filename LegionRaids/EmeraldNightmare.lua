@@ -20,6 +20,7 @@ local bugsUID = {}
 ------------------------------------------------------
 local playersUID = {}
 local playersBuffCounter = 0
+local dragonsKilled = false
 
 ------------------------------------------------------
 ---- Il'gynoth
@@ -35,7 +36,7 @@ local creatureOfMadnessKilled = 0
 
 function core.TheEmeraldNightmare:Nythendra()
     if bugsSquished >= 15 then
-        core:getAchievementSuccess()
+        core:getAchievementSuccessWithMessageAfter("(You may wish to get a few extra bugs in case multiple players clicked on the same bug)")
     end
 end
 
@@ -47,7 +48,7 @@ end
 
 function core.TheEmeraldNightmare:Ilgynoth()
     --Track 20 Nightmare Explosion are alive
-    core:trackMob(209471, "Nightmare Explosion", 20, 1, false, nil)
+    core:trackMob(209471, "Nightmare Explosion", 20, 4, false, nil)
 
     if core.mobCounter >= 20 and nightmareExplosionTrackKills == false then
         core:sendMessage("20 Nightmare Explosion have spawned. They can now be killed at the eye")
@@ -63,6 +64,8 @@ function core.TheEmeraldNightmare:Ilgynoth()
             C_Timer.After(10, function() 
                 if nightmareKilled >= 20 then
                     core:getAchievementSuccess()
+                else
+                    print("Nightmare Explosion Killed: " .. nightmareKilled)
                 end
                 nightmareKilled = 0
                 nightmareExplosionTrackKills = false
@@ -84,41 +87,47 @@ end
 -- end
 
 function core.TheEmeraldNightmare:DragonsOfNightmare()
-    --Loop through every player in the group. Once each player has got all 4 buffs. Increment count by 1. Once counter equals group size then complete achievement
-	if core.groupSize > 1 then
-		for i = 1, core.groupSize do
-			local unit = nil
-			if core.chatType == "PARTY" then
-				if i < core.groupSize then
-					unit = "party" .. i
-				else
-					unit = "player"
-			end
-			elseif core.chatType == "RAID" then
-				unit = "raid" .. i
-			end
-			
-            if unit ~= nil then
-                local unitType, destID, spawn_uid_dest = strsplit("-",UnitGUID(unit));
-				if UnitBuff(unit, GetSpellInfo(214588)) and UnitBuff(unit, GetSpellInfo(214601)) and UnitBuff(unit, GetSpellInfo(214604)) and UnitBuff(unit, GetSpellInfo(214610)) and playersUID[spawn_uid_dest] == nil then
-					playersBuffCounter = playersBuffCounter + 1
-					core:sendMessage(core:getAchievement() .. " Players with all 4 buffs (" .. playersBuffCounter .. "/" .. core.groupSize .. ")")
-					playersUID[spawn_uid_dest] = spawn_uid_dest
-				end
-			end
-		end
-	else
-		--Player is not in a group
-		local unitType, destID, spawn_uid_dest = strsplit("-",UnitGUID("Player"));
-		if UnitBuff("Player", GetSpellInfo(214588)) and UnitBuff("Player", GetSpellInfo(214601)) and UnitBuff("Player", GetSpellInfo(214604)) and UnitBuff("Player", GetSpellInfo(214610)) and playersUID[spawn_uid_dest] == nil then
-			playersBuffCounter = playersBuffCounter + 1
-			core:sendMessage(core:getAchievement() " Players with all 4 buffs (" .. playersBuffCounter .. "/" .. core.groupSize .. ")")
-			playersUID[spawn_uid_dest] = spawn_uid_dest
-		end
+    if core.type == "UNIT_DIED" and (core.destID == "102683" or core.destID == "102682" or core.destID == "102681" or core.destID == "102679") then
+        dragonsKilled = true
     end
-    
-    if playersBuffCounter == core.groupSize then
-        core:getAchievementSuccess()
+
+    if dragonsKilled == false then
+    --Loop through every player in the group. Once each player has got all 4 buffs. Increment count by 1. Once counter equals group size then complete achievement
+        if core.groupSize > 1 then
+            for i = 1, core.groupSize do
+                local unit = nil
+                if core.chatType == "PARTY" then
+                    if i < core.groupSize then
+                        unit = "party" .. i
+                    else
+                        unit = "player"
+                end
+                elseif core.chatType == "RAID" then
+                    unit = "raid" .. i
+                end
+                
+                if unit ~= nil then
+                    local unitType, destID, spawn_uid_dest = strsplit("-",UnitGUID(unit));
+                    if UnitBuff(unit, GetSpellInfo(214588)) and UnitBuff(unit, GetSpellInfo(214601)) and UnitBuff(unit, GetSpellInfo(214604)) and UnitBuff(unit, GetSpellInfo(214610)) and playersUID[spawn_uid_dest] == nil then
+                        playersBuffCounter = playersBuffCounter + 1
+                        core:sendMessage(core:getAchievement() .. " Players with all 4 buffs (" .. playersBuffCounter .. "/" .. core.groupSize .. ")")
+                        playersUID[spawn_uid_dest] = spawn_uid_dest
+                    end
+                end
+            end
+        else
+            --Player is not in a group
+            local unitType, destID, spawn_uid_dest = strsplit("-",UnitGUID("Player"));
+            if UnitBuff("Player", GetSpellInfo(214588)) and UnitBuff("Player", GetSpellInfo(214601)) and UnitBuff("Player", GetSpellInfo(214604)) and UnitBuff("Player", GetSpellInfo(214610)) and playersUID[spawn_uid_dest] == nil then
+                playersBuffCounter = playersBuffCounter + 1
+                core:sendMessage(core:getAchievement() " Players with all 4 buffs (" .. playersBuffCounter .. "/" .. core.groupSize .. ")")
+                playersUID[spawn_uid_dest] = spawn_uid_dest
+            end
+        end
+        
+        if playersBuffCounter == core.groupSize then
+            core:getAchievementSuccess()
+        end    
     end
 end
 
@@ -157,6 +166,7 @@ end
 
 function core.TheEmeraldNightmare:InstanceCleanup()
     core.TheEmeraldNightmare.Events:UnregisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+    dragonsKilled = false
 end
 
 function core.TheEmeraldNightmare:InitialSetup()
