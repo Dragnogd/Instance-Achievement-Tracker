@@ -603,7 +603,7 @@ core.Instances = {
                 },
                 boss10 = {
                     name = "Aggramar",
-                    bossIDs = {124691},
+                    bossIDs = {121975},
                     achievement = 11915,
                     players = {"(Enter instance to start scanning)"},
                     tactics = "",
