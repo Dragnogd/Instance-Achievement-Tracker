@@ -31,17 +31,6 @@ local felshieldEmitterCounter = 3
 local tempPower = 0
 local tempPowerStart
 
-function core.AntorusTheBurningThrone:AntoranHighCommand()
-    if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 244902 then
-        felshieldEmitterCounter = felshieldEmitterCounter - 1
-        core:sendMessage("Felshield Emitter Placed. " .. felshieldEmitterCounter .. " more Felshield Emitters can be placed before achievement fails")
-    end
-
-    if felshieldEmitterCounter == 0 then
-        core:getAchievementFailed()
-    end
-end
-
 function core.AntorusTheBurningThrone:FelhoundsOfSargeras()
     --Detect boss death
     if core.type == "UNIT_DIED" and (core.destID == "122477" or core.destID == "122135") then
@@ -90,6 +79,23 @@ function core.AntorusTheBurningThrone:FelhoundsOfSargeras()
         if fhargComplete == true and shatugComplete == true then
             core:getAchievementSuccess()
         end
+    end
+end
+
+function core.AntorusTheBurningThrone:AntoranHighCommand()
+    if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 244902 then
+        felshieldEmitterCounter = felshieldEmitterCounter - 1
+        core:sendMessage("Felshield Emitter Placed. " .. felshieldEmitterCounter .. " more Felshield Emitters can be placed before achievement fails")
+    end
+
+    if felshieldEmitterCounter == 0 then
+        core:getAchievementFailed()
+    end
+end
+
+function core.AntorusTheBurningThrone:PortalKeeperHasabel()
+    if core.type == "SPELL_AURA_APPLIED" and (core.spellId == 246929 or core.spellId == 246925 or core.spellId == 246911) then
+        core:getAchievementSuccess()
     end
 end
 

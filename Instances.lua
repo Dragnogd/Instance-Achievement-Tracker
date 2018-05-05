@@ -543,12 +543,12 @@ core.Instances = {
                 },
                 boss4 = {
                     name = "Portal Keeper Hasabel",
-                    bossIDs = {},
+                    bossIDs = {122104},
                     achievement = 11928,
                     players = {"(Enter instance to start scanning)"},
                     tactics = "",
-                    enabled = false,
-                    track = nil,
+                    enabled = true,
+                    track = function() core.AntoranHighCommand:PortalKeeperHasabel() end,
 					partial = false,
                 },
                 boss5 = {
