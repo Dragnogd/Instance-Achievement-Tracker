@@ -238,7 +238,7 @@ function core.TheNighthold:Guldan()
                         print("EYES Killed: " .. eyeOfGuldanKilled)
                         core:getAchievementSuccess()
                     else
-                        core:sendMessage(core:getAchievement() .. "(" .. eyeOfGuldanKilled .. "/16) Eyes of Gul'dan Killed in time")
+                        --core:sendMessage(core:getAchievement() .. "(" .. eyeOfGuldanKilled .. "/16) Eyes of Gul'dan Killed in time")
                         timerStarted = false
                         eyeOfGuldanKilled = 0
                         eyeTarget = false

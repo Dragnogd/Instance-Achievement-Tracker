@@ -247,7 +247,7 @@ core.Instances = {
                 },
                 boss5 = {
                     name = "Il'gynoth, Heart of Corruption",
-                    bossIDs = {209471},
+                    bossIDs = {105906},
                     achievement = 10830,
                     players = {"(Enter instance to start scanning)"},
                     tactics = "",
