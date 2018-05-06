@@ -113,10 +113,14 @@ end
 
 function core.TheNighthold:StarAugurEtraeus()
     --Check if boss has reached phase 3
-    if core:getHealthPercent("boss1") <= 30 and healthPercentageReached == false then
-        core:sendMessage(core:getAchievement() .. " Kill the Well-Traveled Nether Elemental now")
-        healthPercentageReached = true
+    for i = 1, 5 do
+        local unitType, _, _, _, _, destID, spawn_uid_dest = strsplit("-", UnitGUID("boss" .. i))
+        if destID == "103758" and core:getHealthPercent("boss" .. i) <= 30 and healthPercentageReached == false then
+            core:sendMessage(core:getAchievement() .. " Kill the Well-Traveled Nether Elemental now")
+            healthPercentageReached = true
+        end 
     end
+
 
     --Add has died
     if core.type == "UNIT_DIED" and core.destID == "111587" then

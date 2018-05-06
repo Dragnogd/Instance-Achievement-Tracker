@@ -110,7 +110,7 @@ function core.TheEmeraldNightmare:DragonsOfNightmare()
                     local unitType, destID, spawn_uid_dest = strsplit("-",UnitGUID(unit));
                     if UnitBuff(unit, GetSpellInfo(214588)) and UnitBuff(unit, GetSpellInfo(214601)) and UnitBuff(unit, GetSpellInfo(214604)) and UnitBuff(unit, GetSpellInfo(214610)) and playersUID[spawn_uid_dest] == nil then
                         playersBuffCounter = playersBuffCounter + 1
-                        core:sendMessage(core:getAchievement() .. UnitName(unit) .. " has all 4 buffs (" .. playersBuffCounter .. "/" .. core.groupSize .. ")")
+                        core:sendMessage(core:getAchievement() .. " " .. UnitName(unit) .. " has all 4 buffs (" .. playersBuffCounter .. "/" .. core.groupSize .. ")")
                         playersUID[spawn_uid_dest] = spawn_uid_dest
                     end
                 end
