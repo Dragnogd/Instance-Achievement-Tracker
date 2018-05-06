@@ -33,6 +33,7 @@ local timerStarted = false
 ---- Xavius
 ------------------------------------------------------
 local creatureOfMadnessKilled = 0
+local creatureOfMadnessUID = {}
 
 function core.TheEmeraldNightmare:Nythendra()
     if bugsSquished >= 15 then
@@ -132,9 +133,18 @@ function core.TheEmeraldNightmare:DragonsOfNightmare()
 end
 
 function core.TheEmeraldNightmare:Xavius()
-    if core.type == "PARTY_KILL" and core.destID == "110732" then
-        creatureOfMadnessKilled = creatureOfMadnessKilled + 1
-        core:sendMessage(core:getAchievement() .. " Creature of Madness Killed (" .. creatureOfMadnessKilled .. "/3)")
+    if (core.type == "RANGE_DAMAGE" or core.type == "SPELL_DAMAGE" or core.type == "SPELL_PERIODIC_DAMAGE" or core.type == "SWING_DAMAGE") and core.destID == "110732" and core.overkill ~= nil then
+        if core.overkill > 0 then
+            if creatureOfMadnessUID[core.spawn_uid_dest] == nil then
+                creatureOfMadnessUID[core.spawn_uid_dest] = core.spawn_uid_dest
+                creatureOfMadnessKilled = creatureOfMadnessKilled + 1
+                core:sendMessage(core:getAchievement() .. " Creature of Madness Killed (" .. creatureOfMadnessKilled .. "/3)")
+            end
+        end
+    end
+
+    if creatureOfMadnessKilled == 3 then
+        core:getAchievementSuccess()
     end
 end
 
@@ -155,6 +165,7 @@ function core.TheEmeraldNightmare:ClearVariables()
     ---- Xavius
     ------------------------------------------------------
     creatureOfMadnessKilled = 0
+    creatureOfMadnessUID = {}
 
     ------------------------------------------------------
     ---- Il'gynoth
