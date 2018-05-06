@@ -1397,7 +1397,7 @@ function detectBoss(id)
 	core:sendDebugMessage("Found the following boss ID: " .. id)
 
 	--There is a bug detecting Skopyron in Nighthold since the id for Trilliax is fire before.
-	--If Trilliax id is fired then compare this with the raid frame to confirm if we are actually attacking Trilliax or not
+	--If Trilliax id is fired then compare this with the raid frame to confirm if we are actually attacking Trilliax or not.
 	if id == 104288 or id == "104288" then
 		for i = 1, 5 do
 			if UnitGUID("boss" .. i) ~= nil then
