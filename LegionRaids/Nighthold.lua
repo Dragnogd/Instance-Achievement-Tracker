@@ -23,6 +23,7 @@ local toxicSliceCounter = 0
 ---- Star Augur Etraeus
 ------------------------------------------------------
 local healthPercentageReached = false
+local wellTraveledNetherElementalFound = false
 
 ------------------------------------------------------
 ---- Krosus
@@ -112,15 +113,21 @@ function core.TheNighthold:Trilliax()
 end
 
 function core.TheNighthold:StarAugurEtraeus()
-    --Check if boss has reached phase 3
-    for i = 1, 5 do
-        local unitType, _, _, _, _, destID, spawn_uid_dest = strsplit("-", UnitGUID("boss" .. i))
-        if destID == "103758" and core:getHealthPercent("boss" .. i) <= 30 and healthPercentageReached == false then
-            core:sendMessage(core:getAchievement() .. " Kill the Well-Traveled Nether Elemental now")
-            healthPercentageReached = true
-        end 
+    --Check if add is in combat with boss
+    if core.sourceID == "111587" or core.destID == "111587" then
+        wellTraveledNetherElementalFound = true
     end
 
+    --Check if boss has reached phase 3
+    for i = 1, 5 do
+        if UnitGUID("boss" .. i) ~= nil then
+            local unitType, _, _, _, _, destID, spawn_uid_dest = strsplit("-", UnitGUID("boss" .. i))
+            if destID == "103758" and core:getHealthPercent("boss" .. i) <= 30 and healthPercentageReached == false and wellTraveledNetherElementalFound == true then
+                core:sendMessage(core:getAchievement() .. " Kill the Well-Traveled Nether Elemental now")
+                healthPercentageReached = true
+            end
+        end
+    end
 
     --Add has died
     if core.type == "UNIT_DIED" and core.destID == "111587" then
@@ -260,9 +267,10 @@ function core.TheNighthold:ClearVariables()
     toxicSliceCounter = 0
 
     ------------------------------------------------------
-    ---- Trilliax
+    ---- Star Augur Etraeus
     ------------------------------------------------------
     healthPercentageReached = false
+    wellTraveledNetherElementalFound = false
 
     ------------------------------------------------------
     ---- Krosus
