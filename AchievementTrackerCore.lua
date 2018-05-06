@@ -1399,14 +1399,13 @@ function detectBoss(id)
 	--There is a bug detecting Skopyron in Nighthold since the id for Trilliax is fire before.
 	--If Trilliax id is fired then compare this with the raid frame to confirm if we are actually attacking Trilliax or not
 	if id == 104288 or id == "104288" then
-		if UnitGUID("boss1") ~= nil then
-			local unitType, _, _, _, _, sourceID, spawn_uid = strsplit("-", UnitGUID("boss1")) 
-			if sourceID == "102263" then
-				--Skorpyron
-				id = "102263"
-			elseif sourceID == "104288" then
-				--Trilliax
-				id = "104288"
+		for i = 1, 5 do
+			if UnitGUID("boss" .. i) ~= nil then
+				local unitType, _, _, _, _, sourceID, spawn_uid = strsplit("-", UnitGUID("boss1")) 
+				if sourceID == "102263" then
+					--Skorpyron
+					id = "102263"
+				end
 			end
 		end
 	end
