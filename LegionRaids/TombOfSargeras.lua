@@ -18,6 +18,7 @@ local playersTorment = 0
 ---- Sisters of the Moon
 ------------------------------------------------------
 local healthPercentageReached = false
+local waxingTwilightSoulFound = false
 
 function core.TombOfSargeras:DemonicInquisition()
     --Player has gained Unbearable Torment
@@ -57,12 +58,20 @@ function core.TombOfSargeras:Harjatan()
 end
 
 function core.TombOfSargeras:SistersOfTheMoon()
-    --Check if boss has reached 20% health
-    if core:getHealthPercent("boss1") <= 20 then
-        if healthPercentageReached == false then
-            core:sendMessage(core:getAchievement() .. " Kill the Waxing Twilight Soul now!")
+    --Check if add is in combat with boss
+    if core.sourceID == "121498" or core.destID == "121498" then
+        waxingTwilightSoulFound = true
+    end
+
+    --Check if boss has reached phase 3
+    for i = 1, 5 do
+        if UnitGUID("boss" .. i) ~= nil then
+            local unitType, _, _, _, _, destID, spawn_uid_dest = strsplit("-", UnitGUID("boss" .. i))
+            if (destID == "118523" or destID == "118374" or destID == "118518") and core:getHealthPercent("boss" .. i) <= 20 and healthPercentageReached == false and waxingTwilightSoulFound == true then
+                core:sendMessage(core:getAchievement() .. " Kill the Waxing Twilight Soul now!")
+                healthPercentageReached = true
+            end
         end
-        healthPercentageReached = true
     end
 
     --Add has died
@@ -87,4 +96,5 @@ function core.TombOfSargeras:ClearVariables()
     ---- Sisters of the Moon
     ------------------------------------------------------
     healthPercentageReached = false
+    waxingTwilightSoulFound = false
 end
