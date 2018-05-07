@@ -247,12 +247,12 @@ core.Instances = {
                 },
                 boss5 = {
                     name = "Il'gynoth, Heart of Corruption",
-                    bossIDs = {105906},
+                    bossIDs = {105906,105721},
                     achievement = 10830,
                     players = {"(Enter instance to start scanning)"},
                     tactics = "Wait for 20 Nightmare Explosions to spawn. Once you have enough adds, everyone should stand in front of the eye, then AOE down all the adds together. Once 20 adds have been killed in 10 seconds on the eye, you can kill the boss.",
                     enabled = true,
-                    track = function() core.TheEmeraldNightmare:Ill() end,
+                    track = function() core.TheEmeraldNightmare:Ilgynoth() end,
 					partial = false,
                 },
                 boss6 = {
