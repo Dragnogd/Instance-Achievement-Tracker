@@ -22,37 +22,39 @@ local healthPercentageReached = false
 local waxingTwilightSoulFound = false
 
 function core.TombOfSargeras:DemonicInquisition()
-    if core.type == "UNIT_DIED" and core.destID == "116689" or core.destID == "116691" then
+    if core.type == "UNIT_DIED" and (core.destID == "116689" or core.destID == "116691") then
         demonicInquisitionKilled = true
     end
 
-    --Player has gained Unbearable Torment
-    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 233430 then
-        if playersTormentTable[core.destName] == nil then
-            playersTorment = playersTorment + 1
-            playersTormentTable[core.destName] = core.destName
-            --core:sendMessage(core.destName .. " has gained Unbearable Torment (" .. playersTorment .. "/" .. core.groupSize .. ")")
-        end
-    end
-
-    --Player has lost Unbearable Torment
-    if core.type == "SPELL_AURA_REMOVED" and core.spellId == 233430 then
-        if playersTormentTable[core.destName] ~= nil then
-            playersTorment = playersTorment - 1
-            playersTormentTable[core.destName] = nil
-            --core:sendMessage(core.destName .. " has lost Unbearable Torment (" .. playersTorment .. "/" .. core.groupSize .. ")")
-        
-            --If achievement was already completed then fail it
-            if core.achievementsCompleted[1] == true then
-                core:getAchievementFailed()
-                core.achievementsCompleted[1] = false
+    if demonicInquisitionKilled == false then
+        --Player has gained Unbearable Torment
+        if core.type == "SPELL_AURA_APPLIED" and core.spellId == 233430 then
+            if playersTormentTable[core.destName] == nil then
+                playersTorment = playersTorment + 1
+                playersTormentTable[core.destName] = core.destName
+                --core:sendMessage(core.destName .. " has gained Unbearable Torment (" .. playersTorment .. "/" .. core.groupSize .. ")")
             end
         end
-    end
 
-    if playersTorment == core.groupSize then
-        core:getAchievementSuccess()
-        core.achievementsFailed[1] = false
+        --Player has lost Unbearable Torment
+        if core.type == "SPELL_AURA_REMOVED" and core.spellId == 233430 then
+            if playersTormentTable[core.destName] ~= nil then
+                playersTorment = playersTorment - 1
+                playersTormentTable[core.destName] = nil
+                --core:sendMessage(core.destName .. " has lost Unbearable Torment (" .. playersTorment .. "/" .. core.groupSize .. ")")
+            
+                --If achievement was already completed then fail it
+                if core.achievementsCompleted[1] == true then
+                    core:getAchievementFailed()
+                    core.achievementsCompleted[1] = false
+                end
+            end
+        end
+
+        if playersTorment == core.groupSize then
+            core:getAchievementSuccess()
+            core.achievementsFailed[1] = false
+        end
     end
 end
 
@@ -102,4 +104,8 @@ function core.TombOfSargeras:ClearVariables()
     ------------------------------------------------------
     healthPercentageReached = false
     waxingTwilightSoulFound = false
+end
+
+function core.TombOfSargeras:InstanceCleanup()
+    demonicInquisitionKilled = false
 end
