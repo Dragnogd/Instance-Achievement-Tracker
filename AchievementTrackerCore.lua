@@ -1035,7 +1035,7 @@ function events:ZONE_CHANGED_NEW_AREA()
 
 	getInstanceInfomation()
 
-	if core.inInstance == false and core.instanceVariablesReset == false then
+	if core.inInstance == true and core.instanceVariablesReset == false then
 		--Update achievement tracking
 		for boss,_ in pairs(core.Instances[core.expansion][core.instanceType][core.instance]) do
 			if boss ~= "name" then
@@ -1404,7 +1404,6 @@ function detectBoss(id)
 				local unitType, _, _, _, _, sourceID, spawn_uid = strsplit("-", UnitGUID("boss1")) 
 				if sourceID == "102263" then
 					--Skorpyron
-					print("Found Skorpyron")
 					id = "102263"
 				end
 			end
