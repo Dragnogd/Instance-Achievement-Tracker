@@ -1404,6 +1404,7 @@ function detectBoss(id)
 				local unitType, _, _, _, _, sourceID, spawn_uid = strsplit("-", UnitGUID("boss1")) 
 				if sourceID == "102263" then
 					--Skorpyron
+					print("Found Skorpyron")
 					id = "102263"
 				end
 			end

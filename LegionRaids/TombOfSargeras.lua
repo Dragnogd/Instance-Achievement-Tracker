@@ -13,6 +13,7 @@ core.TombOfSargeras = {}
 ------------------------------------------------------
 local playersTormentTable = {}
 local playersTorment = 0
+local demonicInquisitionKilled = false
 
 ------------------------------------------------------
 ---- Sisters of the Moon
@@ -21,6 +22,10 @@ local healthPercentageReached = false
 local waxingTwilightSoulFound = false
 
 function core.TombOfSargeras:DemonicInquisition()
+    if core.type == "UNIT_DIED" and core.destID == "116689" or core.destID == "116691" then
+        demonicInquisitionKilled = true
+    end
+
     --Player has gained Unbearable Torment
     if core.type == "SPELL_AURA_APPLIED" and core.spellId == 233430 then
         if playersTormentTable[core.destName] == nil then

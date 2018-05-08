@@ -77,6 +77,8 @@ function core.TheNighthold:Skorpyron()
 
         if playerHit == true then
             core:getAchievementFailedWithMessageAfter("Players Hit: " .. playersFailed)
+        else
+            core:sendMessage(core:getAchievement() .. " No players were hit by Shockwave")
         end
     end
 
@@ -231,7 +233,7 @@ function core.TheNighthold:Tichondrius()
 end
 
 function core.TheNighthold:Guldan()
-    core:trackMob("105630", "Eye of Gul'dan", 16, "16 Eye of Gul'dan have spawned. AOE them down now", 2, nil, nil)
+    core:trackMob("105630", "Eye of Gul'dan", 16, "16 Eye of Gul'dan have spawned", 1, nil, nil)
 
     --Enough eyes have spawn so track next kill
     if core.mobCounter >= 16 then
@@ -249,6 +251,7 @@ function core.TheNighthold:Guldan()
                         print("EYES Killed: " .. eyeOfGuldanKilled)
                         core:getAchievementSuccess()
                     else
+                        print("EYES Killed: " .. eyeOfGuldanKilled)
                         --core:sendMessage(core:getAchievement() .. "(" .. eyeOfGuldanKilled .. "/16) Eyes of Gul'dan Killed in time")
                         timerStarted = false
                         eyeOfGuldanKilled = 0
