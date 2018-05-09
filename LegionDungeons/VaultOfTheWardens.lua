@@ -44,7 +44,7 @@ function core.VaultOfTheWardens:AshGolm()
 end
 
 function core.VaultOfTheWardens:Cordana()
-    if core.type == "SPELL_DAMAGE" and core.core.spellId == 197506 then
+    if core.type == "SPELL_DAMAGE" and core.spellId == 197506 then
         core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")")
     end
 end
