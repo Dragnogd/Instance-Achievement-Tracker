@@ -25,7 +25,7 @@ function core.MawOfSouls:Ymiron()
     end
 
     --Only count UNIT_DIED kills when defiant strike is active
-    if defiantStrikeActive == true then
+    if defiantStrikeActive == true and core.achievementsCompleted[1] == false then
         if core.type == "UNIT_DIED" and core.destID == "98246" and core.destFlags == 0xa48 then
             risenWarriorsKilled = risenWarriorsKilled + 1
             core:sendMessage(core:getAchievement() .. " Risen Warriors Killed (" .. risenWarriorsKilled .. "/6)")
