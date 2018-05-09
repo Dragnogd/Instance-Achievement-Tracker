@@ -25,6 +25,7 @@ function core.VaultOfTheWardens:AshGolm()
         playersFiredUp = playersFiredUp - 1
         if core.achievementsCompleted[1] == true then
             core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")")
+            core.achievementsCompleted[1] = false
         end
     end
 
