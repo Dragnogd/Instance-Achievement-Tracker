@@ -12,27 +12,34 @@ core.VaultOfTheWardens = {}
 ---- Ash'Golm
 ------------------------------------------------------
 local playersFiredUp = 0
+local ashGolmKilled = false
 
 function core.VaultOfTheWardens:AshGolm()
-    --Gained Debuff
-    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 215478 then
-        playersFiredUp = playersFiredUp + 1
-        core:sendMessage(core.destName .. " has gained Fired Up debuff (" .. playersFiredUp .. "/" .. core.groupSize .. ")")
+    if core.type == "UNIT_DIED" and core.destID == "95886" then
+        ashGolmKilled = true
     end
 
-    --Lost Debuff
-    if core.type == "SPELL_AURA_REMOVED" and core.spellId == 215478 then
-        playersFiredUp = playersFiredUp - 1
-        if core.achievementsCompleted[1] == true then
-            core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")")
-            core.achievementsCompleted[1] = false
+    if ashGolmKilled == false then
+        --Gained Debuff
+        if core.type == "SPELL_AURA_APPLIED" and core.spellId == 215478 then
+            playersFiredUp = playersFiredUp + 1
+            core:sendMessage(core.destName .. " has gained Fired Up debuff (" .. playersFiredUp .. "/" .. core.groupSize .. ")")
         end
-    end
 
-    --Achievement Success
-    if playersFiredUp == core.groupSize then
-        core:getAchievementSuccess()
-        core.achievementsFailed[1] = false
+        --Lost Debuff
+        if core.type == "SPELL_AURA_REMOVED" and core.spellId == 215478 then
+            playersFiredUp = playersFiredUp - 1
+            if core.achievementsCompleted[1] == true then
+                core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")")
+                core.achievementsCompleted[1] = false
+            end
+        end
+
+        --Achievement Success
+        if playersFiredUp == core.groupSize then
+            core:getAchievementSuccess()
+            core.achievementsFailed[1] = false
+        end
     end
 end
 
@@ -43,4 +50,8 @@ function core.VaultOfTheWardens:Cordana()
 end
 
 function core.VaultOfTheWardens:ClearVariables()
+end
+
+function core.VaultOfTheWardens:InstanceCleanup()
+    ashGolmKilled = false
 end
