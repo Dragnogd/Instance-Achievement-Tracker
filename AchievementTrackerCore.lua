@@ -1035,7 +1035,7 @@ function events:ZONE_CHANGED_NEW_AREA()
 
 	getInstanceInfomation()
 
-	if core.inInstance == true and core.instanceVariablesReset == false then
+	if core.inInstance == false and core.instanceVariablesReset == false then
 		--Update achievement tracking
 		for boss,_ in pairs(core.Instances[core.expansion][core.instanceType][core.instance]) do
 			if boss ~= "name" then
