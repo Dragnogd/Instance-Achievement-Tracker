@@ -15,8 +15,7 @@ local timerStarted3 = false
 ------------------------------------------------------
 ---- Dwarfageddon
 ------------------------------------------------------
-local steelforgedDefenderUID = {}
-local steelforgedDefenderCounter = 0
+local dwarfageddonComplete = false
 local steelforgedDefenderKilled = 0
 local steelforgedDefenderAnnounced = false
 
@@ -100,54 +99,39 @@ local stormLashersKilled = 0
 local snaplashersKilled = 0
 
 function core.Ulduar:Dwarfageddon()
-    --Add killed
-    if core.type == "UNIT_DIED" then
-        steelforgedDefenderUID[core.spawn_uid_dest] = nil
-        steelforgedDefenderCounter = steelforgedDefenderCounter - 1
+    core:trackMob("33572", "Steelforged Defender", 100, "100 Steelforged Defenders have spawned. AOE them now!", 10, nil, nil)
 
-        --Only start the timer if enough adds have been collected.
-        if steelforgedDefenderAnnounced == true then
-            steelforgedDefenderKilled = steelforgedDefenderKilled + 1
-            if timerStarted == false then
-                timerStarted = true
-                core:sendMessage("Timer Started! 10 seconds remaining" ,AchievementTracker_chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
-                C_Timer.After(10, function()
-                    if steelforgedDefenderKilled >= 100 then
-                        core:sendMessage(core:getAchievement() .. " COMPLETED! Steelforged Defenders were killed in time (" .. steelforgedDefenderKilled .. "/100)") 
-                    else
-                        core:sendMessage(core.getAchievement() .. " FAILED! Steelforged Defenders were not killed in time (" .. steelforgedDefenderKilled .. "/100). This achievement can be attempted again.")
-                        steelforgedDefenderKilled = 0
-                        timerStarted = false
-                        steelforgedDefenderAnnounced = false
-                    end
-                end)
-            end
-        end
-    end
-
-    --Add detected
-    if core.sourceID == "33572" and steelforgedDefenderCounter <= 100 and steelforgedDefenderAnnounced == false then
-        if steelforgedDefenderUID[core.spawn_uid] == nil then
-            steelforgedDefenderUID[core.spawn_uid] = core.spawn_uid
-            steelforgedDefenderCounter = steelforgedDefenderCounter + 1
-            core:sendMessageDelay("Steelforged Defender Counter (" .. steelforgedDefenderCounter .. "/100)",steelforgedDefenderCounter,10)
-        end
-    end
-    if core.destID == "33572" and steelforgedDefenderCounter <= 100 and steelforgedDefenderAnnounced == false then
-        if steelforgedDefenderUID[core.spawn_uid_dest] == nil then
-            steelforgedDefenderUID[core.spawn_uid_dest] = core.spawn_uid_dest
-            steelforgedDefenderCounter = steelforgedDefenderCounter + 1
-            core:sendMessageDelay("Steelforged Defender Counter (" .. steelforgedDefenderCounter .. "/100)",steelforgedDefenderCounter,10)
-        end
-    end
-
-    --Requirements Met
-    if steelforgedDefenderCounter >= 100 and steelforgedDefenderAnnounced == false then
+    if core.mobCounter >= 100 and steelforgedDefenderAnnounced == false then
         steelforgedDefenderAnnounced = true
-        if core.difficultyID == 4 then
-            core:sendMessage("[WIP] "  .. core:getAchievement() .. " requirements have been met. Adds can now be killed!")
-        elseif core.difficultyID == 3 then
-            core:sendMessage("[WIP] " .. core:getAchievement() .. " requirements have been met. Adds can now be killed!")
+    end
+
+    --Add killed
+    if core.type == "UNIT_DIED" and steelforgedDefenderAnnounced == true then
+        --Only start the timer if enough adds have been collected.
+        steelforgedDefenderKilled = steelforgedDefenderKilled + 1
+        if timerStarted == false then
+            timerStarted = true
+            core:sendMessage(core:getAchievement() .. " Timer Started! 10 seconds remaining")
+            C_Timer.After(10, function()
+                if steelforgedDefenderKilled >= 100 then
+                    if dwarfageddonComplete == false then
+                        core:sendMessage(core:getAchievement() .. " COMPLETED! Steelforged Defenders were killed in time (" .. steelforgedDefenderKilled .. "/100)")
+                        dwarfageddonComplete = true
+                    end
+                else
+                    core:sendMessage(core.getAchievement() .. " FAILED! Steelforged Defenders were not killed in time (" .. steelforgedDefenderKilled .. "/100). This achievement can be attempted again.")
+                    steelforgedDefenderKilled = 0
+                    timerStarted = false
+                    steelforgedDefenderAnnounced = false
+                end
+            end)
+        else
+            if steelforgedDefenderKilled >= 100 then
+                if dwarfageddonComplete == false then
+                    core:sendMessage(core:getAchievement() .. " COMPLETED! Steelforged Defenders were killed in time (" .. steelforgedDefenderKilled .. "/100)")
+                    dwarfageddonComplete = true
+                end
+            end
         end
     end
 end
@@ -602,6 +586,7 @@ end
 function core.Ulduar:InstanceCleanup()
     core.Ulduar.Events:UnregisterEvent("UNIT_AURA")
     core.Ulduar.Events:UnregisterEvent("CHAT_MSG_MONSTER_YELL")
+    dwarfageddonComplete = false
 end
 
 function core.Ulduar:InitialSetup()
