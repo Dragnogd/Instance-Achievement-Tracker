@@ -396,7 +396,6 @@ function getInstanceInfomation()
 		core:sendDebugMessage("Player has entered instance")
 		--print("Instance")
 		local instanceCompatible = false --Check whether player is on correct difficulty to earn achievements
-		core.instanceVariablesReset = false
 		core.instanceNameSpaces, _, core.difficultyID, _, core.maxPlayers, _, _, core.currentZoneID, _ = GetInstanceInfo()
 
 		--Used to find correct table in the core.instances table
@@ -433,6 +432,7 @@ function getInstanceInfomation()
 						core.instanceType = instanceType
 						core.instance = instance
 						core.inInstance = true
+						core.instanceVariablesReset = false
 
 						core:sendDebugMessage("Expansion: " .. core.expansion)
 						core:sendDebugMessage("Instance Type: " .. core.instanceType)

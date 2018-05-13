@@ -207,9 +207,14 @@ function core.HellfireCitadel:Archimonde()
 	end
 
 	--If boss health is below 40% and no Doomfire has spawned then fail the achievement
-	if core:getHealthPercent("boss1") < 40 and doomfireSpawned == false then
-		core:getAchievementFailed()
-	end
+	for i = 1, 5 do
+        if UnitGUID("boss" .. i) ~= nil then
+            local unitType, _, _, _, _, destID, spawn_uid_dest = strsplit("-", UnitGUID("boss" .. i))
+            if destID == "91331" and core:getHealthPercent("boss" .. i) < 40 and doomfireSpawned == false then
+				core:getAchievementFailed()
+            end
+        end
+    end
 end
 
 function core.HellfireCitadel:ClearVariables()
