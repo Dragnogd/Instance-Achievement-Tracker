@@ -1544,6 +1544,10 @@ function printMessage(message)
 	print("|cff00ccffIAT: |cffffffff" .. message)
 end
 
+function core:printMessage(message)
+	print("|cff00ccffIAT: |cffffffff" .. message)
+end
+
 --Get the current achievement being tracked for custom output messages
 function core:getAchievement(index)
 	local value = index
