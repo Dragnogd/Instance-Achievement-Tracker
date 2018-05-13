@@ -4003,8 +4003,8 @@ core.Instances = {
                     achievement = 12361,
                     players = {"(Enter instance to start scanning)"},
                     tactics = "For the achievement just kill the boss within 20 minutes of killing the first creature in the Freya boss room.",
-                    enabled = true,
-                    track = function() core.Ulduar:FreyaConSpeedAtory() end,
+                    enabled = false,
+                    track = nil,
 					partial = true,
                 }, 
                 boss43 = {

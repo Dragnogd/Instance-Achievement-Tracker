@@ -494,16 +494,20 @@ function core.Ulduar:ThorimDontStandInTheLightning()
     end
 end
 
-function core.Ulduar:ThorimIllTakeYouAllOn()
-
-end 
-
 function core.Ulduar:ThorimWhoNeedsBloodlust()
 
 end
 
-function core.Ulduar:ThorimSiffed()
+function core.Ulduar:Shadowdodger()
+    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 63277 then
+        core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")")
+    end
+end 
 
+function core.Ulduar:ILoveTheSmellOfSaroniteInTheMorning()
+    if core.type == "UNIT_DIED" and core.destID == "33524" then
+        core:getAchievementSuccess()
+    end
 end
 
 function core.Ulduar:ClearVariables()
