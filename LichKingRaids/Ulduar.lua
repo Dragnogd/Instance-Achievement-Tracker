@@ -98,6 +98,17 @@ local ancientWaterSpiritsKilled = 0
 local stormLashersKilled = 0
 local snaplashersKilled = 0
 
+------------------------------------------------------
+---- They're Coming Out of the Walls
+------------------------------------------------------
+local guardianOfYoggSaronAnnounced = false
+local guardianOfYoggSaronKilled = 0
+
+------------------------------------------------------
+---- They're Coming Out of the Walls
+------------------------------------------------------
+local kissAndMakeUpAnnounced = false
+
 function core.Ulduar:Dwarfageddon()
     core:trackMob("33572", "Steelforged Defender", 100, "100 Steelforged Defenders have spawned. AOE them now!", 10, nil, nil)
 
@@ -500,13 +511,71 @@ end
 
 function core.Ulduar:Shadowdodger()
     if core.type == "SPELL_AURA_APPLIED" and core.spellId == 63277 then
-        core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")")
+        core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")", 2)
     end
 end 
 
 function core.Ulduar:ILoveTheSmellOfSaroniteInTheMorning()
     if core.type == "UNIT_DIED" and core.destID == "33524" then
-        core:getAchievementSuccess()
+        core:getAchievementSuccess(1)
+    end
+end
+
+function core.Ulduar:DriveMeCrazy()
+    --3
+    if core.type == "SPELL_AURA_REMOVED" and core.spellId == 63050 then
+        core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")", 3)
+    end
+end
+
+function core.Ulduar:KissAndMakeUp()
+    --4
+    if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 65301 and kissAndMakeUpAnnounced == false then
+        core:sendMessage(core:getAchievement(4) .. " /kiss Sara Now!")
+        kissAndMakeUpAnnounced = true
+    end
+end
+
+function core.Ulduar:HesNotGettingAnyOlder()
+    --2
+    if timerStarted == false then
+        timerStarted = true
+        timer = C_Timer.NewTimer(410, function() 
+            core:getAchievementFailed(2)
+        end)
+    end  
+end
+
+function core.Ulduar:TheyreComingOutOfTheWalls()
+    --1
+    core:trackMob("33136", "Guardian of Yogg-Saron", 9, " 9 Guardian of Yogg-Saron have spawned. Group them up then AOE them down", 1, nil, nil)
+
+    if core.mobCounter >= 9 and guardianOfYoggSaronAnnounced == false then
+        guardianOfYoggSaronAnnounced = true
+    end
+
+    --Add killed
+    if core.type == "UNIT_DIED" and core.destID == "33136" and guardianOfYoggSaronAnnounced == true then
+        --Only start the timer if enough adds have been collected.
+        guardianOfYoggSaronKilled = guardianOfYoggSaronKilled + 1
+        if timerStarted2 == false then
+            timerStarted2 = true
+            core:sendMessage(core:getAchievement() .. " Timer Started! 12 seconds remaining")
+            C_Timer.After(12, function()
+                if guardianOfYoggSaronKilled >= 9 then
+                    core:getAchievementSuccess(1)
+                else
+                    core:getAchievementFailedWithMessageAfter("Guardians of Yogg-Saron killed (" .. guardianOfYoggSaronKilled .. "/9)", 1)
+                    guardianOfYoggSaronKilled = 0
+                    timerStarted2 = false
+                    guardianOfYoggSaronAnnounced = false
+                end
+            end)
+        else
+            if guardianOfYoggSaronKilled >= 9 then
+                core:getAchievementSuccess(1)
+            end
+        end
     end
 end
 
@@ -585,6 +654,17 @@ function core.Ulduar:ClearVariables()
     ancientWaterSpiritsKilled = 0
     stormLashersKilled = 0
     snaplashersKilled = 0
+
+    ------------------------------------------------------
+    ---- They're Coming Out of the Walls
+    ------------------------------------------------------
+    guardianOfYoggSaronAnnounced = false
+    guardianOfYoggSaronKilled = 0
+
+    ------------------------------------------------------
+    ---- They're Coming Out of the Walls
+    ------------------------------------------------------
+    kissAndMakeUpAnnounced = false
 end
 
 function core.Ulduar:InstanceCleanup()
