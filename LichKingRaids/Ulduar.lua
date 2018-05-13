@@ -521,7 +521,7 @@ function core.Ulduar:ILoveTheSmellOfSaroniteInTheMorning()
     end
 end
 
-function core.Ulduar:DriveMeCrazy() 
+function core.Ulduar:DriveMeCrazy()  
     --3
     if core.type == "SPELL_AURA_REMOVED" and core.spellId == 63050 then
         core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")", 3)
