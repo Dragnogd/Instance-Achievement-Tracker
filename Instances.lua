@@ -1085,7 +1085,7 @@ core.Instances = {
                 },
                 boss3 = {
                     name = "Tectus",
-                    bossIDs = {78948},
+                    bossIDs = {}, --78948
                     achievement = 8974,
                     players = {"(Enter instance to start scanning)"},
                     tactics = "At 110, just nuke the boss down for the first and second split. On the third split wait for all 8 versions of the boss to spawn, then AOE them down within 10 seconds of one another.",
