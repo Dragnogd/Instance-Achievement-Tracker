@@ -20,7 +20,7 @@ local bugsUID = {}
 ------------------------------------------------------
 local playersUID = {}
 local playersBuffCounter = 0
-local dragonsKilled = false
+local initialWait = false
 
 ------------------------------------------------------
 ---- Il'gynoth
@@ -87,12 +87,8 @@ end
 -- end
 
 function core.TheEmeraldNightmare:DragonsOfNightmare()
-    if core.type == "UNIT_DIED" and (core.destID == "102683" or core.destID == "102682" or core.destID == "102681" or core.destID == "102679") then
-        dragonsKilled = true
-    end
-
-    if dragonsKilled == false then
-    --Loop through every player in the group. Once each player has got all 4 buffs. Increment count by 1. Once counter equals group size then complete achievement
+    if initialWait == true then
+        --Loop through every player in the group. Once each player has got all 4 buffs. Increment count by 1. Once counter equals group size then complete achievement
         if core.groupSize > 1 then
             for i = 1, core.groupSize do
                 local unit = nil
@@ -127,7 +123,14 @@ function core.TheEmeraldNightmare:DragonsOfNightmare()
         
         if playersBuffCounter == core.groupSize then
             core:getAchievementSuccess()
-        end    
+        end
+    else
+        if timerStarted == false then
+            timerStarted = true
+            C_Timer.After(5, function() 
+                initialWait = true
+            end)
+        end
     end
 end
 
@@ -159,6 +162,7 @@ function core.TheEmeraldNightmare:ClearVariables()
     ------------------------------------------------------
     playersUID = {}
     playersBuffCounter = 0
+    initialWait = false
 
     ------------------------------------------------------
     ---- Xavius
