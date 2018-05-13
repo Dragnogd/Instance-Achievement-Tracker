@@ -524,7 +524,11 @@ end
 function core.Ulduar:DriveMeCrazy()
     --3
     if core.type == "SPELL_AURA_REMOVED" and core.spellId == 63050 then
-        core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")", 3)
+        C_Timer.After(1, function() 
+            if core.inCombat == true then
+                core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")", 3)            
+            end
+        end)
     end
 end
 
@@ -538,9 +542,9 @@ end
 
 function core.Ulduar:HesNotGettingAnyOlder()
     --2
-    if timerStarted == false then
-        timerStarted = true
-        timer = C_Timer.NewTimer(410, function() 
+    if timerStarted3 == false then
+        timerStarted3 = true
+        timer3 = C_Timer.NewTimer(410, function() 
             core:getAchievementFailed(2)
         end)
     end  
@@ -582,6 +586,11 @@ end
 function core.Ulduar:ClearVariables()
     timerStarted = false
     timerStarted2 = false
+    timerStarted3 = false
+
+    if timer3 ~= nil then
+        timer3:Cancel()
+    end
 
     ------------------------------------------------------
     ---- Iron Dwarf, Medium Rare 
