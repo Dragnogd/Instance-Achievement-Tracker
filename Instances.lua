@@ -3873,7 +3873,8 @@ core.Instances = {
                     tactics = "At 110, just single target down the boss.",
                     enabled = true,
                     track = function() core.Ulduar:AuriayaCrazyCatLady() end,
-					partial = false,
+                    partial = false,
+                    nameplateCheck = true,
                 }, 
                 boss30 = {
                     name = "Auriaya 2",
@@ -3883,7 +3884,8 @@ core.Instances = {
                     tactics = "After pulling the boss wait for the Feral Defender to spawn. Once the Feral Defender has spawned kill him. He will then respawn after a short amount of time. Once the Feral Defender has been killed 9 times you can kill the boss.",
                     enabled = true,
                     track = function() core.Ulduar:AuriayaNineLives() end,
-					partial = false,
+                    partial = false,
+                    nameplateCheck = true,
                 }, 
                 boss31 = {
                     name = "Hodir 1",
@@ -3997,7 +3999,7 @@ core.Instances = {
                 }, 
                 boss42 = {
                     name = "Freya 1",
-                    bossIDs = {33430, 33431, 33528, 33527, 33526, 33525, 32914, 32913, 33354, 33355, 32915},
+                    bossIDs = {}, --33430, 33431, 33528, 33527, 33526, 33525, 32914, 32913, 33354, 33355, 32915
                     achievement = 12361,
                     players = {"(Enter instance to start scanning)"},
                     tactics = "For the achievement just kill the boss within 20 minutes of killing the first creature in the Freya boss room.",

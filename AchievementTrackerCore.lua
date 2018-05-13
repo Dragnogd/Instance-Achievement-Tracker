@@ -6,7 +6,7 @@ local _, core = ...
 local events = CreateFrame("Frame")
 local UIConfig
 local UICreated = false
-local debugMode = false
+local debugMode = true
 
 AchievementTrackerOptions = {}
 AchievementTrackerDebug = {}
@@ -1417,16 +1417,39 @@ function detectBoss(id)
 				for i = 1, #core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs do
 					local bossID = core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs[i]
 					if string.find(id, bossID) then
-						if core:has_value(currentBossNums, boss) == false then
-							core:sendDebugMessage("Adding the following boss: " .. boss)
-							table.insert(core.currentBosses, core.Instances[core.expansion][core.instanceType][core.instance][boss])
-							table.insert(currentBossNums, boss)
+						--Check if boss requires namePlate verification to stop incorrect triggering of boss
+						local idVerified = false
+						if core.Instances[core.expansion][core.instanceType][core.instance][boss].nameplateCheck ~= nil then
+							--Check for boss nameplate to make sure correct bosses are being detected
+							core:sendDebugMessage("Checking Nameplates to verify boss...")
+							for i = 1, 5 do
+								if UnitGUID("boss" .. i) ~= nil then
+									local unitType, _, _, _, _, sourceID, spawn_uid = strsplit("-", UnitGUID("boss1")) 
+									if string.find(sourceID, bossID) then
+										idVerified = true
+									end
+								end
+							end
+						else
+							core:sendDebugMessage("Not checking nameplates...")
+							idVerified = true
 						end
-						if core:has_value(core.achievementIDs, core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement) == false then
-							core:sendDebugMessage("Adding the following achievement ID beacuse it doesn't exist: " .. core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
-							table.insert(core.achievementIDs, core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
+
+						if idVerified == true then
+							core:sendDebugMessage("ID Verfified")
+							if core:has_value(currentBossNums, boss) == false then
+								core:sendDebugMessage("Adding the following boss: " .. boss)
+								table.insert(core.currentBosses, core.Instances[core.expansion][core.instanceType][core.instance][boss])
+								table.insert(currentBossNums, boss)
+							end
+							if core:has_value(core.achievementIDs, core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement) == false then
+								core:sendDebugMessage("Adding the following achievement ID beacuse it doesn't exist: " .. core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
+								table.insert(core.achievementIDs, core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
+							end
+							core.foundBoss = true
+						else
+							core:sendDebugMessage("Cannot verify ID")
 						end
-						core.foundBoss = true
 					end
 				end
 			end
