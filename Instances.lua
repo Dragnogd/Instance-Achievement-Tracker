@@ -548,7 +548,7 @@ core.Instances = {
                     players = {"(Enter instance to start scanning)"},
                     tactics = "",
                     enabled = true,
-                    track = function() core.AntoranHighCommand:PortalKeeperHasabel() end,
+                    track = function() core.AntorusTheBurningThrone:PortalKeeperHasabel() end,
 					partial = false,
                 },
                 boss5 = {
