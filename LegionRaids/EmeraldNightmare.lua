@@ -56,7 +56,7 @@ function core.TheEmeraldNightmare:Ilgynoth()
     end
 
     --Only track kills once we have reached the correct number of mobs alive
-    if core.type == "SPELL_DAMAGE" and core.destID == "105906" and core.spellId == 209471 and nightmareExplosionTrackKills == true then
+    if core.type == "SPELL_DAMAGE" and core.destID == "105906" and core.spellId == 210048 and nightmareExplosionTrackKills == true then
         nightmareKilled = nightmareKilled + 1
         if timerStarted == false then
             timerStarted = true
