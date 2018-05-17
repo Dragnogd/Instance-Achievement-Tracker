@@ -117,14 +117,16 @@ function core.AntorusTheBurningThrone:KinGaroth()
 
     --Detect when a bomb is destroyed
     if (core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_REFRESH") and core.spellId == 181089 then
-        diabolicBombCounter = diabolicBombCounter - 1
-        core:sendMessage(core.destName .. " Absorbed Diabolic Bomb (" .. diabolicBombCounter .. "/9)")
-
-        --Achievement Failed (can be completed again during same encounter)
-        if core.achievementsCompleted[1] == true then
-            core:getAchievementFailedWithMessageAfter("Achievement can still be completed by waiting for more diabolic bombs")
-            core.achievementsCompleted[1] = false
-        end
+        C_Timer.After(1, function() 
+            diabolicBombCounter = diabolicBombCounter - 1
+            core:sendMessage(core.destName .. " Absorbed Diabolic Bomb (" .. diabolicBombCounter .. "/9)")
+    
+            --Achievement Failed (can be completed again during same encounter)
+            if core.achievementsCompleted[1] == true then
+                core:getAchievementFailedWithMessageAfter("Achievement can still be completed by waiting for more diabolic bombs")
+                core.achievementsCompleted[1] = false
+            end        
+        end)
     end
 
     --Achievement Success
