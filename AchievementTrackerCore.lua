@@ -6,7 +6,7 @@ local _, core = ...
 local events = CreateFrame("Frame")
 local UIConfig
 local UICreated = false
-local debugMode = false
+local debugMode = true
 
 AchievementTrackerOptions = {}
 AchievementTrackerDebug = {}

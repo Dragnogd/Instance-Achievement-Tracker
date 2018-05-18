@@ -83,7 +83,7 @@ function core.AntorusTheBurningThrone:FelhoundsOfSargeras()
 end
 
 function core.AntorusTheBurningThrone:AntoranHighCommand()
-    if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 244902 then
+    if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 244902 and felshieldEmitterCounter > 0 then
         felshieldEmitterCounter = felshieldEmitterCounter - 1
         core:sendMessage("Felshield Emitter Placed. " .. felshieldEmitterCounter .. " more Felshield Emitters can be placed before achievement fails")
     end
