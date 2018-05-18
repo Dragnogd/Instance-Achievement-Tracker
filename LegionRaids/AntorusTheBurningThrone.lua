@@ -29,7 +29,7 @@ local felhoundsKilled = false
 local felshieldEmitterCounter = 3
 
 local tempPower = 0
-local tempPowerStart
+local tempPowerStart = 0
 
 function core.AntorusTheBurningThrone:FelhoundsOfSargeras()
     --Detect boss death
@@ -163,6 +163,9 @@ function core.AntorusTheBurningThrone:ClearVariables()
     ---- Antoran High Command
     ------------------------------------------------------
     felshieldEmitterCounter = 3
+
+    tempPower = 0
+    tempPowerStart = 0
 end
 
 function core.AntorusTheBurningThrone:InstanceCleanup()
@@ -194,27 +197,31 @@ function core.AntorusTheBurningThrone.Events:UNIT_SPELLCAST_SUCCEEDED(self, unit
 end
 
 function core.AntorusTheBurningThrone.Events:UNIT_POWER(self, unit, powerType)
-    if powerType == "ALTERNATE" and unit == "boss2" then
-        print(UnitName(unit))
-        if timerStarted == false then
-            timerStarted = true
-            tempPowerStart = UnitPower(unit, ALTERNATE_POWER_INDEX)
-            core:sendMessage(core:getAchievement() .. " Timer Started!")
-            C_Timer.After(5, function()
-                if tempPowerStart - tempPowerStart >= 80 then
-                    local powdif = tempPowerStart - tempPowerStart
-                    print("SUCCESS: " .. powdif)
-                    core:getAchievementSuccess()
+    for i = 1, 5 do
+        if UnitGUID("boss" .. i) ~= nil then
+            local unitType, _, _, _, _, destID, spawn_uid_dest = strsplit("-", UnitGUID("boss" .. i))
+            if destID == "125886" and UnitPower(unit) > 0 then
+                if timerStarted == false then
+                    timerStarted = true
+                    tempPowerStart = UnitPower(unit)
+                    print(core:getAchievement() .. " Timer Started!")
+                    C_Timer.After(5, function()
+                        if tempPower - tempPowerStart >= 80 then
+                            local powdif = tempPower - tempPowerStart
+                            core:sendMessage("SUCCESS: " .. powdif)
+                            --core:getAchievementSuccess()
+                        else
+                            local powdif = tempPowerStart - tempPowerStart
+                            print("FAILED: " .. powdif)
+                            tempPowerStart = 0
+                            tempPower = 0
+                            timerStarted = false
+                        end
+                    end)
                 else
-                    local powdif = tempPowerStart - tempPowerStart
-                    print("FAILED: " .. powdif)
-                    tempPowerStart = 0
-                    tempPower = 0
-                    timerStarted = false
+                    tempPower = UnitPower(unit)
                 end
-            end)
-        else
-            tempPower = UnitPower(unit, ALTERNATE_POWER_INDEX)
+            end
         end
     end
 end
