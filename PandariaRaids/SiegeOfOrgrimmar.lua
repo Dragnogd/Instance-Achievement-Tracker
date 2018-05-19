@@ -107,6 +107,7 @@ function core.SiegeOfOrgrimmar:Immerseus()
 					core:sendMessage("Kill the Tears of the Vale Now")
 					safeToKillTears = true
 					timerStarted = false
+					bossReformed = false
 				end
 			end)
 		end
@@ -470,13 +471,17 @@ core.SiegeOfOrgrimmar.Events:SetScript("OnEvent", function(self, event, ...)
 end)
 
 function core.SiegeOfOrgrimmar.Events:CHAT_MSG_RAID_BOSS_EMOTE(self, message, sender, ...)
-	if string.match(message, "Reforms") then
-		bossReformed = true
-	end
-
-	if string.match(message, "Split") then
-		safeToKillTears = false
-		bossReformed = false
+	if core.Instances.MistsOfPandaria.Raids.SiegeOfOrgrimmar.boss1.enabled == true then
+		if core.achievementsCompleted[1] == false then
+			if string.match(message, "Reforms") then
+				core:sendMessage("Do not kill tears till IAT announces confirmation. Killing the tears too quickly will not count towards the achievement")
+				bossReformed = true
+			end
+		
+			if string.match(message, "Split") then
+				safeToKillTears = false
+			end	
+		end
 	end
 end
 
