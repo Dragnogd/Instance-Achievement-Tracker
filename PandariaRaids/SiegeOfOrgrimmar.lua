@@ -232,31 +232,28 @@ function core.SiegeOfOrgrimmar:Malkorok()
 end
 
 function core.SiegeOfOrgrimmar:SecuredStockpileOfPandarenSpoils()
-	local unitTypeSrc, sourceID, spawn_uid = strsplit("-",core.sourceGUID);
-
-	if core.type == "SWING_DAMAGE" or core.type == "RANGE_DAMAGE" or core.type == "SPELL_DAMAGE" or core.type == "SPELL_PERIODIC_DAMAGE" then
-		if core.overkill > 0 then
-			if playersSide[spawn_uid] == nil then
-				if core:has_value(mantridMobs, core.destID) then
-					--print("Adding " .. core.sourceName .. " to Mantrid")
-					playersSide[spawn_uid] = "Mantrid"
-				elseif core:has_value(moguMobs, core.destID) then
-					--print("Adding " .. core.sourceName .. " to Mogu")
-					playersSide[spawn_uid] = "Mogu"
-				end
-			elseif playersSide[spawn_uid] ~= nil then
-				if core:has_value(mantridMobs, core.destID) then
-					if playersSide[spawn_uid] ~= "Mantrid" then
-						core:getAchievementFailedWithMessageAfter("(" .. core.sourceName .. ")")
-					end
-				elseif core:has_value(moguMobs, core.destID) then
-					if playersSide[spawn_uid] ~= "Mogu" then
-						core:getAchievementFailedWithMessageAfter("(" .. core.sourceName .. ")")
-					end					
-				end
-			end
-		end
-	end
+	-- local unitTypeSrc, sourceID, spawn_uid = strsplit("-",core.sourceGUID)
+	-- if core.type == "SWING_DAMAGE" or core.type == "RANGE_DAMAGE" or core.type == "SPELL_DAMAGE" or core.type == "SPELL_PERIODIC_DAMAGE" then
+	-- 	if playersSide[spawn_uid] == nil then
+	-- 		if core:has_value(mantridMobs, core.destID) then
+	-- 			--print("Adding " .. core.sourceName .. " to Mantrid")
+	-- 			playersSide[spawn_uid] = "Mantrid"
+	-- 		elseif core:has_value(moguMobs, core.destID) then
+	-- 			--print("Adding " .. core.sourceName .. " to Mogu")
+	-- 			playersSide[spawn_uid] = "Mogu"
+	-- 		end
+	-- 	elseif playersSide[spawn_uid] ~= nil then
+	-- 		if core:has_value(mantridMobs, core.destID) then
+	-- 			if playersSide[spawn_uid] ~= "Mantrid" then
+	-- 				core:getAchievementFailedWithMessageAfter("(" .. core.sourceName .. ")")
+	-- 			end
+	-- 		elseif core:has_value(moguMobs, core.destID) then
+	-- 			if playersSide[spawn_uid] ~= "Mogu" then
+	-- 				core:getAchievementFailedWithMessageAfter("(" .. core.sourceName .. ")")
+	-- 			end					
+	-- 		end
+	-- 	end
+	-- end
 end
 
 function core.SiegeOfOrgrimmar:ThokTheBloodthirsty()
