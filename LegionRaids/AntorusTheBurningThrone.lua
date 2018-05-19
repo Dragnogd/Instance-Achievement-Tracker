@@ -28,8 +28,11 @@ local felhoundsKilled = false
 ------------------------------------------------------
 local felshieldEmitterCounter = 3
 
-local tempPower = 0
-local tempPowerStart = 0
+------------------------------------------------------
+---- Argus
+------------------------------------------------------
+local newPower = 0
+local currentPower = 0
 
 function core.AntorusTheBurningThrone:FelhoundsOfSargeras()
     --Detect boss death
@@ -164,8 +167,11 @@ function core.AntorusTheBurningThrone:ClearVariables()
     ------------------------------------------------------
     felshieldEmitterCounter = 3
 
-    tempPower = 0
-    tempPowerStart = 0
+    ------------------------------------------------------
+    ---- Argus
+    ------------------------------------------------------
+    newPower = 0
+    currentPower = 0
 end
 
 function core.AntorusTheBurningThrone:InstanceCleanup()
@@ -197,29 +203,26 @@ function core.AntorusTheBurningThrone.Events:UNIT_SPELLCAST_SUCCEEDED(self, unit
 end
 
 function core.AntorusTheBurningThrone.Events:UNIT_POWER(self, unit, powerType)
-    for i = 1, 5 do
-        if UnitGUID("boss" .. i) ~= nil then
-            local unitType, _, _, _, _, destID, spawn_uid_dest = strsplit("-", UnitGUID("boss" .. i))
-            if destID == "125886" and UnitPower(unit) > 0 then
-                if timerStarted == false then
-                    timerStarted = true
-                    tempPowerStart = UnitPower(unit)
-                    print(core:getAchievement() .. " Timer Started!")
-                    C_Timer.After(5, function()
-                        if tempPower - tempPowerStart >= 80 then
-                            local powdif = tempPower - tempPowerStart
-                            core:sendMessage("SUCCESS: " .. powdif)
-                            --core:getAchievementSuccess()
+    if core.Instances.Legion.Raids.AntorusTheBurningThrone.boss11.enabled == true then
+        for i = 1, 5 do
+            if UnitGUID("boss" .. i) ~= nil then
+                local unitType, _, _, _, _, destID, spawn_uid_dest = strsplit("-", UnitGUID("boss" .. i))
+                if destID == "125886" and UnitPower(unit) > 0 then
+                    --Khaz'Goroth has gained power.
+                    --If he gains 80 power within any 5 second period then achievement is complete
+                    local currentPower = UnitPower(unit)
+
+                    --Wait 5 seconds and see if his new power is 80 more than before
+                    C_Timer.After(5, function() 
+                        local newPower = UnitPower(unit)
+
+                        if newPower - currentPower >= 80 then
+                            core:sendDebugMessage(newPower - currentPower)
+                            core:getAchievementSuccess()
                         else
-                            local powdif = tempPowerStart - tempPowerStart
-                            print("FAILED: " .. powdif)
-                            tempPowerStart = 0
-                            tempPower = 0
-                            timerStarted = false
+                            core:sendDebugMessage(newPower - currentPower)
                         end
                     end)
-                else
-                    tempPower = UnitPower(unit)
                 end
             end
         end
