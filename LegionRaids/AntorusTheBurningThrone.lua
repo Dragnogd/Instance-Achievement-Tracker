@@ -126,7 +126,7 @@ function core.AntorusTheBurningThrone:KinGaroth()
             core:sendMessage(playerName .. " Absorbed Diabolic Bomb (" .. diabolicBombCounter .. "/9)")
     
             --Achievement Failed (can be completed again during same encounter)
-            if core.achievementsCompleted[1] == true then
+            if core.achievementsCompleted[1] == true and diabolicBombCounter < 9 then
                 core:getAchievementFailedWithMessageAfter("Achievement can still be completed by waiting for more diabolic bombs")
                 core.achievementsCompleted[1] = false
             end        
