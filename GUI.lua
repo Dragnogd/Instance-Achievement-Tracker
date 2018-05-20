@@ -43,7 +43,7 @@ function Config:Toggle()
     GUI:SetShown(not GUI:IsShown())
 
     --print("Hide")
-    GameTooltip:Hide()
+    AltGameTooltip:Hide()
 end
 
 function Config:CreateButton(point, relativeFrame, relativePoint, yOffset, text)
@@ -802,49 +802,49 @@ function Achievement_OnEnter(self)
     if Config.currentTab == "Battle for Azeroth" or Config.currentTab == "BattleForAzeroth" then
         for i = 1, #BattleForAzerothContentButtons do
             if MouseIsOver(BattleForAzerothContentButtons[i]) then
-                GameTooltip:SetOwner(UIConfig, "ANCHOR_TOPRIGHT")
-                GameTooltip:SetHyperlink(GetAchievementLink(BattleForAzerothContentButtons[i].achievementID))
-                GameTooltip:Show()
+                AltGameTooltip:SetOwner(UIConfig, "ANCHOR_TOPRIGHT")
+                AltGameTooltip:SetHyperlink(GetAchievementLink(BattleForAzerothContentButtons[i].achievementID))
+                AltGameTooltip:Show()
             end
         end
     elseif Config.currentTab == "Legion" then
         for i = 1, #LegionContentButtons do
             if MouseIsOver(LegionContentButtons[i]) then
-                GameTooltip:SetOwner(UIConfig, "ANCHOR_TOPRIGHT")
-                GameTooltip:SetHyperlink(GetAchievementLink(LegionContentButtons[i].achievementID))
-                GameTooltip:Show()
+                AltGameTooltip:SetOwner(UIConfig, "ANCHOR_TOPRIGHT")
+                AltGameTooltip:SetHyperlink(GetAchievementLink(LegionContentButtons[i].achievementID))
+                AltGameTooltip:Show()
             end
         end
     elseif Config.currentTab == "Warlords of Draenor" or Config.currentTab == "WarlordsOfDraenor" then
         for i = 1, #WarlordsOfDraenorContentButtons do
             if MouseIsOver(WarlordsOfDraenorContentButtons[i]) then
-                GameTooltip:SetOwner(UIConfig, "ANCHOR_TOPRIGHT")
-                GameTooltip:SetHyperlink(GetAchievementLink(WarlordsOfDraenorContentButtons[i].achievementID))
-                GameTooltip:Show()
+                AltGameTooltip:SetOwner(UIConfig, "ANCHOR_TOPRIGHT")
+                AltGameTooltip:SetHyperlink(GetAchievementLink(WarlordsOfDraenorContentButtons[i].achievementID))
+                AltGameTooltip:Show()
             end
         end
     elseif Config.currentTab == "Mists of Pandaria" or Config.currentTab == "MistsOfPandaria" then
         for i = 1, #MistsOfPandariaContentButtons do
             if MouseIsOver(MistsOfPandariaContentButtons[i]) then
-                GameTooltip:SetOwner(UIConfig, "ANCHOR_TOPRIGHT")
-                GameTooltip:SetHyperlink(GetAchievementLink(MistsOfPandariaContentButtons[i].achievementID))
-                GameTooltip:Show()
+                AltGameTooltip:SetOwner(UIConfig, "ANCHOR_TOPRIGHT")
+                AltGameTooltip:SetHyperlink(GetAchievementLink(MistsOfPandariaContentButtons[i].achievementID))
+                AltGameTooltip:Show()
             end
         end
     elseif Config.currentTab == "Cataclysm" then
         for i = 1, #CataclysmContentButtons do
             if MouseIsOver(CataclysmContentButtons[i]) then
-                GameTooltip:SetOwner(UIConfig, "ANCHOR_TOPRIGHT")
-                GameTooltip:SetHyperlink(GetAchievementLink(CataclysmContentButtons[i].achievementID))
-                GameTooltip:Show()
+                AltGameTooltip:SetOwner(UIConfig, "ANCHOR_TOPRIGHT")
+                AltGameTooltip:SetHyperlink(GetAchievementLink(CataclysmContentButtons[i].achievementID))
+                AltGameTooltip:Show()
             end
         end
     elseif Config.currentTab == "Wrath of the Lich King" or Config.currentTab == "WrathOfTheLichKing" then
         for i = 1, #WrathOfTheLichKingContentButtons do
             if MouseIsOver(WrathOfTheLichKingContentButtons[i]) then
-                GameTooltip:SetOwner(UIConfig, "ANCHOR_TOPRIGHT")
-                GameTooltip:SetHyperlink(GetAchievementLink(WrathOfTheLichKingContentButtons[i].achievementID))
-                GameTooltip:Show()
+                AltGameTooltip:SetOwner(UIConfig, "ANCHOR_TOPRIGHT")
+                AltGameTooltip:SetHyperlink(GetAchievementLink(WrathOfTheLichKingContentButtons[i].achievementID))
+                AltGameTooltip:Show()
             end
         end
     end  

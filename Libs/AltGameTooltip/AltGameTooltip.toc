@@ -1,0 +1,9 @@
+## Interface: 70300
+## Title: AltGameTooltip
+## Notes: A library for avoiding errors when GameTooltip is forbidden.
+## Version: 1
+## Author: foxlit
+## X-Website: https://www.townlong-yak.com/altgametooltip/
+## X-License: MIT
+## X-Copyright-Year: 2018
+AltGameTooltip.xml
