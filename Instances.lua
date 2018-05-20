@@ -241,6 +241,16 @@ core.Instances = {
                     track = function() core.TheUnderrot:SporecallerZancha() end,
 					partial = false,
                 },
+                boss3 = {
+                    name = "Unbound Abomination",
+                    bossIDs = {},
+                    achievement = 12499,
+                    players = {"(Enter instance to start scanning)"},
+                    tactics = "",
+                    enabled = true,
+                    track = function() core.TheUnderrot:UnboundAbomination() end,
+					partial = false,
+                },                
             },
             TolDagor = {
                 name = "Tol Dagor",

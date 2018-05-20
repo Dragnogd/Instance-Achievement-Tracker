@@ -19,3 +19,9 @@ function core.TheUnderrot:ElderLeaxa()
         core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")")
     end
 end
+
+function core.TheUnderrot:UnboundAbomination()
+    if core.type == "UNIT_DIED" and core.destID == "137458" then
+        core:getAchievementFailed()
+    end
+end
