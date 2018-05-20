@@ -1195,98 +1195,183 @@ end
 
 --Used to monitor the combat log so we can track achievements. The variables change depending on the information being recieved from the combat log
 function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
+	if core.tocVersion == 80000 then
+		core.timestamp, core.type, core.hideCaster, core.sourceGUID, core.sourceName, core.sourceFlags, core.sourceRaidFlags, core.destGUID, core.destName, core.destFlags, core.destRaidFlags = CombatLogGetCurrentEventInfo()
+	else
+		core.timeStamp, core.type, core.hideCaster, core.sourceGUID, core.sourceName, core.sourceFlags, core.sourceRaidFlags, core.destGUID, core.destName, core.destFlags, core.destRaidFlags = ...
+	end
+
+	if core.tocVersion == 80000 then
+		if string.match(core.type, "RANGE_") or string.match(core.type, "SPELL_") or string.match(core.type, "SPELL_PERIODIC_") or string.match(core.type, "SPELL_BUILDING_") then
+			core.spellId, core.spellName, core.spellSchool = select(12, CombatLogGetCurrentEventInfo())
 	
-
-	--All Events
-	core.timeStamp, core.type, core.hideCaster, core.sourceGUID, core.sourceName, core.sourceFlags, core.sourceRaidFlags, core.destGUID, core.destName, core.destFlags, core.destRaidFlags = ...
-
-	--core.all = ...
-
-	--core:sendDebugMessage(core.type .. " " .. core.sourceName .. " " .. core.destName)
-
-	if string.match(core.type, "RANGE_") or string.match(core.type, "SPELL_") or string.match(core.type, "SPELL_PERIODIC_") or string.match(core.type, "SPELL_BUILDING_") then
-		core.spellId, core.spellName, core.spellSchool = select(12, ...)
-
-		if string.match(core.type, "_DAMAGE") then
-			core.amount, core.overkill, core.school, core.resisted, core.blocked, core.absorbed, core.critical, core.glancing, core.crushing = select(15, ...)
-		elseif string.match(core.type, "_MISSED") then
-			core.missType, core.isOffHand, core.amountMissed = select(15, ...)
-		elseif string.match(core.type, "_HEAL") then
-			core.amount, core.overhealing, core.absorbed, core.critical = select(15, ...)
-		elseif string.match(core.type, "_ENERGIZE") then
-			core.amount, core.powerType = select(15, ...)
-		elseif string.match(core.type, "_DRAIN") or string.match(core.type, "_LEECH") then
-			core.amount, core.powerType, core.extraAmount = select(15, ...)
-		elseif string.match(core.type, "_INTERRUPT") or string.match(core.type, "_DISPEL_FAILED") then
-			core.extraSpellId, core.extraSpellName,	core.extraSchool = select(15, ...)
-		elseif string.match(core.type, "_DISPEL") or string.match(core.type, "_STOLEN") then
-			core.extraSpellId, core.extraSpellName, core.extraSchool, core.auraType = select(15, ...)
-		elseif string.match(core.type, "_EXTRA_ATTACKS") then
-			core.amount = select(15, ...)
-		elseif string.match(core.type, "_AURA_APPLIED") or string.match(core.type, "_AURA_REMOVED") or string.match(core.type, "_AURA_APPLIED_DOSE") or string.match(core.type, "_AURA_REMOVED_DOSE") or string.match(core.type, "_AURA_REFRESH") then
-			core.auraType, core.amount = select(15, ...)
-		elseif string.match(core.type, "_AURA_BROKEN") then
-			core.auraType = select(15, ...)
-		elseif string.match(core.type, "_AURA_BROKEN_SPELL") then
-			core.extraSpellId, core.extraSpellName, core.extraSchool, core.auraType = select(15, ...)
-		elseif string.match(core.type, "_CAST_FAILED") then
-			core.failedType = select(15, ...)
-		elseif string.match(core.type, "_ABSORBED") then
-			core.addDestGUID, core.addDestName, core.addDestFlags, core.addDestRaidFlags, core.addSpellId, core.addSpellName, core.addSpellSchool = select(15, ...)
+			if string.match(core.type, "_DAMAGE") then
+				core.amount, core.overkill, core.school, core.resisted, core.blocked, core.absorbed, core.critical, core.glancing, core.crushing = select(15, CombatLogGetCurrentEventInfo())
+			elseif string.match(core.type, "_MISSED") then
+				core.missType, core.isOffHand, core.amountMissed = select(15, CombatLogGetCurrentEventInfo())
+			elseif string.match(core.type, "_HEAL") then
+				core.amount, core.overhealing, core.absorbed, core.critical = select(15, CombatLogGetCurrentEventInfo())
+			elseif string.match(core.type, "_ENERGIZE") then
+				core.amount, core.powerType = select(15, CombatLogGetCurrentEventInfo())
+			elseif string.match(core.type, "_DRAIN") or string.match(core.type, "_LEECH") then
+				core.amount, core.powerType, core.extraAmount = select(15, CombatLogGetCurrentEventInfo())
+			elseif string.match(core.type, "_INTERRUPT") or string.match(core.type, "_DISPEL_FAILED") then
+				core.extraSpellId, core.extraSpellName,	core.extraSchool = select(15, CombatLogGetCurrentEventInfo())
+			elseif string.match(core.type, "_DISPEL") or string.match(core.type, "_STOLEN") then
+				core.extraSpellId, core.extraSpellName, core.extraSchool, core.auraType = select(15, CombatLogGetCurrentEventInfo())
+			elseif string.match(core.type, "_EXTRA_ATTACKS") then
+				core.amount = select(15, CombatLogGetCurrentEventInfo())
+			elseif string.match(core.type, "_AURA_APPLIED") or string.match(core.type, "_AURA_REMOVED") or string.match(core.type, "_AURA_APPLIED_DOSE") or string.match(core.type, "_AURA_REMOVED_DOSE") or string.match(core.type, "_AURA_REFRESH") then
+				core.auraType, core.amount = select(15, CombatLogGetCurrentEventInfo())
+			elseif string.match(core.type, "_AURA_BROKEN") then
+				core.auraType = select(15, CombatLogGetCurrentEventInfo())
+			elseif string.match(core.type, "_AURA_BROKEN_SPELL") then
+				core.extraSpellId, core.extraSpellName, core.extraSchool, core.auraType = select(15, CombatLogGetCurrentEventInfo())
+			elseif string.match(core.type, "_CAST_FAILED") then
+				core.failedType = select(15, CombatLogGetCurrentEventInfo())
+			elseif string.match(core.type, "_ABSORBED") then
+				core.addDestGUID, core.addDestName, core.addDestFlags, core.addDestRaidFlags, core.addSpellId, core.addSpellName, core.addSpellSchool = select(15, CombatLogGetCurrentEventInfo())
+			end
+		elseif string.match(core.type, "SWING_") then
+			if string.match(core.type, "_DAMAGE") then
+				core.amount, core.overkill, core.school, core.resisted, core.blocked, core.absorbed, core.critical, core.glancing, core.crushing = select(12, CombatLogGetCurrentEventInfo())
+			elseif string.match(core.type, "_MISSED") then
+				core.missType, core.isOffHand, core.amountMissed = select(12, CombatLogGetCurrentEventInfo())
+			elseif string.match(core.type, "_HEAL") then
+				core.amount, core.overhealing, core.absorbed, core.critical = select(12, CombatLogGetCurrentEventInfo())
+			elseif string.match(core.type, "_ENERGIZE") then
+				core.amount, core.powerType = select(12, CombatLogGetCurrentEventInfo())
+			elseif string.match(core.type, "_DRAIN") or string.match(core.type, "_LEECH") then
+				core.amount, core.powerType, core.extraAmount = select(12, CombatLogGetCurrentEventInfo())
+			elseif string.match(core.type, "_INTERRUPT") or string.match(core.type, "_DISPEL_FAILED") then
+				core.extraSpellId, core.extraSpellName,	core.extraSchool = select(12, CombatLogGetCurrentEventInfo())
+			elseif string.match(core.type, "_DISPEL") or string.match(core.type, "_STOLEN") then
+				core.extraSpellId, core.extraSpellName, core.extraSchool, core.auraType = select(12, CombatLogGetCurrentEventInfo())
+			elseif string.match(core.type, "_EXTRA_ATTACKS") then
+				core.amount = select(12, CombatLogGetCurrentEventInfo())
+			elseif string.match(core.type, "_AURA_APPLIED") or string.match(core.type, "_AURA_REMOVED") or string.match(core.type, "_AURA_APPLIED_DOSE") or string.match(core.type, "_AURA_REMOVED_DOSE") or string.match(core.type, "_AURA_REFRESH") then
+				core.auraType, core.amount = select(12, CombatLogGetCurrentEventInfo())
+			elseif string.match(core.type, "_AURA_BROKEN") then
+				core.auraType = select(12, CombatLogGetCurrentEventInfo())
+			elseif string.match(core.type, "_AURA_BROKEN_SPELL") then
+				core.extraSpellId, core.extraSpellName, core.extraSchool, core.auraType = select(12, CombatLogGetCurrentEventInfo())
+			elseif string.match(core.type, "_CAST_FAILED") then
+				core.failedType = select(12, CombatLogGetCurrentEventInfo())
+			end
+		elseif string.match(core.type, "ENVIRONMENTAL_") then
+			core.environmentalType = select(12, ...)
+	
+			if string.match(core.type, "_DAMAGE") then
+				core.amount, core.overkill, core.school, core.resisted, core.blocked, core.absorbed, core.critical, core.glancing, core.crushing = select(13, ...)
+			elseif string.match(core.type, "_MISSED") then
+				core.missType, core.isOffHand, core.amountMissed = select(13, ...)
+			elseif string.match(core.type, "_HEAL") then
+				core.amount, core.overhealing, core.absorbed, core.critical = select(13, ...)
+			elseif string.match(core.type, "_ENERGIZE") then
+				core.amount, core.powerType = select(13, ...)
+			elseif string.match(core.type, "_DRAIN") or string.match(core.type, "_LEECH") then
+				core.amount, core.powerType, core.extraAmount = select(13, ...)
+			elseif string.match(core.type, "_INTERRUPT") or string.match(core.type, "_DISPEL_FAILED") then
+				core.extraSpellId, core.extraSpellName,	core.extraSchool = select(13, ...)
+			elseif string.match(core.type, "_DISPEL") or string.match(core.type, "_STOLEN") then
+				core.extraSpellId, core.extraSpellName, core.extraSchool, core.auraType = select(13, ...)
+			elseif string.match(core.type, "_EXTRA_ATTACKS") then
+				core.amount = select(13, ...)
+			elseif string.match(core.type, "_AURA_APPLIED") or string.match(core.type, "_AURA_REMOVED") or string.match(core.type, "_AURA_APPLIED_DOSE") or string.match(core.type, "_AURA_REMOVED_DOSE") or string.match(core.type, "_AURA_REFRESH") then
+				core.auraType, core.amount = select(13, ...)
+			elseif string.match(core.type, "_AURA_BROKEN") then
+				core.auraType = select(13, ...)
+			elseif string.match(core.type, "_AURA_BROKEN_SPELL") then
+				core.extraSpellId, core.extraSpellName, core.extraSchool, core.auraType = select(13, ...)
+			elseif string.match(core.type, "_CAST_FAILED") then
+				core.failedType = select(13, ...)
+			end
 		end
-	elseif string.match(core.type, "SWING_") then
-		if string.match(core.type, "_DAMAGE") then
-			core.amount, core.overkill, core.school, core.resisted, core.blocked, core.absorbed, core.critical, core.glancing, core.crushing = select(12, ...)
-		elseif string.match(core.type, "_MISSED") then
-			core.missType, core.isOffHand, core.amountMissed = select(12, ...)
-		elseif string.match(core.type, "_HEAL") then
-			core.amount, core.overhealing, core.absorbed, core.critical = select(12, ...)
-		elseif string.match(core.type, "_ENERGIZE") then
-			core.amount, core.powerType = select(12, ...)
-		elseif string.match(core.type, "_DRAIN") or string.match(core.type, "_LEECH") then
-			core.amount, core.powerType, core.extraAmount = select(12, ...)
-		elseif string.match(core.type, "_INTERRUPT") or string.match(core.type, "_DISPEL_FAILED") then
-			core.extraSpellId, core.extraSpellName,	core.extraSchool = select(12, ...)
-		elseif string.match(core.type, "_DISPEL") or string.match(core.type, "_STOLEN") then
-			core.extraSpellId, core.extraSpellName, core.extraSchool, core.auraType = select(12, ...)
-		elseif string.match(core.type, "_EXTRA_ATTACKS") then
-			core.amount = select(12, ...)
-		elseif string.match(core.type, "_AURA_APPLIED") or string.match(core.type, "_AURA_REMOVED") or string.match(core.type, "_AURA_APPLIED_DOSE") or string.match(core.type, "_AURA_REMOVED_DOSE") or string.match(core.type, "_AURA_REFRESH") then
-			core.auraType, core.amount = select(12, ...)
-		elseif string.match(core.type, "_AURA_BROKEN") then
-			core.auraType = select(12, ...)
-		elseif string.match(core.type, "_AURA_BROKEN_SPELL") then
-			core.extraSpellId, core.extraSpellName, core.extraSchool, core.auraType = select(12, ...)
-		elseif string.match(core.type, "_CAST_FAILED") then
-			core.failedType = select(12, ...)
-		end
-	elseif string.match(core.type, "ENVIRONMENTAL_") then
-		core.environmentalType = select(12, ...)
-
-		if string.match(core.type, "_DAMAGE") then
-			core.amount, core.overkill, core.school, core.resisted, core.blocked, core.absorbed, core.critical, core.glancing, core.crushing = select(13, ...)
-		elseif string.match(core.type, "_MISSED") then
-			core.missType, core.isOffHand, core.amountMissed = select(13, ...)
-		elseif string.match(core.type, "_HEAL") then
-			core.amount, core.overhealing, core.absorbed, core.critical = select(13, ...)
-		elseif string.match(core.type, "_ENERGIZE") then
-			core.amount, core.powerType = select(13, ...)
-		elseif string.match(core.type, "_DRAIN") or string.match(core.type, "_LEECH") then
-			core.amount, core.powerType, core.extraAmount = select(13, ...)
-		elseif string.match(core.type, "_INTERRUPT") or string.match(core.type, "_DISPEL_FAILED") then
-			core.extraSpellId, core.extraSpellName,	core.extraSchool = select(13, ...)
-		elseif string.match(core.type, "_DISPEL") or string.match(core.type, "_STOLEN") then
-			core.extraSpellId, core.extraSpellName, core.extraSchool, core.auraType = select(13, ...)
-		elseif string.match(core.type, "_EXTRA_ATTACKS") then
-			core.amount = select(13, ...)
-		elseif string.match(core.type, "_AURA_APPLIED") or string.match(core.type, "_AURA_REMOVED") or string.match(core.type, "_AURA_APPLIED_DOSE") or string.match(core.type, "_AURA_REMOVED_DOSE") or string.match(core.type, "_AURA_REFRESH") then
-			core.auraType, core.amount = select(13, ...)
-		elseif string.match(core.type, "_AURA_BROKEN") then
-			core.auraType = select(13, ...)
-		elseif string.match(core.type, "_AURA_BROKEN_SPELL") then
-			core.extraSpellId, core.extraSpellName, core.extraSchool, core.auraType = select(13, ...)
-		elseif string.match(core.type, "_CAST_FAILED") then
-			core.failedType = select(13, ...)
+	else
+		if string.match(core.type, "RANGE_") or string.match(core.type, "SPELL_") or string.match(core.type, "SPELL_PERIODIC_") or string.match(core.type, "SPELL_BUILDING_") then
+			core.spellId, core.spellName, core.spellSchool = select(12, ...)
+	
+			if string.match(core.type, "_DAMAGE") then
+				core.amount, core.overkill, core.school, core.resisted, core.blocked, core.absorbed, core.critical, core.glancing, core.crushing = select(15, ...)
+			elseif string.match(core.type, "_MISSED") then
+				core.missType, core.isOffHand, core.amountMissed = select(15, ...)
+			elseif string.match(core.type, "_HEAL") then
+				core.amount, core.overhealing, core.absorbed, core.critical = select(15, ...)
+			elseif string.match(core.type, "_ENERGIZE") then
+				core.amount, core.powerType = select(15, ...)
+			elseif string.match(core.type, "_DRAIN") or string.match(core.type, "_LEECH") then
+				core.amount, core.powerType, core.extraAmount = select(15, ...)
+			elseif string.match(core.type, "_INTERRUPT") or string.match(core.type, "_DISPEL_FAILED") then
+				core.extraSpellId, core.extraSpellName,	core.extraSchool = select(15, ...)
+			elseif string.match(core.type, "_DISPEL") or string.match(core.type, "_STOLEN") then
+				core.extraSpellId, core.extraSpellName, core.extraSchool, core.auraType = select(15, ...)
+			elseif string.match(core.type, "_EXTRA_ATTACKS") then
+				core.amount = select(15, ...)
+			elseif string.match(core.type, "_AURA_APPLIED") or string.match(core.type, "_AURA_REMOVED") or string.match(core.type, "_AURA_APPLIED_DOSE") or string.match(core.type, "_AURA_REMOVED_DOSE") or string.match(core.type, "_AURA_REFRESH") then
+				core.auraType, core.amount = select(15, ...)
+			elseif string.match(core.type, "_AURA_BROKEN") then
+				core.auraType = select(15, ...)
+			elseif string.match(core.type, "_AURA_BROKEN_SPELL") then
+				core.extraSpellId, core.extraSpellName, core.extraSchool, core.auraType = select(15, ...)
+			elseif string.match(core.type, "_CAST_FAILED") then
+				core.failedType = select(15, ...)
+			elseif string.match(core.type, "_ABSORBED") then
+				core.addDestGUID, core.addDestName, core.addDestFlags, core.addDestRaidFlags, core.addSpellId, core.addSpellName, core.addSpellSchool = select(15, ...)
+			end
+		elseif string.match(core.type, "SWING_") then
+			if string.match(core.type, "_DAMAGE") then
+				core.amount, core.overkill, core.school, core.resisted, core.blocked, core.absorbed, core.critical, core.glancing, core.crushing = select(12, ...)
+			elseif string.match(core.type, "_MISSED") then
+				core.missType, core.isOffHand, core.amountMissed = select(12, ...)
+			elseif string.match(core.type, "_HEAL") then
+				core.amount, core.overhealing, core.absorbed, core.critical = select(12, ...)
+			elseif string.match(core.type, "_ENERGIZE") then
+				core.amount, core.powerType = select(12, ...)
+			elseif string.match(core.type, "_DRAIN") or string.match(core.type, "_LEECH") then
+				core.amount, core.powerType, core.extraAmount = select(12, ...)
+			elseif string.match(core.type, "_INTERRUPT") or string.match(core.type, "_DISPEL_FAILED") then
+				core.extraSpellId, core.extraSpellName,	core.extraSchool = select(12, ...)
+			elseif string.match(core.type, "_DISPEL") or string.match(core.type, "_STOLEN") then
+				core.extraSpellId, core.extraSpellName, core.extraSchool, core.auraType = select(12, ...)
+			elseif string.match(core.type, "_EXTRA_ATTACKS") then
+				core.amount = select(12, ...)
+			elseif string.match(core.type, "_AURA_APPLIED") or string.match(core.type, "_AURA_REMOVED") or string.match(core.type, "_AURA_APPLIED_DOSE") or string.match(core.type, "_AURA_REMOVED_DOSE") or string.match(core.type, "_AURA_REFRESH") then
+				core.auraType, core.amount = select(12, ...)
+			elseif string.match(core.type, "_AURA_BROKEN") then
+				core.auraType = select(12, ...)
+			elseif string.match(core.type, "_AURA_BROKEN_SPELL") then
+				core.extraSpellId, core.extraSpellName, core.extraSchool, core.auraType = select(12, ...)
+			elseif string.match(core.type, "_CAST_FAILED") then
+				core.failedType = select(12, ...)
+			end
+		elseif string.match(core.type, "ENVIRONMENTAL_") then
+			core.environmentalType = select(12, ...)
+	
+			if string.match(core.type, "_DAMAGE") then
+				core.amount, core.overkill, core.school, core.resisted, core.blocked, core.absorbed, core.critical, core.glancing, core.crushing = select(13, ...)
+			elseif string.match(core.type, "_MISSED") then
+				core.missType, core.isOffHand, core.amountMissed = select(13, ...)
+			elseif string.match(core.type, "_HEAL") then
+				core.amount, core.overhealing, core.absorbed, core.critical = select(13, ...)
+			elseif string.match(core.type, "_ENERGIZE") then
+				core.amount, core.powerType = select(13, ...)
+			elseif string.match(core.type, "_DRAIN") or string.match(core.type, "_LEECH") then
+				core.amount, core.powerType, core.extraAmount = select(13, ...)
+			elseif string.match(core.type, "_INTERRUPT") or string.match(core.type, "_DISPEL_FAILED") then
+				core.extraSpellId, core.extraSpellName,	core.extraSchool = select(13, ...)
+			elseif string.match(core.type, "_DISPEL") or string.match(core.type, "_STOLEN") then
+				core.extraSpellId, core.extraSpellName, core.extraSchool, core.auraType = select(13, ...)
+			elseif string.match(core.type, "_EXTRA_ATTACKS") then
+				core.amount = select(13, ...)
+			elseif string.match(core.type, "_AURA_APPLIED") or string.match(core.type, "_AURA_REMOVED") or string.match(core.type, "_AURA_APPLIED_DOSE") or string.match(core.type, "_AURA_REMOVED_DOSE") or string.match(core.type, "_AURA_REFRESH") then
+				core.auraType, core.amount = select(13, ...)
+			elseif string.match(core.type, "_AURA_BROKEN") then
+				core.auraType = select(13, ...)
+			elseif string.match(core.type, "_AURA_BROKEN_SPELL") then
+				core.extraSpellId, core.extraSpellName, core.extraSchool, core.auraType = select(13, ...)
+			elseif string.match(core.type, "_CAST_FAILED") then
+				core.failedType = select(13, ...)
+			end
 		end
 	end
 
