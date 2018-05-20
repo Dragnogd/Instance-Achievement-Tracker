@@ -65,7 +65,7 @@ function core.ThroneOfThunder:Tortos()
 				if kickShellCounter >= 5 then
 					core:getAchievementSuccess()
 				else
-					core:getAchievementFailedWithMessageAfter("(This achievement can be repeated)")
+					core:sendMessage(core:getAchievement() .. "FAILED! (" .. kickShellCounter .. "/5) Killed in time. This acheivement can be repeated")
 					kickShellCounter = 0						
 				end
 				timerStarted = false
