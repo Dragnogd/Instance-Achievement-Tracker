@@ -89,28 +89,15 @@ core.Instances = {
 					partial = false,
                 },
             },
-            Zandalar = {
-                name = "Zandalar",
+            Azeroth = {
+                name = "Azeroth",
                 boss1 = {
-                    name = "",
+                    name = "Temp",
                     bossIDs = {},
-                    achievement = 10555,
+                    achievement = 12937,
                     players = {"(Enter instance to start scanning)"},
                     tactics = "",
-                    enabled = true,
-                    track = nil,
-					partial = false,
-                },
-            },
-            KulTiras = {
-                name = "Kul Tiras",
-                boss1 = {
-                    name = "",
-                    bossIDs = {},
-                    achievement = 10555,
-                    players = {"(Enter instance to start scanning)"},
-                    tactics = "",
-                    enabled = true,
+                    enabled = false,
                     track = nil,
 					partial = false,
                 },
