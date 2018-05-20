@@ -1163,7 +1163,11 @@ function events:CHAT_MSG_ADDON(self, prefix, message, channel, sender)
 		--Other addon has lower requirements so ask them to demote themself
 		if demotionRequired == true then
 			core:sendDebugMessage("Asking " .. sender .. " to demote themselves")
-			SendAddonMessage("Whizzey", sender .. "-demote", "RAID")
+			if core.tocVersion == 80000 then
+				C_ChatInfo.SendAddonMessage("Whizzey", sender .. "-demote", "RAID")
+			else	
+				SendAddonMessage("Whizzey", sender .. "-demote", "RAID")
+			end
 		end
 	end
 end
@@ -1597,7 +1601,11 @@ function core:sendMessage(message)
 					--Broadcast addon info to decide whether it should be the master addon or not
 					masterAddon = true
 					local name, realm = UnitName("Player")
-					SendAddonMessage("Whizzey", "info," .. tostring(addonID) .. "," .. name .. "," .. tostring(masterAddon) .. "," .. tostring(playerRank) .. "," .. tostring(core.Config.majorVersion) .. "," .. tostring(core.Config.minorVersion), "RAID")
+					if core.tocVersion == 80000 then
+						C_ChatInfo.SendAddonMessage("Whizzey", "info," .. tostring(addonID) .. "," .. name .. "," .. tostring(masterAddon) .. "," .. tostring(playerRank) .. "," .. tostring(core.Config.majorVersion) .. "," .. tostring(core.Config.minorVersion), "RAID")
+					else	
+						SendAddonMessage("Whizzey", "info," .. tostring(addonID) .. "," .. name .. "," .. tostring(masterAddon) .. "," .. tostring(playerRank) .. "," .. tostring(core.Config.majorVersion) .. "," .. tostring(core.Config.minorVersion), "RAID")
+					end
 
 					C_Timer.After(3, function()
 						if masterAddon == true then
