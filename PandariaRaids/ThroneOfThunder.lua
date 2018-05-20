@@ -92,11 +92,11 @@ function core.ThroneOfThunder:Megaera()
 	if frozenHeadKilled == true and flamingHeadKilled == true and venmousHeadKilled == true then
 		core:getAchievementFailed()
 	elseif frozenHeadKilled == true and flamingHeadKilled == true then
-		core:getAchievementSuccessWithCustomMessage("'Venomous part of'", "will be completed once boss is killed")
+		core:getAchievementSuccessWithCustomMessage("'Venomous part of'", "will be completed once encounter is completed")
 	elseif venmousHeadKilled == true and flamingHeadKilled == true then
-		core:getAchievementSuccessWithCustomMessage("'Frozen part of'", "will be completed once boss is killed")
+		core:getAchievementSuccessWithCustomMessage("'Frozen part of'", "will be completed once encounter is completed")
 	elseif frozenHeadKilled == true and venmousHeadKilled == true then	
-		core:getAchievementSuccessWithCustomMessage("'Flaming part of'", "will be completed once boss is killed")
+		core:getAchievementSuccessWithCustomMessage("'Flaming part of'", "will be completed once encounter is completed")
 	end
 end
 
