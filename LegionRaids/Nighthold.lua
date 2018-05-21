@@ -142,7 +142,7 @@ function core.TheNighthold:StarAugurEtraeus()
 end
 
 function core.TheNighthold:HighBotanistTelarn()
-	if core.type == "UNIT_DIED" then
+	if core.type == "UNIT_DIED" and core.destID ~= nil then
         local name, realm = strsplit("-", core.destID)
         if UnitIsPlayer(name) then
             --If the player was holding a parasite then reduce counter by 1
