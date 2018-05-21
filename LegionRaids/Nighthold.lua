@@ -29,6 +29,7 @@ local wellTraveledNetherElementalFound = false
 ---- Krosus
 ------------------------------------------------------
 local burningEmbersKilled = 0
+local burningEmbersUID = {}
 
 ------------------------------------------------------
 ---- Gul'dan
@@ -198,25 +199,24 @@ function core.TheNighthold:HighBotanistTelarn()
 	end
 end
 
-local burningEmbersUID = {}
-
 function core.TheNighthold:Krosus()
-    if core.overkill > 0 and core.destID == "104262" and core.destName ~= nil then
-        core:sendDebugMessage("Burning Ember Killed by (2): " .. core.destName)
-    else
-        --core:sendDebugMessage("Burning Ember Killed By Water")        
+    --If add has been killed by overkill then assume the add was killed by a player
+    if core.destID == "104262" and core.overkill > 0 then
+        burningEmbersUID[core.spawn_uid_dest] = core.spawn_uid_dest
     end
 
+    --One a Burning Ember has died, check whether it was killed by a player (overkill) or by the water
     if core.type == "UNIT_DIED" and core.destID == "104262" then
-        if core.destName ~= nil then
-            core:sendDebugMessage("Burning Ember Killed By: " .. core.destName)
+        if burningEmbersUID[core.spawn_uid_dest] == nil then
+            burningEmbersKilled = burningEmbersKilled + 1
+            core:sendMessage(core:getAchievement() .. " Burning Embers Killed (" .. burningEmbersKilled .. "/15)")
         else
-            --core:sendDebugMessage("Burning Ember Killed By Water")
+            core:sendDebugMessage(core.spawn_uid_dest .. " : Burning Ember Killed By Player")
         end
-        --If burning embers were not killed by a player than increment counter by 1
-        burningEmbersKilled = burningEmbersKilled + 1
-        --print(burningEmbersKilled)
-        core:sendMessageDelay(core:getAchievement() .. " Burning Embers Killed (" .. burningEmbersKilled .. "/15)", burningEmbersKilled, 5)
+
+        if burningEmbersKilled >= 15 then
+            core:getAchievementSuccess()
+        end
     end
 end
 
