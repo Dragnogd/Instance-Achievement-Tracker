@@ -28,12 +28,6 @@ local felhoundsKilled = false
 ------------------------------------------------------
 local felshieldEmitterCounter = 3
 
-------------------------------------------------------
----- Argus
-------------------------------------------------------
-local newPower = 0
-local currentPower = 0
-
 function core.AntorusTheBurningThrone:FelhoundsOfSargeras()
     --Detect boss death
     if core.type == "UNIT_DIED" and (core.destID == "122477" or core.destID == "122135") then
@@ -167,12 +161,6 @@ function core.AntorusTheBurningThrone:ClearVariables()
     ---- Antoran High Command
     ------------------------------------------------------
     felshieldEmitterCounter = 3
-
-    ------------------------------------------------------
-    ---- Argus
-    ------------------------------------------------------
-    newPower = 0
-    currentPower = 0
 end
 
 function core.AntorusTheBurningThrone:InstanceCleanup()
@@ -205,26 +193,23 @@ end
 
 function core.AntorusTheBurningThrone.Events:UNIT_POWER(self, unit, powerType)
     if core.Instances.Legion.Raids.AntorusTheBurningThrone.boss11.enabled == true then
-        for i = 1, 5 do
-            if UnitGUID("boss" .. i) ~= nil then
-                local unitType, _, _, _, _, destID, spawn_uid_dest = strsplit("-", UnitGUID("boss" .. i))
-                if destID == "125886" and UnitPower(unit) > 0 then
-                    --Khaz'Goroth has gained power.
-                    --If he gains 80 power within any 5 second period then achievement is complete
-                    local currentPower = UnitPower(unit)
+        if UnitGUID(unit) ~= nil then
+            local unitType, _, _, _, _, destID, spawn_uid_dest = strsplit("-", UnitGUID(unit))
+            if destID == "125886" and UnitPower(unit) > 0 then
+                print(UnitPower(unit))
 
-                    --Wait 5 seconds and see if his new power is 80 more than before
-                    C_Timer.After(5, function() 
-                        local newPower = UnitPower(unit)
+                --Save current power locally
+                local currentPower = UnitPower(unit)
 
-                        if newPower - currentPower >= 80 then
-                            core:sendDebugMessage(newPower - currentPower)
-                            core:getAchievementSuccess()
-                        else
-                            core:sendDebugMessage(newPower - currentPower)
-                        end
-                    end)
-                end
+                --Wait 5 seconds to see if Khaz'Goroth has gained 80 power within 5 seconds
+                C_Timer.After(5, function() 
+                    local newPower = UnitPower(unit)
+
+                    if (newPower - currentPower) >= 80 then
+                        core:getAchievementSuccess()
+                        print("Boss gained: " .. (newPower - currentPower) .. " energy")
+                    end
+                end)
             end
         end
     end

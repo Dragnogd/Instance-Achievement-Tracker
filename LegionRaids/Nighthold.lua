@@ -279,6 +279,7 @@ function core.TheNighthold:ClearVariables()
     ---- Krosus
     ------------------------------------------------------
     burningEmbersKilled = 0
+    burningEmbersUID = {}
 
     ------------------------------------------------------
     ---- Gul'dan
