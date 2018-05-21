@@ -205,7 +205,7 @@ function core.TheNighthold:Krosus()
         burningEmbersUID[core.spawn_uid_dest] = core.spawn_uid_dest
     end
 
-    --One a Burning Ember has died, check whether it was killed by a player (overkill) or by the water
+    --One a Burning Ember has died, check whether it was killed by a player (overkill) or by the water 
     if core.type == "UNIT_DIED" and core.destID == "104262" then
         if burningEmbersUID[core.spawn_uid_dest] == nil then
             burningEmbersKilled = burningEmbersKilled + 1
