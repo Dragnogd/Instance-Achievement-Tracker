@@ -77,6 +77,7 @@ end
 
 function core.TrialOfValor:InstanceCleanup()
     core.TrialOfValor.Events:UnregisterEvent("UNIT_AURA")
+    odynKilled = false
 end
 
 function core.TrialOfValor:InitialSetup()
