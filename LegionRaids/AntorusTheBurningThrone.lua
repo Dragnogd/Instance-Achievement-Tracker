@@ -28,6 +28,11 @@ local felhoundsKilled = false
 ------------------------------------------------------
 local felshieldEmitterCounter = 3
 
+------------------------------------------------------
+---- Argus
+------------------------------------------------------
+local highestEnergy = 0
+
 function core.AntorusTheBurningThrone:FelhoundsOfSargeras()
     --Detect boss death
     if core.type == "UNIT_DIED" and (core.destID == "122477" or core.destID == "122135") then
@@ -161,6 +166,15 @@ function core.AntorusTheBurningThrone:ClearVariables()
     ---- Antoran High Command
     ------------------------------------------------------
     felshieldEmitterCounter = 3
+
+    ------------------------------------------------------
+    ---- Argus
+    ------------------------------------------------------
+    --Output best attempt to chat
+    if highestEnergy > 0 then
+        core:sendMessage(GetAchievementLink(12257) .. " Best Attempt last kill (" .. highestEnergy .. "/80). Khaz'Goroth must gain 80 energy within 5 seconds to complete this achievement")
+    end
+    highestEnergy = 0
 end
 
 function core.AntorusTheBurningThrone:InstanceCleanup()
@@ -208,6 +222,11 @@ function core.AntorusTheBurningThrone.Events:UNIT_POWER(self, unit, powerType)
                     if (newPower - currentPower) >= 80 then
                         core:getAchievementSuccess()
                         print("Boss gained: " .. (newPower - currentPower) .. " energy")
+                    end
+
+                    --Update highest energy if higher than current attempt. This is so we can output at the end of the fight how well the group did
+                    if (newPower - currentPower) > highestEnergy then
+                        highestEnergy = newPower - currentPower
                     end
                 end)
             end
