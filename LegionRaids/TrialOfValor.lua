@@ -106,28 +106,30 @@ core.TrialOfValor.Events:SetScript("OnEvent", function(self, event, ...)
 end)
 
 function core.TrialOfValor.Events:UNIT_AURA(self, unitID, ...)
-    --Player gained Fiery Phlegm
-    if UnitBuff(unitID, GetSpellInfo(231846)) and UnitBuff(unitID, GetSpellInfo(227539)) and fieryPhelgmComplete == false then
-        fieryPhelgmComplete = true
-        breathCounter= breathCounter + 1
-        core:sendMessage("Fiery Phelgm (Orange) part of " .. core:getAchievement() .. " Completed (" .. breathCounter .. "/3)")
-    end
+    if core.Instances.Legion.Raids.TrialOfValor.boss2.enabled then
+        --Player gained Fiery Phlegm
+        if UnitBuff(unitID, GetSpellInfo(231846)) and UnitBuff(unitID, GetSpellInfo(227539)) and fieryPhelgmComplete == false then
+            fieryPhelgmComplete = true
+            breathCounter= breathCounter + 1
+            core:sendMessage("Fiery Phelgm (Orange) part of " .. core:getAchievement() .. " Completed (" .. breathCounter .. "/3)")
+        end
 
-    --Player gained Salty Spittle
-    if UnitBuff(unitID, GetSpellInfo(231846)) and UnitBuff(unitID, GetSpellInfo(227566)) and saltySpittleComplete == false then
-        saltySpittleComplete = true
-        breathCounter= breathCounter + 1
-        core:sendMessage("Salty Spittle (Green) part of " .. core:getAchievement() .. " Completed (" .. breathCounter .. "/3)")
-    end
+        --Player gained Salty Spittle
+        if UnitBuff(unitID, GetSpellInfo(231846)) and UnitBuff(unitID, GetSpellInfo(227566)) and saltySpittleComplete == false then
+            saltySpittleComplete = true
+            breathCounter= breathCounter + 1
+            core:sendMessage("Salty Spittle (Green) part of " .. core:getAchievement() .. " Completed (" .. breathCounter .. "/3)")
+        end
 
-    --Player gained Dark Discharge
-    if UnitBuff(unitID, GetSpellInfo(231846)) and UnitBuff(unitID, GetSpellInfo(227570)) and darkDischargeComplete == false then
-        darkDischargeComplete = true
-        breathCounter= breathCounter + 1
-        core:sendMessage("Dark Discharge (Purple) part of " .. core:getAchievement() .. " Completed (" .. breathCounter .. "/3)")
-    end
+        --Player gained Dark Discharge
+        if UnitBuff(unitID, GetSpellInfo(231846)) and UnitBuff(unitID, GetSpellInfo(227570)) and darkDischargeComplete == false then
+            darkDischargeComplete = true
+            breathCounter= breathCounter + 1
+            core:sendMessage("Dark Discharge (Purple) part of " .. core:getAchievement() .. " Completed (" .. breathCounter .. "/3)")
+        end
 
-    if breathCounter == 3 then
-        core:getAchievementSuccess()
+        if breathCounter == 3 then
+            core:getAchievementSuccess()
+        end  
     end
 end
