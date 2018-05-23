@@ -549,6 +549,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.TheNighthold:Trilliax() end,
 					partial = false,
+                    nameplateCheck = true,
                 },
                 boss4 = {
                     name = "Spellblade Aluriel",
