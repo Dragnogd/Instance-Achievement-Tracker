@@ -211,7 +211,7 @@ function core.TheNighthold:Krosus()
             burningEmbersKilled = burningEmbersKilled + 1
             core:sendMessage(core:getAchievement() .. " Burning Embers Killed (" .. burningEmbersKilled .. "/15)")
         else
-            core:sendDebugMessage(core.spawn_uid_dest .. " : Burning Ember Killed By Player")
+            print(core.spawn_uid_dest .. " : Burning Ember Killed By Player")
         end
 
         if burningEmbersKilled >= 15 then

@@ -210,7 +210,7 @@ function core.AntorusTheBurningThrone.Events:UNIT_POWER(self, unit, powerType)
         if UnitGUID(unit) ~= nil then
             local unitType, _, _, _, _, destID, spawn_uid_dest = strsplit("-", UnitGUID(unit))
             if destID == "125886" and UnitPower(unit) > 0 then
-                print(UnitPower(unit))
+                --print(UnitPower(unit))
 
                 --Save current power locally
                 local currentPower = UnitPower(unit)
@@ -221,7 +221,7 @@ function core.AntorusTheBurningThrone.Events:UNIT_POWER(self, unit, powerType)
 
                     if (newPower - currentPower) >= 80 then
                         core:getAchievementSuccess()
-                        print("Boss gained: " .. (newPower - currentPower) .. " energy")
+                        --print("Boss gained: " .. (newPower - currentPower) .. " energy")
                     end
 
                     --Update highest energy if higher than current attempt. This is so we can output at the end of the fight how well the group did
