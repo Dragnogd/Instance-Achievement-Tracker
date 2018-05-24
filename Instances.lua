@@ -721,12 +721,12 @@ core.Instances = {
                 name = "Antorus the Burning Throne",
                 boss1 = {
                     name = "Garothi Worldbreaker",
-                    bossIDs = {},
+                    bossIDs = {122450,123921},
                     achievement = 11930,
                     players = {"(Enter instance to start scanning)"},
                     tactics = "",
-                    enabled = false,
-                    track = nil,
+                    enabled = true,
+                    track = function() core.AntorusTheBurningThrone:GarothiWorldbreaker() end,
 					partial = false,
                 },
                 boss2 = {

@@ -469,6 +469,9 @@ function getInstanceInfomation()
 			instanceCompatible = true
 		elseif core.difficultyID == 7 or core.difficultyID == 17 and debugMode == true then
 			instanceCompatible = true
+		elseif core.difficultyID == 24 or core.difficultyID == 33 then
+			--Timewalking
+			instanceCompatible = true
 		end
 
 		if debugMode == true then
