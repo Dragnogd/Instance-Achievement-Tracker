@@ -30,6 +30,9 @@ local wellTraveledNetherElementalFound = false
 ------------------------------------------------------
 local burningEmbersKilled = 0
 local burningEmbersUID = {}
+local burningEmbersUIDBridgeBreak = {}
+local slamCounter = 0
+local timerStarted = false
 
 ------------------------------------------------------
 ---- Gul'dan
@@ -200,22 +203,65 @@ function core.TheNighthold:HighBotanistTelarn()
 end
 
 function core.TheNighthold:Krosus()
-    --If add has been killed by overkill then assume the add was killed by a player
-    if core.destID == "104262" and core.overkill > 0 then
+    --Keep a collection of all detected Burning Embers
+    --If a burning ember dies than remove from collection
+    --When bridge breaks, start a 5 second countdown and store all burning embers which do damage in this time
+    --After 5 seconds compare new collection with original collection to see which burning embers where killed from the bridge break
+
+    --Burning Ember Detected Overall
+    if core.sourceID == "104262" and burningEmbersUID[core.spawn_uid] == nil then
+        burningEmbersUID[core.spawn_uid] = core.spawn_uid
+    elseif core.destID == "104262" and burningEmbersUID[core.spawn_uid_dest] == nil then
         burningEmbersUID[core.spawn_uid_dest] = core.spawn_uid_dest
     end
 
-    --One a Burning Ember has died, check whether it was killed by a player (overkill) or by the water 
+    --Burning Ember Killed
     if core.type == "UNIT_DIED" and core.destID == "104262" then
-        if burningEmbersUID[core.spawn_uid_dest] == nil then
-            burningEmbersKilled = burningEmbersKilled + 1
-            core:sendMessage(core:getAchievement() .. " Burning Embers Killed (" .. burningEmbersKilled .. "/15)")
-        else
-            print(core.spawn_uid_dest .. " : Burning Ember Killed By Player")
+        if burningEmbersUID[core.spawn_uid_dest] ~= nil then
+            burningEmbersUID[core.spawn_uid_dest] = nil
         end
+        if burningEmbersUIDBridgeBreak[core.spawn_uid_dest] ~= nil then
+            burningEmbersUIDBridgeBreak[core.spawn_uid_dest] = nil
+        end
+    end
 
-        if burningEmbersKilled >= 15 then
-            core:getAchievementSuccess()
+    --Slam Counter
+    if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 205862 then
+        slamCounter = slamCounter + 1
+    end
+
+    --Bridge Break Detected
+    if slamCounter % 3 == 0 then
+        --The bridge has broken. Wait 5 seconds to see which adds have died
+        if timerStarted == false then
+            timerStarted = true
+            C_Timer.After(5, function() 
+                if core.inCombat == true then
+                    --Compare differences between the 2 tables to see which burning embers where killed during the bridge break
+                    for i = 1, #burningEmbersUID do
+                        if core:has_value(burningEmbersUIDBridgeBreak, burningEmbersUID[i]) == false then
+                            burningEmbersKilled = burningEmbersKilled + 1
+                            burningEmbersUID[i] == nil
+                            core:sendMessage(core:getAchievement() .. " Burning Embers Quenced (" .. burningEmbersKilled .. "/" .. "15)")
+                        end
+                    end
+                    burningEmbersUIDBridgeBreak = {}
+
+                    if burningEmbersKilled >= 15 then
+                        core:getAchievementSuccess()
+                    end
+                end
+            end)
+        end
+    end
+
+    --Burning Ember Detected After Bridge Break
+    if timerStarted == true then
+        --See which Burning Embers are still alive
+        if core.sourceID == "104262" and burningEmbersUIDBridgeBreak[core.spawn_uid] == nil then
+            burningEmbersUIDBridgeBreak[core.spawn_uid] = core.spawn_uid
+        elseif core.destID == "104262" and burningEmbersUIDBridgeBreak[core.spawn_uid_dest] == nil then
+            burningEmbersUIDBridgeBreak[core.spawn_uid_dest] = core.spawn_uid_dest
         end
     end
 end
@@ -280,6 +326,9 @@ function core.TheNighthold:ClearVariables()
     ------------------------------------------------------
     burningEmbersKilled = 0
     burningEmbersUID = {}
+    burningEmbersUIDBridgeBreak = {}
+    slamCounter = 0
+    timerStarted = false
 
     ------------------------------------------------------
     ---- Gul'dan

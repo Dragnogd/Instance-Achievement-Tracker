@@ -583,12 +583,12 @@ core.Instances = {
                 },
                 boss7 = {
                     name = "Krosus",
-                    bossIDs = {}, --101002
+                    bossIDs = {101002}, 
                     achievement = 10575,
                     players = {"(Enter instance to start scanning)"},
                     tactics = "",
-                    enabled = false,
-                    track = nil,
+                    enabled = true,
+                    track = function() core.TheNighthold:Krosus() end,
 					partial = false,
                 },
                 boss8 = {
