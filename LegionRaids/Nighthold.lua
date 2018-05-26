@@ -241,7 +241,7 @@ function core.TheNighthold:Krosus()
                     for i = 1, #burningEmbersUID do
                         if core:has_value(burningEmbersUIDBridgeBreak, burningEmbersUID[i]) == false then
                             burningEmbersKilled = burningEmbersKilled + 1
-                            burningEmbersUID[i] == nil
+                            burningEmbersUID[i] = nil
                             core:sendMessage(core:getAchievement() .. " Burning Embers Quenced (" .. burningEmbersKilled .. "/" .. "15)")
                         end
                     end
