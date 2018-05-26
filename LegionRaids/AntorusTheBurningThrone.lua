@@ -227,7 +227,7 @@ function core.AntorusTheBurningThrone.Events:UNIT_POWER(self, unit, powerType)
                     --Update highest energy if higher than current attempt. This is so we can output at the end of the fight how well the group did
                     if (newPower - currentPower) > highestEnergy then
                         highestEnergy = newPower - currentPower
-                        core:sendMessage(GetAchievementLink(12257) .. " Best attempt so far (" .. highestEnergy .. "/80)")
+                        core:sendMessage(core:getAchievement() .. " Best attempt so far (" .. highestEnergy .. "/80)")
                     end
                 end)
             end
