@@ -1561,7 +1561,7 @@ core.Instances = {
                 },
                 boss12 = {
                     name = "Mannoroth",
-                    bossIDs = {91349},
+                    bossIDs = {91349, 91305},
                     achievement = 10030,
                     players = {"(Enter instance to start scanning)"},
                     tactics = "At the start of the fight kill the green & purple summoner. Wait for a player to get curse of the legion debuff before killing the red summoner. Once the curse of the legion debuff runs out or is dispelled, a doom lord will spawn. Get the doom lord down to 5% health. Next dps down Mannoroth to 30% health. Once this is done place the doom lord in front of the boss and wait for it to get killed by Mannoroth Empowered Fel Seeker ability. Once the doom lord has been killed by the boss, you can kill the boss.",
