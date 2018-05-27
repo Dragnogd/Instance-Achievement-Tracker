@@ -85,13 +85,13 @@ function core.AntorusTheBurningThrone:FelhoundsOfSargeras()
 end
 
 function core.AntorusTheBurningThrone:AntoranHighCommand()
-    if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 244902 and felshieldEmitterCounter > 0 then
+    if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 244902 and core.achievementsFailed[1] == false then
         felshieldEmitterCounter = felshieldEmitterCounter - 1
-        core:sendMessage("Felshield Emitter Placed. " .. felshieldEmitterCounter .. " more Felshield Emitters can be placed before achievement fails")
-    end
+        core:sendMessage(core:getAchievement() .. " Felshield Emitter Placed. You can only place a maximum of " .. felshieldEmitterCounter .. " more Felshield Emitters")
 
-    if felshieldEmitterCounter == 0 then
-        core:getAchievementFailed()
+        if felshieldEmitterCounter < 0 then
+            core:getAchievementFailed()
+        end
     end
 end
 
@@ -172,7 +172,7 @@ function core.AntorusTheBurningThrone:ClearVariables()
     ------------------------------------------------------
     --Output best attempt to chat
     if highestEnergy > 0 then
-        core:sendMessage(GetAchievementLink(12257) .. " Best Attempt last kill (" .. highestEnergy .. "/80). Khaz'Goroth must gain 80 energy within 5 seconds to complete this achievement")
+        core:sendMessage(GetAchievementLink(12257) .. " Best attempt last kill (" .. highestEnergy .. "/80). Khaz'Goroth must gain 80 energy within 5 seconds to complete this achievement")
     end
     highestEnergy = 0
 end
@@ -227,7 +227,7 @@ function core.AntorusTheBurningThrone.Events:UNIT_POWER(self, unit, powerType)
                     --Update highest energy if higher than current attempt. This is so we can output at the end of the fight how well the group did
                     if (newPower - currentPower) > highestEnergy then
                         highestEnergy = newPower - currentPower
-                        core:sendMessage(core:getAchievement() .. " Best attempt so far (" .. highestEnergy .. "/80)")
+                        core:sendMessage(GetAchievementLink(12257) .. " Best attempt this pull (" .. highestEnergy .. "/80). Khaz'Goroth must gain 80 energy within 5 seconds to complete this achievement")
                     end
                 end)
             end

@@ -1451,13 +1451,14 @@ core.Instances = {
                 name = "Hellfire Citadel",
                 boss1 = {
                     name = "Hellfire Assault",
-                    bossIDs = {95068, 90018, 93023},
+                    bossIDs = {93023},
                     achievement = 10026,
                     players = {"(Enter instance to start scanning)"},
                     tactics = "At 110, simply nuke down all the mobs/vehicles as quick as possible. Make sure to keep an eye on the Felfire Crushers and Artillery especially",
                     enabled = true,
                     track = function() end,
                     partial = false,
+                    nameplateCheck = true,
                 },
                 boss2 = {
                     name = "Iron Reaver",
