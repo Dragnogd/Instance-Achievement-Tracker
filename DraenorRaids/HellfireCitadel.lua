@@ -30,6 +30,7 @@ local firstPickup = false
 ---- Socrethar the Eternal
 ------------------------------------------------------
 local hauntingSoulsKilled = 0
+local hauntingSoulsTrackKills = false
 
 ------------------------------------------------------
 ---- Archimonde
@@ -146,23 +147,49 @@ function core.HellfireCitadel:Xhulhorac()
 end
 
 function core.HellfireCitadel:SocretharTheEternal()
-	if core.type == "UNIT_DIED" and core.destID == "91938" and core.achievementsCompleted[1] == false then
-		hauntingSoulsKilled = hauntingSoulsKilled + 1
-		core:sendMessageDelay("Haunting Souls Killed: (" .. hauntingSoulsKilled .. "/20)",hauntingSoulsKilled,5)	
-		if timerStarted == false then
-			timerStarted = true
-			core:sendMessage("Timer Started! 10 seconds remaining")
-			C_Timer.After(10, function()
-				if hauntingSoulsKilled < 20 and core.inCombat == true then
-					core:sendMessage(GetAchievementLink(core.achievementIDs[1]) .. " FAILED! (" .. hauntingSoulsKilled .. "/20) Killed in time.")
-					hauntingSoulsKilled = 0
-					timerStarted = false
-				elseif hauntingSoulsKilled >= 20 then
-					core:getAchievementSuccess()
-				end
-			end)
+	if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 182925 and core.mobUID[core.spawn_uid] ~= "Dead" then
+		--Decrease haunting soul counter by 1 if player walks into one of the mobs
+		if core.mobUID[core.spawn_uid] ~= nil then
+			core.mobCounter = core.mobCounter - 1
+			core:sendDebugMessage(core.mobCounter)
 		end
+		core.mobUID[core.spawn_uid] = "Dead"
+	elseif core.type == "SPELL_DAMAGE" and core.spellId == 188500 and core.mobUID[core.spawn_uid] ~= "Dead" then
+		--Decrease haunting soul counter by 1 if robot absorbs one of the mobs
+		if core.mobUID[core.spawn_uid] ~= nil then
+			core.mobCounter = core.mobCounter - 1
+			core:sendDebugMessage(core.mobCounter)
+		end
+		core.mobUID[core.spawn_uid] = "Dead"
 	end
+
+	core:trackMob("91938", "Haunting Soul", 20, " 20 Haunting Souls have spawned. They can now be AOE'd down", 3, nil, nil)
+
+	if core.mobCounter >= 20 and hauntingSoulsTrackKills == false then
+        hauntingSoulsTrackKills = true
+	end
+	
+	if core.type == "UNIT_DIED" and core.destID == "91938" and hauntingSoulsTrackKills == true then
+        hauntingSoulsKilled = hauntingSoulsKilled + 1
+        if timerStarted == false then
+            timerStarted = true
+            core:sendMessage(core:getAchievement() .. " Timer Started!. 10 seconds remaining")
+            C_Timer.After(10, function() 
+                if hauntingSoulsKilled >= 20 then
+                    core:getAchievementSuccess()
+                else
+                    core:sendMessage(core:getAchievement() .. " Haunting Souls Killed (" .. hauntingSoulsKilled .. "/20)")
+                end
+                hauntingSoulsKilled = 0
+                hauntingSoulsTrackKills = false
+                timerStarted = false
+            end)
+        else
+            if hauntingSoulsKilled >= 20 then
+                core:getAchievementSuccess()
+            end            
+        end
+    end
 end
 
 function core.HellfireCitadel:TyrantVelhari()
@@ -239,6 +266,7 @@ function core.HellfireCitadel:ClearVariables()
 	---- Socrethar the Eternal
 	------------------------------------------------------
 	hauntingSoulsKilled = 0
+	hauntingSoulsTrackKills = false
 
 	------------------------------------------------------
 	---- Archimonde

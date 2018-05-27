@@ -6,7 +6,7 @@ local _, core = ...
 local events = CreateFrame("Frame")
 local UIConfig
 local UICreated = false
-local debugMode = false
+local debugMode = true
 
 AchievementTrackerOptions = {}
 AchievementTrackerDebug = {}
@@ -1886,7 +1886,7 @@ function core:trackMob(mobID, mobName, threshold, message, interval, trackAchiev
 	if core.type == "UNIT_DIED" and core.destID == mobID and core.mobCounter > 0 then
         core.mobUID[core.spawn_uid_dest] = "Dead"
 		core.mobCounter = core.mobCounter - 1
-		--core:sendDebugMessage(core.mobCounter)
+		core:sendDebugMessage(core.mobCounter)
 	end
 
 	--Requirements Met
