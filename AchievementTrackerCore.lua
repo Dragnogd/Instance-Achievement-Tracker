@@ -59,7 +59,7 @@ core.groupSize = 1								--Amount of players currently in the group. Set to 1 b
 core.achievementIDs = {}						--Stores a list of the achievements to track for the current boss
 core.achievementTrackingEnabled = false			--Whether the user wants to track achievements for the particular instance or not
 core.playersFailedPersonal = {}					--List of players that have failed a personal achievement. Resets when you exit combat
-core.playersSuccessPersonal = {}
+core.playersSuccessPersonal = {}				--List of players that have successfully completed a personal acheievement. Resets when you exit combat
 core.enableAchievementScanning = true			--Whether the addon is allowed to scan for achievements
 local combatTimerStarted = false				--Used to determine if players in the group are still in combat with a boss
 local lastMessageSent = ""   					--Stores the last message sent to the chat. This is used to prevent the same message being sent more than once in case of an error and to prevent unwanted spam
@@ -200,7 +200,6 @@ function getPlayersInGroup()
 		end
 
 		rescanNeeded = false
-		updateDebugTable()
 
 		--Start the player scanning
 		if #playersToScan > 0 then
@@ -226,7 +225,6 @@ end
 --TODO: have a limit on the amount of times a certain player is scanned. This is needed so we are not constantly scanning players that are offline or players who never enter the instance
 function getInstanceAchievements()
 	ClearAchievementComparisonUnit()
-	--updateDebugTable()
 	--Make sure the player we are about to scan is still in the group
 	if UnitName(playersToScan[1]) ~= nil then
 		playerCurrentlyScanning = playersToScan[1]
@@ -260,7 +258,6 @@ function getInstanceAchievements()
 				-- 	printMessage("Achievment Scanning Finished (" .. #playersScanned .. "/" .. core.groupSize .. ")")
 				-- 	scanInProgress = false
 				-- 	core.scanFinished = true
-				-- 	updateDebugTable()
 				-- elseif #playersToScan == 0 and rescanNeeded == true then
 				-- 	--print("Achievement Scanning Finished but some players still need scanning. Waiting 20 seconds then trying again (" .. #playersScanned .. "/" .. core.groupSize .. ")")
 				-- 	C_Timer.After(10, function()
@@ -289,13 +286,11 @@ function getInstanceAchievements()
 			else
 				core:sendDebugMessage("Cancelling: " .. scanCounterloc)
 			end
-			--updateDebugTable()
 		end)
 	else
 		rescanNeeded = true
 		scanInProgress = true
 		getPlayersInGroup()
-		updateDebugTable()
 	end
 end
 
@@ -948,8 +943,6 @@ function events:INSPECT_ACHIEVEMENT_READY(self, GUID)
 			--Must be in the same instance in order to get scanned.
 			rescanNeeded = true
 		end
-
-		--updateDebugTable()
 	else
 		--Someone else has called the INSPECT_ACHIEVEMENT_READY event so do not perform achievement scanning for that player
 		core:sendDebugMessage("Incorrect INSPECT_ACHIEVEMENT_READY call for " .. name)
