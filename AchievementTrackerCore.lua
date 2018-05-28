@@ -6,7 +6,7 @@ local _, core = ...
 local events = CreateFrame("Frame")
 local UIConfig
 local UICreated = false
-local debugMode = true
+local debugMode = false
 
 AchievementTrackerOptions = {}
 AchievementTrackerDebug = {}
@@ -495,6 +495,7 @@ function getInstanceInfomation()
 					createEnableAchievementTrackingUI()
 				else
 					core:sendDebugMessage("Displaying Tracking UI since it was already created")
+					UIConfig.content:SetText("Do you want to enable achievement tracking for: " .. core.instanceNameSpaces);
 					UIConfig:Show()
 				end
 			else
@@ -913,7 +914,7 @@ end
 --Does not get called for achievements which are not part of a boss fight so achievement tracking is calling manually once per session for those achievements
 function events:ENCOUNTER_START(self, encounterID, encounterName, difficultyID, groupSize)
 	core:sendDebugMessage("---Encounter Started---")
-	core:sendDebugMessage("Encounter ID: " .. encounterID)
+	print("Encounter ID: " .. encounterID)
 	--table.insert(--TargetLogData, "---Encounter Started---")
 	core.encounterStarted = true
 
@@ -1511,7 +1512,9 @@ function detectBoss(id)
 				end
 				core.foundBoss = true
 			end
-		elseif core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs ~= nil then
+		end
+		
+		if core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs ~= nil then
 			--Detect boss by the ID of the npc
 			core:sendDebugMessage("Detecting boss by npc ID")
 			if #core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs > 0 then
