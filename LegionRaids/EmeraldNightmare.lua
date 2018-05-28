@@ -65,7 +65,7 @@ function core.TheEmeraldNightmare:Ilgynoth()
                 if nightmareKilled >= 20 then
                     core:getAchievementSuccess()
                 else
-                    print("Nightmare Ichors Killed: " .. nightmareKilled)
+                    core:sendMessage(core:getAchievement() .. " Nightmare Ichors Killed: " .. nightmareKilled)
                 end
                 nightmareKilled = 0
                 nightmareExplosionTrackKills = false

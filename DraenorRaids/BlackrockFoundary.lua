@@ -131,7 +131,7 @@ function core.BlackrockFoundry:Kromog()
 				if graspingEarthKilled >= 10 then
 					core.getAchievementSuccess()
 				elseif graspingEarthKilled < 10 then
-					core.sendMessage("(" .. graspingEarthKilled .. "/10) Grasping Earth Hands killed in time")
+					core:getAchievementFailed()
 					graspingEarthKilled = 0
 					timerStarted = false			
 				end

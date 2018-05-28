@@ -1462,13 +1462,14 @@ core.Instances = {
                 },
                 boss2 = {
                     name = "Iron Reaver",
-                    bossIDs = {90284},
+                    bossIDs = {}, --90284
                     achievement = 10057,
                     players = {"(Enter instance to start scanning)"},
                     tactics = "On the ledges to the left and right of the boss there are untargetable Hellfire Guardians. Bring the boss up against these ledges facing the boss towards the Hellfire Guardians. When the boss casts barrage, this should kill the mobs.",
                     enabled = true,
                     track = function() core.HellfireCitadel:IronReaver() end,
                     partial = false,
+                    encounterID = 1785,
                 },
                 boss3 = {
                     name = "Kormrok",

@@ -911,14 +911,20 @@ end
 --Fired when a user engages a boss. Used to output to chat which achievement is currently being tracked
 --Does not fire for all bosses or sometimes fires too late into the fight so some fight manually call the achievement tracking functions
 --Does not get called for achievements which are not part of a boss fight so achievement tracking is calling manually once per session for those achievements
-function events:ENCOUNTER_START()
+function events:ENCOUNTER_START(self, encounterID, encounterName, difficultyID, groupSize)
 	core:sendDebugMessage("---Encounter Started---")
+	core:sendDebugMessage("Encounter ID: " .. encounterID)
 	--table.insert(--TargetLogData, "---Encounter Started---")
 	core.encounterStarted = true
 
 	if core.displayAchievements == true then
 		core:getAchievementToTrack()
 		core.disableAchievementTracking = false
+	end
+
+	--If encounter ID is detected then use that to detectBoss
+	if encounterID ~= nil then
+		detectBoss(encounterID)
 	end
 end
 
@@ -1488,60 +1494,40 @@ end
 function detectBoss(id)
 	core:sendDebugMessage("Found the following boss ID: " .. id)
 
-	--There is a bug detecting Skopyron in Nighthold since the id for Trilliax is fire before.
-	--If Trilliax id is fired then compare this with the raid frame to confirm if we are actually attacking Trilliax or not.
-	if id == 104288 or id == "104288" then
-		for i = 1, 5 do
-			if UnitGUID("boss" .. i) ~= nil then
-				local unitType, _, _, _, _, sourceID, spawn_uid = strsplit("-", UnitGUID("boss1")) 
-				if sourceID == "102263" then
-					--Skorpyron
-					id = "102263"
-				end
-			end
-		end
-	end
-	
+	--Detect Encounter ID
 	for boss,_ in pairs(core.Instances[core.expansion][core.instanceType][core.instance]) do
-		if core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs ~= nil then
+		if core.Instances[core.expansion][core.instanceType][core.instance][boss].encounterID ~= nil then
+			--Detect boss by the encounter ID
+			core:sendDebugMessage("Detecting boss by Encounter ID")
+			if id == core.Instances[core.expansion][core.instanceType][core.instance][boss].encounterID then
+				if core:has_value(currentBossNums, boss) == false then
+					core:sendDebugMessage("Adding the following encounter ID: " .. boss)
+					table.insert(core.currentBosses, core.Instances[core.expansion][core.instanceType][core.instance][boss])
+					table.insert(currentBossNums, boss)
+				end
+				if core:has_value(core.achievementIDs, core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement) == false then
+					core:sendDebugMessage("Adding the following achievement ID beacuse it doesn't exist: " .. core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
+					table.insert(core.achievementIDs, core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
+				end
+				core.foundBoss = true
+			end
+		elseif core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs ~= nil then
+			--Detect boss by the ID of the npc
+			core:sendDebugMessage("Detecting boss by npc ID")
 			if #core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs > 0 then
-				--core:sendDebugMessage(#core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs)
 				for i = 1, #core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs do
 					local bossID = core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs[i]
 					if string.find(id, bossID) then
-						--Check if boss requires namePlate verification to stop incorrect triggering of boss
-						local idVerified = false
-						if core.Instances[core.expansion][core.instanceType][core.instance][boss].nameplateCheck ~= nil then
-							--Check for boss nameplate to make sure correct bosses are being detected
-							core:sendDebugMessage("Checking Nameplates to verify boss...")
-							for i = 1, 5 do
-								if UnitGUID("boss" .. i) ~= nil then
-									local unitType, _, _, _, _, sourceID, spawn_uid = strsplit("-", UnitGUID("boss1")) 
-									if string.find(sourceID, bossID) then
-										idVerified = true
-									end
-								end
-							end
-						else
-							core:sendDebugMessage("Not checking nameplates...")
-							idVerified = true
+						if core:has_value(currentBossNums, boss) == false then
+							core:sendDebugMessage("Adding the following boss: " .. boss)
+							table.insert(core.currentBosses, core.Instances[core.expansion][core.instanceType][core.instance][boss])
+							table.insert(currentBossNums, boss)
 						end
-
-						if idVerified == true then
-							core:sendDebugMessage("ID Verfified")
-							if core:has_value(currentBossNums, boss) == false then
-								core:sendDebugMessage("Adding the following boss: " .. boss)
-								table.insert(core.currentBosses, core.Instances[core.expansion][core.instanceType][core.instance][boss])
-								table.insert(currentBossNums, boss)
-							end
-							if core:has_value(core.achievementIDs, core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement) == false then
-								core:sendDebugMessage("Adding the following achievement ID beacuse it doesn't exist: " .. core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
-								table.insert(core.achievementIDs, core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
-							end
-							core.foundBoss = true
-						else
-							core:sendDebugMessage("Cannot verify ID")
+						if core:has_value(core.achievementIDs, core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement) == false then
+							core:sendDebugMessage("Adding the following achievement ID beacuse it doesn't exist: " .. core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
+							table.insert(core.achievementIDs, core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
 						end
+						core.foundBoss = true
 					end
 				end
 			end
