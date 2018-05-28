@@ -11,52 +11,13 @@ local debugMode = false
 AchievementTrackerOptions = {}
 AchievementTrackerDebug = {}
 
--- events:RegisterEvent("INSPECT_ACHIEVEMENT_READY")
-
--- local events = CreateFrame("Frame", "AchievementTracker2", UIParent, "UIPanelDialogTemplate")
--- events:SetSize(800, 500)
--- events:SetPoint("CENTER") --Center of the screen
-
--- local playersToScanFontstring = events:CreateFontString(nil,"ARTWORK","GameFontNormalSmall")
--- playersToScanFontstring:SetPoint("TOPLEFT",12,-30)
--- playersToScanFontstring:SetText("Test 123")
--- playersToScanFontstring:SetWidth(500)
-
--- local playersScannedFontString = events:CreateFontString(nil,"ARTWORK","GameFontNormalSmall")
--- playersScannedFontString:SetPoint("TOPLEFT",12,-200)
--- playersScannedFontString:SetText("Test 1234")
--- playersScannedFontString:SetWidth(500)
-
--- local playersWaitingToScanFontstring = events:CreateFontString(nil,"ARTWORK","GameFontNormalSmall")
--- playersWaitingToScanFontstring:SetPoint("TOPLEFT",12,-300)
--- playersWaitingToScanFontstring:SetText("Test 12345")
--- playersWaitingToScanFontstring:SetWidth(500)
-
--- local events = CreateFrame("Frame", "AchievementTracker2", UIParent, "OptionsFrameListTemplate")
--- events:SetSize(800, 500)
--- events:SetPoint("CENTER") --Center of the screen
-
 events:RegisterEvent("ADDON_LOADED")						--Used to setup the slash commands for the addon
-
---DEBUG
-if debugMode == true then
-	events:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
-	events:RegisterEvent("UNIT_HEALTH")
-	events:RegisterEvent("UNIT_AURA")
-	events:RegisterEvent("UNIT_ABSORB_AMOUNT_CHANGED")
-	events:RegisterEvent("NAME_PLATE_UNIT_ADDED")
-	
-end
-
-local temp2 = {}
---s = {}
-
-local tempCounter = 0
 
 events:SetScript("OnEvent", function(self, event, ...)
     return self[event] and self[event](self, event, ...) 	--Allow event arguments to be called from seperate functions
 end)
 
+--Used to detect whether there are still players in the group still in combat with the boss
 function events:onUpdate(sinceLastUpdate)
 	self.sinceLastUpdate = (self.sinceLastUpdate or 0) + sinceLastUpdate;
 	if ( self.sinceLastUpdate >= 1 ) then -- in seconds
@@ -102,7 +63,7 @@ core.playersSuccessPersonal = {}
 core.enableAchievementScanning = true			--Whether the addon is allowed to scan for achievements
 local combatTimerStarted = false				--Used to determine if players in the group are still in combat with a boss
 local lastMessageSent = ""   					--Stores the last message sent to the chat. This is used to prevent the same message being sent more than once in case of an error and to prevent unwanted spam
-local requestToRun = false					--Store whether the current addon sent the request to enable itself or not for achievement tracking
+local requestToRun = false						--Store whether the current addon sent the request to enable itself or not for achievement tracking
 local enableDisplayAchievement = true
 local currentBossNums = {}
 local detectBossWait = false
@@ -135,37 +96,6 @@ core.displayAchievements = false
 local masterAddon = false					--The master addon for the group. This stop multiple people with the addon outputting identical messages. Reset at the end of every fight
 local playerRank = -1						--The rank of the player is the group. Players with higher rank get priorty over outputting messages unless they have an outdated addon
 local addonID = 0
-
---OLD used to create a seperate table for tracking current table values
-function updateDebugTable()
-	--DEBUG START
-	-- local tmpPlayersToScanOutput = "ToScan: "
-	-- if #playersToScan > 0 then
-	-- 	for i = 1, #playersToScan do
-	-- 		tmpPlayersToScanOutput = tmpPlayersToScanOutput .. playersToScan[i] .. ", "
-
-	-- 	end
-	-- 	playersToScanFontstring:SetText(tmpPlayersToScanOutput)
-	-- end
-
-	-- local tmpPlayersScannedOutput = "Scanned: "
-	-- if #playersScanned > 0 then
-	-- 	for i = 1, #playersScanned do
-	-- 		tmpPlayersScannedOutput = tmpPlayersScannedOutput .. playersScanned[i] .. ", "
-
-	-- 	end
-	-- 	playersScannedFontString:SetText(tmpPlayersScannedOutput)
-	-- end
-
-	-- local tmpPlayersWaitingToScanOutput = "WaitingToScan: "
-	-- if #playersWaitingToScan > 1 then
-	-- 	for i = 1, #playersWaitingToScan do
-	-- 		tmpPlayersWaitingToScanOutput = tmpPlayersWaitingToScanOutput .. playersWaitingToScan[i] .. ", "
-	-- 	end
-	-- 	playersWaitingToScanFontstring:SetText(tmpPlayersWaitingToScanOutput)
-	-- end
-	--DEBUG END
-end
 
 --Get the current size of the group
 function core:getGroupSize()
