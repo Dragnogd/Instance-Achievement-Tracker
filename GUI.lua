@@ -347,12 +347,12 @@ function Config:CreateGUI()
     UIConfig = CreateFrame("Frame", "AchievementTracker", UIParent, "UIPanelDialogTemplate", "AchievementTemplate")
     UIConfig:SetSize(800, 500)
     UIConfig:SetPoint("CENTER") --Center of the screen
-    --UIConfig:SetMovable(true)
-    --UIConfig:EnableMouse(true)
-    --UIConfig:SetClampedToScreen(true)
-    --UIConfig:RegisterForDrag("LeftButton")
-    --UIConfig:SetScript("OnDragStart", UIConfig.StartMoving)
-    --UIConfig:SetScript("OnDragStop", UIConfig.StopMovingOrSizing)
+    UIConfig:SetMovable(true)
+    UIConfig:EnableMouse(true)
+    UIConfig:SetClampedToScreen(true)
+    UIConfig:RegisterForDrag("LeftButton")
+    UIConfig:SetScript("OnDragStart", UIConfig.StartMoving)
+    UIConfig:SetScript("OnDragStop", UIConfig.StopMovingOrSizing)
 
     --Title
     UIConfig.title = UIConfig:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
