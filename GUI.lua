@@ -24,8 +24,8 @@ Config.currentInstance = nil
 AchievementTrackerOptions = {}
 
 Config.majorVersion = 1						--Addon with a higher major version change have priority over a lower major version
-Config.minorVersion = 3						--Addon with a minor version change have prioirty over a lower minor version
-Config.revisionVersion = 0					--Addon with a revision change have the same priorty as a lower revision verison
+Config.minorVersion = 4						--Addon with a minor version change have prioirty over a lower minor version
+Config.revisionVersion = 1					--Addon with a revision change have the same priorty as a lower revision verison
 Config.releaseType = ""                    --Release type (Alpha, Beta, Release)
 
 --Get build info
