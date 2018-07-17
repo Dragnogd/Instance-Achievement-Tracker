@@ -89,19 +89,6 @@ core.Instances = {
 					partial = false,
                 },
             },
-            Azeroth = {
-                name = "Azeroth",
-                boss1 = {
-                    name = "Temp",
-                    bossIDs = {},
-                    achievement = 12937,
-                    players = {"(Enter instance to start scanning)"},
-                    tactics = "",
-                    enabled = false,
-                    track = nil,
-					partial = false,
-                },
-            },
         },
 
         Dungeons = {
