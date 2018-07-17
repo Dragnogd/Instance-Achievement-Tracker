@@ -32,9 +32,6 @@ Config.releaseType = ""                    --Release type (Alpha, Beta, Release)
 local _, _, _, tocVersionloc = GetBuildInfo()
 core.tocVersion = tocVersionloc
 
---core.tocVersion = 80000
---core.tocVersion = 70300
-
 --------------------------------------
 -- Config functions
 --------------------------------------
@@ -386,12 +383,8 @@ function Config:CreateGUI()
      UIConfig.ScrollFrame2.ScrollBar:SetPoint("BOTTOMRIGHT", UIConfig.ScrollFrame2, "BOTTOMRIGHT", -7, 18)    
 
     --Tabs
-    content1, BattleForAzerothNav, BattleForAzerothContent, LegionNav, LegionContent, WarlordsOfDraenorNav, WarlordsOfDraenorContent, MistsOfPandariaNav, MistsOfPandariaContent, CataclysmNav, CataclysmContent, WrathOfTheLichKingNav, WrathOfTheLichKingContent = nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil
-    if core.tocVersion == 70300 then
-        content1, LegionNav, LegionContent, WarlordsOfDraenorNav, WarlordsOfDraenorContent, MistsOfPandariaNav, MistsOfPandariaContent, CataclysmNav, CataclysmContent, WrathOfTheLichKingNav, WrathOfTheLichKingContent = SetTabs(UIConfig, 6, "Main", "Legion", "Warlords of Draenor", "Mists of Pandaria", "Cataclysm", "Wrath of the Lich King")
-    elseif core.tocVersion == 80000 then
-        content1, BattleForAzerothNav, BattleForAzerothContent, LegionNav, LegionContent, WarlordsOfDraenorNav, WarlordsOfDraenorContent, MistsOfPandariaNav, MistsOfPandariaContent, CataclysmNav, CataclysmContent, WrathOfTheLichKingNav, WrathOfTheLichKingContent = SetTabs(UIConfig, 7, "Main", "Battle for Azeroth", "Legion", "Warlords of Draenor", "Mists of Pandaria", "Cataclysm", "Wrath of the Lich King")    
-    end
+    content1, BattleForAzerothNav, BattleForAzerothContent, LegionNav, LegionContent, WarlordsOfDraenorNav, WarlordsOfDraenorContent, MistsOfPandariaNav, MistsOfPandariaContent, CataclysmNav, CataclysmContent, WrathOfTheLichKingNav, WrathOfTheLichKingContent = SetTabs(UIConfig, 7, "Main", "Battle for Azeroth", "Legion", "Warlords of Draenor", "Mists of Pandaria", "Cataclysm", "Wrath of the Lich King")    
+
     --Content (Main)
 	--content1.saveBtn = self:CreateButton("CENTER", content1, "TOP", -70, "Save");
     content1.title = content1:CreateFontString(nil, "OVERLAY", "GameFontHighlightLarge")
@@ -417,11 +410,8 @@ function Config:CreateGUI()
 
     --Create the navigation buttons for each expansion
     local expansions = nil
-    if core.tocVersion == 70300 then
-        expansions = {"Legion", "WarlordsOfDraenor", "MistsOfPandaria", "Cataclysm", "WrathOfTheLichKing"}    
-    elseif core.tocVersion == 80000 then
-        expansions = {"BattleForAzeroth", "Legion", "WarlordsOfDraenor", "MistsOfPandaria", "Cataclysm", "WrathOfTheLichKing"}
-    end
+    expansions = {"BattleForAzeroth", "Legion", "WarlordsOfDraenor", "MistsOfPandaria", "Cataclysm", "WrathOfTheLichKing"}
+
     for i = 1, #expansions do
         --Raids
         local firstRaid = false
