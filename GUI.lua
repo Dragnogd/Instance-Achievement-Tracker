@@ -32,6 +32,7 @@ Config.releaseType = ""                    --Release type (Alpha, Beta, Release)
 local _, _, _, tocVersionloc = GetBuildInfo()
 core.tocVersion = tocVersionloc
 
+
 --------------------------------------
 -- Config functions
 --------------------------------------
@@ -411,7 +412,7 @@ function Config:CreateGUI()
     --Create the navigation buttons for each expansion
     local expansions = nil
     expansions = {"BattleForAzeroth", "Legion", "WarlordsOfDraenor", "MistsOfPandaria", "Cataclysm", "WrathOfTheLichKing"}
-
+    
     for i = 1, #expansions do
         --Raids
         local firstRaid = false
