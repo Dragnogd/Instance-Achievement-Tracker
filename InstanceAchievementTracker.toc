@@ -12,7 +12,6 @@ Libs\LibDataBroker-1.1\LibDataBroker-1.1.lua
 Libs\LibDBIcon-1.0\LibDBIcon-1.0.lua
 Libs\AltGameTooltip\AltGameTooltip.xml
 
-BattleForAzerothRaids\Azeroth.lua
 BattleForAzerothRaids\Uldir.lua
 
 BattleForAzerothDungeons\AtalDazar.lua
