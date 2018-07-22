@@ -340,12 +340,12 @@ core.Instances = {
                 name = "Tol Dagor",
                 boss1 = {
                     name = "Knight Captain Valyri",
-                    bossIDs = {},
+                    bossIDs = {130646},
                     achievement = 12457,
                     players = {"(Enter instance to start scanning)"},
                     tactics = "",
-                    enabled = false,
-                    track = nil,
+                    enabled = true,
+                    track = function() core.TolDagor:KnightCaptainValyri() end,
 					partial = false,
                 },
                 boss2 = {
