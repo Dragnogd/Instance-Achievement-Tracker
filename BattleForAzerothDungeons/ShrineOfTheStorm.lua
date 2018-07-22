@@ -51,6 +51,13 @@ function core.ShrineOfTheStorm:VolzithTheWhisperer()
     end
 end
 
+function core.ShrineOfTheStorm:LordStormsong()
+	--Defeat Lord Stormsong without coming into contact with any Awoken Void in Shrine of the Storm on Mythic difficulty.
+	if core.spellId == 269104 then
+		core:getAchievementFailed(core.destName)
+	end
+end
+
 function core.ShrineOfTheStorm:ClearVariables()
     ------------------------------------------------------
     ---- Vol'zith the Whisperer

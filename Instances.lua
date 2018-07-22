@@ -195,12 +195,12 @@ core.Instances = {
                 name = "Shrine of the Storm",
                 boss1 = {
                     name = "Lord Stormsong",
-                    bossIDs = {},
+                    bossIDs = {139737},
                     achievement = 12601,
                     players = {"(Enter instance to start scanning)"},
                     tactics = "",
-                    enabled = false,
-                    track = nil,
+                    enabled = true,
+                    track = function() core.ShrineOfTheStorm:LordStormsong() end,
 					partial = false,
                 },
                 boss2 = {
