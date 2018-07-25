@@ -13,3 +13,6 @@ function core.TolDagor:KnightCaptainValyri()
         core:getAchievementFailed()
     end
 end
+
+function core.TolDagor:ClearVariables()
+end

@@ -3792,7 +3792,7 @@ core.Instances = {
                     tactics = "At 110, this achievement is a lot easier to complete without a vehicle. Just run up between 2 of the pillars towards the boss. Wait for 100 adds to attack you then just AOE all the adds down.",
                     enabled = true,
                     track = function() core.Ulduar:Dwarfageddon() end,
-					partial = true,
+                    partial = true,
                 },
                 boss2 = {
                     name = "Other 24",
@@ -3822,7 +3822,8 @@ core.Instances = {
                     tactics = "This achievement requires at least 2 players. The player not going for the achievement needs to drive a demolisher and the player going for the achievements needs to be the passenger of the demolisher. Once you have pulled the boss, load the passenger into the catapult and throw them at the turrets on the boss. Once the player is up on the boss, they need to kill the turret to gain the achievement.",
                     enabled = true,
                     track = function() core.Ulduar:FlameLeviathanTakeOutThoseTurrets() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1132,
                 }, 
                 boss5 = {
                     name = "Flame Leviathan 3",
@@ -3832,7 +3833,8 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = true,
                     track = function() core.Ulduar:FlameLeviathanShutout() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1132,
                 }, 
                 boss6 = {
                     name = "Flame Leviathan 4",
@@ -3882,7 +3884,8 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = true,
                     track = function() core.Ulduar:RazorscaleAQuickShave() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1139,
                 }, 
                 boss11 = {
                     name = "Razorscale 2",
@@ -3892,7 +3895,8 @@ core.Instances = {
                     tactics = "Wait for 25 Dark Rune Guardian Dwarves to spawn then use the harpoons to pull Razorscale down. Once Razorscale is down dps the boss down to below 50% so the boss is permanently grounded. Be careful you don’t one shot the boss. Once the boss is grounded, place the Dark Rune Guardians in front of the boss until they are killed by Razorscale breath ability.",
                     enabled = true,
                     track = function() core.Ulduar:RazorscaleIronDwarfMediumRare() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1139,
                 }, 
                 boss12 = {
                     name = "Ignis the Furnace Master 1",
@@ -3902,7 +3906,8 @@ core.Instances = {
                     tactics = "Pull the boss then wait for 2 Iron Constructs to spawn. Place the 2 Iron Constructs in the fire on the ground until they gain 10 stacks of the Heat Buff. Next drag the 2 Iron Constructs into the water so they turn to stone. Finally nuke down the 2 adds within 5 seconds of one another. Once both adds have died you can kill boss.",
                     enabled = true,
                     track = function() core.Ulduar:IgnisTheFurnaceMasterShattered() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1136,
                 }, 
                 boss13 = {
                     name = "Ignis the Furnace Master 2",
@@ -3922,7 +3927,8 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = true,
                     track = function() core.Ulduar:IgnisTheFurnaceMasterStokinTheFurnace() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1136,
                 }, 
                 boss15 = {
                     name = "XT-002 Deconstructor 1",
@@ -3932,7 +3938,8 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = true,
                     track = function() core.Ulduar:XT002DeconstructorNerfEngineering() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1142,
                 }, 
                 boss16 = {
                     name = "XT-002 Deconstructor 2",
@@ -3942,7 +3949,8 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.Ulduar:XT002DeconstructorNerfScrapbots() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1142,
                 }, 
                 boss17 = {
                     name = "XT-002 Deconstructor 3",
@@ -3952,7 +3960,8 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = true,
                     track = function() core.Ulduar:XT002DeconstructorNerfGravityBombs() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1142,
                 }, 
                 boss18 = {
                     name = "XT-002 Deconstructor 4",
@@ -3962,7 +3971,8 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = true,
                     track = function() core.Ulduar:XT002DeconstructorMustDeconstructFaster() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1142,
                 }, 
                 boss19 = {
                     name = "XT-002 Deconstructor 5",
@@ -3972,7 +3982,8 @@ core.Instances = {
                     tactics = "Pull the boss and dps down until you reach 75%, 50% or 25% to start the heart phase. Careful you don’t one shot the boss. Once the heart is exposed nuke it down then kill the boss.",
                     enabled = true,
                     track = function() core.Ulduar:XT002DeconstructorHeartbreaker() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1142,
                 }, 
                 boss20 = {
                     name = "Assembly of Iron 1",
@@ -3982,7 +3993,8 @@ core.Instances = {
                     tactics = "At 110, just kill Runemaster Molgeim last.",
                     enabled = true,
                     track = function() core.Ulduar:AssemblyOfIronIChooseYouRunemasterMolgeim() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1140,
                 }, 
                 boss21 = {
                     name = "Assembly of Iron 2",
@@ -3992,7 +4004,8 @@ core.Instances = {
                     tactics = "At 110, just kill Stormcaller Brundir last.",
                     enabled = true,
                     track = function() core.Ulduar:AssemblyOfIronIChooseYouStormcallerBrundir() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1140,
                 }, 
                 boss22 = {
                     name = "Assembly of Iron 3",
@@ -4002,7 +4015,8 @@ core.Instances = {
                     tactics = "At 110, just kill Steelbreaker last.",
                     enabled = true,
                     track = function() core.Ulduar:AssemblyOfIronIChooseYouSteelbreaker() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1140,
                 }, 
                 boss23 = {
                     name = "Assembly of Iron 4",
@@ -4022,7 +4036,8 @@ core.Instances = {
                     tactics = "After pulling the boss you must interrupt the first cast of Chain Lightning from Stormcaller Brundir before killing him. Once you have interrupted the spell, nuke down Stormcaller Brundir and then kill the other two bosses.",
                     enabled = true,
                     track = function() core.Ulduar:AssemblyOfIronCantDoThatWhileStunned() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1140,
                 }, 
                 boss25 = {
                     name = "Kologarn 1",
@@ -4032,7 +4047,8 @@ core.Instances = {
                     tactics = "At 110, just single target down the boss without killing the arms.",
                     enabled = true,
                     track = function() core.Ulduar:KologarnWithOpenArms() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1137,
                 }, 
                 boss26 = {
                     name = "Kologarn 2",
@@ -4052,7 +4068,8 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = true,
                     track = function() core.Ulduar:KologarnIfLooksCouldKill() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1137,
                 }, 
                 boss28 = {
                     name = "Kologarn 4",
@@ -4062,7 +4079,8 @@ core.Instances = {
                     tactics = "After pulling the boss kill the arms until 25 Rubble has spawned. Don’t damage the boss since killing the arms already does a lot of damage to the boss.",
                     enabled = true,
                     track = function() core.Ulduar:KologarnRubbleAndRoll() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1137,
                 }, 
                 boss29 = {
                     name = "Auriaya 1",
@@ -4073,7 +4091,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.Ulduar:AuriayaCrazyCatLady() end,
                     partial = false,
-                    nameplateCheck = true,
+                    encounterID = 1131,
                 }, 
                 boss30 = {
                     name = "Auriaya 2",
@@ -4084,7 +4102,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.Ulduar:AuriayaNineLives() end,
                     partial = false,
-                    nameplateCheck = true,
+                    encounterID = 1131,
                 }, 
                 boss31 = {
                     name = "Hodir 1",
@@ -4094,7 +4112,8 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke down the boss.",
                     enabled = true,
                     track = function() core.Ulduar:HodirCheeseTheFreeze() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1135,
                 }, 
                 boss32 = {
                     name = "Hodir 2",
@@ -4104,7 +4123,8 @@ core.Instances = {
                     tactics = "At 110, free the adds from the ice tombs then nuke down the boss.",
                     enabled = true,
                     track = function() core.Ulduar:HodirIHaveTheCoolestFriends() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1135,
                 }, 
                 boss33 = {
                     name = "Hodir 3",
@@ -4114,7 +4134,8 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke down the boss.",
                     enabled = true,
                     track = function() core.Ulduar:HodirGettingColdInHere() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1135,
                 }, 
                 boss34 = {
                     name = "Hodir 4",
@@ -4124,7 +4145,8 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke down the boss.",
                     enabled = true,
                     track = function() core.Ulduar:HodirICouldSayThatThisCacheWasRare() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1135,
                 }, 
                 boss35 = {
                     name = "Hodir 5",
@@ -4144,7 +4166,8 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke down the boss.",
                     enabled = true,
                     track = function() core.Ulduar:ThorimDontStandInTheLightning() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1141,
                 }, 
                 boss37 = {
                     name = "Thorim 2",
@@ -4194,17 +4217,18 @@ core.Instances = {
                     tactics = "Pull Elder Brightleaf, Elder Ironbranch and Elder Stonebark together in the Freya boss room and kill them within 15 seconds of one another.",
                     enabled = true,
                     track = function() core.Ulduar:FreyaLumberjacked() end,
-					partial = false,
+                    partial = false,
                 }, 
                 boss42 = {
                     name = "Freya 1",
-                    bossIDs = {}, --33430, 33431, 33528, 33527, 33526, 33525, 32914, 32913, 33354, 33355, 32915
+                    bossIDs = {33430, 33431, 33528, 33527, 33526, 33525, 32914, 32913, 33354, 33355, 32915},
                     achievement = 12361,
                     players = {"(Enter instance to start scanning)"},
                     tactics = "For the achievement just kill the boss within 20 minutes of killing the first creature in the Freya boss room.",
-                    enabled = false,
-                    track = nil,
-					partial = true,
+                    enabled = true,
+                    track = function() core.Ulduar:FreyaConSpeedAtory() end,
+                    partial = true,
+                    encounterID = 1133,
                 }, 
                 boss43 = {
                     name = "Freya 2",
@@ -4214,7 +4238,8 @@ core.Instances = {
                     tactics = "Pull the boss then wait for 2 Ancient Water Spirits, 2 Storm Lashers and 2 Snaplashers to spawn. Once these have spawned aoe them down within 10 seconds of one another. Be careful that you don’t kill the boss first.",
                     enabled = true,
                     track = function() core.Ulduar:FreyaDeforestation() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1133,
                 }, 
                 boss44 = {
                     name = "Freya 3",
@@ -4224,7 +4249,8 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = true,
                     track = function() core.Ulduar:FreyaGettingBackToNature() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1133,
                 }, 
                 boss45 = {
                     name = "Freya 4",
@@ -4264,7 +4290,8 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke the boss down. If a bomb bot spawns, make sure you kill it before it reaches you.",
                     enabled = true,
                     track = function() core.Ulduar:MimironSetUpUsTheBomb() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1138,
                 }, 
                 boss49 = {
                     name = "Mimiron 2",
@@ -4274,7 +4301,8 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.Ulduar:MimironNotSoFriendlyFire() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1138,
                 }, 
                 boss50 = {
                     name = "Mimiron 3",
@@ -4284,7 +4312,8 @@ core.Instances = {
                     tactics = "Push the red button behind the boss to active hard mode to earn this achievement.",
                     enabled = true,
                     track = function() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1138,
                 }, 
                 boss51 = {
                     name = "General Vezax 1",
@@ -4294,7 +4323,8 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = true,
                     track = function() core.Ulduar:Shadowdodger() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1134,
                 }, 
                 boss52 = {
                     name = "General Vezax 2",
@@ -4304,7 +4334,8 @@ core.Instances = {
                     tactics = "Pull the boss then wait for the Saronite Animus to spawn. Once the Saronite Animus has spawned, kill it then kill the boss. The Saronite Animus takes about 5 minutes to spawn.",
                     enabled = true,
                     track = function() core.Ulduar:ILoveTheSmellOfSaroniteInTheMorning() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1134,
                 }, 
                 boss53 = {
                     name = "Yogg-Saron 1",
@@ -4314,7 +4345,8 @@ core.Instances = {
                     tactics = "After bring Sara down to 0% at the start of phase one, she will turn angry. Use /kiss on her to complete this achievement at this point.",
                     enabled = true,
                     track = function() core.Ulduar:KissAndMakeUp() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1143,
                 }, 
                 boss54 = {
                     name = "Yogg-Saron 2",
@@ -4364,7 +4396,8 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = true,
                     track = function() core.Ulduar:DriveMeCrazy() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1143,
                 }, 
                 boss59 = {
                     name = "Yogg-Saron 7",
@@ -4374,7 +4407,8 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = true,
                     track = function() core.Ulduar:HesNotGettingAnyOlder() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1143,
                 }, 
                 boss60 = {
                     name = "Yogg-Saron 8",
@@ -4384,7 +4418,8 @@ core.Instances = {
                     tactics = "After starting the encounter, run into the clouds around the room to spawn Guardians of Yogg-Saron. Once 9 Guardians of Yogg-Saron have spawned, AOE then down within 12 seconds of one another. You can then kill the boss.",
                     enabled = true,
                     track = function() core.Ulduar:TheyreComingOutOfTheWalls() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1143,
                 }, 
                 boss61 = {
                     name = "Yogg-Saron 9",
