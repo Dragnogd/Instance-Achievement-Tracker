@@ -1334,30 +1334,37 @@ function detectBoss(id)
 					table.insert(core.achievementIDs, core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
 				end
 				core.foundBoss = true
+				core.encounterDetected = true --This will stop other bosses being detected by accident through the detection method below
 			end
 		end
 		
-		if core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs ~= nil then
-			--Detect boss by the ID of the npc
-			core:sendDebugMessage("Detecting boss by npc ID")
-			if #core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs > 0 then
-				for i = 1, #core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs do
-					local bossID = core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs[i]
-					if string.find(id, bossID) then
-						if core:has_value(currentBossNums, boss) == false then
-							core:sendDebugMessage("Adding the following boss: " .. boss)
-							table.insert(core.currentBosses, core.Instances[core.expansion][core.instanceType][core.instance][boss])
-							table.insert(currentBossNums, boss)
+		C_Timer.After(2, function() 
+			--Wait for 2 seconds to give a chance for the encounter id to be detected. This is a much more reliable way to detect which
+			--boss we are currently in combat with. We need the detection below in case bosses do not have an encounter id or for
+			--achievements which do not actually start a boss encounter. Eg achievements which just involve trash mobs.
+			if core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs ~= nil and encounterDetected = false then
+				--Detect boss by the ID of the npc
+				core:sendDebugMessage("Detecting boss by npc ID")
+				if #core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs > 0 then
+					for i = 1, #core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs do
+						local bossID = core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs[i]
+						if string.find(id, bossID) then
+							if core:has_value(currentBossNums, boss) == false then
+								core:sendDebugMessage("Adding the following boss: " .. boss)
+								table.insert(core.currentBosses, core.Instances[core.expansion][core.instanceType][core.instance][boss])
+								table.insert(currentBossNums, boss)
+							end
+							if core:has_value(core.achievementIDs, core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement) == false then
+								core:sendDebugMessage("Adding the following achievement ID beacuse it doesn't exist: " .. core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
+								table.insert(core.achievementIDs, core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
+							end
+							core.foundBoss = true
 						end
-						if core:has_value(core.achievementIDs, core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement) == false then
-							core:sendDebugMessage("Adding the following achievement ID beacuse it doesn't exist: " .. core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
-							table.insert(core.achievementIDs, core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
-						end
-						core.foundBoss = true
 					end
 				end
 			end
-		end
+		end)
+		
 	end
 
 	if core.foundBoss == true then
@@ -1754,6 +1761,7 @@ function clearVariables()
 	core.achievementsCompleted = {}
 	core.achievementTrackedMessageShown = false
 	core.foundBoss = false
+	core.encounterDetected = false
 	core.playersFailedPersonal = {}
 	lastMessageSent = nil
 
