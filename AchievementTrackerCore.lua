@@ -1348,7 +1348,7 @@ function detectBoss(id)
 			--Wait for 2 seconds to give a chance for the encounter id to be detected. This is a much more reliable way to detect which
 			--boss we are currently in combat with. We need the detection below in case bosses do not have an encounter id or for
 			--achievements which do not actually start a boss encounter. Eg achievements which just involve trash mobs.
-			if core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs ~= nil and core.encounterDetected == false then
+			if core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs ~= nil and core.encounterDetected == false and core.inCombat == true then
 				--Detect boss by the ID of the npc
 				core:sendDebugMessage("Detecting boss by npc ID")
 				if #core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs > 0 then

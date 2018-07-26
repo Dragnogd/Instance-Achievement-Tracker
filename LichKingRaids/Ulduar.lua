@@ -259,7 +259,7 @@ function core.Ulduar:XT002DeconstructorNerfScrapbots()
 end
 
 function core.Ulduar:KologarnIfLooksCouldKill()
-    if core.type == "SPELL_DAMAGE" and core.spellId == 63346 then
+    if (core.type == "SPELL_DAMAGE" or core.type == "SPELL_MISSED") and (core.spellId == 63346 or core.spellId == 63976) then
         core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")")
     end
 end
