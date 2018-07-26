@@ -704,7 +704,9 @@ function core.Ulduar.Events:UNIT_AURA(self, unitID, ...)
 end
 
 function core.Ulduar.Events:CHAT_MSG_MONSTER_YELL(self, message, sender, language, channelString, target, flags, unknown, channelNumber, channelName, unknown, counter, ...)
-    if message == "Now, why would you go and do something like that? Didn't you see the sign that said, \"DO NOT PUSH THIS BUTTON!\"? How will we finish testing with the self-destruct mechanism active?" then
-        core:getAchievementSuccess(2)
+    if core.Instances.WrathOfTheLichKing.Raids.Ulduar.boss50.enabled == true then
+        if message == "Now, why would you go and do something like that? Didn't you see the sign that said, \"DO NOT PUSH THIS BUTTON!\"? How will we finish testing with the self-destruct mechanism active?" then
+            core:getAchievementSuccess(2)
+        end   
     end
 end
