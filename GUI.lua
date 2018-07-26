@@ -206,6 +206,9 @@ function Tab_OnClick(self)
             UIConfig.Main2.options4:SetScript("OnClick", ATToggleMinimapIcon_OnClick)
             UIConfig.Main2.options5 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options4, "TOPLEFT", 30, -9, "Show Minimap Button","GameFontHighlight")            
 
+            --Announce which acheivements are being tracked to group
+            
+
             -- print("Addon State: " .. AchievementTrackerOptions["enableAddon"])
 
             -- if AchievementTrackerOptions["enableAddon"] == nil or AchievementTrackerOptions["enableAddon"] == true then

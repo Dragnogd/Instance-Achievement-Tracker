@@ -89,6 +89,8 @@ core.mobUID = {}								--Used in the trackMob function to store the unique UID 
 core.thresholdAnnounced = false					--Used to check whether the trackMob funciton has announced the requirements have been met
 core.encounterStarted = false
 core.displayAchievements = false
+core.encounterDetected = false
+core.outputTrackingStatus = false
 
 --------------------------------------
 -- Addon Syncing V1.0.1a
@@ -1324,25 +1326,28 @@ function detectBoss(id)
 			--Detect boss by the encounter ID
 			core:sendDebugMessage("Detecting boss by Encounter ID")
 			if id == core.Instances[core.expansion][core.instanceType][core.instance][boss].encounterID then
-				if core:has_value(currentBossNums, boss) == false then
-					core:sendDebugMessage("Adding the following encounter ID: " .. boss)
-					table.insert(core.currentBosses, core.Instances[core.expansion][core.instanceType][core.instance][boss])
-					table.insert(currentBossNums, boss)
+				--Check whether the boss has an achievement first before adding. This is so we can output to the chat. "IAT cannot track any achievements for this encounter" if needed
+				if core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement ~= false then
+					if core:has_value(currentBossNums, boss) == false then
+						core:sendDebugMessage("Adding the following encounter ID: " .. boss)
+						table.insert(core.currentBosses, core.Instances[core.expansion][core.instanceType][core.instance][boss])
+						table.insert(currentBossNums, boss)
+					end
+					if core:has_value(core.achievementIDs, core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement) == false then
+						core:sendDebugMessage("Adding the following achievement ID beacuse it doesn't exist: " .. core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
+						table.insert(core.achievementIDs, core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
+					end
+					core.foundBoss = true
 				end
-				if core:has_value(core.achievementIDs, core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement) == false then
-					core:sendDebugMessage("Adding the following achievement ID beacuse it doesn't exist: " .. core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
-					table.insert(core.achievementIDs, core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
-				end
-				core.foundBoss = true
-				core.encounterDetected = true --This will stop other bosses being detected by accident through the detection method below
 			end
+			core.encounterDetected = true --This will stop other bosses being detected by accident through the detection method below
 		end
 		
 		C_Timer.After(2, function() 
 			--Wait for 2 seconds to give a chance for the encounter id to be detected. This is a much more reliable way to detect which
 			--boss we are currently in combat with. We need the detection below in case bosses do not have an encounter id or for
 			--achievements which do not actually start a boss encounter. Eg achievements which just involve trash mobs.
-			if core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs ~= nil and encounterDetected = false then
+			if core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs ~= nil and encounterDetected == false then
 				--Detect boss by the ID of the npc
 				core:sendDebugMessage("Detecting boss by npc ID")
 				if #core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs > 0 then
@@ -1364,7 +1369,12 @@ function detectBoss(id)
 				end
 			end
 		end)
-		
+	end
+
+	--If encounter is detected but foundBoss is false then output to chat no achievements to detect for this encounter
+	if encounterDetected == true and core.foundBoss == false and core.outputTrackingStatus == false then
+		core:printMessage("IAT cannot track any achievements for this encounter.")
+		core.outputTrackingStatus = true
 	end
 
 	if core.foundBoss == true then
@@ -1763,6 +1773,7 @@ function clearVariables()
 	core.foundBoss = false
 	core.encounterDetected = false
 	core.playersFailedPersonal = {}
+	core.outputTrackingStatus = false
 	lastMessageSent = nil
 
 	core.mobCounter = 0
