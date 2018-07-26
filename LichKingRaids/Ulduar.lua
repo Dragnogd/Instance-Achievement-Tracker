@@ -692,10 +692,19 @@ core.Ulduar.Events:SetScript("OnEvent", function(self, event, ...)
 end)
 
 function core.Ulduar.Events:UNIT_AURA(self, unitID, ...)
-    if UnitBuff(unitID, GetSpellInfo(62705)) ~= nil and repairedAnnounced == false then
-        core:sendMessage(GetAchievementLink(2905) .. " FAILED! A player has repaired their vechile")
-        repairedAnnounced = true
+    -- if UnitBuff(unitID, GetSpellInfo(62705)) ~= nil and repairedAnnounced == false then
+    --     core:sendMessage(GetAchievementLink(2905) .. " FAILED! A player has repaired their vechile")
+    --     repairedAnnounced = true
+    -- end
+
+    for i=1,40 do
+        local _, _, _, _, _, _, _, _, _, spellId = UnitBuff(unitID, i)
+        if spellId == 62705 and repairedAnnounced == false then
+            core:sendMessage(GetAchievementLink(2905) .. " FAILED! A player has repaired their vechile")
+            repairedAnnounced = true
+        end
     end
+
 end
 
 function core.Ulduar.Events:CHAT_MSG_MONSTER_YELL(self, message, sender, language, channelString, target, flags, unknown, channelNumber, channelName, unknown, counter, ...)

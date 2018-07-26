@@ -1318,6 +1318,7 @@ end
 
 --Where the player enters combat, check if any of the mobs/bosses need to be tracked or not
 function detectBoss(id)
+	print("DETECT BOSS FIRED!")
 	core:sendDebugMessage("Found the following boss ID: " .. id)
 
 	--Detect Encounter ID
@@ -1339,15 +1340,15 @@ function detectBoss(id)
 					end
 					core.foundBoss = true
 				end
+				core.encounterDetected = true --This will stop other bosses being detected by accident through the detection method below
 			end
-			core.encounterDetected = true --This will stop other bosses being detected by accident through the detection method below
 		end
 		
 		C_Timer.After(2, function() 
 			--Wait for 2 seconds to give a chance for the encounter id to be detected. This is a much more reliable way to detect which
 			--boss we are currently in combat with. We need the detection below in case bosses do not have an encounter id or for
 			--achievements which do not actually start a boss encounter. Eg achievements which just involve trash mobs.
-			if core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs ~= nil and encounterDetected == false then
+			if core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs ~= nil and core.encounterDetected == false then
 				--Detect boss by the ID of the npc
 				core:sendDebugMessage("Detecting boss by npc ID")
 				if #core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs > 0 then
