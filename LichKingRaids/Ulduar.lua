@@ -110,42 +110,40 @@ local guardianOfYoggSaronKilled = 0
 local kissAndMakeUpAnnounced = false
 
 function core.Ulduar:Dwarfageddon()
-    if core.Instances.Legion.Raids.Ulduar.boss1.enabled == true then
-        core:trackMob("33572", "Steelforged Defender", 100, "100 Steelforged Defenders have spawned. AOE them now!", 10, nil, nil)
+    core:trackMob("33572", "Steelforged Defender", 100, "100 Steelforged Defenders have spawned. AOE them now!", 10, nil, nil)
 
-        if core.mobCounter >= 100 and steelforgedDefenderAnnounced == false then
-            steelforgedDefenderAnnounced = true
-        end
-    
-        --Add killed
-        if core.type == "UNIT_DIED" and steelforgedDefenderAnnounced == true then
-            --Only start the timer if enough adds have been collected.
-            steelforgedDefenderKilled = steelforgedDefenderKilled + 1
-            if timerStarted == false then
-                timerStarted = true
-                core:sendMessage(core:getAchievement() .. " Timer Started! 10 seconds remaining")
-                C_Timer.After(10, function()
-                    if steelforgedDefenderKilled >= 100 then
-                        if dwarfageddonComplete == false then
-                            core:sendMessage(core:getAchievement() .. " COMPLETED! Steelforged Defenders were killed in time (" .. steelforgedDefenderKilled .. "/100)")
-                            dwarfageddonComplete = true
-                        end
-                    else
-                        core:sendMessage(core.getAchievement() .. " FAILED! Steelforged Defenders were not killed in time (" .. steelforgedDefenderKilled .. "/100). This achievement can be attempted again.")
-                        steelforgedDefenderKilled = 0
-                        timerStarted = false
-                        steelforgedDefenderAnnounced = false
-                    end
-                end)
-            else
+    if core.mobCounter >= 100 and steelforgedDefenderAnnounced == false then
+        steelforgedDefenderAnnounced = true
+    end
+
+    --Add killed
+    if core.type == "UNIT_DIED" and steelforgedDefenderAnnounced == true then
+        --Only start the timer if enough adds have been collected.
+        steelforgedDefenderKilled = steelforgedDefenderKilled + 1
+        if timerStarted == false then
+            timerStarted = true
+            core:sendMessage(core:getAchievement() .. " Timer Started! 10 seconds remaining")
+            C_Timer.After(10, function()
                 if steelforgedDefenderKilled >= 100 then
                     if dwarfageddonComplete == false then
                         core:sendMessage(core:getAchievement() .. " COMPLETED! Steelforged Defenders were killed in time (" .. steelforgedDefenderKilled .. "/100)")
                         dwarfageddonComplete = true
                     end
+                else
+                    core:sendMessage(core.getAchievement() .. " FAILED! Steelforged Defenders were not killed in time (" .. steelforgedDefenderKilled .. "/100). This achievement can be attempted again.")
+                    steelforgedDefenderKilled = 0
+                    timerStarted = false
+                    steelforgedDefenderAnnounced = false
+                end
+            end)
+        else
+            if steelforgedDefenderKilled >= 100 then
+                if dwarfageddonComplete == false then
+                    core:sendMessage(core:getAchievement() .. " COMPLETED! Steelforged Defenders were killed in time (" .. steelforgedDefenderKilled .. "/100)")
+                    dwarfageddonComplete = true
                 end
             end
-        end 
+        end
     end
 end
 
@@ -694,19 +692,15 @@ core.Ulduar.Events:SetScript("OnEvent", function(self, event, ...)
 end)
 
 function core.Ulduar.Events:UNIT_AURA(self, unitID, ...)
-    -- if UnitBuff(unitID, GetSpellInfo(62705)) ~= nil and repairedAnnounced == false then
-    --     core:sendMessage(GetAchievementLink(2905) .. " FAILED! A player has repaired their vechile")
-    --     repairedAnnounced = true
-    -- end
-
-    for i=1,40 do
-        local _, _, _, _, _, _, _, _, _, spellId = UnitBuff(unitID, i)
-        if spellId == 62705 and repairedAnnounced == false then
-            core:sendMessage(GetAchievementLink(2905) .. " FAILED! A player has repaired their vehicle")
-            repairedAnnounced = true
+    if core.Instances.WrathOfTheLichKing.Raids.Ulduar.boss2.enabled == true then
+        for i=1,40 do
+            local _, _, _, _, _, _, _, _, _, spellId = UnitBuff(unitID, i)
+            if spellId == 62705 and repairedAnnounced == false then
+                core:sendMessage(GetAchievementLink(2905) .. " FAILED! A player has repaired their vehicle")
+                repairedAnnounced = true
+            end
         end
     end
-
 end
 
 function core.Ulduar.Events:CHAT_MSG_MONSTER_YELL(self, message, sender, language, channelString, target, flags, unknown, channelNumber, channelName, unknown, counter, ...)
