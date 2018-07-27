@@ -84,6 +84,8 @@ local messageAnnounced = false
 ---- Con-speed-atory
 ------------------------------------------------------
 local freyaTrashedStarted = false
+local timerFreya
+local timerStartedFreya = false
 
 ------------------------------------------------------
 ---- Lumberjacked
@@ -410,23 +412,23 @@ end
 function core.Ulduar:FreyaConSpeedAtory()
     local freyaTrashIDs = {"33430", "33431", "33528", "33527", "33526", "33525", "32914", "32913", "33354", "33355", "32915"}
     if core.type == "UNIT_DIED" and timerStarted == false and freyaTrashedStarted == false and core:has_value(freyaTrashIDs, core.destID) == true then
-        if timerStarted == false then
-            timerStarted = true
+        if timerStartedFreya == false then
+            timerStartedFreya = true
             freyaTrashedStarted = true
             core:sendMessage("Tracking: " .. core:getAchievement() .. " 20 Minutes Remaining")
-            timer = C_Timer.NewTimer(1200, function() 
-                if freyaKilled == false then 
-                    core:sendMessage(GetAchievementLink(12361) .. " FAILED!")
-                end
+            timerFreya = C_Timer.NewTimer(1200, function() 
+                core:sendMessage(GetAchievementLink(12361) .. " FAILED!")
             end)
         end  
     end
 
-    --TODO: Stop timer when Freya has been killed
-    --Freya has been killed so stop timer
-    -- if timer ~= nil then
-    --     timer:Cancel()
-    -- end
+    --Freya has died so stop the timer
+    if core.type == "UNIT_DIED" and core.destID == "32906" then
+        if timerFreya ~= nil then
+            core:sendMessage("Cancelling Freya Timer")
+            timerFreya:Cancel()
+        end
+    end
 end
 
 function core.Ulduar:FreyaLumberjacked()
@@ -709,4 +711,8 @@ function core.Ulduar.Events:CHAT_MSG_MONSTER_YELL(self, message, sender, languag
             core:getAchievementSuccess(2)
         end   
     end
+end
+
+function core.Ulduar.TrackAdditional()
+
 end

@@ -191,7 +191,7 @@ function core.AntorusTheBurningThrone:InitialSetup()
     core.AntorusTheBurningThrone.Events:RegisterEvent("UNIT_POWER")
 end
 
-function core.AntorusTheBurningThrone.Events:UNIT_SPELLCAST_SUCCEEDED(self, unitID, spell, rank, lineID, spellID, ...)
+function core.AntorusTheBurningThrone.Events:UNIT_SPELLCAST_SUCCEEDED(self, unitID, lineID, spellID, ...)
     if core.Instances.Legion.Raids.AntorusTheBurningThrone.boss7.enabled == true then
         if spellID == 248214 and timerStarted == false then
             --Diabolic Bomb Spawned
@@ -214,10 +214,12 @@ function core.AntorusTheBurningThrone.Events:UNIT_POWER(self, unit, powerType)
 
                 --Save current power locally
                 local currentPower = UnitPower(unit)
+                print(currentPower)
 
                 --Wait 5 seconds to see if Khaz'Goroth has gained 80 power within 5 seconds
                 C_Timer.After(5, function() 
                     local newPower = UnitPower(unit)
+                    print(newPower)
 
                     if (newPower - currentPower) >= 80 then
                         core:getAchievementSuccess()

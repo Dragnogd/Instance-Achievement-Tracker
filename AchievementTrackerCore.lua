@@ -6,7 +6,7 @@ local _, core = ...
 local events = CreateFrame("Frame")
 local UIConfig
 local UICreated = false
-local debugMode = false
+local debugMode = true
 
 AchievementTrackerOptions = {}
 AchievementTrackerDebug = {}
@@ -439,6 +439,7 @@ end
 --Run if we need to setup additional events/variables for a certain instance. For example if we need to track additional events such as messages from bosses
 function initialInstanceSetup()
 	--Used to start certain events for some instances so we don't have to run them when they are not needed
+	core:sendDebugMessage("Starting Initial Setup If Needed...")
 	if pcall(function() core[core.instanceClear]:InitialSetup() end) == true then
 		core[core.instanceClear]:InitialSetup()
 	end
@@ -848,6 +849,10 @@ function events:ENCOUNTER_START(self, encounterID, encounterName, difficultyID, 
 
 	--If encounter ID is detected then use that to detectBoss
 	if encounterID ~= nil then
+		--Found the boss encounter ID so clear out any other bosses currently stored
+		core.currentBosses = {}
+		core.achievementIDs = {}
+		currentBossNums = {}
 		detectBoss(encounterID)
 	end
 end
@@ -1325,17 +1330,17 @@ function detectBoss(id)
 	for boss,_ in pairs(core.Instances[core.expansion][core.instanceType][core.instance]) do
 		if core.Instances[core.expansion][core.instanceType][core.instance][boss].encounterID ~= nil then
 			--Detect boss by the encounter ID
-			core:sendDebugMessage("Detecting boss by Encounter ID")
+			--core:sendDebugMessage("Detecting boss by Encounter ID")
 			if id == core.Instances[core.expansion][core.instanceType][core.instance][boss].encounterID then
 				--Check whether the boss has an achievement first before adding. This is so we can output to the chat. "IAT cannot track any achievements for this encounter" if needed
 				if core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement ~= false then
 					if core:has_value(currentBossNums, boss) == false then
-						core:sendDebugMessage("Adding the following encounter ID: " .. boss)
+						core:sendDebugMessage("(E) Adding the following encounter ID: " .. boss)
 						table.insert(core.currentBosses, core.Instances[core.expansion][core.instanceType][core.instance][boss])
 						table.insert(currentBossNums, boss)
 					end
 					if core:has_value(core.achievementIDs, core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement) == false then
-						core:sendDebugMessage("Adding the following achievement ID beacuse it doesn't exist: " .. core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
+						core:sendDebugMessage("(E) Adding the following achievement ID beacuse it doesn't exist: " .. core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
 						table.insert(core.achievementIDs, core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
 					end
 					core.foundBoss = true
@@ -1344,32 +1349,31 @@ function detectBoss(id)
 			end
 		end
 		
-		C_Timer.After(2, function() 
-			--Wait for 2 seconds to give a chance for the encounter id to be detected. This is a much more reliable way to detect which
-			--boss we are currently in combat with. We need the detection below in case bosses do not have an encounter id or for
-			--achievements which do not actually start a boss encounter. Eg achievements which just involve trash mobs.
-			if core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs ~= nil and core.encounterDetected == false and core.inCombat == true then
-				--Detect boss by the ID of the npc
-				core:sendDebugMessage("Detecting boss by npc ID")
-				if #core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs > 0 then
-					for i = 1, #core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs do
-						local bossID = core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs[i]
-						if string.find(id, bossID) then
-							if core:has_value(currentBossNums, boss) == false then
-								core:sendDebugMessage("Adding the following boss: " .. boss)
-								table.insert(core.currentBosses, core.Instances[core.expansion][core.instanceType][core.instance][boss])
-								table.insert(currentBossNums, boss)
-							end
-							if core:has_value(core.achievementIDs, core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement) == false then
-								core:sendDebugMessage("Adding the following achievement ID beacuse it doesn't exist: " .. core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
-								table.insert(core.achievementIDs, core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
-							end
-							core.foundBoss = true
+		--Wait for 2 seconds to give a chance for the encounter id to be detected. This is a much more reliable way to detect which
+		--boss we are currently in combat with. We need the detection below in case bosses do not have an encounter id or for
+		--achievements which do not actually start a boss encounter. Eg achievements which just involve trash mobs.
+		if core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs ~= nil and core.encounterDetected == false then
+			--Detect boss by the ID of the npc
+			--core:sendDebugMessage("Detecting boss by npc ID")
+			if #core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs > 0 then
+				for i = 1, #core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs do
+					local bossID = core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs[i]
+					if string.find(id, bossID) then
+						if core:has_value(currentBossNums, boss) == false then
+							core:sendDebugMessage("Adding the following boss: " .. boss)
+							table.insert(core.currentBosses, core.Instances[core.expansion][core.instanceType][core.instance][boss])
+							table.insert(currentBossNums, boss)
 						end
+						if core:has_value(core.achievementIDs, core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement) == false then
+							core:sendDebugMessage("Adding the following achievement ID beacuse it doesn't exist: " .. core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
+							table.insert(core.achievementIDs, core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
+						end
+						core.foundBoss = true
 					end
 				end
 			end
-		end)
+		end
+
 	end
 
 	--If encounter is detected but foundBoss is false then output to chat no achievements to detect for this encounter
@@ -1380,8 +1384,9 @@ function detectBoss(id)
 
 	if core.foundBoss == true then
 		--Display tracking achievement for that boss if partial variable is not false and boss was found and tracking is enabled and encounter has started
+		core:getAchievementToTrack()
 		if core.encounterStarted == true then
-			core:getAchievementToTrack()
+			
 		else
 			core.displayAchievements = true
 		end
@@ -1398,21 +1403,26 @@ end
 --Display the "Tracking {achievement} for achievements"
 --TODO: concatenate multiple achievements to print out in 1 message / split up to reduce amount of messages being sent
 function core:getAchievementToTrack()
-	if core.achievementTrackedMessageShown == false then
-		core:sendDebugMessage("Length of array: " .. #core.currentBosses)
-		for i = 1, #core.currentBosses do
-			core:sendDebugMessage("Achievement: " .. core.currentBosses[i].achievement)
-			if core.currentBosses[i].partial == false and core.currentBosses[i].enabled == true then
-				printMessage("Tracking: "  .. GetAchievementLink(core.currentBosses[i].achievement))
-				core:sendMessage("setup")
-				core.achievementTrackedMessageShown = true
+	--Wait 1 second while information about encounter is being gathered before outputting
+	C_Timer.After(3, function() 
+		print("HERE 1")
+		if core.achievementTrackedMessageShown == false then
+			print("HERE 2")
+			core:sendDebugMessage("Length of array: " .. #core.currentBosses)
+			for i = 1, #core.currentBosses do
+				core:sendDebugMessage("Achievement: " .. core.currentBosses[i].achievement)
+				if core.currentBosses[i].partial == false and core.currentBosses[i].enabled == true then
+					printMessage("Tracking: "  .. GetAchievementLink(core.currentBosses[i].achievement))
+					core:sendMessage("setup")
+					core.achievementTrackedMessageShown = true
+				end
+	
+				--Setup failed and completed achievements table
+				table.insert(core.achievementsFailed, false)
+				table.insert(core.achievementsCompleted, false)
 			end
-
-			--Setup failed and completed achievements table
-			table.insert(core.achievementsFailed, false)
-			table.insert(core.achievementsCompleted, false)
-		end
-	end
+		end	
+	end)
 end
 
 ------------------------------------------------------
