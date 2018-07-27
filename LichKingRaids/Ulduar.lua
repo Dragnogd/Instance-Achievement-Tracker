@@ -378,7 +378,7 @@ end
 
 function core.Ulduar:HodirCheeseTheFreeze()
     --4
-    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 61990 and core.currentUnit == "Player" then
+    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 61969 and core.currentUnit == "Player" then
         core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")",4)
     end
 end
