@@ -1741,12 +1741,12 @@ function core:trackAura(auraID, maxCount, type)
 		end
 
 		local count = 0
-		local name, rank, icon, castingTime, minRange, maxRange, spellID = GetSpellInfo(auraID)
-		if type == "debuff" then
-			if unit ~= nil then
-				_, _, _, count, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _ = UnitDebuff(unit, name)
-			end
-		end
+        for i=1,40 do
+			local _, _, count2, _, _, _, _, _, _, spellId = UnitDebuff(unit, i)
+			if spellId == auraID then
+				count = count2
+            end
+        end
 
 		if count ~= nil then
 			if count >= maxCount then

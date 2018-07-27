@@ -4439,7 +4439,8 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1130,
                 },                    
             },
 
