@@ -843,17 +843,13 @@ function events:ENCOUNTER_START(self, encounterID, encounterName, difficultyID, 
 	core.encounterStarted = true
 
 	if core.displayAchievements == true then
-		core:getAchievementToTrack()
 		core.disableAchievementTracking = false
 	end
 
 	--If encounter ID is detected then use that to detectBoss
 	if encounterID ~= nil then
 		--Found the boss encounter ID so clear out any other bosses currently stored
-		core.currentBosses = {}
-		core.achievementIDs = {}
-		currentBossNums = {}
-		detectBoss(encounterID)
+		detectBossByEncounterID(encounterID)
 	end
 end
 
@@ -862,6 +858,7 @@ function events:ENCOUNTER_END()
 	core:sendDebugMessage("---Encounter Ended---")
 	--table.insert(--TargetLogData, "---Encounter Ended---")
 	core.encounterStarted = false
+	core.encounterDetected = false
 end
 
 --This event is used to scan players in the group to see which achievements they are currently missing
@@ -1119,8 +1116,12 @@ end
 function events:PLAYER_REGEN_ENABLED()
    --Although the player running the addon has left combat, the boss could still be in combat with other players. Check everyone else in the group to see if anyone is still in combat with the boss
    if getCombatStatus() == false then
-	   clearInstanceVariables()
-	   clearVariables()
+		if core.encounterDetected == false then
+			clearInstanceVariables()
+			clearVariables()
+		else
+			core:sendDebugMessage("Not clearing global variables since encounter is still in progress")
+		end
 	   core:sendDebugMessage("Left Combat")
 	   events:SetScript("OnUpdate",nil)
    else
@@ -1321,20 +1322,24 @@ function core:detectGroupType()
 	--core.chatType = "OFFICER"
 end
 
---Where the player enters combat, check if any of the mobs/bosses need to be tracked or not
-function detectBoss(id)
-	print("DETECT BOSS FIRED!")
-	core:sendDebugMessage("Found the following boss ID: " .. id)
-
-	--Detect Encounter ID
+--Detect Raid and dungeons bosses which have an encounter ID
+function detectBossByEncounterID(id)
+	core:sendDebugMessage("Found the following encounter ID: " .. id)
+	local counter = 0
 	for boss,_ in pairs(core.Instances[core.expansion][core.instanceType][core.instance]) do
 		if core.Instances[core.expansion][core.instanceType][core.instance][boss].encounterID ~= nil then
 			--Detect boss by the encounter ID
-			--core:sendDebugMessage("Detecting boss by Encounter ID")
 			if id == core.Instances[core.expansion][core.instanceType][core.instance][boss].encounterID then
 				--Check whether the boss has an achievement first before adding. This is so we can output to the chat. "IAT cannot track any achievements for this encounter" if needed
 				if core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement ~= false then
 					if core:has_value(currentBossNums, boss) == false then
+						if counter == 0 then
+							--Clear the array storing bosses and achievements so we only output track achievements relevant to that fight
+							core.currentBosses = {}
+							core.achievementIDs = {}
+							currentBossNums = {}
+							counter = 1
+						end
 						core:sendDebugMessage("(E) Adding the following encounter ID: " .. boss)
 						table.insert(core.currentBosses, core.Instances[core.expansion][core.instanceType][core.instance][boss])
 						table.insert(currentBossNums, boss)
@@ -1348,10 +1353,26 @@ function detectBoss(id)
 				core.encounterDetected = true --This will stop other bosses being detected by accident through the detection method below
 			end
 		end
-		
-		--Wait for 2 seconds to give a chance for the encounter id to be detected. This is a much more reliable way to detect which
-		--boss we are currently in combat with. We need the detection below in case bosses do not have an encounter id or for
-		--achievements which do not actually start a boss encounter. Eg achievements which just involve trash mobs.
+	end
+
+	--If encounter is detected but no achievements for the boss have been found then output no achievements to track for this encounter
+	if encounterDetected == true and core.foundBoss == false and core.outputTrackingStatus == false then
+		core:printMessage("IAT cannot track any achievements for this encounter.")
+		core.outputTrackingStatus = true
+	end
+
+	if core.foundBoss == true then
+		--Display tracking achievement for that boss if it has not been output yet for the fight. Make sure we are in combat as well before calling this function
+		core:getAchievementToTrack()
+	end
+end
+
+--Where the player enters combat, check if any of the mobs/bosses need to be tracked or not
+function detectBoss(id)
+	--Fallback method for detecting boss fights and also used to detect trash mobs for some achievements
+	core:sendDebugMessage("Found the following boss ID: " .. id)
+
+	for boss,_ in pairs(core.Instances[core.expansion][core.instanceType][core.instance]) do
 		if core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs ~= nil and core.encounterDetected == false then
 			--Detect boss by the ID of the npc
 			--core:sendDebugMessage("Detecting boss by npc ID")
@@ -1373,38 +1394,25 @@ function detectBoss(id)
 				end
 			end
 		end
-
 	end
 
-	--If encounter is detected but foundBoss is false then output to chat no achievements to detect for this encounter
-	if encounterDetected == true and core.foundBoss == false and core.outputTrackingStatus == false then
-		core:printMessage("IAT cannot track any achievements for this encounter.")
-		core.outputTrackingStatus = true
-	end
-
+	--If a boss has been found then output the achievements that will be tracked to chat.
+	--If an id is found by not in the database then add to cache to prevent the same ID being checked against the database over and over again
 	if core.foundBoss == true then
-		--Display tracking achievement for that boss if partial variable is not false and boss was found and tracking is enabled and encounter has started
+		--Display tracking achievement for that boss if it has not been output yet for the fight. Make sure we are in combat as well before calling this function
 		core:getAchievementToTrack()
-		if core.encounterStarted == true then
-			
-		else
-			core.displayAchievements = true
-		end
 	else
-		--core:sendDebugMessage("ID not found. Need to add to cache")
-		--This boss does not have tracking so add to mob cache
 		if core:has_value(core.mobCache, id) ~= true then
 			table.insert(core.mobCache, id)
-			--core:sendDebugMessage("Adding to cache: " .. id)
 		end
 	end
 end
 
 --Display the "Tracking {achievement} for achievements"
---TODO: concatenate multiple achievements to print out in 1 message / split up to reduce amount of messages being sent
+--Wait a few seconds here before outputting which acheivements to track since the encounter ID can fire after ID has picked up by another source such as GUID
+--This will prevent the wrong achievements being displayed into chat
 function core:getAchievementToTrack()
-	--Wait 1 second while information about encounter is being gathered before outputting
-	C_Timer.After(3, function() 
+	C_Timer.After(2, function() 
 		print("HERE 1")
 		if core.achievementTrackedMessageShown == false then
 			print("HERE 2")
