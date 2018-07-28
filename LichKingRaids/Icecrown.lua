@@ -68,9 +68,11 @@ function core.IcecrownCitadel:LordMarrowgar()
 	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 69065 then
         core:sendMessage(core.destName .. " has been Impaled")
         C_Timer.After(8, function()
-            local name, _, _, _, _, _, _ = GetSpellInfo(69065)
-            if UnitDebuff(core.destName, name) then
-                core:getAchievementFailed()
+            for i=1,40 do
+                local _, _, _, _, _, _, _, _, _, spellId = UnitDebuff(core.destName, i)
+                if spellId == 69065 then
+                    core:getAchievementFailed()
+                end
             end
         end)
     end
