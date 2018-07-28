@@ -37,9 +37,13 @@ end
 function core.TempleOfTheJadeSerpent:ShaOfDoubt()
     local name, realm = UnitName("Player")
     if (core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_APPLIED_DOSE") and core.spellId == 123916 and core.destName == name then
-        local _, _, _, count = UnitDebuff("Player", GetSpellInfo(123916))
-        ShaOfDoubtCounter = count
-        core:sendMessage(GetAchievementLink(core.achievementIDs[2]) .. " Sha of Doubt Counter (" .. ShaOfDoubtCounter .. "/4)")
+        for i=1,40 do
+            local _, _, count, _, _, _, _, _, _, spellId = UnitDebuff("Player", i)
+            if spellId == 123916 then
+                ShaOfDoubtCounter = count
+                core:sendMessage(GetAchievementLink(core.achievementIDs[2]) .. " Sha of Doubt Counter (" .. ShaOfDoubtCounter .. "/4)")
+            end
+        end
     end
 
     if ShaOfDoubtCounter == 4 then
