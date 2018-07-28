@@ -223,7 +223,7 @@ core.TheEmeraldNightmare.Events:SetScript("OnEvent", function(self, event, ...)
     return self[event] and self[event](self, event, ...)
 end)
 
-function core.TheEmeraldNightmare.Events:UNIT_SPELLCAST_SUCCEEDED(self, unitID, spell, rank, lineID, spellID)
+function core.TheEmeraldNightmare.Events:UNIT_SPELLCAST_SUCCEEDED(self, unitID, lineID, spellID, ...)
     if core.Instances.Legion.Raids.TheEmeraldNightmare.boss1.enabled then
         if spellID == 208116 and bugsUID[lineID] == nil then
             bugsUID[lineID] = lineID
