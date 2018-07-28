@@ -84,12 +84,12 @@ end
 
 function core.Highmaul:InstanceCleanup()
     core.Highmaul.Events:UnregisterEvent("UNIT_HEALTH")
-    core.Highmaul.Events:UnregisterEvent("UNIT_POWER")
+    core.Highmaul.Events:UnregisterEvent("UNIT_POWER_UPDATE")
 end
 
 function core.Highmaul:InitialSetup()
 	core.Highmaul.Events:RegisterEvent("UNIT_HEALTH")
-	core.Highmaul.Events:RegisterEvent("UNIT_POWER")
+	core.Highmaul.Events:RegisterEvent("UNIT_POWER_UPDATE")
 end
 
 core.Highmaul.Events:SetScript("OnEvent", function(self, event, ...)
@@ -122,7 +122,7 @@ function core.Highmaul.Events:UNIT_HEALTH(self, unitID)
 	end
 end
 
-function core.Highmaul.Events:UNIT_POWER(self, unit, powerType)
+function core.Highmaul.Events:UNIT_POWER_UPDATE(self, unit, powerType)
 	if core.Instances.WarlordsOfDraenor.Raids.Highmaul.boss5.enabled == true and core.achievementIDs[1] == 8958 then
 		if powerType == "ALTERNATE" then
 			if UnitPower(unit, ALTERNATE_POWER_INDEX) > 30 then
