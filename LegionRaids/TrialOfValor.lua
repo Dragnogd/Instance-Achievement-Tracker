@@ -108,24 +108,35 @@ end)
 function core.TrialOfValor.Events:UNIT_AURA(self, unitID, ...)
     if core.Instances.Legion.Raids.TrialOfValor.boss2.enabled then
         --Player gained Fiery Phlegm
-        if UnitBuff(unitID, GetSpellInfo(231846)) and UnitBuff(unitID, GetSpellInfo(227539)) and fieryPhelgmComplete == false then
-            fieryPhelgmComplete = true
-            breathCounter= breathCounter + 1
-            core:sendMessage("Fiery Phelgm (Orange) part of " .. core:getAchievement() .. " Completed (" .. breathCounter .. "/3)")
-        end
+        local chewToyFound = false
+        local fieryPhelgmFound = false
+        local saltySpittleFound = false
+        local darkDischargeFound = false
+        for i=1,40 do
+            local _, _, _, _, _, _, _, _, _, spellId = UnitBuff(unit, i)
+            if spellId == 231846 then
+                chewToyFound = true
+            elseif spellId == 227539 then
+                fieryPhelgmFound = true
+            elseif spellId == 227566 then
+                saltySpittleFound = true
+            elseif spellId == 227570 then
+                darkDischargeFound = true
+            end
 
-        --Player gained Salty Spittle
-        if UnitBuff(unitID, GetSpellInfo(231846)) and UnitBuff(unitID, GetSpellInfo(227566)) and saltySpittleComplete == false then
-            saltySpittleComplete = true
-            breathCounter= breathCounter + 1
-            core:sendMessage("Salty Spittle (Green) part of " .. core:getAchievement() .. " Completed (" .. breathCounter .. "/3)")
-        end
-
-        --Player gained Dark Discharge
-        if UnitBuff(unitID, GetSpellInfo(231846)) and UnitBuff(unitID, GetSpellInfo(227570)) and darkDischargeComplete == false then
-            darkDischargeComplete = true
-            breathCounter= breathCounter + 1
-            core:sendMessage("Dark Discharge (Purple) part of " .. core:getAchievement() .. " Completed (" .. breathCounter .. "/3)")
+            if chewToyFound == true and fieryPhelgmFound == true and fieryPhelgmComplete == false then
+                fieryPhelgmComplete = true
+                breathCounter= breathCounter + 1
+                core:sendMessage("Fiery Phelgm (Orange) part of " .. core:getAchievement() .. " Completed (" .. breathCounter .. "/3)")
+            elseif chewToyFound == true and saltySpittleFound == true and saltySpittleComplete == false then
+                saltySpittleComplete = true
+                breathCounter= breathCounter + 1
+                core:sendMessage("Salty Spittle (Green) part of " .. core:getAchievement() .. " Completed (" .. breathCounter .. "/3)")
+            elseif chewToyFound == true and darkDischargeFound == true and darkDischargeComplete == false
+                darkDischargeComplete = true
+                breathCounter= breathCounter + 1
+                core:sendMessage("Dark Discharge (Purple) part of " .. core:getAchievement() .. " Completed (" .. breathCounter .. "/3)")
+            end
         end
 
         if breathCounter == 3 then
