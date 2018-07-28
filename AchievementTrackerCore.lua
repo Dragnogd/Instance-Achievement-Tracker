@@ -440,8 +440,12 @@ end
 function initialInstanceSetup()
 	--Used to start certain events for some instances so we don't have to run them when they are not needed
 	core:sendDebugMessage("Starting Initial Setup If Needed...")
-	if pcall(function() core[core.instanceClear]:InitialSetup() end) == true then
+	local retOK, ret1 = pcall(function() core[core.instanceClear]:InitialSetup() end);
+	if (retOK) then
+		core:sendDebugMessage("Starting Initial Setup For Instance")
 		core[core.instanceClear]:InitialSetup()
+	else
+		core:sendDebugMessage("Function failed, error text: " .. ret1 .. ".")
 	end
 end
 

@@ -173,6 +173,8 @@ function core.AntorusTheBurningThrone:ClearVariables()
     --Output best attempt to chat
     if highestEnergy > 0 then
         core:sendMessage(GetAchievementLink(12257) .. " Best attempt last kill (" .. highestEnergy .. "/80). Khaz'Goroth must gain 80 energy within 5 seconds to complete this achievement")
+    else
+        core:sendMessage("Highest Energy is 0")
     end
     highestEnergy = 0
 end
@@ -188,7 +190,10 @@ end)
 
 function core.AntorusTheBurningThrone:InitialSetup()
     core.AntorusTheBurningThrone.Events:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
-    core.AntorusTheBurningThrone.Events:RegisterEvent("UNIT_POWER")
+    core.AntorusTheBurningThrone.Events:RegisterEvent("UNIT_POWER_UPDATE")
+
+    core:sendDebugMessage("HERE asdasd")
+    print(core.AntorusTheBurningThrone.Events:IsEventRegistered("UNIT_POWER_UPDATE"))
 end
 
 function core.AntorusTheBurningThrone.Events:UNIT_SPELLCAST_SUCCEEDED(self, unitID, lineID, spellID, ...)
@@ -205,7 +210,7 @@ function core.AntorusTheBurningThrone.Events:UNIT_SPELLCAST_SUCCEEDED(self, unit
     end
 end
 
-function core.AntorusTheBurningThrone.Events:UNIT_POWER(self, unit, powerType)
+function core.AntorusTheBurningThrone.Events:UNIT_POWER_UPDATE(self, unit, powerType)
     if core.Instances.Legion.Raids.AntorusTheBurningThrone.boss11.enabled == true then
         if UnitGUID(unit) ~= nil then
             local unitType, _, _, _, _, destID, spawn_uid_dest = strsplit("-", UnitGUID(unit))
@@ -214,16 +219,14 @@ function core.AntorusTheBurningThrone.Events:UNIT_POWER(self, unit, powerType)
 
                 --Save current power locally
                 local currentPower = UnitPower(unit)
-                print(currentPower)
 
                 --Wait 5 seconds to see if Khaz'Goroth has gained 80 power within 5 seconds
                 C_Timer.After(5, function() 
                     local newPower = UnitPower(unit)
-                    print(newPower)
 
                     if (newPower - currentPower) >= 80 then
                         core:getAchievementSuccess()
-                        --print("Boss gained: " .. (newPower - currentPower) .. " energy")
+                        print("Boss gained: " .. (newPower - currentPower) .. " energy")
                     end
 
                     --Update highest energy if higher than current attempt. This is so we can output at the end of the fight how well the group did
