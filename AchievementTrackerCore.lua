@@ -6,7 +6,7 @@ local _, core = ...
 local events = CreateFrame("Frame")
 local UIConfig
 local UICreated = false
-local debugMode = true
+local debugMode = false
 
 AchievementTrackerOptions = {}
 AchievementTrackerDebug = {}
@@ -1421,9 +1421,9 @@ end
 --This will prevent the wrong achievements being displayed into chat
 function core:getAchievementToTrack()
 	C_Timer.After(2, function() 
-		print("HERE 1")
+		--print("HERE 1")
 		if core.achievementTrackedMessageShown == false then
-			print("HERE 2")
+			--print("HERE 2")
 			core:sendDebugMessage("Length of array: " .. #core.currentBosses)
 			for i = 1, #core.currentBosses do
 				core:sendDebugMessage("Achievement: " .. core.currentBosses[i].achievement)
