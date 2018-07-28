@@ -492,16 +492,18 @@ function enableAchievementTracking(self)
 	UIConfig:Hide()
 
 	--Switch to correct tab in GUI
-	if core.expansion == "Legion" then
+	if core.expansion == "Battle for Azeroth" then
 		Tab_OnClick(_G["AchievementTrackerTab2"])
-	elseif core.expansion == "Warlords of Draenor" or core.expansion == "WarlordsOfDraenor" then
+	elseif core.expansion == "Legion" then
 		Tab_OnClick(_G["AchievementTrackerTab3"])
-	elseif core.expansion == "Mists of Pandaria" or core.expansion == "MistsOfPandaria" then
+	elseif core.expansion == "Warlords of Draenor" or core.expansion == "WarlordsOfDraenor" then
 		Tab_OnClick(_G["AchievementTrackerTab4"])
-	elseif core.expansion == "Cataclysm" then
+	elseif core.expansion == "Mists of Pandaria" or core.expansion == "MistsOfPandaria" then
 		Tab_OnClick(_G["AchievementTrackerTab5"])
-	elseif core.expansion == "Wrath of the Lich King" or core.expansion == "WrathOfTheLichKing" then
+	elseif core.expansion == "Cataclysm" then
 		Tab_OnClick(_G["AchievementTrackerTab6"])
+	elseif core.expansion == "Wrath of the Lich King" or core.expansion == "WrathOfTheLichKing" then
+		Tab_OnClick(_G["AchievementTrackerTab7"])
 	end
 
 	--Register Events
