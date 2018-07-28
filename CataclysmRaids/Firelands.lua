@@ -129,12 +129,12 @@ function core.Firelands:ClearVariables()
 end
 
 function core.Firelands:InstanceCleanup()
-    core.Firelands.Events:UnregisterEvent("UNIT_POWER")
+    core.Firelands.Events:UnregisterEvent("UNIT_POWER_UPDATE")
     core.Firelands.Events:UnregisterEvent("UNIT_AURA")
 end
 
 function core.Firelands:InitialSetup()
-	core.Firelands.Events:RegisterEvent("UNIT_POWER")
+	core.Firelands.Events:RegisterEvent("UNIT_POWER_UPDATE")
     core.Firelands.Events:RegisterEvent("UNIT_AURA")	
 end
 
@@ -142,7 +142,7 @@ core.Firelands.Events:SetScript("OnEvent", function(self, event, ...)
     return self[event] and self[event](self, event, ...)
 end)
 
-function core.Firelands.Events:UNIT_POWER(self, unit, powerType)
+function core.Firelands.Events:UNIT_POWER_UPDATE(self, unit, powerType)
 	if core.Instances.Cataclysm.Raids.Firelands.boss2.enabled == true then
 		if powerType == "ALTERNATE" then
 			if UnitPower(unit, ALTERNATE_POWER_INDEX) == 0 then
