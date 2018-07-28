@@ -111,26 +111,32 @@ function core.HellfireCitadel:ShadowLordIskar()
 					unit = "raid" .. i
 				end
 
-				if UnitBuff(unit, GetSpellInfo(179202)) then
+				for i=1,40 do
+					local _, _, _, _, _, _, _, _, _, spellId = UnitBuff(unit, i)
+					if spellId == 179202 then
+						eyeOfAnzuPlayer = core.destName
+						firstPickup = true
+						C_Timer.After(5, function()
+							if eyeOfAnzuPlayer == core.destName then
+								core:getAchievementFailedWithMessageAfter("by " .. core.destName)			
+							end
+						end)
+					end
+				end
+			end
+		else
+			for i=1,40 do
+				local _, _, _, _, _, _, _, _, _, spellId = UnitBuff("Player", i)
+				if spellId == 179202 then
 					eyeOfAnzuPlayer = core.destName
 					firstPickup = true
 					C_Timer.After(5, function()
 						if eyeOfAnzuPlayer == core.destName then
-							core:getAchievementFailedWithMessageAfter("by " .. core.destName)			
+							core:getAchievementFailedWithMessageAfter("by " .. core.destName)		
 						end
-					end)						
+					end)	
 				end
-			end
-		else
-			if UnitBuff("Player", GetSpellInfo(179202)) then
-				eyeOfAnzuPlayer = core.destName
-				firstPickup = true
-				C_Timer.After(5, function()
-					if eyeOfAnzuPlayer == core.destName then
-						core:getAchievementFailedWithMessageAfter("by " .. core.destName)		
-					end
-				end)						
-			end			
+			end		
 		end
 	end
 end
