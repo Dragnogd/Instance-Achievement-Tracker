@@ -1400,7 +1400,9 @@ function detectBoss(id)
 	--If an id is found by not in the database then add to cache to prevent the same ID being checked against the database over and over again
 	if core.foundBoss == true then
 		--Display tracking achievement for that boss if it has not been output yet for the fight. Make sure we are in combat as well before calling this function
-		core:getAchievementToTrack()
+		if core.encounterStarted == true then
+			core:getAchievementToTrack()
+		end
 	else
 		if core:has_value(core.mobCache, id) ~= true then
 			table.insert(core.mobCache, id)

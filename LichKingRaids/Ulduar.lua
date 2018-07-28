@@ -410,6 +410,7 @@ function core.Ulduar:HodirICouldSayThatThisCacheWasRare()
 end
 
 function core.Ulduar:FreyaConSpeedAtory()
+    --1
     local freyaTrashIDs = {"33430", "33431", "33528", "33527", "33526", "33525", "32914", "32913", "33354", "33355", "32915"}
     if core.type == "UNIT_DIED" and timerStarted == false and freyaTrashedStarted == false and core:has_value(freyaTrashIDs, core.destID) == true then
         if timerStartedFreya == false then
@@ -461,15 +462,15 @@ function core.Ulduar:FreyaLumberjacked()
 end
 
 function core.Ulduar:FreyaGettingBackToNature()
-    --2
+    --3
     if core.type == "SPELL_AURA_REMOVED_DOSE" and core.amount < 25 then
         --print("Getting back to nature failed")
-        core:getAchievementFailed(2)
+        core:getAchievementFailed(3)
     end
 end
 
 function core.Ulduar:FreyaDeforestation()
-    --1
+    --2
     --Ancient Water Spirit
     if core.type == "UNIT_DIED" and core.destID == "33202" then
         ancientWaterSpiritsKilled = ancientWaterSpiritsKilled + 1
@@ -489,9 +490,9 @@ function core.Ulduar:FreyaDeforestation()
         timerStarted3 = true
         C_Timer.After(10, function()
             if ancientWaterSpiritsKilled >= 2 and stormLashersKilled >= 2 and snaplashersKilled >= 2 then
-                core:getAchievementSuccess()
+                core:getAchievementSuccess(2)
             else
-                core:sendMessage(core:getAchievement() .. " FAILED! Ancient Water Spirits (" .. ancientWaterSpiritsKilled .. "/2) Storm Lashers (" .. stormLashersKilled .. "/2) Snaplashers (" .. snaplashersKilled .. "/2)")
+                core:sendMessage(core:getAchievement(2) .. " FAILED! Ancient Water Spirits (" .. ancientWaterSpiritsKilled .. "/2) Storm Lashers (" .. stormLashersKilled .. "/2) Snaplashers (" .. snaplashersKilled .. "/2)")
                 ancientWaterSpiritsKilled = 0
                 stormLashersKilled = 0
                 snaplashersKilled = 0
