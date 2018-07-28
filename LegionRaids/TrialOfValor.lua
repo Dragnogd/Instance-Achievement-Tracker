@@ -132,7 +132,7 @@ function core.TrialOfValor.Events:UNIT_AURA(self, unitID, ...)
                 saltySpittleComplete = true
                 breathCounter= breathCounter + 1
                 core:sendMessage("Salty Spittle (Green) part of " .. core:getAchievement() .. " Completed (" .. breathCounter .. "/3)")
-            elseif chewToyFound == true and darkDischargeFound == true and darkDischargeComplete == false
+            elseif chewToyFound == true and darkDischargeFound == true and darkDischargeComplete == false then
                 darkDischargeComplete = true
                 breathCounter= breathCounter + 1
                 core:sendMessage("Dark Discharge (Purple) part of " .. core:getAchievement() .. " Completed (" .. breathCounter .. "/3)")

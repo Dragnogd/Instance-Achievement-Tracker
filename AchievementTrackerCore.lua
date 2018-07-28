@@ -844,7 +844,7 @@ end
 --Does not get called for achievements which are not part of a boss fight so achievement tracking is calling manually once per session for those achievements
 function events:ENCOUNTER_START(self, encounterID, encounterName, difficultyID, groupSize)
 	core:sendDebugMessage("---Encounter Started---")
-	print("Encounter ID: " .. encounterID)
+	core:sendDebugMessage("Encounter ID: " .. encounterID)
 	--table.insert(--TargetLogData, "---Encounter Started---")
 	core.encounterStarted = true
 
