@@ -50,18 +50,18 @@ function core.BastionOfTwilight_ValionaAndTheralion()
 end
 
 function core.BastionOfTwilight:InstanceCleanup()
-    core.BastionOfTwilight.Events:UnregisterEvent("UNIT_POWER")
+    core.BastionOfTwilight.Events:UnregisterEvent("UNIT_POWER_UPDATE")
 end
 
 function core.BastionOfTwilight:InitialSetup()
-    core.BastionOfTwilight.Events:RegisterEvent("UNIT_POWER")
+    core.BastionOfTwilight.Events:RegisterEvent("UNIT_POWER_UPDATE")
 end
 
 core.BastionOfTwilight.Events:SetScript("OnEvent", function(self, event, ...)
     return self[event] and self[event](self, event, ...)
 end)
 
-function core.BastionOfTwilight.Events:UNIT_POWER(self, unit, powerType)
+function core.BastionOfTwilight.Events:UNIT_POWER_UPDATE(self, unit, powerType)
 	if core.Instances[core.expansion][core.instanceType][core.instance]["boss4"].enabled == true then
 		if powerType == "ALTERNATE" then
 			if UnitPower(unit, ALTERNATE_POWER_INDEX) > 30 then
