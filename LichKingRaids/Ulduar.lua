@@ -280,7 +280,7 @@ function core.Ulduar:AuriayaNineLives()
     if core.type == "UNIT_DIED" and core.destID == "34035" and timerStarted == false then
         timerStarted = true
         feralDefenderCounter = feralDefenderCounter - 1
-        core:sendMessage(core:getAchievement(1) .. " Feral Defender Lives Remianing: " .. feralDefenderCounter)
+        core:sendMessage(core:getAchievement(1) .. " Feral Defender Lives Remaining: " .. feralDefenderCounter)
         C_Timer.After(5, function() 
             timerStarted = false
         end)
