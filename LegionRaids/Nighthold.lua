@@ -178,22 +178,28 @@ function core.TheNighthold:HighBotanistTelarn()
 			end
 			
 			if unit ~= nil then
-				local unitType, destID, spawn_uid_dest = strsplit("-",UnitGUID(unit));
-				if UnitDebuff(unit, GetSpellInfo(220114)) and mysteriousFruitPlayers[spawn_uid_dest] == nil then
-					mysteriousFruitCounter = mysteriousFruitCounter + 1
-					--core:sendMessage(UnitName(unit) .. " has got the Zealous Parasite debuff (" .. parasiteCounter .. "/" .. core.groupSize .. ")")
-					mysteriousFruitPlayers[spawn_uid_dest] = spawn_uid_dest
+                local unitType, destID, spawn_uid_dest = strsplit("-",UnitGUID(unit));
+                for i=1,40 do
+					local _, _, _, _, _, _, _, _, _, spellId = UnitDebuff(unit, i)
+					if spellId == 220114 and mysteriousFruitPlayers[spawn_uid_dest] == nil then
+                        mysteriousFruitCounter = mysteriousFruitCounter + 1
+                        --core:sendMessage(UnitName(unit) .. " has got the Zealous Parasite debuff (" .. parasiteCounter .. "/" .. core.groupSize .. ")")
+                        mysteriousFruitPlayers[spawn_uid_dest] = spawn_uid_dest
+					end
 				end
 			end
 		end
 	else
 		--Player is not in a group
-		local unitType, destID, spawn_uid_dest = strsplit("-",UnitGUID("Player"));
-		if UnitDebuff("Player", GetSpellInfo(220114)) and mysteriousFruitPlayers[spawn_uid_dest] == nil then
-			mysteriousFruitCounter = mysteriousFruitCounter + 1
-			--core:sendMessage(UnitName("Player") .. " has got the Zealous Parasite debuff (" .. parasiteCounter .. "/" .. core.groupSize .. ")")
-			mysteriousFruitPlayers[spawn_uid_dest] = spawn_uid_dest
-		end
+        local unitType, destID, spawn_uid_dest = strsplit("-",UnitGUID("Player"));
+        for i=1,40 do
+            local _, _, _, _, _, _, _, _, _, spellId = UnitDebuff("Player", i)
+            if spellId == 220114  and mysteriousFruitPlayers[spawn_uid_dest] == nil then
+                mysteriousFruitCounter = mysteriousFruitCounter + 1
+                --core:sendMessage(UnitName("Player") .. " has got the Zealous Parasite debuff (" .. parasiteCounter .. "/" .. core.groupSize .. ")")
+                mysteriousFruitPlayers[spawn_uid_dest] = spawn_uid_dest
+            end
+        end
 	end
 
 	if mysteriousFruitCounter == core.groupSize then
