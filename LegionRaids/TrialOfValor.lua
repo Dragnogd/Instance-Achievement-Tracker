@@ -113,7 +113,7 @@ function core.TrialOfValor.Events:UNIT_AURA(self, unitID, ...)
         local saltySpittleFound = false
         local darkDischargeFound = false
         for i=1,40 do
-            local _, _, _, _, _, _, _, _, _, spellId = UnitBuff(unit, i)
+            local _, _, _, _, _, _, _, _, _, spellId = UnitBuff(unitID, i)
             if spellId == 231846 then
                 chewToyFound = true
             elseif spellId == 227539 then
