@@ -51,20 +51,26 @@ function core.HeartOfFear:ImperialVizierZorlok()
 			
 			if unit ~= nil then
 				local unitType, destID, spawn_uid_dest = strsplit("-",UnitGUID(unit));
-				if UnitDebuff(unit, GetSpellInfo(125785)) and parasitePlayers[spawn_uid_dest] == nil then
-					parasiteCounter = parasiteCounter + 1
-					core:sendMessage(UnitName(unit) .. " has got the Zealous Parasite debuff (" .. parasiteCounter .. "/" .. core.groupSize .. ")")
-					parasitePlayers[spawn_uid_dest] = spawn_uid_dest
+				for i=1,40 do
+					local _, _, _, _, _, _, _, _, _, spellId = UnitDebuff(unit, i)
+					if spellId == 125785 and parasitePlayers[spawn_uid_dest] == nil then
+						parasiteCounter = parasiteCounter + 1
+						core:sendMessage(UnitName(unit) .. " has got the Zealous Parasite debuff (" .. parasiteCounter .. "/" .. core.groupSize .. ")")
+						parasitePlayers[spawn_uid_dest] = spawn_uid_dest
+					end
 				end
 			end
 		end
 	else
 		--Player is not in a group
 		local unitType, destID, spawn_uid_dest = strsplit("-",UnitGUID("Player"));
-		if UnitDebuff("Player", GetSpellInfo(125785)) and parasitePlayers[spawn_uid_dest] == nil then
-			parasiteCounter = parasiteCounter + 1
-			core:sendMessage(UnitName("Player") .. " has got the Zealous Parasite debuff (" .. parasiteCounter .. "/" .. core.groupSize .. ")")
-			parasitePlayers[spawn_uid_dest] = spawn_uid_dest
+		for i=1,40 do
+			local _, _, _, _, _, _, _, _, _, spellId = UnitDebuff("Player", i)
+			if spellId == 125785 and parasitePlayers[spawn_uid_dest] == nil then
+				parasiteCounter = parasiteCounter + 1
+				core:sendMessage(UnitName("Player") .. " has got the Zealous Parasite debuff (" .. parasiteCounter .. "/" .. core.groupSize .. ")")
+				parasitePlayers[spawn_uid_dest] = spawn_uid_dest
+			end
 		end
 	end
 
