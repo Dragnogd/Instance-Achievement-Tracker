@@ -35,7 +35,7 @@ core.VioletHold.Events:SetScript("OnEvent", function(self, event, ...)
     return self[event] and self[event](self, event, ...)
 end)
 
-function core.VioletHold.Events:UNIT_SPELLCAST_SUCCEEDED(self, unitID, spell, rank, lineID, spellID)
+function core.VioletHold.Events:UNIT_SPELLCAST_SUCCEEDED(self, unitID, lineID, spellID, ...)
     if core.Instances[core.expansion][core.instanceType][core.instance]["boss1"].enabled == true and defenselessFailed == false then
         --Check if player has clicked on a crystal
         if spellID == 6247 then
