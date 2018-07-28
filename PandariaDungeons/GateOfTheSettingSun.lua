@@ -58,7 +58,7 @@ core.GateOfTheSettingSun.Events:SetScript("OnEvent", function(self, event, ...)
     return self[event] and self[event](self, event, ...)
 end)
 
-function core.GateOfTheSettingSun.Events:UNIT_SPELLCAST_SUCCEEDED(self, unitID, spell, rank, lineID, spellID)
+function core.GateOfTheSettingSun.Events:UNIT_SPELLCAST_SUCCEEDED(self, unitID, lineID, spellID, ...)
     if core.Instances[core.expansion][core.instanceType][core.instance]["boss1"].enabled == true then
         --Plant Munitions
         if spellID == 114288 then

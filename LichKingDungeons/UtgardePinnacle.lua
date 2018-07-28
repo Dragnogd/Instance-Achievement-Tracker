@@ -83,7 +83,7 @@ function core.UtgardePinnacle.Events:CHAT_MSG_RAID_BOSS_EMOTE(self, message, sen
     -- end
 end
 
-function core.UtgardePinnacle.Events:UNIT_SPELLCAST_SUCCEEDED(self, unitID, spell, rank, lineID, spellID, ...)
+function core.UtgardePinnacle.Events:UNIT_SPELLCAST_SUCCEEDED(self, unitID, lineID, spellID, ...)
     -- if spell == "Summon Harpoon" and harpoonRange == true then
     --     harpoonFired = true
     -- end
