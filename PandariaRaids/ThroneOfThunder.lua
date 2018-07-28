@@ -242,12 +242,12 @@ end
 
 function core.ThroneOfThunder:InstanceCleanup()
     core.ThroneOfThunder.Events:UnregisterEvent("UNIT_HEALTH")
-    core.ThroneOfThunder.Events:UnregisterEvent("UNIT_POWER")
+    core.ThroneOfThunder.Events:UnregisterEvent("UNIT_POWER_UPDATE")
 end
 
 function core.ThroneOfThunder:InitialSetup()
 	core.ThroneOfThunder.Events:RegisterEvent("UNIT_HEALTH")
-	core.ThroneOfThunder.Events:RegisterEvent("UNIT_POWER")
+	core.ThroneOfThunder.Events:RegisterEvent("UNIT_POWER_UPDATE")
 end
 
 core.ThroneOfThunder.Events:SetScript("OnEvent", function(self, event, ...)
@@ -266,7 +266,7 @@ function core.ThroneOfThunder.Events:UNIT_HEALTH(self, UnitID)
 	end
 end
 
-function core.ThroneOfThunder.Events:UNIT_POWER(self, UnitID, powerType)
+function core.ThroneOfThunder.Events:UNIT_POWER_UPDATE(self, UnitID, powerType)
 	if core.Instances.MistsOfPandaria.Raids.ThroneOfThunder.boss12.enabled == true then
 		if UnitIsPlayer(UnitID) == false then
 			if UnitPower(UnitID, ALTERNATE_POWER_INDEX) == 3 then
