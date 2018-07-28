@@ -223,12 +223,12 @@ end
 
 function core.BlackwingDescent:InstanceCleanup()
 	core.BlackwingDescent.Events:UnregisterEvent("CHAT_MSG_MONSTER_YELL")
-	core.BlackwingDescent.Events:UnregisterEvent("UNIT_POWER")
+	core.BlackwingDescent.Events:UnregisterEvent("UNIT_POWER_UPDATE")
 end
 
 function core.BlackwingDescent:InitialSetup()
     core.BlackwingDescent.Events:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-    core.BlackwingDescent.Events:RegisterEvent("UNIT_POWER")
+    core.BlackwingDescent.Events:RegisterEvent("UNIT_POWER_UPDATE")
 end
 
 core.BlackwingDescent.Events:SetScript("OnEvent", function(self, event, ...)
@@ -249,7 +249,7 @@ function core.BlackwingDescent.Events:CHAT_MSG_MONSTER_YELL(self, message, sende
     end
 end
 
-function core.BlackwingDescent.Events:UNIT_POWER(self, unit, powerType)
+function core.BlackwingDescent.Events:UNIT_POWER_UPDATE(self, unit, powerType)
     if core.Instances[core.expansion][core.instanceType][core.instance]["boss4"].enabled == true then
 		if powerType == "ALTERNATE" then
 			if UnitPower(unit, ALTERNATE_POWER_INDEX) > 50 then
