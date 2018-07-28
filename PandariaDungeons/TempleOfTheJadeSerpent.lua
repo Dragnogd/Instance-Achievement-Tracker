@@ -52,8 +52,11 @@ function core.TempleOfTheJadeSerpent:ShaOfDoubt()
 end
 
 function core.TempleOfTheJadeSerpent:ShaOfDoubt2()
-    if UnitAura("Player", GetSpellInfo(118714)) == nil then
-        core:getAchievementFailed(2)
+    for i=1,40 do
+        local _, _, _, _, _, _, _, _, _, spellId = UnitAura("Player", i)
+        if spellId == 118714 then
+            core:getAchievementFailed(2)
+        end
     end
 end
 
