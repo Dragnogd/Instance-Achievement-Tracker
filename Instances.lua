@@ -3,6 +3,8 @@
 --------------------------------------
 local _, core = ...
 
+core.L = L
+
 core.Instances = {
     BattleForAzeroth = {
         Raids = {
@@ -397,7 +399,7 @@ core.Instances = {
 
     Legion = {
         Raids = {
-            TheEmeraldNightmare = {
+            [1520] = { --The Emerald Nightmare
                 name = "The Emerald Nightmare",
                 boss1 = {
                     name = "Nythendra",
@@ -407,7 +409,8 @@ core.Instances = {
                     tactics = "During the Heart of the Swarm phase, glow bugs will spawn around the edges of the room. Once they spawn players need to click on the bugs to squish them. Once 15 bugs have been squished you can kill the boss. 5 bugs spawn each phase so you will need a minimum of 3 Heart of the Swarm phases to complete this achievement.",
                     enabled = true,
                     track = function() core.TheEmeraldNightmare:Nythendra() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1853,
                 },
                 boss2 = {
                     name = "Ursoc",
@@ -417,7 +420,8 @@ core.Instances = {
                     tactics = "Kill the trash to the right hand side before of the entrance to the boss room. Free Tur Ragepaw and wait for him to reach the boss. Nuke the boss down while keeping Tur Ragepaw alive.",
                     enabled = true,
                     track = function() core.TheEmeraldNightmare:Ursoc() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1841,
                 },
                 boss3 = {
                     name = "Dragons of Nightmare",
@@ -427,7 +431,8 @@ core.Instances = {
                     tactics = "There are 4 portals around the boss room. Everyone in the group must go into each of the 4 portals and collect 1 mist from each portal which gives them a buff. Once all players in the group have 4 buffs you can kill the boss. The easiest way to do this is to split the group up into 2 then have half the group collect the 4 buffs at once.",
                     enabled = true,
                     track = function() core.TheEmeraldNightmare:DragonsOfNightmare() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1854,
                 },
                 boss4 = {
                     name = "Elerethe Renferal",
@@ -437,7 +442,8 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1876,
                 },
                 boss5 = {
                     name = "Il'gynoth, Heart of Corruption",
@@ -447,7 +453,8 @@ core.Instances = {
                     tactics = "Wait for 20 Nightmare Explosions to spawn. Once you have enough adds, everyone should stand in front of the eye, then AOE down all the adds together. Once 20 adds have been killed in 10 seconds on the eye, you can kill the boss.",
                     enabled = true,
                     track = function() core.TheEmeraldNightmare:Ilgynoth() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1873,
                 },
                 boss6 = {
                     name = "Cenarius",
@@ -457,7 +464,8 @@ core.Instances = {
                     tactics = "This achievement will take 2 weeks to complete. Drag the boss to one of the four corners of the room and burn it down. This will complete 3/4 parts of the achievement. On the next lockout drag the boss to a different corner of the room to complete the last requirement.",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1877,
                 },
                 boss7 = {
                     name = "Xavius",
@@ -467,11 +475,12 @@ core.Instances = {
                     tactics = "To complete this achievement, you will need a Demon Hunter to use his spectral sight ability. Around the outer edges of the boss rooms, a Creature in the Dark will spawn at 3 points during the fight. The Demon Hunter will need to use his spectral sight ability to find the add and drag it into the centre of the room. The adds spawn at 100-65%, 65%-30% and below 30%. Once all 3 Creatures in the dark have been killed, you can nuke the boss.",
                     enabled = true,
                     track = function() core.TheEmeraldNightmare:Xavius() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1864,
                 },
             },
 
-            TrialOfValor = {
+            [1648] = { --Trial of Valor
                 name = "Trial of Valor",
                 boss1 = {
                     name = "Odyn 2",
@@ -481,7 +490,8 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.TrialOfValor:Odyn() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1958,
                 },
                 boss2 = {
                     name = "Guarm",
@@ -491,7 +501,8 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1962,
                 },
                 boss3 = {
                     name = "Helya",
@@ -501,11 +512,11 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.TrialOfValor:Helya() end,
-					partial = false,
+                    partial = false,
                 },
             },
 
-            TheNighthold = {
+            [1530] = { --The Nighthold
                 name = "The Nighthold",
                 boss1 = {
                     name = "Skorpyron",
@@ -527,6 +538,7 @@ core.Instances = {
                     enabled = false,
                     track = nil,
                     partial = false,
+                    encounterID = 1865,
                 },
                 boss3 = {
                     name = "Trilliax",
@@ -548,7 +560,8 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1871,
                 },
                 boss5 = {
                     name = "Star Augur Etraeus",
@@ -558,7 +571,8 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.TheNighthold:StarAugurEtraeus() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1863,
                 },
                 boss6 = {
                     name = "High Botanist Tel'arn",
@@ -568,7 +582,8 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.TheNighthold:HighBotanistTelarn() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1886,
                 },
                 boss7 = {
                     name = "Krosus",
@@ -578,7 +593,8 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.TheNighthold:Krosus() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1842,
                 },
                 boss8 = {
                     name = "Tichondrius",
@@ -588,7 +604,8 @@ core.Instances = {
                     tactics = "This achievement is a personal achievement. When the boss casts his Echoes of the Void ability, hide behind the pillars around the room to avoid taking damage.",
                     enabled = true,
                     track = function() core.TheNighthold:Tichondrius() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1862,
                 },
                 boss9 = {
                     name = "Elisande",
@@ -598,7 +615,8 @@ core.Instances = {
                     tactics = "For this achievement you will need to summon a Infinite Whelp pet. You then need to overlap the slow and fast time bubbles over one another. Next drag the Infinite Whelp pet into the overlapping bubbles. This will spawn a Infinite Whelpling which needs to be killed before killing the boss.",
                     enabled = true,
                     track = function() core.TheNighthold:Elisande() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1872,
                 },
                 boss10 = {
                     name = "Gul'dan",
@@ -608,11 +626,12 @@ core.Instances = {
                     tactics = "During phase 2, spread out around the room and wait for the eyes to spawn. Once 16 Eyes of Gul'dan have spawned, nuke them down within 3 seconds of one another. If you can’t kill them quick enough you may need to reduce the health of the eyes slightly before killing them.",
                     enabled = true,
                     track = function() core.TheNighthold:Guldan() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1866,
                 },
             },
 
-            TombOfSargeras = {
+            [1676] = { --Tomb of Sargeras
                 name = "Tomb of Sargeras",
                 boss1 = {
                     name = "Goroth",
@@ -622,7 +641,8 @@ core.Instances = {
                     tactics = "Ranged DPS and healers need to stack up together so the Infernal Spikes spawn together. Once the boss targets someone with his Shattering Star ability, they need to hide behind the pillars so that they get destroyed. Once 30 Infernal Spikes have been destroyed with the Shattering Star ability you can kill the boss.",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 2032,
                 },
                 boss2 = {
                     name = "Demonic Inquisition",
@@ -632,7 +652,8 @@ core.Instances = {
                     tactics = "DPS the boss down to around 3-5% health. Once the boss has reached 3-5% health everyone in the raid needs to get to 100 Torment. The quickest way to do this is to stand in the Fel Squall ability that Belac casts. Once everyone has Unbearable Torment you can nuke boss. You will want to save any cooldowns for the last 5% health since the unbearable torment significantly reduces the damage you deal and healing that can be done.",
                     enabled = true,
                     track = function() core.TombOfSargeras:DemonicInquisition() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 2048,
                 },
                 boss3 = {
                     name = "Harjatan",
@@ -642,7 +663,8 @@ core.Instances = {
                     tactics = "Pull the boss then someone in the raid Summon Elder Murk-Eye using the Mrgrglhjorn toy. Kill the add then kill the boss as usual.",
                     enabled = true,
                     track = function() core.TombOfSargeras:Harjatan() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 2036,
                 },
                 boss4 = {
                     name = "Mistress Sassz'ine",
@@ -652,7 +674,8 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 2037,
                 },
                 boss5 = {
                     name = "Sisters of the Moon",
@@ -662,7 +685,8 @@ core.Instances = {
                     tactics = "In the room full of trash before the boss you will want to find the Twilight Soul and keep this add alive. Pull the boss and complete the encounter as usual till 20% health. Keep the Twilight Soul to one side of the room and ignore it till the boss reaches 20% health. At 20% health the Twilight Soul will change colour, at this point you can nuke down the add then just kill the boss as normal.",
                     enabled = true,
                     track = function() core.TombOfSargeras:SistersOfTheMoon() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 2050,
                 },
                 boss6 = {
                     name = "The Desolate Host",
@@ -672,7 +696,8 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 2054,
                 },
                 boss7 = {
                     name = "Maiden of Vigilance",
@@ -682,7 +707,8 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 2052,
                 },
                 boss8 = {
                     name = "Fallen Avatar",
@@ -692,7 +718,8 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 2038,
                 },
                 boss9 = {
                     name = "Kil'jaeden",
@@ -702,11 +729,12 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.TombOfSargeras:Kiljaeden() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 2051,
                 },
             },
 
-            AntorusTheBurningThrone = {
+            [1712] = { --Antorus the Burning Throne
                 name = "Antorus the Burning Throne",
                 boss1 = {
                     name = "Garothi Worldbreaker",
@@ -717,7 +745,7 @@ core.Instances = {
                     enabled = false,
                     track = nil,
                     partial = false,
-                    encounterID = 1992,
+                    encounterID = 2076,
                 },
                 boss2 = {
                     name = "Felhounds of Sargeras",
@@ -728,7 +756,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.AntorusTheBurningThrone:FelhoundsOfSargeras() end,
                     partial = false,
-                    encounterID = 1987,
+                    encounterID = 2074,
                 },
                 boss3 = {
                     name = "Antoran High Command",
@@ -739,7 +767,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.AntorusTheBurningThrone:AntoranHighCommand() end,
                     partial = false,
-                    encounterID = 1997,
+                    encounterID = 2070,
                 },
                 boss4 = {
                     name = "Portal Keeper Hasabel",
@@ -750,7 +778,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.AntorusTheBurningThrone:PortalKeeperHasabel() end,
                     partial = false,
-                    encounterID = 1985,
+                    encounterID = 2064,
                 },
                 boss5 = {
                     name = "Eonar",
@@ -761,7 +789,7 @@ core.Instances = {
                     enabled = false,
                     track = nil,
                     partial = false,
-                    encounterID = 2025,
+                    encounterID = 2075,
                 },
                 boss6 = {
                     name = "Imonar the Soulhunter",
@@ -772,7 +800,7 @@ core.Instances = {
                     enabled = false,
                     track = nil,
                     partial = false,
-                    encounterID = 2009,
+                    encounterID = 2082,
                 },
                 boss7 = {
                     name = "Kin-garoth",
@@ -783,7 +811,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.AntorusTheBurningThrone:KinGaroth() end,
                     partial = false,
-                    encounterID = 2004,
+                    encounterID = 2088,
                 },
                 boss8 = {
                     name = "Varimathras",
@@ -794,7 +822,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.AntorusTheBurningThrone:Varimathras() end,
                     partial = false,
-                    encounterID = 1983,
+                    encounterID = 2069,
                 },
                 boss9 = {
                     name = "Coven of Shivarra",
@@ -805,7 +833,7 @@ core.Instances = {
                     enabled = false,
                     track = nil,
                     partial = false,
-                    encounterID = 1986,
+                    encounterID = 2073,
                 },
                 boss10 = {
                     name = "Aggramar",
@@ -816,7 +844,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.AntorusTheBurningThrone:Aggramar() end,
                     partial = false,
-                    encounterID = 1984,
+                    encounterID = 2063,
                 },
                 boss11 = {
                     name = "Argus",
@@ -827,13 +855,13 @@ core.Instances = {
                     enabled = true,
                     track = function() end,
                     partial = false,
-                    encounterID = 2031,
+                    encounterID = 2092,
                 },
             },
         },
 
         Dungeons = {
-            SeatOfTheTriumvirate = {
+            [1753] = { --Seat of the Triumvirate
                 name = "Seat of the Triumvirate",
                 boss1 = {
                     name = "Zuraal the Ascended",
@@ -843,7 +871,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.SeatOfTheTriumvirate:ZuraalTheAscended() end,
-					partial = false,
+                    partial = false,
                 },
                 boss2 = {
                     name = "Saprish",
@@ -853,7 +881,7 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
                 },
                 boss3 = {
                     name = "L'ura",
@@ -863,11 +891,11 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.SeatOfTheTriumvirate:Lura() end,
-					partial = false,
+                    partial = false,
                 },
             },
 
-            AssaultOnVioletHold = {
+            [1544] = { --Assault on Violet Hold
                 name = "Assault on Violet Hold",
                 boss1 = {
                     name = "Millificent Manastorm",
@@ -877,7 +905,8 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1847,
                 },
                 boss2 = {
                     name = "Festerface",
@@ -887,11 +916,12 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.AssaultOnVioletHold:Festerface() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1848,
                 },
             },
 
-            EyeOfAzshara = {
+            [1456] = { --Eye of Azshara
                 name = "Eye of Azshara",
                 boss1 = {
                     name = "Warlord Parjesh",
@@ -901,7 +931,8 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.EyeOfAzshara:WarlordParjesh() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1810,
                 },
                 boss2 = {
                     name = "Lady Hatecoil",
@@ -911,7 +942,8 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.EyeOfAzshara:LadyHatecoil() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1811,
                 },
                 boss3 = {
                     name = "Wrath of Azshara",
@@ -921,11 +953,12 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.EyeOfAzshara:WrathOfAzshara() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1814,
                 },
             },
 
-            DarkheartThicket = {
+            [1466] = { --Darkheart Thicket
                 name = "Darkheart Thicket",
                 boss1 = {
                     name = "Dresaron",
@@ -935,7 +968,8 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.DarkheartThicket:Dresaron() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1838,
                 },
                 boss2 = {
                     name = "Shade of Xavius",
@@ -945,11 +979,12 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.DarkheartThicket:ShadeOfXavius() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1839,
                 },
             },
 
-            HallsOfValor = {
+            [1477] = { --Halls of Valor
                 name = "Halls of Valor",
                 boss1 = {
                     name = "Other 1",
@@ -959,7 +994,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.HallsOfValor:StagParty() end,
-					partial = false,
+                    partial = false,
                 },
                 boss2 = {
                     name = "Other 2",
@@ -979,11 +1014,12 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.HallsOfValor:Odyn() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1809,
                 },
             },
 
-            NeltharionSLair = {
+            [1458] = { --Neltharion's Lair
                 name = "NeltharionS Lair",
                 boss1 = {
                     name = "Other 3",
@@ -1003,11 +1039,12 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.NeltharionSLair:Naraxas() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1792,
                 },
             },
 
-            VaultOfTheWardens = {
+            [1493] = { --Vault of the Wardens
                 name = "Vault of the Wardens",
                 boss1 = {
                     name = "Ash'Golm",
@@ -1017,7 +1054,8 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.VaultOfTheWardens:AshGolm() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1816,
                 },
                 boss2 = {
                     name = "Cordana",
@@ -1027,7 +1065,8 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.VaultOfTheWardens:Cordana() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1818,
                 },
                 boss3 = {
                     name = "Other 4",
@@ -1041,7 +1080,7 @@ core.Instances = {
                 },
             },
 
-            BlackRookHold = {
+            [1501] = { --Black Rook Hold
                 name = "Black Rook Hold",
                 boss1 = {
                     name = "Other 5",
@@ -1061,21 +1100,23 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.BlackRookHold:AmalgamOfSouls() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1832,
                 },
                 boss3 = {
-                    name = "Illysanna Ravencrest",
+                    name = "Ilysanna Ravencrest",
                     bossIDs = {98696},
                     achievement = 10711,
                     players = {"(Enter instance to start scanning)"},
                     tactics = "",
                     enabled = true,
                     track = function() core.BlackRookHold:IllysannaRavencrest() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1833,
                 },
             },
 
-            MawOfSouls = {
+            [1492] = { --Maw of Souls
                 name = "Maw of Souls",
                 boss1 = {
                     name = "Ymiron",
@@ -1085,7 +1126,8 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.MawOfSouls:Ymiron() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1822,
                 },
                 boss2 = {
                     name = "Helya",
@@ -1095,7 +1137,8 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1824,
                 },
                 boss3 = {
                     name = "Other 6",
@@ -1109,7 +1152,7 @@ core.Instances = {
                 },
             },
 
-            TheArcway = {
+            [1516] = { --The Arcway
                 name = "The Arcway",
                 boss1 = {
                     name = "Ivanyr",
@@ -1119,7 +1162,8 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.TheArcway:Ivanyr() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1827,
                 },
                 boss2 = {
                     name = "Corstilax",
@@ -1129,7 +1173,8 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1825,
                 },
                 boss3 = {
                     name = "Advisor Vandros",
@@ -1139,11 +1184,12 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.TheArcway:AdvisorVandros() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1829,
                 },
             },
 
-            CourtOfStars = {
+            [1571] = { --Court of Stars
                 name = "Court of Stars",
                 boss1 = {
                     name = "Patrol Captain Gerdo",
@@ -1153,7 +1199,8 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1868,
                 },
                 boss2 = {
                     name = "Other 7",
@@ -1167,7 +1214,7 @@ core.Instances = {
                 },
             },
 
-            ReturnToKarazhan = {
+            [1651] = { --Return to Karazhan
                 name = "Return to Karazhan",
                 boss1 = {
                     name = "Other 8",
@@ -1187,7 +1234,8 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1957,
                 },
                 boss3 = {
                     name = "Moroes",
@@ -1197,7 +1245,8 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1961,
                 },
                 boss4 = {
                     name = "Shade of Medivh",
@@ -1207,7 +1256,8 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1965,
                 },
                 boss5 = {
                     name = "Mana Devourer",
@@ -1217,7 +1267,8 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1959,
                 },
                 boss6 = {
                     name = "Other 9",
@@ -1231,7 +1282,7 @@ core.Instances = {
                 },
             },
 
-            CathedralOfEternalNight = {
+            [1677] = { --Cathedral of Eternal Night
                 name = "Cathedral of Eternal Night",
                 boss1 = {
                     name = "Agronox",
@@ -1241,7 +1292,7 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
                 },
                 boss2 = {
                     name = "Thrashbite the Scornful",
@@ -1251,7 +1302,7 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.CathedralOfEternalNight:ThrashbiteTheScornful() end,
-					partial = false,
+                    partial = false,
                 },
                 boss3 = {
                     name = "Mephistroth",
@@ -1261,7 +1312,7 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
                 },
             },
         },
@@ -1269,7 +1320,7 @@ core.Instances = {
 
     WarlordsOfDraenor = {
         Raids = {
-            Highmaul = {
+            [1228] = { --Highmaul
                 name = "Highmaul",
                 boss1 = {
                     name = "Kargath Bladefist",
@@ -1279,7 +1330,8 @@ core.Instances = {
                     tactics = "At 110, you can simply nuke the boss down.",
                     enabled = true,
                     track = function() core.Highmaul:KargathBladefist() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1721,
                 },
                 boss2 = {
                     name = "The Butcher",
@@ -1289,7 +1341,8 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.Highmaul:TheButcher() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1706,
                 },
                 boss3 = {
                     name = "Tectus",
@@ -1299,7 +1352,8 @@ core.Instances = {
                     tactics = "At 110, just nuke the boss down for the first and second split. On the third split wait for all 8 versions of the boss to spawn, then AOE them down within 10 seconds of one another.",
                     enabled = true,
                     track = function() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1722,
                 },
                 boss4 = {
                     name = "Brackenspore",
@@ -1309,7 +1363,8 @@ core.Instances = {
                     tactics = "Before pulling the boss pick up the flamethrower fun. Damage the boss to below 50% health so that the green moss starts growing from the edges of the room. Once the room is full of green moss, start pressing the flamethrower button over the boss. Keep pressing the flamethrower button every time it comes off cooldown until you reach 15 stacks of Burning Infusion. Once you have 15 stacks you can kill the boss. The stacks do need to stay on you once you reach 15.",
                     enabled = true,
                     track = function() core.Highmaul:Brackenspore() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1720,
                 },
                 boss5 = {
                     name = "Twin Ogron",
@@ -1319,7 +1374,8 @@ core.Instances = {
                     tactics = "At 110, you can simply nuke the bosses down. Make sure they are standing next to each other.",
                     enabled = true,
                     track = function() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1719,
                 },
                 boss6 = {
                     name = "Ko'ragh",
@@ -1329,7 +1385,8 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = true,
                     track = function() core.Highmaul:Koragh() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1723,
                 },
                 boss7 = {
                     name = "Imperator Mar'gok",
@@ -1339,11 +1396,12 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1705,
                 },
             },
 
-            BlackrockFoundry = {
+            [1205] = { --Blackrock Foundry
                 name = "Blackrock Foundry",
                 boss1 = {
                     name = "Beastlord Darmac",
@@ -1354,6 +1412,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.BlackrockFoundry:BeastlordDarmac() end,
                     partial = false,
+                    encounterID = 1694,
                 },
                 boss2 = {
                     name = "Operator Thogar",
@@ -1364,6 +1423,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.BlackrockFoundry:OperatorThogar() end,
                     partial = false,
+                    encounterID = 1692,
                 },
                 boss3 = {
                     name = "Iron Maidens",
@@ -1374,6 +1434,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.BlackrockFoundry:TheIronMaidens() end,
                     partial = false,
+                    encounterID = 1695,
                 },
                 boss4 = {
                     name = "Hans'gar & Franzok",
@@ -1384,6 +1445,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.BlackrockFoundry:HansgarFranzok() end,
                     partial = false,
+                    encounterID = 1693,
                 },
                 boss5 = {
                     name = "Flamebender Ka'graz",
@@ -1394,6 +1456,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.BlackrockFoundry:FlamebenderKagraz() end,
                     partial = false,
+                    encounterID = 1689,
                 },
                 boss6 = {
                     name = "Kromog",
@@ -1404,6 +1467,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.BlackrockFoundry:Kromog() end,
                     partial = false,
+                    encounterID = 1713,
                 },
                 boss7 = {
                     name = "Gruul",
@@ -1413,7 +1477,8 @@ core.Instances = {
                     tactics = "1 player tank boss at entrance to room with boss facing into the center of the room. Everyone else stand underneath the ore which is positioned on the ceiling of the boss room. When boss casts overhead smash, players will be flung into the air. Click on the ore on the ceiling to collect it. Once all 3 ores have been collected you can nuke boss.",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1691,
                 },
                 boss8 = {
                     name = "Oregorger",
@@ -1423,7 +1488,8 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1696,
                 },
                 boss9 = {
                     name = "Blast Furnace",
@@ -1434,6 +1500,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.BlackrockFoundry:BlastFurnace() end,
                     partial = false,
+                    encounterID = 1690,
                 },
                 boss10 = {
                     name = "Blackhand",
@@ -1444,10 +1511,11 @@ core.Instances = {
                     enabled = true,
                     track = function() core.BlackrockFoundry:Blackhand() end,
                     partial = false,
+                    encounterID = 1704,
                 },
             },
             
-            HellfireCitadel = {
+            [1448] = { --Hellfire Citadel
                 name = "Hellfire Citadel",
                 boss1 = {
                     name = "Hellfire Assault",
@@ -1459,6 +1527,7 @@ core.Instances = {
                     track = function() end,
                     partial = false,
                     nameplateCheck = true,
+                    encounterID = 1778,
                 },
                 boss2 = {
                     name = "Iron Reaver",
@@ -1470,6 +1539,7 @@ core.Instances = {
                     track = function() core.HellfireCitadel:IronReaver() end,
                     partial = false,
                     encounterID = 1785,
+                    encounterID = 1785,
                 },
                 boss3 = {
                     name = "Kormrok",
@@ -1480,6 +1550,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.HellfireCitadel:Kormrok() end,
                     partial = false,
+                    encounterID = 1787,
                 },
                 boss4 = {
                     name = "Hellfire High Council",
@@ -1490,6 +1561,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.HellfireCitadel:HellfireHighCouncil() end,
                     partial = false,
+                    encounterID = 1798,
                 },
                 boss5 = {
                     name = "Kilrogg Deadeye",
@@ -1500,6 +1572,7 @@ core.Instances = {
                     enabled = true,
                     track = function() end,
                     partial = false,
+                    encounterID = 1786,
                 },
                 boss6 = {
                     name = "Gorefiend",
@@ -1510,6 +1583,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.HellfireCitadel:Gorefiend() end,
                     partial = false,
+                    encounterID = 1783,
                 },
                 boss7 = {
                     name = "Shadow-Lord Iskar",
@@ -1520,6 +1594,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.HellfireCitadel:ShadowLordIskar() end,
                     partial = false,
+                    encounterID = 1788,
                 },
                 boss8 = {
                     name = "Socrethar the Eternal",
@@ -1530,6 +1605,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.HellfireCitadel:SocretharTheEternal() end,
                     partial = false,
+                    encounterID = 1794,
                 },
                 boss9 = {
                     name = "Tyrant Velhari",
@@ -1540,6 +1616,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.HellfireCitadel:TyrantVelhari() end,
                     partial = false,
+                    encounterID = 1784,
                 },
                 boss10 = {
                     name = "Fel Lord Zakuun",
@@ -1550,6 +1627,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.HellfireCitadel:FelLordZakuun() end,
                     partial = false,
+                    encounterID = 1777,
                 },
                 boss11 = {
                     name = "Xhul'horac",
@@ -1560,6 +1638,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.HellfireCitadel:Xhulhorac() end,
                     partial = false,
+                    encounterID = 1800,
                 },
                 boss12 = {
                     name = "Mannoroth",
@@ -1570,6 +1649,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.HellfireCitadel:Mannoroth() end,
                     partial = false,
+                    encounterID = 1795,
                 },
                 boss13 = {
                     name = "Archimonde",
@@ -1579,13 +1659,14 @@ core.Instances = {
                     tactics = "Wait for the Doomfire Spirit to spawn then nuke down boss. The Doomfire Spirit does not need to stay alive",
                     enabled = true,
                     track = function() core.HellfireCitadel:Archimonde() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1799,
                 },
             },
         },
 
         Dungeons = {
-            BloodmaulSlagMines = {
+            [1175] = { --Bloodmaul Slag Mines
                 name = "Bloodmaul Slag Mines",
                 boss1 = {
                     name = "Slave Watcher Crushto",
@@ -1595,7 +1676,8 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1653,
                 },
                 boss2 = {
                     name = "Magmolatus",
@@ -1605,7 +1687,8 @@ core.Instances = {
                     tactics = "At 110, dps down the boss slowly so that both Calamity and Ruination have a chance to spawn",
                     enabled = true,
                     track = function() core.BloodmaulSlagMines:Magmolatus() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1655,
                 },
                 boss3 = {
                     name = "Gug'rokk",
@@ -1615,11 +1698,12 @@ core.Instances = {
                     tactics = "At 110, single target the boss down so that no Unstable Slags are killed",
                     enabled = true,
                     track = function() core.BloodmaulSlagMines:Gugrokk() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1654,
                 },
             },
 
-            IronDocks = {
+            [1195] = { --Iron Docks
                 name = "Iron Docks",
                 boss1 = {
                     name = "Fleshrender Nok'gar",
@@ -1629,7 +1713,8 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.IronDocks:FleshrenderNokgar() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1749,
                 },
                 boss2 = {
                     name = "Other 11",
@@ -1639,7 +1724,7 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
                 },
                 boss3 = {
                     name = "Skulloc",
@@ -1649,11 +1734,12 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.IronDocks:Skulloc() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1754,
                 },
             },
 
-            Auchindoun = {
+            [1182] = { --Auchindoun
                 name = "Auchindoun",
                 boss1 = {
                     name = "Soulbinder Nyami",
@@ -1663,7 +1749,8 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1685,
                 },
                 boss2 = {
                     name = "Azzakel",
@@ -1673,7 +1760,8 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1678,
                 },
                 boss3 = {
                     name = "Teron'gor",
@@ -1683,11 +1771,12 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1714,
                 },
             },
 
-            Skyreach = {
+            [1209] = { --Skyreach
                 name = "Skyreach",
                 boss1 = {
                     name = "Ranjit",
@@ -1697,7 +1786,8 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.Skyreach:Ranjit() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1698,
                 },
                 boss2 = {
                     name = "Rukhran",
@@ -1707,7 +1797,8 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1700,
                 },
                 boss3 = {
                     name = "High Sage Viryx",
@@ -1717,7 +1808,8 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.Skyreach:HighSageViryx() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1701,
                 },
                 boss4 = {
                     name = "High Sage Viryx 2",
@@ -1727,11 +1819,12 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1701,
                 },
             },
 
-            GrimrailDepot = {
+            [1208] = { --Grimrail Depot
                 name = "Grimrail Depot",
                 boss1 = {
                     name = "Rocketspark and Borka",
@@ -1741,7 +1834,8 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.GrimrailDepot:RocketsparkAndBorka() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1715,
                 },
                 boss2 = {
                     name = "Nitrogg Thundertower",
@@ -1751,11 +1845,12 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1732,
                 },
             },
 
-            TheEverbloom = {
+            [1279] = { --The Everbloom
                 name = "The Everbloom",
                 boss1 = {
                     name = "Witherbark",
@@ -1765,7 +1860,8 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.TheEverbloom:Witherbark() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1746,
                 },
                 boss2 = {
                     name = "Archmage Sol",
@@ -1775,7 +1871,8 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1751,
                 },
                 boss3 = {
                     name = "Yalnu",
@@ -1785,11 +1882,12 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1756,
                 },
             },
 
-            ShadowmoonBurialGrounds = {
+            [1176] = { --Shadowmoon Burial Grounds
                 name = "Shadowmoon Burial Grounds",
                 boss1 = {
                     name = "Sadana Bloodfury",
@@ -1799,7 +1897,8 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1677,
                 },
                 boss2 = {
                     name = "Bonemaw",
@@ -1809,7 +1908,8 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.ShadowmoonBurialGrounds:Bonemaw() end,
-					partial = true,
+                    partial = true,
+                    encounterID = 1679,
                 },
                 boss3 = {
                     name = "Ner'zhul",
@@ -1819,11 +1919,12 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.ShadowmoonBurialGrounds:Nerzhul() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1682,
                 },
             },
 
-            UpperBlackrockSpire = {
+            [1358] = { --Upper Blackrock Spire
                 name = "Upper Blackrock Spire",
                 boss1 = {
                     name = "Orebender Gor'ashan",
@@ -1833,7 +1934,8 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.UpperBlackrockSpire:OrebenderGorashan() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1761,
                 },
                 boss2 = {
                     name = "Other 12",
@@ -1843,7 +1945,7 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
                 },
                 boss3 = {
                     name = "Ragewing the Untamed",
@@ -1853,7 +1955,8 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.UpperBlackrockSpire:RagewingTheUntamed() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1760,
                 },
                 boss4 = {
                     name = "Warlord Zaela",
@@ -1863,7 +1966,8 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.UpperBlackrockSpire:WarlordZaela() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1762,
                 },
             },
         },
@@ -1871,7 +1975,7 @@ core.Instances = {
 
     MistsOfPandaria = {
         Raids = {
-            TerraceOfEndlessSpring = {
+            [996] = { --Terrace of Endless Spring
                 name = "Terrace of Endless Spring",
                 boss1 = {
                     name = "Protectors of the Endless",
@@ -1880,8 +1984,9 @@ core.Instances = {
                     players = {"(Enter instance to start scanning)"},
                     tactics = "This achievement takes 3 weeks to complete. All you need to do is rotate which 1 of the 3 bosses is to be killed last each week",
                     enabled = true,
-                    track = function() core.TerraceOfEndlessSpring:ProtectorsOfTheEndless() end,
+                    track = function() core._996:ProtectorsOfTheEndless() end,
                     partial = false,
+                    encounterID = 1409,
                 },
                 boss2 = {
                     name = "Tsulong",
@@ -1890,8 +1995,9 @@ core.Instances = {
                     players = {"(Enter instance to start scanning)"},
                     tactics = "At 110 you can simply nuke the boss since it takes ~70 seconds for the enchanted plant to die without any healing",
                     enabled = true,
-                    track = function() core.TerraceOfEndlessSpring:Tsulong() end,
+                    track = function() core._996:Tsulong() end,
                     partial = false,
+                    encounterID = 1505,
                 },
                 boss3 = {
                     name = "Lei Shi",
@@ -1900,8 +2006,9 @@ core.Instances = {
                     players = {"(Enter instance to start scanning)"},
                     tactics = "Once you have started the fight. Every player must go down the steps to left and right of the boss into the water and walk up to a Parasitoid Sha. Once a player is close enough to the Parasitoid Sha it will attach itself to the head of that player. Once everyone in the raid has a Parasitoid Sha on their head, you can single target the boss down. Do not use multi-target abilities since you may accidently kill a Parasitoid Sha",
                     enabled = true,
-                    track = function() core.TerraceOfEndlessSpring:LeiShi() end,
+                    track = function() core._996:LeiShi() end,
                     partial = false,
+                    encounterID = 1506,
                 },
                 boss4 = {
                     name = "Sha of Fear",
@@ -1910,12 +2017,13 @@ core.Instances = {
                     players = {"(Enter instance to start scanning)"},
                     tactics = "At 110 you can simply nuke the boss. Make sure you stand in the light to avoid getting feared",
                     enabled = true,
-                    track = function() core.TerraceOfEndlessSpring:ShaOfFear() end,
+                    track = function() core._996:ShaOfFear() end,
                     partial = false,
+                    encounterID = 1431,
                 },
             },
 
-            ThroneOfThunder = {
+            [1098] = {
                 name = "Throne of Thunder",
                 boss1 = {
                     name = "Jin'rokh the Breaker",
@@ -1925,7 +2033,8 @@ core.Instances = {
                     tactics = "The boss will randomly cast Focused Lighting Orbs on players. If the orb reaches the player it will explode. 2 players need to get the focused lighting orbs to explode into each other. To do this run away from the orb if it has been targeted on you. Once a 2nd orb has spawned, run your orb into the other players orb.",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1577,
                 },
                 boss2 = {
                     name = "Horridon",
@@ -1936,6 +2045,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.ThroneOfThunder:Horridon() end,
                     partial = false,
+                    encounterID = 1575,
                 },
                 boss3 = {
                     name = "Council of Elders",
@@ -1945,7 +2055,8 @@ core.Instances = {
                     tactics = "At 110 you can simply nuke down the boss. Make sure everyone is in the inner circle before pulling the boss.",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1570,
                 },
                 boss4 = {
                     name = "Tortos",
@@ -1956,6 +2067,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.ThroneOfThunder:Tortos() end,
                     partial = false,
+                    encounterID = 1565,
                 },
                 boss5 = {
                     name = "Megaera",
@@ -1965,7 +2077,8 @@ core.Instances = {
                     tactics = "This achievement takes 3 kills to complete. During the encounter only kill 2 of the heads leaving out a different head each time.",
                     enabled = true,
                     track = function() core.ThroneOfThunder:Megaera() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1578,
                 },
                 boss6 = {
                     name = "Ji-Kun",
@@ -1976,6 +2089,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.ThroneOfThunder:JiKun() end,
                     partial = false,
+                    encounterID = 1573,
                 },
                 boss7 = {
                     name = "Durumu the Forgotten",
@@ -1986,6 +2100,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.ThroneOfThunder:DurumuTheForgotten() end,
                     partial = false,
+                    encounterID = 1572,
                 },
                 boss8 = {
                     name = "Primordius",
@@ -1996,6 +2111,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.ThroneOfThunder:Primordius() end,
                     partial = false,
+                    encounterID = 1574,
                 },
                 boss9 = {
                     name = "Dark Animus",
@@ -2005,7 +2121,8 @@ core.Instances = {
                     tactics = "This achievement may take more than 1 run to complete although you can have multiple attempts during the same lockout. If you kill the Dark Ritualists without pulling the boss, you can reset the instance since they are counted as trash mobs. To do this convert the raid to heroic after killing the ritualists. Wait for a prompt to appear on your screen asking you to leave the instance. Once you are out of the instance, change the instance mode back to normal and then reset the instance. This can be done 9 time before you get locked out of the instance.",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1576,
                 },
                 boss10 = {
                     name = "Iron Qon",
@@ -2016,6 +2133,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.ThroneOfThunder:IronQon() end,
                     partial = false,
+                    encounterID = 1559,
                 },
                 boss11 = {
                     name = "Twin Consorts",
@@ -2026,6 +2144,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.ThroneOfThunder:TwinConsorts() end,
                     partial = false,
+                    encounterID = 1560,
                 },
                 boss12 = {
                     name = "Lei Shen",
@@ -2035,11 +2154,12 @@ core.Instances = {
                     tactics = "This achievement takes 4 kills to complete. Around the corners of the room there are 4 conduits. The boss will teleport to each conduit. Each week pick a different conduit to pull the boss at. Wait for the conduit to reach 3 stacks and overload then nuke the boss down.",
                     enabled = true,
                     track = function() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1579,
                 },
             },
 
-            SiegeOfOrgrimmar = {
+            [1136] = { --Siege of Orgrimmar
                 name = "Siege of Orgrimmar",
                 boss1 = {
                     name = "Immerseus",
@@ -2050,6 +2170,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.SiegeOfOrgrimmar:Immerseus() end,
                     partial = false,
+                    encounterID = 1602,
                 },
                 boss2 = {
                     name = "The Fallen Protectors",
@@ -2060,6 +2181,7 @@ core.Instances = {
                     enabled = false,
                     track = nil,
                     partial = true,
+                    encounterID = 1598,
                 },
                 boss3 = {
                     name = "Amalgam of Corruption",
@@ -2070,6 +2192,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.SiegeOfOrgrimmar:AmalgamOfCorruption() end,
                     partial = false,
+                    encounterID = 1624,
                 },
                 boss4 = {
                     name = "Sha of Pride",
@@ -2080,6 +2203,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.SiegeOfOrgrimmar:ShaOfPride() end,
                     partial = true,
+                    encounterID = 1604,
                 },
                 boss5 = {
                     name = "Galakras",
@@ -2090,6 +2214,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.SiegeOfOrgrimmar:Galakras() end,
                     partial = true,
+                    encounterID = 1622,
                 },
                 boss6 = {
                     name = "Iron Juggernaut",
@@ -2100,6 +2225,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.SiegeOfOrgrimmar:IronJuggernaut() end,
                     partial = false,
+                    encounterID = 1600,
                 },
                 boss7 = {
                     name = "Kor'kron Dark Shaman",
@@ -2108,7 +2234,8 @@ core.Instances = {
                     players = {"(Enter instance to start scanning)"},
                     tactics = "Warning: Do not AOE trash after Iron Juggernaut. 1.) Kill the Oversear with the axe to save Ji Firepaw (you only have a few seconds after entering the room to do this). 2.) Save either the Theramore citizens being held by Overseer Thathung (do not kill the citizens) or save the orcs being held by Overseer Mojka (do not kill the orcs).  3.) Collect a key from Mokuar the Treasurer and unlock a cage of prisoners.",
                     enabled = true,
-                    track = function()  end,
+                    track = function() end,
+                    encounterID = 1606,
                 },
                 boss8 = {
                     name = "General Nazgrim",
@@ -2119,6 +2246,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.SiegeOfOrgrimmar:GeneralNazgrim() end,
                     partial = false,
+                    encounterID = 1603,
                 },
                 boss9 = {
                     name = "Malkorok",
@@ -2129,6 +2257,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.SiegeOfOrgrimmar:Malkorok() end,
                     partial = false,
+                    encounterID = 1595,
                 },
                 boss10 = {
                     name = "Spoils of Pandaria",
@@ -2139,6 +2268,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.SiegeOfOrgrimmar:SecuredStockpileOfPandarenSpoils() end,
                     partial = false,
+                    encounterID = 1594,
                 },
                 boss11 = {
                     name = "Thok the Bloodthirsty",
@@ -2149,6 +2279,7 @@ core.Instances = {
                     enabled = false,
                     track = nil,
                     partial = false,
+                    encounterID = 1599,
                 },
                 boss12 = {
                     name = "Siegecrafter Blackfuse",
@@ -2159,6 +2290,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.SiegeOfOrgrimmar:SiegecrafterBlackfuse() end,
                     partial = false,
+                    encounterID = 1601,
                 },
                 boss13 = {
                     name = "Paragons of the Klaxxi",
@@ -2169,6 +2301,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.SiegeOfOrgrimmar:Paragons() end,
                     partial = false,
+                    encounterID = 1593,
                 },
                 boss14 = {
                     name = "Garrosh Hellscream",
@@ -2179,10 +2312,11 @@ core.Instances = {
                     enabled = true,
                     track = function() core.SiegeOfOrgrimmar:GarroshHellscream() end,
                     partial = false,
+                    encounterID = 1623,
                 },
             },
 
-            HeartOfFear = {
+            [1009] = { --Heart of Fear
                 name = "Heart of Fear",
                 boss1 = {
                     name = "Imperial Vizier Zor'lok",
@@ -2193,6 +2327,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.HeartOfFear:ImperialVizierZorlok() end,
                     partial = false,
+                    encounterID = 1507,
                 },
                 boss2 = {
                     name = "Blade Lord Ta'yak",
@@ -2202,7 +2337,8 @@ core.Instances = {
                     tactics = "There are 4 Braziers in the center of the room and 2 braziers to the far left and far right of the room as you are looking at the boss. Once the boss has reached 20% health you need to click on the braziers in the middle of the room which are lit up to gain the " .. GetSpellLink(128949) .. " buff. You then need to run to one of the brazier on the far right/left to light it up. Once all 4 far braziers are lit up you can kill the boss",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1504,
                 },
                 boss3 = {
                     name = "Garalon",
@@ -2213,6 +2349,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.HeartOfFear:Garalon() end,
                     partial = false,
+                    encounterID = 1463,
                 },
                 boss4 = {
                     name = "Wind Lord Mel'jarak",
@@ -2222,7 +2359,8 @@ core.Instances = {
                     tactics = "At 110 you can simply just nuke the boss to gain this achievement",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1498,
                 },
                 boss5 = {
                     name = "Amber-Shaper Un'sok",
@@ -2232,7 +2370,8 @@ core.Instances = {
                     tactics = "For this achievement you will need atleast 2 players. Once you pull the boss, kill the Living Amber so that the pools that spawn once these adds are killed are stacked on top of one another. Once you have 8 pools stacked ontop of one another, you can nuke the boss. If a player becomes an Amber Monster then nuke that player down to 20% health to free them",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1499,
                 },
                 boss6 = {
                     name = "Grand Empress Shek'zeer",
@@ -2243,10 +2382,11 @@ core.Instances = {
                     enabled = true,
                     track = function() core.HeartOfFear:GrandEmpressShekzeer() end,
                     partial = false,
+                    encounterID = 1501,
                 },
             },
 
-            MoguShanVaults = {
+            [1008] = {
                 name = "MoguShan Vaults",
                 boss1 = {
                     name = "The Stone Guard",
@@ -2256,7 +2396,8 @@ core.Instances = {
                     tactics = "For this achievement every player must have a canine companion pet summoned. The following pets definately work with the achievement: " .. GetSpellLink(70613) .. " " .. GetSpellLink(69452) .. " " .. GetSpellLink(90637),
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1395,
                 },
                 boss2 = {
                     name = "Feng the Accursed",
@@ -2267,6 +2408,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.MoguShanVaults:FengTheAccursed() end,
                     partial = false,
+                    encounterID = 1390,
                 },
                 boss3 = {
                     name = "Gara'jal the Spiritbinder",
@@ -2276,7 +2418,8 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1434,
                 },
                 boss4 = {
                     name = "The Spirit Kings",
@@ -2286,7 +2429,8 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1436,
                 },
                 boss5 = {
                     name = "Elegon",
@@ -2296,7 +2440,8 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.MoguShanVaults:Elegon() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1500,
                 },
                 boss6 = {
                     name = "Will of the Emperor",
@@ -2306,13 +2451,14 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.MoguShanVaults:WillOfTheEmperor() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1407,
                 },
             },
         },
 
         Dungeons = {
-            StormstoutBrewery = {
+            [961] = { --Stormstout Brewery
                 name = "Stormstout Brewery",
                 boss1 = {
                     name = "Ook-Ook",
@@ -2323,6 +2469,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.StormstoutBrewery:OokOok() end,
                     partial = false,
+                    encounterID = 1412,
                 },
                 boss2 = {
                     name = "Other 13",
@@ -2342,6 +2489,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.StormstoutBrewery:Hoptallus() end,
                     partial = false,
+                    encounterID = 1413,
                 },
                 boss4 = {
                     name = "Other 14",
@@ -2365,7 +2513,8 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.ScarletHalls:HoundmasterBraun() end,
-					partial = true,
+                    partial = true,
+                    encounterID = 1422,
                 },
                 boss2 = {
                     name = "Armsmaster Harlan",
@@ -2375,11 +2524,12 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.ScarletHalls:ArmsmasterHarlan() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1421,
                 },
             },
 
-            ScarletMonastery = {
+            [1004] = { --Scarlet Monastery
                 name = "Scarlet Monastery",
                 boss1 = {
                     name = "Thalnos the Soulrender",
@@ -2389,7 +2539,8 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.ScarletMonastery:ThalnosTheSoulrender() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1423,
                 },
                 boss2 = {
                     name = "Brother Korloff",
@@ -2399,7 +2550,8 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1424,
                 },
                 boss3 = {
                     name = "High Inquisitor Whitemane",
@@ -2409,11 +2561,12 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.ScarletMonastery:HighInquisitorWhitemane() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1425,
                 },
             },
 
-            Scholomance = {
+            [1007] = { --Scholomance
                 name = "Scholomance",
                 boss1 = {
                     name = "Jandice Barov",
@@ -2423,7 +2576,8 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1427,
                 },
                 boss2 = {
                     name = "Rattlegore",
@@ -2433,7 +2587,8 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.Scholomance:Rattlegore() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1428,
                 },
                 boss3 = {
                     name = "Other 15",
@@ -2467,7 +2622,7 @@ core.Instances = {
                 },
             },
 
-            TempleOfTheJadeSerpent = {
+            [960] = { --Temple of the Jade Serpent
                 name = "Temple of the Jade Serpent",
                 boss1 = {
                     name = "Wise Mari",
@@ -2477,7 +2632,8 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.TempleOfTheJadeSerpent:WiseMari() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1418,
                 },
                 boss2 = {
                     name = "Sha of Doubt",
@@ -2487,7 +2643,8 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.TempleOfTheJadeSerpent:ShaOfDoubt() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1439,
                 },
                 boss3 = {
                     name = "Sha of Doubt 2",
@@ -2497,11 +2654,12 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.TempleOfTheJadeSerpent:ShaOfDoubt2() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1439,
                 },
             },
 
-            MoguShanPalace = {
+            [994] = { --Mogu'Shan Palace
                 name = "MoguShan Palace",
                 boss1 = {
                     name = "Gekkan",
@@ -2511,7 +2669,7 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
                 },
                 boss2 = {
                     name = "Xin the Weaponmaster",
@@ -2521,7 +2679,8 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.MoguShanPalace.XinTheWeaponmaster() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1441,
                 },
                 boss3 = {
                     name = "Other Mogu",
@@ -2535,7 +2694,7 @@ core.Instances = {
                 },
             },
 
-            ShadoPanMonastery = {
+            [959] = { --Shado Pan Monastery
                 name = "Shado Pan Monastery",
                 boss1 = {
                     name = "Master Snowdrift",
@@ -2545,7 +2704,8 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1304,
                 },
                 boss2 = {
                     name = "Sha of Violence",
@@ -2555,7 +2715,8 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.ShadoPanMonastery:ShaOfViolence() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1305,
                 },
                 boss3 = {
                     name = "Taran Zhu",
@@ -2565,11 +2726,12 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.ShadoPanMonastery:TaranZhu() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1306,
                 },
             },
     
-            SiegeOfNiuzaoTemple = {
+            [1011] = { --Siege of Niuazao Temple
                 name = "Siege of Niuzao Temple",
                 boss1 = {
                     name = "Commander Vo'jak",
@@ -2579,7 +2741,8 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.SiegeOfNiuzaoTemple:CommanderVojak() end,
-					partial = true,
+                    partial = true,
+                    encounterID = 1502,
                 },
                 boss2 = {
                     name = "General Pa'valak",
@@ -2589,7 +2752,8 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.SiegeOfNiuzaoTemple:GeneralPaValak() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1447,
                 },
                 boss3 = {
                     name = "Wing Leader Ner'onok",
@@ -2599,11 +2763,12 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.SiegeOfNiuzaoTemple:WingLeaderNeronok() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1464,
                 },
             },
 
-            GateOfTheSettingSun = {
+            [962] = { --Gate of the Setting Sun
                 name = "Gate of the Setting Sun",
                 boss1 = {
                     name = "Saboteur Kip'tilak",
@@ -2613,7 +2778,8 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.GateOfTheSettingSun:SaboteurKiptilak() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1397,
                 },
                 boss2 = {
                     name = "Other 18",
@@ -2623,7 +2789,7 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
                 },
                 boss3 = {
                     name = "Raigonn",
@@ -2633,7 +2799,8 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.GateOfTheSettingSun:Raigonn() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1419,
                 },
             },
         },
@@ -2641,7 +2808,7 @@ core.Instances = {
 
     Cataclysm = {
         Raids = {
-            DragonSoul = {
+            [967] = { --Dragon Soul
                 name = "Dragon Soul",
                 boss1 = {
                     name = "Morchok",
@@ -2651,7 +2818,8 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1292,
                 },
                 boss2 = {
                     name = "Warlord Zon'ozz",
@@ -2662,6 +2830,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.DragonSoul:WarlordZonozz() end,
                     partial = false,
+                    encounterID = 1294,
                 },
                 boss3 = {
                     name = "Yor'sahj the Unsleeping",
@@ -2672,6 +2841,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.DragonSoul:YorsahjTheUnsleeping() end,
                     partial = false,
+                    encounterID = 1295,
                 },
                 boss4 = {
                     name = "Hagara the Stormbinder",
@@ -2681,7 +2851,8 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1296,
                 },
                 boss5 = {
                     name = "Ultraxion",
@@ -2692,6 +2863,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.DragonSoul:Ultraxion() end,
                     partial = false,
+                    encounterID = 1297,
                 },
                 boss6 = {
                     name = "Warmaster Blackhorn",
@@ -2702,6 +2874,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.DragonSoul:Skyfire() end,
                     partial = false,
+                    encounterID = 1298,
                 },
                 boss7 = {
                     name = "Spine of Deathwing",
@@ -2712,6 +2885,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.DragonSoul:SpineOfDeathwing() end,
                     partial = false,
+                    encounterID = 1291,
                 },
                 boss8 = {
                     name = "Madness of Deathwing",
@@ -2722,10 +2896,11 @@ core.Instances = {
                     enabled = true,
                     track = function() end,
                     partial = false,
+                    encounterID = 1299,
                 },
             },
 
-            BlackwingDescent = {
+            [669] = { --Blackwing Descent
                 name = "Blackwing Descent",
                 boss1 = {
                     name = "Magmaw",
@@ -2736,6 +2911,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.BlackwingDescent:Magmaw() end,
                     partial = false,
+                    encounterID = 1024,
                 },
                 boss2 = {
                     name = "Omnotron Defense System",
@@ -2746,6 +2922,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.BlackwingDescent:OminitronDefenseSystem() end,
                     partial = false,
+                    encounterID = 1027,
                 },
                 boss3 = {
                     name = "Maloriak",
@@ -2756,6 +2933,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.BlackwingDescent:Maloriak() end,
                     partial = false,
+                    encounterID = 1025,
                 },
                 boss4 = {
                     name = "Atramedes",
@@ -2766,6 +2944,7 @@ core.Instances = {
                     enabled = true,
                     track = function() end,
                     partial = false,
+                    encounterID = 1022,
                 },
                 boss5 = {
                     name = "Chimaeron",
@@ -2776,6 +2955,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.BlackwingDescent:Chimaeron() end,
                     partial = false,
+                    encounterID = 1023,
                 },
                 boss6 = {
                     name = "Nefarian",
@@ -2786,10 +2966,11 @@ core.Instances = {
                     enabled = true,
                     track = function() core.BlackwingDescent:Nefarian() end,
                     partial = false,
+                    encounterID = 1026,
                 },
             },
 
-            BastionOfTwilight = {
+            [671] = { --Bastion of Twilight
                 name = "Bastion of Twilight",
                 boss1 = {
                     name = "Halfus Wyrmbreaker",
@@ -2800,6 +2981,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.BastionOfTwilight:HalfusWyrmbreaker() end,
                     partial = false,
+                    encounterID = 1030,
                 },
                 boss2 = {
                     name = "Valiona And Theralion",
@@ -2810,6 +2992,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.BastionOfTwilight_ValionaAndTheralion() end,
                     partial = false,
+                    encounterID = 1032,
                 },
                 boss3 = {
                     name = "Ascendant Council",
@@ -2819,7 +3002,8 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1028,
                 },
                 boss4 = {
                     name = "Cho'gall",
@@ -2830,10 +3014,11 @@ core.Instances = {
                     enabled = true,
                     track = function() end,
                     partial = false,
+                    encounterID = 1029,
                 },
             },
 
-            ThroneOfTheFourWinds = {
+            [754] = { --Throne of the Four Winds
                 name = "Throne of the Four Winds",
                 boss1 = {
                     name = "Conclave of Wind",
@@ -2843,7 +3028,8 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1035,
                 },
                 boss2 = {
                     name = "Al'Akir",
@@ -2853,11 +3039,12 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1034,
                 },
             },
 
-            Firelands = {
+            [720] = { --Firelands
                 name = "Firelands",
                 boss1 = {
                     name = "Beth'tilac",
@@ -2868,6 +3055,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.Firelands:Bethtilac() end,
                     partial = false,
+                    encounterID = 1197,
                 },
                 boss2 = {
                     name = "Lord Rhyolith",
@@ -2878,6 +3066,7 @@ core.Instances = {
                     enabled = true,
                     track = function() end,
                     partial = false,
+                    encounterID = 1204,
                 },
                 boss3 = {
                     name = "Alysrazor",
@@ -2888,6 +3077,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.Firelands:Alysrazor() end,
                     partial = false,
+                    encounterID = 1206,
                 },
                 boss4 = {
                     name = "Shannox",
@@ -2897,7 +3087,8 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1205,
                 },
                 boss5 = {
                     name = "Baleroc",
@@ -2908,6 +3099,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.Firelands:Baleroc() end,
                     partial = false,
+                    encounterID = 1200,
                 },
                 boss6 = {
                     name = "Majordomo Staghelm",
@@ -2917,7 +3109,8 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1185,
                 },
                 boss7 = {
                     name = "Ragnaros",
@@ -2927,13 +3120,14 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.Firelands:Ragnaros() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1203,
                 },
             },
         },
 
         Dungeons = {
-            BlackrockCaverns = {
+            [645] = { --Blackrock Caverns
                 name = "Blackrock Caverns",
                 boss1 = {
                     name = "Rom'ogg Bonecrusher",
@@ -2943,7 +3137,8 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.BlackrockCaverns:RomoggBonecrusher() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1040,
                 }, 
                 boss2 = {
                     name = "Corla",
@@ -2953,7 +3148,8 @@ core.Instances = {
                     tactics = "After pulling the boss wait for the three zealots evolve. This is done by not standing in the way of the beams being channelled to the mobs. Once they have all evolved you can nuke the boss.",
                     enabled = true,
                     track = function() core.BlackrockCaverns:Corla() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1038,
                 },  
                 boss3 = {
                     name = "Karsh Steelbender",
@@ -2963,7 +3159,8 @@ core.Instances = {
                     tactics = "Pull the boss into the fire in the middle of the room until he reaches 15 stacks of Superheated Quicksilver Armor. Once he has 15 stacks you can nuke the boss.",
                     enabled = true,
                     track = function() core.BlackrockCaverns:KarshSteelbender() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1039,
                 },  
                 boss4 = {
                     name = "Ascendant Lord Obsidius",
@@ -2973,11 +3170,12 @@ core.Instances = {
                     tactics = "At 110 you can simply just nuke the boss",
                     enabled = true,
                     track = function() core.BlackrockCaverns:AscendantLordObsidius() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1036,
                 },                 
             },
 
-            ThroneOfTheTides = {
+            [643] = {  --Throne of the Tides
                 name = "Throne of the Tides",
                 boss1 = {
                     name = "Lady Naz'Jar",
@@ -2987,7 +3185,8 @@ core.Instances = {
                     tactics = "Damage the boss down to about 40% health. Be careful that you don’t 1 shot the boss. When the boss transitions to the next phase, kill the 2 caster adds but keep the melee add up. Once the geyser spawns drag the remaining add into the geyser until it gets killed. This may have to done multiple times. Once the add has been killed by the geyser, you can kill the boss.",
                     enabled = true,
                     track = function() core.ThroneOfTheTides:LadyNazjar() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1045,
                 },
                 boss2 = {
                     name = "Ozumat",
@@ -2997,11 +3196,12 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.ThroneOfTheTides:Ozumat() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1047,
                 },                  
             },
 
-            TheStonecore = {
+            [725] = { --The Stonecore
                 name = "The Stonecore",
                 boss1 = {
                     name = "High Priestess Azil",
@@ -3011,11 +3211,12 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.TheStonecore:HighPriestessAzil() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1057,
                 },               
             },
 
-            TheVortexPinnacle = {
+            [657] = { --The Vortext Pinnacle
                 name = "The Vortex Pinnacle",
                 boss1 = {
                     name = "Asaad",
@@ -3025,7 +3226,8 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = true,
                     track = function() core.TheVortexPinnacle:Asaad() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1042,
                 },
                 boss2 = {
                     name = "Other 19",
@@ -3039,7 +3241,7 @@ core.Instances = {
                 },                
             },
 
-            GrimBatol = {
+            [670] = { --Grim Batol
                 name = "Grim Batol",
                 boss1 = {
                     name = "General Umbriss",
@@ -3049,7 +3251,8 @@ core.Instances = {
                     tactics = "Pull the boss then wait for a Malignant Trogg to spawn. Kill the Malignant Trogg next to the boss. Once the boss has got the Modgud's Malice from the killed add then you can kill the boss.",
                     enabled = true,
                     track = function() core.GrimBatol:GeneralUmbriss() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1051,
                 },
                 boss2 = {
                     name = "Erudax",
@@ -3059,11 +3262,12 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = true,
                     track = function() core.GrimBatol:Erudax() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1049,
                 },               
             },
 
-            HallsOfOrigination = {
+            [644] = { --Halls of Origination
                 name = "Halls of Origination",
                 boss1 = {
                     name = "Temple Guardian Anhuur",
@@ -3073,7 +3277,8 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = true,
                     track = function() core.HallsOfOrigination:TempleGuardianAnhuur() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1080,
                 },
                 boss2 = {
                     name = "Earthrager Ptah",
@@ -3083,7 +3288,8 @@ core.Instances = {
                     tactics = "Mount one of the camels to the left or right of the boss before going up the steps. Once you have mounted a camel, just nuke down the boss.",
                     enabled = true,
                     track = function() core.HallsOfOrigination:EarthragerPtah() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1076,
                 },
                 boss3 = {
                     name = "Other Halls",
@@ -3103,11 +3309,12 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = true,
                     track = function() core.HallsOfOrigination:Rajh() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1078,
                 },           
             },
 
-            LostCityOfTheTolVir = {
+            [755] = { --Lost City of the Tol'Vir
                 name = "Lost City of The TolVir",
                 boss1 = {
                     name = "Lockmaw",
@@ -3117,7 +3324,8 @@ core.Instances = {
                     tactics = "Pull the boss and wait for 20 Frenzied Crocolisk to spawn. Once they have spawned nuke them down within 10 seconds. Make sure you don’t kill the boss before nuking down the adds.",
                     enabled = true,
                     track = function() core.LostCityOfTheTolVir:Lockmaw() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1054,
                 },  
                 boss2 = {
                     name = "High Prophet Barim",
@@ -3127,7 +3335,8 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.LostCityOfTheTolVir:HighProphetBarim() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1053,
                 },  
                 boss3 = {
                     name = "Siamat",
@@ -3137,11 +3346,12 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.LostCityOfTheTolVir:Siamat() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1055,
                 },           
             },
 
-            Deadmines = {
+            [36] = { --Deadmines
                 name = "Deadmines",
                 boss1 = {
                     name = "Glubtok",
@@ -3151,7 +3361,8 @@ core.Instances = {
                     tactics = "At 110 you can simply just nuke the boss down.",
                     enabled = true,
                     track = function() core.Deadmines:Glubtok() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1064,
                 },
                 boss2 = {
                     name = "Helix Gearbreaker",
@@ -3161,7 +3372,8 @@ core.Instances = {
                     tactics = "Pull the boss and wait for him to pick you up and charge down the room. Once he has done this Mine Rats will spawn around the room. After you have killed 20 Mine Rats you can kill the boss. The boss will have to do multiple charges so that enough Mine Rats to spawn.",
                     enabled = true,
                     track = function() core.Deadmines:HelixGearbreaker() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1065,
                 },  
                 boss3 = {
                     name = "Foe Reaper 5000",
@@ -3171,7 +3383,8 @@ core.Instances = {
                     tactics = "At 110 you can leave the Prototype Reaper alone and just nuke down the boss.",
                     enabled = false,
                     track = nil,
-					partial = true,
+                    partial = true,
+                    encounterID = 1063,
                 },  
                 boss4 = {
                     name = "Admiral Ripsnarl",
@@ -3181,7 +3394,8 @@ core.Instances = {
                     tactics = "Damage Ripsnarl until he enters the vapour phase. Be careful that you don’t one shot the boss. Once he enters the vapour phase, wait until 3 Freezing Vapors cast Coalesce before killing boss.",
                     enabled = true,
                     track = function() core.Deadmines:AdmiralRipsnarl() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1062,
                 },  
                 boss5 = {
                     name = "'Captain' Cookie",
@@ -3191,7 +3405,8 @@ core.Instances = {
                     tactics = "At 110, Wait for the boss to enter the pot and attempt to cast Throw Food before killing the boss. If you kill the boss before this has happened, the achievement will not get rewarded.",
                     enabled = true,
                     track = function() core.Deadmines:CaptainCookie() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1060,
                 },  
                 boss6 = {
                     name = "Vanessa VanCleef",
@@ -3201,11 +3416,12 @@ core.Instances = {
                     tactics = "At 110, just complete the encounter as quick as possible.",
                     enabled = true,
                     track = function() core.Deadmines:VanessaVanCleef() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1081,
                 },            
             },
 
-            ShadowfangKeep = {
+            [33] = { --Shadowfang Keep
                 name = "Shadowfang Keep",
                 boss1 = {
                     name = "Baron Ashbury",
@@ -3215,7 +3431,8 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = true,
                     track = function() core.ShadowfangKeep:BaronAshbury() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1069,
                 },
                 boss2 = {
                     name = "Commander Springvale",
@@ -3225,7 +3442,8 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = true,
                     track = function() core.ShadowfangKeep:CommanderSpringvale() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1071,
                 },            
                 boss3 = {
                     name = "Lord Godfrey",
@@ -3235,11 +3453,12 @@ core.Instances = {
                     tactics = "Pull the boss then wait for the Bloodthirsty Ghouls to spawn. Place the boss in front of the Bloodthirsty Ghouls and wait for the boss to kill the Bloodthirsty Ghouls with his Pistol Barrage ability. Once 12 Ghouls have been killed, you can nuke the boss.",
                     enabled = true,
                     track = function() core.ShadowfangKeep:LordGodfrey() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1072,
                 },   
             },
 
-            ZulGurub = {
+            [859] = { --Zul'Gurub
                 name = "Zul Gurub",
                 boss1 = {
                     name = "Other 20",
@@ -3249,7 +3468,7 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
                 },
                 boss2 = {
                     name = "High Priest Venoxis",
@@ -3259,7 +3478,8 @@ core.Instances = {
                     tactics = "Pull the boss and wait for him to turn into the snake. While waiting make sure you avoid green stuff on the floor. Once the boss has turned into a snake you can kill him.",
                     enabled = true,
                     track = function() core.ZulGurub:HighPriestVenoxis() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1178,
                 },
                 boss3 = {
                     name = "Bloodlord Mandokir",
@@ -3269,7 +3489,8 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke down the boss.",
                     enabled = true,
                     track = function() core.ZulGurub:BloodlordMandokir() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1179,
                 },
                 boss4 = {
                     name = "High Priestess Kilnara",
@@ -3279,7 +3500,8 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.ZulGurub:HighPriestessKilnara() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1180,
                 },
                 boss5 = {
                     name = "Jin'do",
@@ -3289,11 +3511,12 @@ core.Instances = {
                     tactics = "Damage the boss down to below 70% health. Wait for 20 Twisted Spirts to spawn then nuke them down. Once you have killed 20 Twisted spirits in 15 seconds you can kill boss.",
                     enabled = true,
                     track = function() core.ZulGurub:Jindo() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1182,
                 },
             },
 
-            ZulAman = {
+            [568] = { --Zul'Aman
                 name = "Zul Aman",
                 boss1 = {
                     name = "Halazzi",
@@ -3303,7 +3526,8 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = true,
                     track = function() core.ZulAman:Halazzi() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1192,
                 },
                 boss2 = {
                     name = "Other 21",
@@ -3333,11 +3557,12 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke the boss down while in the rectangular turquoise stonework.",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1194,
                 },
             },
 
-            EndTime = {
+            [938] = { --End Time
                 name = "End Time",
                 boss1 = {
                     name = "Echo of Tyrande",
@@ -3347,7 +3572,8 @@ core.Instances = {
                     tactics = "At 110, run the gauntlet without any player in healing spec. This way you don’t need to worry about a healer taking any damage.",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1884,
                 },
                 boss2 = {
                     name = "Echo of Sylvanas",
@@ -3357,11 +3583,12 @@ core.Instances = {
                     tactics = "Pull the boss then wait for the Risen Ghouls to spawn. Once the Risen Ghouls have spawned, kill two of them then kill boss.",
                     enabled = true,
                     track = function() core.EndTime:EchoOfSylvanas() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1882,
                 },
             },
 
-            WellOfEternity = {
+            [939] = { --Well of Eternity
                 name = "Well of Eternity",
                 boss1 = {
                     name = "Peroth'arn",
@@ -3371,7 +3598,8 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = true,
                     track = function() core.WellOfEternity:Perotharn() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1272,
                 },
                 boss2 = {
                     name = "Mannoroth",
@@ -3381,11 +3609,12 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.WellOfEternity:Mannoroth() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1274,
                 },
             },
 
-            HourOfTwilight = {
+            [940] = { --Hour of Twilight
                 name = "Hour of Twilight",
                 boss1 = {
                     name = "Archbishop Benedictus",
@@ -3395,7 +3624,8 @@ core.Instances = {
                     tactics = "Get the boss health down to 50%. Be careful that you don’t 1 shot the boss. Once the boss has entered his shadow form, run round the edges of the room and kill 10 Twilight Sparks. Once 10 Twilight Sparks have been killed, you can kill the boss.",
                     enabled = true,
                     track = function() core.HourOfTwilight:ArchbishopBenedictus() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1339,
                 },
             },
         },
@@ -3403,7 +3633,7 @@ core.Instances = {
 
     WrathOfTheLichKing = {
         Raids = {
-            ObsidianSanctum10Man = {
+            ["615-10"] = { --Obsidian Sanctum 10 Man
                 name = "Obsidian Sanctum 10 Man",
                 boss1 = {
                     name = "Sartharion the Onyx Guardian 1",
@@ -3413,7 +3643,8 @@ core.Instances = {
                     tactics = "Kill the boss with less than 9 players in the group.",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1090,
                 },
                 boss2 = {
                     name = "Sartharion the Onyx Guardian 2",
@@ -3423,7 +3654,8 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke the boss.",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1090,
                 },  
                 boss3 = {
                     name = "Sartharion the Onyx Guardian 3",
@@ -3433,7 +3665,8 @@ core.Instances = {
                     tactics = "At 110, you can simply just kill Sartharion and ignore all the other bosses to get this achievement.",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1090,
                 },  
                 boss4 = {
                     name = "Sartharion the Onyx Guardian 4",
@@ -3443,7 +3676,8 @@ core.Instances = {
                     tactics = "At 110, you can simply just kill Sartharion and ignore all the other bosses to get this achievement.",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1090,
                 },  
                 boss5 = {
                     name = "Sartharion the Onyx Guardian 5",
@@ -3453,11 +3687,12 @@ core.Instances = {
                     tactics = "At 110, you can simply just kill Sartharion and ignore all the other bosses to get this achievement.",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1090,
                 },                               
             },
 
-            ObsidianSanctum25Man = {
+            ["615-25"] = { --Obsidian Sanctum 25 Man
                 name = "Obsidian Sanctum 25 Man",
                 boss1 = {
                     name = "Sartharion the Onyx Guardian 1",
@@ -3467,7 +3702,8 @@ core.Instances = {
                     tactics = "Kill the boss with less than 21 players in the group.",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1090,
                 },
                 boss2 = {
                     name = "Sartharion the Onyx Guardian 2",
@@ -3477,7 +3713,8 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke the boss.",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1090,
                 },  
                 boss3 = {
                     name = "Sartharion the Onyx Guardian 3",
@@ -3487,7 +3724,8 @@ core.Instances = {
                     tactics = "At 110, you can simply just kill Sartharion and ignore all the other bosses to get this achievement.",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1090,
                 },  
                 boss4 = {
                     name = "Sartharion the Onyx Guardian 4",
@@ -3497,7 +3735,8 @@ core.Instances = {
                     tactics = "At 110, you can simply just kill Sartharion and ignore all the other bosses to get this achievement.",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1090,
                 },  
                 boss5 = {
                     name = "Sartharion the Onyx Guardian 5",
@@ -3507,11 +3746,12 @@ core.Instances = {
                     tactics = "At 110, you can simply just kill Sartharion and ignore all the other bosses to get this achievement.",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1090,
                 },                               
             },
 
-            TheEyeOfEternity10Man = {
+            ["616-10"] = { --Eye of Eternity 10 Man
                 name = "The Eye of Eternity 10 Man",
                 boss1 = {
                     name = "Malygos 1",
@@ -3521,7 +3761,8 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = true,
                     track = function() core.TheEyeOfEternity:YouDontHaveAnEternity() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1094,
                 },
                 boss2 = {
                     name = "Malygos 2",
@@ -3531,7 +3772,8 @@ core.Instances = {
                     tactics = "Kill the boss with fewer than the 9 players in the group.",
                     enabled = true,
                     track = function() core.TheEyeOfEternity:APokeInTheEye() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1094,
                 }, 
                 boss3 = {
                     name = "Malygos 3",
@@ -3541,11 +3783,12 @@ core.Instances = {
                     tactics = "DPS the boss down below 50% health so that he enters phase 2. Once the boss has entered phase 2 kill one of the Nexus Lord then mount the disc the mob was on. Once you are riding on a disk you can kill a scion of eternity to complete the achievement.",
                     enabled = true,
                     track = function() core.TheEyeOfEternity:DenyinTheScion() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1094,
                 },                             
             },
 
-            TheEyeOfEternity25Man = {
+            ["616-25"] = { --Eye of Eternity 25 Man
                 name = "The Eye of Eternity 25 Man",
                 boss1 = {
                     name = "Malygos 1 25",
@@ -3555,7 +3798,8 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = true,
                     track = function() core.TheEyeOfEternity:YouDontHaveAnEternity() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1094,
                 },
                 boss2 = {
                     name = "Malygos 2 25",
@@ -3565,7 +3809,8 @@ core.Instances = {
                     tactics = "Kill the boss with fewer than the 21 players in the group.",
                     enabled = true,
                     track = function() core.TheEyeOfEternity:APokeInTheEye() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1094,
                 }, 
                 boss3 = {
                     name = "Malygos 3 25",
@@ -3575,11 +3820,12 @@ core.Instances = {
                     tactics = "DPS the boss down below 50% health so that he enters phase 2. Once the boss has entered phase 2 kill one of the Nexus Lord then mount the disc the mob was on. Once you are riding on a disk you can kill a scion of eternity to complete the achievement.",
                     enabled = true,
                     track = function() core.TheEyeOfEternity:DenyinTheScion() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1094,
                 },                             
             },
 
-            OnyxiaSLair10Man = {
+            ["249-10"] = { --Onyxia's Lair 10 Man
                 name = "OnyxiaS Lair 10 Man",
                 boss1 = {
                     name = "Onyxia 1",
@@ -3589,7 +3835,8 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = true,
                     track = function() core.OnyxiaSLair:Onyxia2() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1084,
                 },
                 boss2 = {
                     name = "Onyxia 2",
@@ -3599,7 +3846,8 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1084,
                 },
                 boss3 = {
                     name = "Onyxia 3",
@@ -3609,11 +3857,12 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = true,
                     track = function() core.OnyxiaSLair:Onyxia1() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1084,
                 },                          
             },
 
-            OnyxiaSLair25Man = {
+            ["249-25"] = { --Onyxia's Lair 25 Man
                 name = "OnyxiaS Lair 25 Man",
                 boss1 = {
                     name = "Onyxia 1 25",
@@ -3623,7 +3872,8 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = true,
                     track = function() core.OnyxiaSLair:Onyxia2() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1084,
                 },
                 boss2 = {
                     name = "Onyxia 2 25",
@@ -3633,7 +3883,8 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1084,
                 },
                 boss3 = {
                     name = "Onyxia 3 25",
@@ -3643,11 +3894,12 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = true,
                     track = function() core.OnyxiaSLair:Onyxia1() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1084,
                 },                          
             },
 
-            TrialOfTheCrusader10Man = {
+            ["649-10"] = { --Trial of the Crusader 10 Man
                 name = "Trial of the Crusader 10 Man",
                 boss1 = {
                     name = "Icehowl",
@@ -3657,7 +3909,8 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke the boss down. Make sure you don’t kill the Snobolds that fall of Gormok back after killing him.",
                     enabled = true,
                     track = function() core.TrialOfTheCrusader:UpperBackPain() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1088,
                 },
                 boss2 = {
                     name = "Acidmaw and Dreadscale",
@@ -3667,7 +3920,8 @@ core.Instances = {
                     tactics = "At 110, nuke down boss bosses within 10 seconds of each other.",
                     enabled = true,
                     track = function() core.TrialOfTheCrusader:NotOneButTwoJormungars() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1088,
                 }, 
                 boss3 = {
                     name = "Lord Jaraxxus",
@@ -3677,7 +3931,8 @@ core.Instances = {
                     tactics = "At 110, pull the boss then wait for two Mistresses of Pain to spawn. Once they have spawned, single target down the boss.",
                     enabled = true,
                     track = function() core.TrialOfTheCrusader:ThreeSixtyPainSpike() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1087,
                 }, 
                 boss4 = {
                     name = "Faction Champions",
@@ -3687,7 +3942,8 @@ core.Instances = {
                     tactics = "At 110, nuke down all the enemy heroes within 60 seconds of one another.",
                     enabled = true,
                     track = function() core.TrialOfTheCrusader:FactionChampions() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1086,
                 }, 
                 boss5 = {
                     name = "Twin Val'kyr",
@@ -3697,7 +3953,8 @@ core.Instances = {
                     tactics = "At 110, just simply nuke down one of the bosses since they share the same health pool.",
                     enabled = true,
                     track = function() core.TrialOfTheCrusader:TwinValkyr() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1089,
                 }, 
                 boss6 = {
                     name = "Anub'arak",
@@ -3707,11 +3964,12 @@ core.Instances = {
                     tactics = "Pull the boss then wait for 25 Swarm Scarabs to spawn. Once enough adds have spawned. AOE them down. Be careful you don’t kill the boss first.",
                     enabled = true,
                     track = function() core.TrialOfTheCrusader:Anubarak() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1085,
                 },                     
             },
 
-            TrialOfTheCrusader25Man = {
+            ["649-25"] = { --Trial of the Crusader 25 Man
                 name = "Trial of the Crusader 25 Man",
                 boss1 = {
                     name = "Icehowl 25 ",
@@ -3721,7 +3979,8 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke the boss down. Make sure you don’t kill the Snobolds that fall of Gormok back after killing him.",
                     enabled = true,
                     track = function() core.TrialOfTheCrusader:UpperBackPain() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1088,
                 },
                 boss2 = {
                     name = "Acidmaw and Dreadscale 25",
@@ -3731,7 +3990,8 @@ core.Instances = {
                     tactics = "At 110, nuke down boss bosses within 10 seconds of each other.",
                     enabled = true,
                     track = function() core.TrialOfTheCrusader:NotOneButTwoJormungars() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1088,
                 }, 
                 boss3 = {
                     name = "Lord Jaraxxus 25",
@@ -3741,7 +4001,8 @@ core.Instances = {
                     tactics = "At 110, pull the boss then wait for two Mistresses of Pain to spawn. Once they have spawned, single target down the boss.",
                     enabled = true,
                     track = function() core.TrialOfTheCrusader:ThreeSixtyPainSpike() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1087,
                 }, 
                 boss4 = {
                     name = "Twin Val'kyr 25",
@@ -3751,7 +4012,8 @@ core.Instances = {
                     tactics = "At 110, just simply nuke down one of the bosses since they share the same health pool.",
                     enabled = true,
                     track = function() core.TrialOfTheCrusader:TwinValkyr() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1089,
                 }, 
                 boss5 = {
                     name = "Anub'arak 25",
@@ -3761,11 +4023,12 @@ core.Instances = {
                     tactics = "Pull the boss then wait for 25 Swarm Scarabs to spawn. Once enough adds have spawned. AOE them down. Be careful you don’t kill the boss first.",
                     enabled = true,
                     track = function() core.TrialOfTheCrusader:Anubarak() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1085,
                 },                     
             },
 
-            VaultOfArchavon10Man = {
+            ["624-10"] = { --Vault of Archavon 10 Man
                 name = "Vault of Archavon 10 Man",
                 boss1 = {
                     name = "Archavon & Emalon & Koralon",
@@ -3775,11 +4038,12 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1126,
                 },                   
             },
 
-            VaultOfArchavon25Man = {
+            ["624-25"] = { --Vault of Archavon 25 Man
                 name = "Vault of Archavon 25 Man",
                 boss1 = {
                     name = "Archavon & Emalon & Koralon",
@@ -3789,11 +4053,12 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1126,
                 },                   
             },
 
-            Ulduar = {
+            [603] = { --Ulduar
                 name = "Ulduar",
                 boss1 = {
                     name = "Other 23",
@@ -3823,7 +4088,8 @@ core.Instances = {
                     tactics = "This achievement will take 3 runs to complete since you will need to mount a different vehicle each time.",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1132,
                 }, 
                 boss4 = {
                     name = "Flame Leviathan 2",
@@ -3855,7 +4121,8 @@ core.Instances = {
                     tactics = "This achievement can only be completed on the hard mode of the encounter. Hard mode is started by talking to Lore Keeper of Norgannon. This achievement will be awarded if at least one tower is kept alive. At 110 you can simply ignore all the towers and just kill the boss to get the achievement.",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1132,
                 }, 
                 boss7 = {
                     name = "Flame Leviathan 5",
@@ -3865,7 +4132,8 @@ core.Instances = {
                     tactics = "This achievement can only be completed on the hard mode of the encounter. Hard mode is started by talking to Lore Keeper of Norgannon. This achievement will be awarded if at least two towers are kept alive. At 110 you can simply ignore all the towers and just kill the boss to get the achievement.",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1132,
                 }, 
                 boss8 = {
                     name = "Flame Leviathan 6",
@@ -3875,7 +4143,8 @@ core.Instances = {
                     tactics = "This achievement can only be completed on the hard mode of the encounter. Hard mode is started by talking to Lore Keeper of Norgannon. This achievement will be awarded if at least three towers are kept alive. At 110 you can simply ignore all the towers and just kill the boss to get the achievement.",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1132,
                 }, 
                 boss9 = {
                     name = "Flame Leviathan 7",
@@ -3885,7 +4154,8 @@ core.Instances = {
                     tactics = "This achievement can only be completed on the hard mode of the encounter. Hard mode is started by talking to Lore Keeper of Norgannon. This achievement will be awarded if all four towers are kept alive. At 110 you can simply ignore all the towers and just kill the boss to get the achievement.",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1132,
                 }, 
                 boss10 = {
                     name = "Razorscale 1",
@@ -3928,7 +4198,8 @@ core.Instances = {
                     tactics = "This achievement requires 2 players or a player with a pet class. The boss will randomly pick players to enter the pot that do not have aggro of the boss. Just pull the boss and wait till everyone gets thrown into the pot.",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1136,
                 }, 
                 boss14 = {
                     name = "Ignis the Furnace Master 3",
@@ -4037,7 +4308,8 @@ core.Instances = {
                     tactics = "At 110, use the Iron Boot Flask toy then nuke down the boss.",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1140,
                 }, 
                 boss24 = {
                     name = "Assembly of Iron 5",
@@ -4069,7 +4341,8 @@ core.Instances = {
                     tactics = "At 110, single target down the two arms then kill the boss.",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1137,
                 }, 
                 boss27 = {
                     name = "Kologarn 3",
@@ -4167,7 +4440,8 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1135,
                 }, 
                 boss36 = {
                     name = "Thorim 1",
@@ -4188,7 +4462,8 @@ core.Instances = {
                     tactics = "At 110, complete the gauntlet part of the encounter to gain this achievement.",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1141,
                 }, 
                 boss38 = {
                     name = "Thorim 3",
@@ -4198,7 +4473,8 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1141,
                 }, 
                 boss39 = {
                     name = "Thorim 4",
@@ -4208,7 +4484,8 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke down the boss.",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1141,
                 }, 
                 boss40 = {
                     name = "Thorim 5",
@@ -4218,7 +4495,8 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke down the boss.",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1141,
                 }, 
                 boss41 = {
                     name = "Freya Mini Bosses",
@@ -4271,7 +4549,8 @@ core.Instances = {
                     tactics = "Defeat Freya leaving at least one of the following mini bosses alive: Elder Brightleaf, Elder Ironbranch and Elder Stonebark. At 110, just nuke down the boss within killing the mini bosses.",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1133,
                 }, 
                 boss46 = {
                     name = "Freya 5",
@@ -4281,7 +4560,8 @@ core.Instances = {
                     tactics = "Defeat Freya leaving at least two of the following mini bosses alive: Elder Brightleaf, Elder Ironbranch and Elder Stonebark. At 110, just nuke down the boss within killing the mini bosses.",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1133,
                 }, 
                 boss47 = {
                     name = "Freya 6",
@@ -4291,7 +4571,8 @@ core.Instances = {
                     tactics = "Defeat Freya leaving all three of the following mini bosses alive: Elder Brightleaf, Elder Ironbranch and Elder Stonebark. At 110, just nuke down the boss within killing the mini bosses.",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1133,
                 }, 
                 boss48 = {
                     name = "Mimiron 1",
@@ -4367,7 +4648,8 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke the boss down, provided you have not spoken to more than 3 keepers.",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1143,
                 }, 
                 boss55 = {
                     name = "Yogg-Saron 3",
@@ -4377,7 +4659,8 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke the boss down, provided you have not spoken to more than 2 keepers.",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1143,
                 }, 
                 boss56 = {
                     name = "Yogg-Saron 4",
@@ -4387,7 +4670,8 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke the boss down, provided you have not spoken to more than 1 keeper.",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1143,
                 }, 
                 boss57 = {
                     name = "Yogg-Saron 5",
@@ -4397,7 +4681,8 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke the boss down, provided you have not spoken to any of the keepers.",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1143,
                 }, 
                 boss58 = {
                     name = "Yogg-Saron 6",
@@ -4440,7 +4725,8 @@ core.Instances = {
                     tactics = "This achievement takes multiple runs to complete since it’s random which vision the boss will spawn. You can simply just nuke the boss down.",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1143,
                 }, 
                 boss62 = {
                     name = "Algalon the Observer",
@@ -4455,7 +4741,7 @@ core.Instances = {
                 },                    
             },
 
-            Naxxramas10Man = {
+            ["533-10"] = { --Naxxramas 10 Man
                 name = "Naxxramas 10 Man",
                 boss1 = {
                     name = "Other 25",
@@ -4465,7 +4751,7 @@ core.Instances = {
                     tactics = "Kill the boss with less than 9 players in the group.",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
                 },
                 boss2 = {
                     name = "Maexxna",
@@ -4475,7 +4761,8 @@ core.Instances = {
                     tactics = "At 110, just nuke down the bosses in the Arachnid Quarter to gain this achievement.",
                     enabled = true,
                     track = function() core.Naxxramas:Arachnophobia() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1116,
                 },
                 boss3 = {
                     name = "Patchwerk",
@@ -4485,7 +4772,8 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = true,
                     track = function() core.Naxxramas:Patchwerk() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1118,
                 },
                 boss4 = {
                     name = "Heigan the Unclean",
@@ -4495,7 +4783,8 @@ core.Instances = {
                     tactics = "At 110, you can simply nuke the boss down.",
                     enabled = true,
                     track = function() core.Naxxramas:HeiganTheUnclean() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1112,
                 },
                 boss5 = {
                     name = "Grand Widow Faerlina",
@@ -4505,7 +4794,8 @@ core.Instances = {
                     tactics = "At 110, you can simply nuke the boss down.",
                     enabled = true,
                     track = function() core.Naxxramas:GrandWidowFaerlina() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1110,
                 },
                 boss6 = {
                     name = "Thaddius 1",
@@ -4515,7 +4805,8 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = true,
                     track = function() core.Naxxramas:Shocking() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1120,
                 },
                 boss7 = {
                     name = "Thaddius 2",
@@ -4525,7 +4816,8 @@ core.Instances = {
                     tactics = "Just nuke the boss down with fewer than 9 players in the group.",
                     enabled = true,
                     track = function() core.Naxxramas:Subtraction() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1120,
                 },
                 boss8 = {
                     name = "Loatheb",
@@ -4535,7 +4827,8 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = true,
                     track = function() core.Naxxramas:Loatheb() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1115,
                 },
                 boss9 = {
                     name = "Four Horsemen",
@@ -4545,7 +4838,8 @@ core.Instances = {
                     tactics = "Kill all 4 horsemen without 15 seconds of one another. After pulling the boss wait till they split before damaging them otherwise the encounter will reset if you one shot any of the horsemen.",
                     enabled = true,
                     track = function() core.Naxxramas:FourHorsemen() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1121,
                 },
                 boss10 = {
                     name = "Sapphiron",
@@ -4555,7 +4849,8 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1119,
                 },
                 boss11 = {
                     name = "Kel'Thuzad",
@@ -4565,11 +4860,12 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.Naxxramas:KelThuzad() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1114,
                 },                          
             },
 
-            Naxxramas25Man = {
+            ["533-25"] = { --Naxxramas 25 Man
                 name = "Naxxramas 25 Man",
                 boss1 = {
                     name = "Other 26",
@@ -4589,7 +4885,8 @@ core.Instances = {
                     tactics = "At 110, just nuke down the bosses in the Arachnid Quarter to gain this achievement.",
                     enabled = true,
                     track = function() core.Naxxramas:Arachnophobia() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1116,
                 },
                 boss3 = {
                     name = "Patchwerk",
@@ -4599,7 +4896,8 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = true,
                     track = function() core.Naxxramas:Patchwerk() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1118,
                 },
                 boss4 = {
                     name = "Heigan the Unclean",
@@ -4609,7 +4907,8 @@ core.Instances = {
                     tactics = "At 110, you can simply nuke the boss down.",
                     enabled = true,
                     track = function() core.Naxxramas:HeiganTheUnclean() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1112,
                 },
                 boss5 = {
                     name = "Grand Widow Faerlina",
@@ -4619,7 +4918,8 @@ core.Instances = {
                     tactics = "At 110, single target the boss down without touching any of the adds.",
                     enabled = true,
                     track = function() core.Naxxramas:GrandWidowFaerlina() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1110,
                 },
                 boss6 = {
                     name = "Thaddius 1",
@@ -4629,7 +4929,8 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = true,
                     track = function() core.Naxxramas:Shocking() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1120,
                 },
                 boss7 = {
                     name = "Thaddius 2",
@@ -4639,7 +4940,8 @@ core.Instances = {
                     tactics = "Just nuke the boss down with fewer than 21 players in the group.",
                     enabled = true,
                     track = function() core.Naxxramas:Subtraction() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1120,
                 },
                 boss8 = {
                     name = "Loatheb",
@@ -4649,7 +4951,8 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = true,
                     track = function() core.Naxxramas:Loatheb() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1115,
                 },
                 boss9 = {
                     name = "Four Horsemen",
@@ -4659,7 +4962,8 @@ core.Instances = {
                     tactics = "Kill all 4 horsemen without 15 seconds of one another. After pulling the boss wait till they split before damaging them otherwise the encounter will reset if you one shot any of the horsemen.",
                     enabled = true,
                     track = function() core.Naxxramas:FourHorsemen() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1121,
                 },
                 boss10 = {
                     name = "Sapphiron",
@@ -4669,7 +4973,8 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1119,
                 },
                 boss11 = {
                     name = "Kel'Thuzad",
@@ -4679,11 +4984,12 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.Naxxramas:KelThuzad() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1114,
                 },                          
             },
 
-            IcecrownCitadel10Man = {
+            ["631-10"] = { --Icecrown Citadel 10 Man
                 name = "Icecrown Citadel 10 Man",
                 boss1 = {
                     name = "Lord Marrowgar",
@@ -4694,6 +5000,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.IcecrownCitadel:LordMarrowgar() end,
                     partial = false,
+                    encounterID = 1101,
                 },
                 boss2 = {
                     name = "Lady Deathwhisper",
@@ -4704,6 +5011,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.IcecrownCitadel:LadyDeathwhisper() end,
                     partial = false,
+                    encounterID = 1100,
                 },     
                 boss3 = {
                     name = "Gunship Battle",
@@ -4714,6 +5022,7 @@ core.Instances = {
                     enabled = false,
                     track = nil,
                     partial = false,
+                    encounterID = 1099,
                 },     
                 boss4 = {
                     name = "Deathbringer Saurfang",
@@ -4724,6 +5033,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.IcecrownCitadel:DeathbringerSaurfang() end,
                     partial = false,
+                    encounterID = 1096,
                 },     
                 boss5 = {
                     name = "Festergut",
@@ -4734,6 +5044,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.IcecrownCitadel:Festergut() end,
                     partial = false,
+                    encounterID = 1097,
                 },     
                 boss6 = {
                     name = "Rotface",
@@ -4744,6 +5055,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.IcecrownCitadel:Rotface() end,
                     partial = false,
+                    encounterID = 1104,
                 },     
                 boss7 = {
                     name = "Professor Putricide",
@@ -4754,6 +5066,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.IcecrownCitadel:ProfessorPutricide() end,
                     partial = false,
+                    encounterID = 1102,
                 },     
                 boss8 = {
                     name = "Valithria Dreamwalker",
@@ -4763,7 +5076,8 @@ core.Instances = {
                     tactics = "This achievement requires a healing class to complete. At 110, the healer can just heal the at the start of the fight. You do not need to wait for the portals to spawn if you can heal the boss to full in under 45 seconds.",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1098,
                 },     
                 boss9 = {
                     name = "Sindragosa",
@@ -4774,6 +5088,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.IcecrownCitadel:Sindragosa() end,
                     partial = false,
+                    encounterID = 1105,
                 },     
                 boss10 = {
                     name = "Blood Prince Council",
@@ -4784,6 +5099,7 @@ core.Instances = {
                     enabled = false,
                     track = nil,
                     partial = false,
+                    encounterID = 1095,
                 },     
                 boss11 = {
                     name = "Blood-Queen Lana'thel",
@@ -4793,7 +5109,8 @@ core.Instances = {
                     tactics = "This achievement will take 2 kills to complete. At 110 to complete the ‘Defeat Blood-Queen Lana'thel without becoming a vampire’ criteria just simply nuke the boss down. To complete the ‘Defeat Blood-Queen Lana'thel while a vampire’ criteria, wait until you get the Essence of the Blood Queen debuff then nuke the boss down.",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1103,
                 },     
                 boss12 = {
                     name = "The Lich King 1",
@@ -4804,6 +5121,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.IcecrownCitadel:LichKing() end,
                     partial = false,
+                    encounterID = 1106,
                 },
                 boss13 = {
                     name = "The Lich King 2",
@@ -4813,11 +5131,12 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1106,
                 },                                
             },
 
-            IcecrownCitadel25Man = {
+            ["631-25"] = { --Icecrown Citadel 25 Man
                 name = "Icecrown Citadel 25 Man",
                 boss1 = {
                     name = "Lord Marrowgar 25",
@@ -4828,6 +5147,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.IcecrownCitadel:LordMarrowgar() end,
                     partial = false,
+                    encounterID = 1101,
                 },
                 boss2 = {
                     name = "Lady Deathwhisper 25",
@@ -4838,6 +5158,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.IcecrownCitadel:LadyDeathwhisper() end,
                     partial = false,
+                    encounterID = 1100,
                 },     
                 boss3 = {
                     name = "Gunship Battle 25",
@@ -4848,6 +5169,7 @@ core.Instances = {
                     enabled = false,
                     track = nil,
                     partial = false,
+                    encounterID = 1099,
                 },     
                 boss4 = {
                     name = "Deathbringer Saurfang 25",
@@ -4858,6 +5180,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.IcecrownCitadel:DeathbringerSaurfang() end,
                     partial = false,
+                    encounterID = 1096,
                 },     
                 boss5 = {
                     name = "Festergut 25",
@@ -4868,6 +5191,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.IcecrownCitadel:Festergut() end,
                     partial = false,
+                    encounterID = 1097,
                 },     
                 boss6 = {
                     name = "Rotface 25",
@@ -4878,6 +5202,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.IcecrownCitadel:Rotface() end,
                     partial = false,
+                    encounterID = 1104,
                 },     
                 boss7 = {
                     name = "Professor Putricide 25",
@@ -4888,6 +5213,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.IcecrownCitadel:ProfessorPutricide() end,
                     partial = false,
+                    encounterID = 1102,
                 },     
                 boss8 = {
                     name = "Valithria Dreamwalker 25",
@@ -4897,7 +5223,8 @@ core.Instances = {
                     tactics = "This achievement requires a healing class to complete. At 110, the healer can just heal the at the start of the fight. You do not need to wait for the portals to spawn if you can heal the boss to full in under 45 seconds.",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1098,
                 },     
                 boss9 = {
                     name = "Sindragosa 25",
@@ -4908,6 +5235,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.IcecrownCitadel:Sindragosa() end,
                     partial = false,
+                    encounterID = 1105,
                 },     
                 boss10 = {
                     name = "Blood Prince Council 25",
@@ -4918,6 +5246,7 @@ core.Instances = {
                     enabled = false,
                     track = nil,
                     partial = false,
+                    encounterID = 1095,
                 },     
                 boss11 = {
                     name = "Blood-Queen Lana'thel 25",
@@ -4927,7 +5256,8 @@ core.Instances = {
                     tactics = "This achievement will take 2 kills to complete. At 110 to complete the ‘Defeat Blood-Queen Lana'thel without becoming a vampire’ criteria just simply nuke the boss down. To complete the ‘Defeat Blood-Queen Lana'thel while a vampire’ criteria, wait until you get the Essence of the Blood Queen debuff then nuke the boss down.",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1103,
                 },     
                 boss12 = {
                     name = "The Lich King 1 25",
@@ -4938,6 +5268,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core.IcecrownCitadel:LichKing() end,
                     partial = false,
+                    encounterID = 1106,
                 },
                 boss13 = {
                     name = "The Lich King 2 25",
@@ -4947,13 +5278,14 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1106,
                 },                               
             },
         },
 
         Dungeons = {
-            UtgardeKeep = {
+            [574] = { --Utgarde Keep
                 name = "Utgarde Keep",
                 boss1 = {
                     name = "Prince Keleseth",
@@ -4963,11 +5295,12 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = true,
                     track = function() core.UtgardeKeep:PrinceKeleseth() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 2026,
                 },
             },
 
-            TheNexus = {
+            [576] = { --The Nexus
                 name = "The Nexus",
                 boss1 = {
                     name = "Grand Magus Telestra",
@@ -4977,7 +5310,7 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = true,
                     track = function() core.TheNexus:GrandMagusTelestra() end,
-					partial = false,
+                    partial = false,
                 },
                 boss2 = {
                     name = "Anomalus",
@@ -4987,7 +5320,7 @@ core.Instances = {
                     tactics = "Damage the boss down to 45%, be careful you don’t 1 shot the boss. Wait for the add to finish casting the indestructible buff on the boss. Once this has finished you can kill the boss. Make sure you don’t kill the chaotic rift.",
                     enabled = true,
                     track = function() core.TheNexus:Anomalus() end,
-					partial = false,
+                    partial = false,
                 },
                 boss3 = {
                     name = "Keristrasza",
@@ -4997,11 +5330,11 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = true,
                     track = function() core.TheNexus:Keristrasza() end,
-					partial = false,
+                    partial = false,
                 },
             },
 
-            TheCullingOfStratholme = {
+            [595] = { --The Culling of Stratholme
                 name = "The Culling of Stratholme",
                 boss1 = {
                     name = "Other 27",
@@ -5025,7 +5358,7 @@ core.Instances = {
                 },
             },
 
-            AzjolNerub = {
+            [601] = { --Azjol Nerub
                 name = "Azjol Nerub",
                 boss1 = {
                     name = "Krik'thir the Gatewatcher",
@@ -5035,7 +5368,8 @@ core.Instances = {
                     tactics = "At 110, just single target the boss down without killing any of the mobs around him.",
                     enabled = true,
                     track = function() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1971,
                 },
                 boss2 = {
                     name = "Hadronox",
@@ -5045,7 +5379,8 @@ core.Instances = {
                     tactics = "At 110, just go straight down to the boss ignoring all adds in the way. Nuke the boss down as soon as you reach him. Don’t wait for the boss to come to you.",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1972,
                 },
                 boss3 = {
                     name = "Anub'arak",
@@ -5055,11 +5390,12 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = true,
                     track = function() core.AzjolNerub:Anubarak() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1973,
                 },
             },
 
-            AhnKahetTheOldKingdom = {
+            [619] = { --Ahn'Kahet The Old Kingdom
                 name = "AhnKahet The Old Kingdom",
                 boss1 = {
                     name = "Elder Nadox",
@@ -5069,7 +5405,8 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = true,
                     track = function() core.AhnKahetTheOldKingdom:ElderNadox() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1969,
                 },
                 boss2 = {
                     name = "Jedoga Shadowseeker",
@@ -5079,7 +5416,8 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = true,
                     track = function() core.AhnKahetTheOldKingdom:JedogaShadowseeker() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1967,
                 },
                 boss3 = {
                     name = "Herald Volazj",
@@ -5089,11 +5427,12 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = true,
                     track = function() core.AhnKahetTheOldKingdom:HeraldVolazj() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1968,
                 },
             },
 
-            DrakTharonKeep = {
+            [600] = { --Dark Tharon Keep
                 name = "Drak Tharon Keep",
                 boss1 = {
                     name = "Trollgore",
@@ -5103,7 +5442,8 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = true,
                     track = function() core.DrakTharonKeep:Trollgore() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1974,
                 },
                 boss2 = {
                     name = "Novos the Summoner",
@@ -5113,7 +5453,8 @@ core.Instances = {
                     tactics = "Stand at the top of the stairs and kill the undead adds and Crystal Handlers until all 4 Crystal Handlers have been killed. At this point phase 2 starts and you can kill the boss.",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1976,
                 },
                 boss3 = {
                     name = "King Dred",
@@ -5123,11 +5464,12 @@ core.Instances = {
                     tactics = "Pull the boss and pull 6 Drakkari Gutrippers and/or Drakkari Scytheclaw but don’t kill them. Once you in combat with the boss, single target down the raptors 1 by 1 until 6 are killed. Once this is done you can kill the boss.",
                     enabled = true,
                     track = function() core.DrakTharonKeep:KingDred() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1977,
                 },
             },
 
-            VioletHold = {
+            [608] = { --Violet Hold
                 name = "Violet Hold",
                 boss1 = {
                     name = "Cyanigosa",
@@ -5137,7 +5479,8 @@ core.Instances = {
                     tactics = "For the achievement you must not use any of the red crystal around the room and none of the mobs can reach the entrance.",
                     enabled = true,
                     track = function() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 2020,
                 },
                 boss2 = {
                     name = "Other 29",
@@ -5157,7 +5500,7 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
                 },
                 boss4 = {
                     name = "Zuramat the Obliterator",
@@ -5167,11 +5510,11 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = true,
                     track = function() core.VioletHold:ZuramatTheObliterator() end,
-					partial = false,
+                    partial = false,
                 },
             },
 
-            Gundrak = {
+            [604] = { --Gundrak
                 name = "Gundrak",
                 boss1 = {
                     name = "Slad'ran",
@@ -5181,7 +5524,8 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = true,
                     track = function() core.Gundrak:Sladran() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1978,
                 },
                 boss2 = {
                     name = "Moorabi",
@@ -5191,7 +5535,8 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = true,
                     track = function() core.Gundrak:Moorabi() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1980,
                 },
                 boss3 = {
                     name = "Gal'darah 1",
@@ -5201,7 +5546,8 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 1981,
                 },
                 boss4 = {
                     name = "Gal'darah 2",
@@ -5211,11 +5557,12 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.Gundrak:Galdarah() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1981,
                 },
             },
 
-            HallsOfStone = {
+            [599] = { --Halls of Stone
                 name = "Halls of Stone",
                 boss1 = {
                     name = "Maiden of Grief",
@@ -5225,7 +5572,8 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = true,
                     track = function() core.HallsOfStone:MaidenOfGrief() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1996,
                 },
                 boss2 = {
                     name = "Tribunal of Ages",
@@ -5235,7 +5583,8 @@ core.Instances = {
                     tactics = "At 110, just complete the encounter without letting the adds reach Brann Bronzebeard.",
                     enabled = true,
                     track = function() core.HallsOfStone:TribunalOfAges() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1995,
                 },
                 boss3 = {
                     name = "Sjonnir The Ironshaper",
@@ -5245,11 +5594,12 @@ core.Instances = {
                     tactics = "Pull the boss then wait for the Malformed Ooze to form into one Iron Sludge. Once the Iron Sludge is formed, kill it then kill the boss.",
                     enabled = true,
                     track = function() core.HallsOfStone:SjonnirTheIronshaper() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1998,
                 },
             },
 
-            HallsOfLightning = {
+            [602] = { --Halls of Lightning
                 name = "Halls of Lightning",
                 boss1 = {
                     name = "General Bjarngrim",
@@ -5259,7 +5609,8 @@ core.Instances = {
                     tactics = "At 110, just wait for the boss to gain Temporary Electrical Charge buff before pulling him. Once he has the buff pull the boss, wait for him to get his defensive stance up then kill him.",
                     enabled = true,
                     track = function() core.HallsOfLightning:GeneralBjarngrim() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1987,
                 },
                 boss2 = {
                     name = "Volkhan",
@@ -5269,7 +5620,8 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = true,
                     track = function() core.HallsOfLightning:Volkhan() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1985,
                 },
                 boss3 = {
                     name = "Loken",
@@ -5279,11 +5631,12 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = true,
                     track = function() core.HallsOfLightning:Loken() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1986,
                 },
             },
 
-            TheOculus = {
+            [578] = { --The Oculus
                 name = "The Oculus",
                 boss1 = {
                     name = "Ley-Guardian Eregos 1",
@@ -5293,7 +5646,8 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 2013,
                 },
                 boss2 = {
                     name = "Ley-Guardian Eregos 2",
@@ -5303,7 +5657,8 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 2013,
                 },
                 boss3 = {
                     name = "Ley-Guardian Eregos 3",
@@ -5313,7 +5668,8 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 2013,
                 },
                 boss4 = {
                     name = "Ley-Guardian Eregos 4",
@@ -5323,7 +5679,8 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 2013,
                 },
                 boss5 = {
                     name = "Ley-Guardian Eregos 5",
@@ -5333,11 +5690,12 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 2013,
                 },
             },
 
-            UtgardePinnacle = {
+            [575] = { --Utgarde Pinnacle
                 name = "Utgarde Pinnacle",
                 boss1 = {
                     name = "Svala Sorrowgrave",
@@ -5347,7 +5705,8 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 2030,
                 },
                 boss2 = {
                     name = "Skadi the Ruthless 1",
@@ -5357,7 +5716,8 @@ core.Instances = {
                     tactics = "At 110, just complete the encounter as quickly as possible.",
                     enabled = true,
                     track = function() core.UtgardePinnacle:SkadiTheRuthless() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 2029,
                 },
                 boss3 = {
                     name = "Skadi the Ruthless 2",
@@ -5367,7 +5727,8 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 2029,
                 },
                 boss4 = {
                     name = "King Ymiron",
@@ -5377,11 +5738,12 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = true,
                     track = function() core.UtgardePinnacle:KingYmiron() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 2028,
                 },
             },
 
-            TrialOfTheChampion = {
+            [650] = { --Trial of the Champion
                 name = "Trial of the Champion",
                 boss1 = {
                     name = "Argent Confessor Paletress",
@@ -5391,7 +5753,7 @@ core.Instances = {
                     tactics = "This achievement will take multiple runs to complete. At 110, you can simply nuke down the boss to supress one of the memories.",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
                 },
                 boss2 = {
                     name = "Eadric the Pure ",
@@ -5401,7 +5763,7 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
                 },
                 boss3 = {
                     name = "The Black Knight",
@@ -5411,11 +5773,12 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = true,
                     track = function() core.TrialOfTheChampion:TheBlackKnight() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 2021,
                 },
             },
 
-            TheForgeOfSouls = {
+            [632] = { --The Forge of Souls
                 name = "The Forge of Souls",
                 boss1 = {
                     name = "Bronjahm",
@@ -5425,7 +5788,8 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.TheForgeOfSouls:Bronjahm() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 2006,
                 },
                 boss2 = {
                     name = "Devourer of Souls",
@@ -5435,11 +5799,12 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = true,
                     track = function() core.TheForgeOfSouls:DevourerOfSouls() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 2007,
                 },
             },
 
-            PitOfSaron = {
+            [658] = { --Pit of Saron
                 name = "Pit of Saron",
                 boss1 = {
                     name = "Forgemaster Garfrost",
@@ -5449,7 +5814,8 @@ core.Instances = {
                     tactics = "At 110, you can simply just nuke the boss down.",
                     enabled = true,
                     track = function() core.PitOfSaron:ForgemasterGarfrost() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 1999,
                 },
                 boss2 = {
                     name = "Pit of Saron Tunnel",
@@ -5463,7 +5829,7 @@ core.Instances = {
                 },
             },
 
-            HallsOfReflection = {
+            [668] = { --Halls of Reflection
                 name = "Halls of Reflection",
                 boss1 = {
                     name = "Wrath of the Lich King",
@@ -5473,7 +5839,7 @@ core.Instances = {
                     tactics = "At 110, just complete the gauntlet as quickly as possible.",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
                 },
             },
         },

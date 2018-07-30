@@ -3,10 +3,12 @@
 --------------------------------------
 local _, core = ...
 
+core.L = WhizzL
+
 local events = CreateFrame("Frame")
 local UIConfig
 local UICreated = false
-local debugMode = false
+local debugMode = true
 
 AchievementTrackerOptions = {}
 AchievementTrackerDebug = {}
@@ -32,6 +34,8 @@ function events:onUpdate(sinceLastUpdate)
 		end
 	end
 end
+
+--print(WhizzL["Terrace of Endless Spring"])
 
 --------------------------------------
 -- Achievement Scanning Variables
@@ -325,6 +329,8 @@ function getInstanceInfomation()
 		local instanceCompatible = false --Check whether player is on correct difficulty to earn achievements
 		core.instanceNameSpaces, _, core.difficultyID, _, core.maxPlayers, _, _, core.currentZoneID, _ = GetInstanceInfo()
 
+		core:sendDebugMessage(core.currentZoneID)
+
 		--Used to find correct table in the core.instances table
 		local str = string.gsub(" " .. core.instanceNameSpaces, "%W%l", string.upper):sub(2)
 		str = str:gsub("%s+", "")
@@ -333,20 +339,24 @@ function getInstanceInfomation()
 		str = str:gsub("%:", "")
 		str = str:gsub("%,", "")
 
-		core.instance = str --Instance name without any puntuation
-		core.instanceClear = core.instance --Instance name with puntuation
+		core.instance = core.currentZoneID --Instance name without any puntuation
+		core.instanceClear = "_" .. core.currentZoneID --Instance name with puntuation
 
 		core:sendDebugMessage("Offical Instance Name: " .. core.instance .. " " .. core.instanceClear)
 
 		--If the raid is in the lich king expansion then detect whether player is on the 10man or 25man difficulty
 		--This is only needed for raids that have seperate achievements for 10man and 25man. Happens for the majority of WOTLK raids
-		if core.instance == "TrialOfTheCrusader" or core.instance == "Naxxramas" or core.instance == "IcecrownCitadel" or core.instance == "OnyxiaSLair" or core.instance == "TheEyeOfEternity" then
+		if core.instance == 615 or core.instance == 616 or core.instance == 249 or core.instance == 649 or core.instance == 624 or core.instance == 533 or core.instance == 631 then
 			if core.difficultyID == 3 or core.difficultyID == 5 then
 				--10 Man
-				core.instance = core.instance .. "10Man"
+				core:sendDebugMessage("Detected Legacy 10 man Raid")
+				core.instance = core.instance .. -10
+				core:sendDebugMessage("New Instance Name: " .. core.instance)
 			elseif core.difficultyID == 4 or core.difficultyID == 6 then
 				--25 Man
-				core.instance = core.instance .. "25Man"
+				core:sendDebugMessage("Detected Legacy 25 man raid")
+				core.instance = core.instance .. -25
+				core:sendDebugMessage("New Instance Name: " .. core.instance)
 			end
 		end
 
@@ -408,6 +418,9 @@ function getInstanceInfomation()
 		if instanceCompatible == true then
 			--Check if the instance has any achievements to actually track
 			local foundTracking = false
+			core:sendDebugMessage("Expansion: " .. core.expansion)
+			core:sendDebugMessage("Instance Type: " .. core.instanceType)
+			core:sendDebugMessage("Instance: " .. core.instance)
 			for boss,_ in pairs(core.Instances[core.expansion][core.instanceType][core.instance]) do
 				if core.Instances[core.expansion][core.instanceType][core.instance][boss].track ~= nil then
 					foundTracking = true

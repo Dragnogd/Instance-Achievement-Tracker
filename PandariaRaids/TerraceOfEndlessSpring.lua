@@ -6,7 +6,7 @@ local _, core = ...
 --------------------------------------
 -- Terrace Of Endless Spring Bosses --
 --------------------------------------
-core.TerraceOfEndlessSpring = {}
+core._996 = {}
 
 -------------------------------
 -- Protectors Of The Endless --
@@ -20,7 +20,7 @@ local elderRegailKilled = false
 ------------------------------------------------------
 local parasiticClutchCounter = 0
 
-function core.TerraceOfEndlessSpring:ProtectorsOfTheEndless()
+function core._996:ProtectorsOfTheEndless()
 	if core.type == "UNIT_DIED" and core.destID == "60586" then
 		elderAsaniKilled = true
 	elseif core.type == "UNIT_DIED" and core.destID == "60583" then
@@ -38,13 +38,13 @@ function core.TerraceOfEndlessSpring:ProtectorsOfTheEndless()
 	end
 end
 
-function core.TerraceOfEndlessSpring:Tsulong()
+function core._996:Tsulong()
 	if core.type == "SPELL_DAMAGE" and core.destID == "64443" and core.overkill > 0 then
 		core:getAchievementFailed()  		
 	end
 end
 
-function core.TerraceOfEndlessSpring:LeiShi()
+function core._996:LeiShi()
 	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 125652 then
 		parasiticClutchCounter = parasiticClutchCounter + 1
 		core:sendMessage(core.destName .. " Inflicted with Parasitic Clutch (" .. parasiticClutchCounter .. "/" .. core.groupSize .. ")")
@@ -66,7 +66,7 @@ function core.TerraceOfEndlessSpring:LeiShi()
 	end
 end
 
-function core.TerraceOfEndlessSpring:ShaOfFear()
+function core._996:ShaOfFear()
 	--Spray of Breath
 	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 125786 then
 		core:getAchievementFailedWithMessageAfter("(" .. core.destName .. " got feared by Spray of Breath)")
@@ -78,7 +78,7 @@ function core.TerraceOfEndlessSpring:ShaOfFear()
 	end
 end
 
-function core.TerraceOfEndlessSpring:ClearVariables()
+function core._996:ClearVariables()
 	-------------------------------
 	-- Protectors Of The Endless --
 	-------------------------------
