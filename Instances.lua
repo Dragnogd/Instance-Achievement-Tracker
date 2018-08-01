@@ -3,7 +3,7 @@
 --------------------------------------
 local _, core = ...
 
-core.L = L
+local L = core.L
 
 core.Instances = {
     BattleForAzeroth = {
@@ -3835,7 +3835,7 @@ core.Instances = {
             },
 
             ["249-10"] = { --Onyxia's Lair 10 Man
-                name = "Onyxia's Lair 10 Man",
+                name = L["Onyxia's Lair 10 Man"],
                 boss1 = {
                     name = "Onyxia 1",
                     bossIDs = {10184},

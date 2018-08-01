@@ -32,7 +32,6 @@ Config.releaseType = ""                    --Release type (Alpha, Beta, Release)
 local _, _, _, tocVersionloc = GetBuildInfo()
 core.tocVersion = tocVersionloc
 
-
 --------------------------------------
 -- Config functions
 --------------------------------------

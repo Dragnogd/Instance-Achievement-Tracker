@@ -3,7 +3,7 @@
 --------------------------------------
 local _, core = ...
 
-core.L = WhizzL
+local L = core.L
 
 local events = CreateFrame("Frame")
 local UIConfig
