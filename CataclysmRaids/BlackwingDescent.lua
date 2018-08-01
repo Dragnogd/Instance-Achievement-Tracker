@@ -6,8 +6,8 @@ local _, core = ...
 ------------------------------------------------------
 ---- Blackwing Descent Bosses
 ------------------------------------------------------
-core.BlackwingDescent = {}
-core.BlackwingDescent.Events = CreateFrame("Frame")
+core._669 = {}
+core._669.Events = CreateFrame("Frame")
 
 ------------------------------------------------------
 ---- Ominitron Defense System
@@ -42,13 +42,13 @@ local step2Complete = false
 local step3Complete = false
 local step4Complete = false
 
-function core.BlackwingDescent:Magmaw()
+function core._669:Magmaw()
 	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 78941 then
 		core:getAchievementFailedWithMessageAfter("by (" .. core.destName .. ")")
 	end
 end
 
-function core.BlackwingDescent:OminitronDefenseSystem()
+function core._669:OminitronDefenseSystem()
 	--Arcane Annihilator
 	if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 79710 and arcaneAnnihilatorFailed == false then
 		core:sendMessage(core.spellName .. " part of " .. core:getAchievement() .. " FAILED! by (" .. core.destName .. ")")
@@ -87,7 +87,7 @@ function core.BlackwingDescent:OminitronDefenseSystem()
 	end
 end
 
-function core.BlackwingDescent:Maloriak()
+function core._669:Maloriak()
     if core.destID == "41440" and core.type == "UNIT_DIED" then
         aberrationsList[core.spawn_uid_dest] = nil
         aberrationsCounter = aberrationsCounter - 1
@@ -125,7 +125,7 @@ function core.BlackwingDescent:Maloriak()
     end	
 end
 
-function core.BlackwingDescent:Chimaeron()
+function core._669:Chimaeron()
 	if core.type == "UNIT_DIED" and core.unitType == "Player" then
 		playersDead = playersDead + 1
 	end
@@ -135,7 +135,7 @@ function core.BlackwingDescent:Chimaeron()
 	end
 end
 
-function core.BlackwingDescent:Nefarian()
+function core._669:Nefarian()
 	if f:IsEventRegistered("CHAT_MSG_MONSTER_YELL") == nil then
 		f:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	end
@@ -189,7 +189,7 @@ function core.BlackwingDescent:Nefarian()
 	end
 end
 
-function core.BlackwingDescent:ClearVariables()
+function core._669:ClearVariables()
 	------------------------------------------------------
 	---- Ominitron Defense System
 	------------------------------------------------------
@@ -221,21 +221,21 @@ function core.BlackwingDescent:ClearVariables()
 	step4Complete = false
 end
 
-function core.BlackwingDescent:InstanceCleanup()
-	core.BlackwingDescent.Events:UnregisterEvent("CHAT_MSG_MONSTER_YELL")
-	core.BlackwingDescent.Events:UnregisterEvent("UNIT_POWER_UPDATE")
+function core._669:InstanceCleanup()
+	core._669.Events:UnregisterEvent("CHAT_MSG_MONSTER_YELL")
+	core._669.Events:UnregisterEvent("UNIT_POWER_UPDATE")
 end
 
-function core.BlackwingDescent:InitialSetup()
-    core.BlackwingDescent.Events:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-    core.BlackwingDescent.Events:RegisterEvent("UNIT_POWER_UPDATE")
+function core._669:InitialSetup()
+    core._669.Events:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+    core._669.Events:RegisterEvent("UNIT_POWER_UPDATE")
 end
 
-core.BlackwingDescent.Events:SetScript("OnEvent", function(self, event, ...)
+core._669.Events:SetScript("OnEvent", function(self, event, ...)
     return self[event] and self[event](self, event, ...)
 end)
 
-function core.BlackwingDescent.Events:CHAT_MSG_MONSTER_YELL(self, message, sender)
+function core._669.Events:CHAT_MSG_MONSTER_YELL(self, message, sender)
     if core.Instances[core.expansion][core.instanceType][core.instance]["boss6"].enabled == true then
 		if step3Complete == true and step4Complete == false then
 			if string.find(message, "I have tried to be an accommodating host, but you simply will not die! Time to throw all pretense aside and just... KILL YOU ALL!") then
@@ -249,7 +249,7 @@ function core.BlackwingDescent.Events:CHAT_MSG_MONSTER_YELL(self, message, sende
     end
 end
 
-function core.BlackwingDescent.Events:UNIT_POWER_UPDATE(self, unit, powerType)
+function core._669.Events:UNIT_POWER_UPDATE(self, unit, powerType)
     if core.Instances[core.expansion][core.instanceType][core.instance]["boss4"].enabled == true then
 		if powerType == "ALTERNATE" then
 			if UnitPower(unit, ALTERNATE_POWER_INDEX) > 50 then

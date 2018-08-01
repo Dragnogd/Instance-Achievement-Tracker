@@ -1837,8 +1837,17 @@ function clearInstanceVariables()
 	--If a boss was pulled then clear the variables for that raid
 	if core.instance ~= nil then
 		--print(core.instanceClear)
-		core[core.instanceClear]:ClearVariables()
+		core:sendDebugMessage("Clearing Instance Variables if exists")
+		local retOK, ret1 = pcall(function() core[core.instanceClear]:ClearVariables() end);
+		if (retOK) then
+			core:sendDebugMessage("Clearing Instance Variables")
+			core[core.instanceClear]:ClearVariables()
+		else
+			core:sendDebugMessage("Function failed, error text: " .. ret1 .. ".")
+		end
 	end
+
+
 end
 
 ------------------------------------------------------

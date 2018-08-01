@@ -6,7 +6,7 @@ local _, core = ...
 ------------------------------------------------------
 ---- Azjol-Nerub Bosses
 ------------------------------------------------------
-core.AzjolNerub = {}
+core._601 = {}
 
 ------------------------------------------------------
 ---- Watch Him Die
@@ -19,7 +19,7 @@ local achievementFailed = false
 local timerStarted = false
 local timer
 
-function core.AzjolNerub:TrackAdditional()
+function core._601:TrackAdditional()
     --Watch Him Die
     if core.Instances[core.expansion][core.instanceType][core.instance]["boss1"].enabled == true then
         if core.type == "UNIT_DIED" and (core.destID == "28729" or core.destID == "28730" or core.destID == "28731") and achievementFailed == false then
@@ -29,7 +29,7 @@ function core.AzjolNerub:TrackAdditional()
     end
 end
 
-function core.AzjolNerub:Anubarak()
+function core._601:Anubarak()
     if timerStarted == false then
         timerStarted = true
         timer = C_Timer.NewTimer(241, function() 
@@ -38,7 +38,7 @@ function core.AzjolNerub:Anubarak()
     end
 end
 
-function core.AzjolNerub:ClearVariables()
+function core._601:ClearVariables()
     ------------------------------------------------------
     ---- Anub'arak
     ------------------------------------------------------

@@ -6,8 +6,8 @@ local _, core = ...
 ------------------------------------------------------
 ---- Onyxia's Lair Bosses
 ------------------------------------------------------
-core.OnyxiaSLair = {}
--- core.OnyxiaSLair.Events = CreateFrame("Frame")
+core._249 = {}
+-- core._249.Events = CreateFrame("Frame")
 
 ------------------------------------------------------
 ---- Onyxia
@@ -18,13 +18,13 @@ local timer
 -- local whelpsCounter = 0
 
 
-function core.OnyxiaSLair:Onyxia1()
+function core._249:Onyxia1()
     if core.type == "SPELL_DAMAGE" and core.spellName == "Breath" then
         core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")", 2)
     end
 end
 
-function core.OnyxiaSLair:Onyxia2()
+function core._249:Onyxia2()
     if timerStarted == false then
         timerStarted = true
         timer = C_Timer.NewTimer(300, function() 
@@ -33,7 +33,7 @@ function core.OnyxiaSLair:Onyxia2()
     end 
 end
 
-function core.OnyxiaSLair:ClearVariables()
+function core._249:ClearVariables()
     ------------------------------------------------------
     ---- Onyxia
     ------------------------------------------------------
@@ -46,15 +46,15 @@ function core.OnyxiaSLair:ClearVariables()
     end
 end
 
--- function core.OnyxiaSLair:InitialSetup()
---     core.OnyxiaSLair.Events:RegisterEvent("NAME_PLATE_UNIT_ADDED")
+-- function core._249:InitialSetup()
+--     core._249.Events:RegisterEvent("NAME_PLATE_UNIT_ADDED")
 -- end
 
--- core.OnyxiaSLair.Events:SetScript("OnEvent", function(self, event, ...)
+-- core._249.Events:SetScript("OnEvent", function(self, event, ...)
 --     return self[event] and self[event](self, event, ...)
 -- end)
 
--- function core.OnyxiaSLair.Events:NAME_PLATE_UNIT_ADDED(self, unitID, ...)
+-- function core._249.Events:NAME_PLATE_UNIT_ADDED(self, unitID, ...)
     
 
 --     local unitType, _, _, _, _, unitIDCreature, unitUID = strsplit("-", UnitGUID(unitID))

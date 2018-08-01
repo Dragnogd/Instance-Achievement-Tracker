@@ -6,7 +6,7 @@ local _, core = ...
 ------------------------------------------------------
 ---- Maw of Souls Bosses
 ------------------------------------------------------
-core.MawOfSouls = {}
+core._1492 = {}
 
 ------------------------------------------------------
 ---- Ymiron
@@ -14,7 +14,7 @@ core.MawOfSouls = {}
 local risenWarriorsKilled = 0
 local defiantStrikeActive = false
 
-function core.MawOfSouls:Ymiron()
+function core._1492:Ymiron()
     if core.type == "SPELL_AURA_APPLIED" and core.destID == "97200" and core.spellId == 195031 then
         defiantStrikeActive = true
     end
@@ -37,7 +37,7 @@ function core.MawOfSouls:Ymiron()
     end
 end
 
-function core.MawOfSouls:ClearVariables()
+function core._1492:ClearVariables()
     ------------------------------------------------------
     ---- Ymiron
     ------------------------------------------------------

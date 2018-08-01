@@ -6,20 +6,20 @@ local _, core = ...
 ------------------------------------------------------
 ---- Drak'Tharon Keep Bosses
 ------------------------------------------------------
-core.DrakTharonKeep = {}
+core._600 = {}
 
 ------------------------------------------------------
 ---- King Dred
 ------------------------------------------------------
 local drakkariKilled = 0
 
-function core.DrakTharonKeep:Trollgore()
+function core._600:Trollgore()
     if core.type == "SPELL_AURA_APPLIED_DOSE" and core.amount >= 10 then
         core:getAchievementFailed()
     end
 end
 
-function core.DrakTharonKeep:KingDred()
+function core._600:KingDred()
     if core.type == "UNIT_DIED" and (core.destID == "26641" or core.destID == "26628") and drakkariKilled < 6 then
         drakkariKilled = drakkariKilled + 1
         core:sendMessage(core:getAchievement() .. " Drakkari Gutrippers/Scytheclaw Killed (" .. drakkariKilled .. "/6)")
@@ -30,7 +30,7 @@ function core.DrakTharonKeep:KingDred()
     end
 end
 
-function core.DrakTharonKeep:ClearVariables()
+function core._600:ClearVariables()
     ------------------------------------------------------
     ---- King Dred
     ------------------------------------------------------

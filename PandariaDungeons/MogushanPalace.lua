@@ -6,7 +6,7 @@ local _, core = ...
 ------------------------------------------------------
 ---- Mogushan Palace Bosses
 ------------------------------------------------------
-core.MoguShanPalace = {}
+core._994 = {}
 
 ------------------------------------------------------
 ---- Xin the Weaponmaster
@@ -14,7 +14,7 @@ core.MoguShanPalace = {}
 local achievementSuccess = false
 local timerStarted = false
 
-function core.MoguShanPalace.XinTheWeaponmaster()
+function core._994.XinTheWeaponmaster()
     --Achievement Success
     if core.type == "SPELL_DAMAGE" and core.spellId == 124527 then
         achievementSuccess = true
@@ -33,7 +33,7 @@ function core.MoguShanPalace.XinTheWeaponmaster()
     end
 end
 
-function core.MoguShanPalace:ClearVariables()
+function core._994:ClearVariables()
     ------------------------------------------------------
     ---- Xin the Weaponmaster
     ------------------------------------------------------

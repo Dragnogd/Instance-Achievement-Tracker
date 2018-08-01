@@ -6,7 +6,7 @@ local _, core = ...
 ------------------------------------------------------
 ---- Temple of the Jade Serpent Bosses
 ------------------------------------------------------
-core.TempleOfTheJadeSerpent = {}
+core._960 = {}
 
 ------------------------------------------------------
 ---- Wise Mari
@@ -18,7 +18,7 @@ local playersHit = {}
 ------------------------------------------------------
 local ShaOfDoubtCounter = 0
 
-function core.TempleOfTheJadeSerpent:WiseMari()
+function core._960:WiseMari()
     if core.spellId == 115167 then
         --If someone gets hit by the ability, check if they need the achievement or not
         
@@ -34,7 +34,7 @@ function core.TempleOfTheJadeSerpent:WiseMari()
     end
 end
 
-function core.TempleOfTheJadeSerpent:ShaOfDoubt()
+function core._960:ShaOfDoubt()
     local name, realm = UnitName("Player")
     if (core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_APPLIED_DOSE") and core.spellId == 123916 and core.destName == name then
         for i=1,40 do
@@ -51,7 +51,7 @@ function core.TempleOfTheJadeSerpent:ShaOfDoubt()
     end
 end
 
-function core.TempleOfTheJadeSerpent:ShaOfDoubt2()
+function core._960:ShaOfDoubt2()
     for i=1,40 do
         local _, _, _, _, _, _, _, _, _, spellId = UnitAura("Player", i)
         if spellId == 118714 then
@@ -60,7 +60,7 @@ function core.TempleOfTheJadeSerpent:ShaOfDoubt2()
     end
 end
 
-function core.TempleOfTheJadeSerpent:ClearVariables()
+function core._960:ClearVariables()
     ------------------------------------------------------
     ---- Wise Mari
     ------------------------------------------------------

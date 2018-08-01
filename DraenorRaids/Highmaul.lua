@@ -4,10 +4,10 @@
 local _, core = ...
 
 ------------------------------------------------------
----- Highmaul Bosses
+---- _1228 Bosses
 ------------------------------------------------------
-core.Highmaul = {}
-core.Highmaul.Events = CreateFrame("Frame")
+core._1228 = {}
+core._1228.Events = CreateFrame("Frame")
 
 ------------------------------------------------------
 ---- The Butcher
@@ -26,13 +26,13 @@ local timerStarted = false
 ------------------------------------------------------
 local orbCounter = 15
 
-function core.Highmaul:KargathBladefist()
+function core._1228:KargathBladefist()
     if core.type == "SPELL_AURA_REMOVED" and core.destID == "78757" and core.spellId == 159202 then
         core:getAchievementFailed()
     end
 end
 
-function core.Highmaul:TheButcher()
+function core._1228:TheButcher()
     if core.type == "UNIT_DIED" and core.destID == "80728" and maggotCounter < 6 then
         maggotCounter = maggotCounter + 1
         core:sendMessage(core:getAchievement() .. " Maggot Counter (" .. maggotCounter .. "/6)")
@@ -43,13 +43,13 @@ function core.Highmaul:TheButcher()
     end
 end
 
-function core.Highmaul:Brackenspore()
+function core._1228:Brackenspore()
     if core.type == "SPELL_AURA_APPLIED_DOSE" and core.spellId == 165223 and core.amount == 15 then
         core:getAchievementSuccess()
     end
 end
 
-function core.Highmaul:Koragh()
+function core._1228:Koragh()
     if core.type == "SPELL_DAMAGE" and (core.spellId == 161576 or core.spellId == 161612) and orbCounter > 0 then
         orbCounter = orbCounter - 1
         core:sendMessage(core:getAchievement() .. " Overflowing Energy Orb Counter Missed. " .. orbCounter .. " more before fail")
@@ -63,7 +63,7 @@ function core.Highmaul:Koragh()
     end
 end
 
-function core.Highmaul:ClearVariables()
+function core._1228:ClearVariables()
     ------------------------------------------------------
     ---- The Butcher
     ------------------------------------------------------
@@ -82,22 +82,22 @@ function core.Highmaul:ClearVariables()
     orbCounter = 15
 end
 
-function core.Highmaul:InstanceCleanup()
-    core.Highmaul.Events:UnregisterEvent("UNIT_HEALTH")
-    core.Highmaul.Events:UnregisterEvent("UNIT_POWER_UPDATE")
+function core._1228:InstanceCleanup()
+    core._1228.Events:UnregisterEvent("UNIT_HEALTH")
+    core._1228.Events:UnregisterEvent("UNIT_POWER_UPDATE")
 end
 
-function core.Highmaul:InitialSetup()
-	core.Highmaul.Events:RegisterEvent("UNIT_HEALTH")
-	core.Highmaul.Events:RegisterEvent("UNIT_POWER_UPDATE")
+function core._1228:InitialSetup()
+	core._1228.Events:RegisterEvent("UNIT_HEALTH")
+	core._1228.Events:RegisterEvent("UNIT_POWER_UPDATE")
 end
 
-core.Highmaul.Events:SetScript("OnEvent", function(self, event, ...)
+core._1228.Events:SetScript("OnEvent", function(self, event, ...)
     return self[event] and self[event](self, event, ...)
 end)
 
-function core.Highmaul.Events:UNIT_HEALTH(self, unitID)
-	if core.Instances.WarlordsOfDraenor.Raids.Highmaul.boss3.enabled == true then
+function core._1228.Events:UNIT_HEALTH(self, unitID)
+	if core.Instances.WarlordsOfDraenor.Raids._1228.boss3.enabled == true then
 		local unitType, _, _, _, _, destID, spawn_uid_dest = strsplit("-", UnitGUID(unitID));
 		if destID == "80557" and core.achievementsFailed[1] == false then
             if core:getHealthPercent(unitID) <= 1 and moteOfTectusUID[spawn_uid_dest] == nil then
@@ -122,8 +122,8 @@ function core.Highmaul.Events:UNIT_HEALTH(self, unitID)
 	end
 end
 
-function core.Highmaul.Events:UNIT_POWER_UPDATE(self, unit, powerType)
-	if core.Instances.WarlordsOfDraenor.Raids.Highmaul.boss5.enabled == true and core.achievementIDs[1] == 8958 then
+function core._1228.Events:UNIT_POWER_UPDATE(self, unit, powerType)
+	if core.Instances.WarlordsOfDraenor.Raids._1228.boss5.enabled == true and core.achievementIDs[1] == 8958 then
 		if powerType == "ALTERNATE" then
 			if UnitPower(unit, ALTERNATE_POWER_INDEX) > 30 then
 				core:getAchievementFailed()

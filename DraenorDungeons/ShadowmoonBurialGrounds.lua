@@ -6,7 +6,7 @@ local _, core = ...
 ------------------------------------------------------
 ---- Shadowmoon Burial Grounds Bosses
 ------------------------------------------------------
-core.ShadowmoonBurialGrounds = {}
+core._1176 = {}
 
 ------------------------------------------------------
 ---- Bonemaw
@@ -21,7 +21,7 @@ local corpseSkitterlingAnnounced = false
 local ritualOfBonesCounter = 0
 local timerStarted = false
 
-function core.ShadowmoonBurialGrounds:Bonemaw()
+function core._1176:Bonemaw()
     --Corpse Skitterlings Alive
     if (core.type == "SWING_DAMAGE" or core.type == "SWING_MISSED") and core.sourceID == "77006" then
         if corpseSkitterlingUID[core.spawn_uid] == nil then
@@ -57,7 +57,7 @@ function core.ShadowmoonBurialGrounds:Bonemaw()
     end
 end
 
-function core.ShadowmoonBurialGrounds:Nerzhul()
+function core._1176:Nerzhul()
     if core.type == "UNIT_DIED" and core.destID == "76518" then
         ritualOfBonesCounter = ritualOfBonesCounter + 1
         if timerStarted == false then
@@ -73,7 +73,7 @@ function core.ShadowmoonBurialGrounds:Nerzhul()
     end
 end
 
-function core.ShadowmoonBurialGrounds:ClearVariables()
+function core._1176:ClearVariables()
     ------------------------------------------------------
     ---- Bonemaw
     ------------------------------------------------------

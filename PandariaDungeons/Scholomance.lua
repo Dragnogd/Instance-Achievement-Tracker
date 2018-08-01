@@ -4,17 +4,17 @@
 local _, core = ...
 
 ------------------------------------------------------
----- Scholomance Bosses
+---- _1007 Bosses
 ------------------------------------------------------
-core.Scholomance = {}
+core._1007 = {}
 
-function core.Scholomance:Rattlegore()
+function core._1007:Rattlegore()
     if core.type == "SPELL_AURA_APPLIED_DOSE" and core.doseAmount > 5 and core.spellId == 113765 then
         core:getAchievementFailed()
     end
 end
 
-function core.Scholomance:Sanguinarian()
+function core._1007:Sanguinarian()
     -- if core.type == "SPELL_AURA_APPLIED_DOSE" and core.spellId == 114141 then
     --     print(core.doseAmount)
     -- end
@@ -25,5 +25,5 @@ function core.Scholomance:Sanguinarian()
     end
 end
 
-function core.Scholomance:ClearVariables()
+function core._1007:ClearVariables()
 end

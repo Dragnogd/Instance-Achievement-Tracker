@@ -4,9 +4,9 @@
 local _, core = ...
 
 ------------------------------------------------------
----- Gundrak Bosses
+---- _604 Bosses
 ------------------------------------------------------
-core.Gundrak = {}
+core._604 = {}
 
 ------------------------------------------------------
 ---- Gal'darah
@@ -14,7 +14,7 @@ core.Gundrak = {}
 local playersImpaled = {}
 local impaleCounter = 0
 
-function core.Gundrak:Sladran()
+function core._604:Sladran()
     --Boss does not fire Encounter Start
     core:getAchievementToTrack()
 
@@ -23,13 +23,13 @@ function core.Gundrak:Sladran()
     end
 end
 
-function core.Gundrak:Moorabi()
+function core._604:Moorabi()
     if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 55098 then
         core:getAchievementFailed()
     end
 end
 
-function core.Gundrak:Galdarah()
+function core._604:Galdarah()
     if core.type == "SPELL_AURA_APPLIED" and core.spellId == 59827 and core:has_value(playersImpaled, core.destName) == false then
         table.insert(playersImpaled, core.destName)
         impaleCounter = impaleCounter + 1
@@ -41,7 +41,7 @@ function core.Gundrak:Galdarah()
     end
 end
 
-function core.Gundrak:ClearVariables()
+function core._604:ClearVariables()
     ------------------------------------------------------
     ---- Gal'darah
     ------------------------------------------------------

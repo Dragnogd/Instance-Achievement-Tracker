@@ -6,7 +6,7 @@ local _, core = ...
 ------------------------------------------------------
 ---- Upper Blackrock Spire Bosses
 ------------------------------------------------------
-core.UpperBlackrockSpire = {}
+core._1358 = {}
 
 ------------------------------------------------------
 ---- Orebender Gor'ashan
@@ -27,7 +27,7 @@ local whelpsKilled = 0
 ------------------------------------------------------
 local emberscaleIronflightCounter = 0 
 
-function core.UpperBlackrockSpire:OrebenderGorashan()
+function core._1358:OrebenderGorashan()
     if core.type == "SPELL_AURA_APPLIED" and core.spellId == 166168 then
         thunderCacophonyCounter = 0
     end
@@ -41,7 +41,7 @@ function core.UpperBlackrockSpire:OrebenderGorashan()
     end
 end
 
-function core.UpperBlackrockSpire:RagewingTheUntamed()
+function core._1358:RagewingTheUntamed()
     if core.sourceID == "76801" then
         if ragewingWhelpUID[core.spawn_uid] == nil then
             ragewingWhelpUID[core.spawn_uid] = core.spawn_uid
@@ -78,7 +78,7 @@ function core.UpperBlackrockSpire:RagewingTheUntamed()
     end
 end
 
-function core.UpperBlackrockSpire:WarlordZaela()
+function core._1358:WarlordZaela()
     if core.type == "UNIT_DIED" and core.destID == "82428" and emberscaleIronflightCounter < 5 then
         emberscaleIronflightCounter = emberscaleIronflightCounter + 1
         core:sendMessage("Emberscale IronFlight Killed (" .. emberscaleIronflightCounter .. "/5)")
@@ -89,7 +89,7 @@ function core.UpperBlackrockSpire:WarlordZaela()
     end
 end
 
-function core.UpperBlackrockSpire:ClearVariables()
+function core._1358:ClearVariables()
     ------------------------------------------------------
     ---- Orebender Gor'ashan
     ------------------------------------------------------

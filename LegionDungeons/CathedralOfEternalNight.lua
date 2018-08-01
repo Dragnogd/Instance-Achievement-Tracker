@@ -6,7 +6,7 @@ local _, core = ...
 ------------------------------------------------------
 ---- Cathedral of Eternal Night Bosses
 ------------------------------------------------------
-core.CathedralOfEternalNight = {}
+core._1677 = {}
 
 ------------------------------------------------------
 ---- Thrashbite the Scornful
@@ -17,7 +17,7 @@ local buff2Counter = 0
 local buff3Counter = 0
 local buff4Counter = 0
 
-function core.CathedralOfEternalNight:ThrashbiteTheScornful()
+function core._1677:ThrashbiteTheScornful()
     --Volume 1: 121776 Voume 2: 121783 Volume 3: 121784 Voume 4: 121785
     --Buff 1: 243256 Buff 2: 243258 Buff 3: 243259 Buff 4: 243261
 
@@ -59,7 +59,7 @@ function core.CathedralOfEternalNight:ThrashbiteTheScornful()
     end
 end
 
-function core.CathedralOfEternalNight:ClearVariables()
+function core._1677:ClearVariables()
     ------------------------------------------------------
     ---- Thrashbite the Scornful
     ------------------------------------------------------

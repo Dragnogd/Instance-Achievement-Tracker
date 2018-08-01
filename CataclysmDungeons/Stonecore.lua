@@ -6,7 +6,7 @@ local _, core = ...
 ------------------------------------------------------
 ---- Stonecore Bosses
 ------------------------------------------------------
-core.TheStonecore = {}
+core._725 = {}
 
 ------------------------------------------------------
 ---- High Priestess Azil
@@ -15,7 +15,7 @@ local mobLimitReached = false
 local devoutFollowersKilled = 0
 local timerStarted = false
 
-function core.TheStonecore:HighPriestessAzil()
+function core._725:HighPriestessAzil()
     core:trackMob("42428", "Devout Follower", 60, "Kill the Devout Followers Now", 10, nil, nil)
 
     if core.mobCounter >= 10 then
@@ -45,7 +45,7 @@ function core.TheStonecore:HighPriestessAzil()
     end
 end
 
-function core.TheStonecore:ClearVariables()
+function core._725:ClearVariables()
     ------------------------------------------------------
     ---- High Priestess Azil
     ------------------------------------------------------

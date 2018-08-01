@@ -6,7 +6,7 @@ local _, core = ...
 ------------------------------------------------------
 ---- Mogu'shan Vaults
 ------------------------------------------------------
-core.MoguShanVaults = {}
+core._1008 = {}
 
 ------------------------------------------------------
 ---- Feng The Accursed
@@ -31,7 +31,7 @@ local playerExecutedStrike = 0
 local playersFailCounter = {}
 local timerStarted = false
 
-function core.MoguShanVaults:FengTheAccursed()
+function core._1008:FengTheAccursed()
 	if core.type == "SPELL_AURA_APPLIED" then
 		if core.spellId == 116936 and EpicenterReversed == false then
 			EpicenterReversed = true
@@ -63,7 +63,7 @@ function core.MoguShanVaults:FengTheAccursed()
 	end
 end
 
-function core.MoguShanVaults:Elegon()
+function core._1008:Elegon()
 	if core.type == "UNIT_DIED" and core.destID == "60913" then
 		energyChargeKilled = true
 	end
@@ -87,7 +87,7 @@ function core.MoguShanVaults:Elegon()
 	end
 end
 
-function MoguShanVaults_TheSpiritKings()
+function _1008_TheSpiritKings()
 	--If boss has cast pillage start timer
 	--If user dances and timer has started add to array and user is not already in the array
 	--If player gets pillaged add to another array
@@ -95,7 +95,7 @@ function MoguShanVaults_TheSpiritKings()
 	--Announce in chat who did not dance in time.
 end
 
-function core.MoguShanVaults:ClearVariables()
+function core._1008:ClearVariables()
 	------------------------------------------------------
 	---- Feng The Accursed
 	------------------------------------------------------
@@ -126,7 +126,7 @@ end
 --Check how many players executed opportunistic strike on boss
 --If counter equals 10 or 25 then complete achievement
 
-function core.MoguShanVaults:WillOfTheEmperor()
+function core._1008:WillOfTheEmperor()
 	--Hit by Devestating Arc
 	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 116835 then
 		if playersFailCounter[core.destName] == nil then

@@ -6,7 +6,7 @@ local _, core = ...
 ------------------------------------------------------
 ---- Throne of the Four Winds Bosses
 ------------------------------------------------------
-core.ThroneOfTheFourWinds = {}
+core._754 = {}
 
-function core.ThroneOfTheFourWinds:ClearVariables()
+function core._754:ClearVariables()
 end

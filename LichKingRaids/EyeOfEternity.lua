@@ -6,7 +6,7 @@ local _, core = ...
 ------------------------------------------------------
 ---- Eye of Eternity Bosses
 ------------------------------------------------------
-core.TheEyeOfEternity = {}
+core._616 = {}
 
 ------------------------------------------------------
 ---- You Don't Have an Eternity
@@ -14,7 +14,7 @@ core.TheEyeOfEternity = {}
 local timer
 local timerStarted = false
 
-function core.TheEyeOfEternity:YouDontHaveAnEternity()
+function core._616:YouDontHaveAnEternity()
     if timerStarted == false then
         timerStarted = true
         timer = C_Timer.NewTimer(360, function()
@@ -23,7 +23,7 @@ function core.TheEyeOfEternity:YouDontHaveAnEternity()
     end
 end
 
-function core.TheEyeOfEternity:APokeInTheEye()
+function core._616:APokeInTheEye()
     if core.difficultyID == 3 then
         --10 Man
         if core.groupSize < 9 then
@@ -41,13 +41,13 @@ function core.TheEyeOfEternity:APokeInTheEye()
     end
 end
 
-function core.TheEyeOfEternity:DenyinTheScion()
+function core._616:DenyinTheScion()
     if core.type == "PARTY_KILL" and core.destID == "30249" and UnitControllingVehicle(core.sourceName) == true then
         core:getAchievementSuccessPersonal(3,"source")
     end
 end
 
-function core.TheEyeOfEternity:ClearVariables()
+function core._616:ClearVariables()
     ------------------------------------------------------
     ---- You Don't Have an Eternity
     ------------------------------------------------------

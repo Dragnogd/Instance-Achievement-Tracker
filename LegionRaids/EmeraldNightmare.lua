@@ -6,8 +6,8 @@ local _, core = ...
 ------------------------------------------------------
 ---- Emerald Nightmare Bosses
 ------------------------------------------------------
-core.TheEmeraldNightmare = {}
-core.TheEmeraldNightmare.Events = CreateFrame("Frame")
+core._1520 = {}
+core._1520.Events = CreateFrame("Frame")
 
 ------------------------------------------------------
 ---- Nythendra
@@ -35,19 +35,19 @@ local timerStarted = false
 local creatureOfMadnessKilled = 0
 local creatureOfMadnessUID = {}
 
-function core.TheEmeraldNightmare:Nythendra()
+function core._1520:Nythendra()
     if bugsSquished >= 15 then
         core:getAchievementSuccessWithMessageAfter("(You may wish to get a few extra bugs in case multiple players clicked on the same bug)")
     end
 end
 
-function core.TheEmeraldNightmare:Ursoc()
+function core._1520:Ursoc()
     if core.type == "UNIT_DIED" and core.destID == "111263" then
         core:getAchievementFailed()
     end
 end
 
-function core.TheEmeraldNightmare:Ilgynoth()
+function core._1520:Ilgynoth()
     --Track 20 Nightmare Explosion are alive
     core:trackMob("105721", "Nightmare Ichors", 20, "20 Nightmare Ichors have spawned. They can now be killed at the eye", 4, nil, nil)
 
@@ -79,14 +79,14 @@ function core.TheEmeraldNightmare:Ilgynoth()
     end
 end
 
--- function core.TheEmeraldNightmare:Ele()
+-- function core._1520:Ele()
 --     if core.type == "SPELL_DAMAGE" and core.spellId == 215503 and core.sourceID == "112078" then
 --         pulsingEggCounter = pulsingEggCounter + 1
 --         print(pulsingEggCounter .. " Pulsing Egg Counter")
 --     end
 -- end
 
-function core.TheEmeraldNightmare:DragonsOfNightmare()
+function core._1520:DragonsOfNightmare()
     if initialWait == true then
         --Loop through every player in the group. Once each player has got all 4 buffs. Increment count by 1. Once counter equals group size then complete achievement
         if core.groupSize > 1 then
@@ -166,7 +166,7 @@ function core.TheEmeraldNightmare:DragonsOfNightmare()
     end
 end
 
-function core.TheEmeraldNightmare:Xavius()
+function core._1520:Xavius()
     if (core.type == "RANGE_DAMAGE" or core.type == "SPELL_DAMAGE" or core.type == "SPELL_PERIODIC_DAMAGE" or core.type == "SWING_DAMAGE") and core.destID == "110732" and core.overkill ~= nil then
         if core.overkill > 0 then
             if creatureOfMadnessUID[core.spawn_uid_dest] == nil then
@@ -182,7 +182,7 @@ function core.TheEmeraldNightmare:Xavius()
     end
 end
 
-function core.TheEmeraldNightmare:ClearVariables()
+function core._1520:ClearVariables()
     ------------------------------------------------------
     ---- Nythendra
     ------------------------------------------------------
@@ -210,21 +210,21 @@ function core.TheEmeraldNightmare:ClearVariables()
     timerStarted = false
 end
 
-function core.TheEmeraldNightmare:InstanceCleanup()
-    core.TheEmeraldNightmare.Events:UnregisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+function core._1520:InstanceCleanup()
+    core._1520.Events:UnregisterEvent("UNIT_SPELLCAST_SUCCEEDED")
     dragonsKilled = false
 end
 
-function core.TheEmeraldNightmare:InitialSetup()
-	core.TheEmeraldNightmare.Events:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+function core._1520:InitialSetup()
+	core._1520.Events:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
 end
 
-core.TheEmeraldNightmare.Events:SetScript("OnEvent", function(self, event, ...)
+core._1520.Events:SetScript("OnEvent", function(self, event, ...)
     return self[event] and self[event](self, event, ...)
 end)
 
-function core.TheEmeraldNightmare.Events:UNIT_SPELLCAST_SUCCEEDED(self, unitID, lineID, spellID, ...)
-    if core.Instances.Legion.Raids.TheEmeraldNightmare.boss1.enabled then
+function core._1520.Events:UNIT_SPELLCAST_SUCCEEDED(self, unitID, lineID, spellID, ...)
+    if core.Instances.Legion.Raids._1520.boss1.enabled then
         if spellID == 208116 and bugsUID[lineID] == nil then
             bugsUID[lineID] = lineID
             bugsSquished = bugsSquished + 1

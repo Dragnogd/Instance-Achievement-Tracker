@@ -6,13 +6,13 @@ local _, core = ...
 ------------------------------------------------------
 ---- Trial of the Champion Bosses
 ------------------------------------------------------
-core.TrialOfTheChampion = {}
+core._650 = {}
 
-function core.TrialOfTheChampion:TheBlackKnight()
+function core._650:TheBlackKnight()
     if (core.type == "SPELL_DAMAGE" or core.type == "SPELL_MISSED") and core.spellId == 67729 then
         core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")")
     end
 end
 
-function core.TrialOfTheChampion:ClearVariables()
+function core._650:ClearVariables()
 end

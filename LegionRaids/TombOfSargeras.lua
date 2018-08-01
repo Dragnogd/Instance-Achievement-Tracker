@@ -6,7 +6,7 @@ local _, core = ...
 ------------------------------------------------------
 ---- Tomb of Sargeras Bosses
 ------------------------------------------------------
-core.TombOfSargeras = {}
+core._1676 = {}
 
 ------------------------------------------------------
 ---- Demonic Inquisition
@@ -21,7 +21,7 @@ local demonicInquisitionKilled = false
 local healthPercentageReached = false
 local waxingTwilightSoulFound = false
 
-function core.TombOfSargeras:DemonicInquisition()
+function core._1676:DemonicInquisition()
     if core.type == "UNIT_DIED" and (core.destID == "116689" or core.destID == "116691") then
         demonicInquisitionKilled = true
     end
@@ -60,13 +60,13 @@ function core.TombOfSargeras:DemonicInquisition()
     end
 end
 
-function core.TombOfSargeras:Harjatan()
+function core._1676:Harjatan()
     if core.type == "UNIT_DIED" and core.destID == "121071" then
         core:getAchievementSuccess()
     end
 end
 
-function core.TombOfSargeras:SistersOfTheMoon()
+function core._1676:SistersOfTheMoon()
     --Check if add is in combat with boss
     if core.sourceID == "121498" or core.destID == "121498" then
         waxingTwilightSoulFound = true
@@ -93,14 +93,14 @@ function core.TombOfSargeras:SistersOfTheMoon()
     end
 end
 
-function core.TombOfSargeras:Kiljaeden()
+function core._1676:Kiljaeden()
     if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 241702 then
         --print("Failed Dark Souls")
         core:getAchievementFailed()
     end
 end
 
-function core.TombOfSargeras:ClearVariables()
+function core._1676:ClearVariables()
     ------------------------------------------------------
     ---- Sisters of the Moon
     ------------------------------------------------------
@@ -108,6 +108,6 @@ function core.TombOfSargeras:ClearVariables()
     waxingTwilightSoulFound = false
 end
 
-function core.TombOfSargeras:InstanceCleanup()
+function core._1676:InstanceCleanup()
     demonicInquisitionKilled = false
 end

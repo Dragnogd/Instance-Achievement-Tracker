@@ -6,7 +6,7 @@ local _, core = ...
 ------------------------------------------------------
 ---- Vault of Archavon Bosses
 ------------------------------------------------------
-core.VaultOfArchavon = {}
+core._624 = {}
 
-function core.VaultOfArchavon:ClearVariables()
+function core._624:ClearVariables()
 end

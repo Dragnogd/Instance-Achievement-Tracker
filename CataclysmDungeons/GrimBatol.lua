@@ -6,9 +6,9 @@ local _, core = ...
 ------------------------------------------------------
 ---- Grim Batol Bosses
 ------------------------------------------------------
-core.GrimBatol = {}
+core._670 = {}
 
-function core.GrimBatol:GeneralUmbriss()
+function core._670:GeneralUmbriss()
     if core.type == "SPELL_AURA_APPLIED" and core.spellId == 90170 and core.destID == "39625" then
         core.achievementsFailed[1] = false
         core:getAchievementSuccessWithMessageAfter("(20 seconds remaining)")
@@ -18,11 +18,11 @@ function core.GrimBatol:GeneralUmbriss()
     end
 end
 
-function core.GrimBatol:Erudax()
+function core._670:Erudax()
     if core.type == "SPELL_AURA_APPLIED" and core.spellId == 75520 then
         core:getAchievementFailed()
     end
 end
 
-function core.GrimBatol:ClearVariables()
+function core._670:ClearVariables()
 end

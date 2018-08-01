@@ -6,7 +6,7 @@ local _, core = ...
 ------------------------------------------------------
 ---- Zul'Gurub Bosses
 ------------------------------------------------------
-core.ZulGurub = {}
+core._859 = {}
 
 ------------------------------------------------------
 ---- High Priestess Kilnara
@@ -22,7 +22,7 @@ local twistedSoulsAnnounced = false
 local timerStarted = false
 local twistedSoulsKilled = 0
 
-function core.ZulGurub:HighPriestVenoxis()
+function core._859:HighPriestVenoxis()
     if core.type == "SPELL_DAMAGE" and (core.spellId == 96638 or core.spellId == 96521 or core.spellId == 96685) then
         local reason = nil
         if core.spellId == 96638 then
@@ -36,13 +36,13 @@ function core.ZulGurub:HighPriestVenoxis()
     end
 end
 
-function core.ZulGurub:BloodlordMandokir()
+function core._859:BloodlordMandokir()
     if core.type == "UNIT_DIED" and core.destID == "52157" then
         core:getAchievementFailed()
     end
 end
 
-function core.ZulGurub:HighPriestessKilnara()
+function core._859:HighPriestessKilnara()
     if core.type == "SPELL_AURA_APPLIED" and core.spellId == 98239 and templeRatsCounter < 4 then
         templeRatsCounter = templeRatsCounter + 1
         core:sendMessage(GetAchievementLink(core.achievementIDs[1]) .. " Temple Rats Counter: (" .. templeRatsCounter .. "/4)")
@@ -53,7 +53,7 @@ function core.ZulGurub:HighPriestessKilnara()
     end
 end
 
-function core.ZulGurub:Jindo()
+function core._859:Jindo()
     if core.destID == "52624" and core.achievementsCompleted[1] == false and timerStarted == false then
         if twistedSoulsUID[core.spawn_uid_dest] == nil then
             twistedSoulsUID[core.spawn_uid_dest] = core.spawn_uid_dest
@@ -98,7 +98,7 @@ function core.ZulGurub:Jindo()
     end
 end
 
-function core.ZulGurub:ClearVariables()
+function core._859:ClearVariables()
     ------------------------------------------------------
     ---- High Priestess Kilnara
     ------------------------------------------------------

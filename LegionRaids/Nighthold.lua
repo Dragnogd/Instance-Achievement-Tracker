@@ -6,7 +6,7 @@ local _, core = ...
 ------------------------------------------------------
 ---- Nighthold Bosses
 ------------------------------------------------------
-core.TheNighthold = {}
+core._1530 = {}
 
 ------------------------------------------------------
 ---- Skorpyron
@@ -47,7 +47,7 @@ local eyeTarget = false
 local mysteriousFruitCounter = 0
 local mysteriousFruitPlayers = {}
 
-function core.TheNighthold:Skorpyron()
+function core._1530:Skorpyron()
     --Shockwave cast
     if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 204316 then
         --Loop through all players in the group and make a list of all players that got hit by the shockwave
@@ -107,7 +107,7 @@ function core.TheNighthold:Skorpyron()
     end
 end
 
-function core.TheNighthold:Trilliax()
+function core._1530:Trilliax()
     if (core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_APPLIED_DOSE") and core.spellId == 206798 then
         toxicSliceCounter = toxicSliceCounter + 1
         core:sendMessage(core:getAchievement() .. " Toxic Slice Counter " .. toxicSliceCounter)
@@ -118,7 +118,7 @@ function core.TheNighthold:Trilliax()
     end
 end
 
-function core.TheNighthold:StarAugurEtraeus()
+function core._1530:StarAugurEtraeus()
     --Check if add is in combat with boss
     if core.sourceID == "111587" or core.destID == "111587" then
         wellTraveledNetherElementalFound = true
@@ -145,7 +145,7 @@ function core.TheNighthold:StarAugurEtraeus()
     end
 end
 
-function core.TheNighthold:HighBotanistTelarn()
+function core._1530:HighBotanistTelarn()
 	if core.type == "UNIT_DIED" and core.destID ~= nil then
         local name, realm = strsplit("-", core.destID)
         if UnitIsPlayer(name) then
@@ -208,7 +208,7 @@ function core.TheNighthold:HighBotanistTelarn()
 	end
 end
 
-function core.TheNighthold:Krosus()
+function core._1530:Krosus()
     --Keep a collection of all detected Burning Embers
     --If a burning ember dies than remove from collection
     --When bridge breaks, start a 5 second countdown and store all burning embers which do damage in this time
@@ -272,19 +272,19 @@ function core.TheNighthold:Krosus()
     end
 end
 
-function core.TheNighthold:Elisande()
+function core._1530:Elisande()
     if core.type == "UNIT_DIED" and core.destID == "108802" then
         core:getAchievementSuccess()
     end
 end
 
-function core.TheNighthold:Tichondrius()
+function core._1530:Tichondrius()
     if core.type == "SPELL_DAMAGE" and core.spellId == 213534 then
         core:getAchievementFailedPersonal()
     end
 end
 
-function core.TheNighthold:Guldan()
+function core._1530:Guldan()
     core:trackMob("105630", "Eye of Gul'dan", 16, "16 Eye of Gul'dan have spawned", 1, nil, nil)
 
     --Enough eyes have spawn so track next kill
@@ -315,7 +315,7 @@ function core.TheNighthold:Guldan()
     end
 end
 
-function core.TheNighthold:ClearVariables()
+function core._1530:ClearVariables()
     ------------------------------------------------------
     ---- Trilliax
     ------------------------------------------------------

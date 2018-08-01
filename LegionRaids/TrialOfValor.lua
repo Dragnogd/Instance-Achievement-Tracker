@@ -6,8 +6,8 @@ local _, core = ...
 ------------------------------------------------------
 ---- Trial of Valor Bosses
 ------------------------------------------------------
-core.TrialOfValor = {}
-core.TrialOfValor.Events = CreateFrame("Frame")
+core._1648 = {}
+core._1648.Events = CreateFrame("Frame")
 
 ------------------------------------------------------
 ---- Odyn
@@ -28,7 +28,7 @@ local breathCounter = 0
 local fetidNames = {}
 local fetidcount = 0
 
-function core.TrialOfValor:Odyn()
+function core._1648:Odyn()
     if core.type == "UNIT_DIED" and core.destID == "114263" then
         odynKilled = true
     end
@@ -46,7 +46,7 @@ function core.TrialOfValor:Odyn()
     end
 end
 
-function core.TrialOfValor:Helya()
+function core._1648:Helya()
     if core.type == "SPELL_AURA_APPLIED" and core.spellId == 193367 then
         if fetidNames[core.destName] == nil then
             fetidNames[core.destName] = core.destName
@@ -75,17 +75,17 @@ function core.TrialOfValor:Helya()
     end  
 end
 
-function core.TrialOfValor:InstanceCleanup()
-    core.TrialOfValor.Events:UnregisterEvent("UNIT_AURA")
+function core._1648:InstanceCleanup()
+    core._1648.Events:UnregisterEvent("UNIT_AURA")
     odynKilled = false
 end
 
-function core.TrialOfValor:InitialSetup()
+function core._1648:InitialSetup()
     odynKilled = false
-    core.TrialOfValor.Events:RegisterEvent("UNIT_AURA")
+    core._1648.Events:RegisterEvent("UNIT_AURA")
 end
 
-function core.TrialOfValor:ClearVariables()
+function core._1648:ClearVariables()
     ------------------------------------------------------
     ---- Helya
     ------------------------------------------------------
@@ -101,12 +101,12 @@ function core.TrialOfValor:ClearVariables()
     breathCounter = 0
 end
 
-core.TrialOfValor.Events:SetScript("OnEvent", function(self, event, ...)
+core._1648.Events:SetScript("OnEvent", function(self, event, ...)
     return self[event] and self[event](self, event, ...)
 end)
 
-function core.TrialOfValor.Events:UNIT_AURA(self, unitID, ...)
-    if core.Instances.Legion.Raids.TrialOfValor.boss2.enabled then
+function core._1648.Events:UNIT_AURA(self, unitID, ...)
+    if core.Instances.Legion.Raids._1648.boss2.enabled then
         --Player gained Fiery Phlegm
         local chewToyFound = false
         local fieryPhelgmFound = false

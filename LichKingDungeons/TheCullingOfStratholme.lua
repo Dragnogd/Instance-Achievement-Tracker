@@ -6,7 +6,7 @@ local _, core = ...
 ------------------------------------------------------
 ---- The Culling of Stratholme Bosses
 ------------------------------------------------------
-core.TheCullingOfStratholme = {}
+core._595 = {}
 
 ------------------------------------------------------
 ---- Zombiefest
@@ -16,7 +16,7 @@ local zombieKilled = 0
 local zombieCounterReached = false
 local achievementCompleted = false
 
-function core.TheCullingOfStratholme:ZombieFest()
+function core._595:ZombieFest()
     core:trackMob("27737", "Risen Zombie", 100, " 100 Risen Zombies Spawned!", 10, nil, nil)
 
     if core.mobCounter >= 100 then
@@ -52,7 +52,7 @@ function core.TheCullingOfStratholme:ZombieFest()
     end
 end
 
-function core.TheCullingOfStratholme:ClearVariables()
+function core._595:ClearVariables()
     ------------------------------------------------------
     ---- Zombiefest
     ------------------------------------------------------

@@ -6,8 +6,8 @@ local _, core = ...
 ------------------------------------------------------
 ---- Siege Of Orgrimmar Bosses
 ------------------------------------------------------
-core.SiegeOfOrgrimmar = {}
-core.SiegeOfOrgrimmar.Events = CreateFrame("Frame")
+core._1136 = {}
+core._1136.Events = CreateFrame("Frame")
 
 local f = CreateFrame ("Frame")
 f:RegisterEvent("UNIT_HEALTH")
@@ -98,7 +98,7 @@ local step1Complete = false
 local warbringersKilled = 0
 local killedTimestamp = nil
 
-function core.SiegeOfOrgrimmar:Immerseus()
+function core._1136:Immerseus()
 	if (core.type == "SWING_DAMAGE_LANDED" or core.type == "SWING_DAMAGE" or core.type == "SPELL_DAMAGE" or core.type == "SPELL_MISSED" or core.type == "SPELL_ABSORBED") and bossReformed == true and core.sourceID == "71543" then
 		if timerStarted == false then
 			timerStarted = true
@@ -123,7 +123,7 @@ function core.SiegeOfOrgrimmar:Immerseus()
 	end
 end
 
-function core.SiegeOfOrgrimmar:TheFallenProtectors()
+function core._1136:TheFallenProtectors()
 	--Don't count the mark for the the first person that has recieved it
 	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 143840 then
 		table.insert(playersRecievedMark, core.spawn_uid_dest_Player)
@@ -140,13 +140,13 @@ function core.SiegeOfOrgrimmar:TheFallenProtectors()
 	end
 end
 
-function core.SiegeOfOrgrimmar:AmalgamOfCorruption()
+function core._1136:AmalgamOfCorruption()
 	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 145132 then
 		core:getAchievementFailed()
 	end
 end
 
-function core.SiegeOfOrgrimmar:ShaOfPride()
+function core._1136:ShaOfPride()
 	--Mocking Blast
 	if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 144379 then
 		core:getAchievementFailedWithMessageAfter("(Mocking Blast has to be interrupted)")
@@ -158,7 +158,7 @@ function core.SiegeOfOrgrimmar:ShaOfPride()
 	end
 end
 
-function core.SiegeOfOrgrimmar:Galakras()
+function core._1136:Galakras()
 	f:SetScript("OnEvent", function(self, event, unitID)
 		if event == "UNIT_HEALTH" and UnitName(unitID) == "Alliance Vanguard" then
 			if UnitHealth(unitID) == 0 then
@@ -168,7 +168,7 @@ function core.SiegeOfOrgrimmar:Galakras()
 	end)
 end
 
-function core.SiegeOfOrgrimmar:IronJuggernaut()
+function core._1136:IronJuggernaut()
 	--Crawler Mine Blast
 	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 144766 then
 		if superheatedCrawlerMines[core.spawn_uid_dest] ~= nil then
@@ -207,7 +207,7 @@ function core.SiegeOfOrgrimmar:IronJuggernaut()
 	end
 end
 
-function core.SiegeOfOrgrimmar:GeneralNazgrim()
+function core._1136:GeneralNazgrim()
 	--Gamon Died
 	if core.type == "UNIT_DIED" and core.destID == "72192" then
 		core:getAchievementFailed()
@@ -220,7 +220,7 @@ function core.SiegeOfOrgrimmar:GeneralNazgrim()
 	end
 end
 
-function core.SiegeOfOrgrimmar:Malkorok()
+function core._1136:Malkorok()
 	if core.type == "SPELL_AURA_APPLIED" and core.destID == "72983" and core.spellId == 142848 then
 		core:getAchievementSuccess()
 	end
@@ -231,7 +231,7 @@ function core.SiegeOfOrgrimmar:Malkorok()
 	end
 end
 
-function core.SiegeOfOrgrimmar:SecuredStockpileOfPandarenSpoils()
+function core._1136:SecuredStockpileOfPandarenSpoils()
 	-- local unitTypeSrc, sourceID, spawn_uid = strsplit("-",core.sourceGUID)
 	-- if core.type == "SWING_DAMAGE" or core.type == "RANGE_DAMAGE" or core.type == "SPELL_DAMAGE" or core.type == "SPELL_PERIODIC_DAMAGE" then
 	-- 	if playersSide[spawn_uid] == nil then
@@ -256,7 +256,7 @@ function core.SiegeOfOrgrimmar:SecuredStockpileOfPandarenSpoils()
 	-- end
 end
 
-function core.SiegeOfOrgrimmar:ThokTheBloodthirsty()
+function core._1136:ThokTheBloodthirsty()
 	--core:displayAchievementsToTrackCurrent(8527)
 
 	--If raid size is 25man set bloodiedMaxCounter to 10
@@ -272,7 +272,7 @@ function core.SiegeOfOrgrimmar:ThokTheBloodthirsty()
 	--Step 3: Once snail released you can kill boss
 end
 
-function core.SiegeOfOrgrimmar:SiegecrafterBlackfuse()
+function core._1136:SiegecrafterBlackfuse()
 	--Deactivated Missile Turret
 	if core.type == "UNIT_DIED" and core.destID == "71606" and deactivatedMissileTurret == false then
 		deactivatedMissileTurret = true
@@ -298,7 +298,7 @@ function core.SiegeOfOrgrimmar:SiegecrafterBlackfuse()
 	end
 end
 
-function core.SiegeOfOrgrimmar:Paragons()
+function core._1136:Paragons()
 	--Alert the user when they assume the power of one of the parargons
 	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 141857 then
 		core:sendMessage(core.destName .. " has gained powers from Rik'kal the Dissector")		
@@ -321,7 +321,7 @@ function core.SiegeOfOrgrimmar:Paragons()
 	end
 end
 
-function core.SiegeOfOrgrimmar:GarroshHellscream()
+function core._1136:GarroshHellscream()
 	if core.achievementsCompleted[1] == false then
 		if (core.type == "SWING_DAMAGE" or core.type == "SWING_MISSED") and core.sourceID == "71979" then
 			if warbringersIds[core.spawn_uid] == nil then
@@ -385,7 +385,7 @@ function core.SiegeOfOrgrimmar:GarroshHellscream()
 	end
 end
 
-function core.SiegeOfOrgrimmar:TrackAdditional()
+function core._1136:TrackAdditional()
 	------------------------------------------------------
 	---- Rescue Raiders
 	------------------------------------------------------
@@ -453,22 +453,22 @@ function core.SiegeOfOrgrimmar:TrackAdditional()
 	end
 end
 
-function core.SiegeOfOrgrimmar:InstanceCleanup()
-    core.SiegeOfOrgrimmar.Events:UnregisterEvent("UNIT_AURA")
-    core.SiegeOfOrgrimmar.Events:UnregisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
+function core._1136:InstanceCleanup()
+    core._1136.Events:UnregisterEvent("UNIT_AURA")
+    core._1136.Events:UnregisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 end
 
-function core.SiegeOfOrgrimmar:InitialSetup()
-    core.SiegeOfOrgrimmar.Events:RegisterEvent("UNIT_AURA")
-    core.SiegeOfOrgrimmar.Events:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
+function core._1136:InitialSetup()
+    core._1136.Events:RegisterEvent("UNIT_AURA")
+    core._1136.Events:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 end
 
-core.SiegeOfOrgrimmar.Events:SetScript("OnEvent", function(self, event, ...)
+core._1136.Events:SetScript("OnEvent", function(self, event, ...)
     return self[event] and self[event](self, event, ...)
 end)
 
-function core.SiegeOfOrgrimmar.Events:CHAT_MSG_RAID_BOSS_EMOTE(self, message, sender, ...)
-	if core.Instances.MistsOfPandaria.Raids.SiegeOfOrgrimmar.boss1.enabled == true then
+function core._1136.Events:CHAT_MSG_RAID_BOSS_EMOTE(self, message, sender, ...)
+	if core.Instances.MistsOfPandaria.Raids._1136.boss1.enabled == true then
 		if core.achievementsCompleted[1] == false then
 			if string.match(message, "Reforms") then
 				core:sendMessage("Do not kill tears till IAT announces confirmation. Killing the tears too quickly will not count towards the achievement")
@@ -482,7 +482,7 @@ function core.SiegeOfOrgrimmar.Events:CHAT_MSG_RAID_BOSS_EMOTE(self, message, se
 	end
 end
 
-function core.SiegeOfOrgrimmar.Events:UNIT_AURA(self, unitID, ...)
+function core._1136.Events:UNIT_AURA(self, unitID, ...)
 	if UnitAura("Player", "Resistance Totem") and prisonersRescued == false then
 		prisonersRescued = true
 		unitsSaved = unitsSaved + 1
@@ -496,7 +496,7 @@ function core.SiegeOfOrgrimmar.Events:UNIT_AURA(self, unitID, ...)
 	end
 end
 
-function core.SiegeOfOrgrimmar:ClearVariables()
+function core._1136:ClearVariables()
 	------------------------------------------------------
 	---- Immerseus
 	------------------------------------------------------

@@ -6,14 +6,14 @@ local _, core = ...
 ------------------------------------------------------
 ---- Vortex Pinnacle Bosses
 ------------------------------------------------------
-core.TheVortexPinnacle = {}
+core._657 = {}
 
 ------------------------------------------------------
 ---- Asaad
 ------------------------------------------------------
 local playersHit = {}
 
-function core.TheVortexPinnacle:Asaad()
+function core._657:Asaad()
     if core.type == "SPELL_AURA_APPLIED" and core.spellId == 87618 then
         --If someone gets hit by the ability, check if they need the achievement or not
         
@@ -29,7 +29,7 @@ function core.TheVortexPinnacle:Asaad()
     end
 end
 
-function core.TheVortexPinnacle:ClearVariables()
+function core._657:ClearVariables()
     ------------------------------------------------------
     ---- Asaad
     ------------------------------------------------------

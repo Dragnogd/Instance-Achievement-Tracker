@@ -6,14 +6,14 @@ local _, core = ...
 ------------------------------------------------------
 ---- Hour of Twilight Bosses
 ------------------------------------------------------
-core.HourOfTwilight = {}
+core._940 = {}
 
 ------------------------------------------------------
 ---- Archbishop Benedictus
 ------------------------------------------------------
 local twilightSparksCounter = 0
 
-function core.HourOfTwilight:ArchbishopBenedictus()
+function core._940:ArchbishopBenedictus()
     if (core.type == "SPELL_DAMAGE" or core.type == "RANGE_DAMAGE" or core.type == "SPELL_PERIODIC_DAMAGE") and core.destID == "55466" and core.overkill > 0 then
         twilightSparksCounter = twilightSparksCounter + 1
     elseif core.type == "SWING_DAMAGE" and core.destID == "55466" and core.swingOverkill > 0 then
@@ -25,7 +25,7 @@ function core.HourOfTwilight:ArchbishopBenedictus()
     end
 end
 
-function core.HourOfTwilight:ClearVariables()
+function core._940:ClearVariables()
     ------------------------------------------------------
     ---- Archbishop Benedictus
     ------------------------------------------------------

@@ -6,7 +6,7 @@ local _, core = ...
 ------------------------------------------------------
 ---- The Oculus Bosses
 ------------------------------------------------------
-core.TheOculus = {}
+core._578 = {}
 
 ------------------------------------------------------
 ---- Make it Count
@@ -14,7 +14,7 @@ core.TheOculus = {}
 local timer
 local timerStarted = false
 
-function core.TheOculus:TrackAdditional()
+function core._578:TrackAdditional()
     if core.Instances[core.expansion][core.instanceType][core.instance]["boss2"].enabled == true then
         if core.type == "UNIT_DIED" and core.destID == "27654" then
             core:sendMessage(core:getAchievement() .. " 20 Minutes to kill Ley-Guardian Eregos")
@@ -34,5 +34,5 @@ function core.TheOculus:TrackAdditional()
     end
 end
 
-function core.TheOculus:ClearVariables()
+function core._578:ClearVariables()
 end

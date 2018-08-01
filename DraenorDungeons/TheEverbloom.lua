@@ -6,7 +6,7 @@ local _, core = ...
 ------------------------------------------------------
 ---- The Everbloom Bosses
 ------------------------------------------------------
-core.TheEverbloom = {}
+core._1279 = {}
 --local events = CreateFrame("Frame")
 
 -- ------------------------------------------------------
@@ -15,13 +15,13 @@ core.TheEverbloom = {}
 -- local enableNameplates = false
 -- local npcUID = {}
 
-function core.TheEverbloom:Witherbark()
+function core._1279:Witherbark()
     if core.type == "SPELL_ENERGIZE" and core.spellId == 164438 then
         core:getAchievementFailed()
     end
 end
 
--- function core.TheEverbloom:Yalnu()
+-- function core._1279:Yalnu()
 --     --print(GetCVar("nameplateShowFriends"))
 --     if GetCVar("nameplateShowFriends") == "0" and enableNameplates == false then
 --         print("Enabling Friendly Nameplates")
@@ -46,7 +46,7 @@ end
 --     end
 -- end
 
-function core.TheEverbloom:ClearVariables()
+function core._1279:ClearVariables()
     -- ------------------------------------------------------
     -- ---- Yalnu
     -- ------------------------------------------------------

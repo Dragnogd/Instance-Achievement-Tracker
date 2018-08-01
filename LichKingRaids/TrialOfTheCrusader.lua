@@ -6,7 +6,7 @@ local _, core = ...
 ------------------------------------------------------
 ---- Trial of the Crusader Bosses
 ------------------------------------------------------
-core.TrialOfTheCrusader = {}
+core._649 = {}
 
 ------------------------------------------------------
 ---- The Northrend Beasts
@@ -35,7 +35,7 @@ local timer
 local swarmScarabCounterReached = false
 local swarmScarabKilled = 0
 
-function core.TrialOfTheCrusader:UpperBackPain()
+function core._649:UpperBackPain()
     core:getAchievementToTrack()
 
     if core.difficultyID == 3 then
@@ -55,7 +55,7 @@ function core.TrialOfTheCrusader:UpperBackPain()
     end
 end
 
-function core.TrialOfTheCrusader:NotOneButTwoJormungars()
+function core._649:NotOneButTwoJormungars()
     --Defeat Acidmaw and Dreadscale within 10 seconds of one another
     core:getAchievementToTrack(2)
 
@@ -88,7 +88,7 @@ function core.TrialOfTheCrusader:NotOneButTwoJormungars()
     end
 end
 
-function core.TrialOfTheCrusader:ThreeSixtyPainSpike()
+function core._649:ThreeSixtyPainSpike()
     --Mistress of pain summoned
     if core.type == "SPELL_SUMMON" and core.destID == "34826" then
         mistressOfPainCounter = mistressOfPainCounter + 1
@@ -112,7 +112,7 @@ function core.TrialOfTheCrusader:ThreeSixtyPainSpike()
     end
 end
 
-function core.TrialOfTheCrusader:FactionChampions()
+function core._649:FactionChampions()
     if core.inCombat == true then
         core:getAchievementToTrack()
     end
@@ -128,7 +128,7 @@ function core.TrialOfTheCrusader:FactionChampions()
     end
 end
 
-function core.TrialOfTheCrusader:TwinValkyr()
+function core._649:TwinValkyr()
     if timerStarted == false then
         timerStarted = true
         timer = C_Timer.NewTimer(180, function() 
@@ -137,7 +137,7 @@ function core.TrialOfTheCrusader:TwinValkyr()
     end    
 end
 
-function core.TrialOfTheCrusader:Anubarak()
+function core._649:Anubarak()
     core:trackMob("34605", "Swarm Scarab", 25, " 25 Swarm Scarabs Spawned. Kill them now", 5, nil, 1)
 
     if core.mobCounter >= 25 then
@@ -166,7 +166,7 @@ function core.TrialOfTheCrusader:Anubarak()
     end
 end
 
-function core.TrialOfTheCrusader:ClearVariables()
+function core._649:ClearVariables()
     ------------------------------------------------------
     ---- The Northrend Beasts
     ------------------------------------------------------

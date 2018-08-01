@@ -6,8 +6,8 @@ local _, core = ...
 ------------------------------------------------------
 ---- Throne of Thunder Bosses
 ------------------------------------------------------
-core.ThroneOfThunder = {}
-core.ThroneOfThunder.Events = CreateFrame("Frame")
+core._1098 = {}
+core._1098.Events = CreateFrame("Frame")
 
 ------------------------------------------------------
 ---- Durumu the Forgotten
@@ -50,13 +50,13 @@ local frozenSolidFailed = false
 ------------------------------------------------------
 local lulinKilled = false
 
-function core.ThroneOfThunder:Horridon()
+function core._1098:Horridon()
 	if core.type == "UNIT_DIED" and core.destID == "69221" then
 		core:getAchievementFailed()
 	end
 end
 
-function core.ThroneOfThunder:Tortos()
+function core._1098:Tortos()
 	--Kick Shell Started so start 5 second timer to capture all hits
 	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 134031 and core.achievementsCompleted[1] == false then
 		if timerStarted == false then
@@ -80,7 +80,7 @@ function core.ThroneOfThunder:Tortos()
 	end
 end
 
-function core.ThroneOfThunder:Megaera()
+function core._1098:Megaera()
 	if core.type == "UNIT_DIED" and core.destID == "70235" then
 		frozenHeadKilled = true
 	elseif core.type == "UNIT_DIED" and core.destID == "70212" then
@@ -100,7 +100,7 @@ function core.ThroneOfThunder:Megaera()
 	end
 end
 
-function core.ThroneOfThunder:JiKun()
+function core._1098:JiKun()
 	if initalCounterDisplayed == false then
 		initalCounterDisplayed = true
 		C_Timer.After(10, function()
@@ -131,7 +131,7 @@ function core.ThroneOfThunder:JiKun()
 	end)
 end
 
-function core.ThroneOfThunder:DurumuTheForgotten()
+function core._1098:DurumuTheForgotten()
 	if core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_REMOVED" then
 		if core.destName == "Orange Fog Beast" and OrangeFogBeast ~= true then
 			FogBeastCounter = FogBeastCounter - 1
@@ -153,13 +153,13 @@ function core.ThroneOfThunder:DurumuTheForgotten()
 	end
 end
 
-function core.ThroneOfThunder:Primordius()
+function core._1098:Primordius()
 	if (core.type == "SPELL_DAMAGE" or core.type == "SPELL_ABSORBED" or core.type == "SPELL_MISSED" or core.type == "SPELL_AURA_APPLIED") and (core.spellId == 140508 or core.spellId == 136185 or core.spellId == 136187 or core.spellId == 136183 or core.spellId == 136181) then
 		core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")")
 	end
 end
 
-function core.ThroneOfThunder:IronQon()
+function core._1098:IronQon()
 	--Burning Cinders
 	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 137668 and burningCindersFailed == false then
 		core:sendMessage("'Burning Cinders' part of "  .. GetAchievementLink(core.achievementIDs[1]) .. " FAILED! by (" .. core.destName .. ")")
@@ -191,13 +191,13 @@ function core.ThroneOfThunder:IronQon()
 	end
 end
 
-function core.ThroneOfThunder:TwinConsorts()
+function core._1098:TwinConsorts()
 	if core.type == "UNIT_DIED" and core.destID == "68905" then
 		lulinKilled = true
 	end
 end
 
-function core.ThroneOfThunder:ClearVariables()
+function core._1098:ClearVariables()
 	------------------------------------------------------
 	---- Tortos
 	------------------------------------------------------
@@ -240,22 +240,22 @@ function core.ThroneOfThunder:ClearVariables()
 	lulinKilled = false
 end
 
-function core.ThroneOfThunder:InstanceCleanup()
-    core.ThroneOfThunder.Events:UnregisterEvent("UNIT_HEALTH")
-    core.ThroneOfThunder.Events:UnregisterEvent("UNIT_POWER_UPDATE")
+function core._1098:InstanceCleanup()
+    core._1098.Events:UnregisterEvent("UNIT_HEALTH")
+    core._1098.Events:UnregisterEvent("UNIT_POWER_UPDATE")
 end
 
-function core.ThroneOfThunder:InitialSetup()
-	core.ThroneOfThunder.Events:RegisterEvent("UNIT_HEALTH")
-	core.ThroneOfThunder.Events:RegisterEvent("UNIT_POWER_UPDATE")
+function core._1098:InitialSetup()
+	core._1098.Events:RegisterEvent("UNIT_HEALTH")
+	core._1098.Events:RegisterEvent("UNIT_POWER_UPDATE")
 end
 
-core.ThroneOfThunder.Events:SetScript("OnEvent", function(self, event, ...)
+core._1098.Events:SetScript("OnEvent", function(self, event, ...)
     return self[event] and self[event](self, event, ...)
 end)
 
-function core.ThroneOfThunder.Events:UNIT_HEALTH(self, UnitID)
-	if core.Instances.MistsOfPandaria.Raids.ThroneOfThunder.boss11.enabled == true then
+function core._1098.Events:UNIT_HEALTH(self, UnitID)
+	if core.Instances.MistsOfPandaria.Raids._1098.boss11.enabled == true then
 		if UnitName(UnitID) == "Suen" then
 			if core:getHealthPercent(UnitID) < 30 then		
 				if lulinKilled == false then
@@ -266,8 +266,8 @@ function core.ThroneOfThunder.Events:UNIT_HEALTH(self, UnitID)
 	end
 end
 
-function core.ThroneOfThunder.Events:UNIT_POWER_UPDATE(self, UnitID, powerType)
-	if core.Instances.MistsOfPandaria.Raids.ThroneOfThunder.boss12.enabled == true then
+function core._1098.Events:UNIT_POWER_UPDATE(self, UnitID, powerType)
+	if core.Instances.MistsOfPandaria.Raids._1098.boss12.enabled == true then
 		if UnitIsPlayer(UnitID) == false then
 			if UnitPower(UnitID, ALTERNATE_POWER_INDEX) == 3 then
 				core:getAchievementSuccessWithCustomMessage(UnitName(UnitID) .. " Disabled First part of","will be completed once boss is killed")

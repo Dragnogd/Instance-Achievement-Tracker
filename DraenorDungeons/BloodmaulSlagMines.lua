@@ -6,9 +6,9 @@ local _, core = ...
 ------------------------------------------------------
 ---- Bloodmaul Slag Mines Bosses
 ------------------------------------------------------
-core.BloodmaulSlagMines = {}
+core._1175 = {}
 
-function core.BloodmaulSlagMines:Magmolatus()
+function core._1175:Magmolatus()
     if core.type == "UNIT_DIED" and core.destID == "74571" then
         core:getAchievementFailedWithMessageAfter("(Reason: Calamity has died)")
     elseif core.type == "UNIT_DIED" and core.destID == "74570" then
@@ -16,11 +16,11 @@ function core.BloodmaulSlagMines:Magmolatus()
     end
 end
 
-function core.BloodmaulSlagMines:Gugrokk()
+function core._1175:Gugrokk()
     if core.type == "UNIT_DIED" and core.destID == "74927" then
         core:getAchievementFailed()
     end
 end
 
-function core.BloodmaulSlagMines:ClearVariables()
+function core._1175:ClearVariables()
 end

@@ -6,20 +6,20 @@ local _, core = ...
 ------------------------------------------------------
 ---- Darkheart Thicket Bosses
 ------------------------------------------------------
-core.DarkheartThicket = {}
+core._1466 = {}
 
 ------------------------------------------------------
 ---- Shade of Xavius
 ------------------------------------------------------
 local shadeOfXaviusKilled = false
 
-function core.DarkheartThicket:Dresaron()
+function core._1466:Dresaron()
     if core.type == "UNIT_DIED" and core.destID == "111008" then
         core:getAchievementSuccess()
     end
 end
 
-function core.DarkheartThicket:ShadeOfXavius()
+function core._1466:ShadeOfXavius()
     --Check if boss has died
     if core.type == "UNIT_DIED" and core.destID == "99192" then
         shadeOfXaviusKilled = true
@@ -43,5 +43,5 @@ function core.DarkheartThicket:ShadeOfXavius()
 end
     
 
-function core.DarkheartThicket:ClearVariables()
+function core._1466:ClearVariables()
 end

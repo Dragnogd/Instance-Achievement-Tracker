@@ -6,7 +6,7 @@ local _, core = ...
 ------------------------------------------------------
 ---- Shado-Pan Monastery Bosses
 ------------------------------------------------------
-core.ShadoPanMonastery = {}
+core._959 = {}
 
 ------------------------------------------------------
 ---- Sha of Violence
@@ -20,7 +20,7 @@ local volatileEnergyCounter = 0
 ------------------------------------------------------
 local hazeOfHateCounter = 0
 
-function core.ShadoPanMonastery:ShaOfViolence()
+function core._959:ShaOfViolence()
     if core.type == "UNIT_DIED" and core.destID == "56765" then
         destroyingShaCounter = destroyingShaCounter + 1
         --print("Destroying Sha: " .. destroyingShaCounter)
@@ -37,7 +37,7 @@ function core.ShadoPanMonastery:ShaOfViolence()
     end
 end
 
-function core.ShadoPanMonastery:TaranZhu()
+function core._959:TaranZhu()
     if core.type == "SPELL_AURA_APPLIED" and core.spellId == 107087 then
         hazeOfHateCounter = hazeOfHateCounter + 1
         core:sendMessage(core.destName .. " is at maximum hatred (" .. hazeOfHateCounter .. "/" .. core.groupSize .. ")")
@@ -52,7 +52,7 @@ function core.ShadoPanMonastery:TaranZhu()
     end
 end
 
-function core.ShadoPanMonastery:ClearVariables()
+function core._959:ClearVariables()
     ------------------------------------------------------
     ---- Sha of Violence
     ------------------------------------------------------

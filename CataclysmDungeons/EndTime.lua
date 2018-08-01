@@ -6,14 +6,14 @@ local _, core = ...
 ------------------------------------------------------
 ---- End Time Bosses
 ------------------------------------------------------
-core.EndTime = {}
+core._938 = {}
 
 ------------------------------------------------------
 ---- Echo of Sylvanas
 ------------------------------------------------------
 local risenGhoulCounter = 0
 
-function core.EndTime:EchoOfSylvanas()
+function core._938:EchoOfSylvanas()
     if core.type == "SPELL_AURA_APPLIED" and core.spellId == 100686 then
         risenGhoulCounter = 0
     end
@@ -27,7 +27,7 @@ function core.EndTime:EchoOfSylvanas()
     end
 end
 
-function core.EndTime:EchoOfTyrande()
+function core._938:EchoOfTyrande()
 	-- if core.groupSize > 1 then
 	-- 	--We are in a group
 	-- 	local currentUnit
@@ -52,7 +52,7 @@ function core.EndTime:EchoOfTyrande()
 	-- end
 end
 
-function core.EndTime:ClearVariables()
+function core._938:ClearVariables()
     ------------------------------------------------------
     ---- Echo of Sylvanas
     ------------------------------------------------------

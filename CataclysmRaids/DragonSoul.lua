@@ -6,8 +6,8 @@ local _, core = ...
 ------------------------------------------------------
 ---- Dragon Soul Bosses
 ------------------------------------------------------
-core.DragonSoul = {}
-core.DragonSoul.Events = CreateFrame("Frame")
+core._967 = {}
+core._967.Events = CreateFrame("Frame")
 
 ------------------------------------------------------
 ---- Warlord Zon'ozz
@@ -46,7 +46,7 @@ local rolesPerformed = 0
 ------------------------------------------------------
 local platformAssualted = false
 
-function core.DragonSoul:WarlordZonozz()
+function core._967:WarlordZonozz()
 	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 106836 then
 		pingPongCounter = 1
 		core:sendMessage("Void of the Unmaking ("  .. pingPongCounter .. "/10)")
@@ -60,7 +60,7 @@ function core.DragonSoul:WarlordZonozz()
 	end
 end
 
-function core.DragonSoul:YorsahjTheUnsleeping()
+function core._967:YorsahjTheUnsleeping()
 	--Set variable to detect which colours have been found
 	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 104897 and core.destID == "55312" then
 		redFound = true
@@ -121,7 +121,7 @@ function core.DragonSoul:YorsahjTheUnsleeping()
 
 end
 
-function core.DragonSoul:Ultraxion()
+function core._967:Ultraxion()
 	if core.type == "SPELL_DAMAGE" and core.spellId == 103327 then
 		if core:has_value(hourOfTwilightPlayers, core.spawn_uid_dest) then
 			core:getAchievementFailedWithMessageAfter("by (" .. core.destName .. ")")
@@ -131,13 +131,13 @@ function core.DragonSoul:Ultraxion()
 	end
 end
 
-function core.DragonSoul:Skyfire()
+function core._967:Skyfire()
 	if core.type == "SPELL_DAMAGE" and core.spellId == 107501 and core.destID == "56598" then
 		core:getAchievementFailed()
 	end
 end
 
-function core.DragonSoul:SpineOfDeathwing()
+function core._967:SpineOfDeathwing()
 	f:SetScript("OnEvent", function(self, event, message, sender, language, channelString, target, flags, unknown, channelNumber, channelName, unknown, counter)
 		if rolesPerformed == 4 then
 			core:getAchievementSuccess()
@@ -145,7 +145,7 @@ function core.DragonSoul:SpineOfDeathwing()
 	end)
 end
 
-function core.DragonSoul:ClearVariables()
+function core._967:ClearVariables()
 	------------------------------------------------------
 	---- Warlord Zon'ozz
 	------------------------------------------------------
@@ -184,19 +184,19 @@ function core.DragonSoul:ClearVariables()
 	platformAssualted = false
 end
 
-function core.DragonSoul:InstanceCleanup()
-    core.DragonSoul.Events:UnregisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
+function core._967:InstanceCleanup()
+    core._967.Events:UnregisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 end
 
-function core.DragonSoul:InitialSetup()
-    core.DragonSoul.Events:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
+function core._967:InitialSetup()
+    core._967.Events:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 end
 
-core.DragonSoul.Events:SetScript("OnEvent", function(self, event, ...)
+core._967.Events:SetScript("OnEvent", function(self, event, ...)
     return self[event] and self[event](self, event, ...)
 end)
 
-function core.DragonSoul.Events:CHAT_MSG_RAID_BOSS_EMOTE(self, message, sender, language, channelString, target, flags, unknown, channelNumber, channelName, unknown, counter)
+function core._967.Events:CHAT_MSG_RAID_BOSS_EMOTE(self, message, sender, language, channelString, target, flags, unknown, channelNumber, channelName, unknown, counter)
     if core.Instances[core.expansion][core.instanceType][core.instance]["boss8"].enabled == true then
 		if platformAssualted == false then
 			if string.match(message, "Ysera") and platformAssualted == false then

@@ -6,7 +6,7 @@ local _, core = ...
 ------------------------------------------------------
 ---- Throne of the Tides Bosses
 ------------------------------------------------------
-core.ThroneOfTheTides = {}
+core._643 = {}
 
 ------------------------------------------------------
 ---- Ozumat
@@ -14,13 +14,13 @@ core.ThroneOfTheTides = {}
 local requirementsMetAnnounced = false
 local unyieldingBehemothAlive = false
 
-function core.ThroneOfTheTides:LadyNazjar()
+function core._643:LadyNazjar()
     if core.type == "SPELL_DAMAGE" and core.spellId == 94046 and core.overkill > 0 then
         core:getAchievementSuccess()
     end
 end
 
-function core.ThroneOfTheTides:Ozumat()
+function core._643:Ozumat()
     if core.type == "SPELL_AURA_APPLIED" and core.spellId == 76133 and unyieldingBehemothAlive == true and requirementsMetAnnounced == false then
         core:sendMessage(GetAchievementLink(core.achievementIDs[1]) .. " requirements have been met. Kill the Unyielding Behemoth now")
         requirementsMetAnnounced = true
@@ -45,7 +45,7 @@ function core.ThroneOfTheTides:Ozumat()
     
 end
 
-function core.ThroneOfTheTides:ClearVariables()
+function core._643:ClearVariables()
     ------------------------------------------------------
     ---- Ozumat
     ------------------------------------------------------

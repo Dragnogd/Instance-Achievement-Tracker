@@ -6,20 +6,20 @@ local _, core = ...
 ------------------------------------------------------
 ---- The Arcway Bosses
 ------------------------------------------------------
-core.TheArcway = {}
+core._1516 = {}
 
 ------------------------------------------------------
 ---- Advisor Vandros
 ------------------------------------------------------
 local advisorVandrosKilled = false
 
-function core.TheArcway:Ivanyr()
+function core._1516:Ivanyr()
     if core.type == "SPELL_DAMAGE" and core.spellId == 220581 then
         core:getAchievementFailedPersonal()
     end
 end
 
-function core.TheArcway:AdvisorVandros()
+function core._1516:AdvisorVandros()
     --Check if boss is dead
     if core.type == "UNIT_DIED" and core.destID == "98208" then
         advisorVandrosKilled = true
@@ -31,5 +31,5 @@ function core.TheArcway:AdvisorVandros()
     end
 end
 
-function core.TheArcway:ClearVariables()
+function core._1516:ClearVariables()
 end

@@ -6,7 +6,7 @@ local _, core = ...
 ------------------------------------------------------
 ---- The Forge of Souls Bosses
 ------------------------------------------------------
-core.TheForgeOfSouls = {}
+core._632 = {}
 
 ------------------------------------------------------
 ---- Bronjahm
@@ -14,7 +14,7 @@ core.TheForgeOfSouls = {}
 local corruptedSoulFragments = 0
 
 
-function core.TheForgeOfSouls:Bronjahm()
+function core._632:Bronjahm()
     if core.type == "SPELL_SUMMON" and core.destID == "36535" then
         corruptedSoulFragments = corruptedSoulFragments + 1
         core:sendMessage(core:getAchievement() .. " Corrupted Soul Fragments Alive (" .. corruptedSoulFragments .. "/4)")
@@ -45,13 +45,13 @@ function core.TheForgeOfSouls:Bronjahm()
     end
 end
 
-function core.TheForgeOfSouls:DevourerOfSouls()
+function core._632:DevourerOfSouls()
     if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 68982 then
         core:getAchievementFailed()
     end
 end
 
-function core.TheForgeOfSouls:ClearVariables()
+function core._632:ClearVariables()
     ------------------------------------------------------
     ---- Bronjahm
     ------------------------------------------------------

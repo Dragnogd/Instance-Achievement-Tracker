@@ -6,15 +6,15 @@ local _, core = ...
 ------------------------------------------------------
 ---- Well of Eternity Bosses
 ------------------------------------------------------
-core.WellOfEternity = {}
+core._939 = {}
 
-function core.WellOfEternity:Perotharn()
+function core._939:Perotharn()
     if core.type == "UNIT_DIED" and core.destID == "55868" then
         core:getAchievementFailed()
     end
 end
 
-function core.WellOfEternity:Mannoroth()
+function core._939:Mannoroth()
     if core.type == "UNIT_DIED" and core.destID == "55419" and core.destFlags == 0x10a48 then
         core:getAchievementFailed()
     end
@@ -24,5 +24,5 @@ function core.WellOfEternity:Mannoroth()
     end
 end
 
-function core.WellOfEternity:ClearVariables()
+function core._939:ClearVariables()
 end

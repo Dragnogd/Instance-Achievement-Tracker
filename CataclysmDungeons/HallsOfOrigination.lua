@@ -6,8 +6,8 @@ local _, core = ...
 ------------------------------------------------------
 ---- Halls of Origination Bosses
 ------------------------------------------------------
-core.HallsOfOrigination = {}
-core.HallsOfOrigination.Events = CreateFrame("Frame")
+core._644 = {}
+core._644.Events = CreateFrame("Frame")
 
 ------------------------------------------------------
 ---- Temple Guardian Anhuur
@@ -27,7 +27,7 @@ local playersVehicle = {}
 ------------------------------------------------------
 local blessingOfTheSunCounter = 0
 
-function core.HallsOfOrigination:TempleGuardianAnhuur()
+function core._644:TempleGuardianAnhuur()
     if core.type == "SPELL_AURA_APPLIED" and core.spellId == 75322 and reverberatingHymnTimerStarted == false then
         reverberatingHymnTimerStarted = true
         C_Timer.After(15, function()
@@ -45,7 +45,7 @@ function core.HallsOfOrigination:TempleGuardianAnhuur()
     end
 end
 
-function core.HallsOfOrigination:Rajh()
+function core._644:Rajh()
     if core.type == "SPELL_PERIODIC_ENERGIZE" and core.spellId == 76355 then
         blessingOfTheSunCounter = blessingOfTheSunCounter + 1
 
@@ -55,7 +55,7 @@ function core.HallsOfOrigination:Rajh()
     end
 end
 
-function core.HallsOfOrigination:EarthragerPtah()
+function core._644:EarthragerPtah()
     -- if core.type == "SPELL_DAMAGE" and (core.spellId == 75339 or core.spellId == 75548) then
     --     lastPlayerHit = core.destName
     --     print(core.destName)
@@ -65,7 +65,7 @@ function core.HallsOfOrigination:EarthragerPtah()
     --     if playersHit[lastPlayerHit] == nil then
     --         --Players has not been hit already
     --         --Check if the player actually needs the achievement
-    --         if core:has_value(core.Instances.Catacalysm.Dungeons.HallsOfOrigination.boss2.players, lastPlayerHit) then
+    --         if core:has_value(core.Instances.Catacalysm.Dungeons._644.boss2.players, lastPlayerHit) then
     --             --Player needs achievement but has failed it
     --             core:sendMessage(lastPlayerHit .. " has failed " .. GetAchievementLink(core.currentAchievementID) .. " (Personal Achievement)")
     --         end
@@ -76,7 +76,7 @@ function core.HallsOfOrigination:EarthragerPtah()
 
 end
 
-function core.HallsOfOrigination:ClearVariables()
+function core._644:ClearVariables()
     ------------------------------------------------------
     ---- Temple Guardian Anhuur
     ------------------------------------------------------
@@ -89,21 +89,21 @@ function core.HallsOfOrigination:ClearVariables()
     playersHit = {}
 end
 
-function core.HallsOfOrigination:InstanceCleanup()
-    core.HallsOfOrigination.Events:UnregisterEvent("UNIT_ENTERING_VEHICLE")
-    core.HallsOfOrigination.Events:UnregisterEvent("UNIT_EXITING_VEHICLE")
+function core._644:InstanceCleanup()
+    core._644.Events:UnregisterEvent("UNIT_ENTERING_VEHICLE")
+    core._644.Events:UnregisterEvent("UNIT_EXITING_VEHICLE")
 end
 
-core.HallsOfOrigination.Events:SetScript("OnEvent", function(self, event, ...)
+core._644.Events:SetScript("OnEvent", function(self, event, ...)
     return self[event] and self[event](self, event, ...)
 end)
 
-function core.HallsOfOrigination:InitialSetup()
-    core.HallsOfOrigination.Events:RegisterEvent("UNIT_ENTERING_VEHICLE")
-    core.HallsOfOrigination.Events:RegisterEvent("UNIT_EXITING_VEHICLE")
+function core._644:InitialSetup()
+    core._644.Events:RegisterEvent("UNIT_ENTERING_VEHICLE")
+    core._644.Events:RegisterEvent("UNIT_EXITING_VEHICLE")
 end
 
-function core.HallsOfOrigination.Events:UNIT_ENTERING_VEHICLE(self, unitID, arg2, arg3, arg4, arg5, arg6, vehicleGUID, arg8, ...)
+function core._644.Events:UNIT_ENTERING_VEHICLE(self, unitID, arg2, arg3, arg4, arg5, arg6, vehicleGUID, arg8, ...)
     if core.Instances[core.expansion][core.instanceType][core.instance]["boss2"].enabled == true then
         local unitType, _, _, _, _, sourceID, spawn_uid = strsplit("-", vehicleGUID)
         if sourceID == "39443" then
@@ -113,7 +113,7 @@ function core.HallsOfOrigination.Events:UNIT_ENTERING_VEHICLE(self, unitID, arg2
     end
 end
 
-function core.HallsOfOrigination.Events:UNIT_EXITING_VEHICLE(self, unitID, ...)
+function core._644.Events:UNIT_EXITING_VEHICLE(self, unitID, ...)
     if core.Instances[core.expansion][core.instanceType][core.instance]["boss2"].enabled == true then
         local name = UnitName(unitID)
         if playersVehicle[name] ~= nil then

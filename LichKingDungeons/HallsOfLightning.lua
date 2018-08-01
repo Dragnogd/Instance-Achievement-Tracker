@@ -6,7 +6,7 @@ local _, core = ...
 ------------------------------------------------------
 ---- Halls of Lightning Bosses
 ------------------------------------------------------
-core.HallsOfLightning = {}
+core._602 = {}
 
 ------------------------------------------------------
 ---- Volkhan
@@ -19,13 +19,13 @@ local brittleGolemsShattered = 0
 local timer
 local timerStarted = false
 
-function core.HallsOfLightning:GeneralBjarngrim()
+function core._602:GeneralBjarngrim()
     if core.type == "SPELL_AURA_REFRESH" and core.spellId == 52097 then
         core:getAchievementSuccess()
     end
 end
 
-function core.HallsOfLightning:Volkhan()
+function core._602:Volkhan()
     if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 59527 then
         brittleGolemsShattered = brittleGolemsShattered + 1
     end
@@ -35,7 +35,7 @@ function core.HallsOfLightning:Volkhan()
     end
 end
 
-function core.HallsOfLightning:Loken()
+function core._602:Loken()
     if timerStarted == false then
         timerStarted = true
         timer = C_Timer.NewTimer(121, function() 
@@ -44,7 +44,7 @@ function core.HallsOfLightning:Loken()
     end
 end
 
-function core.HallsOfLightning:ClearVariables()
+function core._602:ClearVariables()
     ------------------------------------------------------
     ---- Volkhan
     ------------------------------------------------------

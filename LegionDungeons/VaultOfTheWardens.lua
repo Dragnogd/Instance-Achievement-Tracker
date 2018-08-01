@@ -6,7 +6,7 @@ local _, core = ...
 ------------------------------------------------------
 ---- Vault of the Wardens Bosses
 ------------------------------------------------------
-core.VaultOfTheWardens = {}
+core._1493 = {}
 
 ------------------------------------------------------
 ---- Ash'Golm
@@ -14,7 +14,7 @@ core.VaultOfTheWardens = {}
 local playersFiredUp = 0
 local ashGolmKilled = false
 
-function core.VaultOfTheWardens:AshGolm()
+function core._1493:AshGolm()
     if core.type == "UNIT_DIED" and core.destID == "95886" then
         ashGolmKilled = true
     end
@@ -43,15 +43,15 @@ function core.VaultOfTheWardens:AshGolm()
     end
 end
 
-function core.VaultOfTheWardens:Cordana()
+function core._1493:Cordana()
     if core.type == "SPELL_DAMAGE" and core.spellId == 197506 then
         core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")")
     end
 end
 
-function core.VaultOfTheWardens:ClearVariables()
+function core._1493:ClearVariables()
 end
 
-function core.VaultOfTheWardens:InstanceCleanup()
+function core._1493:InstanceCleanup()
     ashGolmKilled = false
 end

@@ -6,9 +6,9 @@ local _, core = ...
 local events = CreateFrame("Frame")
 
 ------------------------------------------------------
----- The Deadmines Bosses
+---- The _36 Bosses
 ------------------------------------------------------
-core.Deadmines = {}
+core._36 = {}
 
 ------------------------------------------------------
 ---- Glubtok
@@ -36,13 +36,13 @@ local coalesceCounter = 0
 local timerStarted = false
 local achievementFailed = false
 
-function core.Deadmines:Glubtok()
+function core._36:Glubtok()
     if core.type == "SPELL_DAMAGE" and core.spellId == 91397 then
         core:getAchievementFailedPersonal()
     end
 end
 
-function core.Deadmines:HelixGearbreaker()
+function core._36:HelixGearbreaker()
     if core.type == "UNIT_DIED" and core.destID == "51462" and mineRatsCounter < 20 then
         mineRatsCounter = mineRatsCounter + 1
         core:sendMessageDelay(GetAchievementLink(core.achievementIDs[1]) .. " Mine Rats Counter: " .. mineRatsCounter .. "/20",mineRatsCounter,5)
@@ -53,7 +53,7 @@ function core.Deadmines:HelixGearbreaker()
     end
 end
 
-function core.Deadmines:FoeReaper5000()
+function core._36:FoeReaper5000()
     if achievementAnnounced == false then
         core:sendMessage("Tracking: "  .. GetAchievementLink(core.achievementIDs[i]))
         achievementAnnounced = true
@@ -66,7 +66,7 @@ function core.Deadmines:FoeReaper5000()
     -- end
 end
 
-function core.Deadmines:AdmiralRipsnarl()
+function core._36:AdmiralRipsnarl()
     if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 92042 and coalesceCounter < 3 then
         coalesceCounter = coalesceCounter + 1
         core:sendMessage(GetAchievementLink(core.achievementIDs[1]) .. " Coalesce Counter: (" .. coalesceCounter .. "/3)")
@@ -77,20 +77,20 @@ function core.Deadmines:AdmiralRipsnarl()
     end
 end
 
-function core.Deadmines:CaptainCookie()
+function core._36:CaptainCookie()
     if core.type == "SPELL_AURA_APPLIED_DOSE" and core.spellId == 89732 then
         core:getAchievementFailedPersonal()
     end
 end
 
-function core.Deadmines:VanessaVanCleef()
+function core._36:VanessaVanCleef()
     timerStarted = false
     if (core.destID == "49541" or core.sourceID == "49541") and achievementFailed == false then
         core:getAchievementSuccess()
     end
 end
 
-function core.Deadmines:ClearVariables()
+function core._36:ClearVariables()
     ------------------------------------------------------
     ---- Glubtok
     ------------------------------------------------------
@@ -107,11 +107,11 @@ function core.Deadmines:ClearVariables()
     coalesceCounter = 0
 end
 
-function core.Deadmines:InstanceCleanup()
-    core.Deadmines.Events:UnregisterEvent("CHAT_MSG_SYSTEM")
+function core._36:InstanceCleanup()
+    core._36.Events:UnregisterEvent("CHAT_MSG_SYSTEM")
 end
 
-function core.Deadmines:InitialSetup()
+function core._36:InitialSetup()
     events:RegisterEvent("CHAT_MSG_SYSTEM")
 end
 

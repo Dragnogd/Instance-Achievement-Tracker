@@ -6,7 +6,7 @@ local _, core = ...
 ------------------------------------------------------
 ---- Iron Docks Bosses
 ------------------------------------------------------
-core.IronDocks = {}
+core._1195 = {}
 
 ------------------------------------------------------
 ---- Fleshrender Nok'gar
@@ -17,7 +17,7 @@ local ChampionDrunaFound = false
 local fleshrenderKilled = false
 
 
-function core.IronDocks:FleshrenderNokgar()
+function core._1195:FleshrenderNokgar()
     --If Fleshrender Nok'gar has died then stop tracking
     if core.type == "UNIT_DIED" and core.destID == "81305" then
         fleshrenderKilled = true
@@ -57,7 +57,7 @@ function core.IronDocks:FleshrenderNokgar()
     end
 end
 
-function core.IronDocks:Skulloc()
+function core._1195:Skulloc()
     if core.type == "SPELL_DAMAGE" and core.spellId == 168390 then
         core:getAchievementFailedWithMessageAfter("(" .. core.destName .. " got hit by Cannon Barrage)")
     elseif core.type == "SPELL_DAMAGE" and core.spellId == 169129 then
@@ -65,7 +65,7 @@ function core.IronDocks:Skulloc()
     end
 end
 
-function core.IronDocks:ClearVariables()
+function core._1195:ClearVariables()
     ------------------------------------------------------
     ---- Fleshrender Nok'gar
     ------------------------------------------------------

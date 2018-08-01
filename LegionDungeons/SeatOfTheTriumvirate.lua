@@ -6,7 +6,7 @@ local _, core = ...
 ------------------------------------------------------
 ---- Seat of the Triumvirate Bosses
 ------------------------------------------------------
-core.SeatOfTheTriumvirate = {}
+core._1753 = {}
 
 ------------------------------------------------------
 ---- L'ura
@@ -14,13 +14,13 @@ core.SeatOfTheTriumvirate = {}
 local crushingDarknessCounter = 0
 local luraKilled = false
 
-function core.SeatOfTheTriumvirate:ZuraalTheAscended()
+function core._1753:ZuraalTheAscended()
     if core.type == "UNIT_DIED" and core.destID == "126283" then
         core:getAchievementSuccess()
     end
 end
 
-function core.SeatOfTheTriumvirate:Lura()
+function core._1753:Lura()
     if core.type == "UNIT_DIED" and core.destID == "124729" then
         luraKilled = true
     end
@@ -30,7 +30,7 @@ function core.SeatOfTheTriumvirate:Lura()
     end
 end
 
-function core.SeatOfTheTriumvirate:TrackAdditional()
+function core._1753:TrackAdditional()
     --Gained Crushing Darkness
     if core.type == "SPELL_AURA_APPLIED" and core.spellId == 250821 then
         crushingDarknessCounter = crushingDarknessCounter + 1
@@ -44,5 +44,5 @@ function core.SeatOfTheTriumvirate:TrackAdditional()
     end
 end
 
-function core.SeatOfTheTriumvirate:ClearVariables()
+function core._1753:ClearVariables()
 end

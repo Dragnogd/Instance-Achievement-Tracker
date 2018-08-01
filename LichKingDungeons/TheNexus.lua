@@ -6,7 +6,7 @@ local _, core = ...
 ------------------------------------------------------
 ---- The Nexus Bosses
 ------------------------------------------------------
-core.TheNexus = {}
+core._576 = {}
 
 ------------------------------------------------------
 ---- Grand Magus Telestra
@@ -17,7 +17,7 @@ local mob3Killed = false
 local imageCounter = 0
 local timerStarted = false
 
-function core.TheNexus:GrandMagusTelestra()
+function core._576:GrandMagusTelestra()
     if core.overkill ~= nil then
         if core.overkill > 0 then
             if core.destID == "26928" and mob1Killed == false then
@@ -55,19 +55,19 @@ function core.TheNexus:GrandMagusTelestra()
     end
 end
 
-function core.TheNexus:Anomalus()
+function core._576:Anomalus()
     if core.type == "UNIT_DIED" and core.destID == "26918" then
         core:getAchievementFailed()
     end
 end
 
-function core.TheNexus:Keristrasza()
+function core._576:Keristrasza()
     if core.type == "SPELL_AURA_APPLIED_DOSE" and core.amount > 2 then
         core:getAchievementFailedPersonal()    
     end
 end
 
-function core.TheNexus:ClearVariables()
+function core._576:ClearVariables()
     ------------------------------------------------------
     ---- Grand Magus Telestra
     ------------------------------------------------------

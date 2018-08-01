@@ -6,7 +6,7 @@ local _, core = ...
 ------------------------------------------------------
 ---- Lost City of Tol'vir Bosses
 ------------------------------------------------------
-core.LostCityOfTheTolVir = {}
+core._755 = {}
 
 ------------------------------------------------------
 ---- Lockmaw
@@ -29,7 +29,7 @@ local buringSoulAuraUID = {}
 local lightningChargeCounter = 0
 local lightingChargeUID = {}
 
-function core.LostCityOfTheTolVir:Lockmaw()
+function core._755:Lockmaw()
     if core.sourceID == "43658" then
         if frenziedCrocoliskUID[core.spawn_uid] == nil then
             frenziedCrocoliskUID[core.spawn_uid] = core.spawn_uid
@@ -79,7 +79,7 @@ function core.LostCityOfTheTolVir:Lockmaw()
     end
 end
 
-function core.LostCityOfTheTolVir:HighProphetBarim()
+function core._755:HighProphetBarim()
     --When a spell aura is applied to a buring soul add to table
     --Remove spell aura when removed
     --If burning soul is killed and spell aura is active than add 1 to counter
@@ -105,7 +105,7 @@ function core.LostCityOfTheTolVir:HighProphetBarim()
     end
 end
 
-function core.LostCityOfTheTolVir:Siamat()
+function core._755:Siamat()
     --Met Requirements
     if core.type == "SPELL_AURA_APPLIED_DOSE" and core.spellId == 93959 and core.amount == 2 and lightingChargeUID[core.spawn_uid_dest_Player] == nil then
         lightningChargeCounter = lightningChargeCounter + 1
@@ -127,7 +127,7 @@ function core.LostCityOfTheTolVir:Siamat()
     end
 end
 
-function core.LostCityOfTheTolVir:ClearVariables()
+function core._755:ClearVariables()
     ------------------------------------------------------
     ---- Lockmaw
     ------------------------------------------------------

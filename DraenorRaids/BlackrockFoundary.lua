@@ -6,7 +6,7 @@ local _, core = ...
 ------------------------------------------------------
 ---- Blackrock Foundary Bosses
 ------------------------------------------------------
-core.BlackrockFoundry = {}
+core._1205 = {}
 
 ------------------------------------------------------
 ---- Blackhand
@@ -38,14 +38,14 @@ local graspingEarthKilled = 0
 ------------------------------------------------------
 local messageSent = false
 
-function core.BlackrockFoundry:BeastlordDarmac()
+function core._1205:BeastlordDarmac()
 	if (core.sourceID == "76884" or core.sourceID == "76874" or core.sourceID == "76945") and messageSent == false then
 		core:sendMessage(core.sourceName .. " Mounted First' part of " .. GetAchievementLink(core.achievementIDs[1]) .. " will be completed once boss is killed")
 		messageSent = true	
 	end
 end
 
-function core.BlackrockFoundry:Blackhand()
+function core._1205:Blackhand()
 	if (core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_APPLIED_DOSE") and core.spellId == 163324 then
 		ashCounter = ashCounter + 1
 		core:sendMessage(core.destName .. " caught Ashes  (" .. ashCounter .. "/20)")					
@@ -56,7 +56,7 @@ function core.BlackrockFoundry:Blackhand()
 	end
 end
 
-function core.BlackrockFoundry:OperatorThogar()
+function core._1205:OperatorThogar()
 	if timerStarted == false then
 		core:sendMessage("Note: The Toy Train Set Then Wind-Up Train Wrecker need to placed on the first track 8 seconds after the encounter has started.")	
 		C_Timer.After(8, function()
@@ -75,19 +75,19 @@ function core.BlackrockFoundry:OperatorThogar()
 	end
 end
 
-function core.BlackrockFoundry:HansgarFranzok()
+function core._1205:HansgarFranzok()
 	if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 158140 then
 		core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")")
 	end
 end
 
-function core.BlackrockFoundry:FlamebenderKagraz()
+function core._1205:FlamebenderKagraz()
 	if core.type == "UNIT_DIED" and core.destID == "77337" then
 		core:getAchievementFailed()
 	end
 end
 
-function core.BlackrockFoundry:TheIronMaidens()
+function core._1205:TheIronMaidens()
 	if (core.type == "UNIT_DIED") and (core.destID == "77477" or core.destID == "77557" or core.destID == "77231") and timerStarted == false then
 		timerStarted = true
 		bossesDead = 1
@@ -102,7 +102,7 @@ function core.BlackrockFoundry:TheIronMaidens()
 	end
 end
 
-function core.BlackrockFoundry:BlastFurnace()
+function core._1205:BlastFurnace()
 	if core.type == "UNIT_DIED" and core.destID == "76815" and core.achievementsFailed[1] == false and core.achievementsCompleted[1] == false then
 		primalElementalistsKilled = primalElementalistsKilled + 1
 		core:sendMessage("Primal Elementalists killed: (" .. primalElementalistsKilled .. "/4)")
@@ -120,7 +120,7 @@ function core.BlackrockFoundry:BlastFurnace()
 	end
 end
 
-function core.BlackrockFoundry:Kromog()
+function core._1205:Kromog()
 	if core.type == "UNIT_DIED" and core.destID == "77893" and core.achievementsCompleted[1] == false then
 		graspingEarthKilled = graspingEarthKilled + 1
 		core:sendMessageDelay("Grasping Earth Hands killed: (" .. graspingEarthKilled .. "/10)", graspingEarthKilled, 2)
@@ -140,7 +140,7 @@ function core.BlackrockFoundry:Kromog()
 	end
 end
 
-function core.BlackrockFoundry:ClearVariables()
+function core._1205:ClearVariables()
 	------------------------------------------------------
 	---- Blackhand
 	------------------------------------------------------

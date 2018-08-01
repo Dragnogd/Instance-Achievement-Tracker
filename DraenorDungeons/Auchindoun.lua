@@ -4,9 +4,9 @@
 local _, core = ...
 
 ------------------------------------------------------
----- Auchindoun Bosses
+---- _1182 Bosses
 ------------------------------------------------------
-core.Auchindoun = {}
+core._1182 = {}
 
-function core.Auchindoun:ClearVariables()
+function core._1182:ClearVariables()
 end

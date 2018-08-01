@@ -6,7 +6,7 @@ local _, core = ...
 ------------------------------------------------------
 ---- Obsidian Sanctum Bosses
 ------------------------------------------------------
-core.ObsidianSanctum = {}
+core._615 = {}
 
-function core.ObsidianSanctum:ClearVariables()
+function core._615:ClearVariables()
 end

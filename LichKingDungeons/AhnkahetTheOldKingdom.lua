@@ -6,7 +6,7 @@ local _, core = ...
 ------------------------------------------------------
 ---- Ahn'kahet the Old Kingdom Bosses
 ------------------------------------------------------
-core.AhnKahetTheOldKingdom = {}
+core._619 = {}
 
 ------------------------------------------------------
 ---- Herald Volazj
@@ -14,13 +14,13 @@ core.AhnKahetTheOldKingdom = {}
 local timerStarted = false
 local timer
 
-function core.AhnKahetTheOldKingdom:ElderNadox()
+function core._619:ElderNadox()
     if core.type == "UNIT_DIED" and core.destID == "30176" then
         core:getAchievementFailed()
     end
 end
 
-function core.AhnKahetTheOldKingdom:JedogaShadowseeker()
+function core._619:JedogaShadowseeker()
     core:getAchievementToTrack()
 
     if core.type == "UNIT_DIED" and core.destID == "30385" then
@@ -28,7 +28,7 @@ function core.AhnKahetTheOldKingdom:JedogaShadowseeker()
     end
 end
 
-function core.AhnKahetTheOldKingdom:HeraldVolazj()
+function core._619:HeraldVolazj()
     if timerStarted == false then
         timerStarted = true
         timer = C_Timer.NewTimer(121, function() 
@@ -37,7 +37,7 @@ function core.AhnKahetTheOldKingdom:HeraldVolazj()
     end
 end
 
-function core.AhnKahetTheOldKingdom:ClearVariables()
+function core._619:ClearVariables()
     ------------------------------------------------------
     ---- Herald Volazj
     ------------------------------------------------------

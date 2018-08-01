@@ -4,10 +4,10 @@
 local _, core = ...
 
 ------------------------------------------------------
----- Ulduar Bosses
+---- _603 Bosses
 ------------------------------------------------------
-core.Ulduar = {}
-core.Ulduar.Events = CreateFrame("Frame")
+core._603 = {}
+core._603.Events = CreateFrame("Frame")
 local timerStarted = false
 local timerStarted2 = false
 local timerStarted3 = false
@@ -111,7 +111,7 @@ local guardianOfYoggSaronKilled = 0
 ------------------------------------------------------
 local kissAndMakeUpAnnounced = false
 
-function core.Ulduar:Dwarfageddon()
+function core._603:Dwarfageddon()
     core:trackMob("33572", "Steelforged Defender", 100, "100 Steelforged Defenders have spawned. AOE them now!", 10, nil, nil)
 
     if core.mobCounter >= 100 and steelforgedDefenderAnnounced == false then
@@ -149,19 +149,19 @@ function core.Ulduar:Dwarfageddon()
     end
 end
 
-function core.Ulduar:FlameLeviathanTakeOutThoseTurrets()
+function core._603:FlameLeviathanTakeOutThoseTurrets()
     if core.type == "PARTY_KILL" and core.destID == 33142 then
         core:getAchievementSuccessPersonal()
     end
 end
 
-function core.Ulduar:FlameLeviathanShutout()
+function core._603:FlameLeviathanShutout()
     if core.type == "SPELL_AURA_APPLIED" and core.spellID == 62475 then
         core:getAchievementFailed(2)
     end
 end
 
-function core.Ulduar:RazorscaleIronDwarfMediumRare()
+function core._603:RazorscaleIronDwarfMediumRare()
     if core.type == "UNIT_DIED" and core.spellId == 63317 and core.destID == "33388" then
         darkRuneGuardianKilled = darkRuneGuardianKilled + 1
         --print(darkRuneGuardianKilled)
@@ -175,7 +175,7 @@ function core.Ulduar:RazorscaleIronDwarfMediumRare()
     end
 end
 
-function core.Ulduar:RazorscaleAQuickShave()
+function core._603:RazorscaleAQuickShave()
     if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 62666 and (UnitHealth("boss1") / UnitHealthMax("boss1") * 100) > 50 then
         takeOff = takeOff + 1
         --print(takeOff)
@@ -186,7 +186,7 @@ function core.Ulduar:RazorscaleAQuickShave()
     end
 end
 
-function core.Ulduar:IgnisTheFurnaceMasterShattered()
+function core._603:IgnisTheFurnaceMasterShattered()
     if core.type == "SPELL_AURA_APPLIED" and core.spellId == 62383 then
         brittleTargetsKilled = brittleTargetsKilled + 1
         if timerStarted == false then
@@ -204,7 +204,7 @@ function core.Ulduar:IgnisTheFurnaceMasterShattered()
     end
 end
 
-function core.Ulduar:IgnisTheFurnaceMasterStokinTheFurnace()
+function core._603:IgnisTheFurnaceMasterStokinTheFurnace()
     if timerStarted2 == false then
         timerStarted2 = true
         timer = C_Timer.NewTimer(240, function() 
@@ -213,19 +213,19 @@ function core.Ulduar:IgnisTheFurnaceMasterStokinTheFurnace()
     end  
 end
 
-function core.Ulduar:XT002DeconstructorNerfEngineering()
+function core._603:XT002DeconstructorNerfEngineering()
     if core.type == "SPELL_INSTAKILL" and core.spellId == 62834 then
         core:getAchievementFailed(4)
     end
 end
 
-function core.Ulduar:XT002DeconstructorHeartbreaker()
+function core._603:XT002DeconstructorHeartbreaker()
     if core.type == "PARTY_KILL" and core.destID == "33329" then
         core:getAchievementSuccess(3)
     end
 end
 
-function core.Ulduar:XT002DeconstructorMustDeconstructFaster()
+function core._603:XT002DeconstructorMustDeconstructFaster()
     if timerStarted3 == false then
         timerStarted3 = true
         timer2 = C_Timer.NewTimer(205, function() 
@@ -234,13 +234,13 @@ function core.Ulduar:XT002DeconstructorMustDeconstructFaster()
     end  
 end
 
-function core.Ulduar:XT002DeconstructorNerfGravityBombs()
+function core._603:XT002DeconstructorNerfGravityBombs()
     if (core.type == "SPELL_DAMAGE" or core.type == "SPELL_PERIODIC_DAMAGE") and core.spellId == 63024 and core.overkill > 0 then
         core:getAchievementFailed(2)
     end
 end
 
-function core.Ulduar:XT002DeconstructorNerfScrapbots()
+function core._603:XT002DeconstructorNerfScrapbots()
     core:trackMob("33343", "XS-013 Scrapbot", 20, "20 XS-013 Scrapbots have spawned!",5)
 
     if core.type == "SPELL_DAMAGE" and core.destID == "33343" and core.spellId == 62834 and core.overkill > 0 then
@@ -260,23 +260,23 @@ function core.Ulduar:XT002DeconstructorNerfScrapbots()
     end
 end
 
-function core.Ulduar:KologarnIfLooksCouldKill()
+function core._603:KologarnIfLooksCouldKill()
     if (core.type == "SPELL_DAMAGE" or core.type == "SPELL_MISSED") and (core.spellId == 63346 or core.spellId == 63976) then
         core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")")
     end
 end
 
-function core.Ulduar:KologarnRubbleAndRoll()
+function core._603:KologarnRubbleAndRoll()
     core:trackMob("33768", "Rubble", 25, "25 Rubble have spawned!",5,true,3)
 end
 
-function core.Ulduar:KologarnWithOpenArms()
+function core._603:KologarnWithOpenArms()
     if core.type == "UNIT_DIED" and (core.destID == "32934" or core.destID == "32933") then
         core:getAchievementFailed(2)
     end
 end
 
-function core.Ulduar:AuriayaNineLives()
+function core._603:AuriayaNineLives()
     if core.type == "UNIT_DIED" and core.destID == "34035" and timerStarted == false then
         timerStarted = true
         feralDefenderCounter = feralDefenderCounter - 1
@@ -291,13 +291,13 @@ function core.Ulduar:AuriayaNineLives()
     end
 end
 
-function core.Ulduar:AuriayaCrazyCatLady()
+function core._603:AuriayaCrazyCatLady()
     if core.type == "UNIT_DIED" and core.destID == "34014" then
         core:getAchievementFailed(2)
     end
 end
 
-function core.Ulduar:MimironSetUpUsTheBomb()
+function core._603:MimironSetUpUsTheBomb()
     --Proximity Mine
     if (core.type == "SPELL_DAMAGE" or core.type == "SPELL_MISSED") and core.spellId == 63009 and proximityMineFailed == false then
         proximityMineFailed = true
@@ -317,13 +317,13 @@ function core.Ulduar:MimironSetUpUsTheBomb()
     end
 end
 
-function core.Ulduar:MimironNotSoFriendlyFire()
+function core._603:MimironNotSoFriendlyFire()
     if core.type == "SPELL_DAMAGE" and core.spellId == 63041 and core.destID == "34057" then
         core:getAchievementSuccess(3)
     end
 end
 
-function core.Ulduar:AssemblyOfIronIChooseYouSteelbreaker()
+function core._603:AssemblyOfIronIChooseYouSteelbreaker()
     --4
     if core.type == "UNIT_DIED" and core.destID == "32867" then
         steelbreakerKilled = true
@@ -339,7 +339,7 @@ function core.Ulduar:AssemblyOfIronIChooseYouSteelbreaker()
     end
 end
 
-function core.Ulduar:AssemblyOfIronIChooseYouStormcallerBrundir()
+function core._603:AssemblyOfIronIChooseYouStormcallerBrundir()
     --3
     if core.type == "UNIT_DIED" and core.destID == "32867" then
         steelbreakerKilled = true
@@ -355,7 +355,7 @@ function core.Ulduar:AssemblyOfIronIChooseYouStormcallerBrundir()
     end
 end
 
-function core.Ulduar:AssemblyOfIronIChooseYouRunemasterMolgeim()
+function core._603:AssemblyOfIronIChooseYouRunemasterMolgeim()
     --2
     if core.type == "UNIT_DIED" and core.destID == "32867" then
         steelbreakerKilled = true
@@ -371,35 +371,35 @@ function core.Ulduar:AssemblyOfIronIChooseYouRunemasterMolgeim()
     end
 end
 
-function core.Ulduar:AssemblyOfIronCantDoThatWhileStunned()
+function core._603:AssemblyOfIronCantDoThatWhileStunned()
     --1
     if core.type == "SPELL_DAMAGE" and core.spellId == 63479 then
         core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")",1)
     end
 end
 
-function core.Ulduar:HodirCheeseTheFreeze()
+function core._603:HodirCheeseTheFreeze()
     --4
     if core.type == "SPELL_AURA_APPLIED" and core.spellId == 61969 and core.currentUnit == "Player" then
         core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")",4)
     end
 end
 
-function core.Ulduar:HodirIHaveTheCoolestFriends()
+function core._603:HodirIHaveTheCoolestFriends()
     --1
     if core.type == "UNIT_DIED" and core.unitType == "Creature" and core.destID ~= "32845" then
         core:getAchievementFailedWithMessageAfter("(Reason: " .. core.destName .. " has died)",1)
     end
 end
 
-function core.Ulduar:HodirGettingColdInHere()
+function core._603:HodirGettingColdInHere()
     --2
     if core:trackAura(62039, 3, "debuff") == true then
         core:getAchievementFailed(2)
     end
 end
 
-function core.Ulduar:HodirICouldSayThatThisCacheWasRare()
+function core._603:HodirICouldSayThatThisCacheWasRare()
     --3
     if timerStarted == false then
         timerStarted = true
@@ -409,7 +409,7 @@ function core.Ulduar:HodirICouldSayThatThisCacheWasRare()
     end 
 end
 
-function core.Ulduar:FreyaConSpeedAtory()
+function core._603:FreyaConSpeedAtory()
     --1
     local freyaTrashIDs = {"33430", "33431", "33528", "33527", "33526", "33525", "32914", "32913", "33354", "33355", "32915"}
     if core.type == "UNIT_DIED" and timerStarted == false and freyaTrashedStarted == false and core:has_value(freyaTrashIDs, core.destID) == true then
@@ -432,7 +432,7 @@ function core.Ulduar:FreyaConSpeedAtory()
     end
 end
 
-function core.Ulduar:FreyaLumberjacked()
+function core._603:FreyaLumberjacked()
     --Elder Stonebark
     if core.type == "UNIT_DIED" and core.destID == "32914" then
         bossesKilled = bossesKilled + 1
@@ -461,7 +461,7 @@ function core.Ulduar:FreyaLumberjacked()
     end
 end
 
-function core.Ulduar:FreyaGettingBackToNature()
+function core._603:FreyaGettingBackToNature()
     --3
     if core.type == "SPELL_AURA_REMOVED_DOSE" and core.amount < 25 then
         --print("Getting back to nature failed")
@@ -469,7 +469,7 @@ function core.Ulduar:FreyaGettingBackToNature()
     end
 end
 
-function core.Ulduar:FreyaDeforestation()
+function core._603:FreyaDeforestation()
     --2
     --Ancient Water Spirit
     if core.type == "UNIT_DIED" and core.destID == "33202" then
@@ -502,29 +502,29 @@ function core.Ulduar:FreyaDeforestation()
     end
 end
 
-function core.Ulduar:ThorimDontStandInTheLightning()
+function core._603:ThorimDontStandInTheLightning()
     if (core.type == "SPELL_DAMAGE" or core.type == "SPELL_MISSED") and core.spellId == 62466 then
         core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")")
     end
 end
 
-function core.Ulduar:ThorimWhoNeedsBloodlust()
+function core._603:ThorimWhoNeedsBloodlust()
 
 end
 
-function core.Ulduar:Shadowdodger()
+function core._603:Shadowdodger()
     if core.type == "SPELL_AURA_APPLIED" and core.spellId == 63277 then
         core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")", 2)
     end
 end 
 
-function core.Ulduar:ILoveTheSmellOfSaroniteInTheMorning()
+function core._603:ILoveTheSmellOfSaroniteInTheMorning()
     if core.type == "UNIT_DIED" and core.destID == "33524" then
         core:getAchievementSuccess(1)
     end
 end
 
-function core.Ulduar:DriveMeCrazy()
+function core._603:DriveMeCrazy()
     --3
     if core.type == "SPELL_AURA_REMOVED" and core.spellId == 63050 then
         C_Timer.After(1, function() 
@@ -535,7 +535,7 @@ function core.Ulduar:DriveMeCrazy()
     end
 end
 
-function core.Ulduar:KissAndMakeUp()
+function core._603:KissAndMakeUp()
     --4
     if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 65301 and kissAndMakeUpAnnounced == false then
         core:sendMessage(core:getAchievement(4) .. " /kiss Sara Now!")
@@ -543,7 +543,7 @@ function core.Ulduar:KissAndMakeUp()
     end
 end
 
-function core.Ulduar:HesNotGettingAnyOlder()
+function core._603:HesNotGettingAnyOlder()
     --2
     if timerStarted3 == false then
         timerStarted3 = true
@@ -553,7 +553,7 @@ function core.Ulduar:HesNotGettingAnyOlder()
     end  
 end
 
-function core.Ulduar:TheyreComingOutOfTheWalls()
+function core._603:TheyreComingOutOfTheWalls()
     --1
     core:trackMob("33136", "Guardian of Yogg-Saron", 9, " 9 Guardian of Yogg-Saron have spawned. Group them up then AOE them down", 1, nil, nil)
 
@@ -586,7 +586,7 @@ function core.Ulduar:TheyreComingOutOfTheWalls()
     end
 end
 
-function core.Ulduar:ClearVariables()
+function core._603:ClearVariables()
     timerStarted = false
     timerStarted2 = false
     timerStarted3 = false
@@ -679,23 +679,23 @@ function core.Ulduar:ClearVariables()
     kissAndMakeUpAnnounced = false
 end
 
-function core.Ulduar:InstanceCleanup()
-    core.Ulduar.Events:UnregisterEvent("UNIT_AURA")
-    core.Ulduar.Events:UnregisterEvent("CHAT_MSG_MONSTER_YELL")
+function core._603:InstanceCleanup()
+    core._603.Events:UnregisterEvent("UNIT_AURA")
+    core._603.Events:UnregisterEvent("CHAT_MSG_MONSTER_YELL")
     dwarfageddonComplete = false
 end
 
-function core.Ulduar:InitialSetup()
-    core.Ulduar.Events:RegisterEvent("UNIT_AURA")
-    core.Ulduar.Events:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+function core._603:InitialSetup()
+    core._603.Events:RegisterEvent("UNIT_AURA")
+    core._603.Events:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 end
 
-core.Ulduar.Events:SetScript("OnEvent", function(self, event, ...)
+core._603.Events:SetScript("OnEvent", function(self, event, ...)
     return self[event] and self[event](self, event, ...)
 end)
 
-function core.Ulduar.Events:UNIT_AURA(self, unitID, ...)
-    if core.Instances.WrathOfTheLichKing.Raids.Ulduar.boss2.enabled == true then
+function core._603.Events:UNIT_AURA(self, unitID, ...)
+    if core.Instances.WrathOfTheLichKing.Raids._603.boss2.enabled == true then
         for i=1,40 do
             local _, _, _, _, _, _, _, _, _, spellId = UnitBuff(unitID, i)
             if spellId == 62705 and repairedAnnounced == false then
@@ -706,14 +706,14 @@ function core.Ulduar.Events:UNIT_AURA(self, unitID, ...)
     end
 end
 
-function core.Ulduar.Events:CHAT_MSG_MONSTER_YELL(self, message, sender, language, channelString, target, flags, unknown, channelNumber, channelName, unknown, counter, ...)
-    if core.Instances.WrathOfTheLichKing.Raids.Ulduar.boss50.enabled == true then
+function core._603.Events:CHAT_MSG_MONSTER_YELL(self, message, sender, language, channelString, target, flags, unknown, channelNumber, channelName, unknown, counter, ...)
+    if core.Instances.WrathOfTheLichKing.Raids._603.boss50.enabled == true then
         if message == "Now, why would you go and do something like that? Didn't you see the sign that said, \"DO NOT PUSH THIS BUTTON!\"? How will we finish testing with the self-destruct mechanism active?" then
             core:getAchievementSuccess(2)
         end   
     end
 end
 
-function core.Ulduar.TrackAdditional()
+function core._603.TrackAdditional()
 
 end

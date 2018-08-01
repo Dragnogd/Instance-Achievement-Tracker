@@ -6,19 +6,19 @@ local _, core = ...
 ------------------------------------------------------
 ---- Black Rook Hold Bosses
 ------------------------------------------------------
-core.BlackRookHold = {}
+core._1501 = {}
 
-function core.BlackRookHold:AmalgamOfSouls()
+function core._1501:AmalgamOfSouls()
     if core.type == "UNIT_DIED" and core.destName == "Frustrated Soul" then
         core:getAchievementSuccess()
     end
 end
 
-function core.BlackRookHold:IllysannaRavencrest()
+function core._1501:IllysannaRavencrest()
     if core.type == "UNIT_DIED" and core.destID == "100485" then
         core:getAchievementFailed()
     end
 end
 
-function core.BlackRookHold:ClearVariables()
+function core._1501:ClearVariables()
 end

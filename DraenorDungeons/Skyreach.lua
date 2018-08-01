@@ -4,16 +4,16 @@
 local _, core = ...
 
 ------------------------------------------------------
----- Skyreach Bosses
+---- _1209 Bosses
 ------------------------------------------------------
-core.Skyreach = {}
+core._1209 = {}
 
 ------------------------------------------------------
 ---- Ranjit
 ------------------------------------------------------
 local playersHit = {}
 
-function core.Skyreach:Ranjit()
+function core._1209:Ranjit()
     local playerHit = false
     local reason = nil
     
@@ -45,7 +45,7 @@ function core.Skyreach:Ranjit()
         if playersHit[core.destName] == nil then
             --Players has not been hit already
             --Check if the player actually needs the achievement
-            if core:has_value(core.Instances.WarlordsOfDraenor.Dungeons.Skyreach.boss1.players, core.destName) then
+            if core:has_value(core.Instances.WarlordsOfDraenor.Dungeons._1209.boss1.players, core.destName) then
                 --Player needs achievement but has failed it
                 core:sendMessage(core.destName .. " has failed " .. GetAchievementLink(core.currentAchievementID) .. " (Personal Achievement) (Reason: Damage from " .. reason .. ")")
             end
@@ -54,13 +54,13 @@ function core.Skyreach:Ranjit()
     end
 end
 
-function core.Skyreach:HighSageViryx()
+function core._1209:HighSageViryx()
     if core.type == "UNIT_DIED" and core.destID == "76292" then
         core:getAchievementFailed()
     end
 end
 
-function core.Skyreach:ClearVariables()
+function core._1209:ClearVariables()
     ------------------------------------------------------
     ---- Ranjit
     ------------------------------------------------------

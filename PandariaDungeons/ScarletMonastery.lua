@@ -6,7 +6,7 @@ local _, core = ...
 ------------------------------------------------------
 ---- Scarlet Monastery Bosses
 ------------------------------------------------------
-core.ScarletMonastery = {}
+core._1004 = {}
 
 ------------------------------------------------------
 ---- Thalnos the Soulrender
@@ -19,7 +19,7 @@ local empoweredZombieTable = {}
 ------------------------------------------------------
 local scarletJudicatorCounter = 0
 
-function core.ScarletMonastery:ThalnosTheSoulrender()
+function core._1004:ThalnosTheSoulrender()
     if core.type == "SPELL_SUMMON" and core.destID == "59930" and empoweredZombieTable[core.spawn_uid_dest] == nil then
         empoweredZombieCounter = empoweredZombieCounter + 1
         empoweredZombieTable[core.spawn_uid_dest] = core.spawn_uid_dest
@@ -48,7 +48,7 @@ function core.ScarletMonastery:ThalnosTheSoulrender()
     end
 end
 
-function core.ScarletMonastery:HighInquisitorWhitemane()
+function core._1004:HighInquisitorWhitemane()
     if core.type == "UNIT_DIED" and core.destID == "58605" then
         scarletJudicatorCounter = scarletJudicatorCounter + 1
         if scarletJudicatorCounter <= 13 then
@@ -61,7 +61,7 @@ function core.ScarletMonastery:HighInquisitorWhitemane()
     end
 end
 
-function core.ScarletMonastery:ClearVariables()
+function core._1004:ClearVariables()
     ------------------------------------------------------
     ---- Thalnos the Soulrender
     ------------------------------------------------------

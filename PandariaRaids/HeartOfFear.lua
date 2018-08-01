@@ -6,7 +6,7 @@ local _, core = ...
 ------------------------------------------------------
 ---- Heart Of Fear
 ------------------------------------------------------
-core.HeartOfFear = {}
+core._1009 = {}
 
 ------------------------------------------------------
 ---- Imperial Vizier Zor'lok
@@ -20,7 +20,7 @@ local parasiteCounter = 0
 local timerStarted = false
 local reaversKilled = 0
 
-function core.HeartOfFear:ImperialVizierZorlok()
+function core._1009:ImperialVizierZorlok()
 	if core.type == "UNIT_DIED" and core.unitTypePlayer == "Player" then
 		--If the player was holding a parasite then reduce counter by 1
 		if parasitePlayers[core.spawn_uid_dest_Player] ~= nil then
@@ -80,13 +80,13 @@ function core.HeartOfFear:ImperialVizierZorlok()
 	end
 end
 
-function core.HeartOfFear:Garalon()
+function core._1009:Garalon()
 	if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 122786 then
 		core:getAchievementFailed()		
 	end
 end
 
-function core.HeartOfFear:GrandEmpressShekzeer()
+function core._1009:GrandEmpressShekzeer()
 	if core.type == "UNIT_DIED" and core.destID == "63591" then
 		reaversKilled = reaversKilled + 1
 		if timerStarted == false then
@@ -110,7 +110,7 @@ function core.HeartOfFear:GrandEmpressShekzeer()
 	end
 end
 
-function core.HeartOfFear:ClearVariables()
+function core._1009:ClearVariables()
 	------------------------------------------------------
 	---- Imperial Vizier Zor'lok
 	------------------------------------------------------

@@ -6,9 +6,9 @@ local _, core = ...
 ------------------------------------------------------
 ---- Utgarde Keep Bosses
 ------------------------------------------------------
-core.UtgardeKeep = {}
+core._574 = {}
 
-function core.UtgardeKeep:PrinceKeleseth()
+function core._574:PrinceKeleseth()
     if core.destID == "23965" and core.overkill ~= nil then
         if core.overkill > 0 then
             core:getAchievementFailedWithMessageAfter("(" .. core.sourceName .. ")")
@@ -16,5 +16,5 @@ function core.UtgardeKeep:PrinceKeleseth()
     end
 end
 
-function core.UtgardeKeep:ClearVariables()
+function core._574:ClearVariables()
 end

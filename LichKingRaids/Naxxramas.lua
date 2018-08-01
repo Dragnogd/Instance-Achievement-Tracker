@@ -4,9 +4,9 @@
 local _, core = ...
 
 ------------------------------------------------------
----- Naxxramas Bosses
+---- _533 Bosses
 ------------------------------------------------------
-core.Naxxramas = {}
+core._533 = {}
 
 ------------------------------------------------------
 ---- Patchwerk
@@ -25,19 +25,19 @@ local timer2
 ------------------------------------------------------
 local abominationsKilled = 0
 
-function core.Naxxramas:HeiganTheUnclean()
+function core._533:HeiganTheUnclean()
     if core.type == "UNIT_DIED" and core.currentUnit == "Player" then
         core:getAchievementFailed()
     end
 end
 
-function core.Naxxramas:Loatheb()
+function core._533:Loatheb()
     if core.type == "UNIT_DIED" and core.destID == "16286" then
         core:getAchievementFailed()
     end
 end
 
-function core.Naxxramas:Patchwerk()
+function core._533:Patchwerk()
     if timerStarted == false then
         timerStarted = true
         timer = C_Timer.NewTimer(180, function() 
@@ -46,7 +46,7 @@ function core.Naxxramas:Patchwerk()
     end  
 end
 
-function core.Naxxramas:Arachnophobia()
+function core._533:Arachnophobia()
     if core.type == "UNIT_DIED" and core.destID == "15956" then
         if timerStarted2 == false then
             timerStarted2 = true
@@ -69,13 +69,13 @@ function core.Naxxramas:Arachnophobia()
     end
 end
 
-function core.Naxxramas:GrandWidowFaerlina()
+function core._533:GrandWidowFaerlina()
     if core.type == "SPELL_AURA_APPLIED" and core.destID == "15953" and core.spellId == 28732 then
         core:getAchievementFailed()
     end
 end
 
-function core.Naxxramas:Subtraction()
+function core._533:Subtraction()
     if core.inCombat == true then
         core:getAchievementToTrack()
     end
@@ -97,7 +97,7 @@ function core.Naxxramas:Subtraction()
     end
 end
 
-function core.Naxxramas:Shocking()
+function core._533:Shocking()
     if core.inCombat == true then
         core:getAchievementToTrack()
     end
@@ -107,7 +107,7 @@ function core.Naxxramas:Shocking()
     end
 end
 
-function core.Naxxramas:FourHorsemen()
+function core._533:FourHorsemen()
     if core.inCombat == true then
         core:getAchievementToTrack()
     end
@@ -122,7 +122,7 @@ function core.Naxxramas:FourHorsemen()
     end
 end
 
-function core.Naxxramas:KelThuzad()
+function core._533:KelThuzad()
     if core.inCombat == true then
         core:getAchievementToTrack()
     end
@@ -137,7 +137,7 @@ function core.Naxxramas:KelThuzad()
     end
 end
 
-function core.Naxxramas:ClearVariables()
+function core._533:ClearVariables()
     ------------------------------------------------------
     ---- Patchwerk
     ------------------------------------------------------

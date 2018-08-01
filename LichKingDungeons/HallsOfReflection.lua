@@ -6,7 +6,7 @@ local _, core = ...
 ------------------------------------------------------
 ---- Halls of Reflection Bosses
 ------------------------------------------------------
-core.HallsOfReflection = {}
+core._668 = {}
 
-function core.HallsOfReflection:ClearVariables()
+function core._668:ClearVariables()
 end

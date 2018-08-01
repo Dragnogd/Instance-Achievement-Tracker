@@ -6,7 +6,7 @@ local _, core = ...
 ------------------------------------------------------
 ---- Return To Karazhan Bosses
 ------------------------------------------------------
-core.ReturnToKarazhan = {}
+core._1651 = {}
 
-function core.ReturnToKarazhan:ClearVariables()
+function core._1651:ClearVariables()
 end

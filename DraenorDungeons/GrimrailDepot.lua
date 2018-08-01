@@ -6,15 +6,15 @@ local _, core = ...
 ------------------------------------------------------
 ---- Grimrail Depot Bosses
 ------------------------------------------------------
-core.GrimrailDepot = {}
-core.GrimrailDepot.Events = CreateFrame("Frame")
+core._1208 = {}
+core._1208.Events = CreateFrame("Frame")
 
 ------------------------------------------------------
 ---- Rocketspark and Borka
 ------------------------------------------------------
 local pricelessParaphernaliaCounter = 0
 
-function core.GrimrailDepot:RocketsparkAndBorka()
+function core._1208:RocketsparkAndBorka()
     if events:IsEventRegistered("CHAT_MSG_MONSTER_YELL") ~= true then
         events:RegisterEvent("CHAT_MSG_MONSTER_YELL")
     end
@@ -24,22 +24,22 @@ function core.GrimrailDepot:RocketsparkAndBorka()
     end
 end
 
-function core.GrimrailDepot:ClearVariables()
+function core._1208:ClearVariables()
 end
 
-function core.GrimrailDepot:InstanceCleanup()
-    core.GrimrailDepot.Events:UnregisterEvent("CHAT_MSG_MONSTER_YELL")
+function core._1208:InstanceCleanup()
+    core._1208.Events:UnregisterEvent("CHAT_MSG_MONSTER_YELL")
 end
 
-function core.GrimrailDepot:InitialSetup()
-    core.GrimrailDepot.Events:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+function core._1208:InitialSetup()
+    core._1208.Events:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 end
 
-core.GrimrailDepot.Events:SetScript("OnEvent", function(self, event, ...)
+core._1208.Events:SetScript("OnEvent", function(self, event, ...)
     return self[event] and self[event](self, event, ...)
 end)
 
-function core.GrimrailDepot.Events:CHAT_MSG_MONSTER_YELL(self, message, sender, language, channelString, target, flags, unknown, channelNumber, channelName, unknown, counter, ...)
+function core._1208.Events:CHAT_MSG_MONSTER_YELL(self, message, sender, language, channelString, target, flags, unknown, channelNumber, channelName, unknown, counter, ...)
     if core.Instances[core.expansion][core.instanceType][core.instance]["boss1"].enabled == true then
         if message == "Gah! That was my last samophlange! Do you know how hard those are to get?" or message == "Hey dummy! How would you like it if I broke all your things?!" or message == "That was my entire collection of Hearthstone cards!" or message == "You big oaf! Quit breaking my things!" then
             pricelessParaphernaliaCounter = pricelessParaphernaliaCounter + 1

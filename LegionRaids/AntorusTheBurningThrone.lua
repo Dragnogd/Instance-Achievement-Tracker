@@ -6,8 +6,8 @@ local _, core = ...
 ------------------------------------------------------
 ---- Antorus The Burning Throne Bosses
 ------------------------------------------------------
-core.AntorusTheBurningThrone = {}
-core.AntorusTheBurningThrone.Events = CreateFrame("Frame")
+core._1712 = {}
+core._1712.Events = CreateFrame("Frame")
 
 ------------------------------------------------------
 ---- Kin-garoth
@@ -33,7 +33,7 @@ local felshieldEmitterCounter = 3
 ------------------------------------------------------
 local highestEnergy = 0
 
-function core.AntorusTheBurningThrone:FelhoundsOfSargeras()
+function core._1712:FelhoundsOfSargeras()
     --Detect boss death
     if core.type == "UNIT_DIED" and (core.destID == "122477" or core.destID == "122135") then
         felhoundsKilled = true
@@ -84,7 +84,7 @@ function core.AntorusTheBurningThrone:FelhoundsOfSargeras()
     end
 end
 
-function core.AntorusTheBurningThrone:AntoranHighCommand()
+function core._1712:AntoranHighCommand()
     if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 244902 and core.achievementsFailed[1] == false then
         felshieldEmitterCounter = felshieldEmitterCounter - 1
         core:sendMessage(core:getAchievement() .. " Felshield Emitter Placed. You can only place a maximum of " .. felshieldEmitterCounter .. " more Felshield Emitters")
@@ -95,19 +95,19 @@ function core.AntorusTheBurningThrone:AntoranHighCommand()
     end
 end
 
-function core.AntorusTheBurningThrone:PortalKeeperHasabel()
+function core._1712:PortalKeeperHasabel()
     if core.type == "SPELL_AURA_APPLIED" and (core.spellId == 246929 or core.spellId == 246925 or core.spellId == 246911) then
         core:getAchievementSuccess()
     end
 end
 
-function core.AntorusTheBurningThrone:Varimathras()
+function core._1712:Varimathras()
     if (core.type == "SPELL_DAMAGE" or core.type == "SPELL_ABSORBED") and core.spellId == 243963 then
         core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")")
     end
 end
 
-function core.AntorusTheBurningThrone:KinGaroth()
+function core._1712:KinGaroth()
     --Check difficulty of the encounter to determine the number of bombs that spawn
     if core.difficultyID == 14 or core.difficultyID == 17 then
         --Normal/LFR Mode (for testing)
@@ -139,13 +139,13 @@ function core.AntorusTheBurningThrone:KinGaroth()
     end 
 end
 
-function core.AntorusTheBurningThrone:Aggramar()
+function core._1712:Aggramar()
     if core.type == "UNIT_DIED" and core.destName == "Manifestation of Taeshalach" then
         core:getAchievementSuccess()
     end
 end
 
-function core.AntorusTheBurningThrone:ClearVariables()
+function core._1712:ClearVariables()
     ------------------------------------------------------
     ---- Kin-garoth
     ------------------------------------------------------
@@ -179,25 +179,25 @@ function core.AntorusTheBurningThrone:ClearVariables()
     highestEnergy = 0
 end
 
-function core.AntorusTheBurningThrone:InstanceCleanup()
-    core.AntorusTheBurningThrone.Events:UnregisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+function core._1712:InstanceCleanup()
+    core._1712.Events:UnregisterEvent("UNIT_SPELLCAST_SUCCEEDED")
     felhoundsKilled = false
 end
 
-core.AntorusTheBurningThrone.Events:SetScript("OnEvent", function(self, event, ...)
+core._1712.Events:SetScript("OnEvent", function(self, event, ...)
     return self[event] and self[event](self, event, ...)
 end)
 
-function core.AntorusTheBurningThrone:InitialSetup()
-    core.AntorusTheBurningThrone.Events:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
-    core.AntorusTheBurningThrone.Events:RegisterEvent("UNIT_POWER_UPDATE")
+function core._1712:InitialSetup()
+    core._1712.Events:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+    core._1712.Events:RegisterEvent("UNIT_POWER_UPDATE")
 
     core:sendDebugMessage("HERE asdasd")
-    print(core.AntorusTheBurningThrone.Events:IsEventRegistered("UNIT_POWER_UPDATE"))
+    print(core._1712.Events:IsEventRegistered("UNIT_POWER_UPDATE"))
 end
 
-function core.AntorusTheBurningThrone.Events:UNIT_SPELLCAST_SUCCEEDED(self, unitID, lineID, spellID, ...)
-    if core.Instances.Legion.Raids.AntorusTheBurningThrone.boss7.enabled == true then
+function core._1712.Events:UNIT_SPELLCAST_SUCCEEDED(self, unitID, lineID, spellID, ...)
+    if core.Instances.Legion.Raids._1712.boss7.enabled == true then
         if spellID == 248214 and timerStarted == false then
             --Diabolic Bomb Spawned
             timerStarted = true
@@ -210,8 +210,8 @@ function core.AntorusTheBurningThrone.Events:UNIT_SPELLCAST_SUCCEEDED(self, unit
     end
 end
 
-function core.AntorusTheBurningThrone.Events:UNIT_POWER_UPDATE(self, unit, powerType)
-    if core.Instances.Legion.Raids.AntorusTheBurningThrone.boss11.enabled == true then
+function core._1712.Events:UNIT_POWER_UPDATE(self, unit, powerType)
+    if core.Instances.Legion.Raids._1712.boss11.enabled == true then
         if UnitGUID(unit) ~= nil then
             local unitType, _, _, _, _, destID, spawn_uid_dest = strsplit("-", UnitGUID(unit))
             if destID == "125886" and UnitPower(unit) > 0 then

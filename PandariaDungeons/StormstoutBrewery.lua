@@ -6,7 +6,7 @@ local _, core = ...
 ------------------------------------------------------
 ---- Stormstout Brewery Bosses
 ------------------------------------------------------
-core.StormstoutBrewery = {}
+core._961 = {}
 
 ------------------------------------------------------
 ---- Ook-Ook
@@ -22,7 +22,7 @@ local virmenKilled = 0
 local startCountingVirmen = false
 local hammerUsedAmount = 0
 
-function core.StormstoutBrewery:OokOok()
+function core._961:OokOok()
 	if core.type == "SPELL_DAMAGE" and core.spellId == 106784 then
 		brewExplosion = brewExplosion + 1
 		core:sendMessage("Rolling Brew Barrels (" .. brewExplosion .. "/20)")
@@ -34,7 +34,7 @@ function core.StormstoutBrewery:OokOok()
 end
 
 
-function core.StormstoutBrewery:Hoptallus()
+function core._961:Hoptallus()
 	--Detect amount of virmen currently on target
 	if (core.type == "SWING_DAMAGE" or core.type == "SWING_MISSED") and (core.sourceID == "59426" or core.sourceID == "59460" or core.sourceID == "56718" or core.sourceID == "59459" or core.sourceID == "59461" or core.sourceID == "59551") and (core.spawn_uid ~= nil) then
 		if virmenTable[core.spawn_uid] == nil then
@@ -87,7 +87,7 @@ function core.StormstoutBrewery:Hoptallus()
 end
 
 
-function core.StormstoutBrewery:ClearVariables()
+function core._961:ClearVariables()
 	------------------------------------------------------
 	---- Ook-Ook
 	------------------------------------------------------

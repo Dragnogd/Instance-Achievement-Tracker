@@ -6,8 +6,8 @@ local _, core = ...
 ------------------------------------------------------
 ---- Hellfire Citadel Bosses
 ------------------------------------------------------
-core.HellfireCitadel = {}
-core.HellfireCitadel.Events = CreateFrame("Frame")
+core._1448 = {}
+core._1448.Events = CreateFrame("Frame")
 
 ------------------------------------------------------
 ---- Iron Reaver
@@ -42,7 +42,7 @@ local felSummonersKilled = 0
 ------------------------------------------------------
 local doomfireSpawned = false
 
-function core.HellfireCitadel:IronReaver()
+function core._1448:IronReaver()
 	if core.type == "SPELL_INSTAKILL" and core.destID == "94985" and hellfireGuardianKilled < 10 then
 		hellfireGuardianKilled = hellfireGuardianKilled + 1
 		core:sendMessage(core:getAchievement() .. " Hellfire Guardians Killed (" .. hellfireGuardianKilled .. "/10)")
@@ -53,7 +53,7 @@ function core.HellfireCitadel:IronReaver()
 	end
 end
 
-function core.HellfireCitadel:HellfireHighCouncil()
+function core._1448:HellfireHighCouncil()
 	if core.type == "UNIT_DIED" and (core.destID == "92142" or core.destID == "92146" or core.destID == "92144") then
 		unitsKilled = unitsKilled + 1
 		if timerStarted == false then
@@ -68,20 +68,20 @@ function core.HellfireCitadel:HellfireHighCouncil()
 	end
 end
 
-function core.HellfireCitadel:Kormrok()
+function core._1448:Kormrok()
 	--If player gets hit by one of the abilities and has not already been hit then fail the achievement for the player
 	if core.type == "SPELL_AURA_APPLIED" and (core.spellId == 185521 or core.spellId == 185519 or core.spellId == 180270) then
 		core:getAchievementFailedPersonal()
 	end
 end
 
-function core.HellfireCitadel:Gorefiend()
+function core._1448:Gorefiend()
 	if core.type == "UNIT_DIED" and core.destID == "93145" then
 		core:getAchievementSuccess()			
 	end
 end
 
-function core.HellfireCitadel:ShadowLordIskar()
+function core._1448:ShadowLordIskar()
 	if core.type == "SPELL_AURA_REMOVED" and core.spellId == 179202 and core.achievementsFailed[1] == false then
 		eyeOfAnzuPlayer = nil
 	end
@@ -141,7 +141,7 @@ function core.HellfireCitadel:ShadowLordIskar()
 	end
 end
 
-function core.HellfireCitadel:FelLordZakuun()
+function core._1448:FelLordZakuun()
 	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 179428 then	
 		C_Timer.After(6, function()
 			if core.inCombat == true then
@@ -151,13 +151,13 @@ function core.HellfireCitadel:FelLordZakuun()
 	end
 end
 
-function core.HellfireCitadel:Xhulhorac()
+function core._1448:Xhulhorac()
 	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 185656 then
 		core:getAchievementFailedWithMessageAfter("by " .. core.destName)
 	end
 end
 
-function core.HellfireCitadel:SocretharTheEternal()
+function core._1448:SocretharTheEternal()
 	if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 182925 and core.mobUID[core.spawn_uid] ~= "Dead" then
 		--Decrease haunting soul counter by 1 if player walks into one of the mobs
 		if core.mobUID[core.spawn_uid] ~= nil then
@@ -203,13 +203,13 @@ function core.HellfireCitadel:SocretharTheEternal()
     end
 end
 
-function core.HellfireCitadel:TyrantVelhari()
+function core._1448:TyrantVelhari()
 	if core.type == "UNIT_DIED" and core.destID == "90270" then
 		core:getAchievementFailed()	
 	end
 end
 
-function core.HellfireCitadel:Mannoroth()
+function core._1448:Mannoroth()
 	core:trackMob("91241", "Doom Lord", 1, " Doom Lord has spawned. DPS it down to ~5% health", 1, nil, nil)
 
 	--Achievement Successfull
@@ -227,7 +227,7 @@ function core.HellfireCitadel:Mannoroth()
 	end
 end
 
-function core.HellfireCitadel:Archimonde()
+function core._1448:Archimonde()
 	if core.type == "SPELL_SUMMON" and core.destID == "92208" then
 		doomfireSpawned = true
 		core:getAchievementSuccess()
@@ -267,7 +267,7 @@ function core.HellfireCitadel:Archimonde()
     end
 end
 
-function core.HellfireCitadel:ClearVariables()
+function core._1448:ClearVariables()
 	------------------------------------------------------
 	---- Iron Reaver
 	------------------------------------------------------
@@ -305,22 +305,22 @@ function core.HellfireCitadel:ClearVariables()
     end
 end
 
-function core.HellfireCitadel:InstanceCleanup()
-    core.HellfireCitadel.Events:UnregisterEvent("UNIT_HEALTH")
-    core.HellfireCitadel.Events:UnregisterEvent("CHAT_MSG_MONSTER_YELL")
+function core._1448:InstanceCleanup()
+    core._1448.Events:UnregisterEvent("UNIT_HEALTH")
+    core._1448.Events:UnregisterEvent("CHAT_MSG_MONSTER_YELL")
 end
 
-function core.HellfireCitadel:InitialSetup()
-	core.HellfireCitadel.Events:RegisterEvent("UNIT_HEALTH")
-	core.HellfireCitadel.Events:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+function core._1448:InitialSetup()
+	core._1448.Events:RegisterEvent("UNIT_HEALTH")
+	core._1448.Events:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 end
 
-core.HellfireCitadel.Events:SetScript("OnEvent", function(self, event, ...)
+core._1448.Events:SetScript("OnEvent", function(self, event, ...)
     return self[event] and self[event](self, event, ...)
 end)
 
-function core.HellfireCitadel.Events:UNIT_HEALTH(self, unitID)
-	if core.Instances.WarlordsOfDraenor.Raids.HellfireCitadel.boss1.enabled == true then
+function core._1448.Events:UNIT_HEALTH(self, unitID)
+	if core.Instances.WarlordsOfDraenor.Raids._1448.boss1.enabled == true then
 		local unitType, _, _, _, _, destID, spawn_uid_dest = strsplit("-", UnitGUID(unitID));
 		if destID == "90018" then
 			--If health is less than 90% then fail the achievement
@@ -331,7 +331,7 @@ function core.HellfireCitadel.Events:UNIT_HEALTH(self, unitID)
 	end
 end
 
-function core.HellfireCitadel.Events:CHAT_MSG_MONSTER_YELL(self, message, sender)
+function core._1448.Events:CHAT_MSG_MONSTER_YELL(self, message, sender)
 	if message == "GHHAAAaaa!!!" then
 		core:getAchievementFailed()				
 	end
