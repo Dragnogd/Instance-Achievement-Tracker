@@ -4999,7 +4999,7 @@ core.Instances = {
             },
 
             ["631-10"] = { --Icecrown Citadel 10 Man
-                name = "Icecrown Citadel 10 Man",
+                name = L["Icecrown Citadel 10 Man"],
                 boss1 = {
                     name = "Lord Marrowgar",
                     bossIDs = {36612},
@@ -5146,7 +5146,7 @@ core.Instances = {
             },
 
             ["631-25"] = { --Icecrown Citadel 25 Man
-                name = "Icecrown Citadel 25 Man",
+                name = L["Icecrown Citadel 25 Man"],
                 boss1 = {
                     name = "Lord Marrowgar 25",
                     bossIDs = {36612},
