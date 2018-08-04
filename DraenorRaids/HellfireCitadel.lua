@@ -320,7 +320,7 @@ core._1448.Events:SetScript("OnEvent", function(self, event, ...)
 end)
 
 function core._1448.Events:UNIT_HEALTH(self, unitID)
-	if core.Instances.WarlordsOfDraenor.Raids._1448.boss1.enabled == true then
+	if core.Instances.WarlordsOfDraenor.Raids[1448].boss1.enabled == true then
 		local unitType, _, _, _, _, destID, spawn_uid_dest = strsplit("-", UnitGUID(unitID));
 		if destID == "90018" then
 			--If health is less than 90% then fail the achievement

@@ -255,7 +255,7 @@ core._1098.Events:SetScript("OnEvent", function(self, event, ...)
 end)
 
 function core._1098.Events:UNIT_HEALTH(self, UnitID)
-	if core.Instances.MistsOfPandaria.Raids._1098.boss11.enabled == true then
+	if core.Instances.MistsOfPandaria.Raids[1098].boss11.enabled == true then
 		if UnitName(UnitID) == "Suen" then
 			if core:getHealthPercent(UnitID) < 30 then		
 				if lulinKilled == false then
@@ -267,7 +267,7 @@ function core._1098.Events:UNIT_HEALTH(self, UnitID)
 end
 
 function core._1098.Events:UNIT_POWER_UPDATE(self, UnitID, powerType)
-	if core.Instances.MistsOfPandaria.Raids._1098.boss12.enabled == true then
+	if core.Instances.MistsOfPandaria.Raids[1098].boss12.enabled == true then
 		if UnitIsPlayer(UnitID) == false then
 			if UnitPower(UnitID, ALTERNATE_POWER_INDEX) == 3 then
 				core:getAchievementSuccessWithCustomMessage(UnitName(UnitID) .. " Disabled First part of","will be completed once boss is killed")

@@ -97,7 +97,7 @@ core._1228.Events:SetScript("OnEvent", function(self, event, ...)
 end)
 
 function core._1228.Events:UNIT_HEALTH(self, unitID)
-	if core.Instances.WarlordsOfDraenor.Raids._1228.boss3.enabled == true then
+	if core.Instances.WarlordsOfDraenor.Raids[1228].boss3.enabled == true then
 		local unitType, _, _, _, _, destID, spawn_uid_dest = strsplit("-", UnitGUID(unitID));
 		if destID == "80557" and core.achievementsFailed[1] == false then
             if core:getHealthPercent(unitID) <= 1 and moteOfTectusUID[spawn_uid_dest] == nil then
@@ -123,7 +123,7 @@ function core._1228.Events:UNIT_HEALTH(self, unitID)
 end
 
 function core._1228.Events:UNIT_POWER_UPDATE(self, unit, powerType)
-	if core.Instances.WarlordsOfDraenor.Raids._1228.boss5.enabled == true and core.achievementIDs[1] == 8958 then
+	if core.Instances.WarlordsOfDraenor.Raids[1228].boss5.enabled == true and core.achievementIDs[1] == 8958 then
 		if powerType == "ALTERNATE" then
 			if UnitPower(unit, ALTERNATE_POWER_INDEX) > 30 then
 				core:getAchievementFailed()

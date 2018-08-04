@@ -468,7 +468,7 @@ core._1136.Events:SetScript("OnEvent", function(self, event, ...)
 end)
 
 function core._1136.Events:CHAT_MSG_RAID_BOSS_EMOTE(self, message, sender, ...)
-	if core.Instances.MistsOfPandaria.Raids._1136.boss1.enabled == true then
+	if core.Instances.MistsOfPandaria.Raids[1136].boss1.enabled == true then
 		if core.achievementsCompleted[1] == false then
 			if string.match(message, "Reforms") then
 				core:sendMessage("Do not kill tears till IAT announces confirmation. Killing the tears too quickly will not count towards the achievement")
