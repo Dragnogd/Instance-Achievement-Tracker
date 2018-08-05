@@ -50,7 +50,7 @@ function Config:CreateButton(point, relativeFrame, relativePoint, yOffset, text,
 	btn:SetText(text);
 	btn:SetNormalFontObject("GameFontNormal");
     btn:SetHighlightFontObject("GameFontHighlight");
-    print("ID DETECTED: " .. mapID)
+    --print("ID DETECTED: " .. mapID)
     if mapID ~= nil then
         local mapID = tostring(mapID)
         mapID = mapID:gsub('%-', '')
@@ -428,7 +428,7 @@ function Config:CreateGUI()
         local firstRaid = false
         local previousInstance
         for instance,v in pairs(core.Instances[expansions[i]].Raids) do
-            print("HERE" .. instance)
+            --print("HERE" .. instance)
             if firstRaid == false then
                 if expansions[i] == "BattleForAzeroth" then
                     BattleForAzerothNav[instance] = self:CreateButton("TOPLEFT", BattleForAzerothNav, "TOPLEFT", 0, core.Instances[expansions[i]].Raids[instance].name, instance);

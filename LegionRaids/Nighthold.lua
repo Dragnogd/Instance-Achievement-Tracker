@@ -300,10 +300,10 @@ function core._1530:Guldan()
             C_Timer.After(3, function()
                 if core.inCombat == true then
                     if eyeOfGuldanKilled >= 16 then
-                        print("EYES Killed: " .. eyeOfGuldanKilled)
+                        --print("EYES Killed: " .. eyeOfGuldanKilled)
                         core:getAchievementSuccess()
                     else
-                        print("EYES Killed: " .. eyeOfGuldanKilled)
+                        --print("EYES Killed: " .. eyeOfGuldanKilled)
                         --core:sendMessage(core:getAchievement() .. "(" .. eyeOfGuldanKilled .. "/16) Eyes of Gul'dan Killed in time")
                         timerStarted = false
                         eyeOfGuldanKilled = 0

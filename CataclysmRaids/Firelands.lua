@@ -153,13 +153,16 @@ function core._720.Events:UNIT_POWER_UPDATE(self, unit, powerType)
 end
 
 function core._720.Events:UNIT_AURA(self, unitID)
-	local name, rank, icon, count, dispelType, duration, expires, caster, isStealable, nameplateShowPersonal, spellID2, canApplyAura, isBossDebuff, _, nameplateShowAll, timeMod, value1, value2, value3 = UnitDebuff(unitID, "Fiery Web Silk")
-			
-	--Add the mob to an array to say that it is currently ontop of the nest
-	if spellID2 ~= nil then
-		local unitType, _, _, _, _, destID2, spawn_uid_dest = strsplit("-", UnitGUID(unitID));
-		if spawn_uid_dest ~= nil then
-			cinderwebDroneList[spawn_uid_dest] = spawn_uid_dest
+	for i=1,40 do
+		local _, _, count2, _, _, _, _, _, _, spellId = UnitDebuff(unitID, i)
+		if spellId == 100048 then
+			--Add the mob to an array to say that it is currently ontop of the nest
+			if spellID2 ~= nil then
+				local unitType, _, _, _, _, destID2, spawn_uid_dest = strsplit("-", UnitGUID(unitID));
+				if spawn_uid_dest ~= nil then
+					cinderwebDroneList[spawn_uid_dest] = spawn_uid_dest
+				end
+			end
 		end
 	end
 end

@@ -174,7 +174,7 @@ function core._1712:ClearVariables()
     if highestEnergy > 0 then
         core:sendMessage(GetAchievementLink(12257) .. " Best attempt last kill (" .. highestEnergy .. "/80). Khaz'Goroth must gain 80 energy within 5 seconds to complete this achievement")
     else
-        core:sendMessage("Highest Energy is 0")
+        --core:sendMessage("Highest Energy is 0")
     end
     highestEnergy = 0
 end
@@ -192,8 +192,8 @@ function core._1712:InitialSetup()
     core._1712.Events:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
     core._1712.Events:RegisterEvent("UNIT_POWER_UPDATE")
 
-    core:sendDebugMessage("HERE asdasd")
-    print(core._1712.Events:IsEventRegistered("UNIT_POWER_UPDATE"))
+    --core:sendDebugMessage("HERE asdasd")
+    --print(core._1712.Events:IsEventRegistered("UNIT_POWER_UPDATE"))
 end
 
 function core._1712.Events:UNIT_SPELLCAST_SUCCEEDED(self, unitID, lineID, spellID, ...)
@@ -226,7 +226,7 @@ function core._1712.Events:UNIT_POWER_UPDATE(self, unit, powerType)
 
                     if (newPower - currentPower) >= 80 then
                         core:getAchievementSuccess()
-                        print("Boss gained: " .. (newPower - currentPower) .. " energy")
+                        --print("Boss gained: " .. (newPower - currentPower) .. " energy")
                     end
 
                     --Update highest energy if higher than current attempt. This is so we can output at the end of the fight how well the group did
