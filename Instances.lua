@@ -8,7 +8,7 @@ local L = core.L
 core.Instances = {
     BattleForAzeroth = {
         Raids = {
-            [15200] = {
+            [1861] = { --Uldir
                 name = "Uldir",
                 boss1 = {
                     name = "Taloc",
@@ -94,7 +94,7 @@ core.Instances = {
         },
 
         Dungeons = {
-            [15201] = {
+            [1763] = { --Atal Dazar
                 name = "Atal Dazar",
                 boss1 = {
                     name = "Other 52",
@@ -128,7 +128,7 @@ core.Instances = {
                 },
             },
 
-            [15202] = {
+            [1754] = { --Freehold
                 name = "Freehold",
                 boss1 = {
                     name = "Skycap'n Kragg",
@@ -162,7 +162,7 @@ core.Instances = {
                 },
             },
 
-            [15203] = {
+            [1762] = { --Kings Rest
                 name = "Kings Rest",
                 boss1 = {
                     name = "Mchimba the Embalmer",
@@ -196,7 +196,7 @@ core.Instances = {
                 },
             },
 
-            [15204] = {
+            [1864] = { --Shrine of the Storm
                 name = "Shrine of the Storm",
                 boss1 = {
                     name = "Lord Stormsong",
@@ -230,7 +230,7 @@ core.Instances = {
                 },
             },
 
-            [15205] = {
+            [1822] = { --Siege of Boralus
                 name = "Siege of Boralus",
                 boss1 = {
                     name = "Dread Captain Lockwood",
@@ -254,7 +254,7 @@ core.Instances = {
                 },
             },
 
-            [15206] = {
+            [1877] = { --Temple of Sethraliss
                 name = "Temple of Sethraliss",
                 boss1 = {
                     name = "Merektha",
@@ -288,7 +288,7 @@ core.Instances = {
                 },
             },
 
-            [15207] = {
+            [1594] = { --The Motherlode
                 name = "The Motherlode",
                 boss1 = {
                     name = "Coin-Operated Crowd Pummeler",
@@ -312,7 +312,7 @@ core.Instances = {
                 },
             },
 
-            [15208] = {
+            [1841] = { --The Underrot
                 name = "The Underrot",
                 boss1 = {
                     name = "Elder Leaxa",
@@ -346,7 +346,7 @@ core.Instances = {
                 },                
             },
 
-            [15209] = {
+            [1771] = { --Tol Dagor
                 name = "Tol Dagor",
                 boss1 = {
                     name = "Knight Captain Valyri",
@@ -370,7 +370,7 @@ core.Instances = {
                 },
             },
 
-            [152010] = {
+            [1862] = { --Waycrest Manor
                 name = "Waycrest Manor",
                 boss1 = {
                     name = "Soulbound Goliath",

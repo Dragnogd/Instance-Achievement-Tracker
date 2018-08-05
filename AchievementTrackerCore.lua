@@ -35,6 +35,9 @@ function events:onUpdate(sinceLastUpdate)
 	end
 end
 
+local mapID, isContinent = GetCurrentMapAreaID()
+print(mapID)
+
 --print(WhizzL["Terrace of Endless Spring"])
 
 --------------------------------------
