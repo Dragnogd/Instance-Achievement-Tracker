@@ -18,7 +18,8 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 2144,
                 },
                 boss2 = {
                     name = "MOTHER",
@@ -28,7 +29,8 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 2141,
                 },
                 boss3 = {
                     name = "Fetid Devourer",
@@ -38,7 +40,8 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.Uldir:FetidDevourer() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 2128,
                 },
                 boss4 = {
                     name = "Zek'voz",
@@ -48,7 +51,8 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 2136,
                 },
                 boss5 = {
                     name = "Vectis",
@@ -58,7 +62,8 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 2134,
                 },
                 boss6 = {
                     name = "Zul Reborn",
@@ -68,7 +73,8 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 2145,
                 },
                 boss7 = {
                     name = "Mythrax the Unraveler",
@@ -78,7 +84,8 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 2135,
                 },
                 boss8 = {
                     name = "G'huun",
@@ -88,7 +95,8 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 2122,
                 },
             },
         },
@@ -114,7 +122,8 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.AtalDazar:PriestessAlunza() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 2084,
                 },
                 boss3 = {
                     name = "Yazma",
@@ -124,7 +133,8 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 2087,
                 },
             },
 
@@ -138,7 +148,8 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.Freehold:SkycapnKragg() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 2093,
                 },
                 boss2 = {
                     name = "Ring of Booty",
@@ -148,7 +159,8 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 2095,
                 },
                 boss3 = {
                     name = "Harlan Sweete",
@@ -158,7 +170,8 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 2096,
                 },
             },
 
@@ -172,7 +185,8 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 2142,
                 },
                 boss2 = {
                     name = "Other 53",
@@ -206,7 +220,8 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.ShrineOfTheStorm:LordStormsong() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 2132,
                 },
                 boss2 = {
                     name = "Vol'zith",
@@ -216,7 +231,8 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.ShrineOfTheStorm:VolzithTheWhisperer() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 2133,
                 },
                 boss3 = {
                     name = "Other 51",
@@ -240,7 +256,8 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 2109,
                 },
                 boss2 = {
                     name = "Viq'Goth",
@@ -250,7 +267,8 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 2100,
                 },
             },
 
@@ -264,7 +282,8 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 2125,
                 },
                 boss2 = {
                     name = "Avatar of Sethraliss",
@@ -274,7 +293,8 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 2127,
                 },
                 boss3 = {
                     name = "Other 30",
@@ -298,7 +318,8 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.TheMotherlode:CoinOperatedCrowdPummeler() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 2105,
                 },
                 boss2 = {
                     name = "Mogul Razdunk",
@@ -308,7 +329,8 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.TheMotherlode:MogulRazdunk() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 2108,
                 },
             },
 
@@ -322,7 +344,8 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.TheUnderrot:ElderLeaxa() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 2111,
                 },
                 boss2 = {
                     name = "Sporecaller Zancha",
@@ -332,7 +355,8 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.TheUnderrot:SporecallerZancha() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 2112,
                 },
                 boss3 = {
                     name = "Unbound Abomination",
@@ -342,7 +366,8 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.TheUnderrot:UnboundAbomination() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 2123,
                 },                
             },
 
@@ -356,7 +381,8 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.TolDagor:KnightCaptainValyri() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 2103,
                 },
                 boss2 = {
                     name = "Overseer Korgus",
@@ -366,7 +392,8 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 2104,
                 },
             },
 
@@ -380,7 +407,8 @@ core.Instances = {
                     tactics = "",
                     enabled = true,
                     track = function() core.WaycrestManor:SoulboundGoliath() end,
-					partial = false,
+                    partial = false,
+                    encounterID = 2114,
                 },
                 boss2 = {
                     name = "Gorak Tul",
@@ -390,7 +418,8 @@ core.Instances = {
                     tactics = "",
                     enabled = false,
                     track = nil,
-					partial = false,
+                    partial = false,
+                    encounterID = 2117,
                 },
                 boss3 = {
                     name = "Other 50",
@@ -881,6 +910,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core._1753:ZuraalTheAscended() end,
                     partial = false,
+                    encounterID = 2065,
                 },
                 boss2 = {
                     name = "Saprish",
@@ -891,6 +921,7 @@ core.Instances = {
                     enabled = false,
                     track = nil,
                     partial = false,
+                    encounterID = 2066,
                 },
                 boss3 = {
                     name = "L'ura",
@@ -901,6 +932,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core._1753:Lura() end,
                     partial = false,
+                    encounterID = 2068,
                 },
             },
 
@@ -1302,6 +1334,7 @@ core.Instances = {
                     enabled = false,
                     track = nil,
                     partial = false,
+                    encounterID = 2055,
                 },
                 boss2 = {
                     name = "Thrashbite the Scornful",
@@ -1312,6 +1345,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core._1677:ThrashbiteTheScornful() end,
                     partial = false,
+                    encounterID = 2057,
                 },
                 boss3 = {
                     name = "Mephistroth",
@@ -1322,6 +1356,7 @@ core.Instances = {
                     enabled = false,
                     track = nil,
                     partial = false,
+                    encounterID = 2039,
                 },
             },
         },
