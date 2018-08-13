@@ -6,9 +6,9 @@ local _, core = ...
 ------------------------------------------------------
 ---- Atal'Dazar Bosses
 ------------------------------------------------------
-core.AtalDazar = {}
+core._1763 = {}
 
-function core.AtalDazar:PriestessAlunza()
+function core._1763:PriestessAlunza()
     if core.type == "UNIT_DIED" and core.destID == "131140" then
         core:getAchievementSuccess()
     end

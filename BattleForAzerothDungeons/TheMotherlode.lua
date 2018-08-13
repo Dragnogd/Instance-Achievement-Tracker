@@ -6,20 +6,20 @@ local _, core = ...
 ------------------------------------------------------
 ---- The Motherlode Bosses
 ------------------------------------------------------
-core.TheMotherlode = {}
+core._1594 = {}
 
 ------------------------------------------------------
 ---- Mogul Razdunk
 ------------------------------------------------------
 local playersHit = {}
 
-function core.TheMotherlode:CoinOperatedCrowdPummeler()
+function core._1594:CoinOperatedCrowdPummeler()
     if core.type == "UNIT_DIED" and core.destID == "142625" then
         core:getAchievementSuccess()
     end
 end
 
-function core.TheMotherlode:MogulRazdunk()
+function core._1594:MogulRazdunk()
     --Defeat Mogul Razdunk without being struck by Gatling Gun, Micro Missiles, Big Red Rocket, or a direct hit from Drill Smash in The MOTHERLODE!! on Mythic difficulty.
     --Gatling Gun 260279
     --Micro Missiles 276234
@@ -39,6 +39,6 @@ function core.TheMotherlode:MogulRazdunk()
     end
 end
 
-function core.TheMotherlode:ClearVariables()
+function core._1594:ClearVariables()
     playersHit = {}
 end

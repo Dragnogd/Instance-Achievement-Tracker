@@ -6,13 +6,13 @@ local _, core = ...
 ------------------------------------------------------
 ---- Tol Dagor Bosses
 ------------------------------------------------------
-core.TolDagor = {}
+core._1771 = {}
 
-function core.TolDagor:KnightCaptainValyri()
+function core._1771:KnightCaptainValyri()
     if core.spellId == 256710 then
         core:getAchievementFailed()
     end
 end
 
-function core.TolDagor:ClearVariables()
+function core._1771:ClearVariables()
 end

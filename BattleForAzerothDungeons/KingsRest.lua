@@ -6,14 +6,14 @@ local _, core = ...
 ------------------------------------------------------
 ---- Kings Rest Bosses
 ------------------------------------------------------
-core.KingsRest = {}
+core._1762 = {}
 
 ------------------------------------------------------
 ---- Mchimba The Embalmer
 ------------------------------------------------------
 local struggleUsed = false
 
-function core.KingsRest:MchimbaTheEmbalmer()
+function core._1762:MchimbaTheEmbalmer()
     --Defeat Mchimba the Embalmer without him finishing a cast of Open Coffin and with entombed players using Struggle no more than once per cast of Entomb on Mythic Difficulty.
 
     --Boss has successfully cast Open Coffin so fail achievement
@@ -27,7 +27,7 @@ function core.KingsRest:MchimbaTheEmbalmer()
     end
 
     --Check if player has used Struggle too many times.
-    if core.type == "SPELL_CAST_SUCEESS" and core.spellId == 267764 and struggleUsed = false then
+    if core.type == "SPELL_CAST_SUCEESS" and core.spellId == 267764 and struggleUsed == false then
         struggleUsed = true
     else
         core:getAchievementFailed()
@@ -38,7 +38,7 @@ function core.KingsRest:MchimbaTheEmbalmer()
     --Struggle 267764
 end
 
-function core.KingsRest:ClearVariables()
+function core._1762:ClearVariables()
     ------------------------------------------------------
     ---- Mchimba The Embalmer
     ------------------------------------------------------

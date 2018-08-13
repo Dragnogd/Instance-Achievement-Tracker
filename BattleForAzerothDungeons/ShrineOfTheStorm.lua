@@ -6,7 +6,7 @@ local _, core = ...
 ------------------------------------------------------
 ---- Shrine of the Storm Bosses
 ------------------------------------------------------
-core.ShrineOfTheStorm = {}
+core._1864 = {}
 
 ------------------------------------------------------
 ---- Vol'zith the Whisperer
@@ -15,7 +15,7 @@ local maddeningDreamCount = 0
 local maddeningDreamPlayersUID = {}
 local volzithKilled = false
 
-function core.ShrineOfTheStorm:VolzithTheWhisperer()
+function core._1864:VolzithTheWhisperer()
     --Defeat Vol'zith the Whisperer while all party members are afflicted with Maddening Dreams in Shrine of the Storm on Mythic difficulty.
 
     if volzithKilled == false then
@@ -51,14 +51,14 @@ function core.ShrineOfTheStorm:VolzithTheWhisperer()
     end
 end
 
-function core.ShrineOfTheStorm:LordStormsong()
+function core._1864:LordStormsong()
 	--Defeat Lord Stormsong without coming into contact with any Awoken Void in Shrine of the Storm on Mythic difficulty.
 	if core.spellId == 269104 then
 		core:getAchievementFailed(core.destName)
 	end
 end
 
-function core.ShrineOfTheStorm:ClearVariables()
+function core._1864:ClearVariables()
     ------------------------------------------------------
     ---- Vol'zith the Whisperer
     ------------------------------------------------------

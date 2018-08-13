@@ -6,21 +6,21 @@ local _, core = ...
 ------------------------------------------------------
 ---- The Underrot Bosses
 ------------------------------------------------------
-core.TheUnderrot = {}
+core._1841 = {}
 
-function core.TheUnderrot:SporecallerZancha()
+function core._1841:SporecallerZancha()
     if core.type == "UNIT_DIED" and core.destID == "138740" then
         core:getAchievementSuccess()
     end
 end
 
-function core.TheUnderrot:ElderLeaxa()
+function core._1841:ElderLeaxa()
     if core.type == "SPELL_AURA_APPLIED" and core.spellId == 260685 then
         core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")")
     end
 end
 
-function core.TheUnderrot:UnboundAbomination()
+function core._1841:UnboundAbomination()
     if core.type == "UNIT_DIED" and core.destID == "137458" then
         core:getAchievementFailed()
     end

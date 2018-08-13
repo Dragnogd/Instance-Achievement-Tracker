@@ -6,7 +6,7 @@ local _, core = ...
 ------------------------------------------------------
 ---- Uldir Bosses
 ------------------------------------------------------
-core.Uldir = {}
+core._1861 = {}
 
 ------------------------------------------------------
 ---- Fetid Devourer
@@ -15,7 +15,7 @@ local fetidDevourerKilled = false
 local playersFetidTable = {}
 local playersFetid = 0
 
-function core.Uldir:FetidDevourer()
+function core._1861:FetidDevourer()
     --Defeat the Fetid Devourer in Uldir after having all players hit by Terrible Thrash at least once on Normal difficulty or higher.
     if core.type == "UNIT_DIED" and core.destID == "133298" then
         fetidDevourerKilled = true
