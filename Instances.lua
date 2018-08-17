@@ -6,7 +6,8 @@ local _, core = ...
 local L = core.L
 
 core.Instances = {
-    BattleForAzeroth = {
+    --Battle for Azeroth
+    [2] = {
         Raids = {
             [1861] = { --Uldir
                 name = "Uldir",
@@ -435,7 +436,8 @@ core.Instances = {
         },
     },
 
-    Legion = {
+    --Legion
+    [3] = {
         Raids = {
             [1520] = { --The Emerald Nightmare
                 name = "The Emerald Nightmare",
@@ -1362,7 +1364,8 @@ core.Instances = {
         },
     },
 
-    WarlordsOfDraenor = {
+    --Warlords of Dranor
+    [4] = {
         Raids = {
             [1228] = { --Highmaul
                 name = "Highmaul",
@@ -2017,7 +2020,8 @@ core.Instances = {
         },
     },
 
-    MistsOfPandaria = {
+    --Mists of Pandaria
+    [5] = {
         Raids = {
             [996] = { --Terrace of Endless Spring
                 name = "Terrace of Endless Spring",
@@ -2850,7 +2854,8 @@ core.Instances = {
         },
     },
 
-    Cataclysm = {
+    --Cataclysm
+    [6] = {
         Raids = {
             [967] = { --Dragon Soul
                 name = "Dragon Soul",
@@ -3675,7 +3680,8 @@ core.Instances = {
         },
     },
 
-    WrathOfTheLichKing = {
+    --Wrath of the Lich King
+    [7] = {
         Raids = {
             ["615-10"] = { --Obsidian Sanctum 10 Man
                 name = "Obsidian Sanctum 10 Man",
