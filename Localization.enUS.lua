@@ -41,6 +41,20 @@ local baseLocale = {
     ["Disabled"] = "Disabled",
     ["Enabled"] = "Enabled",
     ["Tracking"] = "Tracking",
+
+    ["Starting Achievement Scan For"] = "Starting Achievement Scan For",
+    ["This may freeze your game for a few seconds"] = "This may freeze your game for a few seconds",
+    ["Achievement Scanning Finished"] = "Achievement Scanning Finished",
+    ["Do you want to enable achievement tracking for"] = "Do you want to enable achievement tracking for",
+    ["Track Achievements"] = "Track Achievements",
+    ["Yes"] = "Yes",
+    ["No"] = "No",
+    ["Achievement Tracking Enabled for"] = "Achievement Tracking Enabled for",
+    ["List of slash commands"] = "List of slash commands",
+    ["help"] = "help",
+    ["enable"] = "enable",
+    ["shows a list of avaliable slash commands"] = "shows a list of avaliable slash commands",
+    ["enable/disable IAT achievement tracking"] = "enable/disable IAT achievement tracking",
 }
 
 core:RegisterLocale('enUS', baseLocale)

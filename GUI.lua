@@ -35,6 +35,20 @@ Config.releaseType = ""                     --Release type (Alpha, Beta, Release
 local _, _, _, tocVersionloc = GetBuildInfo()
 core.tocVersion = tocVersionloc
 
+------------------------------------------------------
+---- Localisation
+------------------------------------------------------
+
+function Config:getLocalisedInstanceName(instanceID)
+    return EJ_GetInstanceInfo(instanceID)
+end
+
+function Config:getLocalisedEncouterName(encounterID)
+    return EJ_GetEncounterInfo(encounterID)
+end
+
+
+
 -- Method:          Config:Toggle()
 -- What it Does:    Toggles the GUI to show or hide
 -- Purpose:         Checks whether the GUI is currently being shown and performs the opposite action
@@ -438,44 +452,44 @@ function Config:CreateGUI()
         for instance,v in pairs(core.Instances[i].Raids) do
             if firstRaid == false then
                 if i == 2 then
-                    BattleForAzerothNav[instance] = self:CreateButton("TOPLEFT", BattleForAzerothNav, "TOPLEFT", 0, core.Instances[i].Raids[instance].name, instance);
+                    BattleForAzerothNav[instance] = self:CreateButton("TOPLEFT", BattleForAzerothNav, "TOPLEFT", 0, Config:getLocalisedInstanceName(core.Instances[i].Raids[instance].name), instance);
                     BattleForAzerothNav[instance]:SetScript("OnClick", Instance_OnClick);                
                 elseif i == 3 then
-                    LegionNav[instance] = self:CreateButton("TOPLEFT", LegionNav, "TOPLEFT", 0, core.Instances[i].Raids[instance].name, instance);
+                    LegionNav[instance] = self:CreateButton("TOPLEFT", LegionNav, "TOPLEFT", 0, Config:getLocalisedInstanceName(core.Instances[i].Raids[instance].name), instance);
                     LegionNav[instance]:SetScript("OnClick", Instance_OnClick);
                 elseif i == 4 then
-                    WarlordsOfDraenorNav[instance] = self:CreateButton("TOPLEFT", WarlordsOfDraenorNav, "TOPLEFT", 0, core.Instances[i].Raids[instance].name, instance);
+                    WarlordsOfDraenorNav[instance] = self:CreateButton("TOPLEFT", WarlordsOfDraenorNav, "TOPLEFT", 0, Config:getLocalisedInstanceName(core.Instances[i].Raids[instance].name), instance);
                     WarlordsOfDraenorNav[instance]:SetScript("OnClick", Instance_OnClick);
                 elseif i == 5 then
-                    MistsOfPandariaNav[instance] = self:CreateButton("TOPLEFT", MistsOfPandariaNav, "TOPLEFT", 0, core.Instances[i].Raids[instance].name, instance);
+                    MistsOfPandariaNav[instance] = self:CreateButton("TOPLEFT", MistsOfPandariaNav, "TOPLEFT", 0, Config:getLocalisedInstanceName(core.Instances[i].Raids[instance].name), instance);
                     MistsOfPandariaNav[instance]:SetScript("OnClick", Instance_OnClick);
                 elseif i == 6 then
-                    CataclysmNav[instance] = self:CreateButton("TOPLEFT", CataclysmNav, "TOPLEFT", 0, core.Instances[i].Raids[instance].name, instance);
+                    CataclysmNav[instance] = self:CreateButton("TOPLEFT", CataclysmNav, "TOPLEFT", 0, Config:getLocalisedInstanceName(core.Instances[i].Raids[instance].name), instance);
                     CataclysmNav[instance]:SetScript("OnClick", Instance_OnClick);
                 elseif i == 7 then
-                    WrathOfTheLichKingNav[instance] = self:CreateButton("TOPLEFT", WrathOfTheLichKingNav, "TOPLEFT", 0, core.Instances[i].Raids[instance].name, instance);
+                    WrathOfTheLichKingNav[instance] = self:CreateButton("TOPLEFT", WrathOfTheLichKingNav, "TOPLEFT", 0, Config:getLocalisedInstanceName(core.Instances[i].Raids[instance].name), instance);
                     WrathOfTheLichKingNav[instance]:SetScript("OnClick", Instance_OnClick);
                 end
                 firstRaid = true
                 previousInstance = instance
             else
                 if i == 2 then
-                    BattleForAzerothNav[instance] = self:CreateButton("TOPLEFT", BattleForAzerothNav[previousInstance], "TOPLEFT", -32, core.Instances[i].Raids[instance].name, instance);
+                    BattleForAzerothNav[instance] = self:CreateButton("TOPLEFT", BattleForAzerothNav[previousInstance], "TOPLEFT", -32, Config:getLocalisedInstanceName(core.Instances[i].Raids[instance].name), instance);
                     BattleForAzerothNav[instance]:SetScript("OnClick", Instance_OnClick);
                 elseif i == 3 then
-                    LegionNav[instance] = self:CreateButton("TOPLEFT", LegionNav[previousInstance], "TOPLEFT", -32, core.Instances[i].Raids[instance].name, instance);
+                    LegionNav[instance] = self:CreateButton("TOPLEFT", LegionNav[previousInstance], "TOPLEFT", -32, Config:getLocalisedInstanceName(core.Instances[i].Raids[instance].name), instance);
                     LegionNav[instance]:SetScript("OnClick", Instance_OnClick);
                 elseif i == 4 then
-                    WarlordsOfDraenorNav[instance] = self:CreateButton("TOPLEFT", WarlordsOfDraenorNav[previousInstance], "TOPLEFT", -32, core.Instances[i].Raids[instance].name, instance);
+                    WarlordsOfDraenorNav[instance] = self:CreateButton("TOPLEFT", WarlordsOfDraenorNav[previousInstance], "TOPLEFT", -32, Config:getLocalisedInstanceName(core.Instances[i].Raids[instance].name), instance);
                     WarlordsOfDraenorNav[instance]:SetScript("OnClick", Instance_OnClick);
                 elseif i == 5 then
-                    MistsOfPandariaNav[instance] = self:CreateButton("TOPLEFT", MistsOfPandariaNav[previousInstance], "TOPLEFT", -32, core.Instances[i].Raids[instance].name, instance);
+                    MistsOfPandariaNav[instance] = self:CreateButton("TOPLEFT", MistsOfPandariaNav[previousInstance], "TOPLEFT", -32, Config:getLocalisedInstanceName(core.Instances[i].Raids[instance].name), instance);
                     MistsOfPandariaNav[instance]:SetScript("OnClick", Instance_OnClick);
                 elseif i == 6 then
-                    CataclysmNav[instance] = self:CreateButton("TOPLEFT", CataclysmNav[previousInstance], "TOPLEFT", -32, core.Instances[i].Raids[instance].name, instance);
+                    CataclysmNav[instance] = self:CreateButton("TOPLEFT", CataclysmNav[previousInstance], "TOPLEFT", -32, Config:getLocalisedInstanceName(core.Instances[i].Raids[instance].name), instance);
                     CataclysmNav[instance]:SetScript("OnClick", Instance_OnClick);
                 elseif i == 7 then
-                    WrathOfTheLichKingNav[instance] = self:CreateButton("TOPLEFT", WrathOfTheLichKingNav[previousInstance], "TOPLEFT", -32, core.Instances[i].Raids[instance].name, instance);
+                    WrathOfTheLichKingNav[instance] = self:CreateButton("TOPLEFT", WrathOfTheLichKingNav[previousInstance], "TOPLEFT", -32, Config:getLocalisedInstanceName(core.Instances[i].Raids[instance].name), instance);
                     WrathOfTheLichKingNav[instance]:SetScript("OnClick", Instance_OnClick);
                 end
                 previousInstance = instance
@@ -486,44 +500,44 @@ function Config:CreateGUI()
         for instance,v in pairs(core.Instances[i].Dungeons) do
             if firstDungeon == false then
                 if i == 2 then
-                    BattleForAzerothNav[instance] = self:CreateButton("TOPLEFT", BattleForAzerothNav[previousInstance], "TOPLEFT", -40, core.Instances[i].Dungeons[instance].name, instance);
+                    BattleForAzerothNav[instance] = self:CreateButton("TOPLEFT", BattleForAzerothNav[previousInstance], "TOPLEFT", -40, Config:getLocalisedInstanceName(core.Instances[i].Dungeons[instance].name), instance);
                     BattleForAzerothNav[instance]:SetScript("OnClick", Instance_OnClick);
                 elseif i == 3 then
-                    LegionNav[instance] = self:CreateButton("TOPLEFT", LegionNav[previousInstance], "TOPLEFT", -40, core.Instances[i].Dungeons[instance].name, instance);
+                    LegionNav[instance] = self:CreateButton("TOPLEFT", LegionNav[previousInstance], "TOPLEFT", -40, Config:getLocalisedInstanceName(core.Instances[i].Dungeons[instance].name), instance);
                     LegionNav[instance]:SetScript("OnClick", Instance_OnClick);
                 elseif i == 4 then
-                    WarlordsOfDraenorNav[instance] = self:CreateButton("TOPLEFT", WarlordsOfDraenorNav[previousInstance], "TOPLEFT", -40, core.Instances[i].Dungeons[instance].name, instance);
+                    WarlordsOfDraenorNav[instance] = self:CreateButton("TOPLEFT", WarlordsOfDraenorNav[previousInstance], "TOPLEFT", -40, Config:getLocalisedInstanceName(core.Instances[i].Dungeons[instance].name), instance);
                     WarlordsOfDraenorNav[instance]:SetScript("OnClick", Instance_OnClick);
                 elseif i == 5 then
-                    MistsOfPandariaNav[instance] = self:CreateButton("TOPLEFT", MistsOfPandariaNav[previousInstance], "TOPLEFT", -40, core.Instances[i].Dungeons[instance].name, instance);
+                    MistsOfPandariaNav[instance] = self:CreateButton("TOPLEFT", MistsOfPandariaNav[previousInstance], "TOPLEFT", -40, Config:getLocalisedInstanceName(core.Instances[i].Dungeons[instance].name), instance);
                     MistsOfPandariaNav[instance]:SetScript("OnClick", Instance_OnClick);
                 elseif i == 6 then
-                    CataclysmNav[instance] = self:CreateButton("TOPLEFT", CataclysmNav[previousInstance], "TOPLEFT", -40, core.Instances[i].Dungeons[instance].name, instance);
+                    CataclysmNav[instance] = self:CreateButton("TOPLEFT", CataclysmNav[previousInstance], "TOPLEFT", -40, Config:getLocalisedInstanceName(core.Instances[i].Dungeons[instance].name), instance);
                     CataclysmNav[instance]:SetScript("OnClick", Instance_OnClick);
                 elseif i == 7 then
-                    WrathOfTheLichKingNav[instance] = self:CreateButton("TOPLEFT", WrathOfTheLichKingNav[previousInstance], "TOPLEFT", -40, core.Instances[i].Dungeons[instance].name, instance);
+                    WrathOfTheLichKingNav[instance] = self:CreateButton("TOPLEFT", WrathOfTheLichKingNav[previousInstance], "TOPLEFT", -40, Config:getLocalisedInstanceName(core.Instances[i].Dungeons[instance].name), instance);
                     WrathOfTheLichKingNav[instance]:SetScript("OnClick", Instance_OnClick);
                 end
                 firstDungeon = true
                 previousInstance = instance
             else
                 if i == 2 then
-                    BattleForAzerothNav[instance] = self:CreateButton("TOPLEFT", BattleForAzerothNav[previousInstance], "TOPLEFT", -32, core.Instances[i].Dungeons[instance].name, instance);
+                    BattleForAzerothNav[instance] = self:CreateButton("TOPLEFT", BattleForAzerothNav[previousInstance], "TOPLEFT", -32, Config:getLocalisedInstanceName(core.Instances[i].Dungeons[instance].name), instance);
                     BattleForAzerothNav[instance]:SetScript("OnClick", Instance_OnClick);
                 elseif i == 3 then
-                    LegionNav[instance] = self:CreateButton("TOPLEFT", LegionNav[previousInstance], "TOPLEFT", -32, core.Instances[i].Dungeons[instance].name, instance);
+                    LegionNav[instance] = self:CreateButton("TOPLEFT", LegionNav[previousInstance], "TOPLEFT", -32, Config:getLocalisedInstanceName(core.Instances[i].Dungeons[instance].name), instance);
                     LegionNav[instance]:SetScript("OnClick", Instance_OnClick);
                 elseif i == 4 then
-                    WarlordsOfDraenorNav[instance] = self:CreateButton("TOPLEFT", WarlordsOfDraenorNav[previousInstance], "TOPLEFT", -32, core.Instances[i].Dungeons[instance].name, instance);
+                    WarlordsOfDraenorNav[instance] = self:CreateButton("TOPLEFT", WarlordsOfDraenorNav[previousInstance], "TOPLEFT", -32, Config:getLocalisedInstanceName(core.Instances[i].Dungeons[instance].name), instance);
                     WarlordsOfDraenorNav[instance]:SetScript("OnClick", Instance_OnClick);                    
                 elseif i == 5 then
-                    MistsOfPandariaNav[instance] = self:CreateButton("TOPLEFT", MistsOfPandariaNav[previousInstance], "TOPLEFT", -32, core.Instances[i].Dungeons[instance].name, instance);
+                    MistsOfPandariaNav[instance] = self:CreateButton("TOPLEFT", MistsOfPandariaNav[previousInstance], "TOPLEFT", -32, Config:getLocalisedInstanceName(core.Instances[i].Dungeons[instance].name), instance);
                     MistsOfPandariaNav[instance]:SetScript("OnClick", Instance_OnClick);
                 elseif i == 6 then
-                    CataclysmNav[instance] = self:CreateButton("TOPLEFT", CataclysmNav[previousInstance], "TOPLEFT", -32, core.Instances[i].Dungeons[instance].name, instance);
+                    CataclysmNav[instance] = self:CreateButton("TOPLEFT", CataclysmNav[previousInstance], "TOPLEFT", -32, Config:getLocalisedInstanceName(core.Instances[i].Dungeons[instance].name), instance);
                     CataclysmNav[instance]:SetScript("OnClick", Instance_OnClick);
                 elseif i == 7 then
-                    WrathOfTheLichKingNav[instance] = self:CreateButton("TOPLEFT", WrathOfTheLichKingNav[previousInstance], "TOPLEFT", -32, core.Instances[i].Dungeons[instance].name, instance);
+                    WrathOfTheLichKingNav[instance] = self:CreateButton("TOPLEFT", WrathOfTheLichKingNav[previousInstance], "TOPLEFT", -32, Config:getLocalisedInstanceName(core.Instances[i].Dungeons[instance].name), instance);
                     WrathOfTheLichKingNav[instance]:SetScript("OnClick", Instance_OnClick);
                 end
                 previousInstance = instance
@@ -714,7 +728,7 @@ function Instance_OnClick(self)
                     button:SetPoint("TOPLEFT",WrathOfTheLichKingContentButtons[counter-1],"BOTTOMLEFT",0,30-heightDifference)
                 end                
             end
-            button.headerText:SetText(instanceLocation["boss" .. counter2].name)
+            button.headerText:SetText(Config:getLocalisedEncouterName(instanceLocation["boss" .. counter2].name))
             button.headerText:Show()
             button.contentText:Hide()
             button:SetNormalTexture("Interface\\Common\\Dark-GoldFrame-Button")

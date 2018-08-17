@@ -123,7 +123,7 @@ function getPlayersInGroup()
 	if core.inInstance == true then
 		--Only Announce the scanning once.
 		if scanAnnounced == false then
-			printMessage("Starting Achievement Scan For " .. core.instanceNameSpaces .. " (This may freeze your game for a few seconds!)")
+			printMessage(L["Starting Achievement Scan For"] .. " " .. core.instanceNameSpaces .. " (" .. L["This may freeze your game for a few seconds"] .. "!)")
 			scanAnnounced = true
 		end
 		core:getGroupSize() --Get current size of the group
@@ -210,7 +210,7 @@ function getPlayersInGroup()
 			--Fetch information for the next person in the group
 			getInstanceAchievements()
 		else
-			core:sendDebugMessage("Achievement Scanning Finished (" .. #playersScanned .. "/" .. core.groupSize .. ")")
+			core:sendDebugMessage(L["Achievement Scanning Finished"] .. " (" .. #playersScanned .. "/" .. core.groupSize .. ")")
 			scanInProgress = false
 			core.scanFinished = true
 
@@ -433,7 +433,7 @@ function getInstanceInfomation()
 					createEnableAchievementTrackingUI()
 				else
 					core:sendDebugMessage("Displaying Tracking UI since it was already created")
-					UIConfig.content:SetText("Do you want to enable achievement tracking for: " .. core.instanceNameSpaces);
+					UIConfig.content:SetText(L["Do you want to enable achievement tracking for"] .. ": " .. core.instanceNameSpaces);
 					UIConfig:Show()
 				end
 			else
@@ -474,25 +474,25 @@ function createEnableAchievementTrackingUI()
 	--Title
 	UIConfig.title = UIConfig:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
 	UIConfig.title:SetPoint("CENTER", AchievementTrackerCheckTitleBG, "CENTER", -5, 0);
-	UIConfig.title:SetText("Track Achievements?");
+	UIConfig.title:SetText(L["Track Achievements"] .. "?");
 
 	--Content
 	UIConfig.content = UIConfig:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
 	UIConfig.content:SetPoint("TOPLEFT", AchievementTrackerCheckDialogBG, "TOPLEFT", 0, -5);
-	UIConfig.content:SetText("Do you want to enable achievement tracking for: " .. core.instanceNameSpaces);
+	UIConfig.content:SetText(L["Do you want to enable achievement tracking for"] .. ": " .. core.instanceNameSpaces);
 	UIConfig.content:SetWidth(185)
 
 	UIConfig.btnYes = CreateFrame("Button", nil, UIConfig, "GameMenuButtonTemplate");
 	UIConfig.btnYes:SetPoint("RIGHT", UIConfig.content, "BOTTOM", 0, -20);
 	UIConfig.btnYes:SetSize(80, 30);
-	UIConfig.btnYes:SetText("Yes");
+	UIConfig.btnYes:SetText(L["Yes"]);
 	UIConfig.btnYes:SetNormalFontObject("GameFontNormal");
 	UIConfig.btnYes:SetHighlightFontObject("GameFontHighlight");
 
 	UIConfig.btnNo = CreateFrame("Button", nil, UIConfig, "GameMenuButtonTemplate");
 	UIConfig.btnNo:SetPoint("LEFT", UIConfig.btnYes, "RIGHT", 5, 0);
 	UIConfig.btnNo:SetSize(80, 30);
-	UIConfig.btnNo:SetText("No");
+	UIConfig.btnNo:SetText(L["No"]);
 	UIConfig.btnNo:SetNormalFontObject("GameFontNormal");
 	UIConfig.btnNo:SetHighlightFontObject("GameFontHighlight");
 
@@ -554,7 +554,7 @@ function enableAchievementTracking(self)
 	if core.groupSize == 1 then
 		--Player is not a group so set the player to the master addon
 		core.masterAddon = true
-		printMessage("Achievement Tracking Enabled for " .. core.instanceNameSpaces)
+		printMessage(L["Achievement Tracking Enabled for"] .. " " .. core.instanceNameSpaces)
 	else
 		--Get the rank for the current player
 		for i = 1, core.groupSize do
@@ -617,13 +617,13 @@ end
 ---- Custom Slash Command
 --------------------------------------
 core.commands = {
-	["help"] = function()
-		printMessage("List of slash commands:")
-		printMessage("/iat help|r - shows help info")
-		printMessage("/iat enable|r - enable/disable IAT achievement tracking")
+	[L["help"]] = function()
+		printMessage(L["List of slash commands"] .. ":")
+		printMessage("/iat help|r - " .. L["shows a list of avaliable slash commands"])
+		printMessage("/iat enable|r - " .. L["enable/disable IAT achievement tracking"])
 	end,
 
-	["enable"] = function()
+	[L["enable"]] = function()
 		print("Enable/Disable addon")
 	end,
 
