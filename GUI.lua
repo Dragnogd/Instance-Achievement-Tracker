@@ -44,7 +44,14 @@ function Config:getLocalisedInstanceName(instanceID)
 end
 
 function Config:getLocalisedEncouterName(encounterID)
-    return EJ_GetEncounterInfo(encounterID)
+    if tonumber(encounterID) then
+        return EJ_GetEncounterInfo(encounterID)
+    else
+        --The encounterID is actually string since there is no dungeon journal entry for this achievement
+        --This will happen for achievements that are not tied directly to a boss.
+        --Localised strings will be attached in the instances database
+        return encounterID
+    end
 end
 
 
@@ -545,16 +552,17 @@ function Config:CreateGUI()
         end
     end
 
+    --Create the maximun number of buttons we could possible need for a single instances to store bosses names & tactics etc.
     local buttonHeight = 30
     local numButtons = 200 --Total number of button we need for any instance. We can hide excess button for raids/dungeons with less bosses
-
-    --Create the maximun number of buttons we could possible need for any instance
+    local idCounter = 0
     for j = 2, expansions do
         for i = 1, numButtons do
             if j == 2 then
                 BattleForAzerothContentButtons[i] = CreateFrame("Button",nil,BattleForAzerothContent)
                 button = BattleForAzerothContentButtons[i]
                 button:SetSize(BattleForAzerothContent:GetWidth()-18,buttonHeight)
+                button:SetID(idCounter)
                 if i == 1 then
                     button:SetPoint("TOPLEFT",0,0-(i-1)*buttonHeight)
                 else
@@ -564,6 +572,7 @@ function Config:CreateGUI()
                 LegionContentButtons[i] = CreateFrame("Button",nil,LegionContent)
                 button = LegionContentButtons[i]
                 button:SetSize(LegionContent:GetWidth()-18,buttonHeight)
+                button:SetID(idCounter)
                 if i == 1 then
                     button:SetPoint("TOPLEFT",0,0-(i-1)*buttonHeight)
                 else
@@ -573,6 +582,7 @@ function Config:CreateGUI()
                 WarlordsOfDraenorContentButtons[i] = CreateFrame("Button",nil,WarlordsOfDraenorContent)
                 button = WarlordsOfDraenorContentButtons[i]
                 button:SetSize(WarlordsOfDraenorContent:GetWidth()-18,buttonHeight)
+                button:SetID(idCounter)
                 if i == 1 then
                     button:SetPoint("TOPLEFT",0,0-(i-1)*buttonHeight)
                 else
@@ -582,6 +592,7 @@ function Config:CreateGUI()
                 MistsOfPandariaContentButtons[i] = CreateFrame("Button",nil,MistsOfPandariaContent)
                 button = MistsOfPandariaContentButtons[i]
                 button:SetSize(MistsOfPandariaContent:GetWidth()-18,buttonHeight)
+                button:SetID(idCounter)
                 if i == 1 then
                     button:SetPoint("TOPLEFT",0,0-(i-1)*buttonHeight)
                 else
@@ -591,6 +602,7 @@ function Config:CreateGUI()
                 CataclysmContentButtons[i] = CreateFrame("Button",nil,CataclysmContent)
                 button = CataclysmContentButtons[i]
                 button:SetSize(CataclysmContent:GetWidth()-18,buttonHeight)
+                button:SetID(idCounter)
                 if i == 1 then
                     button:SetPoint("TOPLEFT",0,0-(i-1)*buttonHeight)
                 else
@@ -600,6 +612,7 @@ function Config:CreateGUI()
                 WrathOfTheLichKingContentButtons[i] = CreateFrame("Button",nil,WrathOfTheLichKingContent)
                 button = WrathOfTheLichKingContentButtons[i]
                 button:SetSize(WrathOfTheLichKingContent:GetWidth()-18,buttonHeight)
+                button:SetID(idCounter)
                 if i == 1 then
                     button:SetPoint("TOPLEFT",0,0-(i-1)*buttonHeight)
                 else
@@ -607,35 +620,33 @@ function Config:CreateGUI()
                 end
             end
 
-            
-            --button:SetHighlightTexture("Interface\\PaperDollInfoFrame\\UI-Character-Tab-Highlight")
-            --button:SetID(i) -- we'll use this when collapsing/expanding
-            --button:SetScript("OnClick", ExpandExample_ListButtonOnClick)
-
             -- the text for the header
             button.headerText = button:CreateFontString(nil,"ARTWORK","GameFontNormalLarge")
             button.headerText:SetPoint("LEFT",12,0)
-           -- button.headerText:SetText("This is headerText")
 
             -- the text for the content
             button.contentText = button:CreateFontString(nil,"ARTWORK","GameFontHighlight")
-            button.contentText:SetPoint("TOPLEFT",16,0) -- a little extra indent
-            --button.contentText:SetText("This is contentText")
+            button.contentText:SetPoint("TOPLEFT",16,0)
             button.contentText:SetJustifyH("LEFT")
 
             --Tactics
             button.tactics = Config:CreateButton2("TOPRIGHT", button, "TOPRIGHT", -1, -7, L["Output Tactics"])
+            button.tactics:SetID(idCounter)
 
             --Players
             button.players = Config:CreateButton2("TOPRIGHT", button.tactics, "TOPLEFT", -7, -1, L["Output Players"])
+            button.players:SetID(idCounter)
 
             --Track
             button.enabled = Config:CreateCheckBox("TOPRIGHT", button.players, "TOPLEFT", -7, -1)
+            button.enabled:SetID(idCounter)
 
             --Track Fontstring
             button.enabledText = Config:CreateText("TOPRIGHT", button.enabled, "TOPLEFT", 0, 1, L["Track"])
 
             button:Hide()
+
+            idCounter = idCounter + 1
         end   
     end
 
@@ -932,7 +943,7 @@ end
 
 function Tactics_OnClick(self)
     core:detectGroupType()
-    local parent = self:GetParent()
+    print(self:GetID())
 	for expansion,_ in pairs(core.Instances) do
 		for instanceType,_ in pairs(core.Instances[expansion]) do
 			for instance,_ in pairs(core.Instances[expansion][instanceType]) do

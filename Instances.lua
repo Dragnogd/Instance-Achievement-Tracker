@@ -1,3 +1,19 @@
+local i = 1
+while EJ_GetInstanceByIndex(i, false) do
+    local instanceId, name = EJ_GetInstanceByIndex(i, false)
+    print("---" .. instanceId, name)
+    EJ_SelectInstance(instanceId)
+    i = i+1
+    
+    local j = 1
+    while EJ_GetEncounterInfoByIndex(j, instanceId) do
+        local name, _, encounterId = EJ_GetEncounterInfoByIndex(j, instanceId)
+        print(encounterId, name)
+        j = j+1
+    end
+end
+
+
 --------------------------------------
 -- Namespaces
 --------------------------------------
@@ -106,9 +122,9 @@ core.Instances = {
 
         Dungeons = {
             [1763] = { --Atal Dazar
-                name = "Atal Dazar",
+                name = 968,
                 boss1 = {
-                    name = "Other 52",
+                    name = L["Other"],
                     bossIDs = {},
                     achievement = 12270,
                     players = {L["(Enter instance to start scanning)"]},
@@ -118,7 +134,7 @@ core.Instances = {
 					partial = false,
                 },
                 boss2 = {
-                    name = "Priestess Alun'za",
+                    name = 2082, --Priestess Alun'za
                     bossIDs = {},
                     achievement = 12272,
                     players = {L["(Enter instance to start scanning)"]},
@@ -129,7 +145,7 @@ core.Instances = {
                     encounterID = 2084,
                 },
                 boss3 = {
-                    name = "Yazma",
+                    name = 2030, --Yazma
                     bossIDs = {},
                     achievement = 12273,
                     players = {L["(Enter instance to start scanning)"]},
@@ -142,9 +158,9 @@ core.Instances = {
             },
 
             [1754] = { --Freehold
-                name = "Freehold",
+                name = 1001,
                 boss1 = {
-                    name = "Skycap'n Kragg",
+                    name = 2102, --Skycap'n Kragg
                     bossIDs = {},
                     achievement = 12548,
                     players = {L["(Enter instance to start scanning)"]},
@@ -155,7 +171,7 @@ core.Instances = {
                     encounterID = 2093,
                 },
                 boss2 = {
-                    name = "Ring of Booty",
+                    name = 2094, --Ring of Booty
                     bossIDs = {},
                     achievement = 12550,
                     players = {L["(Enter instance to start scanning)"]},
@@ -166,7 +182,7 @@ core.Instances = {
                     encounterID = 2095,
                 },
                 boss3 = {
-                    name = "Harlan Sweete",
+                    name = 2095, --Harlan Sweete
                     bossIDs = {},
                     achievement = 12998,
                     players = {L["(Enter instance to start scanning)"]},
@@ -179,9 +195,9 @@ core.Instances = {
             },
 
             [1762] = { --Kings Rest
-                name = "Kings Rest",
+                name = 1041,
                 boss1 = {
-                    name = "Mchimba the Embalmer",
+                    name = 2171, --Mchimba the Embalmer
                     bossIDs = {},
                     achievement = 12721,
                     players = {L["(Enter instance to start scanning)"]},
@@ -192,7 +208,7 @@ core.Instances = {
                     encounterID = 2142,
                 },
                 boss2 = {
-                    name = "Other 53",
+                    name = L["Other"],
                     bossIDs = {},
                     achievement = 12723,
                     players = {L["(Enter instance to start scanning)"]},
@@ -202,7 +218,7 @@ core.Instances = {
 					partial = false,
                 },
                 boss3 = {
-                    name = "Other 54",
+                    name = L["Other"],
                     bossIDs = {},
                     achievement = 12722,
                     players = {L["(Enter instance to start scanning)"]},
@@ -214,9 +230,9 @@ core.Instances = {
             },
 
             [1864] = { --Shrine of the Storm
-                name = "Shrine of the Storm",
+                name = 1036,
                 boss1 = {
-                    name = "Lord Stormsong",
+                    name = 2155, --Lord Stormsong
                     bossIDs = {139737},
                     achievement = 12601,
                     players = {L["(Enter instance to start scanning)"]},
@@ -227,7 +243,7 @@ core.Instances = {
                     encounterID = 2132,
                 },
                 boss2 = {
-                    name = "Vol'zith",
+                    name = 2156, --Vol'zith
                     bossIDs = {275690},
                     achievement = 12602,
                     players = {L["(Enter instance to start scanning)"]},
@@ -238,7 +254,7 @@ core.Instances = {
                     encounterID = 2133,
                 },
                 boss3 = {
-                    name = "Other 51",
+                    name = L["Other"],
                     bossIDs = {},
                     achievement = 12600,
                     players = {L["(Enter instance to start scanning)"]},
@@ -250,9 +266,9 @@ core.Instances = {
             },
 
             [1822] = { --Siege of Boralus
-                name = "Siege of Boralus",
+                name = 1023,
                 boss1 = {
-                    name = "Dread Captain Lockwood",
+                    name = 2173, --Dread Captain Lockwood
                     bossIDs = {},
                     achievement = 12727,
                     players = {L["(Enter instance to start scanning)"]},
@@ -263,7 +279,7 @@ core.Instances = {
                     encounterID = 2109,
                 },
                 boss2 = {
-                    name = "Viq'Goth",
+                    name = 2140, --Viq'Goth
                     bossIDs = {},
                     achievement = 12726,
                     players = {L["(Enter instance to start scanning)"]},
@@ -276,9 +292,9 @@ core.Instances = {
             },
 
             [1877] = { --Temple of Sethraliss
-                name = "Temple of Sethraliss",
+                name = 1030,
                 boss1 = {
-                    name = "Merektha",
+                    name = 2143, --Merektha
                     bossIDs = {},
                     achievement = 12507,
                     players = {L["(Enter instance to start scanning)"]},
@@ -289,7 +305,7 @@ core.Instances = {
                     encounterID = 2125,
                 },
                 boss2 = {
-                    name = "Avatar of Sethraliss",
+                    name = 2145, --Avatar of Sethraliss
                     bossIDs = {},
                     achievement = 12508,
                     players = {L["(Enter instance to start scanning)"]},
@@ -300,7 +316,7 @@ core.Instances = {
                     encounterID = 2127,
                 },
                 boss3 = {
-                    name = "Other 30",
+                    name = L["Other"],
                     bossIDs = {},
                     achievement = 12503,
                     players = {L["(Enter instance to start scanning)"]},
@@ -312,9 +328,9 @@ core.Instances = {
             },
 
             [1594] = { --The Motherlode
-                name = "The Motherlode",
+                name = 1012,
                 boss1 = {
-                    name = "Coin-Operated Crowd Pummeler",
+                    name = 2109, --Coin-Operated Crowd Pummeler
                     bossIDs = {},
                     achievement = 12855,
                     players = {L["(Enter instance to start scanning)"]},
@@ -325,7 +341,7 @@ core.Instances = {
                     encounterID = 2105,
                 },
                 boss2 = {
-                    name = "Mogul Razdunk",
+                    name = 2116, --Mogul Razdunk
                     bossIDs = {131227},
                     achievement = 12854,
                     players = {L["(Enter instance to start scanning)"]},
@@ -338,9 +354,9 @@ core.Instances = {
             },
 
             [1841] = { --The Underrot
-                name = "The Underrot",
+                name = 1022,
                 boss1 = {
-                    name = "Elder Leaxa",
+                    name = 2157, --Elder Leaxa
                     bossIDs = {},
                     achievement = 12498,
                     players = {L["(Enter instance to start scanning)"]},
@@ -351,7 +367,7 @@ core.Instances = {
                     encounterID = 2111,
                 },
                 boss2 = {
-                    name = "Sporecaller Zancha",
+                    name = 2130, --Sporecaller Zancha
                     bossIDs = {},
                     achievement = 12549,
                     players = {L["(Enter instance to start scanning)"]},
@@ -362,7 +378,7 @@ core.Instances = {
                     encounterID = 2112,
                 },
                 boss3 = {
-                    name = "Unbound Abomination",
+                    name = 2158, --Unbound Abomination
                     bossIDs = {},
                     achievement = 12499,
                     players = {L["(Enter instance to start scanning)"]},
@@ -375,9 +391,9 @@ core.Instances = {
             },
 
             [1771] = { --Tol Dagor
-                name = "Tol Dagor",
+                name = 1002,
                 boss1 = {
-                    name = "Knight Captain Valyri",
+                    name = 2099, --Knight Captain Valyri
                     bossIDs = {130646},
                     achievement = 12457,
                     players = {L["(Enter instance to start scanning)"]},
@@ -388,7 +404,7 @@ core.Instances = {
                     encounterID = 2103,
                 },
                 boss2 = {
-                    name = "Overseer Korgus",
+                    name = 2096, --Overseer Korgus
                     bossIDs = {},
                     achievement = 12462,
                     players = {L["(Enter instance to start scanning)"]},
@@ -401,9 +417,9 @@ core.Instances = {
             },
 
             [1862] = { --Waycrest Manor
-                name = "Waycrest Manor",
+                name = 1021,
                 boss1 = {
-                    name = "Soulbound Goliath",
+                    name = 2126, --Soulbound Goliath
                     bossIDs = {},
                     achievement = 12495,
                     players = {L["(Enter instance to start scanning)"]},
@@ -414,7 +430,7 @@ core.Instances = {
                     encounterID = 2114,
                 },
                 boss2 = {
-                    name = "Gorak Tul",
+                    name = 2129, --Gorak Tul
                     bossIDs = {},
                     achievement = 12490,
                     players = {L["(Enter instance to start scanning)"]},
@@ -425,7 +441,7 @@ core.Instances = {
                     encounterID = 2117,
                 },
                 boss3 = {
-                    name = "Other 50",
+                    name = L["Other"],
                     bossIDs = {},
                     achievement = 12489,
                     players = {L["(Enter instance to start scanning)"]},
@@ -443,8 +459,8 @@ core.Instances = {
         Raids = {
             [1520] = { --The Emerald Nightmare
                 name = 768,
-                boss1 = {
-                    name = "Nythendra",
+                boss1 = { 
+                    name = 1703, --Nythendra
                     bossIDs = {102672},
                     achievement = 10555,
                     players = {L["(Enter instance to start scanning)"]},
@@ -455,7 +471,7 @@ core.Instances = {
                     encounterID = 1853,
                 },
                 boss2 = {
-                    name = "Ursoc",
+                    name = 1667, --Ursoc
                     bossIDs = {100497},
                     achievement = 10753,
                     players = {L["(Enter instance to start scanning)"]},
@@ -466,7 +482,7 @@ core.Instances = {
                     encounterID = 1841,
                 },
                 boss3 = {
-                    name = "Dragons of Nightmare",
+                    name = 1704, --Dragons of Nightmare
                     bossIDs = {102683,102682,102681,102679},
                     achievement = 10663,
                     players = {L["(Enter instance to start scanning)"]},
@@ -477,7 +493,7 @@ core.Instances = {
                     encounterID = 1854,
                 },
                 boss4 = {
-                    name = "Elerethe Renferal",
+                    name = 1744, --Elerethe Renferal
                     bossIDs = {}, --106087
                     achievement = 10771,
                     players = {L["(Enter instance to start scanning)"]},
@@ -488,7 +504,7 @@ core.Instances = {
                     encounterID = 1876,
                 },
                 boss5 = {
-                    name = "Il'gynoth, Heart of Corruption",
+                    name = 1738, --Ill'gynoth, Heart of Corruption
                     bossIDs = {105906,105721},
                     achievement = 10830,
                     players = {L["(Enter instance to start scanning)"]},
@@ -499,7 +515,7 @@ core.Instances = {
                     encounterID = 1873,
                 },
                 boss6 = {
-                    name = "Cenarius",
+                    name = 1750, --Cenarius
                     bossIDs = {},
                     achievement = 10772,
                     players = {L["(Enter instance to start scanning)"]},
@@ -510,7 +526,7 @@ core.Instances = {
                     encounterID = 1877,
                 },
                 boss7 = {
-                    name = "Xavius",
+                    name = 1726, --Xavius
                     bossIDs = {103769},
                     achievement = 10755,
                     players = {L["(Enter instance to start scanning)"]},
@@ -525,7 +541,7 @@ core.Instances = {
             [1648] = { --Trial of Valor
                 name = 861,
                 boss1 = {
-                    name = "Odyn 2",
+                    name = 1819, --Odyn
                     bossIDs = {114263},
                     achievement = 11337,
                     players = {L["(Enter instance to start scanning)"]},
@@ -536,7 +552,7 @@ core.Instances = {
                     encounterID = 1958,
                 },
                 boss2 = {
-                    name = "Guarm",
+                    name = 1830, --Guarm
                     bossIDs = {114323},
                     achievement = 11386,
                     players = {L["(Enter instance to start scanning)"]},
@@ -547,7 +563,7 @@ core.Instances = {
                     encounterID = 1962,
                 },
                 boss3 = {
-                    name = "Helya",
+                    name = 1829, --Helya
                     bossIDs = {114537},
                     achievement = 11377,
                     players = {L["(Enter instance to start scanning)"]},
@@ -561,7 +577,7 @@ core.Instances = {
             [1530] = { --The Nighthold
                 name = 786,
                 boss1 = {
-                    name = "Skorpyron",
+                    name = 1706, --Skorpyron
                     bossIDs = {}, --102263
                     achievement = 10678,
                     players = {L["(Enter instance to start scanning)"]},
@@ -572,7 +588,7 @@ core.Instances = {
                     encounterID = 1849,
                 },
                 boss2 = {
-                    name = "Chronomatic Anomaly",
+                    name = 1725, --Chronomatic Anomaly
                     bossIDs = {},
                     achievement = 10697,
                     players = {L["(Enter instance to start scanning)"]},
@@ -583,7 +599,7 @@ core.Instances = {
                     encounterID = 1865,
                 },
                 boss3 = {
-                    name = "Trilliax",
+                    name = 1731, --Trilliax
                     bossIDs = {}, --104288
                     achievement = 10742,
                     players = {L["(Enter instance to start scanning)"]},
@@ -595,7 +611,7 @@ core.Instances = {
                     encounterID = 1867,
                 },
                 boss4 = {
-                    name = "Spellblade Aluriel",
+                    name = 1751, --Spellblade Aluriel
                     bossIDs = {},
                     achievement = 10817,
                     players = {L["(Enter instance to start scanning)"]},
@@ -606,7 +622,7 @@ core.Instances = {
                     encounterID = 1871,
                 },
                 boss5 = {
-                    name = "Star Augur Etraeus",
+                    name = 1732, --Star Augur Etraeus
                     bossIDs = {103758},
                     achievement = 10851,
                     players = {L["(Enter instance to start scanning)"]},
@@ -617,7 +633,7 @@ core.Instances = {
                     encounterID = 1863,
                 },
                 boss6 = {
-                    name = "High Botanist Tel'arn",
+                    name = 1761, --High Botanist Tel'arn
                     bossIDs = {104528},
                     achievement = 10754,
                     players = {L["(Enter instance to start scanning)"]},
@@ -628,7 +644,7 @@ core.Instances = {
                     encounterID = 1886,
                 },
                 boss7 = {
-                    name = "Krosus",
+                    name = 1713, --Krosus
                     bossIDs = {101002}, 
                     achievement = 10575,
                     players = {L["(Enter instance to start scanning)"]},
@@ -639,7 +655,7 @@ core.Instances = {
                     encounterID = 1842,
                 },
                 boss8 = {
-                    name = "Tichondrius",
+                    name = 1762, --Tichondrius
                     bossIDs = {103685},
                     achievement = 10704,
                     players = {L["(Enter instance to start scanning)"]},
@@ -650,7 +666,7 @@ core.Instances = {
                     encounterID = 1862,
                 },
                 boss9 = {
-                    name = "Elisande",
+                    name = 1743, --Elisande
                     bossIDs = {106643},
                     achievement = 10699,
                     players = {L["(Enter instance to start scanning)"]},
@@ -661,7 +677,7 @@ core.Instances = {
                     encounterID = 1872,
                 },
                 boss10 = {
-                    name = "Gul'dan",
+                    name = 1737, --Gul'dan
                     bossIDs = {104154},
                     achievement = 10696,
                     players = {L["(Enter instance to start scanning)"]},
@@ -676,7 +692,7 @@ core.Instances = {
             [1676] = { --Tomb of Sargeras
                 name = 875,
                 boss1 = {
-                    name = "Goroth",
+                    name = 1862, --Goroth
                     bossIDs = {},
                     achievement = 11724,
                     players = {L["(Enter instance to start scanning)"]},
@@ -687,7 +703,7 @@ core.Instances = {
                     encounterID = 2032,
                 },
                 boss2 = {
-                    name = "Demonic Inquisition",
+                    name = 1867, --Demonic Inquisition
                     bossIDs = {116689,116691},
                     achievement = 11696,
                     players = {L["(Enter instance to start scanning)"]},
@@ -698,7 +714,7 @@ core.Instances = {
                     encounterID = 2048,
                 },
                 boss3 = {
-                    name = "Harjatan",
+                    name = 1856, --Harjatan
                     bossIDs = {116407},
                     achievement = 11699,
                     players = {L["(Enter instance to start scanning)"]},
@@ -709,7 +725,7 @@ core.Instances = {
                     encounterID = 2036,
                 },
                 boss4 = {
-                    name = "Mistress Sassz'ine",
+                    name = 1861, --Mistress Sassz'ine
                     bossIDs = {},
                     achievement = 11676,
                     players = {L["(Enter instance to start scanning)"]},
@@ -720,7 +736,7 @@ core.Instances = {
                     encounterID = 2037,
                 },
                 boss5 = {
-                    name = "Sisters of the Moon",
+                    name = 1903, --Sisters of the Moon
                     bossIDs = {118523,118374,118518},
                     achievement = 11773,
                     players = {L["(Enter instance to start scanning)"]},
@@ -731,7 +747,7 @@ core.Instances = {
                     encounterID = 2050,
                 },
                 boss6 = {
-                    name = "The Desolate Host",
+                    name = 1896, --The Desolate Host
                     bossIDs = {},
                     achievement = 11674,
                     players = {L["(Enter instance to start scanning)"]},
@@ -742,7 +758,7 @@ core.Instances = {
                     encounterID = 2054,
                 },
                 boss7 = {
-                    name = "Maiden of Vigilance",
+                    name = 1897, --Maiden of Vigilance
                     bossIDs = {},
                     achievement = 11675,
                     players = {L["(Enter instance to start scanning)"]},
@@ -753,7 +769,7 @@ core.Instances = {
                     encounterID = 2052,
                 },
                 boss8 = {
-                    name = "Fallen Avatar",
+                    name = 1873, --Fallen Avatar
                     bossIDs = {},
                     achievement = 11683,
                     players = {L["(Enter instance to start scanning)"]},
@@ -764,7 +780,7 @@ core.Instances = {
                     encounterID = 2038,
                 },
                 boss9 = {
-                    name = "Kil'jaeden",
+                    name = 1898, --Kil'jaeden
                     bossIDs = {117269},
                     achievement = 11770,
                     players = {L["(Enter instance to start scanning)"]},
@@ -779,7 +795,7 @@ core.Instances = {
             [1712] = { --Antorus the Burning Throne
                 name = 946,
                 boss1 = {
-                    name = "Garothi Worldbreaker",
+                    name = 1992, --Garothi Worldbreaker
                     bossIDs = {},
                     achievement = 11930,
                     players = {L["(Enter instance to start scanning)"]},
@@ -790,7 +806,7 @@ core.Instances = {
                     encounterID = 2076,
                 },
                 boss2 = {
-                    name = "Felhounds of Sargeras",
+                    name = 1987, --Felhounds of Sargeras
                     bossIDs = {122477,122135},
                     achievement = 12065,
                     players = {L["(Enter instance to start scanning)"]},
@@ -801,7 +817,7 @@ core.Instances = {
                     encounterID = 2074,
                 },
                 boss3 = {
-                    name = "Antoran High Command",
+                    name = 1997, --Antoran High Command
                     bossIDs = {122367,130184,122369},
                     achievement = 12129,
                     players = {L["(Enter instance to start scanning)"]},
@@ -812,7 +828,7 @@ core.Instances = {
                     encounterID = 2070,
                 },
                 boss4 = {
-                    name = "Portal Keeper Hasabel",
+                    name = 1985, --Portal Keeper Hasabel
                     bossIDs = {122104},
                     achievement = 11928,
                     players = {L["(Enter instance to start scanning)"]},
@@ -823,7 +839,7 @@ core.Instances = {
                     encounterID = 2064,
                 },
                 boss5 = {
-                    name = "Eonar",
+                    name = 2025, --Eonar
                     bossIDs = {},
                     achievement = 12067,
                     players = {L["(Enter instance to start scanning)"]},
@@ -834,7 +850,7 @@ core.Instances = {
                     encounterID = 2075,
                 },
                 boss6 = {
-                    name = "Imonar the Soulhunter",
+                    name = 2009, --Imonar the Soulhunter
                     bossIDs = {},
                     achievement = 11949,
                     players = {L["(Enter instance to start scanning)"]},
@@ -845,7 +861,7 @@ core.Instances = {
                     encounterID = 2082,
                 },
                 boss7 = {
-                    name = "Kin-garoth",
+                    name = 2004, --Kin-garoth
                     bossIDs = {122578},
                     achievement = 12030,
                     players = {L["(Enter instance to start scanning)"]},
@@ -856,7 +872,7 @@ core.Instances = {
                     encounterID = 2088,
                 },
                 boss8 = {
-                    name = "Varimathras",
+                    name = 1983, --Varimathras
                     bossIDs = {122366},
                     achievement = 11948,
                     players = {L["(Enter instance to start scanning)"]},
@@ -867,7 +883,7 @@ core.Instances = {
                     encounterID = 2069,
                 },
                 boss9 = {
-                    name = "Coven of Shivarra",
+                    name = 1986, --Coven of Shivarra
                     bossIDs = {},
                     achievement = 12046,
                     players = {L["(Enter instance to start scanning)"]},
@@ -878,7 +894,7 @@ core.Instances = {
                     encounterID = 2073,
                 },
                 boss10 = {
-                    name = "Aggramar",
+                    name = 1984, --Aggramar
                     bossIDs = {121975},
                     achievement = 11915,
                     players = {L["(Enter instance to start scanning)"]},
@@ -889,7 +905,7 @@ core.Instances = {
                     encounterID = 2063,
                 },
                 boss11 = {
-                    name = "Argus",
+                    name = 2031, --Argus
                     bossIDs = {124828},
                     achievement = 12257,
                     players = {L["(Enter instance to start scanning)"]},
@@ -904,9 +920,9 @@ core.Instances = {
 
         Dungeons = {
             [1753] = { --Seat of the Triumvirate
-                name = "Seat of the Triumvirate",
+                name = 945,
                 boss1 = {
-                    name = "Zuraal the Ascended",
+                    name = 1979, --Zuraal the Ascended
                     bossIDs = {122313},
                     achievement = 12004,
                     players = {L["(Enter instance to start scanning)"]},
@@ -917,7 +933,7 @@ core.Instances = {
                     encounterID = 2065,
                 },
                 boss2 = {
-                    name = "Saprish",
+                    name = 1980, --Saprish
                     bossIDs = {},
                     achievement = 12005,
                     players = {L["(Enter instance to start scanning)"]},
@@ -928,7 +944,7 @@ core.Instances = {
                     encounterID = 2066,
                 },
                 boss3 = {
-                    name = "L'ura",
+                    name = 1982, --L'ura
                     bossIDs = {124729},
                     achievement = 12009,
                     players = {L["(Enter instance to start scanning)"]},
@@ -941,9 +957,9 @@ core.Instances = {
             },
 
             [1544] = { --Assault on Violet Hold
-                name = "Assault on Violet Hold",
+                name = 777,
                 boss1 = {
-                    name = "Millificent Manastorm",
+                    name = 1688, --Millificent Manastorm
                     bossIDs = {},
                     achievement = 10553,
                     players = {L["(Enter instance to start scanning)"]},
@@ -954,7 +970,7 @@ core.Instances = {
                     encounterID = 1847,
                 },
                 boss2 = {
-                    name = "Festerface",
+                    name = 1693, --Festerface
                     bossIDs = {101995},
                     achievement = 10554,
                     players = {L["(Enter instance to start scanning)"]},
@@ -967,9 +983,9 @@ core.Instances = {
             },
 
             [1456] = { --Eye of Azshara
-                name = "Eye of Azshara",
+                name = 716,
                 boss1 = {
-                    name = "Warlord Parjesh",
+                    name = 1480, --Warlord Parjesh
                     bossIDs = {91784},
                     achievement = 10456,
                     players = {L["(Enter instance to start scanning)"]},
@@ -980,7 +996,7 @@ core.Instances = {
                     encounterID = 1810,
                 },
                 boss2 = {
-                    name = "Lady Hatecoil",
+                    name = 1490, --Lady Hatecoil
                     bossIDs = {91789},
                     achievement = 10457,
                     players = {L["(Enter instance to start scanning)"]},
@@ -991,7 +1007,7 @@ core.Instances = {
                     encounterID = 1811,
                 },
                 boss3 = {
-                    name = "Wrath of Azshara",
+                    name = 1492, --Wrath of Azshara
                     bossIDs = {96028},
                     achievement = 10458,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1004,9 +1020,9 @@ core.Instances = {
             },
 
             [1466] = { --Darkheart Thicket
-                name = "Darkheart Thicket",
+                name = 762,
                 boss1 = {
-                    name = "Dresaron",
+                    name = 1656, --Dresaron
                     bossIDs = {99200},
                     achievement = 10766,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1017,7 +1033,7 @@ core.Instances = {
                     encounterID = 1838,
                 },
                 boss2 = {
-                    name = "Shade of Xavius",
+                    name = 1657, --Shade of Xavius
                     bossIDs = {99192},
                     achievement = 10769,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1030,9 +1046,9 @@ core.Instances = {
             },
 
             [1477] = { --Halls of Valor
-                name = "Halls of Valor",
+                name = 721,
                 boss1 = {
-                    name = "Other 1",
+                    name = L["Other"],
                     bossIDs = {99891},
                     achievement = 10544,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1042,7 +1058,7 @@ core.Instances = {
                     partial = false,
                 },
                 boss2 = {
-                    name = "Other 2",
+                    name = L["Other"],
                     bossIDs = {},
                     achievement = 10542,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1052,7 +1068,7 @@ core.Instances = {
 					partial = false,
                 },
                 boss3 = {
-                    name = "Odyn",
+                    name = 1489, --Odyn
                     bossIDs = {95676},
                     achievement = 10543,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1065,9 +1081,9 @@ core.Instances = {
             },
 
             [1458] = { --Neltharion's Lair
-                name = "Neltharion's Lair",
+                name = 767,
                 boss1 = {
-                    name = "Other 3",
+                    name = L["Other"],
                     bossIDs = {},
                     achievement = 10996,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1077,7 +1093,7 @@ core.Instances = {
 					partial = false,
                 },
                 boss2 = {
-                    name = "Naraxas",
+                    name = 1673, --Naraxas
                     bossIDs = {91005},
                     achievement = 10875,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1090,9 +1106,9 @@ core.Instances = {
             },
 
             [1493] = { --Vault of the Wardens
-                name = "Vault of the Wardens",
+                name = 707,
                 boss1 = {
-                    name = "Ash'Golm",
+                    name = 1468, --Ash'Golm
                     bossIDs = {95886},
                     achievement = 10679,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1103,7 +1119,7 @@ core.Instances = {
                     encounterID = 1816,
                 },
                 boss2 = {
-                    name = "Cordana",
+                    name = 1470, --Cordana
                     bossIDs = {95888},
                     achievement = 10680,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1114,7 +1130,7 @@ core.Instances = {
                     encounterID = 1818,
                 },
                 boss3 = {
-                    name = "Other 4",
+                    name = L["Other"],
                     bossIDs = {},
                     achievement = 10707,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1126,9 +1142,9 @@ core.Instances = {
             },
 
             [1501] = { --Black Rook Hold
-                name = "Black Rook Hold",
+                name = 740,
                 boss1 = {
-                    name = "Other 5",
+                    name = L["Other"],
                     bossIDs = {},
                     achievement = 10709,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1138,7 +1154,7 @@ core.Instances = {
 					partial = false,
                 },
                 boss2 = {
-                    name = "Amalgam of Souls",
+                    name = 1518, --Amalgam of Souls
                     bossIDs = {98542},
                     achievement = 10710,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1149,7 +1165,7 @@ core.Instances = {
                     encounterID = 1832,
                 },
                 boss3 = {
-                    name = "Ilysanna Ravencrest",
+                    name = 1653, --Ilysanna Ravencrest
                     bossIDs = {98696},
                     achievement = 10711,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1162,9 +1178,9 @@ core.Instances = {
             },
 
             [1492] = { --Maw of Souls
-                name = "Maw of Souls",
+                name = 727,
                 boss1 = {
-                    name = "Ymiron",
+                    name = 1502, --Ymiron
                     bossIDs = {96756},
                     achievement = 10413,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1175,7 +1191,7 @@ core.Instances = {
                     encounterID = 1822,
                 },
                 boss2 = {
-                    name = "Helya",
+                    name = 1486, --Helya
                     bossIDs = {},
                     achievement = 10412,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1186,7 +1202,7 @@ core.Instances = {
                     encounterID = 1824,
                 },
                 boss3 = {
-                    name = "Other 6",
+                    name = L["Other"],
                     bossIDs = {},
                     achievement = 10411,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1198,9 +1214,9 @@ core.Instances = {
             },
 
             [1516] = { --The Arcway
-                name = "The Arcway",
+                name = 726,
                 boss1 = {
-                    name = "Ivanyr",
+                    name = 1497, --Ivanyr
                     bossIDs = {98203},
                     achievement = 10773,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1211,7 +1227,7 @@ core.Instances = {
                     encounterID = 1827,
                 },
                 boss2 = {
-                    name = "Corstilax",
+                    name = 1498, --Corstilax
                     bossIDs = {},
                     achievement = 10775,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1222,7 +1238,7 @@ core.Instances = {
                     encounterID = 1825,
                 },
                 boss3 = {
-                    name = "Advisor Vandros",
+                    name = 1501, --Advisor Vandros
                     bossIDs = {98208},
                     achievement = 10776,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1235,9 +1251,9 @@ core.Instances = {
             },
 
             [1571] = { --Court of Stars
-                name = "Court of Stars",
+                name = 800,
                 boss1 = {
-                    name = "Patrol Captain Gerdo",
+                    name = 1718, --Patrol Captain Gerdo
                     bossIDs = {},
                     achievement = 10610,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1248,7 +1264,7 @@ core.Instances = {
                     encounterID = 1868,
                 },
                 boss2 = {
-                    name = "Other 7",
+                    name = L["Other"],
                     bossIDs = {},
                     achievement = 10611,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1260,9 +1276,9 @@ core.Instances = {
             },
 
             [1651] = { --Return to Karazhan
-                name = "Return to Karazhan",
+                name = 860,
                 boss1 = {
-                    name = "Other 8",
+                    name = L["Other"],
                     bossIDs = {},
                     achievement = 11433,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1272,7 +1288,7 @@ core.Instances = {
 					partial = false,
                 },
                 boss2 = {
-                    name = "Opera Hall",
+                    name = 1820, --Opera Hall
                     bossIDs = {},
                     achievement = 11335,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1283,7 +1299,7 @@ core.Instances = {
                     encounterID = 1957,
                 },
                 boss3 = {
-                    name = "Moroes",
+                    name = 1837, --Moroes
                     bossIDs = {},
                     achievement = 11338,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1294,7 +1310,7 @@ core.Instances = {
                     encounterID = 1961,
                 },
                 boss4 = {
-                    name = "Shade of Medivh",
+                    name = 1817, --Shade of Medivh
                     bossIDs = {},
                     achievement = 11432,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1305,7 +1321,7 @@ core.Instances = {
                     encounterID = 1965,
                 },
                 boss5 = {
-                    name = "Mana Devourer",
+                    name = 1818, --Mana Devourer
                     bossIDs = {},
                     achievement = 11431,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1316,7 +1332,7 @@ core.Instances = {
                     encounterID = 1959,
                 },
                 boss6 = {
-                    name = "Other 9",
+                    name = L["Other"],
                     bossIDs = {},
                     achievement = 11430,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1328,9 +1344,9 @@ core.Instances = {
             },
 
             [1677] = { --Cathedral of Eternal Night
-                name = "Cathedral of Eternal Night",
+                name = 900,
                 boss1 = {
-                    name = "Agronox",
+                    name = 1905, --Agronox
                     bossIDs = {},
                     achievement = 11768,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1341,7 +1357,7 @@ core.Instances = {
                     encounterID = 2055,
                 },
                 boss2 = {
-                    name = "Thrashbite the Scornful",
+                    name = 1906, --Thrashbite the Scornful
                     bossIDs = {117194},
                     achievement = 11769,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1352,7 +1368,7 @@ core.Instances = {
                     encounterID = 2057,
                 },
                 boss3 = {
-                    name = "Mephistroth",
+                    name = 1878, --Mephistroth
                     bossIDs = {},
                     achievement = 11703,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1372,7 +1388,7 @@ core.Instances = {
             [1228] = { --Highmaul
                 name = 477,
                 boss1 = {
-                    name = "Kargath Bladefist",
+                    name = 1128, --Kargath Bladefist
                     bossIDs = {78714},
                     achievement = 8948,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1383,7 +1399,7 @@ core.Instances = {
                     encounterID = 1721,
                 },
                 boss2 = {
-                    name = "The Butcher",
+                    name = 971, --The Butcher
                     bossIDs = {77404},
                     achievement = 8947,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1394,7 +1410,7 @@ core.Instances = {
                     encounterID = 1706,
                 },
                 boss3 = {
-                    name = "Tectus",
+                    name = 1195, --Tectus
                     bossIDs = {}, --78948
                     achievement = 8974,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1405,7 +1421,7 @@ core.Instances = {
                     encounterID = 1722,
                 },
                 boss4 = {
-                    name = "Brackenspore",
+                    name = 1196, --Brackenspore
                     bossIDs = {78491},
                     achievement = 8975,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1416,7 +1432,7 @@ core.Instances = {
                     encounterID = 1720,
                 },
                 boss5 = {
-                    name = "Twin Ogron",
+                    name = 1148, --Twin Ogron
                     bossIDs = {78237,78238},
                     achievement = 8958,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1427,7 +1443,7 @@ core.Instances = {
                     encounterID = 1719,
                 },
                 boss6 = {
-                    name = "Ko'ragh",
+                    name = 1153, --Ko'ragh
                     bossIDs = {79015},
                     achievement = 8976,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1438,7 +1454,7 @@ core.Instances = {
                     encounterID = 1723,
                 },
                 boss7 = {
-                    name = "Imperator Mar'gok",
+                    name = 1197, --Imperator Mar'gok
                     bossIDs = {},
                     achievement = 8977,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1453,7 +1469,7 @@ core.Instances = {
             [1205] = { --Blackrock Foundry
                 name = 457,
                 boss1 = {
-                    name = "Beastlord Darmac",
+                    name = 1122, --Beastlord Darmac
                     bossIDs = {76865},
                     achievement = 8981,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1464,7 +1480,7 @@ core.Instances = {
                     encounterID = 1694,
                 },
                 boss2 = {
-                    name = "Operator Thogar",
+                    name = 1147, --Operator Thogar
                     bossIDs = {76906},
                     achievement = 8982,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1475,7 +1491,7 @@ core.Instances = {
                     encounterID = 1692,
                 },
                 boss3 = {
-                    name = "Iron Maidens",
+                    name = 1203, --Iron Maidens
                     bossIDs = {77477, 77557, 77231},
                     achievement = 8984,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1486,7 +1502,7 @@ core.Instances = {
                     encounterID = 1695,
                 },
                 boss4 = {
-                    name = "Hans'gar & Franzok",
+                    name = 1155, --Hans'gar & Franzok
                     bossIDs = {76973, 76974},
                     achievement = 8980,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1497,7 +1513,7 @@ core.Instances = {
                     encounterID = 1693,
                 },
                 boss5 = {
-                    name = "Flamebender Ka'graz",
+                    name = 1123, --Flamebender Ka'graz
                     bossIDs = {76814},
                     achievement = 8929,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1508,7 +1524,7 @@ core.Instances = {
                     encounterID = 1689,
                 },
                 boss6 = {
-                    name = "Kromog",
+                    name = 1162, --Kromog
                     bossIDs = {77692},
                     achievement = 8983,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1519,7 +1535,7 @@ core.Instances = {
                     encounterID = 1713,
                 },
                 boss7 = {
-                    name = "Gruul",
+                    name = 1161, --Gruul
                     bossIDs = {},
                     achievement = 8978,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1530,7 +1546,7 @@ core.Instances = {
                     encounterID = 1691,
                 },
                 boss8 = {
-                    name = "Oregorger",
+                    name = 1202, --Oregorger
                     bossIDs = {},
                     achievement = 8979,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1541,7 +1557,7 @@ core.Instances = {
                     encounterID = 1696,
                 },
                 boss9 = {
-                    name = "Blast Furnace",
+                    name = 1154, --Blast Furnace
                     bossIDs = {76806},
                     achievement = 8930,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1552,7 +1568,7 @@ core.Instances = {
                     encounterID = 1690,
                 },
                 boss10 = {
-                    name = "Blackhand",
+                    name = 959, --Blackhand
                     bossIDs = {77325},
                     achievement = 8952,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1567,7 +1583,7 @@ core.Instances = {
             [1448] = { --Hellfire Citadel
                 name = 669,
                 boss1 = {
-                    name = "Hellfire Assault",
+                    name = 1426, --Hellfire Assault
                     bossIDs = {93023},
                     achievement = 10026,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1579,7 +1595,7 @@ core.Instances = {
                     encounterID = 1778,
                 },
                 boss2 = {
-                    name = "Iron Reaver",
+                    name = 1425, --Iron Reaver
                     bossIDs = {}, --90284
                     achievement = 10057,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1591,7 +1607,7 @@ core.Instances = {
                     encounterID = 1785,
                 },
                 boss3 = {
-                    name = "Kormrok",
+                    name = 1392, --Kormrok
                     bossIDs = {90435},
                     achievement = 10013,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1602,7 +1618,7 @@ core.Instances = {
                     encounterID = 1787,
                 },
                 boss4 = {
-                    name = "Hellfire High Council",
+                    name = 1432, --Hellfire High Council
                     bossIDs = {92144, 92146, 92142},
                     achievement = 10054,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1613,7 +1629,7 @@ core.Instances = {
                     encounterID = 1798,
                 },
                 boss5 = {
-                    name = "Kilrogg Deadeye",
+                    name = 1396, --Kilrogg Deadeye
                     bossIDs = {90378},
                     achievement = 9972,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1624,7 +1640,7 @@ core.Instances = {
                     encounterID = 1786,
                 },
                 boss6 = {
-                    name = "Gorefiend",
+                    name = 1372, --Gorefiend
                     bossIDs = {90199},
                     achievement = 9979,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1635,7 +1651,7 @@ core.Instances = {
                     encounterID = 1783,
                 },
                 boss7 = {
-                    name = "Shadow-Lord Iskar",
+                    name = 1433, --Shadow-Lord Iskar
                     bossIDs = {90316},
                     achievement = 9988,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1646,7 +1662,7 @@ core.Instances = {
                     encounterID = 1788,
                 },
                 boss8 = {
-                    name = "Socrethar the Eternal",
+                    name = 1427, --Socrethar the Eternal
                     bossIDs = {90296},
                     achievement = 10086,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1657,7 +1673,7 @@ core.Instances = {
                     encounterID = 1794,
                 },
                 boss9 = {
-                    name = "Tyrant Velhari",
+                    name = 1394, --Tyrant Velhari
                     bossIDs = {93439},
                     achievement = 9989,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1668,7 +1684,7 @@ core.Instances = {
                     encounterID = 1784,
                 },
                 boss10 = {
-                    name = "Fel Lord Zakuun",
+                    name = 1391, --Fel Lord Zakuun
                     bossIDs = {89890},
                     achievement = 10012,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1679,7 +1695,7 @@ core.Instances = {
                     encounterID = 1777,
                 },
                 boss11 = {
-                    name = "Xhul'horac",
+                    name = 1447, --Xhul'horac
                     bossIDs = {93068},
                     achievement = 10087,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1690,7 +1706,7 @@ core.Instances = {
                     encounterID = 1800,
                 },
                 boss12 = {
-                    name = "Mannoroth",
+                    name = 1395, --Mannoroth
                     bossIDs = {91349, 91305},
                     achievement = 10030,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1701,7 +1717,7 @@ core.Instances = {
                     encounterID = 1795,
                 },
                 boss13 = {
-                    name = "Archimonde",
+                    name = 1438, --Archimonde
                     bossIDs = {91331},
                     achievement = 10073,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1716,9 +1732,9 @@ core.Instances = {
 
         Dungeons = {
             [1175] = { --Bloodmaul Slag Mines
-                name = "Bloodmaul Slag Mines",
+                name = 385,
                 boss1 = {
-                    name = "Slave Watcher Crushto",
+                    name = 888, --Slave Watcher Crushto
                     bossIDs = {},
                     achievement = 9005,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1729,7 +1745,7 @@ core.Instances = {
                     encounterID = 1653,
                 },
                 boss2 = {
-                    name = "Magmolatus",
+                    name = 893, --Magmolatus
                     bossIDs = {74366},
                     achievement = 8993,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1740,7 +1756,7 @@ core.Instances = {
                     encounterID = 1655,
                 },
                 boss3 = {
-                    name = "Gug'rokk",
+                    name = 889, --Gug'rokk
                     bossIDs = {74790},
                     achievement = 9008,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1753,9 +1769,9 @@ core.Instances = {
             },
 
             [1195] = { --Iron Docks
-                name = "Iron Docks",
+                name = 558,
                 boss1 = {
-                    name = "Fleshrender Nok'gar",
+                    name = 1235, --Fleshrender Nok'gar
                     bossIDs = {81305, 83026, 84520, 81603},
                     achievement = 9083,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1766,7 +1782,7 @@ core.Instances = {
                     encounterID = 1749,
                 },
                 boss2 = {
-                    name = "Other 11",
+                    name = L["Other"],
                     bossIDs = {},
                     achievement = 9081,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1776,7 +1792,7 @@ core.Instances = {
                     partial = false,
                 },
                 boss3 = {
-                    name = "Skulloc",
+                    name = 1238, --Skulloc
                     bossIDs = {83612},
                     achievement = 9082,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1789,9 +1805,9 @@ core.Instances = {
             },
 
             [1182] = { --Auchindoun
-                name = "Auchindoun",
+                name = 547,
                 boss1 = {
-                    name = "Soulbinder Nyami",
+                    name = 1186, --Soulbinder Nyami
                     bossIDs = {},
                     achievement = 9023,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1802,7 +1818,7 @@ core.Instances = {
                     encounterID = 1685,
                 },
                 boss2 = {
-                    name = "Azzakel",
+                    name = 1216, --Azzakel
                     bossIDs = {},
                     achievement = 9551,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1813,7 +1829,7 @@ core.Instances = {
                     encounterID = 1678,
                 },
                 boss3 = {
-                    name = "Teron'gor",
+                    name = 1225, --Teron'gor
                     bossIDs = {},
                     achievement = 9552,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1826,9 +1842,9 @@ core.Instances = {
             },
 
             [1209] = { --Skyreach
-                name = "Skyreach",
+                name = 476,
                 boss1 = {
-                    name = "Ranjit",
+                    name = 965, --Ranjit
                     bossIDs = {75964},
                     achievement = 9033,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1839,7 +1855,7 @@ core.Instances = {
                     encounterID = 1698,
                 },
                 boss2 = {
-                    name = "Rukhran",
+                    name = 967, --Rukhran
                     bossIDs = {},
                     achievement = 9035,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1850,7 +1866,7 @@ core.Instances = {
                     encounterID = 1700,
                 },
                 boss3 = {
-                    name = "High Sage Viryx",
+                    name = 968, --High Sage Viryx
                     bossIDs = {76266},
                     achievement = 9036,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1861,7 +1877,7 @@ core.Instances = {
                     encounterID = 1701,
                 },
                 boss4 = {
-                    name = "High Sage Viryx 2",
+                    name = 968, --High Sage Viryx
                     bossIDs = {},
                     achievement = 9034,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1874,9 +1890,9 @@ core.Instances = {
             },
 
             [1208] = { --Grimrail Depot
-                name = "Grimrail Depot",
+                name = 536,
                 boss1 = {
-                    name = "Rocketspark and Borka",
+                    name = 1138, --Rocketspark and Borka
                     bossIDs = {77803,77816},
                     achievement = 9024,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1887,7 +1903,7 @@ core.Instances = {
                     encounterID = 1715,
                 },
                 boss2 = {
-                    name = "Nitrogg Thundertower",
+                    name = 1163, --Nitrogg Thundertower
                     bossIDs = {},
                     achievement = 9007,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1900,9 +1916,9 @@ core.Instances = {
             },
 
             [1279] = { --The Everbloom
-                name = "The Everbloom",
+                name = 556,
                 boss1 = {
-                    name = "Witherbark",
+                    name = 1214, --Witherbark
                     bossIDs = {81522},
                     achievement = 9017,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1913,7 +1929,7 @@ core.Instances = {
                     encounterID = 1746,
                 },
                 boss2 = {
-                    name = "Archmage Sol",
+                    name = 1208, --Archmage Sol
                     bossIDs = {},
                     achievement = 9493,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1924,7 +1940,7 @@ core.Instances = {
                     encounterID = 1751,
                 },
                 boss3 = {
-                    name = "Yalnu",
+                    name = 1210, --Yalnu
                     bossIDs = {}, --83846
                     achievement = 9223,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1937,9 +1953,9 @@ core.Instances = {
             },
 
             [1176] = { --Shadowmoon Burial Grounds
-                name = "Shadowmoon Burial Grounds",
+                name = 537,
                 boss1 = {
-                    name = "Sadana Bloodfury",
+                    name = 1139, --Sadana Bloodfury
                     bossIDs = {},
                     achievement = 9018,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1950,7 +1966,7 @@ core.Instances = {
                     encounterID = 1677,
                 },
                 boss2 = {
-                    name = "Bonemaw",
+                    name = 1140, --Bonemaw
                     bossIDs = {77006, 75452},
                     achievement = 9025,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1961,7 +1977,7 @@ core.Instances = {
                     encounterID = 1679,
                 },
                 boss3 = {
-                    name = "Ner'zhul",
+                    name = 1160, --Ner'zhul
                     bossIDs = {76407},
                     achievement = 9026,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1974,9 +1990,9 @@ core.Instances = {
             },
 
             [1358] = { --Upper Blackrock Spire
-                name = "Upper Blackrock Spire",
+                name = 559,
                 boss1 = {
-                    name = "Orebender Gor'ashan",
+                    name = 1226, --Orebender Gor'ashan
                     bossIDs = {76413},
                     achievement = 9045,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1987,7 +2003,7 @@ core.Instances = {
                     encounterID = 1761,
                 },
                 boss2 = {
-                    name = "Other 12",
+                    name = L["Other"],
                     bossIDs = {},
                     achievement = 9058,
                     players = {L["(Enter instance to start scanning)"]},
@@ -1997,7 +2013,7 @@ core.Instances = {
                     partial = false,
                 },
                 boss3 = {
-                    name = "Ragewing the Untamed",
+                    name = 1229, --Ragewing the Untamed
                     bossIDs = {76585},
                     achievement = 9056,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2008,7 +2024,7 @@ core.Instances = {
                     encounterID = 1760,
                 },
                 boss4 = {
-                    name = "Warlord Zaela",
+                    name = 1234, --Warlord Zaela
                     bossIDs = {77120},
                     achievement = 9057,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2028,7 +2044,7 @@ core.Instances = {
             [996] = { --Terrace of Endless Spring
                 name = 320,
                 boss1 = {
-                    name = "Protectors of the Endless",
+                    name = 683, --Protectors of the Endless
                     bossIDs = {60583, 60586, 60585},
                     achievement = 6717,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2039,7 +2055,7 @@ core.Instances = {
                     encounterID = 1409,
                 },
                 boss2 = {
-                    name = "Tsulong",
+                    name = 742, --Tsulong
                     bossIDs = {62442},
                     achievement = 6933,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2050,7 +2066,7 @@ core.Instances = {
                     encounterID = 1505,
                 },
                 boss3 = {
-                    name = "Lei Shi",
+                    name = "729", --Lei Shi
                     bossIDs = {62983},
                     achievement = 6824,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2061,7 +2077,7 @@ core.Instances = {
                     encounterID = 1506,
                 },
                 boss4 = {
-                    name = "Sha of Fear",
+                    name = 709, --Sha of Fear
                     bossIDs = {60999},
                     achievement = 6825,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2073,10 +2089,10 @@ core.Instances = {
                 },
             },
 
-            [1098] = {
+            [1098] = { --Throne of Thunder
                 name = 362,
                 boss1 = {
-                    name = "Jin'rokh the Breaker",
+                    name = 827, --Jin'rokh the Breaker
                     bossIDs = {},
                     achievement = 8094,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2087,7 +2103,7 @@ core.Instances = {
                     encounterID = 1577,
                 },
                 boss2 = {
-                    name = "Horridon",
+                    name = 819, --Horridon
                     bossIDs = {68476},
                     achievement = 8038,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2098,7 +2114,7 @@ core.Instances = {
                     encounterID = 1575,
                 },
                 boss3 = {
-                    name = "Council of Elders",
+                    name = 816, --Council of Elders
                     bossIDs = {},
                     achievement = 8073,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2109,7 +2125,7 @@ core.Instances = {
                     encounterID = 1570,
                 },
                 boss4 = {
-                    name = "Tortos",
+                    name = 825, --Tortos
                     bossIDs = {67977},
                     achievement = 8077,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2120,7 +2136,7 @@ core.Instances = {
                     encounterID = 1565,
                 },
                 boss5 = {
-                    name = "Megaera",
+                    name = 821, --Megaera
                     bossIDs = {70235, 70212, 70247},
                     achievement = 8082,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2131,7 +2147,7 @@ core.Instances = {
                     encounterID = 1578,
                 },
                 boss6 = {
-                    name = "Ji-Kun",
+                    name = 828, --Ji-Kun
                     bossIDs = {69712},
                     achievement = 8097,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2142,7 +2158,7 @@ core.Instances = {
                     encounterID = 1573,
                 },
                 boss7 = {
-                    name = "Durumu the Forgotten",
+                    name = 818, --Durumu the Forgotten
                     bossIDs = {68036},
                     achievement = 8098,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2153,7 +2169,7 @@ core.Instances = {
                     encounterID = 1572,
                 },
                 boss8 = {
-                    name = "Primordius",
+                    name = 820, --Primordius
                     bossIDs = {69017},
                     achievement = 8037,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2164,7 +2180,7 @@ core.Instances = {
                     encounterID = 1574,
                 },
                 boss9 = {
-                    name = "Dark Animus",
+                    name = 824, --Dark Animus
                     bossIDs = {},
                     achievement = 8081,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2175,7 +2191,7 @@ core.Instances = {
                     encounterID = 1576,
                 },
                 boss10 = {
-                    name = "Iron Qon",
+                    name = 817, --Iron Qon
                     bossIDs = {68078},
                     achievement = 8087,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2186,7 +2202,7 @@ core.Instances = {
                     encounterID = 1559,
                 },
                 boss11 = {
-                    name = "Twin Consorts",
+                    name = 829, --Twin Consorts
                     bossIDs = {68905, 68904},
                     achievement = 8086,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2197,7 +2213,7 @@ core.Instances = {
                     encounterID = 1560,
                 },
                 boss12 = {
-                    name = "Lei Shen",
+                    name = 729, --Lei Shen
                     bossIDs = {68397},
                     achievement = 8090,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2212,7 +2228,7 @@ core.Instances = {
             [1136] = { --Siege of Orgrimmar
                 name = 369,
                 boss1 = {
-                    name = "Immerseus",
+                    name = 852, --Immerseus
                     bossIDs = {71543},
                     achievement = 8536,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2223,7 +2239,7 @@ core.Instances = {
                     encounterID = 1602,
                 },
                 boss2 = {
-                    name = "The Fallen Protectors",
+                    name = 849, --The Fallen Protectors
                     bossIDs = {}, --71475, 71479, 71480
                     achievement = 8528,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2234,7 +2250,7 @@ core.Instances = {
                     encounterID = 1598,
                 },
                 boss3 = {
-                    name = "Amalgam of Corruption",
+                    name = 866, --Amalgam of Corruption
                     bossIDs = {72276},
                     achievement = 8532,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2245,7 +2261,7 @@ core.Instances = {
                     encounterID = 1624,
                 },
                 boss4 = {
-                    name = "Sha of Pride",
+                    name = 867, --Sha of Pride
                     bossIDs = {71734},
                     achievement = 8521,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2256,7 +2272,7 @@ core.Instances = {
                     encounterID = 1604,
                 },
                 boss5 = {
-                    name = "Galakras",
+                    name = 881, --Galakras
                     bossIDs = {72311},
                     achievement = 8530,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2267,7 +2283,7 @@ core.Instances = {
                     encounterID = 1622,
                 },
                 boss6 = {
-                    name = "Iron Juggernaut",
+                    name = 864, --Iron Juggernaut
                     bossIDs = {71466},
                     achievement = 8520,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2278,7 +2294,7 @@ core.Instances = {
                     encounterID = 1600,
                 },
                 boss7 = {
-                    name = "Kor'kron Dark Shaman",
+                    name = 856, --Kor'kron Dark Shaman
                     bossIDs = {},
                     achievement = 8453,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2288,7 +2304,7 @@ core.Instances = {
                     encounterID = 1606,
                 },
                 boss8 = {
-                    name = "General Nazgrim",
+                    name = 850, --General Nazgrim
                     bossIDs = {71515},
                     achievement = 8448,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2299,7 +2315,7 @@ core.Instances = {
                     encounterID = 1603,
                 },
                 boss9 = {
-                    name = "Malkorok",
+                    name = 846, --Malkorok
                     bossIDs = {71454},
                     achievement = 8538,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2310,7 +2326,7 @@ core.Instances = {
                     encounterID = 1595,
                 },
                 boss10 = {
-                    name = "Spoils of Pandaria",
+                    name = 870, --Spoils of Pandaria
                     bossIDs = {71385, 71398, 71383, 71397, 71405, 73951, 71409, 71388, 73948, 73949, 71380, 72535, 71392, 71433, 71378, 71395, 71393, 71408, 73723, 73724, 73725},
                     achievement = 8529,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2321,7 +2337,7 @@ core.Instances = {
                     encounterID = 1594,
                 },
                 boss11 = {
-                    name = "Thok the Bloodthirsty",
+                    name = 851, --Thok the Bloodthirsty
                     bossIDs = {}, --71529
                     achievement = 8527,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2332,7 +2348,7 @@ core.Instances = {
                     encounterID = 1599,
                 },
                 boss12 = {
-                    name = "Siegecrafter Blackfuse",
+                    name = 865, --Siegecrafter Blackfuse
                     bossIDs = {71504},
                     achievement = 8543,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2343,7 +2359,7 @@ core.Instances = {
                     encounterID = 1601,
                 },
                 boss13 = {
-                    name = "Paragons of the Klaxxi",
+                    name = 853, --Paragons of the Klaxxi
                     bossIDs = {71158, 71152, 71155, 71153, 71157, 71160, 71156, 71154, 71161},
                     achievement = 8531,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2354,7 +2370,7 @@ core.Instances = {
                     encounterID = 1593,
                 },
                 boss14 = {
-                    name = "Garrosh Hellscream",
+                    name = 869, --Garrosh Hellscream
                     bossIDs = {71865},
                     achievement = 8537,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2369,7 +2385,7 @@ core.Instances = {
             [1009] = { --Heart of Fear
                 name = 330,
                 boss1 = {
-                    name = "Imperial Vizier Zor'lok",
+                    name = 745, --Imperial Vizier Zor'lok
                     bossIDs = {62980},
                     achievement = 6937,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2380,7 +2396,7 @@ core.Instances = {
                     encounterID = 1507,
                 },
                 boss2 = {
-                    name = "Blade Lord Ta'yak",
+                    name = 744, --Blade Lord Ta'yak
                     bossIDs = {},
                     achievement = 6936,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2391,7 +2407,7 @@ core.Instances = {
                     encounterID = 1504,
                 },
                 boss3 = {
-                    name = "Garalon",
+                    name = 713, --Garalon
                     bossIDs = {62164, 63053},
                     achievement = 6553,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2402,7 +2418,7 @@ core.Instances = {
                     encounterID = 1463,
                 },
                 boss4 = {
-                    name = "Wind Lord Mel'jarak",
+                    name = 741, --Wind Lord Mel'jarak
                     bossIDs = {},
                     achievement = 6683,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2413,7 +2429,7 @@ core.Instances = {
                     encounterID = 1498,
                 },
                 boss5 = {
-                    name = "Amber-Shaper Un'sok",
+                    name = 737, --Amber-Shaper Un'sok
                     bossIDs = {},
                     achievement = 6518,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2424,7 +2440,7 @@ core.Instances = {
                     encounterID = 1499,
                 },
                 boss6 = {
-                    name = "Grand Empress Shek'zeer",
+                    name = 743, --Grand Empress Shek'zeer
                     bossIDs = {62837},
                     achievement = 6922,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2436,10 +2452,10 @@ core.Instances = {
                 },
             },
 
-            [1008] = {
+            [1008] = { --Mogu'shan Vaults
                 name = 317,
                 boss1 = {
-                    name = "The Stone Guard",
+                    name = 679, --The Stone Guard
                     bossIDs = {},
                     achievement = 6823,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2450,7 +2466,7 @@ core.Instances = {
                     encounterID = 1395,
                 },
                 boss2 = {
-                    name = "Feng the Accursed",
+                    name = 689, --Feng the Accursed
                     bossIDs = {60009},
                     achievement = 6674,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2461,7 +2477,7 @@ core.Instances = {
                     encounterID = 1390,
                 },
                 boss3 = {
-                    name = "Gara'jal the Spiritbinder",
+                    name = 682, --Gara'jal the Spiritbinder
                     bossIDs = {},
                     achievement = 7056,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2472,7 +2488,7 @@ core.Instances = {
                     encounterID = 1434,
                 },
                 boss4 = {
-                    name = "The Spirit Kings",
+                    name = 687, --The Spirit Kings
                     bossIDs = {},
                     achievement = 6687,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2483,7 +2499,7 @@ core.Instances = {
                     encounterID = 1436,
                 },
                 boss5 = {
-                    name = "Elegon",
+                    name = 726, --Elegon
                     bossIDs = {60410},
                     achievement = 6686,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2494,7 +2510,8 @@ core.Instances = {
                     encounterID = 1500,
                 },
                 boss6 = {
-                    name = "Will of the Emperor",
+                    name = 677, --Will of the Emperor
+
                     bossIDs = {60400, 60399},
                     achievement = 6455,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2509,9 +2526,9 @@ core.Instances = {
 
         Dungeons = {
             [961] = { --Stormstout Brewery
-                name = "Stormstout Brewery",
+                name = 302,
                 boss1 = {
-                    name = "Ook-Ook",
+                    name = 668, --Ook-Ook
                     bossIDs = {56637},
                     achievement = 6089,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2522,7 +2539,7 @@ core.Instances = {
                     encounterID = 1412,
                 },
                 boss2 = {
-                    name = "Other 13",
+                    name = L["Other"],
                     bossIDs = {},
                     achievement = 6400,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2531,7 +2548,7 @@ core.Instances = {
                     partial = false,
                 },                
                 boss3 = {
-                    name = "Hoptallus",
+                    name = 669, --Hoptallus
                     bossIDs = {59426, 59460, 56718, 59459, 59461, 59551},
                     achievement = 6420,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2542,7 +2559,7 @@ core.Instances = {
                     encounterID = 1413,
                 },
                 boss4 = {
-                    name = "Other 14",
+                    name = L["Other"],
                     bossIDs = {},
                     achievement = 6402,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2554,9 +2571,9 @@ core.Instances = {
             },
 
             [1001] = { --Scarlet Halls
-                name = "Scarlet Halls",
+                name = 311,
                 boss1 = {
-                    name = "Houndmaster Braun",
+                    name = 660, --Houndmaster Braun
                     bossIDs = {58876, 58674, 59309},
                     achievement = 6684,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2567,7 +2584,7 @@ core.Instances = {
                     encounterID = 1422,
                 },
                 boss2 = {
-                    name = "Armsmaster Harlan",
+                    name = 654, --Armsmaster Harlan
                     bossIDs = {58632},
                     achievement = 6427,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2580,9 +2597,9 @@ core.Instances = {
             },
 
             [1004] = { --Scarlet Monastery
-                name = "Scarlet Monastery",
+                name = 316,
                 boss1 = {
-                    name = "Thalnos the Soulrender",
+                    name = 688, --Thalnos the Soulrender
                     bossIDs = {59789},
                     achievement = 6946,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2593,7 +2610,7 @@ core.Instances = {
                     encounterID = 1423,
                 },
                 boss2 = {
-                    name = "Brother Korloff",
+                    name = 671, --Brother Korloff
                     bossIDs = {},
                     achievement = 6928,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2604,7 +2621,7 @@ core.Instances = {
                     encounterID = 1424,
                 },
                 boss3 = {
-                    name = "High Inquisitor Whitemane",
+                    name = 674, --High Inquisitor Whitemane
                     bossIDs = {60040, 3977},
                     achievement = 6929,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2617,9 +2634,9 @@ core.Instances = {
             },
 
             [1007] = { --Scholomance
-                name = "Scholomance",
+                name = 246,
                 boss1 = {
-                    name = "Jandice Barov",
+                    name = 663, --Jandice Barov
                     bossIDs = {},
                     achievement = 6531,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2630,7 +2647,7 @@ core.Instances = {
                     encounterID = 1427,
                 },
                 boss2 = {
-                    name = "Rattlegore",
+                    name = 665, --Rattlegore
                     bossIDs = {59153},
                     achievement = 6394,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2641,7 +2658,7 @@ core.Instances = {
                     encounterID = 1428,
                 },
                 boss3 = {
-                    name = "Other 15",
+                    name = L["Other"],
                     bossIDs = {59368},
                     achievement = 6396,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2651,7 +2668,7 @@ core.Instances = {
 					partial = true,
                 },
                 boss4 = {
-                    name = "Other 16",
+                    name = L["Other"],
                     bossIDs = {},
                     achievement = 6821,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2661,7 +2678,7 @@ core.Instances = {
 					partial = false,
                 },
                 boss5 = {
-                    name = "Other 17",
+                    name = L["Other"],
                     bossIDs = {},
                     achievement = 6715,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2673,9 +2690,9 @@ core.Instances = {
             },
 
             [960] = { --Temple of the Jade Serpent
-                name = "Temple of the Jade Serpent",
+                name = 313,
                 boss1 = {
-                    name = "Wise Mari",
+                    name = 672, --Wise Mari
                     bossIDs = {56448},
                     achievement = 6460,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2686,7 +2703,7 @@ core.Instances = {
                     encounterID = 1418,
                 },
                 boss2 = {
-                    name = "Sha of Doubt",
+                    name = 335, --Sha of Doubt
                     bossIDs = {56439},
                     achievement = 6671,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2697,7 +2714,7 @@ core.Instances = {
                     encounterID = 1439,
                 },
                 boss3 = {
-                    name = "Sha of Doubt 2",
+                    name = 335, --Sha of Doubt
                     bossIDs = {56439},
                     achievement = 6475,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2710,9 +2727,9 @@ core.Instances = {
             },
 
             [994] = { --Mogu'Shan Palace
-                name = "MoguShan Palace",
+                name = 321,
                 boss1 = {
-                    name = "Gekkan",
+                    name = 690, --Gekkan
                     bossIDs = {},
                     achievement = 6478,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2722,7 +2739,7 @@ core.Instances = {
                     partial = false,
                 },
                 boss2 = {
-                    name = "Xin the Weaponmaster",
+                    name = 698, --Xin the Weaponmaster
                     bossIDs = {61398},
                     achievement = 6736,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2733,7 +2750,7 @@ core.Instances = {
                     encounterID = 1441,
                 },
                 boss3 = {
-                    name = "Other Mogu",
+                    name = L["Other"],
                     bossIDs = {},
                     achievement = 6713,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2745,9 +2762,9 @@ core.Instances = {
             },
 
             [959] = { --Shado Pan Monastery
-                name = "Shado Pan Monastery",
+                name = 312,
                 boss1 = {
-                    name = "Master Snowdrift",
+                    name = 657, --Master Snowdrift
                     bossIDs = {},
                     achievement = 6477,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2758,7 +2775,7 @@ core.Instances = {
                     encounterID = 1304,
                 },
                 boss2 = {
-                    name = "Sha of Violence",
+                    name = 685, --Sha of Violence
                     bossIDs = {56719},
                     achievement = 6472,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2769,7 +2786,7 @@ core.Instances = {
                     encounterID = 1305,
                 },
                 boss3 = {
-                    name = "Taran Zhu",
+                    name = 686, --Taran Zhu
                     bossIDs = {56884},
                     achievement = 6471,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2782,9 +2799,9 @@ core.Instances = {
             },
     
             [1011] = { --Siege of Niuazao Temple
-                name = "Siege of Niuzao Temple",
+                name = 324,
                 boss1 = {
-                    name = "Commander Vo'jak",
+                    name = 738, --Commander Vo'jak
                     bossIDs = {63106,61699,61670,61701,61634},
                     achievement = 6688,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2795,7 +2812,7 @@ core.Instances = {
                     encounterID = 1502,
                 },
                 boss2 = {
-                    name = "General Pa'valak",
+                    name = 692, --General Pa'valak
                     bossIDs = {61485},
                     achievement = 6485,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2806,7 +2823,7 @@ core.Instances = {
                     encounterID = 1447,
                 },
                 boss3 = {
-                    name = "Wing Leader Ner'onok",
+                    name = 727, --Wing Leader Ner'onok
                     bossIDs = {62205},
                     achievement = 6822,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2819,9 +2836,9 @@ core.Instances = {
             },
 
             [962] = { --Gate of the Setting Sun
-                name = "Gate of the Setting Sun",
+                name = 303,
                 boss1 = {
-                    name = "Saboteur Kip'tilak",
+                    name = 655, --Saboteur Kip'tilak
                     bossIDs = {56906},
                     achievement = 6479,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2832,7 +2849,7 @@ core.Instances = {
                     encounterID = 1397,
                 },
                 boss2 = {
-                    name = "Other 18",
+                    name = L["Other"],
                     bossIDs = {},
                     achievement = 6476,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2842,7 +2859,7 @@ core.Instances = {
                     partial = false,
                 },
                 boss3 = {
-                    name = "Raigonn",
+                    name = 649, --Raigonn
                     bossIDs = {56877},
                     achievement = 6945,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2860,9 +2877,9 @@ core.Instances = {
     [6] = {
         Raids = {
             [967] = { --Dragon Soul
-                name = "Dragon Soul",
+                name = 187,
                 boss1 = {
-                    name = "Morchok",
+                    name = 311, --Morchok
                     bossIDs = {},
                     achievement = 6174,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2873,7 +2890,7 @@ core.Instances = {
                     encounterID = 1292,
                 },
                 boss2 = {
-                    name = "Warlord Zon'ozz",
+                    name = 324, --Warlord Zon'ozz
                     bossIDs = {55308},
                     achievement = 6128,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2884,7 +2901,7 @@ core.Instances = {
                     encounterID = 1294,
                 },
                 boss3 = {
-                    name = "Yor'sahj the Unsleeping",
+                    name = 325, --Yor'sahj the Unsleeping
                     bossIDs = {55312},
                     achievement = 6129,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2895,7 +2912,7 @@ core.Instances = {
                     encounterID = 1295,
                 },
                 boss4 = {
-                    name = "Hagara the Stormbinder",
+                    name = 317, --Hagara the Stormbinder
                     bossIDs = {},
                     achievement = 6175,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2906,7 +2923,7 @@ core.Instances = {
                     encounterID = 1296,
                 },
                 boss5 = {
-                    name = "Ultraxion",
+                    name = 331, --Ultraxion
                     bossIDs = {55294},
                     achievement = 6084,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2917,7 +2934,7 @@ core.Instances = {
                     encounterID = 1297,
                 },
                 boss6 = {
-                    name = "Warmaster Blackhorn",
+                    name = 332, --Warmaster Blackhorn
                     bossIDs = {56598},
                     achievement = 6105,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2928,7 +2945,7 @@ core.Instances = {
                     encounterID = 1298,
                 },
                 boss7 = {
-                    name = "Spine of Deathwing",
+                    name = 318, --Spine of Deathwing
                     bossIDs = {53879},
                     achievement = 6133,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2939,7 +2956,7 @@ core.Instances = {
                     encounterID = 1291,
                 },
                 boss8 = {
-                    name = "Madness of Deathwing",
+                    name = 333, --Madness of Deathwing
                     bossIDs = {},
                     achievement = 6180,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2952,9 +2969,9 @@ core.Instances = {
             },
 
             [669] = { --Blackwing Descent
-                name = "Blackwing Descent",
+                name = 73,
                 boss1 = {
-                    name = "Magmaw",
+                    name = 170, --Magmaw
                     bossIDs = {41570},
                     achievement = 5306,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2965,7 +2982,7 @@ core.Instances = {
                     encounterID = 1024,
                 },
                 boss2 = {
-                    name = "Omnotron Defense System",
+                    name = 169, --Omnotron Defense System
                     bossIDs = {42178, 42179, 42180, 42166},
                     achievement = 5307,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2976,7 +2993,7 @@ core.Instances = {
                     encounterID = 1027,
                 },
                 boss3 = {
-                    name = "Maloriak",
+                    name = 173, --Maloriak
                     bossIDs = {41378},
                     achievement = 5310,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2987,7 +3004,7 @@ core.Instances = {
                     encounterID = 1025,
                 },
                 boss4 = {
-                    name = "Atramedes",
+                    name = 171, --Atramedes
                     bossIDs = {41442},
                     achievement = 5308,
                     players = {L["(Enter instance to start scanning)"]},
@@ -2998,7 +3015,7 @@ core.Instances = {
                     encounterID = 1022,
                 },
                 boss5 = {
-                    name = "Chimaeron",
+                    name = 172, --Chimaeron
                     bossIDs = {43296},
                     achievement = 5309,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3009,7 +3026,7 @@ core.Instances = {
                     encounterID = 1023,
                 },
                 boss6 = {
-                    name = "Nefarian",
+                    name = 174, --Nefarian
                     bossIDs = {41270, 41376},
                     achievement = 4849,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3022,9 +3039,9 @@ core.Instances = {
             },
 
             [671] = { --Bastion of Twilight
-                name = "Bastion of Twilight",
+                name = 72,
                 boss1 = {
-                    name = "Halfus Wyrmbreaker",
+                    name = 156, --Halfus Wyrmbreaker
                     bossIDs = {44600},
                     achievement = 5300,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3035,7 +3052,7 @@ core.Instances = {
                     encounterID = 1030,
                 },
                 boss2 = {
-                    name = "Valiona And Theralion",
+                    name = 157, --Valiona And Theralion
                     bossIDs = {45992},
                     achievement = 4852,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3046,7 +3063,7 @@ core.Instances = {
                     encounterID = 1032,
                 },
                 boss3 = {
-                    name = "Ascendant Council",
+                    name = 158, --Ascendant Council
                     bossIDs = {},
                     achievement = 5311,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3057,7 +3074,7 @@ core.Instances = {
                     encounterID = 1028,
                 },
                 boss4 = {
-                    name = "Cho'gall",
+                    name = 167, --Cho'gall
                     bossIDs = {43324},
                     achievement = 5312,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3070,9 +3087,9 @@ core.Instances = {
             },
 
             [754] = { --Throne of the Four Winds
-                name = "Throne of the Four Winds",
+                name = 74,
                 boss1 = {
-                    name = "Conclave of Wind",
+                    name = 154, --Conclave of Wind
                     bossIDs = {},
                     achievement = 5304,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3083,7 +3100,7 @@ core.Instances = {
                     encounterID = 1035,
                 },
                 boss2 = {
-                    name = "Al'Akir",
+                    name = 155, --Al'Akir
                     bossIDs = {},
                     achievement = 5305,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3096,9 +3113,9 @@ core.Instances = {
             },
 
             [720] = { --Firelands
-                name = "Firelands",
+                name = 78,
                 boss1 = {
-                    name = "Beth'tilac",
+                    name = 192, --Beth'tilac
                     bossIDs = {52498},
                     achievement = 5821,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3109,7 +3126,7 @@ core.Instances = {
                     encounterID = 1197,
                 },
                 boss2 = {
-                    name = "Lord Rhyolith",
+                    name = 193, --Lord Rhyolith
                     bossIDs = {52558},
                     achievement = 5810,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3120,7 +3137,7 @@ core.Instances = {
                     encounterID = 1204,
                 },
                 boss3 = {
-                    name = "Alysrazor",
+                    name = 194, --Alysrazor
                     bossIDs = {52530},
                     achievement = 5813,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3131,7 +3148,7 @@ core.Instances = {
                     encounterID = 1206,
                 },
                 boss4 = {
-                    name = "Shannox",
+                    name = 195, --Shannox
                     bossIDs = {},
                     achievement = 5829,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3142,7 +3159,7 @@ core.Instances = {
                     encounterID = 1205,
                 },
                 boss5 = {
-                    name = "Baleroc",
+                    name = 196, --Baleroc
                     bossIDs = {53494},
                     achievement = 5830,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3153,7 +3170,7 @@ core.Instances = {
                     encounterID = 1200,
                 },
                 boss6 = {
-                    name = "Majordomo Staghelm",
+                    name = 197, --Majordomo Staghelm
                     bossIDs = {},
                     achievement = 5799,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3164,7 +3181,7 @@ core.Instances = {
                     encounterID = 1185,
                 },
                 boss7 = {
-                    name = "Ragnaros",
+                    name = 198, --Ragnaros
                     bossIDs = {52409},
                     achievement = 5855,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3179,9 +3196,9 @@ core.Instances = {
 
         Dungeons = {
             [645] = { --Blackrock Caverns
-                name = "Blackrock Caverns",
+                name = 66,
                 boss1 = {
-                    name = "Rom'ogg Bonecrusher",
+                    name = 105, --Rom'ogg Bonecrusher
                     bossIDs = {39665},
                     achievement = 5281,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3191,8 +3208,8 @@ core.Instances = {
                     partial = false,
                     encounterID = 1040,
                 }, 
-                boss2 = {
-                    name = "Corla",
+                boss2 = { 
+                    name = 106, --Corla
                     bossIDs = {39679},
                     achievement = 5282,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3203,7 +3220,7 @@ core.Instances = {
                     encounterID = 1038,
                 },  
                 boss3 = {
-                    name = "Karsh Steelbender",
+                    name = 107, --Karsh Steelbender
                     bossIDs = {39698},
                     achievement = 5283,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3214,7 +3231,7 @@ core.Instances = {
                     encounterID = 1039,
                 },  
                 boss4 = {
-                    name = "Ascendant Lord Obsidius",
+                    name = 109, --Ascendant Lord Obsidius
                     bossIDs = {39705},
                     achievement = 5284,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3227,9 +3244,9 @@ core.Instances = {
             },
 
             [643] = {  --Throne of the Tides
-                name = "Throne of the Tides",
+                name = 65,
                 boss1 = {
-                    name = "Lady Naz'Jar",
+                    name = 101, --Lady Naz'Jar
                     bossIDs = {40586},
                     achievement = 5285,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3240,7 +3257,7 @@ core.Instances = {
                     encounterID = 1045,
                 },
                 boss2 = {
-                    name = "Ozumat",
+                    name = 104, --Ozumat
                     bossIDs = {44658, 44715, 44648},
                     achievement = 5286,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3253,9 +3270,9 @@ core.Instances = {
             },
 
             [725] = { --The Stonecore
-                name = "The Stonecore",
+                name = 67,
                 boss1 = {
-                    name = "High Priestess Azil",
+                    name = 113, --High Priestess Azil
                     bossIDs = {42333},
                     achievement = 5287,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3268,9 +3285,9 @@ core.Instances = {
             },
 
             [657] = { --The Vortext Pinnacle
-                name = "The Vortex Pinnacle",
+                name = 68,
                 boss1 = {
-                    name = "Asaad",
+                    name = 116, --Asaad
                     bossIDs = {43875},
                     achievement = 5288,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3281,7 +3298,7 @@ core.Instances = {
                     encounterID = 1042,
                 },
                 boss2 = {
-                    name = "Other 19",
+                    name = L["Other"],
                     bossIDs = {},
                     achievement = 5289,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3293,9 +3310,9 @@ core.Instances = {
             },
 
             [670] = { --Grim Batol
-                name = "Grim Batol",
+                name = 71,
                 boss1 = {
-                    name = "General Umbriss",
+                    name = 131, --General Umbriss
                     bossIDs = {39625},
                     achievement = 5297,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3306,7 +3323,7 @@ core.Instances = {
                     encounterID = 1051,
                 },
                 boss2 = {
-                    name = "Erudax",
+                    name = 134, --Erudax
                     bossIDs = {40484},
                     achievement = 5298,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3319,9 +3336,9 @@ core.Instances = {
             },
 
             [644] = { --Halls of Origination
-                name = "Halls of Origination",
+                name = 70,
                 boss1 = {
-                    name = "Temple Guardian Anhuur",
+                    name = 124, --Temple Guardian Anhuur
                     bossIDs = {39425},
                     achievement = 5293,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3332,7 +3349,7 @@ core.Instances = {
                     encounterID = 1080,
                 },
                 boss2 = {
-                    name = "Earthrager Ptah",
+                    name = 125, --Earthrager Ptah
                     bossIDs = {39428},
                     achievement = 5294,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3343,7 +3360,7 @@ core.Instances = {
                     encounterID = 1076,
                 },
                 boss3 = {
-                    name = "Other Halls",
+                    name = L["Other"],
                     bossIDs = {},
                     achievement = 5296,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3353,7 +3370,7 @@ core.Instances = {
 					partial = false,
                 },
                 boss4 = {
-                    name = "Rajh",
+                    name = 130, --Rajh
                     bossIDs = {39378},
                     achievement = 5295,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3366,9 +3383,9 @@ core.Instances = {
             },
 
             [755] = { --Lost City of the Tol'Vir
-                name = "Lost City of The TolVir",
+                name = 69,
                 boss1 = {
-                    name = "Lockmaw",
+                    name = 118, --Lockmaw
                     bossIDs = {43614},
                     achievement = 5291,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3379,7 +3396,7 @@ core.Instances = {
                     encounterID = 1054,
                 },  
                 boss2 = {
-                    name = "High Prophet Barim",
+                    name = 119, --High Prophet Barim
                     bossIDs = {43612},
                     achievement = 5290,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3390,7 +3407,7 @@ core.Instances = {
                     encounterID = 1053,
                 },  
                 boss3 = {
-                    name = "Siamat",
+                    name = 122, --Siamat
                     bossIDs = {44819},
                     achievement = 5292,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3403,9 +3420,9 @@ core.Instances = {
             },
 
             [36] = { --Deadmines
-                name = "Deadmines",
+                name = 63,
                 boss1 = {
-                    name = "Glubtok",
+                    name = 89, --Glubtok
                     bossIDs = {47162},
                     achievement = 5366,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3416,7 +3433,7 @@ core.Instances = {
                     encounterID = 1064,
                 },
                 boss2 = {
-                    name = "Helix Gearbreaker",
+                    name = 90, --Helix Gearbreaker
                     bossIDs = {47296},
                     achievement = 5367,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3427,7 +3444,7 @@ core.Instances = {
                     encounterID = 1065,
                 },  
                 boss3 = {
-                    name = "Foe Reaper 5000",
+                    name = 91, --Foe Reaper 5000
                     bossIDs = {},
                     achievement = 5368,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3438,7 +3455,7 @@ core.Instances = {
                     encounterID = 1063,
                 },  
                 boss4 = {
-                    name = "Admiral Ripsnarl",
+                    name = 92, --Admiral Ripsnarl
                     bossIDs = {47626},
                     achievement = 5369,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3449,7 +3466,7 @@ core.Instances = {
                     encounterID = 1062,
                 },  
                 boss5 = {
-                    name = "'Captain' Cookie",
+                    name = 93, --'Captain' Cookie
                     bossIDs = {47739},
                     achievement = 5370,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3460,7 +3477,7 @@ core.Instances = {
                     encounterID = 1060,
                 },  
                 boss6 = {
-                    name = "Vanessa VanCleef",
+                    name = 95, --Vanessa VanCleef
                     bossIDs = {49541},
                     achievement = 5371,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3473,9 +3490,9 @@ core.Instances = {
             },
 
             [33] = { --Shadowfang Keep
-                name = "Shadowfang Keep",
+                name = 64,
                 boss1 = {
-                    name = "Baron Ashbury",
+                    name = 96, --Baron Ashbury
                     bossIDs = {46962},
                     achievement = 5503,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3486,7 +3503,7 @@ core.Instances = {
                     encounterID = 1069,
                 },
                 boss2 = {
-                    name = "Commander Springvale",
+                    name = 98, --Commander Springvale
                     bossIDs = {4278},
                     achievement = 5504,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3497,7 +3514,7 @@ core.Instances = {
                     encounterID = 1071,
                 },            
                 boss3 = {
-                    name = "Lord Godfrey",
+                    name = 100, --Lord Godfrey
                     bossIDs = {46964},
                     achievement = 5505,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3510,9 +3527,9 @@ core.Instances = {
             },
 
             [859] = { --Zul'Gurub
-                name = "Zul Gurub",
+                name = 76,
                 boss1 = {
-                    name = "Other 20",
+                    name = L["Other"],
                     bossIDs = {},
                     achievement = 5744,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3522,7 +3539,7 @@ core.Instances = {
                     partial = false,
                 },
                 boss2 = {
-                    name = "High Priest Venoxis",
+                    name = 175, --High Priest Venoxis
                     bossIDs = {52155},
                     achievement = 5743,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3533,7 +3550,7 @@ core.Instances = {
                     encounterID = 1178,
                 },
                 boss3 = {
-                    name = "Bloodlord Mandokir",
+                    name = 176, --Bloodlord Mandokir
                     bossIDs = {52151},
                     achievement = 5762,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3544,7 +3561,7 @@ core.Instances = {
                     encounterID = 1179,
                 },
                 boss4 = {
-                    name = "High Priestess Kilnara",
+                    name = 181, --High Priestess Kilnara
                     bossIDs = {52059},
                     achievement = 5765,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3555,7 +3572,7 @@ core.Instances = {
                     encounterID = 1180,
                 },
                 boss5 = {
-                    name = "Jin'do",
+                    name = 185, --Jin'do
                     bossIDs = {52148, 52624},
                     achievement = 5759,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3568,9 +3585,9 @@ core.Instances = {
             },
 
             [568] = { --Zul'Aman
-                name = "Zul Aman",
+                name = 77,
                 boss1 = {
-                    name = "Halazzi",
+                    name = 189, --Halazzi
                     bossIDs = {23577},
                     achievement = 5750,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3581,7 +3598,7 @@ core.Instances = {
                     encounterID = 1192,
                 },
                 boss2 = {
-                    name = "Other 21",
+                    name = L["Other"],
                     bossIDs = {},
                     achievement = 5761,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3591,7 +3608,7 @@ core.Instances = {
 					partial = false,
                 },
                 boss3 = {
-                    name = "Other 22",
+                    name = L["Other"],
                     bossIDs = {},
                     achievement = 5858,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3601,7 +3618,7 @@ core.Instances = {
 					partial = false,
                 },
                 boss4 = {
-                    name = "Daakara",
+                    name = 191, --Daakara
                     bossIDs = {},
                     achievement = 5760,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3614,9 +3631,9 @@ core.Instances = {
             },
 
             [938] = { --End Time
-                name = "End Time",
+                name = 184,
                 boss1 = {
-                    name = "Echo of Tyrande",
+                    name = 283, --Echo of Tyrande
                     bossIDs = {},
                     achievement = 5995,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3627,7 +3644,7 @@ core.Instances = {
                     encounterID = 1884,
                 },
                 boss2 = {
-                    name = "Echo of Sylvanas",
+                    name = 323, --Echo of Sylvanas
                     bossIDs = {54123},
                     achievement = 6130,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3640,9 +3657,9 @@ core.Instances = {
             },
 
             [939] = { --Well of Eternity
-                name = "Well of Eternity",
+                name = 185,
                 boss1 = {
-                    name = "Peroth'arn",
+                    name = 290, --Peroth'arn
                     bossIDs = {55085},
                     achievement = 6127,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3653,7 +3670,7 @@ core.Instances = {
                     encounterID = 1272,
                 },
                 boss2 = {
-                    name = "Mannoroth",
+                    name = 292, --Mannoroth
                     bossIDs = {54969, 55419},
                     achievement = 6070,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3666,9 +3683,9 @@ core.Instances = {
             },
 
             [940] = { --Hour of Twilight
-                name = "Hour of Twilight",
+                name = 186,
                 boss1 = {
-                    name = "Archbishop Benedictus",
+                    name = 341, --Archbishop Benedictus
                     bossIDs = {54938},
                     achievement = 6132,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3686,9 +3703,9 @@ core.Instances = {
     [7] = {
         Raids = {
             ["615-10"] = { --Obsidian Sanctum 10 Man
-                name = "Obsidian Sanctum 10 Man",
+                name = 755,
                 boss1 = {
-                    name = "Sartharion the Onyx Guardian 1",
+                    name = 1616, --Sartharion the Onyx Guardian
                     bossIDs = {},
                     achievement = 624,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3699,7 +3716,7 @@ core.Instances = {
                     encounterID = 1090,
                 },
                 boss2 = {
-                    name = "Sartharion the Onyx Guardian 2",
+                    name = 1616, --Sartharion the Onyx Guardian
                     bossIDs = {},
                     achievement = 2047,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3710,7 +3727,7 @@ core.Instances = {
                     encounterID = 1090,
                 },  
                 boss3 = {
-                    name = "Sartharion the Onyx Guardian 3",
+                    name = 1616, --Sartharion the Onyx Guardian
                     bossIDs = {},
                     achievement = 2049,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3721,7 +3738,7 @@ core.Instances = {
                     encounterID = 1090,
                 },  
                 boss4 = {
-                    name = "Sartharion the Onyx Guardian 4",
+                    name = 1616, --Sartharion the Onyx Guardian
                     bossIDs = {},
                     achievement = 2050,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3732,7 +3749,7 @@ core.Instances = {
                     encounterID = 1090,
                 },  
                 boss5 = {
-                    name = "Sartharion the Onyx Guardian 5",
+                    name = 1616, --Sartharion the Onyx Guardian
                     bossIDs = {},
                     achievement = 2051,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3745,9 +3762,9 @@ core.Instances = {
             },
 
             ["615-25"] = { --Obsidian Sanctum 25 Man
-                name = "Obsidian Sanctum 25 Man",
+                name = 755,
                 boss1 = {
-                    name = "Sartharion the Onyx Guardian 1",
+                    name = 1616, --Sartharion the Onyx Guardian
                     bossIDs = {},
                     achievement = 1877,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3758,7 +3775,7 @@ core.Instances = {
                     encounterID = 1090,
                 },
                 boss2 = {
-                    name = "Sartharion the Onyx Guardian 2",
+                    name = 1616, --Sartharion the Onyx Guardian
                     bossIDs = {},
                     achievement = 2048,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3769,7 +3786,7 @@ core.Instances = {
                     encounterID = 1090,
                 },  
                 boss3 = {
-                    name = "Sartharion the Onyx Guardian 3",
+                    name = 1616, --Sartharion the Onyx Guardian
                     bossIDs = {},
                     achievement = 2052,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3780,7 +3797,7 @@ core.Instances = {
                     encounterID = 1090,
                 },  
                 boss4 = {
-                    name = "Sartharion the Onyx Guardian 4",
+                    name = 1616, --Sartharion the Onyx Guardian
                     bossIDs = {},
                     achievement = 2053,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3791,7 +3808,7 @@ core.Instances = {
                     encounterID = 1090,
                 },  
                 boss5 = {
-                    name = "Sartharion the Onyx Guardian 5",
+                    name = 1616, --Sartharion the Onyx Guardian
                     bossIDs = {},
                     achievement = 2054,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3804,9 +3821,9 @@ core.Instances = {
             },
 
             ["616-10"] = { --Eye of Eternity 10 Man
-                name = "The Eye of Eternity 10 Man",
+                name = 756,
                 boss1 = {
-                    name = "Malygos 1",
+                    name = 1617, --Malygos
                     bossIDs = {28859},
                     achievement = 1874,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3817,7 +3834,7 @@ core.Instances = {
                     encounterID = 1094,
                 },
                 boss2 = {
-                    name = "Malygos 2",
+                    name = 1617, --Malygos
                     bossIDs = {28859},
                     achievement = 1869,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3828,7 +3845,7 @@ core.Instances = {
                     encounterID = 1094,
                 }, 
                 boss3 = {
-                    name = "Malygos 3",
+                    name = 1617, --Malygos
                     bossIDs = {28859},
                     achievement = 2148,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3841,9 +3858,9 @@ core.Instances = {
             },
 
             ["616-25"] = { --Eye of Eternity 25 Man
-                name = "The Eye of Eternity 25 Man",
+                name = 756,
                 boss1 = {
-                    name = "Malygos 1 25",
+                    name = 1617, --Malygos
                     bossIDs = {28859},
                     achievement = 1875,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3854,7 +3871,7 @@ core.Instances = {
                     encounterID = 1094,
                 },
                 boss2 = {
-                    name = "Malygos 2 25",
+                    name = 1617, --Malygos
                     bossIDs = {28859},
                     achievement = 1870,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3865,7 +3882,7 @@ core.Instances = {
                     encounterID = 1094,
                 }, 
                 boss3 = {
-                    name = "Malygos 3 25",
+                    name = 1617, --Malygos
                     bossIDs = {28859},
                     achievement = 2149,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3878,9 +3895,9 @@ core.Instances = {
             },
 
             ["249-10"] = { --Onyxia's Lair 10 Man
-                name = L["Onyxia's Lair 10 Man"],
+                name = 760,
                 boss1 = {
-                    name = "Onyxia 1",
+                    name = 1651, --Onyxia
                     bossIDs = {10184},
                     achievement = 4402,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3891,7 +3908,7 @@ core.Instances = {
                     encounterID = 1084,
                 },
                 boss2 = {
-                    name = "Onyxia 2",
+                    name = 1651, --Onyxia
                     bossIDs = {},
                     achievement = 4403,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3902,7 +3919,7 @@ core.Instances = {
                     encounterID = 1084,
                 },
                 boss3 = {
-                    name = "Onyxia 3",
+                    name = 1651, --Onyxia
                     bossIDs = {10184},
                     achievement = 4404,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3915,9 +3932,9 @@ core.Instances = {
             },
 
             ["249-25"] = { --Onyxia's Lair 25 Man
-                name = "Onyxia's Lair 25 Man",
+                name = 760,
                 boss1 = {
-                    name = "Onyxia 1 25",
+                    name = 1651, --Onyxia
                     bossIDs = {10184},
                     achievement = 4405,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3928,7 +3945,7 @@ core.Instances = {
                     encounterID = 1084,
                 },
                 boss2 = {
-                    name = "Onyxia 2 25",
+                    name = 1651, --Onyxia
                     bossIDs = {}, 
                     achievement = 4406,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3939,7 +3956,7 @@ core.Instances = {
                     encounterID = 1084,
                 },
                 boss3 = {
-                    name = "Onyxia 3 25",
+                    name = 1651, --Onyxia
                     bossIDs = {10184},
                     achievement = 4407,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3952,9 +3969,9 @@ core.Instances = {
             },
 
             ["649-10"] = { --Trial of the Crusader 10 Man
-                name = "Trial of the Crusader 10 Man",
+                name = 757,
                 boss1 = {
-                    name = "Icehowl",
+                    name = 1618, --Icehowl
                     bossIDs = {34796},
                     achievement = 3797,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3965,7 +3982,7 @@ core.Instances = {
                     encounterID = 1088,
                 },
                 boss2 = {
-                    name = "Acidmaw and Dreadscale",
+                    name = 1618, --Acidmaw and Dreadscale
                     bossIDs = {34796,35144,34799},
                     achievement = 3936,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3976,7 +3993,7 @@ core.Instances = {
                     encounterID = 1088,
                 }, 
                 boss3 = {
-                    name = "Lord Jaraxxus",
+                    name = 1619, --Lord Jaraxxus
                     bossIDs = {34780},
                     achievement = 3996,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3987,7 +4004,7 @@ core.Instances = {
                     encounterID = 1087,
                 }, 
                 boss4 = {
-                    name = "Faction Champions",
+                    name = 1621, --Faction Champions
                     bossIDs = {34461,34460,34469,34467,34468,34465,34471,34466,34473,34472,34463,34470,34474,34475,34458,34451,34459,34448,34449,34445,34456,34447,34441,34454,34455,34444,34450,34453},
                     achievement = 3798,
                     players = {L["(Enter instance to start scanning)"]},
@@ -3998,7 +4015,7 @@ core.Instances = {
                     encounterID = 1086,
                 }, 
                 boss5 = {
-                    name = "Twin Val'kyr",
+                    name = 1622, --Twin Val'kyr
                     bossIDs = {34497,34496},
                     achievement = 3799,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4009,7 +4026,7 @@ core.Instances = {
                     encounterID = 1089,
                 }, 
                 boss6 = {
-                    name = "Anub'arak",
+                    name = 1623, --Anub'arak
                     bossIDs = {34564},
                     achievement = 3800,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4022,9 +4039,9 @@ core.Instances = {
             },
 
             ["649-25"] = { --Trial of the Crusader 25 Man
-                name = "Trial of the Crusader 25 Man",
+                name = 757,
                 boss1 = {
-                    name = "Icehowl 25 ",
+                    name = 1618, --Icehowl
                     bossIDs = {34796},
                     achievement = 3813,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4035,7 +4052,7 @@ core.Instances = {
                     encounterID = 1088,
                 },
                 boss2 = {
-                    name = "Acidmaw and Dreadscale 25",
+                    name = 1618, --Acidmaw and Dreadscale
                     bossIDs = {34796,35144,34799},
                     achievement = 3937,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4046,7 +4063,7 @@ core.Instances = {
                     encounterID = 1088,
                 }, 
                 boss3 = {
-                    name = "Lord Jaraxxus 25",
+                    name = 1619, --Lord Jaraxxus
                     bossIDs = {34780},
                     achievement = 3997,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4057,7 +4074,7 @@ core.Instances = {
                     encounterID = 1087,
                 }, 
                 boss4 = {
-                    name = "Twin Val'kyr 25",
+                    name = 1622, --Twin Val'kyr
                     bossIDs = {34497,34496},
                     achievement = 3815,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4068,7 +4085,7 @@ core.Instances = {
                     encounterID = 1089,
                 }, 
                 boss5 = {
-                    name = "Anub'arak 25",
+                    name = 1623, --Anub'arak
                     bossIDs = {34564},
                     achievement = 3816,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4081,9 +4098,9 @@ core.Instances = {
             },
 
             ["624-10"] = { --Vault of Archavon 10 Man
-                name = "Vault of Archavon 10 Man",
+                name = 753,
                 boss1 = {
-                    name = "Archavon & Emalon & Koralon",
+                    name = 1597, --Archavon & Emalon & Koralon
                     bossIDs = {},
                     achievement = 4016,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4096,9 +4113,9 @@ core.Instances = {
             },
 
             ["624-25"] = { --Vault of Archavon 25 Man
-                name = "Vault of Archavon 25 Man",
+                name = 753,
                 boss1 = {
-                    name = "Archavon & Emalon & Koralon",
+                    name = 1597, --Archavon & Emalon & Koralon
                     bossIDs = {},
                     achievement = 4017,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4111,7 +4128,7 @@ core.Instances = {
             },
 
             [603] = { --Ulduar
-                name = "Ulduar",
+                name = 759,
                 boss1 = {
                     name = "Other 23",
                     bossIDs = {33572},
@@ -4133,7 +4150,7 @@ core.Instances = {
 					partial = false,
                 }, 
                 boss3 = {
-                    name = "Flame Leviathan 1",
+                    name = 1637, --Flame Leviathan
                     bossIDs = {},
                     achievement = 12314,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4144,7 +4161,7 @@ core.Instances = {
                     encounterID = 1132,
                 }, 
                 boss4 = {
-                    name = "Flame Leviathan 2",
+                    name = 1637, --Flame Leviathan
                     bossIDs = {33113},
                     achievement = 12315,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4155,7 +4172,7 @@ core.Instances = {
                     encounterID = 1132,
                 }, 
                 boss5 = {
-                    name = "Flame Leviathan 3",
+                    name = 1637, --Flame Leviathan
                     bossIDs = {33113},
                     achievement = 12316,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4166,7 +4183,7 @@ core.Instances = {
                     encounterID = 1132,
                 }, 
                 boss6 = {
-                    name = "Flame Leviathan 4",
+                    name = 1637, --Flame Leviathan
                     bossIDs = {},
                     achievement = 12317,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4177,7 +4194,7 @@ core.Instances = {
                     encounterID = 1132,
                 }, 
                 boss7 = {
-                    name = "Flame Leviathan 5",
+                    name = 1637, --Flame Leviathan
                     bossIDs = {},
                     achievement = 12318,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4188,7 +4205,7 @@ core.Instances = {
                     encounterID = 1132,
                 }, 
                 boss8 = {
-                    name = "Flame Leviathan 6",
+                    name = 1637, --Flame Leviathan
                     bossIDs = {},
                     achievement = 12319,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4199,7 +4216,7 @@ core.Instances = {
                     encounterID = 1132,
                 }, 
                 boss9 = {
-                    name = "Flame Leviathan 7",
+                    name = 1637, --Flame Leviathan
                     bossIDs = {},
                     achievement = 12320,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4210,7 +4227,7 @@ core.Instances = {
                     encounterID = 1132,
                 }, 
                 boss10 = {
-                    name = "Razorscale 1",
+                    name = 1639, --Razorscale
                     bossIDs = {33186},
                     achievement = 12321,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4221,7 +4238,7 @@ core.Instances = {
                     encounterID = 1139,
                 }, 
                 boss11 = {
-                    name = "Razorscale 2",
+                    name = 1639, --Razorscale
                     bossIDs = {33186},
                     achievement = 12322,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4232,7 +4249,7 @@ core.Instances = {
                     encounterID = 1139,
                 }, 
                 boss12 = {
-                    name = "Ignis the Furnace Master 1",
+                    name = 1638, --Ignis the Furnace Master
                     bossIDs = {33118},
                     achievement = 12323,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4243,7 +4260,7 @@ core.Instances = {
                     encounterID = 1136,
                 }, 
                 boss13 = {
-                    name = "Ignis the Furnace Master 2",
+                    name = 1638, --Ignis the Furnace Master
                     bossIDs = {},
                     achievement = 12324,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4254,7 +4271,7 @@ core.Instances = {
                     encounterID = 1136,
                 }, 
                 boss14 = {
-                    name = "Ignis the Furnace Master 3",
+                    name = 1638, --Ignis the Furnace Master
                     bossIDs = {33118},
                     achievement = 12325,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4265,7 +4282,7 @@ core.Instances = {
                     encounterID = 1136,
                 }, 
                 boss15 = {
-                    name = "XT-002 Deconstructor 1",
+                    name = 1640, --XT-002 Deconstructor
                     bossIDs = {33293},
                     achievement = 12326,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4276,7 +4293,7 @@ core.Instances = {
                     encounterID = 1142,
                 }, 
                 boss16 = {
-                    name = "XT-002 Deconstructor 2",
+                    name = 1640, --XT-002 Deconstructor
                     bossIDs = {33293},
                     achievement = 12327,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4287,7 +4304,7 @@ core.Instances = {
                     encounterID = 1142,
                 }, 
                 boss17 = {
-                    name = "XT-002 Deconstructor 3",
+                    name = 1640, --XT-002 Deconstructor
                     bossIDs = {33293},
                     achievement = 12328,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4298,7 +4315,7 @@ core.Instances = {
                     encounterID = 1142,
                 }, 
                 boss18 = {
-                    name = "XT-002 Deconstructor 4",
+                    name = 1640, --XT-002 Deconstructor
                     bossIDs = {33293},
                     achievement = 12329,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4309,7 +4326,7 @@ core.Instances = {
                     encounterID = 1142,
                 }, 
                 boss19 = {
-                    name = "XT-002 Deconstructor 5",
+                    name = 1640, --XT-002 Deconstructor
                     bossIDs = {33293},
                     achievement = 12330,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4320,7 +4337,7 @@ core.Instances = {
                     encounterID = 1142,
                 }, 
                 boss20 = {
-                    name = "Assembly of Iron 1",
+                    name = 1641, --Assembly of Iron
                     bossIDs = {32867,32927,32857},
                     achievement = 12332,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4331,7 +4348,7 @@ core.Instances = {
                     encounterID = 1140,
                 }, 
                 boss21 = {
-                    name = "Assembly of Iron 2",
+                    name = 1641, --Assembly of Iron
                     bossIDs = {32867,32927,32857},
                     achievement = 12333,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4342,7 +4359,7 @@ core.Instances = {
                     encounterID = 1140,
                 }, 
                 boss22 = {
-                    name = "Assembly of Iron 3",
+                    name = 1641, --Assembly of Iron
                     bossIDs = {32867,32927,32857},
                     achievement = 12334,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4353,7 +4370,7 @@ core.Instances = {
                     encounterID = 1140,
                 }, 
                 boss23 = {
-                    name = "Assembly of Iron 4",
+                    name = 1641, --Assembly of Iron
                     bossIDs = {},
                     achievement = 12335,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4364,7 +4381,7 @@ core.Instances = {
                     encounterID = 1140,
                 }, 
                 boss24 = {
-                    name = "Assembly of Iron 5",
+                    name = 1641, --Assembly of Iron
                     bossIDs = {32867,32927,32857},
                     achievement = 12336,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4375,7 +4392,7 @@ core.Instances = {
                     encounterID = 1140,
                 }, 
                 boss25 = {
-                    name = "Kologarn 1",
+                    name = 1642, --Kologarn
                     bossIDs = {32930,32934,32933},
                     achievement = 12337,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4386,7 +4403,7 @@ core.Instances = {
                     encounterID = 1137,
                 }, 
                 boss26 = {
-                    name = "Kologarn 2",
+                    name = 1642, --Kologarn
                     bossIDs = {},
                     achievement = 12338,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4397,7 +4414,7 @@ core.Instances = {
                     encounterID = 1137,
                 }, 
                 boss27 = {
-                    name = "Kologarn 3",
+                    name = 1642, --Kologarn
                     bossIDs = {32930,32934,32933},
                     achievement = 12339,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4408,7 +4425,7 @@ core.Instances = {
                     encounterID = 1137,
                 }, 
                 boss28 = {
-                    name = "Kologarn 4",
+                    name = 1642, --Kologarn
                     bossIDs = {32930,32934,32933},
                     achievement = 12340,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4419,7 +4436,7 @@ core.Instances = {
                     encounterID = 1137,
                 }, 
                 boss29 = {
-                    name = "Auriaya 1",
+                    name = 1643, --Auriaya
                     bossIDs = {33515, 34014},
                     achievement = 12341,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4430,7 +4447,7 @@ core.Instances = {
                     encounterID = 1131,
                 }, 
                 boss30 = {
-                    name = "Auriaya 2",
+                    name = 1643, --Auriaya
                     bossIDs = {33515, 34014},
                     achievement = 12342,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4441,7 +4458,7 @@ core.Instances = {
                     encounterID = 1131,
                 }, 
                 boss31 = {
-                    name = "Hodir 1",
+                    name = 1644, --Hodir
                     bossIDs = {32845},
                     achievement = 12343,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4452,7 +4469,7 @@ core.Instances = {
                     encounterID = 1135,
                 }, 
                 boss32 = {
-                    name = "Hodir 2",
+                    name = 1644, --Hodir
                     bossIDs = {32845},
                     achievement = 12344,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4463,7 +4480,7 @@ core.Instances = {
                     encounterID = 1135,
                 }, 
                 boss33 = {
-                    name = "Hodir 3",
+                    name = 1644, --Hodir
                     bossIDs = {32845},
                     achievement = 12345,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4474,7 +4491,7 @@ core.Instances = {
                     encounterID = 1135,
                 }, 
                 boss34 = {
-                    name = "Hodir 4",
+                    name = 1644, --Hodir
                     bossIDs = {32845},
                     achievement = 12347,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4485,7 +4502,7 @@ core.Instances = {
                     encounterID = 1135,
                 }, 
                 boss35 = {
-                    name = "Hodir 5",
+                    name = 1644, --Hodir
                     bossIDs = {},
                     achievement = 12346,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4496,7 +4513,7 @@ core.Instances = {
                     encounterID = 1135,
                 }, 
                 boss36 = {
-                    name = "Thorim 1",
+                    name = 1645, --Thorim
                     bossIDs = {32865},
                     achievement = 12348,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4507,7 +4524,7 @@ core.Instances = {
                     encounterID = 1141,
                 }, 
                 boss37 = {
-                    name = "Thorim 2",
+                    name = 1645, --Thorim
                     bossIDs = {},
                     achievement = 12349,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4518,7 +4535,7 @@ core.Instances = {
                     encounterID = 1141,
                 }, 
                 boss38 = {
-                    name = "Thorim 3",
+                    name = 1645, --Thorim
                     bossIDs = {},
                     achievement = 12350,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4529,7 +4546,7 @@ core.Instances = {
                     encounterID = 1141,
                 }, 
                 boss39 = {
-                    name = "Thorim 4",
+                    name = 1645, --Thorim
                     bossIDs = {},
                     achievement = 12351,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4540,7 +4557,7 @@ core.Instances = {
                     encounterID = 1141,
                 }, 
                 boss40 = {
-                    name = "Thorim 5",
+                    name = 1645, --Thorim
                     bossIDs = {},
                     achievement = 12352,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4561,7 +4578,7 @@ core.Instances = {
                     partial = false,
                 }, 
                 boss42 = {
-                    name = "Freya 1",
+                    name = 1646, --Freya
                     bossIDs = {32906, 33430, 33431, 33528, 33527, 33526, 33525, 32914, 32913, 33354, 33355, 32915},
                     achievement = 12361,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4572,7 +4589,7 @@ core.Instances = {
                     encounterID = 1133,
                 }, 
                 boss43 = {
-                    name = "Freya 2",
+                    name = 1646, --Freya
                     bossIDs = {32906},
                     achievement = 12362,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4583,7 +4600,7 @@ core.Instances = {
                     encounterID = 1133,
                 }, 
                 boss44 = {
-                    name = "Freya 3",
+                    name = 1646, --Freya
                     bossIDs = {32906},
                     achievement = 12363,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4594,7 +4611,7 @@ core.Instances = {
                     encounterID = 1133,
                 }, 
                 boss45 = {
-                    name = "Freya 4",
+                    name = 1646, --Freya
                     bossIDs = {},
                     achievement = 12364,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4605,7 +4622,7 @@ core.Instances = {
                     encounterID = 1133,
                 }, 
                 boss46 = {
-                    name = "Freya 5",
+                    name = 1646, --Freya
                     bossIDs = {},
                     achievement = 12365,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4616,7 +4633,7 @@ core.Instances = {
                     encounterID = 1133,
                 }, 
                 boss47 = {
-                    name = "Freya 6",
+                    name = 1646, --Freya
                     bossIDs = {},
                     achievement = 12366,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4627,7 +4644,7 @@ core.Instances = {
                     encounterID = 1133,
                 }, 
                 boss48 = {
-                    name = "Mimiron 1",
+                    name = 1647, --Mimiron
                     bossIDs = {33350, 33432},
                     achievement = 12367,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4638,7 +4655,7 @@ core.Instances = {
                     encounterID = 1138,
                 }, 
                 boss49 = {
-                    name = "Mimiron 2",
+                    name = 1647, --Mimiron
                     bossIDs = {33350, 33432},
                     achievement = 12368,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4649,7 +4666,7 @@ core.Instances = {
                     encounterID = 1138,
                 }, 
                 boss50 = {
-                    name = "Mimiron 3",
+                    name = 1647, --Mimiron
                     bossIDs = {33350, 33432},
                     achievement = 12369,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4660,7 +4677,7 @@ core.Instances = {
                     encounterID = 1138,
                 }, 
                 boss51 = {
-                    name = "General Vezax 1",
+                    name = 1648, --General Vezax
                     bossIDs = {33271},
                     achievement = 12372,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4671,7 +4688,7 @@ core.Instances = {
                     encounterID = 1134,
                 }, 
                 boss52 = {
-                    name = "General Vezax 2",
+                    name = 1648, --General Vezax
                     bossIDs = {33271},
                     achievement = 12373,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4682,7 +4699,7 @@ core.Instances = {
                     encounterID = 1134,
                 }, 
                 boss53 = {
-                    name = "Yogg-Saron 1",
+                    name = 1649, --Yogg-Saron
                     bossIDs = {33134},
                     achievement = 12384,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4693,7 +4710,7 @@ core.Instances = {
                     encounterID = 1143,
                 }, 
                 boss54 = {
-                    name = "Yogg-Saron 2",
+                    name = 1649, --Yogg-Saron
                     bossIDs = {},
                     achievement = 12385,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4704,7 +4721,7 @@ core.Instances = {
                     encounterID = 1143,
                 }, 
                 boss55 = {
-                    name = "Yogg-Saron 3",
+                    name = 1649, --Yogg-Saron
                     bossIDs = {},
                     achievement = 12386,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4715,7 +4732,7 @@ core.Instances = {
                     encounterID = 1143,
                 }, 
                 boss56 = {
-                    name = "Yogg-Saron 4",
+                    name = 1649, --Yogg-Saron
                     bossIDs = {},
                     achievement = 12387,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4726,7 +4743,7 @@ core.Instances = {
                     encounterID = 1143,
                 }, 
                 boss57 = {
-                    name = "Yogg-Saron 5",
+                    name = 1649, --Yogg-Saron
                     bossIDs = {},
                     achievement = 12388,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4737,7 +4754,7 @@ core.Instances = {
                     encounterID = 1143,
                 }, 
                 boss58 = {
-                    name = "Yogg-Saron 6",
+                    name = 1649, --Yogg-Saron
                     bossIDs = {33134},
                     achievement = 12395,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4748,7 +4765,7 @@ core.Instances = {
                     encounterID = 1143,
                 }, 
                 boss59 = {
-                    name = "Yogg-Saron 7",
+                    name = 1649, --Yogg-Saron
                     bossIDs = {33134},
                     achievement = 12396,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4759,7 +4776,7 @@ core.Instances = {
                     encounterID = 1143,
                 }, 
                 boss60 = {
-                    name = "Yogg-Saron 8",
+                    name = 1649, --Yogg-Saron
                     bossIDs = {33134},
                     achievement = 12397,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4770,7 +4787,7 @@ core.Instances = {
                     encounterID = 1143,
                 }, 
                 boss61 = {
-                    name = "Yogg-Saron 9",
+                    name = 1649, --Yogg-Saron
                     bossIDs = {},
                     achievement = 12398,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4781,7 +4798,7 @@ core.Instances = {
                     encounterID = 1143,
                 }, 
                 boss62 = {
-                    name = "Algalon the Observer",
+                    name = 1650, --Algalon the Observer
                     bossIDs = {},
                     achievement = 12400,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4794,7 +4811,7 @@ core.Instances = {
             },
 
             ["533-10"] = { --Naxxramas 10 Man
-                name = "Naxxramas 10 Man",
+                name = 754,
                 boss1 = {
                     name = "Other 25",
                     bossIDs = {},
@@ -4806,7 +4823,7 @@ core.Instances = {
                     partial = false,
                 },
                 boss2 = {
-                    name = "Maexxna",
+                    name = 1603, --Maexxna
                     bossIDs = {15956,15952},
                     achievement = 1858,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4817,7 +4834,7 @@ core.Instances = {
                     encounterID = 1116,
                 },
                 boss3 = {
-                    name = "Patchwerk",
+                    name = 1610, --Patchwerk
                     bossIDs = {16028},
                     achievement = 1856,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4828,7 +4845,7 @@ core.Instances = {
                     encounterID = 1118,
                 },
                 boss4 = {
-                    name = "Heigan the Unclean",
+                    name = 1605, --Heigan the Unclean
                     bossIDs = {15936},
                     achievement = 1996,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4839,7 +4856,7 @@ core.Instances = {
                     encounterID = 1112,
                 },
                 boss5 = {
-                    name = "Grand Widow Faerlina",
+                    name = 1602, --Grand Widow Faerlina
                     bossIDs = {15953},
                     achievement = 1997,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4850,7 +4867,7 @@ core.Instances = {
                     encounterID = 1110,
                 },
                 boss6 = {
-                    name = "Thaddius 1",
+                    name = 1613, --Thaddius
                     bossIDs = {15928,15930,15929},
                     achievement = 2178,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4861,7 +4878,7 @@ core.Instances = {
                     encounterID = 1120,
                 },
                 boss7 = {
-                    name = "Thaddius 2",
+                    name = 1613, --Thaddius
                     bossIDs = {15928,15930,15929},
                     achievement = 2180,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4872,7 +4889,7 @@ core.Instances = {
                     encounterID = 1120,
                 },
                 boss8 = {
-                    name = "Loatheb",
+                    name = 1606, --Loatheb
                     bossIDs = {16011},
                     achievement = 2182,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4883,7 +4900,7 @@ core.Instances = {
                     encounterID = 1115,
                 },
                 boss9 = {
-                    name = "Four Horsemen",
+                    name = 1609, --Four Horsemen
                     bossIDs = {16063,16064,16065,30549},
                     achievement = 2176,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4894,7 +4911,7 @@ core.Instances = {
                     encounterID = 1121,
                 },
                 boss10 = {
-                    name = "Sapphiron",
+                    name = 1614, --Sapphiron
                     bossIDs = {},
                     achievement = 2146,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4905,7 +4922,7 @@ core.Instances = {
                     encounterID = 1119,
                 },
                 boss11 = {
-                    name = "Kel'Thuzad",
+                    name = 1615, --Kel'Thuzad
                     bossIDs = {23562,23563,23561,16427,16429,16428},
                     achievement = 2184,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4918,7 +4935,7 @@ core.Instances = {
             },
 
             ["533-25"] = { --Naxxramas 25 Man
-                name = "Naxxramas 25 Man",
+                name = 754,
                 boss1 = {
                     name = "Other 26",
                     bossIDs = {},
@@ -4930,7 +4947,7 @@ core.Instances = {
 					partial = false,
                 },
                 boss2 = {
-                    name = "Maexxna",
+                    name = 1603, --Maexxna
                     bossIDs = {15956,15952},
                     achievement = 1859,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4941,7 +4958,7 @@ core.Instances = {
                     encounterID = 1116,
                 },
                 boss3 = {
-                    name = "Patchwerk",
+                    name = 1610, --Patchwerk
                     bossIDs = {16028},
                     achievement = 1857,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4952,7 +4969,7 @@ core.Instances = {
                     encounterID = 1118,
                 },
                 boss4 = {
-                    name = "Heigan the Unclean",
+                    name = 1605, --Heigan the Unclean
                     bossIDs = {15936},
                     achievement = 2139,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4963,7 +4980,7 @@ core.Instances = {
                     encounterID = 1112,
                 },
                 boss5 = {
-                    name = "Grand Widow Faerlina",
+                    name = 1602, --Grand Widow Faerlina
                     bossIDs = {15953},
                     achievement = 2140,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4974,7 +4991,7 @@ core.Instances = {
                     encounterID = 1110,
                 },
                 boss6 = {
-                    name = "Thaddius 1",
+                    name = 1613, --Thaddius
                     bossIDs = {15928,15930,15929},
                     achievement = 2179,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4985,7 +5002,7 @@ core.Instances = {
                     encounterID = 1120,
                 },
                 boss7 = {
-                    name = "Thaddius 2",
+                    name = 1613, --Thaddius
                     bossIDs = {15928,15930,15929},
                     achievement = 2181,
                     players = {L["(Enter instance to start scanning)"]},
@@ -4996,7 +5013,7 @@ core.Instances = {
                     encounterID = 1120,
                 },
                 boss8 = {
-                    name = "Loatheb",
+                    name = 1606, --Loatheb
                     bossIDs = {16011},
                     achievement = 2183,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5007,7 +5024,7 @@ core.Instances = {
                     encounterID = 1115,
                 },
                 boss9 = {
-                    name = "Four Horsemen",
+                    name = 1609, --Four Horsemen
                     bossIDs = {16063,16064,16065,30549},
                     achievement = 2177,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5018,7 +5035,7 @@ core.Instances = {
                     encounterID = 1121,
                 },
                 boss10 = {
-                    name = "Sapphiron",
+                    name = 1614, --Sapphiron
                     bossIDs = {},
                     achievement = 2147,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5029,7 +5046,7 @@ core.Instances = {
                     encounterID = 1119,
                 },
                 boss11 = {
-                    name = "Kel'Thuzad",
+                    name = 1615, --Kel'Thuzad
                     bossIDs = {23562,23563,23561,16427,16429,16428},
                     achievement = 2185,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5042,9 +5059,9 @@ core.Instances = {
             },
 
             ["631-10"] = { --Icecrown Citadel 10 Man
-                name = L["Icecrown Citadel 10 Man"],
+                name = 758,
                 boss1 = {
-                    name = "Lord Marrowgar",
+                    name = 1624, --Lord Marrowgar
                     bossIDs = {36612},
                     achievement = 4534,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5055,7 +5072,7 @@ core.Instances = {
                     encounterID = 1101,
                 },
                 boss2 = {
-                    name = "Lady Deathwhisper",
+                    name = 1625, --Lady Deathwhisper
                     bossIDs = {36855},
                     achievement = 4535,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5066,7 +5083,7 @@ core.Instances = {
                     encounterID = 1100,
                 },     
                 boss3 = {
-                    name = "Gunship Battle",
+                    name = 1626, --Gunship Battle
                     bossIDs = {37215},
                     achievement = 4536,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5077,7 +5094,7 @@ core.Instances = {
                     encounterID = 1099,
                 },     
                 boss4 = {
-                    name = "Deathbringer Saurfang",
+                    name = 1628, --Deathbringer Saurfang
                     bossIDs = {37813},
                     achievement = 4537,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5088,7 +5105,7 @@ core.Instances = {
                     encounterID = 1096,
                 },     
                 boss5 = {
-                    name = "Festergut",
+                    name = 1629, --Festergut
                     bossIDs = {36626},
                     achievement = 4577,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5099,7 +5116,7 @@ core.Instances = {
                     encounterID = 1097,
                 },     
                 boss6 = {
-                    name = "Rotface",
+                    name = 1630, --Rotface
                     bossIDs = {36627},
                     achievement = 4538,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5110,7 +5127,7 @@ core.Instances = {
                     encounterID = 1104,
                 },     
                 boss7 = {
-                    name = "Professor Putricide",
+                    name = 1631, --Professor Putricide
                     bossIDs = {36678},
                     achievement = 4578,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5121,7 +5138,7 @@ core.Instances = {
                     encounterID = 1102,
                 },     
                 boss8 = {
-                    name = "Valithria Dreamwalker",
+                    name = 1634, --Valithria Dreamwalker
                     bossIDs = {36789},
                     achievement = 4579,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5132,7 +5149,7 @@ core.Instances = {
                     encounterID = 1098,
                 },     
                 boss9 = {
-                    name = "Sindragosa",
+                    name = 1635, --Sindragosa
                     bossIDs = {36853},
                     achievement = 4580,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5143,7 +5160,7 @@ core.Instances = {
                     encounterID = 1105,
                 },     
                 boss10 = {
-                    name = "Blood Prince Council",
+                    name = 1632, --Blood Prince Council
                     bossIDs = {37970},
                     achievement = 4582,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5154,7 +5171,7 @@ core.Instances = {
                     encounterID = 1095,
                 },     
                 boss11 = {
-                    name = "Blood-Queen Lana'thel",
+                    name = 1633, --Blood-Queen Lana'thel
                     bossIDs = {37955},
                     achievement = 4539,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5165,7 +5182,7 @@ core.Instances = {
                     encounterID = 1103,
                 },     
                 boss12 = {
-                    name = "The Lich King 1",
+                    name = 1636, --The Lich King
                     bossIDs = {36597},
                     achievement = 4601,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5176,7 +5193,7 @@ core.Instances = {
                     encounterID = 1106,
                 },
                 boss13 = {
-                    name = "The Lich King 2",
+                    name = 1636, --The Lich King
                     bossIDs = {},
                     achievement = 4581,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5189,9 +5206,9 @@ core.Instances = {
             },
 
             ["631-25"] = { --Icecrown Citadel 25 Man
-                name = L["Icecrown Citadel 25 Man"],
+                name = 758,
                 boss1 = {
-                    name = "Lord Marrowgar 25",
+                    name = 1624, --Lord Marrowgar
                     bossIDs = {36612},
                     achievement = 4610,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5202,7 +5219,7 @@ core.Instances = {
                     encounterID = 1101,
                 },
                 boss2 = {
-                    name = "Lady Deathwhisper 25",
+                    name = 1625, --Lady Deathwhisper
                     bossIDs = {36855},
                     achievement = 4611,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5213,7 +5230,7 @@ core.Instances = {
                     encounterID = 1100,
                 },     
                 boss3 = {
-                    name = "Gunship Battle 25",
+                    name = 1626, --Gunship Battle
                     bossIDs = {37215},
                     achievement = 4612,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5224,7 +5241,7 @@ core.Instances = {
                     encounterID = 1099,
                 },     
                 boss4 = {
-                    name = "Deathbringer Saurfang 25",
+                    name = 1628, --Deathbringer Saurfang
                     bossIDs = {37813},
                     achievement = 4613,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5235,7 +5252,7 @@ core.Instances = {
                     encounterID = 1096,
                 },     
                 boss5 = {
-                    name = "Festergut 25",
+                    name = 1629, --Festergut
                     bossIDs = {36626},
                     achievement = 4615,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5246,7 +5263,7 @@ core.Instances = {
                     encounterID = 1097,
                 },     
                 boss6 = {
-                    name = "Rotface 25",
+                    name = 1630, --Rotface
                     bossIDs = {36627},
                     achievement = 4614,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5257,7 +5274,7 @@ core.Instances = {
                     encounterID = 1104,
                 },     
                 boss7 = {
-                    name = "Professor Putricide 25",
+                    name = 1631, --Professor Putricide
                     bossIDs = {36678},
                     achievement = 4616,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5268,7 +5285,7 @@ core.Instances = {
                     encounterID = 1102,
                 },     
                 boss8 = {
-                    name = "Valithria Dreamwalker 25",
+                    name = 1634, --Valithria Dreamwalker
                     bossIDs = {36789},
                     achievement = 4619,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5279,7 +5296,7 @@ core.Instances = {
                     encounterID = 1098,
                 },     
                 boss9 = {
-                    name = "Sindragosa 25",
+                    name = 1635, --Sindragosa
                     bossIDs = {36853},
                     achievement = 4620,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5290,7 +5307,7 @@ core.Instances = {
                     encounterID = 1105,
                 },     
                 boss10 = {
-                    name = "Blood Prince Council 25",
+                    name = 1632, --Blood Prince Council
                     bossIDs = {37970},
                     achievement = 4617,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5301,7 +5318,7 @@ core.Instances = {
                     encounterID = 1095,
                 },     
                 boss11 = {
-                    name = "Blood-Queen Lana'thel 25",
+                    name = 1633, --Blood-Queen Lana'thel
                     bossIDs = {37955},
                     achievement = 4618,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5312,7 +5329,7 @@ core.Instances = {
                     encounterID = 1103,
                 },     
                 boss12 = {
-                    name = "The Lich King 1 25",
+                    name = 1636, --The Lich King
                     bossIDs = {36597},
                     achievement = 4621,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5323,7 +5340,7 @@ core.Instances = {
                     encounterID = 1106,
                 },
                 boss13 = {
-                    name = "The Lich King 2 25",
+                    name = 1636, --The Lich King
                     bossIDs = {},
                     achievement = 4622,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5338,9 +5355,9 @@ core.Instances = {
 
         Dungeons = {
             [574] = { --Utgarde Keep
-                name = "Utgarde Keep",
+                name = 285,
                 boss1 = {
-                    name = "Prince Keleseth",
+                    name = 638, --Prince Keleseth
                     bossIDs = {23953},
                     achievement = 1919,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5353,9 +5370,9 @@ core.Instances = {
             },
 
             [576] = { --The Nexus
-                name = "The Nexus",
+                name = 281,
                 boss1 = {
-                    name = "Grand Magus Telestra",
+                    name = 618, --Grand Magus Telestra
                     bossIDs = {26731},
                     achievement = 2150,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5365,7 +5382,7 @@ core.Instances = {
                     partial = false,
                 },
                 boss2 = {
-                    name = "Anomalus",
+                    name = 619, --Anomalus
                     bossIDs = {26763},
                     achievement = 2037,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5375,7 +5392,7 @@ core.Instances = {
                     partial = false,
                 },
                 boss3 = {
-                    name = "Keristrasza",
+                    name = 621, --Keristrasza
                     bossIDs = {26723},
                     achievement = 2036,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5387,9 +5404,9 @@ core.Instances = {
             },
 
             [595] = { --The Culling of Stratholme
-                name = "The Culling of Stratholme",
+                name = 279,
                 boss1 = {
-                    name = "Other 27",
+                    name = L["Other"],
                     bossIDs = {27737},
                     achievement = 1872,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5399,7 +5416,7 @@ core.Instances = {
 					partial = false,
                 },
                 boss2 = {
-                    name = "Other 28",
+                    name = L["Other"],
                     bossIDs = {},
                     achievement = 1817,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5411,9 +5428,9 @@ core.Instances = {
             },
 
             [601] = { --Azjol Nerub
-                name = "Azjol Nerub",
+                name = 272,
                 boss1 = {
-                    name = "Krik'thir the Gatewatcher",
+                    name = 585, --Krik'thir the Gatewatcher
                     bossIDs = {},
                     achievement = 1296,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5424,7 +5441,7 @@ core.Instances = {
                     encounterID = 1971,
                 },
                 boss2 = {
-                    name = "Hadronox",
+                    name = 586, --Hadronox
                     bossIDs = {},
                     achievement = 1297,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5435,7 +5452,7 @@ core.Instances = {
                     encounterID = 1972,
                 },
                 boss3 = {
-                    name = "Anub'arak",
+                    name = 587, --Anub'arak
                     bossIDs = {29120},
                     achievement = 1860,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5448,9 +5465,9 @@ core.Instances = {
             },
 
             [619] = { --Ahn'Kahet The Old Kingdom
-                name = "AhnKahet The Old Kingdom",
+                name = 271,
                 boss1 = {
-                    name = "Elder Nadox",
+                    name = 580, --Elder Nadox
                     bossIDs = {29309},
                     achievement = 2038,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5461,7 +5478,7 @@ core.Instances = {
                     encounterID = 1969,
                 },
                 boss2 = {
-                    name = "Jedoga Shadowseeker",
+                    name = 582, --Jedoga Shadowseeker
                     bossIDs = {29310},
                     achievement = 2056,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5472,7 +5489,7 @@ core.Instances = {
                     encounterID = 1967,
                 },
                 boss3 = {
-                    name = "Herald Volazj",
+                    name = 584, --Herald Volazj
                     bossIDs = {29311},
                     achievement = 1862,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5485,9 +5502,9 @@ core.Instances = {
             },
 
             [600] = { --Dark Tharon Keep
-                name = "Drak Tharon Keep",
+                name = 273,
                 boss1 = {
-                    name = "Trollgore",
+                    name = 588, --Trollgore
                     bossIDs = {26630},
                     achievement = 2151,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5498,7 +5515,7 @@ core.Instances = {
                     encounterID = 1974,
                 },
                 boss2 = {
-                    name = "Novos the Summoner",
+                    name = 589, --Novos the Summoner
                     bossIDs = {},
                     achievement = 2057,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5509,7 +5526,7 @@ core.Instances = {
                     encounterID = 1976,
                 },
                 boss3 = {
-                    name = "King Dred",
+                    name = 590, --King Dred
                     bossIDs = {27483},
                     achievement = 2039,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5522,9 +5539,9 @@ core.Instances = {
             },
 
             [608] = { --Violet Hold
-                name = "Violet Hold",
+                name = 283,
                 boss1 = {
-                    name = "Cyanigosa",
+                    name = 632, --Cyanigosa
                     bossIDs = {},
                     achievement = 1816,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5535,7 +5552,7 @@ core.Instances = {
                     encounterID = 2020,
                 },
                 boss2 = {
-                    name = "Other 29",
+                    name = L["Other"],
                     bossIDs = {},
                     achievement = 1865,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5545,7 +5562,7 @@ core.Instances = {
 					partial = false,
                 },
                 boss3 = {
-                    name = "Ichoron",
+                    name = 628, --Ichoron
                     bossIDs = {},
                     achievement = 2041,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5555,7 +5572,7 @@ core.Instances = {
                     partial = false,
                 },
                 boss4 = {
-                    name = "Zuramat the Obliterator",
+                    name = 631, --Zuramat the Obliterator
                     bossIDs = {29314},
                     achievement = 2153,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5567,9 +5584,9 @@ core.Instances = {
             },
 
             [604] = { --Gundrak
-                name = "Gundrak",
+                name = 274,
                 boss1 = {
-                    name = "Slad'ran",
+                    name = 592, --Slad'ran
                     bossIDs = {29304},
                     achievement = 2058,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5580,7 +5597,7 @@ core.Instances = {
                     encounterID = 1978,
                 },
                 boss2 = {
-                    name = "Moorabi",
+                    name = 594, --Moorabi
                     bossIDs = {29305},
                     achievement = 2040,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5591,7 +5608,7 @@ core.Instances = {
                     encounterID = 1980,
                 },
                 boss3 = {
-                    name = "Gal'darah 1",
+                    name = 596, --Gal'darah
                     bossIDs = {},
                     achievement = 1864,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5602,7 +5619,7 @@ core.Instances = {
                     encounterID = 1981,
                 },
                 boss4 = {
-                    name = "Gal'darah 2",
+                    name = 596, --Gal'darah
                     bossIDs = {29306},
                     achievement = 2152,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5615,9 +5632,9 @@ core.Instances = {
             },
 
             [599] = { --Halls of Stone
-                name = "Halls of Stone",
+                name = 277,
                 boss1 = {
-                    name = "Maiden of Grief",
+                    name = 605, --Maiden of Grief
                     bossIDs = {27975},
                     achievement = 1866,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5628,7 +5645,7 @@ core.Instances = {
                     encounterID = 1996,
                 },
                 boss2 = {
-                    name = "Tribunal of Ages",
+                    name = 606, --Tribunal of Ages
                     bossIDs = {27983},
                     achievement = 2154,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5639,7 +5656,7 @@ core.Instances = {
                     encounterID = 1995,
                 },
                 boss3 = {
-                    name = "Sjonnir The Ironshaper",
+                    name = 607, --Sjonnir The Ironshaper
                     bossIDs = {27978},
                     achievement = 2155,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5652,9 +5669,9 @@ core.Instances = {
             },
 
             [602] = { --Halls of Lightning
-                name = "Halls of Lightning",
+                name = 275,
                 boss1 = {
-                    name = "General Bjarngrim",
+                    name = 597, --General Bjarngrim
                     bossIDs = {28586},
                     achievement = 1834,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5665,7 +5682,7 @@ core.Instances = {
                     encounterID = 1987,
                 },
                 boss2 = {
-                    name = "Volkhan",
+                    name = 598, --Volkhan
                     bossIDs = {28587},
                     achievement = 2042,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5676,7 +5693,7 @@ core.Instances = {
                     encounterID = 1985,
                 },
                 boss3 = {
-                    name = "Loken",
+                    name = 600, --Loken
                     bossIDs = {28923},
                     achievement = 1867,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5689,9 +5706,9 @@ core.Instances = {
             },
 
             [578] = { --The Oculus
-                name = "The Oculus",
+                name = 282,
                 boss1 = {
-                    name = "Ley-Guardian Eregos 1",
+                    name = 625, --Ley-Guardian Eregos
                     bossIDs = {},
                     achievement = 1871,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5702,7 +5719,7 @@ core.Instances = {
                     encounterID = 2013,
                 },
                 boss2 = {
-                    name = "Ley-Guardian Eregos 2",
+                    name = 625, --Ley-Guardian Eregos
                     bossIDs = {},
                     achievement = 1868,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5713,7 +5730,7 @@ core.Instances = {
                     encounterID = 2013,
                 },
                 boss3 = {
-                    name = "Ley-Guardian Eregos 3",
+                    name = 625, --Ley-Guardian Eregos
                     bossIDs = {},
                     achievement = 2044,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5724,7 +5741,7 @@ core.Instances = {
                     encounterID = 2013,
                 },
                 boss4 = {
-                    name = "Ley-Guardian Eregos 4",
+                    name = 625, --Ley-Guardian Eregos
                     bossIDs = {},
                     achievement = 2045,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5735,7 +5752,7 @@ core.Instances = {
                     encounterID = 2013,
                 },
                 boss5 = {
-                    name = "Ley-Guardian Eregos 5",
+                    name = 625, --Ley-Guardian Eregos
                     bossIDs = {},
                     achievement = 2046,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5748,9 +5765,9 @@ core.Instances = {
             },
 
             [575] = { --Utgarde Pinnacle
-                name = "Utgarde Pinnacle",
+                name = 286,
                 boss1 = {
-                    name = "Svala Sorrowgrave",
+                    name = 641, --Svala Sorrowgrave
                     bossIDs = {},
                     achievement = 2043,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5761,7 +5778,7 @@ core.Instances = {
                     encounterID = 2030,
                 },
                 boss2 = {
-                    name = "Skadi the Ruthless 1",
+                    name = 643, --Skadi the Ruthless
                     bossIDs = {26690, 26693},
                     achievement = 1873,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5772,7 +5789,7 @@ core.Instances = {
                     encounterID = 2029,
                 },
                 boss3 = {
-                    name = "Skadi the Ruthless 2",
+                    name = 643, --Skadi the Ruthless
                     bossIDs = {},
                     achievement = 2156,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5783,7 +5800,7 @@ core.Instances = {
                     encounterID = 2029,
                 },
                 boss4 = {
-                    name = "King Ymiron",
+                    name = 644, --King Ymiron
                     bossIDs = {26861},
                     achievement = 2157,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5796,9 +5813,9 @@ core.Instances = {
             },
 
             [650] = { --Trial of the Champion
-                name = "Trial of the Champion",
+                name = 284,
                 boss1 = {
-                    name = "Argent Confessor Paletress",
+                    name = 636, --Argent Confessor Paletress
                     bossIDs = {},
                     achievement = 3802,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5808,7 +5825,7 @@ core.Instances = {
                     partial = false,
                 },
                 boss2 = {
-                    name = "Eadric the Pure ",
+                    name = 635, --Eadric the Pure
                     bossIDs = {},
                     achievement = 3803,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5818,7 +5835,7 @@ core.Instances = {
                     partial = false,
                 },
                 boss3 = {
-                    name = "The Black Knight",
+                    name = 637, --The Black Knight
                     bossIDs = {35451},
                     achievement = 3804,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5831,9 +5848,9 @@ core.Instances = {
             },
 
             [632] = { --The Forge of Souls
-                name = "The Forge of Souls",
+                name = 280,
                 boss1 = {
-                    name = "Bronjahm",
+                    name = 615, --Bronjahm
                     bossIDs = {36497},
                     achievement = 4522,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5844,7 +5861,7 @@ core.Instances = {
                     encounterID = 2006,
                 },
                 boss2 = {
-                    name = "Devourer of Souls",
+                    name = 616, --Devourer of Souls
                     bossIDs = {36502},
                     achievement = 4523,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5857,9 +5874,9 @@ core.Instances = {
             },
 
             [658] = { --Pit of Saron
-                name = "Pit of Saron",
+                name = 278,
                 boss1 = {
-                    name = "Forgemaster Garfrost",
+                    name = 608, --Forgemaster Garfrost
                     bossIDs = {36494},
                     achievement = 4524,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5870,7 +5887,7 @@ core.Instances = {
                     encounterID = 1999,
                 },
                 boss2 = {
-                    name = "Pit of Saron Tunnel",
+                    name = L["Other"],
                     bossIDs = {},
                     achievement = 4525,
                     players = {L["(Enter instance to start scanning)"]},
@@ -5882,9 +5899,9 @@ core.Instances = {
             },
 
             [668] = { --Halls of Reflection
-                name = "Halls of Reflection",
+                name = 276,
                 boss1 = {
-                    name = "Wrath of the Lich King",
+                    name = 603,
                     bossIDs = {},
                     achievement = 4526,
                     players = {L["(Enter instance to start scanning)"]},
