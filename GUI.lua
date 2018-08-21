@@ -552,7 +552,7 @@ function Config:CreateGUI()
         end
     end
 
-    --Create the maximun number of buttons we could possible need for a single instances to store bosses names & tactics etc.
+    --Create 200 buttons for each of the expansion tabs
     local buttonHeight = 30
     local numButtons = 200 --Total number of button we need for any instance. We can hide excess button for raids/dungeons with less bosses
     local idCounter = 0
@@ -650,6 +650,22 @@ function Config:CreateGUI()
         end   
     end
 
+    local generatedIDCounter = 0
+    --Create a unqiue ID for each boss
+    for expansion,_ in pairs(core.Instances) do
+		for instanceType,_ in pairs(core.Instances[expansion]) do
+			for instance,_ in pairs(core.Instances[expansion][instanceType]) do
+                for boss,_ in pairs(core.Instances[expansion][instanceType][instance]) do
+                    if boss ~= "name" then
+                        core.Instances[expansion][instanceType][instance][boss].generatedID = generatedIDCounter
+                        generatedIDCounter = generatedIDCounter + 1
+                        print("Setting ID " .. generatedIDCounter .. " for " .. boss)
+                        print(core.Instances[expansion][instanceType][instance][boss].generatedID)
+                    end
+                end
+			end
+		end
+	end
 end
 
 -- Method:          Config:Instance_OnClickAutomatic()
@@ -705,10 +721,11 @@ function Instance_OnClick(self)
     end
 
     for bossName,v in pairs(instanceLocation) do
-        if bossName ~= "name" then
+        if bossName ~= "name" then --Don't fetch the name of the instance that has been clicked
             local button
 
             --Header
+            --Get the set of buttons for the current selected tab
             if Config.currentTab == 2 then
                 button = BattleForAzerothContentButtons[counter]               
             elseif Config.currentTab == 3 then
@@ -761,6 +778,14 @@ function Instance_OnClick(self)
                 button.enabledText:Hide()
                 button.enabled:Hide()
             end
+
+            print(instanceLocation["boss" .. counter2].generatedID)
+
+            --We need to set the ID of the tactics/players/track buttons to the id of the current boss so when clicked we know which boss we need to fetch info for
+            button.tactics:SetID(instanceLocation["boss" .. counter2].generatedID)
+            button.players:SetID(instanceLocation["boss" .. counter2].generatedID)
+            button.enabled:SetID(instanceLocation["boss" .. counter2].generatedID)
+
             counter = counter + 1  
 
             --Content        
@@ -948,7 +973,8 @@ function Tactics_OnClick(self)
 		for instanceType,_ in pairs(core.Instances[expansion]) do
 			for instance,_ in pairs(core.Instances[expansion][instanceType]) do
                 for boss,_ in pairs(core.Instances[expansion][instanceType][instance]) do
-                    if core.Instances[expansion][instanceType][instance][boss].name == parent.headerText:GetText() then
+                    print(core.Instances[expansion][instanceType][instance][boss].generatedID,  self:GetID())
+                    if core.Instances[expansion][instanceType][instance][boss].generatedID == self:GetID() then
                         local message, pattern, position;
                         local tactics = GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " " .. core.Instances[expansion][instanceType][instance][boss].tactics
                         position = 1;
