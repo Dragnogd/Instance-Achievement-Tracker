@@ -1,18 +1,17 @@
-local i = 1
-while EJ_GetInstanceByIndex(i, false) do
-    local instanceId, name = EJ_GetInstanceByIndex(i, false)
-    print("---" .. instanceId, name)
-    EJ_SelectInstance(instanceId)
-    i = i+1
+-- local i = 1
+-- while EJ_GetInstanceByIndex(i, false) do
+--     local instanceId, name = EJ_GetInstanceByIndex(i, false)
+--     print("---" .. instanceId, name)
+--     EJ_SelectInstance(instanceId)
+--     i = i+1
     
-    local j = 1
-    while EJ_GetEncounterInfoByIndex(j, instanceId) do
-        local name, _, encounterId = EJ_GetEncounterInfoByIndex(j, instanceId)
-        print(encounterId, name)
-        j = j+1
-    end
-end
-
+--     local j = 1
+--     while EJ_GetEncounterInfoByIndex(j, instanceId) do
+--         local name, _, encounterId = EJ_GetEncounterInfoByIndex(j, instanceId)
+--         print(encounterId, name)
+--         j = j+1
+--     end
+-- end
 
 --------------------------------------
 -- Namespaces
@@ -128,7 +127,7 @@ core.Instances = {
                     bossIDs = {},
                     achievement = 12270,
                     players = {L["(Enter instance to start scanning)"]},
-                    tactics = string.format("The Zanchuli Witch-Doctor throughout the dungeon cast %s on a random player which hexes them for 5 seconds, and at the end of its duration anyone who is stood near that player will also get hexed. \n\nBefore pulling any Zanchuli Witch-Doctor you will want to clear all the trash in the dungeon. You will have to bring the add to every boss, and if you have a class with a long cc (such as Monk with %s, Hunter with %s, Mage with %s) then you should keep it crowd controlled until close to the end of the fight. If you don't have any class with cc, then you should just focus on interrupting its %s cast throughout the fight.", GetSpellInfo(279118), GetSpellInfo(115078), GetSpellInfo(187650), GetSpellInfo(118), GetSpellInfo(279118)),
+                    tactics = format("The Zanchuli Witch-Doctor throughout the dungeon cast %s on a random player which hexes them for 5 seconds, and at the end of its duration anyone who is stood near that player will also get hexed. \n\nBefore pulling any Zanchuli Witch-Doctor you will want to clear all the trash in the dungeon. You will have to bring the add to every boss, and if you have a class with a long cc (such as Monk with %s, Hunter with %s, Mage with %s) then you should keep it crowd controlled until close to the end of the fight. If you don't have any class with cc, then you should just focus on interrupting its %s cast throughout the fight.", GetSpellLink(279118), GetSpellLink(115078), GetSpellLink(187650), GetSpellLink(118), GetSpellLink(279118)),
                     enabled = false,
                     track = nil,
 					partial = false,
@@ -138,7 +137,7 @@ core.Instances = {
                     bossIDs = {},
                     achievement = 12272,
                     players = {L["(Enter instance to start scanning)"]},
-                    tactics = "",
+                    tactics = format("Boss will summon an add by casting %s. This add will move to any %s puddles and soak them, and when there are no puddles up, it will turn to attack the players. At this point, you should cc the add in order to prevent excessive damage. The add will have to soak 8 puddles of %s in order to turn into a Fatal Corruption.", GetSpellLink(259205), GetSpellLink(255558), GetSpellLink(255558), GetSpellLink(255558)),
                     enabled = true,
                     track = function() core._1763:PriestessAlunza() end,
                     partial = false,
@@ -149,7 +148,7 @@ core.Instances = {
                     bossIDs = {},
                     achievement = 12273,
                     players = {L["(Enter instance to start scanning)"]},
-                    tactics = "",
+                    tactics = format("In order to lit the Shadowflame Sconces, everyone in the group except the tank will have to spread and stay near one when the boss casts %s. The sconces will stay lit up for about 25 seconds, so you should do this when the boss is low on health around 5 to 10%%.", GetSpellLink(259190)),
                     enabled = false,
                     track = nil,
                     partial = false,

@@ -998,17 +998,70 @@ function Tactics_OnClick(self)
                             local message, pattern, position;
                             local tactics = GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " " .. core.Instances[expansion][instanceType][instance][boss].tactics
                             position = 1;
-                            for i = 1, #tactics, 249 do
-                                message = tactics:sub(position, position + 248);
-                                if #message < 249 then
-                                    pattern = ".+";
+                            local openBracketOpen = false
+                            local tmpTacticsStr = ""
+                            local tmpTacticsArr = {}
+                            local lastSpacePosition = 0
+                            local currentStrPosition = 0
+                            for i = 1, #tactics do
+                                currentStrPosition = currentStrPosition + 1
+                                if tactics[i] == "[" then
+                                    --If we are opening a bracket we don't want to check for whitespaces as this will break links if they are cutoff between multiple lines.
+                                    openBracketOpen = true
+                                elseif tactics[i] == "]" then
+                                    --Brackets have been closed so we free to break to a new line again
+                                    openBracketOpen = false
                                 else
-                                    pattern = "(.+)%s";
+                                    --Add this character to a tmp string. The string must not go above 255 words (blizzard limit) and cannot break between brackets
+                                    --If the chracter is a space, we need to record the position of this so we can split at the correct position if limit goes over
+                                    --The reason 249 is used is because we have to take into account the [IAT] prefix at the start of each message
+                                    if #tmpTacticsStr < 249 then
+                                        --Room left to add characters.
+                                        --This does not take into account whether we can complete a word before the limit. Therefore need to get position of last space in order to break
+                                        print(tactics[i])
+                                        tmpTacticsStr = tmpTacticsStr .. tactics[i]
+                                    else
+                                        --Not enough room to add any more chracters.
+                                        --1: If current character is white space and not in brackets then add to tmpArr and empty string
+                                        --2: If we are in a middle of word then break the string at last space position. Add first half to array and 2nd half set as current string
+
+                                        if string.match(tactics[i], " ") and openBracketOpen == false then
+                                            --Since we are on a space not in bracekts, we can just split here
+                                            table.insert(tmpTacticsArr, tmpTacticsStr)
+                                            table.str = ""
+                                            currentStrPosition = 1
+                                        else
+                                            --Split the current str at the position of the last space and the beginning and add to tmpArr
+                                            table.insert(tmpTacticsArr, string.sub(tmpTacticsStr, 1, (lastSpacePosition - 1))) --We don't need the space at the end of the line
+
+                                            --Split the current str at the position of the last space till the end and set this as the new str.
+                                            tmpTacticsStr = string.sub(tmpTacticsStr, (lastSpacePosition + 1)) --We don't need the space since we are going to new line
+                                        end
+                                    end
+
+                                    if tactics[i] == " " and openBracketOpen == false then
+                                        --Only count spaces that are not inside of brackets
+                                        lastSpacePosition = currentStrPosition
+                                    end
                                 end
-                                for capture in message:gmatch(pattern) do
-                                    core:sendMessage2(capture);
-                                    position = position + #capture + 1;
+
+                                for i = 1, #tmpTacticsArr do
+                                    print(capture)
                                 end
+
+                                -- message = tactics:sub(position, position + 248);
+                                -- if #message < 249 then
+                                --     pattern = ".+";
+                                -- else
+                                --     pattern = "[^%[.+%]$]"
+                                --     --pattern = "%S[^%[(.*)%]]";
+                                --    -- pattern = "(.+)%s";
+                                -- end
+                                -- for capture in message:gmatch(pattern) do
+                                --     print(capture)
+                                --     core:sendMessage2(capture);
+                                --     position = position + #capture + 1;
+                                -- end
                             end
                         end
                     end
