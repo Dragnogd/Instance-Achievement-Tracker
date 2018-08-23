@@ -1531,6 +1531,7 @@ function core:sendMessage(message)
 end
 
 function core:sendMessageSafe(message)
+	print("Sending The Following Message")
 	message = message:gsub("[\r\n]+","") --Remove newlines before ouputting to chat
 	local openBracketOpen = false
 	local tmpMessageStr = ""
@@ -1602,7 +1603,7 @@ function core:sendMessageSafe(message)
 	for i in ipairs(tmpMessageArr) do
 		if debugMode == false then
 			--print("Printing Safe Message")
-			SendChatMessage("[IAT] " .. tmpMessageArr[1],core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+			SendChatMessage("[IAT] " .. tmpMessageArr[i],core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
 		else
 			print("[DEBUG] " .. tmpMessageArr[i])
 		end
