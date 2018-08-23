@@ -997,6 +997,7 @@ function Tactics_OnClick(self)
                         if core.Instances[expansion][instanceType][instance][boss].generatedID == self:GetID() then
                             local message, pattern, position;
                             local tactics = GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " " .. core.Instances[expansion][instanceType][instance][boss].tactics
+                            tactics = tactics:gsub("[\r\n]+","") --Remove newlines before ouputting to chat
                             position = 1;
                             local openBracketOpen = false
                             local tmpTacticsStr = ""
@@ -1028,6 +1029,8 @@ function Tactics_OnClick(self)
                                     --1: If current character is white space and not in brackets then add to tmpArr and empty string
                                     --2: If we are in a middle of word then break the string at last space position. Add first half to array and 2nd half set as current string
 
+                                    print("Splitting String")
+
                                     if string.utf8sub(tactics, i, i) == " " and openBracketOpen == false then
                                         --Since we are on a space and not in brackets, we can just split here
                                         table.insert(tmpTacticsArr, tmpTacticsStr)
@@ -1039,8 +1042,10 @@ function Tactics_OnClick(self)
 
                                         --Split the current str at the position of the last space till the end and set this as the new str.
                                         tmpTacticsStr = string.utf8sub(tmpTacticsStr, lastSpacePosition + 1) --We don't need the space since we are going to new line
+                                        print(string.utf8sub(tmpTacticsStr, lastSpacePosition + 1))
                                         tmpTacticsStr = tmpTacticsStr .. string.utf8sub(tactics, i, i)
                                         currentStrPosition = string.utf8len(tmpTacticsStr)
+                                        print(tmpTacticsStr)
                                     end
                                 end
 
@@ -1057,7 +1062,6 @@ function Tactics_OnClick(self)
 
                             --Print the chat
                             for i in ipairs(tmpTacticsArr) do
-                                print(tmpTacticsArr[i])
                                 core:sendMessage2(tmpTacticsArr[i])
                             end
                         end
