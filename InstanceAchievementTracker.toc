@@ -135,5 +135,6 @@ LichKingDungeons\UtgardeKeep.lua
 LichKingDungeons\UtgardePinnacle.lua
 
 Instances.lua
+ItemCache.lua
 GUI.lua
 AchievementTrackerCore.lua

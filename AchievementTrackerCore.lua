@@ -14,6 +14,35 @@ AchievementTrackerOptions = {}
 AchievementTrackerDebug = {}
 
 events:RegisterEvent("ADDON_LOADED")						--Used to setup the slash commands for the addon
+events:RegisterEvent("PLAYER_LOGIN")
+events:RegisterEvent("GET_ITEM_INFO_RECEIVED")
+
+function generateItemCache()
+	for i,v in pairs(core.ItemCache) do
+		GetItemInfo(core.ItemCache[v])
+		print(core.ItemCache[v])
+	end
+end
+
+function events:GET_ITEM_INFO_RECEIVED(self, arg1)
+	if core:has_value2(core.ItemCache, arg1) then
+		--Update table with updated info
+		for expansion, _ in pairs(core.Instances) do
+			for instanceType, _ in pairs(core.Instances[expansion]) do
+				for instance, _ in pairs(core.Instances[expansion][instanceType]) do
+					for boss, _ in pairs(core.Instances[expansion][instanceType][instance]) do
+						if boss ~= "name" then
+							if string.find(core.Instances[expansion][instanceType][instance][boss].tactics, ("IAT_" .. arg1)) then
+								local itemName, itemLink = GetItemInfo(arg1)
+								core.Instances[expansion][instanceType][instance][boss].tactics = string.gsub(core.Instances[expansion][instanceType][instance][boss].tactics, ("IAT_" .. arg1), itemLink)
+							end
+						end
+					end
+				end
+			end
+		end
+	end
+end
 
 events:SetScript("OnEvent", function(self, event, ...)
     return self[event] and self[event](self, event, ...) 	--Allow event arguments to be called from seperate functions
@@ -688,6 +717,8 @@ function events:ADDON_LOADED(event, name)
 	end
 	
 	if name ~= "InstanceAchievementTracker" then return end
+
+	generateItemCache()
 
 	--Check if the options have been setup
 	if AchievementTrackerOptions["enableAddon"] == nil then
@@ -1499,12 +1530,87 @@ function core:sendMessage(message)
 	--The master addon check will be reset after every boss fight so we don't have to worry about players out of range/offline players etc
 end
 
-function core:sendMessage2(message)
-	if debugMode == false then
-		SendChatMessage("[IAT] " .. message,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
-	else
-		print("[DEBUG] " .. message)
+function core:sendMessageSafe(message)
+	message = message:gsub("[\r\n]+","") --Remove newlines before ouputting to chat
+	local openBracketOpen = false
+	local tmpMessageStr = ""
+	local tmpMessageArr = {}
+	local lastSpacePosition = 0
+	local currentStrPosition = 0
+	for i = 1, string.utf8len(message) do
+		currentStrPosition = currentStrPosition + 1
+		if string.utf8sub(message, i, i) == "[" then
+			--If we are opening a bracket we don't want to check for whitespaces as this will break links if they are cutoff between multiple lines.
+			openBracketOpen = true
+		elseif string.utf8sub(message, i, i) == "]" then
+			--Brackets have been closed so we free to break to a new line again
+			openBracketOpen = false
+		end
+
+		--Add this character to a tmp string. The string must not go above 255 words (blizzard limit) and cannot break between brackets
+		--If the chracter is a space, we need to record the position of this so we can split at the correct position if limit goes over
+		--The reason 249 is used is because we have to take into account the [IAT] prefix at the start of each message
+		if currentStrPosition < 249 then
+			--Room left to add characters.
+			--This does not take into account whether we can complete a word before the limit. Therefore need to get position of last space in order to break
+			tmpMessageStr = tmpMessageStr .. string.utf8sub(message, i, i)
+			--print(tmpMessageStr .. " I(" .. i .. " ) CSP(" .. currentStrPosition .. ")" .. "L(" .. string.utf8len(tmpMessageStr) .. ")")
+
+		else
+			--Not enough room to add any more chracters.
+			--1: If current character is white space and not in brackets then add to tmpArr and empty string
+			--2: If we are in a middle of word then break the string at last space position. Add first half to array and 2nd half set as current string
+
+			--print("Splitting String")
+
+			if string.utf8sub(message, i, i) == " " and openBracketOpen == false then
+				--Since we are on a space and not in brackets, we can just split here
+				table.insert(tmpMessageArr, tmpMessageStr)
+				tmpMessageStr = ""
+				currentStrPosition = 0
+			else
+				--Split the current str at the position of the last space and the beginning and add to tmpArr
+				table.insert(tmpMessageArr, string.utf8sub(tmpMessageStr, 1, lastSpacePosition)) --We don't need the space at the end of the line
+				--print(string.utf8sub(tmpMessageStr, 1, lastSpacePosition))
+
+				--Split the current str at the position of the last space till the end and set this as the new str.
+				tmpMessageStr = string.utf8sub(tmpMessageStr, lastSpacePosition + 1) --We don't need the space since we are going to new line
+				tmpMessageStr = tmpMessageStr .. string.utf8sub(message, i, i)
+				currentStrPosition = string.utf8len(tmpMessageStr)
+
+				--print(tmpMessageStr)
+			end
+		end
+
+		if string.utf8sub(message, i, i) == " " and openBracketOpen == false then
+			--Only count spaces that are not inside of brackets
+			lastSpacePosition = currentStrPosition
+			--print("Space Detected: " .. lastSpacePosition)
+		end
 	end
+
+	--Insert the remaining string into array if length is greater than 0
+	if string.utf8len(tmpMessageStr) > 0 then
+		table.insert(tmpMessageArr, tmpMessageStr)
+		--print("Inserting Remaining String...")
+		--print("---" .. tmpMessageStr)
+	end
+
+	--print(tmpMessageArr[1])
+
+	--Print the chat
+	for i in ipairs(tmpMessageArr) do
+		if debugMode == false then
+			--print("Printing Safe Message")
+			SendChatMessage("[IAT] " .. tmpMessageArr[1],core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+		else
+			print("[DEBUG] " .. tmpMessageArr[i])
+		end
+	end
+end
+
+function core:sendMessage2(message)
+
 end
 
 --Output messages depending on a counter and the specified interval
@@ -1855,6 +1961,16 @@ end
 --Check whether a table contains a certain value
 function core:has_value(tab, val)
     for index, value in ipairs(tab) do
+        if value == val then
+            return true
+        end
+    end
+
+    return false
+end
+
+function core:has_value2(tab, val)
+    for index, value in pairs(tab) do
         if value == val then
             return true
         end
