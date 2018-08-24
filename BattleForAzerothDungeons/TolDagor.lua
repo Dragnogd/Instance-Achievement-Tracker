@@ -9,7 +9,7 @@ local _, core = ...
 core._1771 = {}
 
 function core._1771:KnightCaptainValyri()
-    if core.spellId == 256710 then
+    if core.type == "SPELL_DAMAGE" and core.spellId == 256710 then
         core:getAchievementFailed()
     end
 end
