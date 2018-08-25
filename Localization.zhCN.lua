@@ -1,4 +1,4 @@
-if(GetLocale() ~= 'zhCN') then return end
+if(GetLocale() ~= 'enUS') then return end
 
 local _, core = ...
 local baseLocale = {
@@ -39,4 +39,4 @@ local baseLocale = {
     ["Tracking"] = "追踪",
 }
 
-core:RegisterLocale('zhCN', baseLocale)
+core:RegisterLocale('enUS', baseLocale)

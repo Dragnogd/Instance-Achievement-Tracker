@@ -796,7 +796,7 @@ function Instance_OnClick(self)
                 button.enabled:Hide()
             end
 
-            print(instanceLocation["boss" .. counter2].generatedID)
+            --print(instanceLocation["boss" .. counter2].generatedID)
 
             --We need to set the ID of the tactics/players/track buttons to the id of the current boss so when clicked we know which boss we need to fetch info for
             button.tactics:SetID(instanceLocation["boss" .. counter2].generatedID)
