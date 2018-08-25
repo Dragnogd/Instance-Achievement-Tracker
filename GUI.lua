@@ -985,10 +985,6 @@ end
 
 function Tactics_OnClick(self)
     core:detectGroupType()
-    print(self:GetID())
-
-    
-
 	for expansion,_ in pairs(core.Instances) do
 		for instanceType,_ in pairs(core.Instances[expansion]) do
 			for instance,_ in pairs(core.Instances[expansion][instanceType]) do
