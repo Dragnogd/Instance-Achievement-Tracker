@@ -571,7 +571,7 @@ function Config:CreateGUI()
     local buttonHeight = 30
     local numButtons = 200 --Total number of button we need for any instance. We can hide excess button for raids/dungeons with less bosses
     local idCounter = 0
-    for j = 2, expansions do
+    for j = 2, 7 do
         for i = 1, numButtons do
             if j == 2 then
                 BattleForAzerothContentButtons[i] = CreateFrame("Button",nil,BattleForAzerothContent)
@@ -711,7 +711,8 @@ function Instance_OnClick(self)
 
         --If raid is wrath of the lich king as is not Ulduar then we need to re-add the '-' so the button can find the correct raid
         if Config.currentTab == 7 then --Current position of WOTLK expansion. Needs updating each expansion
-            if InstanceID ~= 603 then
+            local numberToNotConvert = {603,574,576,595,601,619,600,608,604,599,602,578,575,650,632,658,668}
+            if core:has_value(numberToNotConvert, InstanceID) == false then
                 InstanceID = tostring(InstanceID)
                 InstanceID = InstanceID:sub(1, -3) .. "-" .. InstanceID:sub(-2)
             end
@@ -1008,28 +1009,8 @@ function Enabled_OnClick(self)
 	end   
 end
 
-function ExpandExample_ListButtonOnClick(self)
-    --print("Running This")
-    --print(self:GetID())
-    --print(self:Hide())
-    -- local index = self:GetID()
-    -- -- only headers can be expanded or collapsed
-
-    --     CollapseTradeSkillSubClass(index)
-    --     --ExpandTradeSkillSubClass(index)
-    -- ExpandExample_UpdateList()
-end 
-
-function CollapseTradeSkillSubClass(self)
-    self.contentText:Hide()
-end
-
-function ExpandExample_UpdateList()
-
-end
-
-    SlashCmdList["EXPANDEXAMPLE"] = ExpandExample_UpdateList
-    SLASH_EXPANDEXAMPLE1 = "/ex"
+SlashCmdList["EXPANDEXAMPLE"] = ExpandExample_UpdateList
+SLASH_EXPANDEXAMPLE1 = "/ex"
 
 Config:CreateGUI()
 UIConfig:Hide()
