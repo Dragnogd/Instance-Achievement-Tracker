@@ -1529,7 +1529,6 @@ function core:sendMessage(message)
 end
 
 function core:sendMessageSafe(message)
-	print("Sending The Following Message")
 	message = message:gsub("[\r\n]+","") --Remove newlines before ouputting to chat
 	local openBracketOpen = false
 	local tmpMessageStr = ""
