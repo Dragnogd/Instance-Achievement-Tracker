@@ -176,6 +176,10 @@ function Tab_OnClick(self)
 
             UIConfig.Main2.content:Show()
             UIConfig.Main2.content2:Show()
+
+            UIConfig.Main2.credits:Show()
+            UIConfig.Main2.credits2:Show()
+            UIConfig.Main2.credits3:Show()
         else                                    --Main tab frames have not been created so need to create frames first before showing.
             --Heading
             UIConfig.Main = Config:CreateText2("TOP", AchievementTrackerDialogBG, "TOP", 0, -10, "Instance Achievement Tracker", "GameFontNormalLarge")
@@ -186,7 +190,7 @@ function Tab_OnClick(self)
             
             --Version
             UIConfig.Main.verison = Config:CreateText2("BOTTOMLEFT", AchievementTrackerDialogBG, "BOTTOMLEFT", 5, 5, "v" .. Config.majorVersion .. "." .. Config.minorVersion .. "." .. Config.revisionVersion .. Config.releaseType,"GameFontNormal")
-    
+            
             --Currently tracking
             UIConfig.Main2 = Config:CreateText2("TOPLEFT", UIConfig.Main, "TOPLEFT", 0, -45, L["Currently Tracking"] .. ":","GameFontNormalLarge")            
             UIConfig.Main2:SetWidth(300)
@@ -244,6 +248,17 @@ function Tab_OnClick(self)
             UIConfig.Main2.options4:SetScript("OnClick", ATToggleMinimapIcon_OnClick)
             UIConfig.Main2.options5 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options4, "TOPLEFT", 30, -9, L["Show Minimap Button"],"GameFontHighlight")            
 
+    
+            --Links to current guides and achievement discord credit for tactics
+            UIConfig.Main2.credits = Config:CreateText2("TOPRIGHT",UIConfig.Main2.features6, "TOPRIGHT", 480, -30, L["Achievement Discord"] .. ":","GameFontNormalLarge")            
+            UIConfig.Main2.credits:SetWidth(400)
+            UIConfig.Main2.credits:SetJustifyH("LEFT")
+            UIConfig.Main2.credits2 = Config:CreateText2("TOPLEFT", UIConfig.Main2.credits, "TOPLEFT", 0, -20, L["https://discord.gg/achievements"],"GameFontNormal")
+            UIConfig.Main2.credits3 = Config:CreateText2("TOPLEFT", UIConfig.Main2.credits2, "TOPLEFT", 0, -20, L["Tactics kindly contributed by the Achievement Discord Server, the community where members can meet like-minded completionists and form groups for a variety of achievements."],"GameFontHighlight")
+            UIConfig.Main2.credits3:SetWidth(400)
+            UIConfig.Main2.credits3:SetJustifyH("LEFT")
+            
+
             --Announce which acheivements are being tracked to group
             -- UIConfig.Main2.options6 = Config:CreateCheckBox("TOPLEFT", UIConfig.Main2.options3, "TOPLEFT", 0, -25, "AchievementTracker_ToggleMinimapIcon")
             -- UIConfig.Main2.options6:SetScript("OnClick", ATToggleMinimapIcon_OnClick)
@@ -285,6 +300,10 @@ function Tab_OnClick(self)
 
         UIConfig.Main2.content:Hide()
         UIConfig.Main2.content2:Hide()
+
+        UIConfig.Main2.credits:Hide()
+        UIConfig.Main2.credits2:Hide()
+        UIConfig.Main2.credits3:Hide()
     end
 end
 
