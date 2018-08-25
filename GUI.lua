@@ -924,18 +924,12 @@ end
 
 function Player_OnClick(self)
     core:detectGroupType()
-    local parent = self:GetParent()
-    parent = parent:GetParent()
-
-    core:sendDebugMessage(parent.headerText:GetText())
-
 	for expansion,_ in pairs(core.Instances) do
 		for instanceType,_ in pairs(core.Instances[expansion]) do
-            for instance,_ in pairs(core.Instances[expansion][instanceType]) do
-                if instance == Config.currentInstance then
-                    for boss,_ in pairs(core.Instances[expansion][instanceType][instance]) do
-                        if core.Instances[expansion][instanceType][instance][boss].name == parent.headerText:GetText() then
-                            
+			for instance,_ in pairs(core.Instances[expansion][instanceType]) do
+                for boss,_ in pairs(core.Instances[expansion][instanceType][instance]) do
+                    if boss ~= "name" then
+                        if core.Instances[expansion][instanceType][instance][boss].generatedID == self:GetID() then
                             local players
                             if core.inInstance == true then
                                 if core.Instances[expansion][instanceType][instance][boss].players[1] == "(" .. L["No players in the group need this achievement"] .. ")" then
@@ -961,26 +955,14 @@ function Player_OnClick(self)
                                 players = GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement)
                             end
                             
-                            local message, pattern, position;
-                            position = 1;
-                            for i = 1, #players, 249 do
-                                message = players:sub(position, position + 248);
-                                if #message < 249 then
-                                    pattern = ".+";
-                                else
-                                    pattern = "(.+)%s";
-                                end
-                                for capture in message:gmatch(pattern) do
-                                    core:sendMessage2(capture);
-                                    position = position + #capture + 1;
-                                end
-                            end
+                            --Send message to chat
+                            core:sendMessageSafe(players)
                         end
                     end
                 end
 			end
 		end
-	end
+	end                            
 end
 
 function Tactics_OnClick(self)

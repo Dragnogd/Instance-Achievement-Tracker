@@ -8,7 +8,7 @@ local L = core.L
 local events = CreateFrame("Frame")
 local UIConfig
 local UICreated = false
-local debugMode = true
+local debugMode = false
 
 AchievementTrackerOptions = {}
 AchievementTrackerDebug = {}
@@ -401,11 +401,12 @@ function getInstanceInfomation()
 		core:sendDebugMessage("DifficultyID: " .. core.difficultyID)
 		if core.difficultyID == 2 then
 			--WOTLK/Cata/Mop/Wod heroic dungeons
-			if core.expansion == "WrathOfTheLichKing" or core.expansion == "Cataclysm" or core.expansion == "MistsOfPandaria" or core.expansion == "WarlordsOfDraenor" then
+			if core.expansion == 7 or core.expansion == 6 or core.expansion == 5 or core.expansion == 4 then
 				instanceCompatible = true
 			end
 		elseif core.difficultyID == 23 then
-			if core.expansion == "Legion" then
+			--Legion/BFA Mythics
+			if core.expansion == 3 or core.expansion == 2 then
 				instanceCompatible = true
 			end
 		elseif core.difficultyID == 3 or core.difficultyID == 5 then
@@ -416,7 +417,7 @@ function getInstanceInfomation()
 			instanceCompatible = true
 		elseif core.difficultyID == 11 or core.difficultyID == 12 then
 			--scenerios"
-			if core.expansion == "MistsOfPandaria" then
+			if core.expansion == 5 then
 				instanceCompatible = true
 			end
 		elseif core.difficultyID == 13 or core.difficultyID == 14 or core.difficultyID == 15 or core.difficultyID == 16 then
@@ -529,17 +530,17 @@ function enableAchievementTracking(self)
 	UIConfig:Hide()
 
 	--Switch to correct tab in GUI
-	if core.expansion == "Battle for Azeroth" then
+	if core.expansion == 2 then
 		Tab_OnClick(_G["AchievementTrackerTab2"])
-	elseif core.expansion == "Legion" then
+	elseif core.expansion == 3 then
 		Tab_OnClick(_G["AchievementTrackerTab3"])
-	elseif core.expansion == "Warlords of Draenor" or core.expansion == "WarlordsOfDraenor" then
+	elseif core.expansion == 4 then
 		Tab_OnClick(_G["AchievementTrackerTab4"])
-	elseif core.expansion == "Mists of Pandaria" or core.expansion == "MistsOfPandaria" then
+	elseif core.expansion == 5 then
 		Tab_OnClick(_G["AchievementTrackerTab5"])
-	elseif core.expansion == "Cataclysm" then
+	elseif core.expansion == 6 then
 		Tab_OnClick(_G["AchievementTrackerTab6"])
-	elseif core.expansion == "Wrath of the Lich King" or core.expansion == "WrathOfTheLichKing" then
+	elseif core.expansion == 7 then
 		Tab_OnClick(_G["AchievementTrackerTab7"])
 	end
 
