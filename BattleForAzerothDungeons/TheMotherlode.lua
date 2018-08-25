@@ -42,7 +42,6 @@ function core._1594:MogulRazdunk()
                 elseif core.spellId == 270277 then
                     reason = "Big Red Rocket Direct Hit"
                 end
-                print(core.destName .. " " .. reason)
                 if playersHit[core.destName] == nil then
                     --Players has not been hit already
                     --Check if the player actually needs the achievement
