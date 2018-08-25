@@ -1,4 +1,4 @@
-if(GetLocale() ~= 'enUSa') then return end
+if(GetLocale() ~= 'enUS') then return end
 
 local _, core = ...
 local baseLocale = {

@@ -984,29 +984,28 @@ function Tactics_OnClick(self)
 end
 
 function Enabled_OnClick(self)
-    local parent = self:GetParent()
-    parent = parent:GetParent()
-    parent = parent:GetParent()
+    core:detectGroupType()
 	for expansion,_ in pairs(core.Instances) do
 		for instanceType,_ in pairs(core.Instances[expansion]) do
 			for instance,_ in pairs(core.Instances[expansion][instanceType]) do
                 for boss,_ in pairs(core.Instances[expansion][instanceType][instance]) do
-                    if core.Instances[expansion][instanceType][instance][boss].name == parent.headerText:GetText() then
-                        core.Instances[expansion][instanceType][instance][boss].enabled = self:GetChecked()
-
-                        --Print to chat
-                        local status = nil
-                        if core.Instances[expansion][instanceType][instance][boss].enabled == false then
-                            status = L["Disabled"]
-                        else
-                            status = L["Enabled"]
+                    if boss ~= "name" then
+                        if core.Instances[expansion][instanceType][instance][boss].generatedID == self:GetID() then
+                            core.Instances[expansion][instanceType][instance][boss].enabled = self:GetChecked()
+                            --Print to chat
+                            local status = nil
+                            if core.Instances[expansion][instanceType][instance][boss].enabled == false then
+                                status = L["Disabled"]
+                            else
+                                status = L["Enabled"]
+                            end
+                            core:printMessage(GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " " .. L["Tracking"] .. " " .. status)
                         end
-                        core:printMessage(GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " " .. L["Tracking"] .. " " .. status)
                     end
                 end
 			end
 		end
-	end    
+	end   
 end
 
 function ExpandExample_ListButtonOnClick(self)
