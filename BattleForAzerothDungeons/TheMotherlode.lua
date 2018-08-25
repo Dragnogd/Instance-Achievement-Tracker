@@ -28,29 +28,27 @@ function core._1594:MogulRazdunk()
 
     if (core.type == "SPELL_AURA_APPLIED" and core.spellId == 260279) or (core.type == "SPELL_DAMAGE" and core.spellId == 276234) or (core.type == "SPELL_DAMAGE" and core.spellId == 270926) or (core.type == "SPELL_DAMAGE" and core.spellId == 270277) then
         --If someone gets hit by the ability, check if they need the achievement or not
-        if core.destIDPlayer ~= nil and core.currentDest == "Player" then
-            local name, realm = strsplit("-", core.destID)  
-            if UnitIsPlayer(name) then
-                --Detect the reason the player has failed the achievement
-                local reason = ""
-                if core.spellId == 260279 then
-                    reason = "Gatling Gun Damage"
-                elseif core.spellId == 276234 then
-                    reason = "Micro Missile Damage"
-                elseif core.spellId == 270926 then
-                    reason = "Drill Smash Direct Hit"
-                elseif core.spellId == 270277 then
-                    reason = "Big Red Rocket Direct Hit"
+        if UnitIsPlayer(core.destName) then
+            --Detect the reason the player has failed the achievement
+            local reason = ""
+            if core.spellId == 260279 then
+                reason = "Gatling Gun Damage"
+            elseif core.spellId == 276234 then
+                reason = "Micro Missile Damage"
+            elseif core.spellId == 270926 then
+                reason = "Drill Smash Direct Hit"
+            elseif core.spellId == 270277 then
+                reason = "Big Red Rocket Direct Hit"
+            end
+            print(core.destName .. " " .. reason)
+            if playersHit[core.destName] == nil then
+                --Players has not been hit already
+                --Check if the player actually needs the achievement
+                if core:has_value(core.currentBosses[1].players, core.destName) then
+                    --Player needs achievement but has failed it
+                    core:sendMessage(core.destName .. " has failed " .. GetAchievementLink(core.achievementIDs[1]) .. "(Reason: " .. reason .. ") (Personal Achievement)")
                 end
-                if playersHit[core.destName] == nil then
-                    --Players has not been hit already
-                    --Check if the player actually needs the achievement
-                    if core:has_value(core.currentBosses[1].players, core.destName) then
-                        --Player needs achievement but has failed it
-                        core:sendMessage(core.destName .. " has failed " .. GetAchievementLink(core.achievementIDs[1]) .. "(Reason: " .. reason .. ") (Personal Achievement)")
-                    end
-                    playersHit[core.destName] = true
-                end
+                playersHit[core.destName] = true
             end
         end
     end
