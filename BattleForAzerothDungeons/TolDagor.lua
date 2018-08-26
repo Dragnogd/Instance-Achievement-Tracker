@@ -17,6 +17,7 @@ function core._1771:OverseerKorgus()
     --Gained Heartstopper venom stun
     if core.type == "SPELL_AURA_APPLIED" and core.spellId == 256474 then
         heartstopperVenomCounter = heartstopperVenomCounter + 1
+        print(core.destName  .. " GAINED " .. heartstopperVenomCounter)
 
         if heartstopperVenomCounter == core.groupSize then
             core:getAchievementSuccess()
@@ -26,6 +27,8 @@ function core._1771:OverseerKorgus()
     --Lost Heartstopper venom stun
     if core.type == "SPELL_AURA_REMOVED" and core.spellId == 256474 then
         heartstopperVenomCounter = heartstopperVenomCounter - 1
+
+        print(core.destName  .. " LOST " .. heartstopperVenomCounter)
     end
 end
 

@@ -24,12 +24,12 @@ function generateItemCache()
 	end
 end
 
-print("Tesint Ready for Raiding Function")
-core.destName = "Whizzey-Doomhammer"
-core.type = "SPELL_DAMAGE"
-core.spellId = 270277	
-core._1594:MogulRazdunk()
-print("Finished testing")
+-- print("Tesint Ready for Raiding Function")
+-- core.destName = "Whizzey-Doomhammer"
+-- core.type = "SPELL_DAMAGE"
+-- core.spellId = 270277	
+-- core._1594:MogulRazdunk()
+-- print("Finished testing")
 
 function events:GET_ITEM_INFO_RECEIVED(self, arg1)
 	if core:has_value2(core.ItemCache, arg1) then
