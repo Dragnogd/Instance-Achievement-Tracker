@@ -46,9 +46,9 @@ function core._1763:BringingHexyBack()
         --If player hex is removed, wait 1 second. If no one else is hexed fail achievement
         if core.type == "SPELL_AURA_REMOVED" and core.spellId == 279118 then
             playerHexed = false
-            C_Timer.After(1000, function() 
+            C_Timer.After(1000, function()
                 if playerHexed == false then
-                    core:achievementsCompleted[1] = false
+                    core.achievementsCompleted[1] = false
                     core:getAchievementFailedWithMessageAfter("Atleast one players needs to be hexed on boss kill!")
                 end
             end)
