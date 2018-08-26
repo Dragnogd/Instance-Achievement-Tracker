@@ -15,7 +15,7 @@ local playerHexed = false
 
 function core._1763:PriestessAlunza()
     if core.destID == "131009" and core.type == "SPELL_AURA_APPLIED_DOSE" and core.spellId == 255558 then
-        print("Spirit of Gold " .. core.amount)
+        --print("Spirit of Gold " .. core.amount)
     end
 
     --Spirit of gold has 8 stacks of Tainted Blood
@@ -31,6 +31,10 @@ end
 
 function core._1763:BringingHexyBack()
     --1 Player in group must be hexed at each boss on kill.
+
+    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 279118 then
+        --print(core.destName .. " Hexed")
+    end
 
     --Check if boss is less than 50% health to give people a chance to cc adds / reduce spam
     if core:getHealthPercent("boss1") <= 50 then
