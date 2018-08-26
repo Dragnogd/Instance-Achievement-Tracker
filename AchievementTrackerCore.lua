@@ -8,7 +8,7 @@ local L = core.L
 local events = CreateFrame("Frame")
 local UIConfig
 local UICreated = false
-local debugMode = true
+local debugMode = false
 
 AchievementTrackerOptions = {}
 AchievementTrackerDebug = {}
