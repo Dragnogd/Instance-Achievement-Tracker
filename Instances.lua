@@ -124,12 +124,12 @@ core.Instances = {
                 name = 968,
                 boss1 = {
                     name = L["Other"],
-                    bossIDs = {},
+                    bossIDs = {129399,129614,143577,129412},
                     achievement = 12270,
                     players = {L["(Enter instance to start scanning)"]},
                     tactics = format("The Zanchuli Witch-Doctor throughout the dungeon cast %s on a random player which hexes them for 5 seconds, and at the end of its duration anyone who is stood near that player will also get hexed. \n\nBefore pulling any Zanchuli Witch-Doctor you will want to clear all the trash in the dungeon. You will have to bring the add to every boss, and if you have a class with a long cc (such as Monk with %s, Hunter with %s, Mage with %s) then you should keep it crowd controlled until close to the end of the fight. If you don't have any class with cc, then you should just focus on interrupting its %s cast throughout the fight.", GetSpellLink(279118), GetSpellLink(115078), GetSpellLink(187650), GetSpellLink(118), GetSpellLink(279118)),
-                    enabled = false,
-                    track = nil,
+                    enabled = true,
+                    track = function() core._1763:BringingHexyBack() end,
 					partial = false,
                 },
                 boss2 = {
