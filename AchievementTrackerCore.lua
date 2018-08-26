@@ -20,7 +20,7 @@ events:RegisterEvent("GET_ITEM_INFO_RECEIVED")
 function generateItemCache()
 	for i,v in pairs(core.ItemCache) do
 		GetItemInfo(core.ItemCache[v])
-		print(core.ItemCache[v])
+		--print(core.ItemCache[v])
 	end
 end
 

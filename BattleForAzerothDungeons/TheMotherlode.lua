@@ -52,10 +52,10 @@ function core._1594:MogulRazdunk()
                     playersHit[core.destName] = true
                 end
             else
-                print(core.destName .. " is not a player")
+                --print(core.destName .. " is not a player")
             end
         else
-            print("core.destName is nil")
+            --print("core.destName is nil")
         end
     end
 end
