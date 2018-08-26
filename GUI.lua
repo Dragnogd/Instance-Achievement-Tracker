@@ -250,7 +250,7 @@ function Tab_OnClick(self)
 
     
             --Links to current guides and achievement discord credit for tactics
-            UIConfig.Main2.credits = Config:CreateText2("TOPRIGHT",UIConfig.Main2.features6, "TOPRIGHT", 480, -30, L["Achievement Discord"] .. ":","GameFontNormalLarge")            
+            UIConfig.Main2.credits = Config:CreateText2("TOPRIGHT",UIConfig.Main2.features6, "TOPRIGHT", 480, -30, L["Achievements Discord"] .. ":","GameFontNormalLarge")            
             UIConfig.Main2.credits:SetWidth(400)
             UIConfig.Main2.credits:SetJustifyH("LEFT")
             UIConfig.Main2.credits2 = Config:CreateText2("TOPLEFT", UIConfig.Main2.credits, "TOPLEFT", 0, -20, L["https://discord.gg/achievements"],"GameFontNormal")
