@@ -14,8 +14,8 @@ core._1763 = {}
 local playerHexed = false
 
 function core._1763:PriestessAlunza()
-    if core.destID == "131009" and core.type == "SPELL_AURA_APPLIED_DOSE" and core.spellId == 255558 then
-        --print("Spirit of Gold " .. core.amount)
+    if core.destID == "131009" and (core.type == "SPELL_AURA_APPLIED_DOSE" or core.type == "SPELL_AURA_APPLIED") and core.spellId == 255558 then
+        core:sendDebugMessage("Spirit of Gold " .. core.amount)
     end
 
     --Spirit of gold has 8 stacks of Tainted Blood

@@ -197,7 +197,7 @@ function core._1712:InitialSetup()
 end
 
 function core._1712.Events:UNIT_SPELLCAST_SUCCEEDED(self, unitID, lineID, spellID, ...)
-    if core.Instances.Legion.Raids[1712].boss7.enabled == true then
+    if core.Instances[core.expansion][core.instanceType][core.instance]["boss7"].enabled == true then
         if spellID == 248214 and timerStarted == false then
             --Diabolic Bomb Spawned
             timerStarted = true
@@ -211,7 +211,7 @@ function core._1712.Events:UNIT_SPELLCAST_SUCCEEDED(self, unitID, lineID, spellI
 end
 
 function core._1712.Events:UNIT_POWER_UPDATE(self, unit, powerType)
-    if core.Instances.Legion.Raids[1712].boss11.enabled == true then
+    if core.Instances[core.expansion][core.instanceType][core.instance]["boss11"].enabled == true then
         if UnitGUID(unit) ~= nil then
             local unitType, _, _, _, _, destID, spawn_uid_dest = strsplit("-", UnitGUID(unit))
             if destID == "125886" and UnitPower(unit) > 0 then
