@@ -695,7 +695,7 @@ core._603.Events:SetScript("OnEvent", function(self, event, ...)
 end)
 
 function core._603.Events:UNIT_AURA(self, unitID, ...)
-    if core.Instances.WrathOfTheLichKing.Raids[603].boss2.enabled == true then
+    if core.Instances[core.expansion][core.instanceType][core.instance]["boss2"].enabled == true then
         for i=1,40 do
             local _, _, _, _, _, _, _, _, _, spellId = UnitBuff(unitID, i)
             if spellId == 62705 and repairedAnnounced == false then
@@ -707,7 +707,7 @@ function core._603.Events:UNIT_AURA(self, unitID, ...)
 end
 
 function core._603.Events:CHAT_MSG_MONSTER_YELL(self, message, sender, language, channelString, target, flags, unknown, channelNumber, channelName, unknown, counter, ...)
-    if core.Instances.WrathOfTheLichKing.Raids[603].boss50.enabled == true then
+    if core.Instances[core.expansion][core.instanceType][core.instance]["boss50"].enabled == true then
         if message == "Now, why would you go and do something like that? Didn't you see the sign that said, \"DO NOT PUSH THIS BUTTON!\"? How will we finish testing with the self-destruct mechanism active?" then
             core:getAchievementSuccess(2)
         end   
