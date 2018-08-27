@@ -16,6 +16,10 @@ local maddeningDreamPlayersUID = {}
 local volzithKilled = false
 
 function core._1864:TrackAdditional()
+    if core.type == "UNIT_DIED" and core.destID == "134069" then
+        volzithKilled = true
+    end
+
     if volzithKilled == false then
         --Player gains Maddening Dreams
         if core.type == "SPELL_AURA_APPLIED" and core.spellId == 275690 then
