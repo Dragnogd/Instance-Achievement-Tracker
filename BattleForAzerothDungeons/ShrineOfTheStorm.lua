@@ -15,9 +15,7 @@ local maddeningDreamCount = 0
 local maddeningDreamPlayersUID = {}
 local volzithKilled = false
 
-function core._1864:VolzithTheWhisperer()
-    --Defeat Vol'zith the Whisperer while all party members are afflicted with Maddening Dreams in Shrine of the Storm on Mythic difficulty.
-
+function core._1864:TrackAdditional()
     if volzithKilled == false then
         --Player gains Maddening Dreams
         if core.type == "SPELL_AURA_APPLIED" and core.spellId == 275690 then
@@ -42,12 +40,15 @@ function core._1864:VolzithTheWhisperer()
                 end
             end
         end
+    end
+end
 
-        --Check if all players have Maddening Dreams
-        if maddeningDreamCount == core.groupSize then
-            core:getAchievementSuccess()
-            core.achievementsFailed[1] = false
-        end
+function core._1864:VolzithTheWhisperer()
+    --Defeat Vol'zith the Whisperer while all party members are afflicted with Maddening Dreams in Shrine of the Storm on Mythic difficulty.
+    --Check if all players have Maddening Dreams
+    if maddeningDreamCount == core.groupSize then
+        core:getAchievementSuccess()
+        core.achievementsFailed[1] = false
     end
 end
 
@@ -59,10 +60,4 @@ function core._1864:LordStormsong()
 end
 
 function core._1864:ClearVariables()
-    ------------------------------------------------------
-    ---- Vol'zith the Whisperer
-    ------------------------------------------------------
-    maddeningDreamCount = 0
-    maddeningDreamPlayersUID = {}
-    volzithKilled = false
 end
