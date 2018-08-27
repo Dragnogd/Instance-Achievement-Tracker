@@ -1380,7 +1380,7 @@ function detectBossByEncounterID(id)
 			if core.Instances[core.expansion][core.instanceType][core.instance][boss].encounterID ~= nil then
 				--Detect boss by the encounter ID
 				core:sendDebugMessage("Type:")
-				core:sendDebugMessage(core.Instances[core.expansion][core.instanceType][core.instance][boss].encounterID)
+				--core:sendDebugMessage(core.Instances[core.expansion][core.instanceType][core.instance][boss].encounterID)
 				if type(core.Instances[core.expansion][core.instanceType][core.instance][boss].encounterID) == "table" then
 					--If achievement relates to multiple encounters
 					for i = 1, #core.Instances[core.expansion][core.instanceType][core.instance][boss].encounterID do

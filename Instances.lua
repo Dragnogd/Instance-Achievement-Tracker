@@ -131,7 +131,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core._1763:BringingHexyBack() end,
                     partial = false,
-                    encounterID = {2082,2083,2030,2036},
+                    encounterID = {2087,2086,2085,2084},
                 },
                 boss2 = {
                     name = 2082, --Priestess Alun'za
