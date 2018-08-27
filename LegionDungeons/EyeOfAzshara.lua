@@ -62,7 +62,7 @@ function core._1456:WrathOfAzshara()
         if playersHit[core.destName] == nil then
             --Players has not been hit already
             --Check if the player actually needs the achievement
-            if core:has_value(core.Instances.Legion.Dungeons._1456.boss3.players, core.destName) then
+            if core:has_value(core.Instances[core.expansion][core.instanceType][core.instance]["boss3"].players, core.destName) then
                 --Player needs achievement but has failed it
                 core:sendMessage(core.destName .. " has failed " .. GetAchievementLink(core.currentAchievementID) .. " (Personal Achievement)")
             end
