@@ -397,8 +397,8 @@ core.Instances = {
                     achievement = 12457,
                     players = {L["(Enter instance to start scanning)"]},
                     tactics = format("For this achievement you will want to tank the boss in the middle of the room, and have the other 4 players move the barrels close to Knight Captain Valyri. You will want to move the barrels away from the fire:\n %s - This spell is cast underneath players, you simply have to move the barrel away.\n %s - When Knight Captain Valyri casts this spell, you will have to move the barrel away from where the boss is facing towards.\n %s - When a player gets this debuff, they have to move away from the barrel immediately and wait for a dispel.", GetSpellLink(256976), GetSpellLink(256955), GetSpellLink(257033)),
-                    enabled = true,
-                    track = function() core._1771:KnightCaptainValyri() end,
+                    enabled = false,
+                    track = nil, --function() core._1771:KnightCaptainValyri() end
                     partial = false,
                     encounterID = 2103,
                 },
