@@ -8,7 +8,7 @@ local L = core.L
 local events = CreateFrame("Frame")
 local UIConfig
 local UICreated = false
-local debugMode = false
+local debugMode = true
 
 AchievementTrackerOptions = {}
 AchievementTrackerDebug = {}
@@ -1379,7 +1379,36 @@ function detectBossByEncounterID(id)
 		if boss ~= "name" then
 			if core.Instances[core.expansion][core.instanceType][core.instance][boss].encounterID ~= nil then
 				--Detect boss by the encounter ID
-				if id == core.Instances[core.expansion][core.instanceType][core.instance][boss].encounterID then
+				core:sendDebugMessage("Type:")
+				core:sendDebugMessage(core.Instances[core.expansion][core.instanceType][core.instance][boss].encounterID)
+				if type(core.Instances[core.expansion][core.instanceType][core.instance][boss].encounterID) == "table" then
+					--If achievement relates to multiple encounters
+					for i = 1, #core.Instances[core.expansion][core.instanceType][core.instance][boss].encounterID do
+						--Check whether the boss has an achievement first before adding. This is so we can output to the chat. "IAT cannot track any achievements for this encounter" if needed
+						if id == core.Instances[core.expansion][core.instanceType][core.instance][boss].encounterID[i] then
+							if core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement ~= false then
+								if core:has_value(currentBossNums, boss) == false then
+									if counter == 0 then
+										--Clear the array storing bosses and achievements so we only output track achievements relevant to that fight
+										core.currentBosses = {}
+										core.achievementIDs = {}
+										currentBossNums = {}
+										counter = 1
+									end
+									core:sendDebugMessage("(E) Adding the following encounter ID: " .. boss)
+									table.insert(core.currentBosses, core.Instances[core.expansion][core.instanceType][core.instance][boss])
+									table.insert(currentBossNums, boss)
+								end
+								if core:has_value(core.achievementIDs, core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement) == false then
+									core:sendDebugMessage("(E) Adding the following achievement ID beacuse it doesn't exist: " .. core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
+									table.insert(core.achievementIDs, core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
+								end
+								core.foundBoss = true
+							end
+							core.encounterDetected = true --This will stop other bosses being detected by accident through the detection method below
+						end
+					end
+				elseif id == core.Instances[core.expansion][core.instanceType][core.instance][boss].encounterID then
 					--Check whether the boss has an achievement first before adding. This is so we can output to the chat. "IAT cannot track any achievements for this encounter" if needed
 					if core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement ~= false then
 						if core:has_value(currentBossNums, boss) == false then
