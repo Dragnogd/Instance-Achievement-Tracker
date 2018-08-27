@@ -54,7 +54,7 @@ end
 function core._1864:LordStormsong()
 	--Defeat Lord Stormsong without coming into contact with any Awoken Void in Shrine of the Storm on Mythic difficulty.
 	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 269104 then
-		core:getAchievementFailed(core.destName)
+		core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")")
 	end
 end
 
