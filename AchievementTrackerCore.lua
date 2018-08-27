@@ -1505,7 +1505,7 @@ function core:getAchievementToTrack()
 				core:sendDebugMessage("Achievement: " .. core.currentBosses[i].achievement)
 				if core.currentBosses[i].partial == false and core.currentBosses[i].enabled == true then
 					printMessage("Tracking: "  .. GetAchievementLink(core.currentBosses[i].achievement))
-					core:sendMessage("setup")
+					--core:sendMessage("setup")
 					core.achievementTrackedMessageShown = true
 				end
 	
