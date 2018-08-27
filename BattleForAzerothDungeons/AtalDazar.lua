@@ -20,7 +20,7 @@ function core._1763:PriestessAlunza()
 
     --Spirit of gold has 8 stacks of Tainted Blood
     if core.destID == "131009" and core.type == "SPELL_AURA_APPLIED_DOSE" and core.spellId == 255558 and core.amount == 8 then
-        core:sendMessage("Kill the Spirit of Gold NOW!")
+        core:sendMessage(core:getAchievement() .. " Kill the Spirit of Gold NOW!")
     end
 
     --Achievment Complete
