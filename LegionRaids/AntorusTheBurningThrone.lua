@@ -224,17 +224,16 @@ function core._1712.Events:UNIT_POWER_UPDATE(self, unit, powerType)
                 C_Timer.After(5, function() 
                     local newPower = UnitPower(unit)
 
-                    if (newPower - currentPower) >= 80 then
-                        core:getAchievementSuccess()
-                        --print("Boss gained: " .. (newPower - currentPower) .. " energy")
-                    end
-
                     --Update highest energy if higher than current attempt. This is so we can output at the end of the fight how well the group did
                     if (newPower - currentPower) > highestEnergy then
                         highestEnergy = newPower - currentPower
-                        if highestEnergy < 80 then
-                            core:sendMessage(GetAchievementLink(12257) .. " Best attempt this pull (" .. highestEnergy .. "/80). Khaz'Goroth must gain 80 energy within 5 seconds to complete this achievement")
-                        end
+                        core:sendMessage(GetAchievementLink(12257) .. " Best attempt this pull (" .. highestEnergy .. "/80). Khaz'Goroth must gain 80 energy within 5 seconds to complete this achievement")
+                    end
+
+                    --Achievement Completed
+                    if (newPower - currentPower) >= 80 then
+                        core:getAchievementSuccess()
+                        --print("Boss gained: " .. (newPower - currentPower) .. " energy")
                     end
                 end)
             end
