@@ -16,31 +16,33 @@ local maddeningDreamPlayersUID = {}
 local volzithKilled = false
 
 function core._1864:TrackAdditional()
-    if core.type == "UNIT_DIED" and core.destID == "134069" then
-        volzithKilled = true
-    end
-
-    if volzithKilled == false then
-        --Player gains Maddening Dreams
-        if core.type == "SPELL_AURA_APPLIED" and core.spellId == 275690 then
-            if maddeningDreamPlayersUID[core.destName] == nil then
-                maddeningDreamCount = maddeningDreamCount + 1
-                maddeningDreamPlayersUID[core.destName] = core.destName
-                core:sendMessage(core.destName .. " has gained Maddening Dreams (" .. maddeningDreamCount .. "/" .. core.groupSize .. ")")
-            end
+    if core.Instances[core.expansion][core.instanceType][core.instance]["boss2"].enabled == true then
+        if core.type == "UNIT_DIED" and core.destID == "134069" then
+            volzithKilled = true
         end
-
-        --Player looses Maddening Dreams
-        if core.type == "SPELL_AURA_REMOVED" and core.spellId == 275690 then
-            if maddeningDreamPlayersUID[core.destName] ~= nil then
-                maddeningDreamCount = maddeningDreamCount - 1
-                maddeningDreamPlayersUID[core.destName] = nil
-                core:sendMessage(core.destName .. " has lost Maddening Dreams (" .. maddeningDreamCount .. "/" .. core.groupSize .. ")")
-
-                --If achievement was already completed then fail it
-                if core.achievementsCompleted[1] == true then
-                    core:getAchievementFailed()
-                    core.achievementsCompleted[1] = false
+    
+        if volzithKilled == false then
+            --Player gains Maddening Dreams
+            if core.type == "SPELL_AURA_APPLIED" and core.spellId == 275690 then
+                if maddeningDreamPlayersUID[core.destName] == nil then
+                    maddeningDreamCount = maddeningDreamCount + 1
+                    maddeningDreamPlayersUID[core.destName] = core.destName
+                    core:sendMessage(core.destName .. " has gained Maddening Dreams (" .. maddeningDreamCount .. "/" .. core.groupSize .. ")")
+                end
+            end
+    
+            --Player looses Maddening Dreams
+            if core.type == "SPELL_AURA_REMOVED" and core.spellId == 275690 then
+                if maddeningDreamPlayersUID[core.destName] ~= nil then
+                    maddeningDreamCount = maddeningDreamCount - 1
+                    maddeningDreamPlayersUID[core.destName] = nil
+                    core:sendMessage(core.destName .. " has lost Maddening Dreams (" .. maddeningDreamCount .. "/" .. core.groupSize .. ")")
+    
+                    --If achievement was already completed then fail it
+                    if core.achievementsCompleted[1] == true then
+                        core:getAchievementFailed()
+                        core.achievementsCompleted[1] = false
+                    end
                 end
             end
         end
