@@ -181,6 +181,7 @@ end
 
 function core._1712:InstanceCleanup()
     core._1712.Events:UnregisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+    core._1712.Events:UnregisterEvent("UNIT_POWER_UPDATE")
     felhoundsKilled = false
 end
 
