@@ -123,7 +123,7 @@ function core._1228.Events:UNIT_HEALTH(self, unitID)
 end
 
 function core._1228.Events:UNIT_POWER_UPDATE(self, unit, powerType)
-	if core.Instances.WarlordsOfDraenor.Raids[1228].boss5.enabled == true and core.achievementIDs[1] == 8958 then
+	if core.Instances[core.expansion][core.instanceType][core.instance]["boss5"].enabled == true and core.achievementIDs[1] == 8958 then
 		if powerType == "ALTERNATE" then
 			if UnitPower(unit, ALTERNATE_POWER_INDEX) > 30 then
 				core:getAchievementFailed()
