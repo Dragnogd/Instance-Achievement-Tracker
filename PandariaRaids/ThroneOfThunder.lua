@@ -255,7 +255,7 @@ core._1098.Events:SetScript("OnEvent", function(self, event, ...)
 end)
 
 function core._1098.Events:UNIT_HEALTH(self, UnitID)
-	if core.Instances.MistsOfPandaria.Raids[1098].boss11.enabled == true then
+	if core.Instances[core.expansion][core.instanceType][core.instance]["boss11"].enabled == true then
 		if UnitName(UnitID) == "Suen" then
 			if core:getHealthPercent(UnitID) < 30 then		
 				if lulinKilled == false then
