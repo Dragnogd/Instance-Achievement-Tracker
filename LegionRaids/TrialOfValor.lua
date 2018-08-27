@@ -106,7 +106,7 @@ core._1648.Events:SetScript("OnEvent", function(self, event, ...)
 end)
 
 function core._1648.Events:UNIT_AURA(self, unitID, ...)
-    if core.Instances.Legion.Raids._1648.boss2.enabled then
+    if core.Instances[core.expansion][core.instanceType][core.instance]["boss2"].enabled then
         --Player gained Fiery Phlegm
         local chewToyFound = false
         local fieryPhelgmFound = false

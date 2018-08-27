@@ -224,7 +224,7 @@ core._1520.Events:SetScript("OnEvent", function(self, event, ...)
 end)
 
 function core._1520.Events:UNIT_SPELLCAST_SUCCEEDED(self, unitID, lineID, spellID, ...)
-    if core.Instances.Legion.Raids._1520.boss1.enabled then
+    if core.Instances[core.expansion][core.instanceType][core.instance]["boss1"].enabled then
         if spellID == 208116 and bugsUID[lineID] == nil then
             bugsUID[lineID] = lineID
             bugsSquished = bugsSquished + 1
