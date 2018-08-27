@@ -45,7 +45,7 @@ function core._1209:Ranjit()
         if playersHit[core.destName] == nil then
             --Players has not been hit already
             --Check if the player actually needs the achievement
-            if core:has_value(core.Instances.WarlordsOfDraenor.Dungeons._1209.boss1.players, core.destName) then
+            if core:has_value(core.Instances[core.expansion][core.instanceType][core.instance]["boss1"].players, core.destName) then
                 --Player needs achievement but has failed it
                 core:sendMessage(core.destName .. " has failed " .. GetAchievementLink(core.currentAchievementID) .. " (Personal Achievement) (Reason: Damage from " .. reason .. ")")
             end
