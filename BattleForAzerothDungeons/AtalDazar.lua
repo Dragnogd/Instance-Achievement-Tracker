@@ -41,7 +41,10 @@ function core._1763:PriestessAlunza()
 			if unit ~= nil then
                 local unitType, destID, spawn_uid_dest = strsplit("-",UnitGUID(unit));
                 for i=1,40 do
-					local _, _, count, _, _, _, _, _, _, spellId = UnitDebuff(unit, i)
+                    local _, _, count, _, _, _, _, _, _, spellId = UnitDebuff(unit, i)
+                    if spellId == 255558 and destID == "131009" then
+                        core:sendDebugMessage("Count: " .. count)
+                    end
                     if spellId == 255558 and destID == "131009" and count == 8 then
                         core:sendMessage(core:getAchievement() .. " Kill the Spirit of Gold NOW!")
 					end

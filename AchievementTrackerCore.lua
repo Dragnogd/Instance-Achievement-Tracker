@@ -1036,6 +1036,9 @@ function events:ZONE_CHANGED_NEW_AREA()
 		events:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		events:UnregisterEvent("PLAYER_REGEN_ENABLED")
 		events:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+		events:UnregisterEvent("INSPECT_ACHIEVEMENT_READY")
+		events:UnregisterEvent("ENCOUNTER_START")						
+		events:UnregisterEvent("ENCOUNTER_END")						
 
 		--Reset Instance Variables
 		core.expansion = nil
