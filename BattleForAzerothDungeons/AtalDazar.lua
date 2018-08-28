@@ -9,6 +9,11 @@ local _, core = ...
 core._1763 = {}
 
 ------------------------------------------------------
+---- Priestess Alunza
+------------------------------------------------------
+local taintedBloodCounter = 0
+
+------------------------------------------------------
 ---- Bringing Hexy Back
 ------------------------------------------------------
 local playerHexed = false
@@ -19,9 +24,40 @@ function core._1763:PriestessAlunza()
     end
 
     --Spirit of gold has 8 stacks of Tainted Blood
-    if core.destID == "131009" and core.type == "SPELL_AURA_APPLIED_DOSE" and core.spellId == 255558 and core.amount == 8 then
-        core:sendMessage(core:getAchievement() .. " Kill the Spirit of Gold NOW!")
-    end
+    if core.groupSize > 1 then
+        --If player is in a group
+		for i = 1, core.groupSize do
+			local unit = nil
+			if core.chatType == "PARTY" then
+				if i < core.groupSize then
+					unit = "party" .. i
+				else
+					unit = "player"
+			end
+			elseif core.chatType == "RAID" then
+				unit = "raid" .. i
+			end
+			
+			if unit ~= nil then
+                local unitType, destID, spawn_uid_dest = strsplit("-",UnitGUID(unit));
+                for i=1,40 do
+					local _, _, count, _, _, _, _, _, _, spellId = UnitDebuff(unit, i)
+                    if spellId == 255558 and destID == "131009" and count == 8 then
+                        core:sendMessage(core:getAchievement() .. " Kill the Spirit of Gold NOW!")
+					end
+				end
+			end
+		end
+	else
+		--Player is not in a group
+        local unitType, destID, spawn_uid_dest = strsplit("-",UnitGUID("Player"));
+        for i=1,40 do
+            local _, _, count, _, _, _, _, _, _, spellId = UnitDebuff("Player", i)
+            if spellId == 255558 and destID == "131009" and count >= 8 then
+                core:sendMessage(core:getAchievement() .. " Kill the Spirit of Gold NOW!")
+            end
+        end
+	end
 
     --Achievment Complete
     if core.type == "UNIT_DIED" and core.destID == "131140" then
@@ -65,4 +101,9 @@ function core._1763:ClearVariables()
     ---- Bringing Hexy Back
     ------------------------------------------------------
     playerHexed = false
+
+    ------------------------------------------------------
+    ---- Priestess Alunza
+    ------------------------------------------------------
+    taintedBloodCounter = 0
 end
