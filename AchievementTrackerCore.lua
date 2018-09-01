@@ -129,6 +129,7 @@ core.encounterStarted = false
 core.displayAchievements = false
 core.encounterDetected = false
 core.outputTrackingStatus = false
+core.announceTrackedAchievementsToChat = false
 
 --------------------------------------
 -- Addon Syncing V1.0.1a
@@ -732,6 +733,14 @@ function events:ADDON_LOADED(event, name)
 	end
 	_G["AchievementTracker_ToggleMinimapIcon"]:SetChecked(AchievementTrackerOptions["showMinimap"])
 
+	if AchievementTrackerOptions["announceTrackedAchievements"] == nil then
+		AchievementTrackerOptions["announceTrackedAchievements"] = false --Do not enable by default
+	elseif AchievementTrackerOptions["announceTrackedAchievements"] == true then
+		core.announceTrackedAchievementsToChat = true
+	end
+	_G["AchievementTracker_ToggleAchievementAnnounce"]:SetChecked(AchievementTrackerOptions["announceTrackedAchievements"])
+
+
 	-- if AchievementTrackerOptions["enableAchievementScan"] == nil then
 	-- 	core:sendDebugMessage("Setting Initial Settings")
 	-- 	AchievementTrackerOptions["enableAchievementScan"] = true
@@ -811,6 +820,14 @@ function setAchievementScanEnabled(setAchievementScanEnabled)
 		core.enableAchievementScanning = true
 	else
 		core.enableAchievementScanning = false						
+	end
+end
+
+function setAnnounceTrackedAchievementsToChat(setTrackedAchievements)
+	if setTrackedAchievements then
+		core.announceTrackedAchievementsToChat = true
+	else
+		core.announceTrackedAchievementsToChat = false						
 	end
 end
 
@@ -1405,10 +1422,9 @@ function detectBossByEncounterID(id)
 								if core:has_value(core.achievementIDs, core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement) == false then
 									core:sendDebugMessage("(E) Adding the following achievement ID beacuse it doesn't exist: " .. core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
 									table.insert(core.achievementIDs, core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
-									
-									if core.Instances[core.expansion][core.instanceType][core.instance][boss].track == true then
-										core.outputTrackingStatus = true
-									end
+								end
+								if core.Instances[core.expansion][core.instanceType][core.instance][boss].enabled == true then
+									core.outputTrackingStatus = true
 								end
 								core.foundBoss = true
 							end
@@ -1433,10 +1449,9 @@ function detectBossByEncounterID(id)
 						if core:has_value(core.achievementIDs, core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement) == false then
 							core:sendDebugMessage("(E) Adding the following achievement ID beacuse it doesn't exist: " .. core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
 							table.insert(core.achievementIDs, core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
-
-							if core.Instances[core.expansion][core.instanceType][core.instance][boss].enabled == true then
-								core.outputTrackingStatus = true
-							end
+						end
+						if core.Instances[core.expansion][core.instanceType][core.instance][boss].enabled == true then
+							core.outputTrackingStatus = true
 						end
 						core.foundBoss = true
 					end
@@ -1446,14 +1461,15 @@ function detectBossByEncounterID(id)
 		end
 	end
 
-	print("Outputting Status:")
-	print(core.outputTrackingStatus)
-	print(core.encounterDetected)
-
 	--If encounter is detected but no achievements for the boss have been found then output no achievements to track for this encounter
 	if core.outputTrackingStatus == false then
 		if core.encounterDetected == true then
 			core:printMessage("IAT cannot track any achievements for this encounter.")
+
+			--Announce to chat if enabled
+			if core.announceTrackedAchievementsToChat == true then
+				core:sendMessage("IAT cannot track any achievements for this encounter.")
+			end
 		end
 	end
 
@@ -1485,6 +1501,9 @@ function detectBoss(id)
 							if core:has_value(core.achievementIDs, core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement) == false then
 								core:sendDebugMessage("Adding the following achievement ID beacuse it doesn't exist: " .. core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
 								table.insert(core.achievementIDs, core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
+							end
+							if core.Instances[core.expansion][core.instanceType][core.instance][boss].enabled == true then
+								core.outputTrackingStatus = true
 							end
 							core.foundBoss = true
 						end
@@ -1523,6 +1542,11 @@ function core:getAchievementToTrack()
 					printMessage("Tracking: "  .. GetAchievementLink(core.currentBosses[i].achievement))
 					--core:sendMessage("setup")
 					core.achievementTrackedMessageShown = true
+
+					--Announce to chat if enabled
+					if core.announceTrackedAchievementsToChat == true then
+						core:sendMessage("Tracking: "  .. GetAchievementLink(core.currentBosses[i].achievement))
+					end
 				end
 	
 				--Setup failed and completed achievements table

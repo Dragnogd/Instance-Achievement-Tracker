@@ -170,6 +170,8 @@ function Tab_OnClick(self)
             UIConfig.Main2.options3:Show()
             UIConfig.Main2.options4:Show()
             UIConfig.Main2.options5:Show()
+            UIConfig.Main2.options6:Show()
+            UIConfig.Main2.options7:Show()
 
             UIConfig.Main.author:Show()
             UIConfig.Main.verison:Show()
@@ -248,7 +250,11 @@ function Tab_OnClick(self)
             UIConfig.Main2.options4:SetScript("OnClick", ATToggleMinimapIcon_OnClick)
             UIConfig.Main2.options5 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options4, "TOPLEFT", 30, -9, L["Show Minimap Button"],"GameFontHighlight")            
 
-    
+            --Link achievements being tracked for current boss to chat
+            UIConfig.Main2.options6 = Config:CreateCheckBox("TOPLEFT", UIConfig.Main2.options4, "TOPLEFT", 0, -25, "AchievementTracker_ToggleAchievementAnnounce")
+            UIConfig.Main2.options6:SetScript("OnClick", ATToggleAchievementAnnounce_OnClick)
+            UIConfig.Main2.options7 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options6, "TOPLEFT", 30, -9, L["Announce Achievements Being Tracked To Group"],"GameFontHighlight")    
+
             --Links to current guides and achievement discord credit for tactics
             UIConfig.Main2.credits = Config:CreateText2("TOPRIGHT",UIConfig.Main2.features6, "TOPRIGHT", 480, -30, L["Achievements Discord"] .. ":","GameFontNormalLarge")            
             UIConfig.Main2.credits:SetWidth(400)
@@ -294,6 +300,8 @@ function Tab_OnClick(self)
         UIConfig.Main2.options3:Hide()
         UIConfig.Main2.options4:Hide()
         UIConfig.Main2.options5:Hide()
+        UIConfig.Main2.options6:Hide()
+        UIConfig.Main2.options7:Hide()
         
         UIConfig.Main.author:Hide()
         UIConfig.Main.verison:Hide()
@@ -305,6 +313,11 @@ function Tab_OnClick(self)
         UIConfig.Main2.credits2:Hide()
         UIConfig.Main2.credits3:Hide()
     end
+end
+
+function ATToggleAchievementAnnounce_OnClick(self)
+    AchievementTrackerOptions["announceTrackedAchievements"] = self:GetChecked()
+    setAnnounceTrackedAchievementsToChat(self:GetChecked())
 end
 
 -- Method:          ATToggleMinimapIcon_OnClick()
