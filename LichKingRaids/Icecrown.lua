@@ -591,18 +591,22 @@ function core._631:LichKing()
 			unit = "raid" .. i
 		elseif core.chatType == "SAY" then
 			unit = "player"
-		end
-
-        local name, _, _, count, _, _, _, _, _, _, spellID, _, _, _, _, _, _, _, _ = UnitDebuff(unit, "Necrotic Plague")
-        if spellID == 70338 and count > necroticPlagueStack and necroticPlagueCompletedAnnounced == false then
-            necroticPlagueStack = count
-            core:sendMessage("Necrotic Plague at " .. necroticPlagueStack .. " stacks")
         end
         
-        local name, _, _, count, _, _, _, _, _, _, spellID, _, _, _, _, _, _, _, _ = UnitDebuff(unit .. "target", "Necrotic Plague")
-        if spellID == 70338 and count > necroticPlagueStack and necroticPlagueCompletedAnnounced == false then
-            necroticPlagueStack = count
-            core:sendMessage("Necrotic Plague at " .. necroticPlagueStack .. " stacks")
+        if unit ~= nil then
+            local unitType, destID, spawn_uid_dest = strsplit("-",UnitGUID(unit));
+            for i=1,40 do
+                local _, _, count, _, _, _, _, _, _, spellId = UnitDebuff(unit, i)
+                if (spellId == 70337 or spellId == 70338) and count > necroticPlagueStack and necroticPlagueCompletedAnnounced == false then
+                    necroticPlagueStack = count
+                    core:sendMessage("Necrotic Plague at " .. necroticPlagueStack .. " stacks")
+                end
+                local _, _, count, _, _, _, _, _, _, spellId = UnitDebuff(unit .. "target", i)
+                if (spellId == 70337 or spellId == 70338) and count > necroticPlagueStack and necroticPlagueCompletedAnnounced == false then
+                    necroticPlagueStack = count
+                    core:sendMessage("Necrotic Plague at " .. necroticPlagueStack .. " stacks")
+                end
+            end
         end
 
         if necroticPlagueStack >= 30 then
