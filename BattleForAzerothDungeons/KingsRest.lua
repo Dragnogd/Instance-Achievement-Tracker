@@ -29,7 +29,7 @@ function core._1762:MchimbaTheEmbalmer()
     --Check if player has used Struggle too many times.
     if core.type == "SPELL_CAST_SUCEESS" and core.spellId == 267764 and struggleUsed == false then
         struggleUsed = true
-    else
+    elseif core.type == "SPELL_CAST_SUCEESS" and core.spellId == 267764 and struggleUsed == true then
         core:getAchievementFailed()
     end
 
