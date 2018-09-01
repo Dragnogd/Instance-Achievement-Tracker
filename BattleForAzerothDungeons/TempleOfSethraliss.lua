@@ -14,3 +14,10 @@ function core._1877:Merektha()
         core:sendMessage(core:getAchievement() .. " Loot the Solid Snake now to complete the achievement")
     end
 end
+
+function core._1877:AvatarOfSethraliss()
+    --Detect if Prince has spawned
+    if core.destID == "139314" or core.sourceID == "139314" then
+        core:getAchievementSuccess()
+    end
+end
