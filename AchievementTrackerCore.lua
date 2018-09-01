@@ -63,8 +63,8 @@ function events:onUpdate(sinceLastUpdate)
 		self.sinceLastUpdate = 0;
 		local combatStatus = getCombatStatus()
 		if combatStatus == false then
-			clearInstanceVariables()
-			clearVariables()
+			core:clearInstanceVariables()
+			core:clearVariables()
 			core:sendDebugMessage("Left Combat")
 			events:SetScript("OnUpdate",nil)
 		end
@@ -1169,8 +1169,8 @@ function events:PLAYER_REGEN_ENABLED()
    --Although the player running the addon has left combat, the boss could still be in combat with other players. Check everyone else in the group to see if anyone is still in combat with the boss
    if getCombatStatus() == false then
 		if core.encounterDetected == false then
-			clearInstanceVariables()
-			clearVariables()
+			core:clearInstanceVariables()
+			core:clearVariables()
 		else
 			core:sendDebugMessage("Not clearing global variables since encounter is still in progress")
 		end
@@ -1941,7 +1941,7 @@ end
 ------------------------------------------------------
 
 --Clears global variables between fights such as the current boss/achievement being tracked
-function clearVariables()
+function core:clearVariables()
 	------------------------------------------------------
 	---- Reset Variables
 	------------------------------------------------------
@@ -1974,15 +1974,15 @@ function clearVariables()
 end
 
 --Clears variables for the current instance the player is in
-function clearInstanceVariables()
+function core:clearInstanceVariables()
 	--If a boss was pulled then clear the variables for that raid
 	if core.instance ~= nil then
 		--print(core.instanceClear)
 		core:sendDebugMessage("Clearing Instance Variables if exists")
-		local retOK, ret1 = pcall(function() core[core.instanceClear]:ClearVariables() end);
+		local retOK, ret1 = pcall(function() core[core.instanceClear]:clearVariables() end);
 		if (retOK) then
 			core:sendDebugMessage("Clearing Instance Variables")
-			core[core.instanceClear]:ClearVariables()
+			core[core.instanceClear]:clearVariables()
 		else
 			core:sendDebugMessage("Function failed, error text: " .. ret1 .. ".")
 		end

@@ -69,32 +69,49 @@ function core._1763:PriestessAlunza()
 end
 
 function core._1763:BringingHexyBack()
-    --1 Player in group must be hexed at each boss on kill.
+    --If any of the four bosses die then we need to call the clear global variables manually since the group will constantly be in combat otherwise with the add
+    --And the necessary end of boss functions will never be called
 
-    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 252781 then
-        core:sendDebugMessage(core.destName .. " Hexed")
+    if core.type == "UNIT_DIED" and (destID == "122965" or destID == "122963" or destID == "122967" or destID == "122968") then
+        core:clearInstanceVariables()
+        core:clearVariables()
     end
 
-    --Check if boss is less than 50% health to give people a chance to cc adds / reduce spam
-    if core:getHealthPercent("boss1") <= 50 then
-         --If player is hexed, complete the achievement.
-        if core.type == "SPELL_AURA_APPLIED" and core.spellId == 252781 then
-            if playerHexed == false then
-                playerHexed = true
-                core.achievementsFailed[1] = false
-                core:getAchievementSuccess()
+    --1 Player in group must be hexed at each boss on kill.
+    if UnitGUID("boss1") ~= nil then
+        local unitType, _, _, _, _, destID, spawn_uid_dest = strsplit("-", UnitGUID("boss1"))
+        
+        if destID == "122965" or destID == "122963" or destID == "122967" or destID == "122968" then
+            if core.type == "SPELL_AURA_APPLIED" and core.spellId == 252781 then
+                core:sendDebugMessage(core.destName .. " Hexed")
             end
-        end
-
-        --If player hex is removed, wait 1 second. If no one else is hexed fail achievement
-        if core.type == "SPELL_AURA_REMOVED" and core.spellId == 252781 then
-            playerHexed = false
-            C_Timer.After(1000, function()
-                if playerHexed == false then
-                    core.achievementsCompleted[1] = false
-                    core:getAchievementFailedWithMessageAfter("Atleast one players needs to be hexed on boss kill!")
+        
+            --Check if boss is less than 50% health to give people a chance to cc adds / reduce spam
+            if core:getHealthPercent("boss1") <= 50 then
+                 --If player is hexed, complete the achievement.
+                if core.type == "SPELL_AURA_APPLIED" and core.spellId == 252781 then
+                    if playerHexed == false then
+                        playerHexed = true
+                        core.achievementsFailed[1] = false
+                        if destID == "122967" then
+                            core:getAchievementSuccess(2) --Take into account gold fever tracking too
+                        else
+                            core:getAchievementSuccess()
+                        end
+                    end
                 end
-            end)
+        
+                --If player hex is removed, wait 2 second. If no one else is hexed fail achievement
+                if core.type == "SPELL_AURA_REMOVED" and core.spellId == 252781 then
+                    playerHexed = false
+                    C_Timer.After(2000, function()
+                        if playerHexed == false then
+                            core.achievementsCompleted[1] = false
+                            core:getAchievementFailedWithMessageAfter("Atleast one players needs to be hexed on boss kill!")
+                        end
+                    end)
+                end
+            end 
         end
     end
 end
