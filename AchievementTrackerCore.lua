@@ -1405,6 +1405,10 @@ function detectBossByEncounterID(id)
 								if core:has_value(core.achievementIDs, core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement) == false then
 									core:sendDebugMessage("(E) Adding the following achievement ID beacuse it doesn't exist: " .. core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
 									table.insert(core.achievementIDs, core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
+									
+									if core.Instances[core.expansion][core.instanceType][core.instance][boss].track == true then
+										core.outputTrackingStatus = true
+									end
 								end
 								core.foundBoss = true
 							end
@@ -1429,6 +1433,10 @@ function detectBossByEncounterID(id)
 						if core:has_value(core.achievementIDs, core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement) == false then
 							core:sendDebugMessage("(E) Adding the following achievement ID beacuse it doesn't exist: " .. core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
 							table.insert(core.achievementIDs, core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
+
+							if core.Instances[core.expansion][core.instanceType][core.instance][boss].enabled == true then
+								core.outputTrackingStatus = true
+							end
 						end
 						core.foundBoss = true
 					end
@@ -1438,10 +1446,15 @@ function detectBossByEncounterID(id)
 		end
 	end
 
+	print("Outputting Status:")
+	print(core.outputTrackingStatus)
+	print(core.encounterDetected)
+
 	--If encounter is detected but no achievements for the boss have been found then output no achievements to track for this encounter
-	if encounterDetected == true and core.foundBoss == false and core.outputTrackingStatus == false then
-		core:printMessage("IAT cannot track any achievements for this encounter.")
-		core.outputTrackingStatus = true
+	if core.outputTrackingStatus == false then
+		if core.encounterDetected == true then
+			core:printMessage("IAT cannot track any achievements for this encounter.")
+		end
 	end
 
 	if core.foundBoss == true then

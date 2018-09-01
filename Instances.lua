@@ -289,6 +289,16 @@ core.Instances = {
                     partial = false,
                     encounterID = 2100,
                 },
+                boss3 = {
+                    name = L["Other"],
+                    bossIDs = {},
+                    achievement = 12489,
+                    players = {L["(Enter instance to start scanning)"]},
+                    tactics = "As the name of the achievement implies, this is a profession-based achievement where you to interact with items to summon bosses. In order to use the items throughout the dungeons, a minimum of 75 skill level is required.\n\n (Leatherworking) Huntmaster Grath - The map to summon this boss is found in the hunting lodge section of Waycrest, in the corner of the Kraker fireplace room.\n (Tailoring) Seamstress Johanna - The 'Cursed Loom' (a bolt of cloth) is found in the Banquet Hall, on the top floor.\n (Herbalism) Groundskeeper Lilith - The 'Vile pod' is found in the fountain across the courtyard where Soulbound Goliath is.\n (Inscription) Governess Tabitha - The 'Ancient Tome' is found in a bookshelf on the main floor, on the left side just before you descend to the cellar.\n (Cooking) Head Vintner Justin - The wine is found in the cellar, near other casks of wine.",
+                    enabled = false,
+                    track = nil,
+					partial = false,
+                },
             },
 
             [1877] = { --Temple of Sethraliss
