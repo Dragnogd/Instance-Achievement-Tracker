@@ -22,7 +22,7 @@ local WrathOfTheLichKingContentButtons = {}
 Config.currentTab = nil             --Stores which tab is currently selected
 Config.currentInstance = nil        --Stores which instance is currently selected
 
--- Purpose:         Stores information about the current options in the GUI
+-- Purpose:         Stores information about the current options in the GUIss
 AchievementTrackerOptions = {}
 
 -- Purpose:         Information about the current release. This is mianly used to detect which addon should output messages to chat to avoid spam
