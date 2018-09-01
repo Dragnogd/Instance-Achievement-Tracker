@@ -29,6 +29,7 @@ local timerStarted = false
 local frozenHeadKilled = false
 local flamingHeadKilled = false
 local venmousHeadKilled = false
+local megaeraKilled = false
 
 ------------------------------------------------------
 ---- Ji-Kun
@@ -81,22 +82,28 @@ function core._1098:Tortos()
 end
 
 function core._1098:Megaera()
-	if core.type == "UNIT_DIED" and core.destID == "70235" then
-		frozenHeadKilled = true
-	elseif core.type == "UNIT_DIED" and core.destID == "70212" then
-		flamingHeadKilled = true
-	elseif core.type == "UNIT_DIED" and core.destID == "70247" then
-		venmousHeadKilled = true
+	if core.type == "UNIT_DIED" and core.destID == "68065" then
+		megaeraKilled = true
 	end
 
-	if frozenHeadKilled == true and flamingHeadKilled == true and venmousHeadKilled == true then
-		core:getAchievementFailed()
-	elseif frozenHeadKilled == true and flamingHeadKilled == true then
-		core:getAchievementSuccessWithCustomMessage("'Venomous part of'", "will be completed once encounter is completed")
-	elseif venmousHeadKilled == true and flamingHeadKilled == true then
-		core:getAchievementSuccessWithCustomMessage("'Frozen part of'", "will be completed once encounter is completed")
-	elseif frozenHeadKilled == true and venmousHeadKilled == true then	
-		core:getAchievementSuccessWithCustomMessage("'Flaming part of'", "will be completed once encounter is completed")
+	if megaeraKilled == false then
+		if core.type == "UNIT_DIED" and core.destID == "70235" then
+			frozenHeadKilled = true
+		elseif core.type == "UNIT_DIED" and core.destID == "70212" then
+			flamingHeadKilled = true
+		elseif core.type == "UNIT_DIED" and core.destID == "70247" then
+			venmousHeadKilled = true
+		end
+	
+		if frozenHeadKilled == true and flamingHeadKilled == true and venmousHeadKilled == true then
+			core:getAchievementFailed()
+		elseif frozenHeadKilled == true and flamingHeadKilled == true then
+			core:getAchievementSuccessWithCustomMessage("'Venomous part of'", "will be completed once encounter is completed")
+		elseif venmousHeadKilled == true and flamingHeadKilled == true then
+			core:getAchievementSuccessWithCustomMessage("'Frozen part of'", "will be completed once encounter is completed")
+		elseif frozenHeadKilled == true and venmousHeadKilled == true then	
+			core:getAchievementSuccessWithCustomMessage("'Flaming part of'", "will be completed once encounter is completed")
+		end
 	end
 end
 
