@@ -22,8 +22,8 @@ Instance Achievement Tracker helps track whether the criteria of achievements in
 * Tracks when the criteria of instance achievements has failed and outputs this to chat
 * Keeps track of achievements which require you to kill so many mobs within a certain time period. It will announce to chat when enough mobs have spawned.
 * Scans all players in the group to see which achievements each player is missing for the current instance
-*Announce to chat players who are missing achievements for certain bosses
-*Announce to chat tactics for a certain boss
+* Announce to chat players who are missing achievements for certain bosses
+* Announce to chat tactics for a certain boss
 
 # Slash Commands:
 /iat - Open and closes the GUI
