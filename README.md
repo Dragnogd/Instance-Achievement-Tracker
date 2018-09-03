@@ -1,5 +1,10 @@
 # Instance Achievement Tracker
 
+# Download Links
+
+https://wow.curseforge.com/projects/instance-achievement-tracker
+http://www.wowinterface.com/downloads/info24756-InstanceAchievementTracker.html
+
 # DISCORD Channel!
 
 https://discord.gg/U6S7vjb
