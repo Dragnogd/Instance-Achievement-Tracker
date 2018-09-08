@@ -2,7 +2,7 @@
 
 # Download Links
 
-https://wow.curseforge.com/projects/instance-achievement-tracker
+https://www.curseforge.com/wow/addons/instance-achievement-tracker
 
 http://www.wowinterface.com/downloads/info24756-InstanceAchievementTracker.html
 
