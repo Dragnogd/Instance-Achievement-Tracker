@@ -24,6 +24,8 @@ function generateItemCache()
 	end
 end
 
+--AddTrackedAchievement(6518)
+
 -- print("Tesint Ready for Raiding Function")
 -- core.destName = "Whizzey-Doomhammer"
 -- core.type = "SPELL_DAMAGE"
