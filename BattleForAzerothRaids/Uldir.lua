@@ -48,3 +48,12 @@ function core._1861:Vectis()
         core:getAchievementSuccess()
     end
 end
+
+function core._1861:Zekvoz()
+    --Defeat Zek'voz in Uldir after exposing the Puzzle Box of Yogg-Saron to the Projection of Yogg-Saron on Normal difficulty or higher.
+    --Void Barrage 278068
+
+    if core.type == "SPELL_DAMAGE" and core.spellId == 278068 then
+        core:getAchievementSuccess()
+    end
+end
