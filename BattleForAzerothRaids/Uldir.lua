@@ -38,3 +38,13 @@ function core._1861:FetidDevourer()
         end
     end
 end
+
+function core._1861:Vectis()
+    --Defeat Vectis in Uldir after infecting Warmother Rakkali with Plague Bomb on Normal difficulty or higher.
+    --Warmother Rakkali 142148
+    --Plague Bomb 266948
+
+    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 266948 and core.destID == "142148" then
+        core:getAchievementSuccess()
+    end
+end
