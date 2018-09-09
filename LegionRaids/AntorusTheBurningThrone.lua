@@ -180,6 +180,7 @@ function core._1712:ClearVariables()
     end
     highestEnergy = 0
     energyTooHighAnnounced = false
+    starDustCompleted = false
 end
 
 function core._1712:InstanceCleanup()
