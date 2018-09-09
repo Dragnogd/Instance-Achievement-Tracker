@@ -32,6 +32,8 @@ local felshieldEmitterCounter = 3
 ---- Argus
 ------------------------------------------------------
 local highestEnergy = 0
+local starDustCompleted = false
+local energyTooHighAnnounced = false
 
 function core._1712:FelhoundsOfSargeras()
     --Detect boss death
@@ -177,6 +179,7 @@ function core._1712:ClearVariables()
         --core:sendMessage("Highest Energy is 0")
     end
     highestEnergy = 0
+    energyTooHighAnnounced = false
 end
 
 function core._1712:InstanceCleanup()
@@ -226,15 +229,24 @@ function core._1712.Events:UNIT_POWER_UPDATE(self, unit, powerType)
                     local newPower = UnitPower(unit)
 
                     --Update highest energy if higher than current attempt. This is so we can output at the end of the fight how well the group did
-                    if (newPower - currentPower) > highestEnergy then
-                        highestEnergy = newPower - currentPower
-                        core:sendMessage(GetAchievementLink(12257) .. " Best attempt this pull (" .. highestEnergy .. "/80). Khaz'Goroth must gain 80 energy within 5 seconds to complete this achievement")
+                    if (newPower - currentPower) > highestEnergy and starDustCompleted == false then
+                        if highestEnergy >= 0 then
+                            highestEnergy = newPower - currentPower
+                            core:sendMessage(GetAchievementLink(12257) .. " Best attempt this pull (" .. highestEnergy .. "/80). Khaz'Goroth must gain 80 energy within 5 seconds to complete this achievement")
+                        end
                     end
 
                     --Achievement Completed
                     if (newPower - currentPower) >= 80 then
                         core:getAchievementSuccess()
                         --print("Boss gained: " .. (newPower - currentPower) .. " energy")
+                        starDustCompleted = true
+                    end
+
+                    --Khaz energy too high so cannot track achievement any more
+                    if starDustCompleted == false and energyTooHighAnnounced == false and newPower == 100 then
+                        core:sendMessage(GetAchievementLink(12257) .. " Unable to track achievement. Khaz'Goroth energy must be at 20 energy or lower for IAT to track this achievement")
+                        energyTooHighAnnounced = true                        
                     end
                 end)
             end
