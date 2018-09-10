@@ -130,8 +130,10 @@ function core._1530:StarAugurEtraeus()
         if UnitGUID("boss" .. i) ~= nil then
             local unitType, _, _, _, _, destID, spawn_uid_dest = strsplit("-", UnitGUID("boss" .. i))
             if destID == "103758" and core:getHealthPercent("boss" .. i) <= 30 and healthPercentageReached == false and wellTraveledNetherElementalFound == true then
-                core:sendMessage(core:getAchievement() .. " Kill the Well-Traveled Nether Elemental now")
                 healthPercentageReached = true
+                C_Timer.After(2000, function() 
+                    core:sendMessage(core:getAchievement() .. " Kill the Well-Traveled Nether Elemental now")
+                end)
             end
         end
     end
