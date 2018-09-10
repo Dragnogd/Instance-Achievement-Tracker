@@ -46,6 +46,7 @@ local eyeTarget = false
 ------------------------------------------------------
 local mysteriousFruitCounter = 0
 local mysteriousFruitPlayers = {}
+local highBotanistTelarnKilled = false
 
 function core._1530:Skorpyron()
     --Shockwave cast
@@ -146,66 +147,78 @@ function core._1530:StarAugurEtraeus()
 end
 
 function core._1530:HighBotanistTelarn()
-	if core.type == "UNIT_DIED" and core.destID ~= nil then
-        local name, realm = strsplit("-", core.destID)
-        if UnitIsPlayer(name) then
-            --If the player was holding a parasite then reduce counter by 1
-            if mysteriousFruitPlayers[core.spawn_uid_dest_Player] ~= nil then
-                mysteriousFruitCounter = mysteriousFruitCounter - 1
-                mysteriousFruitPlayers[core.spawn_uid_dest_Player] = nil
-
-                --If achievement had already completed then fail it
-                if core.achievementsCompleted[1] == true then
-                    core:getAchievementFailedWithMessageAfter("(Reason: " .. core.destName .. " has died) DO NOT KILL BOSS!")
-                    core.achievementsCompleted[1] = false
-                end
-            end
-        end
-	end
-
-	--If player is in a group
-	if core.groupSize > 1 then
-		for i = 1, core.groupSize do
-			local unit = nil
-			if core.chatType == "PARTY" then
-				if i < core.groupSize then
-					unit = "party" .. i
-				else
-					unit = "player"
-			end
-			elseif core.chatType == "RAID" then
-				unit = "raid" .. i
-			end
-			
-			if unit ~= nil then
-                local unitType, destID, spawn_uid_dest = strsplit("-",UnitGUID(unit));
-                for i=1,40 do
-					local _, _, _, _, _, _, _, _, _, spellId = UnitDebuff(unit, i)
-					if spellId == 220114 and mysteriousFruitPlayers[spawn_uid_dest] == nil then
-                        mysteriousFruitCounter = mysteriousFruitCounter + 1
-                        --core:sendMessage(UnitName(unit) .. " has got the Zealous Parasite debuff (" .. parasiteCounter .. "/" .. core.groupSize .. ")")
-                        mysteriousFruitPlayers[spawn_uid_dest] = spawn_uid_dest
-					end
-				end
-			end
-		end
-	else
-		--Player is not in a group
-        local unitType, destID, spawn_uid_dest = strsplit("-",UnitGUID("Player"));
-        for i=1,40 do
-            local _, _, _, _, _, _, _, _, _, spellId = UnitDebuff("Player", i)
-            if spellId == 220114  and mysteriousFruitPlayers[spawn_uid_dest] == nil then
-                mysteriousFruitCounter = mysteriousFruitCounter + 1
-                --core:sendMessage(UnitName("Player") .. " has got the Zealous Parasite debuff (" .. parasiteCounter .. "/" .. core.groupSize .. ")")
-                mysteriousFruitPlayers[spawn_uid_dest] = spawn_uid_dest
-            end
-        end
-	end
-
-	if mysteriousFruitCounter == core.groupSize then
+	if mysteriousFruitCounter == core.groupSize and core.groupSize >= 10 then
         core:getAchievementSuccess()
         core.achievementsFailed[1] = false
 	end
+end
+
+function core._1864:TrackAdditional()
+    if core.Instances[core.expansion][core.instanceType][core.instance]["boss6"].enabled == true then
+        --Detect when boss is killed
+        if core.type == "UNIT_DIED" and core.destID == "104528" then
+            highBotanistTelarnKilled = true
+        end
+
+        if highBotanistTelarnKilled == false then
+            --Detect when players get the mysterious fruit debuff
+            if core.groupSize > 1 then
+                for i = 1, core.groupSize do
+                    local unit = nil
+                    if core.chatType == "PARTY" then
+                        if i < core.groupSize then
+                            unit = "party" .. i
+                        else
+                            unit = "player"
+                    end
+                    elseif core.chatType == "RAID" then
+                        unit = "raid" .. i
+                    end
+                    
+                    if unit ~= nil then
+                        local unitType, destID, spawn_uid_dest = strsplit("-",UnitGUID(unit));
+                        for i=1,40 do
+                            local _, _, _, _, _, _, _, _, _, spellId = UnitDebuff(unit, i)
+                            if spellId == 220114 and mysteriousFruitPlayers[spawn_uid_dest] == nil then
+                                mysteriousFruitCounter = mysteriousFruitCounter + 1
+                                mysteriousFruitPlayers[spawn_uid_dest] = spawn_uid_dest
+                                --Achievement requires atleast 10 players in the group to complete so make sure we do not suggest the achievement is completed with groups less than 10
+                                if core.groupSize >= 10 then
+                                    core:sendMessage(UnitName(unit) .. " has got the Mysterious Fruit debuff (" .. mysteriousFruitCounter .. "/" .. core.groupSize .. ")")
+                                else
+                                    core:sendMessage(UnitName(unit) .. " has got the Mysterious Fruit debuff (" .. mysteriousFruitCounter .. "/10)")
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+
+            --Detect when player dies and whether or not they had the mysterious fruit debuff or not.
+            if core.type == "UNIT_DIED" and core.destID ~= nil then
+                local name, realm = strsplit("-", core.destID)
+                if UnitIsPlayer(name) then
+                    --If the player was holding a mysterious fruit then reduce counter by 1
+                    if mysteriousFruitPlayers[core.spawn_uid_dest_Player] ~= nil then
+                        mysteriousFruitCounter = mysteriousFruitCounter - 1
+                        mysteriousFruitPlayers[core.spawn_uid_dest_Player] = nil
+
+                        if core.groupSize >= 10 then
+                            core:sendMessage(UnitName(unit) .. " has lost the Mysterious Fruit debuff (" .. mysteriousFruitCounter .. "/" .. core.groupSize .. ")")
+                        else
+                            core:sendMessage(UnitName(unit) .. " has lost the Mysterious Fruit debuff (" .. mysteriousFruitCounter .. "/10)")
+                        end
+        
+                        --If achievement had already completed then fail it
+                        if core.achievementsCompleted[1] == true then
+                            core:getAchievementFailedWithMessageAfter("(Reason: " .. core.destName .. " has died) DO NOT KILL BOSS!")
+                            core.achievementsCompleted[1] = false
+                        end
+                    end
+                end
+            end
+        end
+    end
 end
 
 function core._1530:Krosus()
@@ -313,6 +326,10 @@ function core._1530:Guldan()
             end)
         end
     end
+end
+
+function core._1530:InstanceCleanup()
+    highBotanistTelarnKilled = false
 end
 
 function core._1530:ClearVariables()
