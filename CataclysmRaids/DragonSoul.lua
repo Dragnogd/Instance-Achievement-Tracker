@@ -140,7 +140,11 @@ end
 function core._967:SpineOfDeathwing()
 	if rolesPerformed == 4 then
 		core:getAchievementSuccess()
+<<<<<<< HEAD
 	end
+=======
+	send
+>>>>>>> bcf244e199cf8d8aacd0f8f8594e52d6a0208824
 end
 
 function core._967:ClearVariables()
