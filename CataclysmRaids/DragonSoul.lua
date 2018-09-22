@@ -138,11 +138,9 @@ function core._967:Skyfire()
 end
 
 function core._967:SpineOfDeathwing()
-	f:SetScript("OnEvent", function(self, event, message, sender, language, channelString, target, flags, unknown, channelNumber, channelName, unknown, counter)
-		if rolesPerformed == 4 then
-			core:getAchievementSuccess()
-		end
-	end)
+	if rolesPerformed == 4 then
+		core:getAchievementSuccess()
+	send
 end
 
 function core._967:ClearVariables()
@@ -220,26 +218,36 @@ function core._967.Events:CHAT_MSG_RAID_BOSS_EMOTE(self, message, sender, langua
 			if lastRole == "right" or lastRole == nil then
 				rolesPerformed = 0
 				core:sendMessage("(This Achievement Can be Attempted Again)")
-				core:sendMessage("Roll the boss LEFT now! (" .. rolesPerformed .. "/4)")
+				C_Timer.After(4, function() 
+					core:sendMessage("Roll the boss LEFT now! (" .. rolesPerformed .. "/4)")				
+				end)
 				lastRole = nil
 			elseif lastRole == "left" then
 				rolesPerformed = rolesPerformed + 1
-				core:sendMessage("Roll the boss LEFT now! (" .. rolesPerformed .. "/4)")
+				C_Timer.After(4, function() 
+					core:sendMessage("Roll the boss LEFT now! (" .. rolesPerformed .. "/4)")				
+				end)
 				lastRole = "right"
 			end
 		elseif message == "%s rolls left!" then
 			if lastRole == nil then
 				rolesPerformed = rolesPerformed + 1
-				core:sendMessage("Roll the boss RIGHT now! (" .. rolesPerformed .. "/4)")
+				C_Timer.After(4, function()
+					core:sendMessage("Roll the boss RIGHT now! (" .. rolesPerformed .. "/4)")
+				end)
 				lastRole = "left"
 			elseif lastRole == "left" then
 				rolesPerformed = 1
 				core:sendMessage("(This Achievement Can be Attempted Again)")
-				core:sendMessage("Roll the boss RIGHT now! (" .. rolesPerformed .. "/4)")
+				C_Timer.After(4, function() 
+					core:sendMessage("Roll the boss RIGHT now! (" .. rolesPerformed .. "/4)")				
+				end)
 				lastRole = "left"
 			elseif lastRole == "right" then
 				rolesPerformed = rolesPerformed + 1
-				core:sendMessage("Roll the boss RIGHT now! (" .. rolesPerformed .. "/4)")
+				C_Timer.After(4, function() 
+					core:sendMessage("Roll the boss RIGHT now! (" .. rolesPerformed .. "/4)")				
+				end)				
 				lastRole = "left"
 			end
 		end
