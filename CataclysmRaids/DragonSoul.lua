@@ -79,25 +79,25 @@ function core._967:YorsahjTheUnsleeping()
 	--Check if any of the combinations have been matched
 	if blackFound == true and yellowFound == true and blackYellowFound == false then
 		combinationsFound = combinationsFound + 1
-		core:sendMessage("Black and Yellow combination found for " .. GetAchievementLink(core.currentAchievementID) .. " (" .. combinationsFound .. "/4)")
+		core:sendMessage("Black and Yellow combination found for " .. GetAchievementLink(core.achievementIDs[1]) .. " (" .. combinationsFound .. "/4)")
 		blackYellowFound = true
 	end
 
 	if redFound == true and greenFound == true and redGreenFound == false then
 		combinationsFound = combinationsFound + 1
-		core:sendMessage("Red and Green combination found for " .. GetAchievementLink(core.currentAchievementID) .. " (" .. combinationsFound .. "/4)")
+		core:sendMessage("Red and Green combination found for " .. GetAchievementLink(core.achievementIDs[1]) .. " (" .. combinationsFound .. "/4)")
 		redGreenFound = true
 	end
 	
 	if blackFound == true and blueFound == true and blackBlueFound == false then
 		combinationsFound = combinationsFound + 1
-		core:sendMessage("Black and Blue combination found for " .. GetAchievementLink(core.currentAchievementID) .. " (" .. combinationsFound .. "/4)")
+		core:sendMessage("Black and Blue combination found for " .. GetAchievementLink(core.achievementIDs[1]) .. " (" .. combinationsFound .. "/4)")
 		blackBlueFound = true
 	end
 
 	if purpleFound == true and yellowFound == true and purpleYellowFound == false then
 		combinationsFound = combinationsFound + 1
-		core:sendMessage("Purple and Yellow combination found for " .. GetAchievementLink(core.currentAchievementID) .. " (" .. combinationsFound .. "/4)")
+		core:sendMessage("Purple and Yellow combination found for " .. GetAchievementLink(core.achievementIDs[1]) .. " (" .. combinationsFound .. "/4)")
 		purpleYellowFound = true
 	end
 
