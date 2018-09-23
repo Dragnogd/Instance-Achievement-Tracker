@@ -161,6 +161,7 @@ function core._1530:HighBotanistTelarn()
 end
 
 function core._1864:TrackAdditional()
+    
     if core.Instances[core.expansion][core.instanceType][core.instance]["boss6"].enabled == true then
         --Detect when boss is killed
         if core.type == "UNIT_DIED" and core.destID == "104528" then
@@ -168,6 +169,7 @@ function core._1864:TrackAdditional()
         end
 
         if highBotanistTelarnKilled == false then
+            print("HERE")
             --Detect when players get the mysterious fruit debuff
             if core.groupSize > 1 then
                 for i = 1, core.groupSize do
@@ -232,7 +234,7 @@ function core._1530:Krosus()
     if core:getBlizzardTrackingStatus(10575) == true then
         core:getAchievementSuccess()
     end
-    
+
     --Keep a collection of all detected Burning Embers
     --If a burning ember dies than remove from collection
     --When bridge breaks, start a 5 second countdown and store all burning embers which do damage in this time
@@ -336,6 +338,10 @@ function core._1530:Guldan()
                 end
             end)
         end
+    end
+
+    if core:getBlizzardTrackingStatus(10696) == true then
+        core:getAchievementSuccess()
     end
 end
 
