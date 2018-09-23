@@ -162,13 +162,13 @@ end
 
 function core._1530:SpellbladeAluriel()
     if core:getBlizzardTrackingStatus(10817, 1) == true then
-        core:getAchievementSuccessWithMessageBeforeAndAfter("The Shal'dorei Terrace Completed", "")
+        core:getAchievementSuccessWithCustomMessage("'The Shal'dorei Terrace part of'", "will be completed once boss is killed")
     end
     if core:getBlizzardTrackingStatus(10817, 2) == true then
-        core:getAchievementSuccessWithMessageBeforeAndAfter("Shattered Walkway Completed", "")
+        core:getAchievementSuccessWithCustomMessage("'Shattered Walkway part of'", "will be completed once boss is killed")
     end
     if core:getBlizzardTrackingStatus(10817, 3) == true then
-        core:getAchievementSuccessWithMessageBeforeAndAfter("Astomancers Rise Completed", "")
+        core:getAchievementSuccessWithCustomMessage("'Astomancers Rise part of'", "will be completed once boss is killed")
     end
 end
 
