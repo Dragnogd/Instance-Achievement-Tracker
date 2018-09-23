@@ -12,10 +12,6 @@ core._1136.Events = CreateFrame("Frame")
 local f = CreateFrame ("Frame")
 f:RegisterEvent("UNIT_HEALTH")
 f:RegisterEvent("UNIT_AURA")
-f:RegisterEvent("ZONE_CHANGED")
-f:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
-f:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
-f:RegisterEvent("PLAYER_ENTERING_WORLD")
 
 ------------------------------------------------------
 ---- Immerseus
@@ -125,18 +121,23 @@ end
 
 function core._1136:TheFallenProtectors()
 	--Don't count the mark for the the first person that has recieved it
-	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 143840 then
-		table.insert(playersRecievedMark, core.spawn_uid_dest_Player)
-	end
+	-- if core.type == "SPELL_AURA_APPLIED" and core.spellId == 143840 then
+	-- 	table.insert(playersRecievedMark, core.spawn_uid_dest_Player)
+	-- end
 
-	if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 143842 and core:has_value(playersRecievedMark, core.spawn_uid_dest_Player) == false and core.achievementsCompleted[1] == false then
-		table.insert(playersRecievedMark, core.spawn_uid_dest_Player)
-		playersRecievedMarkCounter = playersRecievedMarkCounter + 1
-		core:sendMessage("Unique Players Recieved Mark of Anguish ("  .. playersRecievedMarkCounter .. "/5)")
-	end
+	-- if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 143842 and core:has_value(playersRecievedMark, core.spawn_uid_dest_Player) == false and core.achievementsCompleted[1] == false then
+	-- 	table.insert(playersRecievedMark, core.spawn_uid_dest_Player)
+	-- 	playersRecievedMarkCounter = playersRecievedMarkCounter + 1
+	-- 	core:sendMessage("Unique Players Recieved Mark of Anguish ("  .. playersRecievedMarkCounter .. "/5)")
+	-- end
 
-	if playersRecievedMarkCounter == 5 then
-		core:getAchievementSuccessWithCustomMessage(GetAchievementLink(core.achievementIDs[1]) .. " '5 unique players recieved Mark of Anguish' part of the achievement complete. Make sure 200yards have also been covered before killing boss'")
+	-- if playersRecievedMarkCounter == 5 then
+	-- 	core:getAchievementSuccessWithCustomMessage(GetAchievementLink(core.achievementIDs[1]) .. " '5 unique players recieved Mark of Anguish' part of the achievement complete. Make sure 200yards have also been covered before killing boss'")
+	-- end
+
+	--Blizzard Tracker has gone white so achievement has been completed
+	if core:getBlizzardTrackingStatus(8528) == true then
+		core:getAchievementSuccess()
 	end
 end
 

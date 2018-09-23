@@ -2250,12 +2250,12 @@ core.Instances = {
                 },
                 boss2 = {
                     name = 849, --The Fallen Protectors
-                    bossIDs = {}, --71475, 71479, 71480
+                    bossIDs = {71475, 71479, 71480},
                     achievement = 8528,
                     players = {L["(Enter instance to start scanning)"]},
                     tactics = "At 66% the boss will place " .. GetSpellLink(144365) .. " on a random player. You need to transfer this mark to 5 players by using the special action button on your screen which will appear once you have the debuff. You also need to transfer the Mark of Anguish at least 200 yards around the room. Spread the group around the room 40yards apart and continue to transfer the mark until the achievement goes white.",
-                    enabled = false,
-                    track = nil,
+                    enabled = true,
+                    track = function() core._1136:TheFallenProtectors() end,
                     partial = true,
                     encounterID = 1598,
                 },
