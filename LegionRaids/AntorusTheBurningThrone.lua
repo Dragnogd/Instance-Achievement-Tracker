@@ -35,6 +35,12 @@ local highestEnergy = 0
 local starDustCompleted = false
 local energyTooHighAnnounced = false
 
+function core._1712:GarothiWorldbreaker()
+    if core:getBlizzardTrackingStatus(11930, 1) == true then
+        core:getAchievementSuccess()
+    end
+end
+
 function core._1712:FelhoundsOfSargeras()
     --Detect boss death
     if core.type == "UNIT_DIED" and (core.destID == "122477" or core.destID == "122135") then
