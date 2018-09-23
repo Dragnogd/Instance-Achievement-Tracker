@@ -63,6 +63,13 @@ function core._1228:Koragh()
     end
 end
 
+function core._1228:ImperatorMargok()
+    --Blizzard Tracker has gone white so achievement is complete
+    if core:getBlizzardTrackingStatus(8977) == true then
+        core:getAchievementSuccess()
+    end
+end
+
 function core._1228:ClearVariables()
     ------------------------------------------------------
     ---- The Butcher
