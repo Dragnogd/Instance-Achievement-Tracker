@@ -160,6 +160,18 @@ function core._1530:HighBotanistTelarn()
 	end
 end
 
+function core._1530:SpellbladeAluriel()
+    if core:getBlizzardTrackingStatus(10817, 1) == true then
+        core:getAchievementSuccessWithMessageBeforeAndAfter("The Shal'dorei Terrace Completed", "")
+    end
+    if core:getBlizzardTrackingStatus(10817, 2) == true then
+        core:getAchievementSuccessWithMessageBeforeAndAfter("Shattered Walkway Completed", "")
+    end
+    if core:getBlizzardTrackingStatus(10817, 3) == true then
+        core:getAchievementSuccessWithMessageBeforeAndAfter("Astomancers Rise Completed", "")
+    end
+end
+
 function core._1864:TrackAdditional()
     
     if core.Instances[core.expansion][core.instanceType][core.instance]["boss6"].enabled == true then
