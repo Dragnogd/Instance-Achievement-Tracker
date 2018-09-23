@@ -2058,3 +2058,15 @@ end
 function core:getHealthPercent(boss)
 	return (UnitHealth(boss) / UnitHealthMax(boss)) * 100
 end
+
+--Check if Blizzard Achievement Tracking has completed/failed
+function core:getBlizzardTrackingStatus(achievementID, index)
+	if index ~= nil then
+		--Achievement has a criteria
+		local _, _, _, _, _, _, _, _, _, _, eligible, _, _ = GetAchievementCriteriaInfo(achievementID, index);
+		return eligible
+	else
+		--Achievement has no criteria
+		return IsAchievementEligible(achievementID)
+	end
+end
