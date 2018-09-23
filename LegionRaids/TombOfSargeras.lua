@@ -21,6 +21,12 @@ local demonicInquisitionKilled = false
 local healthPercentageReached = false
 local waxingTwilightSoulFound = false
 
+function core._1676:Goroth()
+    if core:getBlizzardTrackingStatus(11724) == true then
+        core:getAchievementSuccess()
+    end
+end
+
 function core._1676:DemonicInquisition()
     if core.type == "UNIT_DIED" and (core.destID == "116689" or core.destID == "116691") then
         demonicInquisitionKilled = true
