@@ -79,12 +79,11 @@ function core._1520:Ilgynoth()
     end
 end
 
--- function core._1520:Ele()
---     if core.type == "SPELL_DAMAGE" and core.spellId == 215503 and core.sourceID == "112078" then
---         pulsingEggCounter = pulsingEggCounter + 1
---         print(pulsingEggCounter .. " Pulsing Egg Counter")
---     end
--- end
+function core._1520:EleretheRenferal()
+    if core:getBlizzardTrackingStatus(10817) == true then
+        core:getAchievementSuccess(10771)
+    end
+end
 
 function core._1520:DragonsOfNightmare()
     if initialWait == true then
