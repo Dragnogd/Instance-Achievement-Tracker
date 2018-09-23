@@ -15,6 +15,11 @@ local fetidDevourerKilled = false
 local playersFetidTable = {}
 local playersFetid = 0
 
+------------------------------------------------------
+---- Mythrax the Unraveler
+------------------------------------------------------
+local lastPlayerToAbsorbOrb = ""
+
 function core._1861:FetidDevourer()
     --Defeat the Fetid Devourer in Uldir after having all players hit by Terrible Thrash at least once on Normal difficulty or higher.
     if core.type == "UNIT_DIED" and core.destID == "133298" then
@@ -55,5 +60,19 @@ function core._1861:Zekvoz()
 
     if core.type == "SPELL_DAMAGE" and core.spellId == 278068 then
         core:getAchievementSuccess()
+    end
+end
+
+function core._1861:MythraxTheUnraveler()
+    --Defeat Mythrax the Unraveler in Uldir with no player touching an Existence Fragment spawned by another player on Normal difficulty or higher
+
+    --Check who the last player was to pick up an orb
+    if (core.type == "SPELL_AURA_REMOVED_DOSE" or core.type == "SPELL_AURA_REMOVED") and core.spellId == 272146 then
+        lastPlayerToAbsorbOrb = core.destName
+    end
+
+    --Blizzard Tracker has gone red so achievement failed
+    if core:getBlizzardTrackingStatus(12836) == false then
+        core:getAchievementFailedWithMessageAfter("(" .. lastPlayerToAbsorbOrb .. ")")
     end
 end
