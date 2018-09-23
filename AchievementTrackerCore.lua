@@ -2062,11 +2062,11 @@ end
 --Check if Blizzard Achievement Tracking has completed/failed
 function core:getBlizzardTrackingStatus(achievementID, index)
 	if index ~= nil then
-		--Achievement has a criteria
+		--Achievement has a criteria so we need to select that criteria to see if it has been completed/failed
 		local _, _, _, _, _, _, _, _, _, _, eligible, _, _ = GetAchievementCriteriaInfo(achievementID, index);
 		return eligible
 	else
-		--Achievement has no criteria
+		--Achievement has no criteria so we can just check whether criteria has failed or completed
 		return IsAchievementEligible(achievementID)
 	end
 end

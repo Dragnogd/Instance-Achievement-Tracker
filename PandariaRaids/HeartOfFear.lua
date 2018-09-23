@@ -110,6 +110,12 @@ function core._1009:GrandEmpressShekzeer()
 	end
 end
 
+function core._1009:AmberShaperUnsok()
+	if core:getBlizzardTrackingStatus(6518) == true then
+		core:getAchievementSuccess()
+	end
+end
+
 function core._1009:ClearVariables()
 	------------------------------------------------------
 	---- Imperial Vizier Zor'lok
