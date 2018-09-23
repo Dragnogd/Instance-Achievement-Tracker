@@ -76,3 +76,17 @@ function core._1861:MythraxTheUnraveler()
         core:getAchievementFailedWithMessageAfter("(" .. lastPlayerToAbsorbOrb .. ")")
     end
 end
+
+function core._1861:ClearVariables()
+    ------------------------------------------------------
+    ---- Fetid Devourer
+    ------------------------------------------------------
+    fetidDevourerKilled = false
+    playersFetidTable = {}
+    playersFetid = 0
+
+    ------------------------------------------------------
+    ---- Mythrax the Unraveler
+    ------------------------------------------------------
+    lastPlayerToAbsorbOrb = ""
+end
