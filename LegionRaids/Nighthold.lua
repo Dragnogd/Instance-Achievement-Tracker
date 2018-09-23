@@ -229,6 +229,10 @@ function core._1864:TrackAdditional()
 end
 
 function core._1530:Krosus()
+    if core:getBlizzardTrackingStatus(10575) == true then
+        core:getAchievementSuccess()
+    end
+    
     --Keep a collection of all detected Burning Embers
     --If a burning ember dies than remove from collection
     --When bridge breaks, start a 5 second countdown and store all burning embers which do damage in this time
