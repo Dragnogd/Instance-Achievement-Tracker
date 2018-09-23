@@ -13,3 +13,9 @@ function core._1822:DreadCaptainLockwood()
         core:getAchievementFailed()
     end
 end
+
+function core._1822:ViqGoth()
+    if core:getBlizzardTrackingStatus(12726) == true then
+        core:getAchievementSuccess()
+    end
+end
