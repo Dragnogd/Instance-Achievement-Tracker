@@ -49,6 +49,11 @@ local mysteriousFruitPlayers = {}
 local highBotanistTelarnKilled = false
 
 function core._1530:Skorpyron()
+
+    if core:getBlizzardTrackingStatus(10678, 1) == false then
+        core:getAchievementFailed()
+    end
+
     --Shockwave cast
     if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 204316 then
         --Loop through all players in the group and make a list of all players that got hit by the shockwave
