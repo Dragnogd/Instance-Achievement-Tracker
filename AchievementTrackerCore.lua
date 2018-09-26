@@ -1,37 +1,28 @@
 --------------------------------------
 -- Namespaces
 --------------------------------------
-local _, core = ...
+local _, core = ... 											--Global Addon Namespace
+local L = core.L												--Translation Table
 
-local L = core.L
-
-local events = CreateFrame("Frame")
-local UIConfig
-local UICreated = false
+local events = CreateFrame("Frame")								--All events are registered to this frame
+local UIConfig													--UIConfig is used to make a display asking the user if they would like
+local UICreated = false											--To enable achievement tracking when they enter an instances
 local debugMode = false
 
-AchievementTrackerOptions = {}
+--------------------------------
+-- Saved Variables tables
+--------------------------------
+AchievementTrackerOptions = {}									--Saved Variables Tables
 AchievementTrackerDebug = {}
 
-events:RegisterEvent("ADDON_LOADED")						--Used to setup the slash commands for the addon
-events:RegisterEvent("PLAYER_LOGIN")
-events:RegisterEvent("GET_ITEM_INFO_RECEIVED")
+events:RegisterEvent("ADDON_LOADED")							--This is the first event that is called as soon as the addon loaded. Does Initial Setup							
+events:RegisterEvent("GET_ITEM_INFO_RECEIVED")					--Get Item Information after the game has loaded to finish loading tactics
 
-function generateItemCache()
-	for i,v in pairs(core.ItemCache) do
-		GetItemInfo(core.ItemCache[v])
-		--print(core.ItemCache[v])
+function generateItemCache()									--The Item Cache can only be generated once the game has loaded		
+	for i,v in pairs(core.ItemCache) do							--We need to first get information about the item to load into the cache
+		GetItemInfo(core.ItemCache[v])							--Then we can insert this information into the tactics. Tactics hold string "IAT_12345" to eventually get replaced
 	end
 end
-
---AddTrackedAchievement(6518)
-
--- print("Tesint Ready for Raiding Function")
--- core.destName = "Whizzey-Doomhammer"
--- core.type = "SPELL_DAMAGE"
--- core.spellId = 270277	
--- core._1594:MogulRazdunk()
--- print("Finished testing")
 
 function events:GET_ITEM_INFO_RECEIVED(self, arg1)
 	if core:has_value2(core.ItemCache, arg1) then
@@ -1049,7 +1040,6 @@ function events:ZONE_CHANGED_NEW_AREA()
 
 		--If user has left the instance then unregister events if they were registered
 		core:sendDebugMessage("Player has left instance. Unregestering events and resetting variables")
-		--events:UnregisterEvent("INSPECT_ACHIEVEMENT_READY")
 		events:UnregisterEvent("GROUP_ROSTER_UPDATE")
 		events:UnregisterEvent("CHAT_MSG_SYSTEM")
 		events:UnregisterEvent("PLAYER_REGEN_DISABLED")
