@@ -58,6 +58,12 @@ function events:onUpdate(sinceLastUpdate)
 		if combatStatus == false then
 			core:clearInstanceVariables()
 			core:clearVariables()
+			core:sendDebugMessage("Locking Detection for 3 seconds")
+			core.lockDetection = true
+			C_Timer.After(3, function() 
+				core.lockDetection = false
+				core:sendDebugMessage("Detection unlocked")
+			end)
 			core:sendDebugMessage("Left Combat")
 			events:SetScript("OnUpdate",nil)
 		end
@@ -123,9 +129,10 @@ core.displayAchievements = false
 core.encounterDetected = false
 core.outputTrackingStatus = false
 core.announceTrackedAchievementsToChat = false
+core.lockDetection = false
 
 --------------------------------------
--- Addon Syncing V1.0.1a
+-- Addon Syncing 
 --------------------------------------
 local masterAddon = false					--The master addon for the group. This stop multiple people with the addon outputting identical messages. Reset at the end of every fight
 local playerRank = -1						--The rank of the player is the group. Players with higher rank get priorty over outputting messages unless they have an outdated addon
@@ -908,7 +915,9 @@ function events:ENCOUNTER_START(self, encounterID, encounterName, difficultyID, 
 	--If encounter ID is detected then use that to detectBoss
 	if encounterID ~= nil then
 		--Found the boss encounter ID so clear out any other bosses currently stored
-		detectBossByEncounterID(encounterID)
+		if core.lockDetection == false then
+			detectBossByEncounterID(encounterID)
+		end
 	end
 end
 
@@ -1180,6 +1189,12 @@ function events:PLAYER_REGEN_ENABLED()
 		if core.encounterDetected == false then
 			core:clearInstanceVariables()
 			core:clearVariables()
+			core:sendDebugMessage("Locking Detection for 3 seconds")
+			core.lockDetection = true
+			C_Timer.After(3, function() 
+				core.lockDetection = false
+				core:sendDebugMessage("Detection unlocked")
+			end)
 		else
 			core:sendDebugMessage("Not clearing global variables since encounter is still in progress")
 		end
@@ -1316,50 +1331,52 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 			end
 		end
 	else
-		--Check if any of the 5 nameplates have caches boss ID and whether source and dest GUID have been stored or not
-		local doNotTrack = false
-		for i = 1, 5 do
-			if UnitGUID("boss" .. i) ~= nil and UnitIsDead("boss" .. i) == false and UnitIsEnemy("Player", "boss" .. i) == true then
-				local _, _, _, _, _, bossID, _ = strsplit("-", UnitGUID("boss" .. i))
-				if bossID ~= nil then
-					if core:has_value(core.mobCache, bossID) == false then
-						core:sendDebugMessage("Calling Detect Boss 1: " .. bossID)
-						detectBoss(bossID)
+		if core.lockDetection == false then
+			--Check if any of the 5 nameplates have caches boss ID and whether source and dest GUID have been stored or not
+			local doNotTrack = false
+			for i = 1, 5 do
+				if UnitGUID("boss" .. i) ~= nil and UnitIsDead("boss" .. i) == false and UnitIsEnemy("Player", "boss" .. i) == true then
+					local _, _, _, _, _, bossID, _ = strsplit("-", UnitGUID("boss" .. i))
+					if bossID ~= nil then
+						if core:has_value(core.mobCache, bossID) == false then
+							core:sendDebugMessage("Calling Detect Boss 1: " .. bossID)
+							detectBoss(bossID)
+						end
 					end
+				elseif UnitIsDead("boss" .. i) == true then
+					doNotTrack = true
 				end
-			elseif UnitIsDead("boss" .. i) == true then
-				doNotTrack = true
 			end
-		end
 
-		if core.sourceID ~= nil and doNotTrack == false and core.currentSource == "Creature" then
-			--core:sendDebugMessage(core.sourceID)
-			if core:has_value(core.mobCache, core.sourceID) ~= true then
-				core:sendDebugMessage("Calling Detect Boss 2: " .. core.sourceID)
-				--print(...)
-				detectBoss(core.sourceID)
+			if core.sourceID ~= nil and doNotTrack == false and core.currentSource == "Creature" then
+				--core:sendDebugMessage(core.sourceID)
+				if core:has_value(core.mobCache, core.sourceID) ~= true then
+					core:sendDebugMessage("Calling Detect Boss 2: " .. core.sourceID)
+					--print(...)
+					detectBoss(core.sourceID)
+				end
 			end
-		end
 
-		if core.destID ~= nil and doNotTrack == false and core.currentDest == "Creature" then
-			--core:sendDebugMessage(core.destID)
-			if core:has_value(core.mobCache, core.destID) == false then
-				core:sendDebugMessage("Calling Detect Boss 3: " .. core.destID)
-				--print(...)
-				detectBoss(core.destID)
+			if core.destID ~= nil and doNotTrack == false and core.currentDest == "Creature" then
+				--core:sendDebugMessage(core.destID)
+				if core:has_value(core.mobCache, core.destID) == false then
+					core:sendDebugMessage("Calling Detect Boss 3: " .. core.destID)
+					--print(...)
+					detectBoss(core.destID)
+				end
 			end
-		end
 
-		--Start tracking the particular boss if the user has not disabled tracking for that boss
-		for i = 1, #core.currentBosses do
-			if core.currentBosses[i].enabled == true then
-				core.currentBosses[i].track()
+			--Start tracking the particular boss if the user has not disabled tracking for that boss
+			for i = 1, #core.currentBosses do
+				if core.currentBosses[i].enabled == true then
+					core.currentBosses[i].track()
+				end
 			end
-		end
 
-		--Track additional variables for the instance if they are not tied to a boss/encounter
-		if pcall(function() core[core.instanceClear]:TrackAdditional() end) == true then
-			core[core.instanceClear]:TrackAdditional()
+			--Track additional variables for the instance if they are not tied to a boss/encounter
+			if pcall(function() core[core.instanceClear]:TrackAdditional() end) == true then
+				core[core.instanceClear]:TrackAdditional()
+			end
 		end
 	end
 end
