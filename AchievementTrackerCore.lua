@@ -2032,6 +2032,14 @@ function core:clearInstanceVariables()
 		else
 			core:sendDebugMessage("Function failed, error text: " .. ret1 .. ".")
 		end
+		core:sendDebugMessage("Clearing Instance Variables if exists")
+		local retOK, ret1 = pcall(function() core[core.instanceClear]:ClearVariables() end);
+		if (retOK) then
+			core:sendDebugMessage("Clearing Instance Variables")
+			core[core.instanceClear]:ClearVariables()
+		else
+			core:sendDebugMessage("Function failed, error text: " .. ret1 .. ".")
+		end
 	end
 
 
