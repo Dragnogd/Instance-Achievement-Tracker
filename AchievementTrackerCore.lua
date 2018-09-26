@@ -7,7 +7,8 @@ local L = core.L												--Translation Table
 local events = CreateFrame("Frame")								--All events are registered to this frame
 local UIConfig													--UIConfig is used to make a display asking the user if they would like
 local UICreated = false											--To enable achievement tracking when they enter an instances
-local debugMode = false
+local debugMode = true
+local debugModeChat = false
 
 --------------------------------
 -- Saved Variables tables
@@ -101,6 +102,7 @@ core.enableAchievementScanning = true			--Whether the addon is allowed to scan f
 local combatTimerStarted = false				--Used to determine if players in the group are still in combat with a boss
 local lastMessageSent = ""   					--Stores the last message sent to the chat. This is used to prevent the same message being sent more than once in case of an error and to prevent unwanted spam
 local requestToRun = false						--Store whether the current addon sent the request to enable itself or not for achievement tracking
+local electionFinished = false
 local enableDisplayAchievement = true
 local currentBossNums = {}
 local detectBossWait = false
@@ -137,6 +139,7 @@ core.lockDetection = false
 local masterAddon = false					--The master addon for the group. This stop multiple people with the addon outputting identical messages. Reset at the end of every fight
 local playerRank = -1						--The rank of the player is the group. Players with higher rank get priorty over outputting messages unless they have an outdated addon
 local addonID = 0
+local messageQueue = {}
 
 --Get the current size of the group
 function core:getGroupSize()
@@ -584,7 +587,8 @@ function enableAchievementTracking(self)
 	--Check if there is already someone else running the addon in the group / whether the priority is higher for the current player than other players running the addon
 	if core.groupSize == 1 then
 		--Player is not a group so set the player to the master addon
-		core.masterAddon = true
+		core:sendDebugMessage("Setting Master Addon 1")
+		masterAddon = true
 		printMessage(L["Achievement Tracking Enabled for"] .. " " .. core.instanceNameSpaces)
 	else
 		--Get the rank for the current player
@@ -755,10 +759,6 @@ function events:ADDON_LOADED(event, name)
 
 	--printMessage("loaded. Version: V" .. core.Config.majorVersion .. "." .. core.Config.minorVersion .. "." .. core.Config.revisionVersion)
 
-	if debugMode == true then
-		core:sendMessage("Debugging Enabled")
-	end
-
 	--------------------------------------
 	-- Minimap Icon
 	--------------------------------------
@@ -805,7 +805,8 @@ function setAddonEnabled(addonEnabled)
 		events:RegisterEvent("PLAYER_ENTERING_WORLD")				--Used to detect if player is inside an instance when they enter the world
 		events:RegisterEvent("ZONE_CHANGED_NEW_AREA")				--Used to detect if player is inside an instance when they change zone
 		events:RegisterEvent("CHAT_MSG_ADDON")						--Allows the addon to communicate with other addons in the same party/raid
-	
+		
+		core:sendDebugMessage("Registering CHAT_MSG_ADDON prefix")
 		C_ChatInfo.RegisterAddonMessagePrefix("Whizzey") 
 	else
 		core:sendDebugMessage("Disabling Addon")
@@ -1088,6 +1089,9 @@ end
 --Used to communicate between everyone in the group using the addon to decide which addon is the master addon
 --The master addon is detected at the start of every fight so we don't have to worry about if a player is in the instance/offline etc
 function events:CHAT_MSG_ADDON(self, prefix, message, channel, sender)
+	core:sendDebugMessage("CHAT_MSG_ADDON FIRED")
+	core:sendDebugMessage(message)
+
 	--Addon is checking who should be leader
 	local name, realm = UnitName("Player")
 	local nameSend, realmSend = strsplit("-", sender)
@@ -1099,7 +1103,7 @@ function events:CHAT_MSG_ADDON(self, prefix, message, channel, sender)
 		if nameFetched == name then
 			--Demote this player
 			core:sendDebugMessage("Demoting Myself...")
-			core.masterAddon = false
+			masterAddon = false
 		end
 	elseif string.match(message, "info") then
 		--Other addons have returned the requested info
@@ -1121,21 +1125,25 @@ function events:CHAT_MSG_ADDON(self, prefix, message, channel, sender)
 				if tonumber(majorVersionRecieved) < core.Config.majorVersion then
 					--Major version recieved from other player is lower so set this addon to the master addon
 					core:sendDebugMessage("1: " .. sender .. " has a lower major version. Setting this addon to master")
+					core:sendDebugMessage("Setting Master Addon 2")
 					masterAddon = true
 					demotionRequired = true
 				elseif tonumber(majorVersionRecieved) == core.Config.majorVersion and tonumber(minorVersionRecieved) < core.Config.minorVersion then
 					--Major version recieved from other player is the same but other player has lower minor version so set this addon to the master addon
 					core:sendDebugMessage("2: " .. sender .. " has a lower minor version. Setting this addon to master")
+					core:sendDebugMessage("Setting Master Addon 3")
 					masterAddon = true
 					demotionRequired = true
 				elseif tonumber(majorVersionRecieved) == core.Config.majorVersion and tonumber(minorVersionRecieved) == core.Config.minorVersion and tonumber(playerRankRecieved) < playerRank then
 					core:sendDebugMessage("3: " .. sender .. " has a lower rank. Setting this addon to master")
 					--Other player has same major and minor version but has lower rank than this addon so set this addon to the master addon
+					core:sendDebugMessage("Setting Master Addon 4")
 					masterAddon = true
 					demotionRequired = true
 				elseif tonumber(majorVersionRecieved) == core.Config.majorVersion and tonumber(minorVersionRecieved) == core.Config.minorVersion and tonumber(playerRankRecieved) == playerRank and tonumber(addonIDRecieved) < addonID then
 					--Other player has exact same requirements but has lower addonID so set this addon to the master addon
 					core:sendDebugMessage("3: " .. sender .. " has a lower Addon ID. Setting this addon to master")
+					core:sendDebugMessage("Setting Master Addon 5")
 					masterAddon = true
 					demotionRequired = true
 				elseif tonumber(majorVersionRecieved) == core.Config.majorVersion and tonumber(minorVersionRecieved) == core.Config.minorVersion and tonumber(playerRankRecieved) == playerRank and tonumber(addonIDRecieved) == addonID then
@@ -1145,6 +1153,7 @@ function events:CHAT_MSG_ADDON(self, prefix, message, channel, sender)
 						addonID = random(1,100000)
 
 						if addonIDRecieved < addonID then
+							core:sendDebugMessage("Setting Master Addon 6")
 							masterAddon = true
 							demotionRequired = true
 						else
@@ -1159,6 +1168,7 @@ function events:CHAT_MSG_ADDON(self, prefix, message, channel, sender)
 			elseif masterAddonRecieved == "false" then
 				--Other player addon is not master addon so set this addon to the master addon
 				core:sendDebugMessage("5: " .. sender .. " is not the master addon. Setting this addon to master")
+				core:sendDebugMessage("Setting Master Addon 7")
 				masterAddon = true
 			end
 		end
@@ -1572,17 +1582,25 @@ end
 
 --Output messages to the chat. All messages get sent this function for easy management
 function core:sendMessage(message)
+	print("Master Addon: ")
+	print(masterAddon)
+	print(message)
 	if message ~= lastMessageSent then
-		if debugMode == false then
-			if masterAddon == true then
+		if debugModeChat == false then
+			if masterAddon == true and electionFinished == true then
 				if message ~= "setup" then
+					core:sendDebugMessage("I am the master addon WOHOO!!!")
 					SendChatMessage("[IAT] " .. message,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
 				end
+			elseif masterAddon == true and requestToRun == true then
+				--We need to store the messages in a queue while the master addon is being decided
+				table.insert(messageQueue, message)
 			else
 				if requestToRun == false then
 					requestToRun = true
 
 					--Broadcast addon info to decide whether it should be the master addon or not
+					core:sendDebugMessage("Setting Master Addon 8")
 					masterAddon = true
 					local name, realm = UnitName("Player")
 					C_ChatInfo.SendAddonMessage("Whizzey", "info," .. tostring(addonID) .. "," .. name .. "," .. tostring(masterAddon) .. "," .. tostring(playerRank) .. "," .. tostring(core.Config.majorVersion) .. "," .. tostring(core.Config.minorVersion), "RAID")
@@ -1593,14 +1611,23 @@ function core:sendMessage(message)
 							
 							if message ~= "setup" then
 								SendChatMessage("[IAT] " .. message,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+								
+								--If the message queue has messages in then ouput these messages as well
+								if #messageQueue > 0 then
+									for k, v in pairs(messageQueue) do
+										SendChatMessage("[IAT] " .. v,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+									end
+								end
+								messageQueue = {}
 							end
 						else
 							core:sendDebugMessage("Another addon is currently in charge of outputting messages for this fight")
 						end
+						electionFinished = true
 					end)
 				end
 			end
-		elseif debugMode == true then
+		elseif debugModeChat == true then
 			core:sendDebugMessage("[DEBUG] " .. message)
 		end
 		lastMessageSent = message
@@ -2017,6 +2044,8 @@ function core:clearVariables()
 	--Addon Syncing variables
 	masterAddon = false
 	requestToRun = false
+	electionFinished = false
+	messageQueue = {}
 end
 
 --Clears variables for the current instance the player is in
