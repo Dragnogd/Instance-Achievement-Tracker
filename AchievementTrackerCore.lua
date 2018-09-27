@@ -1148,16 +1148,25 @@ function events:CHAT_MSG_ADDON(self, prefix, message, channel, sender)
 					demotionRequired = true
 				elseif tonumber(majorVersionRecieved) == core.Config.majorVersion and tonumber(minorVersionRecieved) == core.Config.minorVersion and tonumber(playerRankRecieved) == playerRank and tonumber(addonIDRecieved) == addonID then
 					--Everything about the 2 addons are completely identical. Keep rolling for a random new addonID number until it's different from the one recieved
-					core:sendDebugMessage("5: " .. sender .. " Both addon have the same requirements. Rolling random Addon ID number until a difference is found")
-					while addonIDRecieved == addonID do
-						addonID = random(1,100000)
+					core:sendDebugMessage("5: " .. sender .. " Both addon have the same requirements. Sorting players name into alphabetical order. Player first will get master")
+					names = {}
+					names[1] = nameSend
+					names[2] = UnitName("Player")
 
-						if addonIDRecieved < addonID then
-							core:sendDebugMessage("Setting Master Addon 6")
-							masterAddon = true
-							demotionRequired = true
-						else
-							masterAddon = false
+					local sortedKeys = getKeysSortedByValue(names, function(a, b) return a < b end)
+
+					local counter = 1
+					for _, key in ipairs(sortedKeys) do
+						if counter == 1 then
+							core:sendDebugMessage(names[key])
+							if names[key] == UnitName("Player") then
+								core:sendDebugMessage("5.5: Setting This addon to master")
+								masterAddon = true
+							else
+								core:sendDebugMessage("5.5: Demoting this addon")
+								masterAddon = false
+							end
+							counter = counter + 1
 						end
 					end
 				else
@@ -2102,6 +2111,19 @@ end
 function core:getHealthPercent(boss)
 	return (UnitHealth(boss) / UnitHealthMax(boss)) * 100
 end
+
+function getKeysSortedByValue(tbl, sortFunction)
+	local keys = {}
+	for key in pairs(tbl) do
+	  table.insert(keys, key)
+	end
+  
+	table.sort(keys, function(a, b)
+	  return sortFunction(tbl[a], tbl[b])
+	end)
+  
+	return keys
+  end
 
 --Check if Blizzard Achievement Tracking has completed/failed
 function core:getBlizzardTrackingStatus(achievementID, index)
