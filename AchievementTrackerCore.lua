@@ -1559,7 +1559,7 @@ function core:getAchievementToTrack()
 				core:sendDebugMessage("Achievement: " .. core.currentBosses[i].achievement)
 				if core.currentBosses[i].partial == false and core.currentBosses[i].enabled == true then
 					printMessage("Tracking: "  .. GetAchievementLink(core.currentBosses[i].achievement))
-					--core:sendMessage("setup")
+					core:sendMessage("setup") --This is sent at the start of the encounter to elect a leader rather than waiting for the first message to output
 					core.achievementTrackedMessageShown = true
 
 					--Announce to chat if enabled
@@ -1611,15 +1611,15 @@ function core:sendMessage(message)
 							
 							if message ~= "setup" then
 								SendChatMessage("[IAT] " .. message,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
-								
-								--If the message queue has messages in then ouput these messages as well
-								if #messageQueue > 0 then
-									for k, v in pairs(messageQueue) do
-										SendChatMessage("[IAT] " .. v,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
-									end
-								end
-								messageQueue = {}
 							end
+
+							--If the message queue has messages in then ouput these messages as well
+							if #messageQueue > 0 then
+								for k, v in pairs(messageQueue) do
+									SendChatMessage("[IAT] " .. v,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+								end
+							end
+							messageQueue = {}
 						else
 							core:sendDebugMessage("Another addon is currently in charge of outputting messages for this fight")
 						end
