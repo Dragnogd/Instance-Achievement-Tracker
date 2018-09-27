@@ -947,7 +947,7 @@ function events:INSPECT_ACHIEVEMENT_READY(self, GUID)
 					local completed, month, day, year = GetAchievementComparisonInfo(core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
 
 					--Make sure any text being displayed currently for the achievement is removed.
-					if core.Instances[core.expansion][core.instanceType][core.instance][boss].players[1] == "(Enter instance to start scanning)" or core.Instances[core.expansion][core.instanceType][core.instance][boss].players[1] == "(No players in the group need this achievement)" then
+					if core.Instances[core.expansion][core.instanceType][core.instance][boss].players[1] == L["Enter instance to start scanning"] or core.Instances[core.expansion][core.instanceType][core.instance][boss].players[1] == L["No players in the group need this achievement"] then
 						table.remove(core.Instances[core.expansion][core.instanceType][core.instance][boss].players, 1)
 					end
 
@@ -963,7 +963,7 @@ function events:INSPECT_ACHIEVEMENT_READY(self, GUID)
 			for boss,_ in pairs(core.Instances[core.expansion][core.instanceType][core.instance]) do
 				if boss ~= "name" then
 					if #core.Instances[core.expansion][core.instanceType][core.instance][boss].players == 0 then
-						table.insert(core.Instances[core.expansion][core.instanceType][core.instance][boss].players, "(No players in the group need this achievement)")
+						table.insert(core.Instances[core.expansion][core.instanceType][core.instance][boss].players, L["No players in the group need this achievement"])
 					end
 				end
 			end
@@ -1041,7 +1041,7 @@ function events:ZONE_CHANGED_NEW_AREA()
 		--Update achievement tracking
 		for boss,_ in pairs(core.Instances[core.expansion][core.instanceType][core.instance]) do
 			if boss ~= "name" then
-				core.Instances[core.expansion][core.instanceType][core.instance][boss].players = {"(Enter instance to start scanning)"}
+				core.Instances[core.expansion][core.instanceType][core.instance][boss].players = {L["Enter instance to start scanning"]}
 			end
 		end
 

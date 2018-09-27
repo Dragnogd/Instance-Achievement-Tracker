@@ -367,7 +367,7 @@ function Config:SetupAchievementTracking(mode)
                             table.insert(core.Instances[expansion][instanceType][instance][boss].players, L["(Achievement Tracking Disabled)"])
                         else
                             core.Instances[expansion][instanceType][instance][boss].players = {}
-                            table.insert(core.Instances[expansion][instanceType][instance][boss].players, L["(Enter instance to start scanning)"])
+                            table.insert(core.Instances[expansion][instanceType][instance][boss].players, L["Enter instance to start scanning"])
                             if core.inInstance == true then
                                 if core.instance == instance and instanceFound == false then
                                     core:getPlayersInGroup2()
@@ -971,7 +971,7 @@ function Player_OnClick(self)
                                     else
                                         players = GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " " .. L["No players in the group need this achievement"] .. " (" .. L["scan still in progress"] .. ")"                        
                                     end   
-                                elseif core.Instances[expansion][instanceType][instance][boss].players[1] == "(" .. L["Enter instance to start scanning"] .. ")" then
+                                elseif core.Instances[expansion][instanceType][instance][boss].players[1] == L["Enter instance to start scanning"] then
                                     players = GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement)   
                                 else
                                     players = GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " " .. L["Players who need Achievement"] .. ": "
