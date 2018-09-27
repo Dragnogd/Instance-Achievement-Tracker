@@ -172,6 +172,8 @@ function Tab_OnClick(self)
             UIConfig.Main2.options5:Show()
             UIConfig.Main2.options6:Show()
             UIConfig.Main2.options7:Show()
+            UIConfig.Main2.options8:Show()
+            UIConfig.Main2.options9:Show()
 
             UIConfig.Main.author:Show()
             UIConfig.Main.verison:Show()
@@ -255,6 +257,13 @@ function Tab_OnClick(self)
             UIConfig.Main2.options6:SetScript("OnClick", ATToggleAchievementAnnounce_OnClick)
             UIConfig.Main2.options7 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options6, "TOPLEFT", 30, -9, L["Announce Achievements Being Tracked To Group"],"GameFontHighlight")    
 
+            --Only track achievements in the group that players need.
+            --Note this will only track achievements if players need them account wide not character wide
+            --If players have achievements hidden then tracking may not start as intended
+            UIConfig.Main2.options8 = Config:CreateCheckBox("TOPLEFT", UIConfig.Main2.options6, "TOPLEFT", 0, -25, "AchievementTracker_ToggleTrackMissingAchievementsOnly")
+            UIConfig.Main2.options8:SetScript("OnClick", ATToggleTrackMissingAchievementsOnly_OnClick)
+            UIConfig.Main2.options9 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options8, "TOPLEFT", 30, -9, L["Only track missing achievements"],"GameFontHighlight")              
+
             --Links to current guides and achievement discord credit for tactics
             UIConfig.Main2.credits = Config:CreateText2("TOPRIGHT",UIConfig.Main2.features6, "TOPRIGHT", 480, -30, L["Achievements Discord"] .. ":","GameFontNormalLarge")            
             UIConfig.Main2.credits:SetWidth(400)
@@ -302,6 +311,8 @@ function Tab_OnClick(self)
         UIConfig.Main2.options5:Hide()
         UIConfig.Main2.options6:Hide()
         UIConfig.Main2.options7:Hide()
+        UIConfig.Main2.options8:Hide()
+        UIConfig.Main2.options9:Hide()
         
         UIConfig.Main.author:Hide()
         UIConfig.Main.verison:Hide()
@@ -313,6 +324,12 @@ function Tab_OnClick(self)
         UIConfig.Main2.credits2:Hide()
         UIConfig.Main2.credits3:Hide()
     end
+end
+
+function ATToggleTrackMissingAchievementsOnly_OnClick(self)
+    print("HERE")
+    AchievementTrackerOptions["onlyTrackMissingAchievements"] = self:GetChecked()
+    setOnlyTrackMissingAchievements(self:GetChecked())
 end
 
 function ATToggleAchievementAnnounce_OnClick(self)

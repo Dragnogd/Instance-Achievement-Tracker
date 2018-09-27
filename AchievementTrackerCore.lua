@@ -132,6 +132,7 @@ core.encounterDetected = false
 core.outputTrackingStatus = false
 core.announceTrackedAchievementsToChat = false
 core.lockDetection = false
+core.onlyTrackMissingAchievements = false
 
 --------------------------------------
 -- Addon Syncing 
@@ -744,6 +745,12 @@ function events:ADDON_LOADED(event, name)
 	end
 	_G["AchievementTracker_ToggleAchievementAnnounce"]:SetChecked(AchievementTrackerOptions["announceTrackedAchievements"])
 
+	if AchievementTrackerOptions["onlyTrackMissingAchievements"] == nil then
+		AchievementTrackerOptions["onlyTrackMissingAchievements"] = false --Do not enable by default
+	elseif AchievementTrackerOptions["onlyTrackMissingAchievements"] == true then
+		core.onlyTrackMissingAchievements = true
+	end
+	_G["AchievementTracker_ToggleTrackMissingAchievementsOnly"]:SetChecked(AchievementTrackerOptions["onlyTrackMissingAchievements"])
 
 	-- if AchievementTrackerOptions["enableAchievementScan"] == nil then
 	-- 	core:sendDebugMessage("Setting Initial Settings")
@@ -813,6 +820,14 @@ function setAddonEnabled(addonEnabled)
 		events:UnregisterEvent("PLAYER_ENTERING_WORLD")				
 		events:UnregisterEvent("ZONE_CHANGED_NEW_AREA")				
 		events:UnregisterEvent("CHAT_MSG_ADDON")						
+	end
+end
+
+function setOnlyTrackMissingAchievements(setOnlyTrackMissingAchievements)
+	if setAchievementScanEnabled then
+		core.onlyTrackMissingAchievements = true
+	else
+		core.onlyTrackMissingAchievements = false						
 	end
 end
 
@@ -1346,7 +1361,9 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 		--Start tracking the particular boss if the user has not disabled tracking for that boss
 		for i = 1, #core.currentBosses do
 			if core.currentBosses[i].enabled == true then
-				core.currentBosses[i].track()
+				if core.onlyTrackMissingAchievements == false or (core.onlyTrackMissingAchievements == true and core.currentBosses[i].players ~= L["No players in the group need this achievement"]) then
+					core.currentBosses[i].track()
+				end
 			end
 		end
 	else
@@ -1388,7 +1405,9 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 			--Start tracking the particular boss if the user has not disabled tracking for that boss
 			for i = 1, #core.currentBosses do
 				if core.currentBosses[i].enabled == true then
-					core.currentBosses[i].track()
+					if core.onlyTrackMissingAchievements == false or (core.onlyTrackMissingAchievements == true and core.currentBosses[i].players ~= L["No players in the group need this achievement"]) then
+						core.currentBosses[i].track()
+					end
 				end
 			end
 
@@ -1491,7 +1510,7 @@ function detectBossByEncounterID(id)
 
 	--If encounter is detected but no achievements for the boss have been found then output no achievements to track for this encounter
 	if core.outputTrackingStatus == false then
-		if core.encounterDetected == true then
+		if core.encounterDetected == true and core.onlyTrackMissingAchievements == false then
 			core:printMessage("IAT cannot track any achievements for this encounter.")
 
 			--Announce to chat if enabled
@@ -1571,13 +1590,17 @@ function core:getAchievementToTrack()
 					core:sendMessage("setup") --This is sent at the start of the encounter to elect a leader rather than waiting for the first message to output
 					core.achievementTrackedMessageShown = true
 
+					core.currentBosses[i].players = L["No players in the group need this achievement"]
+
 					--Announce to chat if enabled
 					if core.announceTrackedAchievementsToChat == true then
-						core:sendMessage("Tracking: "  .. GetAchievementLink(core.currentBosses[i].achievement))
+						if core.onlyTrackMissingAchievements == false or (core.onlyTrackMissingAchievements == true and core.currentBosses[i].players ~= L["No players in the group need this achievement"]) then
+							core:sendMessage("Tracking: "  .. GetAchievementLink(core.currentBosses[i].achievement))
+						end
 					end
 				end
 	
-				--Setup failed and completed achievements table
+				--Setup failed and completed achievements tablse
 				table.insert(core.achievementsFailed, false)
 				table.insert(core.achievementsCompleted, false)
 			end

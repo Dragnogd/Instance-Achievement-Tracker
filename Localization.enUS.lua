@@ -55,6 +55,8 @@ local baseLocale = {
     ["shows a list of avaliable slash commands"] = "shows a list of avaliable slash commands",
     ["enable/disable IAT achievement tracking"] = "enable/disable IAT achievement tracking",
     ["Other"] = "Other",
+
+    ["Only track missing achievements"] = "Only Track Missing Achievements",
 }
 
 core:RegisterLocale('enUS', baseLocale)

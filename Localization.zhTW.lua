@@ -24,12 +24,12 @@ local baseLocale = {
     ["Enable Addon"] = "啟用插件",
     ["Show Minimap Button"] = "掃描仍在進行中",
     ["(Achievement Tracking Disabled)"] = "(成就追蹤已停用)",
-    -- ["(Enter instance to start scanning)"] = "(進入副本開始掃描)",
+    ["Enter instance to start scanning"] = "(進入副本開始掃描)",
     ["Output Tactics"] = "輸出戰術",
     ["Output Players"] = "輸出玩家",
     ["Track"] = "追蹤",
     ["Players"] = "玩家",
-    -- ["No players in the group need this achievement"] = "隊伍中沒有玩家需要做這個成就",
+    ["No players in the group need this achievement"] = "隊伍中沒有玩家需要做這個成就",
     ["scan still in progress"] = "掃描仍在進行中",
     ["Enter instance to start scanning"] = "進入副本開始掃描",
     ["Players who need Achievement"] = "需要做成就的玩家",
@@ -50,7 +50,8 @@ local baseLocale = {
     -- ["enable"] = "enable",
     -- ["shows a list of avaliable slash commands"] = "shows a list of avaliable slash commands",
     -- ["enable/disable IAT achievement tracking"] = "enable/disable IAT achievement tracking",
-    -- ["Other"] = "Other", 
+    -- ["Other"] = "Other",
+    -- s["Only track missing achievements"] = "Only track missing achievements",
 }
 
 core:RegisterLocale('zhTW', baseLocale)

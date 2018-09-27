@@ -37,6 +37,8 @@ local baseLocale = {
     ["Disabled"] = "取消",
     ["Enabled"] = "开始",
     ["Tracking"] = "追踪",
+
+    --["Only track missing achievements"] = "Only track missing achievements",
 }
 
 core:RegisterLocale('zhCN', baseLocale)
