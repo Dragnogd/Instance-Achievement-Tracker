@@ -7,7 +7,7 @@ local L = core.L												--Translation Table
 local events = CreateFrame("Frame")								--All events are registered to this frame
 local UIConfig													--UIConfig is used to make a display asking the user if they would like
 local UICreated = false											--To enable achievement tracking when they enter an instances
-local debugMode = true
+local debugMode = false
 local debugModeChat = false
 
 --------------------------------
@@ -1636,9 +1636,6 @@ end
 
 --Output messages to the chat. All messages get sent this function for easy management
 function core:sendMessage(message)
-	print("Master Addon: ")
-	print(masterAddon)
-	print(message)
 	if message ~= lastMessageSent then
 		if debugModeChat == false then
 			if masterAddon == true and electionFinished == true then
