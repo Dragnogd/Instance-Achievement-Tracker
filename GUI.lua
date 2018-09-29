@@ -327,7 +327,6 @@ function Tab_OnClick(self)
 end
 
 function ATToggleTrackMissingAchievementsOnly_OnClick(self)
-    print("HERE")
     AchievementTrackerOptions["onlyTrackMissingAchievements"] = self:GetChecked()
     setOnlyTrackMissingAchievements(self:GetChecked())
 end

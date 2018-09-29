@@ -130,9 +130,10 @@ core.encounterStarted = false
 core.displayAchievements = false
 core.encounterDetected = false
 core.outputTrackingStatus = false
-core.announceTrackedAchievementsToChat = false
-core.lockDetection = false
-core.onlyTrackMissingAchievements = false
+core.announceTrackedAchievementsToChat = false	--Whether or not the user has chosen for IAT to announce which achievements are currently being tracked to chat
+core.lockDetection = false						--Once an encounter has finished. Stop the encounter being detected again straight away
+core.onlyTrackMissingAchievements = false		--Whether or not the user has chosen to only track missing achievements or not
+core.trackingSupressed = false					--Whether or not tracking is being supressed for the current fight
 
 --------------------------------------
 -- Addon Syncing 
@@ -748,7 +749,9 @@ function events:ADDON_LOADED(event, name)
 	if AchievementTrackerOptions["onlyTrackMissingAchievements"] == nil then
 		AchievementTrackerOptions["onlyTrackMissingAchievements"] = false --Do not enable by default
 	elseif AchievementTrackerOptions["onlyTrackMissingAchievements"] == true then
+		core:sendDebugMessage("Only Tracking Missing Achievements Enabled")
 		core.onlyTrackMissingAchievements = true
+		core:sendDebugMessage(tostring(core.onlyTrackMissingAchievements))
 	end
 	_G["AchievementTracker_ToggleTrackMissingAchievementsOnly"]:SetChecked(AchievementTrackerOptions["onlyTrackMissingAchievements"])
 
@@ -824,7 +827,7 @@ function setAddonEnabled(addonEnabled)
 end
 
 function setOnlyTrackMissingAchievements(setOnlyTrackMissingAchievements)
-	if setAchievementScanEnabled then
+	if setOnlyTrackMissingAchievements then
 		core.onlyTrackMissingAchievements = true
 	else
 		core.onlyTrackMissingAchievements = false						
@@ -1122,7 +1125,7 @@ function events:CHAT_MSG_ADDON(self, prefix, message, channel, sender)
 		end
 	elseif string.match(message, "info") then
 		--Other addons have returned the requested info
-		local info, addonIDRecieved, nameRecieved, masterAddonRecieved, playerRankRecieved, majorVersionRecieved, minorVersionRecieved = strsplit(",", message)
+		local info, addonIDRecieved, nameRecieved, masterAddonRecieved, playerRankRecieved, majorVersionRecieved, minorVersionRecieved, onlyTrackMissingAchievementsRecieved = strsplit(",", message)
 		local demotionRequired = false
 
 		if nameRecieved ~= name then
@@ -1134,10 +1137,21 @@ function events:CHAT_MSG_ADDON(self, prefix, message, channel, sender)
 				core:sendDebugMessage("Player Rank: " .. playerRankRecieved .. " : " .. tostring(playerRank))
 				core:sendDebugMessage("Major Version: " .. majorVersionRecieved .. " : " .. tostring(core.Config.majorVersion))
 				core:sendDebugMessage("Minor Version: " .. minorVersionRecieved .. " : " .. tostring(core.Config.minorVersion))
+				core:sendDebugMessage("Only Track Missing Achievements: " .. onlyTrackMissingAchievementsRecieved .. " : " .. tostring(core.trackingSupressed))
 			end
 
 			if masterAddonRecieved == "true" then
-				if tonumber(majorVersionRecieved) < core.Config.majorVersion then
+
+				if onlyTrackMissingAchievementsRecieved == "true" and core.trackingSupressed == false then
+					--Other player is supressing achievements but this addon is not so set this to the master addon
+					core:sendDebugMessage("0.1: " .. sender .. " is supressing achievements so demote")
+					masterAddon = true
+					demotionRequired = true
+				elseif onlyTrackMissingAchievementsRecieved == "false" and core.trackingSupressed == true then
+					core:sendDebugMessage("0.2: This addon is supressing messages so demote")
+					--This addon is supressing achievements but other addon is not so demote this addon
+					masterAddon = false
+				elseif tonumber(majorVersionRecieved) < core.Config.majorVersion then
 					--Major version recieved from other player is lower so set this addon to the master addon
 					core:sendDebugMessage("1: " .. sender .. " has a lower major version. Setting this addon to master")
 					core:sendDebugMessage("Setting Master Addon 2")
@@ -1150,8 +1164,8 @@ function events:CHAT_MSG_ADDON(self, prefix, message, channel, sender)
 					masterAddon = true
 					demotionRequired = true
 				elseif tonumber(majorVersionRecieved) == core.Config.majorVersion and tonumber(minorVersionRecieved) == core.Config.minorVersion and tonumber(playerRankRecieved) < playerRank then
+					--Other player has same major and minor version but has lower rank than this addon so set this addon to the master addon					
 					core:sendDebugMessage("3: " .. sender .. " has a lower rank. Setting this addon to master")
-					--Other player has same major and minor version but has lower rank than this addon so set this addon to the master addon
 					core:sendDebugMessage("Setting Master Addon 4")
 					masterAddon = true
 					demotionRequired = true
@@ -1586,11 +1600,19 @@ function core:getAchievementToTrack()
 			for i = 1, #core.currentBosses do
 				core:sendDebugMessage("Achievement: " .. core.currentBosses[i].achievement)
 				if core.currentBosses[i].partial == false and core.currentBosses[i].enabled == true then
-					printMessage("Tracking: "  .. GetAchievementLink(core.currentBosses[i].achievement))
+					--core.currentBosses[i].players = L["No players in the group need this achievement"] --DEBUG ONLY
+					
+					if core.onlyTrackMissingAchievements == false or (core.onlyTrackMissingAchievements == true and core.currentBosses[i].players ~= L["No players in the group need this achievement"]) then
+						printMessage("Tracking: "  .. GetAchievementLink(core.currentBosses[i].achievement))
+					else
+						--User has decided to supress achievement so will get a lower rank in the addon syncing
+						core:sendDebugMessage("User supressing addon tracking")
+						core:sendDebugMessage(core.currentBosses[i].players)
+						core.trackingSupressed = true					
+					end
+
 					core:sendMessage("setup") --This is sent at the start of the encounter to elect a leader rather than waiting for the first message to output
 					core.achievementTrackedMessageShown = true
-
-					core.currentBosses[i].players = L["No players in the group need this achievement"]
 
 					--Announce to chat if enabled
 					if core.announceTrackedAchievementsToChat == true then
@@ -1635,7 +1657,7 @@ function core:sendMessage(message)
 					core:sendDebugMessage("Setting Master Addon 8")
 					masterAddon = true
 					local name, realm = UnitName("Player")
-					C_ChatInfo.SendAddonMessage("Whizzey", "info," .. tostring(addonID) .. "," .. name .. "," .. tostring(masterAddon) .. "," .. tostring(playerRank) .. "," .. tostring(core.Config.majorVersion) .. "," .. tostring(core.Config.minorVersion), "RAID")
+					C_ChatInfo.SendAddonMessage("Whizzey", "info," .. tostring(addonID) .. "," .. name .. "," .. tostring(masterAddon) .. "," .. tostring(playerRank) .. "," .. tostring(core.Config.majorVersion) .. "," .. tostring(core.Config.minorVersion) .. "," .. tostring(core.trackingSupressed), "RAID")
 
 					C_Timer.After(3, function()
 						if masterAddon == true then
@@ -2078,6 +2100,7 @@ function core:clearVariables()
 	requestToRun = false
 	electionFinished = false
 	messageQueue = {}
+	core.trackingSupressed = false
 end
 
 --Clears variables for the current instance the player is in
