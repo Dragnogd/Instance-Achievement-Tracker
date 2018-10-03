@@ -28,7 +28,7 @@ function core._1861:FetidDevourer()
 
     if fetidDevourerKilled == false then
         --Player has been hit by terrible thrash
-        if core.spellId == 262277 then
+        if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 262277 and core.destID ~= nil then
             local name, realm = strsplit("-", core.destID)
             if UnitIsPlayer(name) and playersFetidTable[core.destName] == nil then
                 playersFetid = playersFetid + 1
