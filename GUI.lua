@@ -174,6 +174,8 @@ function Tab_OnClick(self)
             UIConfig.Main2.options7:Show()
             UIConfig.Main2.options8:Show()
             UIConfig.Main2.options9:Show()
+            UIConfig.Main2.options10:Show()
+            UIConfig.Main2.options11:Show()
 
             UIConfig.Main.author:Show()
             UIConfig.Main.verison:Show()
@@ -262,7 +264,12 @@ function Tab_OnClick(self)
             --If players have achievements hidden then tracking may not start as intended
             UIConfig.Main2.options8 = Config:CreateCheckBox("TOPLEFT", UIConfig.Main2.options6, "TOPLEFT", 0, -25, "AchievementTracker_ToggleTrackMissingAchievementsOnly")
             UIConfig.Main2.options8:SetScript("OnClick", ATToggleTrackMissingAchievementsOnly_OnClick)
-            UIConfig.Main2.options9 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options8, "TOPLEFT", 30, -9, L["Only track missing achievements"],"GameFontHighlight")              
+            UIConfig.Main2.options9 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options8, "TOPLEFT", 30, -9, L["Only track missing achievements"],"GameFontHighlight")
+            
+            --Announce messages to Raid Warning if player has permission
+            UIConfig.Main2.options10 = Config:CreateCheckBox("TOPLEFT", UIConfig.Main2.options8, "TOPLEFT", 0, -25, "AchievementTracker_ToggleAnnounceToRaidWarning")
+            UIConfig.Main2.options10:SetScript("OnClick", ATToggleAnnounceToRaidWarning_OnClick)
+            UIConfig.Main2.options11 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options10, "TOPLEFT", 30, -9, L["Announce messages to Raid Warning"],"GameFontHighlight")            
 
             --Links to current guides and achievement discord credit for tactics
             UIConfig.Main2.credits = Config:CreateText2("TOPRIGHT",UIConfig.Main2.features6, "TOPRIGHT", 480, -30, L["Achievements Discord"] .. ":","GameFontNormalLarge")            
@@ -313,6 +320,8 @@ function Tab_OnClick(self)
         UIConfig.Main2.options7:Hide()
         UIConfig.Main2.options8:Hide()
         UIConfig.Main2.options9:Hide()
+        UIConfig.Main2.options10:Hide()
+        UIConfig.Main2.options11:Hide()
         
         UIConfig.Main.author:Hide()
         UIConfig.Main.verison:Hide()
@@ -324,6 +333,11 @@ function Tab_OnClick(self)
         UIConfig.Main2.credits2:Hide()
         UIConfig.Main2.credits3:Hide()
     end
+end
+
+function ATToggleAnnounceToRaidWarning_OnClick(self)
+    AchievementTrackerOptions["announceToRaidWarning"] = self:GetChecked()
+    setAnnounceToRaidWarning(self:GetChecked()) 
 end
 
 function ATToggleTrackMissingAchievementsOnly_OnClick(self)

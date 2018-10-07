@@ -57,6 +57,7 @@ local baseLocale = {
     ["Other"] = "Other",
 
     ["Only track missing achievements"] = "Only Track Missing Achievements",
+    ["Announce messages to Raid Warning if avaliable"] = "Announce messages to Raid Warning if avaliable",
 }
 
 core:RegisterLocale('enUS', baseLocale)

@@ -106,6 +106,7 @@ local electionFinished = false
 local enableDisplayAchievement = true
 local currentBossNums = {}
 local detectBossWait = false
+local announceToRaidWarning = false				--Whether or not to announce messages to Raid Warning or not. Can only be done while in raid & user is raid leader or assist.
 
 --------------------------------------
 -- Current Instance Variables
@@ -729,16 +730,20 @@ function events:ADDON_LOADED(event, name)
 	generateItemCache()
 
 	--Check if the options have been setup
+	
+	--Enable/Disable addon
 	if AchievementTrackerOptions["enableAddon"] == nil then
 		AchievementTrackerOptions["enableAddon"] = true
 	end
 	_G["AchievementTracker_EnableAddon"]:SetChecked(AchievementTrackerOptions["enableAddon"])
 
+	--Show/Hide minimap
 	if AchievementTrackerOptions["showMinimap"] == nil then
 		AchievementTrackerOptions["showMinimap"] = true
 	end
 	_G["AchievementTracker_ToggleMinimapIcon"]:SetChecked(AchievementTrackerOptions["showMinimap"])
 
+	--Announce which achievments are being tracked
 	if AchievementTrackerOptions["announceTrackedAchievements"] == nil then
 		AchievementTrackerOptions["announceTrackedAchievements"] = false --Do not enable by default
 	elseif AchievementTrackerOptions["announceTrackedAchievements"] == true then
@@ -746,6 +751,7 @@ function events:ADDON_LOADED(event, name)
 	end
 	_G["AchievementTracker_ToggleAchievementAnnounce"]:SetChecked(AchievementTrackerOptions["announceTrackedAchievements"])
 
+	--Only track missing achievements
 	if AchievementTrackerOptions["onlyTrackMissingAchievements"] == nil then
 		AchievementTrackerOptions["onlyTrackMissingAchievements"] = false --Do not enable by default
 	elseif AchievementTrackerOptions["onlyTrackMissingAchievements"] == true then
@@ -754,6 +760,15 @@ function events:ADDON_LOADED(event, name)
 		core:sendDebugMessage(tostring(core.onlyTrackMissingAchievements))
 	end
 	_G["AchievementTracker_ToggleTrackMissingAchievementsOnly"]:SetChecked(AchievementTrackerOptions["onlyTrackMissingAchievements"])
+
+	--Announce to Raid Warning
+	if AchievementTrackerOptions["announceToRaidWarning"] == nil then
+		AchievementTrackerOptions["announceToRaidWarning"] = true --Enable this by default
+	elseif AchievementTrackerOptions["announceToRaidWarning"] == true then
+		announceToRaidWarning = true
+	end
+	_G["AchievementTracker_ToggleAnnounceToRaidWarning"]:SetChecked(AchievementTrackerOptions["announceToRaidWarning"])
+	
 
 	-- if AchievementTrackerOptions["enableAchievementScan"] == nil then
 	-- 	core:sendDebugMessage("Setting Initial Settings")
@@ -807,6 +822,14 @@ function events:ADDON_LOADED(event, name)
 
 	--Set whether addon should be enabled or disabled
 	setAddonEnabled(AchievementTrackerOptions["enableAddon"])
+end
+
+function setAnnounceToRaidWarning(setAnnounceToRaidWarning)
+	if setAnnounceToRaidWarning then
+		announceToRaidWarning = true
+	else
+		announceToRaidWarning = false					
+	end
 end
 
 function setAddonEnabled(addonEnabled)
@@ -1107,8 +1130,8 @@ end
 --Used to communicate between everyone in the group using the addon to decide which addon is the master addon
 --The master addon is detected at the start of every fight so we don't have to worry about if a player is in the instance/offline etc
 function events:CHAT_MSG_ADDON(self, prefix, message, channel, sender)
-	core:sendDebugMessage("CHAT_MSG_ADDON FIRED")
-	core:sendDebugMessage(message)
+	--core:sendDebugMessage("CHAT_MSG_ADDON FIRED")
+	--core:sendDebugMessage(message)
 
 	--Addon is checking who should be leader
 	local name, realm = UnitName("Player")
@@ -1617,7 +1640,7 @@ function core:getAchievementToTrack()
 					--Announce to chat if enabled
 					if core.announceTrackedAchievementsToChat == true then
 						if core.onlyTrackMissingAchievements == false or (core.onlyTrackMissingAchievements == true and core.currentBosses[i].players ~= L["No players in the group need this achievement"]) then
-							core:sendMessage("Tracking: "  .. GetAchievementLink(core.currentBosses[i].achievement))
+							core:sendMessage("Tracking: "  .. GetAchievementLink(core.currentBosses[i].achievement),true)
 						end
 					end
 				end
@@ -1635,13 +1658,22 @@ end
 ------------------------------------------------------
 
 --Output messages to the chat. All messages get sent this function for easy management
-function core:sendMessage(message)
+function core:sendMessage(message, outputToRW)
 	if message ~= lastMessageSent then
 		if debugModeChat == false then
 			if masterAddon == true and electionFinished == true then
 				if message ~= "setup" then
-					core:sendDebugMessage("I am the master addon WOHOO!!!")
-					SendChatMessage("[IAT] " .. message,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+					if outputToRW == true and core.chatType == "RAID" and announceToRaidWarning == true and (UnitIsGroupAssistant("Player") or UnitIsGroupLeader("Player")) then
+						--Important message output to raid warning from user request
+						print("Outputting to Raid Warning")
+						SendChatMessage("[IAT] " .. message,"RAID_WARNING",DEFAULT_CHAT_FRAME.editBox.languageID)
+					elseif outputToRW == true and announceToRaidWarning == true then
+						SendChatMessage("[IAT] " .. message,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+						RaidNotice_AddMessage(RaidWarningFrame, "[IAT] " .. message, ChatTypeInfo["RAID_WARNING"])
+					else
+						print("Outputting normally")
+						SendChatMessage("[IAT] " .. message,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+					end
 				end
 			elseif masterAddon == true and requestToRun == true then
 				--We need to store the messages in a queue while the master addon is being decided
@@ -1659,15 +1691,34 @@ function core:sendMessage(message)
 					C_Timer.After(3, function()
 						if masterAddon == true then
 							core:sendDebugMessage("This addon is in charge of outputting messages")
-							
 							if message ~= "setup" then
-								SendChatMessage("[IAT] " .. message,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+								if outputToRW == true and core.chatType == "RAID" and announceToRaidWarning == true and (UnitIsGroupAssistant("Player") or UnitIsGroupLeader("Player")) then
+									--Important message output to raid warning from user request
+									print("Outputting to Raid Warning")
+									SendChatMessage("[IAT] " .. message,"RAID_WARNING",DEFAULT_CHAT_FRAME.editBox.languageID)
+								elseif outputToRW == true and announceToRaidWarning == true then
+									SendChatMessage("[IAT] " .. message,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+									RaidNotice_AddMessage(RaidWarningFrame, "[IAT] " .. message, ChatTypeInfo["RAID_WARNING"])
+								else
+									print("Outputting normally")
+									SendChatMessage("[IAT] " .. message,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+								end
 							end
 
 							--If the message queue has messages in then ouput these messages as well
 							if #messageQueue > 0 then
 								for k, v in pairs(messageQueue) do
-									SendChatMessage("[IAT] " .. v,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+									if outputToRW == true and core.chatType == "RAID" and announceToRaidWarning == true and (UnitIsGroupAssistant("Player") or UnitIsGroupLeader("Player")) then
+										--Important message output to raid warning from user request
+										print("Outputting to Raid Warning")									
+										SendChatMessage("[IAT] " .. v,"RAID_WARNING",DEFAULT_CHAT_FRAME.editBox.languageID)
+									elseif outputToRW == true and announceToRaidWarning == true then
+										SendChatMessage("[IAT] " .. message,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+										RaidNotice_AddMessage(RaidWarningFrame, "[IAT] " .. message, ChatTypeInfo["RAID_WARNING"])
+									else
+										print("Outputting to normal")										
+										SendChatMessage("[IAT] " .. v,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+									end
 								end
 							end
 							messageQueue = {}
@@ -1817,7 +1868,7 @@ function core:getAchievementFailed(index)
 		value = 1
 	end
 	if core.achievementsFailed[value] == false then
-		core:sendMessage(GetAchievementLink(core.achievementIDs[value]) .. " FAILED!")
+		core:sendMessage(GetAchievementLink(core.achievementIDs[value]) .. " FAILED!",true)
 		core.achievementsFailed[value] = true
 	end
 end
@@ -1830,7 +1881,7 @@ function core:getAchievementFailedWithMessageBefore(message, index)
 	end
 	if core.achievementsFailed[value] == false then
 
-		core:sendMessage(message .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " FAILED!")
+		core:sendMessage(message .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " FAILED!",true)
 		core.achievementsFailed[value] = true
 	end
 end
@@ -1842,7 +1893,7 @@ function core:getAchievementFailedWithMessageAfter(message, index)
 		value = 1
 	end
 	if core.achievementsFailed[value] == false then
-		core:sendMessage(GetAchievementLink(core.achievementIDs[value]) .. " FAILED! " .. message)
+		core:sendMessage(GetAchievementLink(core.achievementIDs[value]) .. " FAILED! " .. message,true)
 		core.achievementsFailed[value] = true
 	end
 end
@@ -1854,7 +1905,7 @@ function core:getAchievementFailedWithMessageBeforeAndAfter(messageBefore, messa
 		value = 1
 	end
 	if core.achievementsFailed[value] == false then
-		core:sendMessage(messageBefore .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " FAILED! " .. messageAfter)
+		core:sendMessage(messageBefore .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " FAILED! " .. messageAfter,true)
 		core.achievementsFailed[value] = true
 	end
 end
@@ -1870,7 +1921,7 @@ function core:getAchievementFailedPersonal(index)
 		--Check if the player actually needs the achievement
 		if core:has_value(core.currentBosses[value].players, core.destName) then
 			--Player needs achievement but has failed it
-			core:sendMessage(core.destName .. " has failed " .. GetAchievementLink(core.achievementIDs[value]) .. " (Personal Achievement)")
+			core:sendMessage(core.destName .. " has failed " .. GetAchievementLink(core.achievementIDs[value]) .. " (Personal Achievement)",true)
 		end
 		core.playersFailedPersonal[core.destName] = true
 	end
@@ -1887,7 +1938,7 @@ function core:getAchievementFailedPersonalWithReason(reason, index)
 		--Check if the player actually needs the achievement
 		if core:has_value(core.currentBosses[value].players, core.destName) then
 			--Player needs achievement but has failed it
-			core:sendMessage(core.destName .. " has failed " .. GetAchievementLink(core.achievementIDs[value]) .. " (Personal Achievement) (Reason: " .. reason .. ")")
+			core:sendMessage(core.destName .. " has failed " .. GetAchievementLink(core.achievementIDs[value]) .. " (Personal Achievement) (Reason: " .. reason .. ")",true)
 		end
 		core.playersFailedPersonal[core.destName] = true
 	end
@@ -1904,7 +1955,7 @@ function core:getAchievementSuccess(index)
 		value = 1
 	end
 	if core.achievementsCompleted[value] == false then
-		core:sendMessage(GetAchievementLink(core.achievementIDs[value]) .. " Criteria has been met. Boss can now be killed!")
+		core:sendMessage(GetAchievementLink(core.achievementIDs[value]) .. " Criteria has been met. Boss can now be killed!",true)
 		core.achievementsCompleted[value] = true
 	end
 end
@@ -1916,7 +1967,7 @@ function core:getAchievementSuccessWithMessageBefore(message, index)
 		value = 1
 	end
 	if core.achievementsCompleted[value] == false then
-		core:sendMessage(message .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " Criteria has been met. Boss can now be killed!")
+		core:sendMessage(message .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " Criteria has been met. Boss can now be killed!",true)
 		core.achievementsCompleted[value] = true
 	end
 end
@@ -1928,7 +1979,7 @@ function core:getAchievementSuccessWithMessageAfter(message, index)
 		value = 1
 	end
 	if core.achievementsCompleted[value] == false then
-		core:sendMessage(GetAchievementLink(core.achievementIDs[value]) .. " Criteria has been met. Boss can now be killed! " .. message)
+		core:sendMessage(GetAchievementLink(core.achievementIDs[value]) .. " Criteria has been met. Boss can now be killed! " .. message,true)
 		core.achievementsCompleted[value] = true
 	end
 end
@@ -1940,7 +1991,7 @@ function core:getAchievementSuccessWithMessageBeforeAndAfter(messageBefore, mess
 		value = 1
 	end
 	if core.achievementsCompleted[value] == false then
-		core:sendMessage(messageBefore .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " Criteria has been met. Boss can now be killed!" .. messageAfter)
+		core:sendMessage(messageBefore .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " Criteria has been met. Boss can now be killed!" .. messageAfter,true)
 		core.achievementsCompleted[value] = true
 	end
 end
@@ -1952,7 +2003,7 @@ function core:getAchievementSuccessWithCustomMessage(messageBefore, messageAfter
 		value = 1
 	end
 	if core.achievementsCompleted[value] == false then
-		core:sendMessage(messageBefore .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " " .. messageAfter)
+		core:sendMessage(messageBefore .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " " .. messageAfter,true)
 		core.achievementsCompleted[value] = true
 	end
 end
@@ -1972,7 +2023,7 @@ function core:getAchievementSuccessPersonal(index, location)
 			--Check if the player actually needs the achievement
 			if core:has_value(core.currentBosses[value].players, core.destName) then
 				--Player needs achievement but has failed it
-				core:sendMessage(core.destName .. " has completed " .. GetAchievementLink(core.achievementIDs[value]) .. " (Personal Achievement)")
+				core:sendMessage(core.destName .. " has completed " .. GetAchievementLink(core.achievementIDs[value]) .. " (Personal Achievement)",true)
 			end
 			core.playersSuccessPersonal[core.destName] = true
 		end
@@ -1982,7 +2033,7 @@ function core:getAchievementSuccessPersonal(index, location)
 			--Check if the player actually needs the achievement
 			if core:has_value(core.currentBosses[value].players, core.sourceName) then
 				--Player needs achievement but has failed it
-				core:sendMessage(core.sourceName .. " has completed " .. GetAchievementLink(core.achievementIDs[value]) .. " (Personal Achievement)")
+				core:sendMessage(core.sourceName .. " has completed " .. GetAchievementLink(core.achievementIDs[value]) .. " (Personal Achievement)",true)
 			end
 			core.playersSuccessPersonal[core.sourceName] = true
 		end	
