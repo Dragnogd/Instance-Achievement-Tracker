@@ -868,6 +868,21 @@ end
 function setEnableSound(setEnableSound)
 	if setEnableSound then
 		enableSound = true
+
+		--Set sounds for user if not done already
+		if completedSound == nil then
+			AchievementTrackerOptions["completedSound"] = "Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Achievement Completed.ogg"
+			AchievementTrackerOptions["completedSoundID"] = 13
+			setCompletedSound("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Achievement Completed.ogg")
+			MSA_DropDownMenu_SetText(_G["AchievementTracker_SelectSoundDropdownCompleted"], 13)
+		end
+
+		if failedSound == nil then
+			AchievementTrackerOptions["failedSound"] = "Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Achievement Failed.ogg"
+			AchievementTrackerOptions["failedSoundID"] = 11
+			setFailedSound("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Achievement Failed.ogg")   
+			MSA_DropDownMenu_SetText(_G["AchievementTracker_SelectSoundDropdownFailed"], 11)  
+		end
 	else
 		enableSound = false					
 	end
