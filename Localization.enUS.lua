@@ -58,6 +58,7 @@ local baseLocale = {
 
     ["Only track missing achievements"] = "Only Track Missing Achievements",
     ["Announce messages to Raid Warning if avaliable"] = "Announce messages to Raid Warning if avaliable",
+    ["Play a sound when achievement is completed or failed"] = "Play a sound when achievement is completed or failed",
 }
 
 core:RegisterLocale('enUS', baseLocale)

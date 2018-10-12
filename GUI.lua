@@ -176,6 +176,9 @@ function Tab_OnClick(self)
             UIConfig.Main2.options9:Show()
             UIConfig.Main2.options10:Show()
             UIConfig.Main2.options11:Show()
+            UIConfig.Main2.options12:Show()
+            UIConfig.Main2.options13:Show()
+            UIConfig.Main2.options14:Show()
 
             UIConfig.Main.author:Show()
             UIConfig.Main.verison:Show()
@@ -280,6 +283,48 @@ function Tab_OnClick(self)
             UIConfig.Main2.credits3:SetWidth(400)
             UIConfig.Main2.credits3:SetJustifyH("LEFT")
             
+            --Make a sound when an achievement has been completed or failed
+            UIConfig.Main2.options12 = Config:CreateCheckBox("TOPLEFT", UIConfig.Main2.options10, "TOPLEFT", 0, -25, "AchievementTracker_ToggleSound")
+            UIConfig.Main2.options12:SetScript("OnClick", ATToggleSound_OnClick)
+            UIConfig.Main2.options13 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options12, "TOPLEFT", 30, -9, L["Play a sound when a achievement is"],"GameFontHighlight")             
+
+            --Dropdown menu to select sound for completed Achievement
+            UIConfig.Main2.options14 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options12, "TOPLEFT", 260, -9, L["completed"],"GameFontHighlight")                         
+            UIConfig.Main2.options15 = MSA_DropDownMenu_Create("AchievementTracker_SelectSoundDropdownCompleted", UIConfig.Main2.options12)
+            UIConfig.Main2.options15:SetPoint("TOPLEFT", UIConfig.Main2.options12, "TOPLEFT", 320, 0)
+            MSA_DropDownMenu_SetWidth(UIConfig.Main2.options15, 100)
+            MSA_DropDownMenu_SetText(UIConfig.Main2.options15, "Select Sound")
+            MSA_DropDownMenu_Initialize(UIConfig.Main2.options15, function(self, level, menuList)
+                local info = MSA_DropDownMenu_CreateInfo()
+                info.func = AchievementTracker_SelectSoundCompleted
+                for i=1,13 do
+                    info.text = "Sound: " .. i
+                    info.menuList = i
+                    info.value = i
+                    info.arg1 = i
+                    info.arg2 = UIConfig.Main2.options15
+                    MSA_DropDownMenu_AddButton(info)
+                end
+            end)
+
+            --Dropdown menu to select sound for failed Achievement
+            UIConfig.Main2.options16 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options12, "TOPLEFT", 460, -9, L["or failed"],"GameFontHighlight")                         
+            UIConfig.Main2.options17 = MSA_DropDownMenu_Create("AchievementTracker_SelectSoundDropdownFailed", UIConfig.Main2.options12)
+            UIConfig.Main2.options17:SetPoint("TOPLEFT", UIConfig.Main2.options12, "TOPLEFT", 505, 0)
+            MSA_DropDownMenu_SetWidth(UIConfig.Main2.options17, 100)
+            MSA_DropDownMenu_SetText(UIConfig.Main2.options17, "Select Sound")
+            MSA_DropDownMenu_Initialize(UIConfig.Main2.options17, function(self, level, menuList)
+                local info = MSA_DropDownMenu_CreateInfo()
+                info.func = AchievementTracker_SelectSoundFailed
+                for i=1,11 do
+                    info.text = "Sound: " .. i
+                    info.menuList = i
+                    info.value = i
+                    info.arg1 = i
+                    info.arg2 = UIConfig.Main2.options17
+                    MSA_DropDownMenu_AddButton(info)
+                end
+            end)
 
             --Announce which acheivements are being tracked to group
             -- UIConfig.Main2.options6 = Config:CreateCheckBox("TOPLEFT", UIConfig.Main2.options3, "TOPLEFT", 0, -25, "AchievementTracker_ToggleMinimapIcon")
@@ -322,6 +367,9 @@ function Tab_OnClick(self)
         UIConfig.Main2.options9:Hide()
         UIConfig.Main2.options10:Hide()
         UIConfig.Main2.options11:Hide()
+        UIConfig.Main2.options12:Hide()
+        UIConfig.Main2.options13:Hide()
+        UIConfig.Main2.options14:Hide()
         
         UIConfig.Main.author:Hide()
         UIConfig.Main.verison:Hide()
@@ -333,6 +381,151 @@ function Tab_OnClick(self)
         UIConfig.Main2.credits2:Hide()
         UIConfig.Main2.credits3:Hide()
     end
+end
+
+function AchievementTracker_SelectSoundCompleted(self, arg1, arg2, checked)
+    if arg1 == 1 then
+        PlaySound(SOUNDKIT.READY_CHECK) --Success
+        AchievementTrackerOptions["completedSound"] = SOUNDKIT.RAID_WARNING
+        AchievementTrackerOptions["completedSoundID"] = 1
+        setCompletedSound(SOUNDKIT.READY_CHECK) 
+    elseif arg1 == 2 then
+        PlaySound(SOUNDKIT.ALARM_CLOCK_WARNING_2) --Success
+        AchievementTrackerOptions["completedSound"] = SOUNDKIT.RAID_WARNING
+        AchievementTrackerOptions["completedSoundID"] = 2
+        setCompletedSound(SOUNDKIT.ALARM_CLOCK_WARNING_2) 
+    elseif arg1 == 3 then
+        PlaySound(SOUNDKIT.ALARM_CLOCK_WARNING_3) --Success
+        AchievementTrackerOptions["completedSound"] = SOUNDKIT.RAID_WARNING
+        AchievementTrackerOptions["completedSoundID"] = 3
+        setCompletedSound(SOUNDKIT.ALARM_CLOCK_WARNING_3)
+    elseif arg1 == 4 then
+        PlaySound(SOUNDKIT.AUCTION_WINDOW_CLOSE) --Success
+        AchievementTrackerOptions["completedSound"] = SOUNDKIT.RAID_WARNING
+        AchievementTrackerOptions["completedSoundID"] = 4
+        setCompletedSound(SOUNDKIT.AUCTION_WINDOW_CLOSE)
+    elseif arg1 == 4 then
+        PlaySound(SOUNDKIT.AUCTION_WINDOW_CLOSE) --Success
+        AchievementTrackerOptions["completedSound"] = SOUNDKIT.RAID_WARNING
+        AchievementTrackerOptions["completedSoundID"] = 4
+        setCompletedSound(SOUNDKIT.AUCTION_WINDOW_CLOSE)
+    elseif arg1 == 4 then
+        PlaySound(SOUNDKIT.AUCTION_WINDOW_CLOSE) --Success
+        AchievementTrackerOptions["completedSound"] = SOUNDKIT.RAID_WARNING
+        AchievementTrackerOptions["completedSoundID"] = 4
+        setCompletedSound(SOUNDKIT.AUCTION_WINDOW_CLOSE)
+    elseif arg1 == 5 then
+        PlaySoundFile("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\You_Are_Prepared.ogg") --Success
+        AchievementTrackerOptions["completedSound"] = "Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\You_Are_Prepared.ogg"
+        AchievementTrackerOptions["completedSoundID"] = 5
+        setCompletedSound("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\You_Are_Prepared.ogg")
+    elseif arg1 == 6 then
+        PlaySoundFile("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound 6.ogg") --Success
+        AchievementTrackerOptions["completedSound"] = "Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound 6.ogg"
+        AchievementTrackerOptions["completedSoundID"] = 6
+        setCompletedSound("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound 6.ogg")
+    elseif arg1 == 7 then
+        PlaySoundFile("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound 7.ogg") --Success
+        AchievementTrackerOptions["completedSound"] = "Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound 7.ogg"
+        AchievementTrackerOptions["completedSoundID"] = 7
+        setCompletedSound("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound 7.ogg")
+    elseif arg1 == 8 then
+        PlaySoundFile("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound 8.ogg") --Success
+        AchievementTrackerOptions["completedSound"] = "Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound 8.ogg"
+        AchievementTrackerOptions["completedSoundID"] = 8
+        setCompletedSound("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound 8.ogg")
+    elseif arg1 == 9 then
+        PlaySoundFile("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound 9.ogg") --Success
+        AchievementTrackerOptions["completedSound"] = "Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound 9.ogg"
+        AchievementTrackerOptions["completedSoundID"] = 9
+        setCompletedSound("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound 9.ogg")
+    elseif arg1 == 10 then
+        PlaySoundFile("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound 10.ogg") --Success
+        AchievementTrackerOptions["completedSound"] = "Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound 10.ogg"
+        AchievementTrackerOptions["completedSoundID"] = 10
+        setCompletedSound("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound 10.ogg")
+    elseif arg1 == 11 then
+        PlaySoundFile("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound 11.ogg") --Success
+        AchievementTrackerOptions["completedSound"] = "Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound 11.ogg"
+        AchievementTrackerOptions["completedSoundID"] = 11
+        setCompletedSound("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound 11.ogg")
+    elseif arg1 == 12 then
+        PlaySoundFile("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound 12.ogg") --Success
+        AchievementTrackerOptions["completedSound"] = "Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound 12.ogg"
+        AchievementTrackerOptions["completedSoundID"] = 12
+        setCompletedSound("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound 12.ogg")
+    elseif arg1 == 13 then
+        PlaySoundFile("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Achievement Completed.ogg") --Success
+        AchievementTrackerOptions["completedSound"] = "Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Achievement Completed.ogg"
+        AchievementTrackerOptions["completedSoundID"] = 13
+        setCompletedSound("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Achievement Completed.ogg")
+    end
+    MSA_DropDownMenu_SetText(arg2, arg1)
+end
+
+function AchievementTracker_SelectSoundFailed(self, arg1, arg2, checked)
+    if arg1 == 1 then
+        PlaySound(SOUNDKIT.RAID_WARNING) --Fail
+        AchievementTrackerOptions["failedSound"] = SOUNDKIT.RAID_WARNING
+        AchievementTrackerOptions["failedSoundID"] = 1
+        setFailedSound(SOUNDKIT.RAID_WARNING)
+    elseif arg1 == 2 then
+        PlaySound(SOUNDKIT.LFG_REWARDS) --Fail
+        AchievementTrackerOptions["failedSound"] = SOUNDKIT.LFG_REWARDS
+        AchievementTrackerOptions["failedSoundID"] = 2
+        setFailedSound(SOUNDKIT.LFG_REWARDS)
+    elseif arg1 == 3 then
+        PlaySound(SOUNDKIT.UI_BATTLEGROUND_COUNTDOWN_FINISHED) --Fail
+        AchievementTrackerOptions["failedSound"] = SOUNDKIT.UI_BATTLEGROUND_COUNTDOWN_FINISHED
+        AchievementTrackerOptions["failedSoundID"] = 3
+        setFailedSound(SOUNDKIT.UI_BATTLEGROUND_COUNTDOWN_FINISHED)
+    elseif arg1 == 4 then
+        PlaySound(SOUNDKIT.UI_SCENARIO_ENDING) --Fail
+        AchievementTrackerOptions["failedSound"] = SOUNDKIT.UI_SCENARIO_ENDING
+        AchievementTrackerOptions["failedSoundID"] = 4
+        setFailedSound(SOUNDKIT.UI_SCENARIO_ENDING)
+    elseif arg1 == 5 then
+        PlaySound(SOUNDKIT.UI_GARRISON_MISSION_COMPLETE_ENCOUNTER_FAIL) --Fail
+        AchievementTrackerOptions["failedSound"] = SOUNDKIT.UI_GARRISON_MISSION_COMPLETE_ENCOUNTER_FAIL
+        AchievementTrackerOptions["failedSoundID"] = 5
+        setFailedSound(SOUNDKIT.UI_GARRISON_MISSION_COMPLETE_ENCOUNTER_FAIL)
+    elseif arg1 == 6 then
+        PlaySoundFile("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\You_Are_Not_Prepared.ogg") --Fail
+        AchievementTrackerOptions["failedSound"] = "Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\You_Are_Not_Prepared.ogg"
+        AchievementTrackerOptions["failedSoundID"] = 6
+        setFailedSound("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\You_Are_Not_Prepared.ogg")
+    elseif arg1 == 7 then
+        PlaySoundFile("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound_2.ogg") --Fail
+        AchievementTrackerOptions["failedSound"] = "Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound_2.ogg"
+        AchievementTrackerOptions["failedSoundID"] = 7
+        setFailedSound("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound_2.ogg")
+    elseif arg1 == 8 then
+        PlaySoundFile("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound_3.ogg") --Fail
+        AchievementTrackerOptions["failedSound"] = "Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound_3.ogg"
+        AchievementTrackerOptions["failedSoundID"] = 8
+        setFailedSound("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound_3.ogg")
+    elseif arg1 == 9 then
+        PlaySoundFile("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound_4.ogg") --Fail
+        AchievementTrackerOptions["failedSound"] = "Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound_4.ogg"
+        AchievementTrackerOptions["failedSoundID"] = 9
+        setFailedSound("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound_4.ogg")
+    elseif arg1 == 10 then
+        PlaySoundFile("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound_5.ogg") --Fail
+        AchievementTrackerOptions["failedSound"] = "Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound_5.ogg"
+        AchievementTrackerOptions["failedSoundID"] = 10
+        setFailedSound("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound_5.ogg")
+    elseif arg1 == 11 then
+        PlaySoundFile("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Achievement Failed.ogg") --Fail
+        AchievementTrackerOptions["failedSound"] = "Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Achievement Failed.ogg"
+        AchievementTrackerOptions["failedSoundID"] = 11
+        setFailedSound("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Achievement Failed.ogg")        
+    end
+    MSA_DropDownMenu_SetText(arg2, arg1)
+end
+
+function ATToggleSound_OnClick(self)
+    AchievementTrackerOptions["toggleSound"] = self:GetChecked()
+    setEnableSound(self:GetChecked()) 
 end
 
 function ATToggleAnnounceToRaidWarning_OnClick(self)

@@ -107,6 +107,9 @@ local enableDisplayAchievement = true
 local currentBossNums = {}
 local detectBossWait = false
 local announceToRaidWarning = false				--Whether or not to announce messages to Raid Warning or not. Can only be done while in raid & user is raid leader or assist.
+local enableSound = false						--Whether to play a sound when achievement is completed or failed
+local failedSound = nil
+local completedSound = nil
 
 --------------------------------------
 -- Current Instance Variables
@@ -769,6 +772,32 @@ function events:ADDON_LOADED(event, name)
 	end
 	_G["AchievementTracker_ToggleAnnounceToRaidWarning"]:SetChecked(AchievementTrackerOptions["announceToRaidWarning"])
 	
+	--Play sound when achievement completed or failed
+	if AchievementTrackerOptions["toggleSound"] == nil then
+		AchievementTrackerOptions["toggleSound"] = false --Do not enable by default
+	elseif AchievementTrackerOptions["toggleSound"] == true then
+		enableSound = true
+	end
+	_G["AchievementTracker_ToggleSound"]:SetChecked(AchievementTrackerOptions["toggleSound"])
+
+	--Sound when achievement is completed
+	if AchievementTrackerOptions["completedSoundID"] ~= nil then
+		--Set the sound if already selected previously
+		MSA_DropDownMenu_SetText(_G["AchievementTracker_SelectSoundDropdownCompleted"], AchievementTrackerOptions["completedSoundID"])
+	end
+	if AchievementTrackerOptions["completedSound"] ~= nil then
+		--Set the source of the completed sound
+		completedSound = AchievementTrackerOptions["completedSound"]
+	end
+	
+	--Sound when achievement is failed
+	if AchievementTrackerOptions["failedSoundID"] ~= nil then
+		MSA_DropDownMenu_SetText(_G["AchievementTracker_SelectSoundDropdownFailed"], AchievementTrackerOptions["failedSoundID"])
+	end
+	if AchievementTrackerOptions["failedSound"] ~= nil then
+		--Set the source of the completed sound
+		failedSound = AchievementTrackerOptions["failedSound"]
+	end
 
 	-- if AchievementTrackerOptions["enableAchievementScan"] == nil then
 	-- 	core:sendDebugMessage("Setting Initial Settings")
@@ -822,6 +851,26 @@ function events:ADDON_LOADED(event, name)
 
 	--Set whether addon should be enabled or disabled
 	setAddonEnabled(AchievementTrackerOptions["enableAddon"])
+end
+
+function setCompletedSound(setCompletedSound)
+	--print("Setting Completed Sound to...")
+	--print(setCompletedSound)
+	completedSound = setCompletedSound
+end
+
+function setFailedSound(setFailedSound)
+	--print("Setting Failed Sound to...")
+	--print(setFailedSound)
+	failedSound = setFailedSound
+end
+
+function setEnableSound(setEnableSound)
+	if setEnableSound then
+		enableSound = true
+	else
+		enableSound = false					
+	end
 end
 
 function setAnnounceToRaidWarning(setAnnounceToRaidWarning)
@@ -1658,21 +1707,41 @@ end
 ------------------------------------------------------
 
 --Output messages to the chat. All messages get sent this function for easy management
-function core:sendMessage(message, outputToRW)
+function core:sendMessage(message, outputToRW, messageType)
 	if message ~= lastMessageSent then
 		if debugModeChat == false then
 			if masterAddon == true and electionFinished == true then
 				if message ~= "setup" then
 					if outputToRW == true and core.chatType == "RAID" and announceToRaidWarning == true and (UnitIsGroupAssistant("Player") or UnitIsGroupLeader("Player")) then
 						--Important message output to raid warning from user request
-						print("Outputting to Raid Warning")
+						--print("Outputting to Raid Warning")
 						SendChatMessage("[IAT] " .. message,"RAID_WARNING",DEFAULT_CHAT_FRAME.editBox.languageID)
 					elseif outputToRW == true and announceToRaidWarning == true then
 						SendChatMessage("[IAT] " .. message,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
 						RaidNotice_AddMessage(RaidWarningFrame, "[IAT] " .. message, ChatTypeInfo["RAID_WARNING"])
 					else
-						print("Outputting normally")
+						--print("Outputting normally")
 						SendChatMessage("[IAT] " .. message,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+					end
+
+					if outputToRW == true and enableSound == true and messageType == "completed" then
+						--print(type(completedSound))
+						--print(completedSound)
+						if type(completedSound) == "number" then
+							--print(1)
+							PlaySound(completedSound, "Master")
+						else
+							--print(2)
+							PlaySoundFile(completedSound, "Master")
+						end
+					elseif outputToRW == true and enableSound == true and messageType == "failed" then
+						if type(failedSound) == "number" then
+							--print(3)
+							PlaySound(failedSound, "Master")
+						else
+							--print(4)
+							PlaySoundFile(failedSound, "Master")
+						end						
 					end
 				end
 			elseif masterAddon == true and requestToRun == true then
@@ -1694,14 +1763,34 @@ function core:sendMessage(message, outputToRW)
 							if message ~= "setup" then
 								if outputToRW == true and core.chatType == "RAID" and announceToRaidWarning == true and (UnitIsGroupAssistant("Player") or UnitIsGroupLeader("Player")) then
 									--Important message output to raid warning from user request
-									print("Outputting to Raid Warning")
+									--print("Outputting to Raid Warning")
 									SendChatMessage("[IAT] " .. message,"RAID_WARNING",DEFAULT_CHAT_FRAME.editBox.languageID)
 								elseif outputToRW == true and announceToRaidWarning == true then
 									SendChatMessage("[IAT] " .. message,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
 									RaidNotice_AddMessage(RaidWarningFrame, "[IAT] " .. message, ChatTypeInfo["RAID_WARNING"])
 								else
-									print("Outputting normally")
+									--print("Outputting normally")
 									SendChatMessage("[IAT] " .. message,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+								end
+
+								if outputToRW == true and enableSound == true and messageType == "completed" then
+									--print(type(completedSound))
+									--print(completedSound)
+									if type(completedSound) == "number" then
+										--print(5)
+										PlaySound(completedSound, "Master")
+									else
+										--print(6)
+										PlaySoundFile(completedSound, "Master")
+									end
+								elseif outputToRW == true and enableSound == true and messageType == "failed" then
+									if type(failedSound) == "number" then
+										--print(7)
+										PlaySound(failedSound, "Master")
+									else
+										--print(8)
+										PlaySoundFile(failedSound, "Master")
+									end						
 								end
 							end
 
@@ -1718,6 +1807,26 @@ function core:sendMessage(message, outputToRW)
 									else
 										print("Outputting to normal")										
 										SendChatMessage("[IAT] " .. v,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+									end
+
+									if outputToRW == true and enableSound == true and messageType == "completed" then
+										--print(type(completedSound))
+										--print(completedSound)
+										if type(completedSound) == "number" then
+											--print(9)
+											PlaySound(completedSound, "Master")
+										else
+											--print(10)
+											PlaySoundFile(completedSound, "Master")
+										end
+									elseif outputToRW == true and enableSound == true and messageType == "failed" then
+										if type(failedSound) == "number" then
+											--print(11)
+											PlaySound(failedSound, "Master")
+										else
+											--print(12)
+											PlaySoundFile(failedSound, "Master")
+										end						
 									end
 								end
 							end
@@ -1868,7 +1977,7 @@ function core:getAchievementFailed(index)
 		value = 1
 	end
 	if core.achievementsFailed[value] == false then
-		core:sendMessage(GetAchievementLink(core.achievementIDs[value]) .. " FAILED!",true)
+		core:sendMessage(GetAchievementLink(core.achievementIDs[value]) .. " FAILED!",true,"failed")
 		core.achievementsFailed[value] = true
 	end
 end
@@ -1881,7 +1990,7 @@ function core:getAchievementFailedWithMessageBefore(message, index)
 	end
 	if core.achievementsFailed[value] == false then
 
-		core:sendMessage(message .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " FAILED!",true)
+		core:sendMessage(message .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " FAILED!",true,"failed")
 		core.achievementsFailed[value] = true
 	end
 end
@@ -1893,7 +2002,7 @@ function core:getAchievementFailedWithMessageAfter(message, index)
 		value = 1
 	end
 	if core.achievementsFailed[value] == false then
-		core:sendMessage(GetAchievementLink(core.achievementIDs[value]) .. " FAILED! " .. message,true)
+		core:sendMessage(GetAchievementLink(core.achievementIDs[value]) .. " FAILED! " .. message,true,"failed")
 		core.achievementsFailed[value] = true
 	end
 end
@@ -1905,7 +2014,7 @@ function core:getAchievementFailedWithMessageBeforeAndAfter(messageBefore, messa
 		value = 1
 	end
 	if core.achievementsFailed[value] == false then
-		core:sendMessage(messageBefore .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " FAILED! " .. messageAfter,true)
+		core:sendMessage(messageBefore .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " FAILED! " .. messageAfter,true,"failed")
 		core.achievementsFailed[value] = true
 	end
 end
@@ -1921,7 +2030,7 @@ function core:getAchievementFailedPersonal(index)
 		--Check if the player actually needs the achievement
 		if core:has_value(core.currentBosses[value].players, core.destName) then
 			--Player needs achievement but has failed it
-			core:sendMessage(core.destName .. " has failed " .. GetAchievementLink(core.achievementIDs[value]) .. " (Personal Achievement)",true)
+			core:sendMessage(core.destName .. " has failed " .. GetAchievementLink(core.achievementIDs[value]) .. " (Personal Achievement)",true,"failed")
 		end
 		core.playersFailedPersonal[core.destName] = true
 	end
@@ -1938,7 +2047,7 @@ function core:getAchievementFailedPersonalWithReason(reason, index)
 		--Check if the player actually needs the achievement
 		if core:has_value(core.currentBosses[value].players, core.destName) then
 			--Player needs achievement but has failed it
-			core:sendMessage(core.destName .. " has failed " .. GetAchievementLink(core.achievementIDs[value]) .. " (Personal Achievement) (Reason: " .. reason .. ")",true)
+			core:sendMessage(core.destName .. " has failed " .. GetAchievementLink(core.achievementIDs[value]) .. " (Personal Achievement) (Reason: " .. reason .. ")",true,"failed")
 		end
 		core.playersFailedPersonal[core.destName] = true
 	end
@@ -1955,7 +2064,7 @@ function core:getAchievementSuccess(index)
 		value = 1
 	end
 	if core.achievementsCompleted[value] == false then
-		core:sendMessage(GetAchievementLink(core.achievementIDs[value]) .. " Criteria has been met. Boss can now be killed!",true)
+		core:sendMessage(GetAchievementLink(core.achievementIDs[value]) .. " Criteria has been met. Boss can now be killed!",true,"completed")
 		core.achievementsCompleted[value] = true
 	end
 end
@@ -1967,7 +2076,7 @@ function core:getAchievementSuccessWithMessageBefore(message, index)
 		value = 1
 	end
 	if core.achievementsCompleted[value] == false then
-		core:sendMessage(message .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " Criteria has been met. Boss can now be killed!",true)
+		core:sendMessage(message .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " Criteria has been met. Boss can now be killed!",true,"completed")
 		core.achievementsCompleted[value] = true
 	end
 end
@@ -1979,7 +2088,7 @@ function core:getAchievementSuccessWithMessageAfter(message, index)
 		value = 1
 	end
 	if core.achievementsCompleted[value] == false then
-		core:sendMessage(GetAchievementLink(core.achievementIDs[value]) .. " Criteria has been met. Boss can now be killed! " .. message,true)
+		core:sendMessage(GetAchievementLink(core.achievementIDs[value]) .. " Criteria has been met. Boss can now be killed! " .. message,true,"completed")
 		core.achievementsCompleted[value] = true
 	end
 end
@@ -1991,7 +2100,7 @@ function core:getAchievementSuccessWithMessageBeforeAndAfter(messageBefore, mess
 		value = 1
 	end
 	if core.achievementsCompleted[value] == false then
-		core:sendMessage(messageBefore .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " Criteria has been met. Boss can now be killed!" .. messageAfter,true)
+		core:sendMessage(messageBefore .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " Criteria has been met. Boss can now be killed!" .. messageAfter,true,"completed")
 		core.achievementsCompleted[value] = true
 	end
 end
@@ -2003,7 +2112,7 @@ function core:getAchievementSuccessWithCustomMessage(messageBefore, messageAfter
 		value = 1
 	end
 	if core.achievementsCompleted[value] == false then
-		core:sendMessage(messageBefore .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " " .. messageAfter,true)
+		core:sendMessage(messageBefore .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " " .. messageAfter,true,"completed")
 		core.achievementsCompleted[value] = true
 	end
 end
@@ -2023,7 +2132,7 @@ function core:getAchievementSuccessPersonal(index, location)
 			--Check if the player actually needs the achievement
 			if core:has_value(core.currentBosses[value].players, core.destName) then
 				--Player needs achievement but has failed it
-				core:sendMessage(core.destName .. " has completed " .. GetAchievementLink(core.achievementIDs[value]) .. " (Personal Achievement)",true)
+				core:sendMessage(core.destName .. " has completed " .. GetAchievementLink(core.achievementIDs[value]) .. " (Personal Achievement)",true,"completed")
 			end
 			core.playersSuccessPersonal[core.destName] = true
 		end
@@ -2033,7 +2142,7 @@ function core:getAchievementSuccessPersonal(index, location)
 			--Check if the player actually needs the achievement
 			if core:has_value(core.currentBosses[value].players, core.sourceName) then
 				--Player needs achievement but has failed it
-				core:sendMessage(core.sourceName .. " has completed " .. GetAchievementLink(core.achievementIDs[value]) .. " (Personal Achievement)",true)
+				core:sendMessage(core.sourceName .. " has completed " .. GetAchievementLink(core.achievementIDs[value]) .. " (Personal Achievement)",true,"completed")
 			end
 			core.playersSuccessPersonal[core.sourceName] = true
 		end	
