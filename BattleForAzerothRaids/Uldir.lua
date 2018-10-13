@@ -62,6 +62,13 @@ function core._1861:Zekvoz()
     end
 end
 
+function core._1861:ZulReborn()
+    --Blizzard Tracker has gone red so achievement failed
+    if core:getBlizzardTrackingStatus(12830) == false then
+        core:getAchievementFailed()
+    end
+end
+
 function core._1861:MythraxTheUnraveler()
     --Defeat Mythrax the Unraveler in Uldir with no player touching an Existence Fragment spawned by another player on Normal difficulty or higher
 
