@@ -28,18 +28,17 @@ function core._1861:FetidDevourer()
 
     if fetidDevourerKilled == false then
         --Player has been hit by terrible thrash
-        if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 262277 and core.destID ~= nil then
-            local name, realm = strsplit("-", core.destID)
-            if UnitIsPlayer(name) and playersFetidTable[core.destName] == nil then
+        if core.type == "SPELL_DAMAGE" and core.spellId == 262277 and core.destIDPlayer ~= nil then
+            local name, realm = strsplit("-", core.destIDPlayer)
+            if UnitIsPlayer(name) and playersFetidTable[core.spawn_uid_dest_Player] == nil then
                 playersFetid = playersFetid + 1
-                playersFetidTable[core.destName] = core.destName
+                playersFetidTable[core.spawn_uid_dest_Player] = core.spawn_uid_dest_Player
                 core:sendMessage(core.destName .. " has been hit with Terrible Thrash (" .. playersFetid .. "/" .. core.groupSize .. ")")
             end
         end
 
         if playersFetid == core.groupSize then
             core:getAchievementSuccess()
-            core.achievementsFailed[1] = false
         end
     end
 end
@@ -77,11 +76,14 @@ function core._1861:MythraxTheUnraveler()
     end
 end
 
+function core._1861:InstanceCleanup()
+    fetidDevourerKilled = false
+end
+
 function core._1861:ClearVariables()
     ------------------------------------------------------
     ---- Fetid Devourer
     ------------------------------------------------------
-    fetidDevourerKilled = false
     playersFetidTable = {}
     playersFetid = 0
 
