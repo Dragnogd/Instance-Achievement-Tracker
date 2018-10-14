@@ -75,6 +75,7 @@ function core._1861:MythraxTheUnraveler()
     --Check who the last player was to pick up an orb
     if (core.type == "SPELL_AURA_REMOVED_DOSE" or core.type == "SPELL_AURA_REMOVED") and core.spellId == 272146 then
         lastPlayerToAbsorbOrb = core.destName
+        core:sendDebugMessage(lastPlayerToAbsorbOrb)
     end
 
     --Blizzard Tracker has gone red so achievement failed
@@ -82,6 +83,46 @@ function core._1861:MythraxTheUnraveler()
         core:getAchievementFailedWithMessageAfter("(" .. lastPlayerToAbsorbOrb .. ")")
     end
 end
+
+function core._1861:Ghuun()
+    --Blizzard Tracker has gone red so achievement failed
+    if core:getBlizzardTrackingStatus(12551) == false then
+        --Find the player who currently has the power matrix
+        if core.groupSize > 1 then
+            for i = 1, core.groupSize do
+                local unit = nil
+                if core.chatType == "PARTY" then
+                    if i < core.groupSize then
+                        unit = "party" .. i
+                    else
+                        unit = "player"
+                    end
+                elseif core.chatType == "RAID" then
+                    unit = "raid" .. i
+                end
+                
+                if unit ~= nil then
+                    local unitType, destID, spawn_uid_dest = strsplit("-",UnitGUID(unit));
+                    for i=1,40 do
+                        local _, _, _, _, _, _, _, _, _, spellId = UnitDebuff(unit, i)
+                        if spellId == 263372 then
+                            core:getAchievementFailedWithMessageAfter("(" .. UnitName(unit) .. ")")
+                        end 
+                    end
+                end
+            end
+        else
+            --Player is not in a group
+            local unitType, destID, spawn_uid_dest = strsplit("-",UnitGUID("Player"));
+            for i=1,40 do
+                local _, _, _, _, _, _, _, _, _, spellId = UnitDebuff("Player", i)
+                if spellId == 263372 then
+                    core:getAchievementFailedWithMessageAfter("(" .. UnitName("Player") .. ")")
+                end
+            end
+        end
+    end
+end 
 
 function core._1861:InstanceCleanup()
     fetidDevourerKilled = false
