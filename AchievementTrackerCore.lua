@@ -7,8 +7,9 @@ local L = core.L												--Translation Table
 local events = CreateFrame("Frame")								--All events are registered to this frame
 local UIConfig													--UIConfig is used to make a display asking the user if they would like
 local UICreated = false											--To enable achievement tracking when they enter an instances
-local debugMode = false
-local debugModeChat = false
+local debugMode = true
+local debugModeChat = true
+local sendDebugMessages = true
 
 --------------------------------
 -- Saved Variables tables
@@ -1541,6 +1542,7 @@ end
 
 --Detect Raid and dungeons bosses which have an encounter ID
 function detectBossByEncounterID(id)
+	core:sendDebugMessage("Detected boss using ENCOUNTER ID")
 	core:sendDebugMessage("Found the following encounter ID: " .. id)
 	local counter = 0
 	for boss,_ in pairs(core.Instances[core.expansion][core.instanceType][core.instance]) do
@@ -1624,6 +1626,53 @@ function detectBossByEncounterID(id)
 	if core.foundBoss == true then
 		--Display tracking achievement for that boss if it has not been output yet for the fight. Make sure we are in combat as well before calling this function
 		core:getAchievementToTrack()
+	end
+end
+
+--Detect Raid & Dungeons bosses which have nameplates
+function detectBossByNameplate(id)
+	--Fallback method for detecting boss fights when ENCOUNTER_START fails to fire
+	core:sendDebugMessage("Detecting Boss by NAMEPLATE")
+	core:sendDebugMessage("Found the following boss ID: " .. id)
+
+	for boss,_ in pairs(core.Instances[core.expansion][core.instanceType][core.instance]) do
+		if boss ~= "name" then
+			if core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs ~= nil and core.encounterDetected == false then
+				if #core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs > 0 then
+					for i = 1, #core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs do
+						local bossID = core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs[i]
+						if string.find(id, bossID) then
+							if core:has_value(currentBossNums, boss) == false then
+								core:sendDebugMessage("Adding the following boss: " .. boss)
+								table.insert(core.currentBosses, core.Instances[core.expansion][core.instanceType][core.instance][boss])
+								table.insert(currentBossNums, boss)
+							end
+							if core:has_value(core.achievementIDs, core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement) == false then
+								core:sendDebugMessage("Adding the following achievement ID beacuse it doesn't exist: " .. core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
+								table.insert(core.achievementIDs, core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
+							end
+							if core.Instances[core.expansion][core.instanceType][core.instance][boss].enabled == true then
+								core.outputTrackingStatus = true
+							end
+							core.foundBoss = true
+						end
+					end
+				end
+			end
+		end
+	end
+
+	--If a boss has been found then output the achievements that will be tracked to chat.
+	--If an id is found by not in the database then add to cache to prevent the same ID being checked against the database over and over again
+	if core.foundBoss == true then
+		--Display tracking achievement for that boss if it has not been output yet for the fight. Make sure we are in combat as well before calling this function
+		if core.encounterStarted == true then
+			core:getAchievementToTrack()
+		end
+	else
+		if core:has_value(core.mobCache, id) ~= true then
+			table.insert(core.mobCache, id)
+		end
 	end
 end
 
@@ -1958,7 +2007,7 @@ end
 
 --Output debug messages to the chat for testing purposes
 function core:sendDebugMessage(message)
-	if debugMode == true then
+	if sendDebugMessages == true then
 		print("[DEBUG] " .. message)
 	end
 end
@@ -2354,3 +2403,45 @@ function core:getBlizzardTrackingStatus(achievementID, index)
 		return IsAchievementEligible(achievementID)
 	end
 end
+
+function core:getPlayersInGroupForAchievement()
+	local players = {}
+    if core.groupSize > 1 then
+        --We are in a group
+        local currentUnit
+        core:detectGroupType() --Detect the type of group the player is in so we can do the appropriate scanning
+        for i = 1, core.groupSize do
+            if core.chatType == "PARTY" then
+                if i < core.groupSize then
+                    currentUnit = "party" .. i
+                else
+                    currentUnit = "player"
+                end
+            elseif core.chatType == "RAID" then
+                currentUnit = "raid" .. i
+			end
+			
+			--Add to the current group so we can remove players that have left the group
+			local name, realm = UnitName(currentUnit)
+            if name ~= "Unknown" then
+                table.insert(players, name)
+            end
+        end
+    else
+        currentUnit = "player"
+        local name, realm = UnitName(currentUnit)
+        if name ~= "Unknown" then
+            table.insert(players, name)
+        end
+	end
+	return players
+end
+
+function core:getTableIndexByValue(tab,el)
+	for index, value in pairs(tab) do
+		if value == el then
+			return index
+		end
+	end
+end
+	
