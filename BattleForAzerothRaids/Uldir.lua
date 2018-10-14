@@ -26,11 +26,18 @@ function core._1861:FetidDevourer()
         fetidDevourerKilled = true
     end
 
+    if core.type == "SPELL_DAMAGE" and core.spellId == 262277 then
+        core:sendDebugMessage(core.destName)
+    end
+
     if fetidDevourerKilled == false then
         --Player has been hit by terrible thrash
-        if core.type == "SPELL_DAMAGE" and core.spellId == 262277 and core.destIDPlayer ~= nil then
-            local name, realm = strsplit("-", core.destIDPlayer)
+        if core.type == "SPELL_DAMAGE" and core.spellId == 262277 and core.destName ~= nil and core.spawn_uid_dest_Player ~= nil then
+            core:sendDebugMessage(core.destName .. " Hit By Terrible Thrash")
+            local name, realm = strsplit("-", core.destName)
+            core:sendDebugMessage(name)
             if UnitIsPlayer(name) and playersFetidTable[core.spawn_uid_dest_Player] == nil then
+                core:sendDebugMessage("Added player to table")
                 playersFetid = playersFetid + 1
                 playersFetidTable[core.spawn_uid_dest_Player] = core.spawn_uid_dest_Player
                 core:sendMessage(core.destName .. " has been hit with Terrible Thrash (" .. playersFetid .. "/" .. core.groupSize .. ")")
@@ -105,7 +112,7 @@ function core._1861:Ghuun()
                     local unitType, destID, spawn_uid_dest = strsplit("-",UnitGUID(unit));
                     for i=1,40 do
                         local _, _, _, _, _, _, _, _, _, spellId = UnitDebuff(unit, i)
-                        if spellId == 263372 then
+                        if spellId == 263420 then
                             core:getAchievementFailedWithMessageAfter("(" .. UnitName(unit) .. ")")
                         end 
                     end
@@ -116,7 +123,7 @@ function core._1861:Ghuun()
             local unitType, destID, spawn_uid_dest = strsplit("-",UnitGUID("Player"));
             for i=1,40 do
                 local _, _, _, _, _, _, _, _, _, spellId = UnitDebuff("Player", i)
-                if spellId == 263372 then
+                if spellId == 263420 then
                     core:getAchievementFailedWithMessageAfter("(" .. UnitName("Player") .. ")")
                 end
             end
