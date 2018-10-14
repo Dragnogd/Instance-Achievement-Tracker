@@ -14,6 +14,8 @@ core._1861 = {}
 local fetidDevourerKilled = false
 local playersFetidTable = {}
 local playersFetid = 0
+local getListOfPlayers = false
+local playersInGroup = {}
 
 ------------------------------------------------------
 ---- Mythrax the Unraveler
@@ -25,9 +27,10 @@ function core._1861:FetidDevourer()
     if core.type == "UNIT_DIED" and core.destID == "133298" then
         fetidDevourerKilled = true
     end
-
-    if core.type == "SPELL_DAMAGE" and core.spellId == 262277 then
-        core:sendDebugMessage(core.destName)
+    
+    if getListOfPlayers == false then
+        playersInGroup = core:getPlayersInGroupForAchievement()
+        getListOfPlayers = true
     end
 
     if fetidDevourerKilled == false then
@@ -40,7 +43,21 @@ function core._1861:FetidDevourer()
                 core:sendDebugMessage("Added player to table")
                 playersFetid = playersFetid + 1
                 playersFetidTable[core.spawn_uid_dest_Player] = core.spawn_uid_dest_Player
+
                 core:sendMessage(core.destName .. " has been hit with Terrible Thrash (" .. playersFetid .. "/" .. core.groupSize .. ")")
+
+                --Remove player from list of players needing to get hit
+                if core:has_value(playersInGroup, name) then
+                    table.remove(playersInGroup, core:getTableIndexByValue(playersInGroup, name))
+                    core:sendDebugMessage("Removing " .. name)
+
+                    --Rebuild list of players that still need to get hit
+                    local messageStr = "Players who still need to get hit: "
+                    for k, v in pairs(playersInGroup) do
+                        messageStr = messageStr .. ", " .. v
+                    end
+                    core:sendMessageSafe(messageStr)
+                end
             end
         end
 
@@ -141,6 +158,8 @@ function core._1861:ClearVariables()
     ------------------------------------------------------
     playersFetidTable = {}
     playersFetid = 0
+    getListOfPlayers = false
+    playersInGroup = {}
 
     ------------------------------------------------------
     ---- Mythrax the Unraveler
