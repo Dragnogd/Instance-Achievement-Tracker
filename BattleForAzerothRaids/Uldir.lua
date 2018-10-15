@@ -35,7 +35,7 @@ function core._1861:FetidDevourer()
 
     if fetidDevourerKilled == false then
         --Player has been hit by terrible thrash
-        if core.type == "SPELL_DAMAGE" and core.spellId == 262277 and core.destName ~= nil and core.spawn_uid_dest_Player ~= nil then
+        if core.type == "SPELL_DAMAGE" and core.spellId == 262277 and core.amount > 0 and core.destName ~= nil and core.spawn_uid_dest_Player ~= nil then
             core:sendDebugMessage(core.destName .. " Hit By Terrible Thrash")
             local name, realm = strsplit("-", core.destName)
             core:sendDebugMessage(name)
