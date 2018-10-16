@@ -7,9 +7,9 @@ local L = core.L												--Translation Table
 local events = CreateFrame("Frame")								--All events are registered to this frame
 local UIConfig													--UIConfig is used to make a display asking the user if they would like
 local UICreated = false											--To enable achievement tracking when they enter an instances
-local debugMode = false
-local debugModeChat = false
-local sendDebugMessages = false
+local debugMode = true
+local debugModeChat = true
+local sendDebugMessages = true
 
 --------------------------------
 -- Saved Variables tables
@@ -60,12 +60,6 @@ function events:onUpdate(sinceLastUpdate)
 		if combatStatus == false then
 			core:clearInstanceVariables()
 			core:clearVariables()
-			core:sendDebugMessage("Locking Detection for 3 seconds")
-			core.lockDetection = true
-			C_Timer.After(3, function() 
-				core.lockDetection = false
-				core:sendDebugMessage("Detection unlocked")
-			end)
 			core:sendDebugMessage("Left Combat")
 			events:SetScript("OnUpdate",nil)
 		end
@@ -1034,6 +1028,12 @@ function events:ENCOUNTER_END()
 	--table.insert(--TargetLogData, "---Encounter Ended---")
 	core.encounterStarted = false
 	core.encounterDetected = false
+	core:sendDebugMessage("Locking Detection for 3 seconds")
+	core.lockDetection = true
+	C_Timer.After(3, function() 
+		core.lockDetection = false
+		core:sendDebugMessage("Detection unlocked")
+	end)
 end
 
 --This event is used to scan players in the group to see which achievements they are currently missing
@@ -1325,12 +1325,6 @@ function events:PLAYER_REGEN_ENABLED()
 		if core.encounterDetected == false then
 			core:clearInstanceVariables()
 			core:clearVariables()
-			core:sendDebugMessage("Locking Detection for 3 seconds")
-			core.lockDetection = true
-			C_Timer.After(3, function() 
-				core.lockDetection = false
-				core:sendDebugMessage("Detection unlocked")
-			end)
 		else
 			core:sendDebugMessage("Not clearing global variables since encounter is still in progress")
 		end
