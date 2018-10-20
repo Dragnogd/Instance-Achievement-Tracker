@@ -326,7 +326,7 @@ core.Instances = {
                     encounterID = 2127,
                 },
                 boss3 = {
-                    name = L["Other"],
+                    name = L["Trash after the third boss"],
                     bossIDs = {},
                     achievement = 12503,
                     players = {L["(Enter instance to start scanning)"]},
