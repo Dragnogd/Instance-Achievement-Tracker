@@ -232,6 +232,16 @@ core.Instances = {
             [1864] = { --Shrine of the Storm
                 name = 1036,
                 boss1 = {
+                    name = L["Other"],
+                    bossIDs = {},
+                    achievement = 12600,
+                    players = {L["(Enter instance to start scanning)"]},
+                    tactics = format("The %s is picked up at the start of the dungeon, in the first room. If you receive any frost damage then the spirit flames will be extinguished so it's recommended to first clear all the trash to the third boss, and then pick up the breath. Do not kill the first boss as that will make the breath despawn. Once you light up the shrines to the third boss you will get the achievement.", GetSpellLink(275633)),
+                    enabled = false,
+                    track = nil,
+					partial = false,
+                },
+                boss2 = {
                     name = 2155, --Lord Stormsong
                     bossIDs = {},
                     achievement = 12601,
@@ -242,7 +252,7 @@ core.Instances = {
                     partial = false,
                     encounterID = 2132,
                 },
-                boss2 = {
+                boss3 = {
                     name = 2156, --Vol'zith
                     bossIDs = {275690},
                     achievement = 12602,
@@ -252,16 +262,6 @@ core.Instances = {
                     track = function() core._1864:VolzithTheWhisperer() end,
                     partial = false,
                     encounterID = 2133,
-                },
-                boss3 = {
-                    name = L["Other"],
-                    bossIDs = {},
-                    achievement = 12600,
-                    players = {L["(Enter instance to start scanning)"]},
-                    tactics = format("The %s is picked up at the start of the dungeon, in the first room. If you receive any frost damage then the spirit flames will be extinguished so it's recommended to first clear all the trash to the third boss, and then pick up the breath. Do not kill the first boss as that will make the breath despawn. Once you light up the shrines to the third boss you will get the achievement.", GetSpellLink(275633)),
-                    enabled = false,
-                    track = nil,
-					partial = false,
                 },
             },
 
