@@ -1105,8 +1105,14 @@ function Instance_OnClick(self)
             for i = 1, #instanceLocation["boss" .. counter2].players do
                 players = players .. instanceLocation["boss" .. counter2].players[i] .. ", "
             end
+            
+            --Only show players for current instances we are in
+            if type(self) == "table" then
+                button.contentText:SetText(L["Achievement"] .. ": " .. GetAchievementLink(instanceLocation["boss" .. counter2].achievement) .. "\n\n" .. L["Tactics"] .. ": " .. instanceLocation["boss" .. counter2].tactics)            
+            else
+                button.contentText:SetText(L["Achievement"] .. ": " .. GetAchievementLink(instanceLocation["boss" .. counter2].achievement) .. "\n\n" .. players .. "\n\n" .. L["Tactics"] .. ": " .. instanceLocation["boss" .. counter2].tactics)
+            end
 
-            button.contentText:SetText(L["Achievement"] .. ": " .. GetAchievementLink(instanceLocation["boss" .. counter2].achievement) .. "\n\n" .. players .. "\n\n" .. L["Tactics"] .. ": " .. instanceLocation["boss" .. counter2].tactics)
             button.contentText:Show()
             button.headerText:Hide()
             button:SetNormalTexture(nil)
