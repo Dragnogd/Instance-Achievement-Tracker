@@ -9,7 +9,7 @@ local _, core = ...
 core._1841 = {}
 
 function core._1841:SporecallerZancha()
-    if core.type == "UNIT_DIED" and core.destID == "138740" then
+    if core:getBlizzardTrackingStatus(12549, 1) == true then
         core:getAchievementSuccess()
     end
 end
