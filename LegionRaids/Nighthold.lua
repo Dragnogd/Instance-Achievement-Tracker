@@ -322,94 +322,94 @@ function core._1530:Krosus()
     --After 5 seconds compare new collection with original collection to see which burning embers where killed from the bridge break
 
     --Burning Ember Detected Overall
-    if core.sourceID == "104262" and burningEmbersUID[core.spawn_uid] == nil then
-        --print("Adding: " .. core.spawn_uid)
-        burningEmbersUIDCounter = burningEmbersUIDCounter + 1
-        burningEmbersUID[core.spawn_uid] = "alive"
-        --print("BurningEmbersUIDCounter: " .. burningEmbersUIDCounter)
-    elseif core.destID == "104262" and burningEmbersUID[core.spawn_uid_dest] == nil then
-        --print("Adding: " .. core.spawn_uid_dest)
-        burningEmbersUIDCounter = burningEmbersUIDCounter + 1
-        burningEmbersUID[core.spawn_uid_dest] = "alive"
-        --print("BurningEmbersUIDCounter: " .. burningEmbersUIDCounter)
-    end
+    -- if core.sourceID == "104262" and burningEmbersUID[core.spawn_uid] == nil then
+    --     --print("Adding: " .. core.spawn_uid)
+    --     burningEmbersUIDCounter = burningEmbersUIDCounter + 1
+    --     burningEmbersUID[core.spawn_uid] = "alive"
+    --     --print("BurningEmbersUIDCounter: " .. burningEmbersUIDCounter)
+    -- elseif core.destID == "104262" and burningEmbersUID[core.spawn_uid_dest] == nil then
+    --     --print("Adding: " .. core.spawn_uid_dest)
+    --     burningEmbersUIDCounter = burningEmbersUIDCounter + 1
+    --     burningEmbersUID[core.spawn_uid_dest] = "alive"
+    --     --print("BurningEmbersUIDCounter: " .. burningEmbersUIDCounter)
+    -- end
 
-    --Burning Ember Killed
-    if core.type == "UNIT_DIED" and core.destID == "104262" then
-        if burningEmbersUID[core.spawn_uid_dest] ~= nil then
-            burningEmbersUIDCounter = burningEmbersUIDCounter - 1
-            burningEmbersUID[core.spawn_uid_dest] = "dead"
-            --print(core.spawn_uid_dest .. " has been killed. Removing from burningEmbersUID")
-            --print("BurningEmbersUIDCounter: " .. burningEmbersUIDCounter)
-            if core.destName ~= nil and core.spellName ~= nil then
-                core:sendMessage("Burning Ember Killed by " .. core.destName .. " (" .. core.spellName .. ")")
-            end
-        end
-        if burningEmbersUIDBridgeBreak[core.spawn_uid_dest] ~= nil then
-            --print(core.spawn_uid_dest .. " killed by player")
-            burningEmbersUIDBridgeBreakCounter = burningEmbersUIDBridgeBreakCounter - 1
-            burningEmbersUIDBridgeBreak[core.spawn_uid_dest] = "dead"
-            --print(core.spawn_uid_dest .. " has been killed. Removing from burningEmbersUIDBridgeBreak")
-            --print("BurningEmbersUIDBridgeBreakCounter: " .. burningEmbersUIDBridgeBreakCounter)
-        end
-    end
+    -- --Burning Ember Killed
+    -- if core.type == "UNIT_DIED" and core.destID == "104262" then
+    --     if burningEmbersUID[core.spawn_uid_dest] ~= nil then
+    --         burningEmbersUIDCounter = burningEmbersUIDCounter - 1
+    --         burningEmbersUID[core.spawn_uid_dest] = "dead"
+    --         --print(core.spawn_uid_dest .. " has been killed. Removing from burningEmbersUID")
+    --         --print("BurningEmbersUIDCounter: " .. burningEmbersUIDCounter)
+    --         if core.destName ~= nil and core.spellName ~= nil then
+    --             core:sendMessage("Burning Ember Killed by " .. core.destName .. " (" .. core.spellName .. ")")
+    --         end
+    --     end
+    --     if burningEmbersUIDBridgeBreak[core.spawn_uid_dest] ~= nil then
+    --         --print(core.spawn_uid_dest .. " killed by player")
+    --         burningEmbersUIDBridgeBreakCounter = burningEmbersUIDBridgeBreakCounter - 1
+    --         burningEmbersUIDBridgeBreak[core.spawn_uid_dest] = "dead"
+    --         --print(core.spawn_uid_dest .. " has been killed. Removing from burningEmbersUIDBridgeBreak")
+    --         --print("BurningEmbersUIDBridgeBreakCounter: " .. burningEmbersUIDBridgeBreakCounter)
+    --     end
+    -- end
 
-    --Slam Counter
-    if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 205862 then
-        slamCounter = slamCounter + 1
-        --print("Detected Slam: " .. slamCounter)
-    end
+    -- --Slam Counter
+    -- if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 205862 then
+    --     slamCounter = slamCounter + 1
+    --     --print("Detected Slam: " .. slamCounter)
+    -- end
 
-    --Bridge Break Detected
-    if slamCounter % 3 == 0 and slamCounter ~= 0 then
-        if timerStarted2 == false then
-            timerStarted2 = true
-            C_Timer.After(3, function() --This gives time for the adds to fall into the water
-                --The bridge has broken. Wait 5 seconds to see which adds have died
-                if timerStarted == false then
-                    --print("Timer Started Waiting For Bridge Break")
-                    timerStarted = true
-                    C_Timer.After(3, function() --Time to recount the adds
-                        --print("Bridge Broken. Check which adds have died")
-                        if core.inCombat == true then
+    -- --Bridge Break Detected
+    -- if slamCounter % 3 == 0 and slamCounter ~= 0 then
+    --     if timerStarted2 == false then
+    --         timerStarted2 = true
+    --         C_Timer.After(3, function() --This gives time for the adds to fall into the water
+    --             --The bridge has broken. Wait 5 seconds to see which adds have died
+    --             if timerStarted == false then
+    --                 --print("Timer Started Waiting For Bridge Break")
+    --                 timerStarted = true
+    --                 C_Timer.After(3, function() --Time to recount the adds
+    --                     --print("Bridge Broken. Check which adds have died")
+    --                     if core.inCombat == true then
 
-                            --print(burningEmbersUIDCounter)
-                            --print(burningEmbersUIDBridgeBreakCounter)
-                            burningEmbersKilled = burningEmbersKilled + (burningEmbersUIDCounter - burningEmbersUIDBridgeBreakCounter)
-                            core:sendMessage(core:getAchievement() .. " Burning Embers Quenced (" .. burningEmbersKilled .. "/" .. "15)")
+    --                         --print(burningEmbersUIDCounter)
+    --                         --print(burningEmbersUIDBridgeBreakCounter)
+    --                         burningEmbersKilled = burningEmbersKilled + (burningEmbersUIDCounter - burningEmbersUIDBridgeBreakCounter)
+    --                         core:sendMessage(core:getAchievement() .. " Burning Embers Quenced (" .. burningEmbersKilled .. "/" .. "15)")
     
-                            slamCounter = 0
-                            burningEmbersUIDBridgeBreak = {}
-                            burningEmbersUIDBridgeBreakCounter = 0
-                            burningEmbersUID = {}
-                            burningEmbersUIDCounter = 0
-                            timerStarted = false
-                            timerStarted2 = false
+    --                         slamCounter = 0
+    --                         burningEmbersUIDBridgeBreak = {}
+    --                         burningEmbersUIDBridgeBreakCounter = 0
+    --                         burningEmbersUID = {}
+    --                         burningEmbersUIDCounter = 0
+    --                         timerStarted = false
+    --                         timerStarted2 = false
     
-                            if burningEmbersKilled >= 15 then
-                                if core:getBlizzardTrackingStatus(10575) == true then
-                                    core:getAchievementSuccess()
-                                else
-                                    core:sendMessage("ERROR! Blizzard tracker has not gone white. Do not kill boss yet.")
-                                end
-                            end
-                        end
-                    end)
-                end        
-            end)
-        end
-    end
+    --                         if burningEmbersKilled >= 15 then
+    --                             if core:getBlizzardTrackingStatus(10575) == true then
+    --                                 core:getAchievementSuccess()
+    --                             else
+    --                                 core:sendMessage("ERROR! Blizzard tracker has not gone white. Do not kill boss yet.")
+    --                             end
+    --                         end
+    --                     end
+    --                 end)
+    --             end        
+    --         end)
+    --     end
+    -- end
 
-    --Burning Ember Detected After Bridge Break
-    if timerStarted == true then
-        --See which Burning Embers are still alive
-        if core.sourceID == "104262" and core.spellId == 209017 and burningEmbersUIDBridgeBreak[core.spawn_uid] == nil and burningEmbersUID[core.spawn_uid] ~= "dead" then
-            --print(core.spawn_uid .. " is still alive " .. core.spellName)
-            burningEmbersUIDBridgeBreakCounter = burningEmbersUIDBridgeBreakCounter + 1
-            burningEmbersUIDBridgeBreak[core.spawn_uid] = "alive"
-            --print("burningEmbersUIDBridgeBreakCounter: " .. burningEmbersUIDBridgeBreakCounter)
-        end
-    end
+    -- --Burning Ember Detected After Bridge Break
+    -- if timerStarted == true then
+    --     --See which Burning Embers are still alive
+    --     if core.sourceID == "104262" and core.spellId == 209017 and burningEmbersUIDBridgeBreak[core.spawn_uid] == nil and burningEmbersUID[core.spawn_uid] ~= "dead" then
+    --         --print(core.spawn_uid .. " is still alive " .. core.spellName)
+    --         burningEmbersUIDBridgeBreakCounter = burningEmbersUIDBridgeBreakCounter + 1
+    --         burningEmbersUIDBridgeBreak[core.spawn_uid] = "alive"
+    --         --print("burningEmbersUIDBridgeBreakCounter: " .. burningEmbersUIDBridgeBreakCounter)
+    --     end
+    -- end
 end
 
 function core._1530:Elisande()
