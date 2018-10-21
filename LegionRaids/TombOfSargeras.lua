@@ -21,6 +21,11 @@ local demonicInquisitionKilled = false
 local healthPercentageReached = false
 local waxingTwilightSoulFound = false
 
+------------------------------------------------------
+---- Mistress Sass'zine
+------------------------------------------------------
+local partsCompleted = 0
+
 function core._1676:Goroth()
     if core:getBlizzardTrackingStatus(11724) == true then
         core:getAchievementSuccess()
@@ -72,6 +77,42 @@ function core._1676:Harjatan()
     end
 end
 
+function core._1676:MistressSasszine()
+    --Hydra Essence
+    if core:getBlizzardTrackingStatus(11676, 1) == true then
+        partsCompleted = partsCompleted + 1
+        core:sendMessage("Hydra Essence part of " .. core:getAchievement() .. " completed (" .. partsCompleted .. "/5)")
+    end
+
+    --Eel Tartare
+    if core:getBlizzardTrackingStatus(11676, 2) == true then
+        partsCompleted = partsCompleted + 1
+        core:sendMessage("Eel Tartare part of " .. core:getAchievement() .. " completed (" .. partsCompleted .. "/5)")
+    end
+
+    --Ink Sauce
+    if core:getBlizzardTrackingStatus(11676, 3) == true then
+        partsCompleted = partsCompleted + 1
+        core:sendMessage("Ink Sauce part of " .. core:getAchievement() .. " completed (" .. partsCompleted .. "/5)")
+    end
+
+    --Murloc Fillet
+    if core:getBlizzardTrackingStatus(11676, 4) == true then
+        partsCompleted = partsCompleted + 1
+        core:sendMessage("Murloc Fillet part of " .. core:getAchievement() .. " completed (" .. partsCompleted .. "/5)")
+    end
+
+    --Player Seasoning
+    if core:getBlizzardTrackingStatus(11676, 5) == true then
+        partsCompleted = partsCompleted + 1
+        core:sendMessage("Player Seasoning part of " .. core:getAchievement() .. " completed (" .. partsCompleted .. "/5)")
+    end
+
+    if partsCompleted == 5 then
+        core:getAchievementSuccess()
+    end
+end
+
 function core._1676:SistersOfTheMoon()
     --Check if add is in combat with boss
     if core.sourceID == "121498" or core.destID == "121498" then
@@ -112,6 +153,11 @@ function core._1676:ClearVariables()
     ------------------------------------------------------
     healthPercentageReached = false
     waxingTwilightSoulFound = false
+
+    ------------------------------------------------------
+    ---- Mistress Sass'zine
+    ------------------------------------------------------
+    partsCompleted = 0
 end
 
 function core._1676:InstanceCleanup()
