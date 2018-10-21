@@ -1278,7 +1278,7 @@ core.Instances = {
                     bossIDs = {},
                     achievement = 10611,
                     players = {L["(Enter instance to start scanning)"]},
-                    tactics = "For this achievement, it is suggested that you follow the below steps to increase your chances of the conversation procing.\n\n - Kill all 5 Duskwatch Sentries before engaging the first boss\n - Disable all 5 Arcane Beacons before engaging the first boss\n - Guess the Spy on first try\n\n Check out https://www.wowhead.com/achievement=10611/dropping-some-eaves#comments:id=2622946 for more info on this achievement",
+                    tactics = "For this achievement, it is suggested that you follow the steps below to increase your chances of the conversation procing.\n\n - Kill all 5 Duskwatch Sentries before engaging the first boss\n - Disable all 5 Arcane Beacons before engaging the first boss\n - Guess the Spy on first try\n\n Check out https://www.wowhead.com/achievement=10611/dropping-some-eaves#comments:id=2622946 for more info on this achievement",
                     enabled = false,
                     track = nil,
 					partial = false,
