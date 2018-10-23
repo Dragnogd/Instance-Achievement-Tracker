@@ -21,6 +21,12 @@ local demonicInquisitionKilled = false
 local healthPercentageReached = false
 local waxingTwilightSoulFound = false
 
+
+local hydraCompleted = false
+local eelCompleted = false
+local playerCompleted = false
+local murlocCompleted = false
+local inkCompleted = false
 ------------------------------------------------------
 ---- Mistress Sass'zine
 ------------------------------------------------------
@@ -79,31 +85,36 @@ end
 
 function core._1676:MistressSasszine()
     --Hydra Essence
-    if core:getBlizzardTrackingStatus(11676, 1) == true then
+    if core:getBlizzardTrackingStatus(11676, 1) == true and hydraCompleted == false then
+        hydraCompleted = true
         partsCompleted = partsCompleted + 1
         core:sendMessage("Hydra Essence part of " .. core:getAchievement() .. " completed (" .. partsCompleted .. "/5)")
     end
 
     --Eel Tartare
-    if core:getBlizzardTrackingStatus(11676, 2) == true then
+    if core:getBlizzardTrackingStatus(11676, 2) == true and eelCompleted == false then
+        eelCompleted = true
         partsCompleted = partsCompleted + 1
         core:sendMessage("Eel Tartare part of " .. core:getAchievement() .. " completed (" .. partsCompleted .. "/5)")
     end
 
     --Ink Sauce
-    if core:getBlizzardTrackingStatus(11676, 3) == true then
+    if core:getBlizzardTrackingStatus(11676, 3) == true and inkCompleted == false then
+        inkCompleted = true
         partsCompleted = partsCompleted + 1
         core:sendMessage("Ink Sauce part of " .. core:getAchievement() .. " completed (" .. partsCompleted .. "/5)")
     end
 
     --Murloc Fillet
-    if core:getBlizzardTrackingStatus(11676, 4) == true then
+    if core:getBlizzardTrackingStatus(11676, 4) == true and murlocCompleted == false then
+        murlocCompleted = true
         partsCompleted = partsCompleted + 1
         core:sendMessage("Murloc Fillet part of " .. core:getAchievement() .. " completed (" .. partsCompleted .. "/5)")
     end
 
     --Player Seasoning
-    if core:getBlizzardTrackingStatus(11676, 5) == true then
+    if core:getBlizzardTrackingStatus(11676, 5) == true and playerCompleted == false then
+        playerCompleted = true
         partsCompleted = partsCompleted + 1
         core:sendMessage("Player Seasoning part of " .. core:getAchievement() .. " completed (" .. partsCompleted .. "/5)")
     end
@@ -158,6 +169,11 @@ function core._1676:ClearVariables()
     ---- Mistress Sass'zine
     ------------------------------------------------------
     partsCompleted = 0
+    playerCompleted = false
+    murlocCompleted = false
+    inkCompleted = false
+    eelCompleted = false
+    hydraCompleted = false
 end
 
 function core._1676:InstanceCleanup()
