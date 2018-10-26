@@ -38,6 +38,7 @@ local burningEmbersKilledDuringTimer = 0
 local slamCounter = 0
 local timerStarted = false
 local timerStarted2 = false
+local burningEmbersKilledByPlayersUID = {}
 
 ------------------------------------------------------
 ---- Gul'dan
@@ -190,6 +191,7 @@ function core._1530:InstanceCleanup()
     core._1530.Events:UnregisterEvent("UNIT_AURA")
     core._1530.Events:UnregisterEvent("UNIT_TARGETABLE_CHANGED")
     core._1530.Events:UnregisterEvent("NAME_PLATE_UNIT_ADDED")
+    burningEmbersKilledByPlayersUID = {}
 end
 
 function core._1530.Events:NAME_PLATE_UNIT_ADDED(self, unitID, ...)
@@ -328,9 +330,14 @@ function core._1530:Krosus()
     --If Burning Ember Killed by player then remove from list
     if core.destID == "104262" and core.overkill > 0 and burningEmbersUID[core.spawn_uid_dest] ~= "killed" then
         if core:getBlizzardTrackingStatus(10575) == false then
-            core:sendMessage(core.sourceName .. " killed a Burning Ember")
+            if burningEmbersKilledByPlayersUID[core.sourceName] == nil then
+                burningEmbersKilledByPlayersUID[core.sourceName] = 1
+            else
+                burningEmbersKilledByPlayersUID[core.sourceName] = burningEmbersKilledByPlayersUID[core.sourceName] + 1
+            end
+            core:sendMessage(core.sourceName .. " killed a Burning Ember (" .. burningEmbersKilledByPlayersUID[core.sourceName] .. ")")
         end
-        burningEmbersUID[core.spawn_uid_dest] = "killed"
+        burningEmbersUID[core.spawn_uid_dest] = "killed" 
     elseif core.sourceID == "104262" and burningEmbersUID[core.spawn_uid_dest] ~= "killed" and burningEmbersUID[core.spawn_uid] ~= "killed" then
         if burningEmbersUID[core.spawn_uid] == nil and core.spawn_uid ~= nil then
             core:sendDebugMessage("ADDED: " .. core.spawn_uid)
@@ -338,18 +345,26 @@ function core._1530:Krosus()
         --Reset counter to current time in seconds since add has been detected again
         burningEmbersUID[core.spawn_uid] = GetTime()
         burningEmbersUIDTemp[core.spawn_uid] = core.spawn_uid
+
+        --If add is detected after we thought it was killed then remove from counter
+        if burningEmbersUID[k] == "missing" then
+            burningEmbersKilled = burningEmbersKilled - 1
+            core:sendMessage(core:getAchievement() .. " Burning Embers Killed (" .. burningEmbersKilled .. "/14)")
+        end
     end
 
     --Compare the two arrays to see if any have been killed
     for k, v in pairs(burningEmbersUID) do
-        if v ~= "killed" then
+        if v ~= "killed" and v ~= "missing" then
             if core:has_value2(burningEmbersUIDTemp, k) == false then
                 if (GetTime() - burningEmbersUID[k]) > 5 then
-                    --This add was killed by the water so increment counter
-                    burningEmbersKilled = burningEmbersKilled + 1
-                    core:sendMessage(core:getAchievement() .. " Burning Embers Killed (" .. burningEmbersKilled .. "/14)")
-                    core:sendDebugMessage(k .. " has been killed")
-                    burningEmbersUID[k] = "killed"                    
+                    if core.encounterStarted == true and UnitName("boss1") ~= nil then
+                        --This add was killed by the water so increment counter
+                        burningEmbersKilled = burningEmbersKilled + 1
+                        core:sendMessage(core:getAchievement() .. " Burning Embers Killed (" .. burningEmbersKilled .. "/14)")
+                        core:sendDebugMessage(k .. " has been killed")
+                        burningEmbersUID[k] = "missing"
+                    end                    
                 end
             end
         end
