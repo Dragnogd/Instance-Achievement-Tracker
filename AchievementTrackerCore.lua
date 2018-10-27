@@ -1857,13 +1857,13 @@ function core:sendMessage(message, outputToRW, messageType)
 								for k, v in pairs(messageQueue) do
 									if outputToRW == true and core.chatType == "RAID" and announceToRaidWarning == true and (UnitIsGroupAssistant("Player") or UnitIsGroupLeader("Player")) then
 										--Important message output to raid warning from user request
-										print("Outputting to Raid Warning")									
+										--print("Outputting to Raid Warning")									
 										SendChatMessage("[IAT] " .. v,"RAID_WARNING",DEFAULT_CHAT_FRAME.editBox.languageID)
 									elseif outputToRW == true and announceToRaidWarning == true then
 										SendChatMessage("[IAT] " .. message,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
 										RaidNotice_AddMessage(RaidWarningFrame, "[IAT] " .. message, ChatTypeInfo["RAID_WARNING"])
 									else
-										print("Outputting to normal")										
+										--print("Outputting to normal")										
 										SendChatMessage("[IAT] " .. v,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
 									end
 
