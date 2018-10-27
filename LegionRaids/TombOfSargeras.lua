@@ -174,6 +174,12 @@ function core._1676:ClearVariables()
     inkCompleted = false
     eelCompleted = false
     hydraCompleted = false
+
+    ------------------------------------------------------
+    ---- Demonic Inquisition
+    ------------------------------------------------------
+    playersTormentTable = {}
+    playersTorment = 0
 end
 
 function core._1676:InstanceCleanup()

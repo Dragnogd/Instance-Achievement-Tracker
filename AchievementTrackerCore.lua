@@ -11,6 +11,8 @@ local debugMode = false
 local debugModeChat = false
 local sendDebugMessages = false
 
+local ptrVersion = "8.1.0"
+
 --------------------------------
 -- Saved Variables tables
 --------------------------------
