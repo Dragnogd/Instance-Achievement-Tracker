@@ -4,6 +4,6 @@
 local _, core = ...
 
 ------------------------------------------------------
----- Azeroth Bosses
+---- Battle of Dazar'alor Bosses
 ------------------------------------------------------
-core.Azeroth = {}
+core.BattleOfDazaralor = {}

@@ -27,6 +27,7 @@ Localization.zhTW.lua
 LocalizationkoKR.lua
 
 BattleForAzerothRaids\Uldir.lua
+BattleForAzerothRaids\BattleOfDazaralor.lua
 
 BattleForAzerothDungeons\AtalDazar.lua
 BattleForAzerothDungeons\Freehold.lua

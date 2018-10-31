@@ -1,4 +1,4 @@
--- local i = 1
+-- local i = 2
 -- while EJ_GetInstanceByIndex(i, false) do
 --     local instanceId, name = EJ_GetInstanceByIndex(i, false)
 --     print("---" .. instanceId, name)
@@ -12,6 +12,10 @@
 --         j = j+1
 --     end
 -- end
+
+--NOTES for updating this file for new raids/dungeons
+--EncounterID - Get this from boss mods
+--
 
 --------------------------------------
 -- Namespaces
@@ -117,6 +121,76 @@ core.Instances = {
                     encounterID = 2122,
                 },
             },
+
+            -- [1861] = { --Battle of Dazar'alor
+            --     name = 1031,
+            --     boss1 = {
+            --         name = 1031, --Champion of the Light
+            --         bossIDs = {},
+            --         achievement = 13316,
+            --         players = {L["(Enter instance to start scanning)"]},
+            --         tactics = "",
+            --         enabled = false,
+            --         track = nil,
+            --         partial = false,
+            --         encounterID = ,
+            --     },
+            --     boss2 = {
+            --         name = 1031, --Grong
+            --         bossIDs = {},
+            --         achievement = 13383,
+            --         players = {L["(Enter instance to start scanning)"]},
+            --         tactics = "",
+            --         enabled = false,
+            --         track = nil,
+            --         partial = false,
+            --         encounterID = ,
+            --     },
+            --     boss3 = {
+            --         name = 1031, --Treasure Guardian
+            --         bossIDs = {},
+            --         achievement = 13345,
+            --         players = {L["(Enter instance to start scanning)"]},
+            --         tactics = "",
+            --         enabled = false,
+            --         track = nil,
+            --         partial = false,
+            --         encounterID = ,
+            --     },
+            --     boss4 = {
+            --         name = 1031, --Conclave of the Chosen
+            --         bossIDs = {},
+            --         achievement = 13325,
+            --         players = {L["(Enter instance to start scanning)"]},
+            --         tactics = "",
+            --         enabled = false,
+            --         track = nil,
+            --         partial = false,
+            --         encounterID = ,
+            --     },
+            --     boss5 = {
+            --         name = 1031, --High Tinker Mekkatorque
+            --         bossIDs = {},
+            --         achievement = 13401,
+            --         players = {L["(Enter instance to start scanning)"]},
+            --         tactics = "",
+            --         enabled = false,
+            --         track = nil,
+            --         partial = false,
+            --         encounterID = ,
+            --     },
+            --     boss6 = {
+            --         name = 1031, --Jaina Proudmoore
+            --         bossIDs = {},
+            --         achievement = 13410,
+            --         players = {L["(Enter instance to start scanning)"]},
+            --         tactics = "",
+            --         enabled = false,
+            --         track = nil,
+            --         partial = false,
+            --         encounterID = ,
+            --     },
+            -- },
         },
 
         Dungeons = {
