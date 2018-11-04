@@ -27,6 +27,11 @@ local warmotherInfected = false
 ------------------------------------------------------
 local lastPlayerToAbsorbOrb = ""
 
+------------------------------------------------------
+---- Ghuun
+------------------------------------------------------
+local achievementRedForAttempt = false
+
 function core._1861:FetidDevourer()
     --Defeat the Fetid Devourer in Uldir after having all players hit by Terrible Thrash at least once on Normal difficulty or higher.
     if core.type == "UNIT_DIED" and core.destID == "133298" then
@@ -121,7 +126,7 @@ end
 
 function core._1861:Ghuun()
     --Blizzard Tracker has gone red so achievement failed
-    if core:getBlizzardTrackingStatus(12551) == false then
+    if core:getBlizzardTrackingStatus(12551) == false and achievementRedForAttempt == false then
         --Find the player who currently has the power matrix
         if core.groupSize > 1 then
             for i = 1, core.groupSize do
@@ -157,6 +162,9 @@ function core._1861:Ghuun()
             end
         end
     end
+
+    --Stop tracker for working for remainder of fight to reduce lag
+    achievementRedForAttempt = true
 end 
 
 function core._1861:InstanceCleanup()
@@ -181,4 +189,9 @@ function core._1861:ClearVariables()
     ---- Mythrax the Unraveler
     ------------------------------------------------------
     lastPlayerToAbsorbOrb = ""
+    
+    ------------------------------------------------------
+    ---- Ghuun
+    ------------------------------------------------------
+    achievementRedForAttempt = false
 end
