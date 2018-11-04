@@ -18,6 +18,11 @@ local getListOfPlayers = false
 local playersInGroup = {}
 
 ------------------------------------------------------
+---- Vectis
+------------------------------------------------------
+local warmotherInfected = false
+
+------------------------------------------------------
 ---- Mythrax the Unraveler
 ------------------------------------------------------
 local lastPlayerToAbsorbOrb = ""
@@ -35,7 +40,7 @@ function core._1861:FetidDevourer()
 
     if fetidDevourerKilled == false then
         --Player has been hit by terrible thrash
-        if core.type == "SPELL_DAMAGE" and core.spellId == 262277 and core.amount > 0 and core.destName ~= nil and core.spawn_uid_dest_Player ~= nil then
+        if core.type == "SPELL_DAMAGE" and core.spellId == 262277 and core.destName ~= nil and core.spawn_uid_dest_Player ~= nil then
             core:sendDebugMessage(core.destName .. " Hit By Terrible Thrash")
             local name, realm = strsplit("-", core.destName)
             core:sendDebugMessage(name)
@@ -72,7 +77,13 @@ function core._1861:Vectis()
     --Warmother Rakkali 142148
     --Plague Bomb 266948
 
-    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 266948 and core.destID == "142148" then
+    --If warmother casts blood ritual then she has been infected
+    if core.type == "SPELL_CAST_START" and core.spellId == 277813 and core.sourceID == "142148" and warmotherInfected == false then
+        core:sendMessage("Warmother Rakkali has been infected with Plague Bomb. She can now be killed.")
+        warmotherInfected = true
+    end
+
+    if core.type == "UNIT_DIED" and core.destID == "142148" and warmotherInfected == true then
         core:getAchievementSuccess()
     end
 end
@@ -160,6 +171,11 @@ function core._1861:ClearVariables()
     playersFetid = 0
     getListOfPlayers = false
     playersInGroup = {}
+
+    ------------------------------------------------------
+    ---- Vectis
+    ------------------------------------------------------
+    warmotherInfected = false
 
     ------------------------------------------------------
     ---- Mythrax the Unraveler
