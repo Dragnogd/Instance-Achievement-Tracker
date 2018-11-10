@@ -38,6 +38,33 @@ local graspingEarthKilled = 0
 ------------------------------------------------------
 local messageSent = false
 
+------------------------------------------------------
+---- Beastlord Darmac
+------------------------------------------------------
+local oreFound = false
+
+function core._1205:Oregorger()
+	--Detect last player to pick up ore
+	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 163454 then
+		oreFound = true
+	end
+
+	--When ore is dropped wait 3 seconds for another player to get orb else faile
+	if core.type == "SPELL_AURA_REMOVED" and core.spellId == 163454 then
+		oreFound = false
+		C_Timer.After(4, function() 
+			if oreFound == false then
+				core:getAchievementFailed()
+			end
+		end)
+	end
+
+    --Blizzard Tracker has gone white so achievement completed
+    if core:getBlizzardTrackingStatus(8979) == true then
+        core:getAchievementSuccess()
+    end
+end
+
 function core._1205:BeastlordDarmac()
 	if (core.sourceID == "76884" or core.sourceID == "76874" or core.sourceID == "76945") and messageSent == false then
 		core:sendMessage(core.sourceName .. " Mounted First' part of " .. GetAchievementLink(core.achievementIDs[1]) .. " will be completed once boss is killed")
@@ -170,4 +197,9 @@ function core._1205:ClearVariables()
 	---- Beastlord Darmac
 	------------------------------------------------------
 	messageSent = false
+
+	------------------------------------------------------
+	---- Beastlord Darmac
+	------------------------------------------------------
+	oreFound = false
 end
