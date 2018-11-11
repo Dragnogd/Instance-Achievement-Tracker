@@ -7,6 +7,7 @@ local _, core = ...
 ---- Blackrock Foundary Bosses
 ------------------------------------------------------
 core._1205 = {}
+core._1205.Events = CreateFrame("Frame")
 
 ------------------------------------------------------
 ---- Blackhand
@@ -42,6 +43,12 @@ local messageSent = false
 ---- Beastlord Darmac
 ------------------------------------------------------
 local oreFound = false
+
+------------------------------------------------------
+---- Gruul
+------------------------------------------------------
+local playersRecentlyCollectedOre = {}
+local oreCounter = 0
 
 function core._1205:Oregorger()
 	--Detect last player to pick up ore
@@ -167,6 +174,38 @@ function core._1205:Kromog()
 	end
 end
 
+function core._1205:InstanceCleanup()
+    core._1205.Events:UnregisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+end
+
+core._1205.Events:SetScript("OnEvent", function(self, event, ...)
+    return self[event] and self[event](self, event, ...)
+end)
+
+function core._1205:InitialSetup()
+    core._1205.Events:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+end
+
+function core._1205.Events:UNIT_SPELLCAST_SUCCEEDED(self, unitID, lineID, spellID, ...)
+	print(GetSpellInfo(spellID))
+
+	--If collect ore detected. Add 1 to counter, then 2 second cooldown on that user 
+
+    if core.Instances[core.expansion][core.instanceType][core.instance]["boss7"].enabled == true then
+		if playersRecentlyCollectedOre[UnitName(unitID)] == nil and spellID == 165184 then
+			oreCounter = oreCounter + 1
+			playersRecentlyCollectedOre[UnitName(unitID)] = UnitName(unitID)
+			core:sendMessage(core:getAchievement() .. " Ore Collected by " .. UnitName(unitID) .. " (" .. oreCounter .. "/3)")
+			if oreCounter == 3 then
+				core:getAchievementSuccess()
+			end
+			C_Timer.After(3, function() 
+				playersRecentlyCollectedOre[UnitName(unitID)] = nil
+			end)
+		end
+	end
+end
+
 function core._1205:ClearVariables()
 	------------------------------------------------------
 	---- Blackhand
@@ -202,4 +241,10 @@ function core._1205:ClearVariables()
 	---- Beastlord Darmac
 	------------------------------------------------------
 	oreFound = false
+
+	------------------------------------------------------
+	---- Gruul
+	------------------------------------------------------
+	playersRecentlyCollectedOre = {}
+	oreCounter = 0
 end
