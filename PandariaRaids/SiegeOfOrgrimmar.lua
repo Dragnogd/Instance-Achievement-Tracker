@@ -95,26 +95,31 @@ local warbringersKilled = 0
 local killedTimestamp = nil
 
 function core._1136:Immerseus()
-	if (core.type == "SWING_DAMAGE_LANDED" or core.type == "SWING_DAMAGE" or core.type == "SPELL_DAMAGE" or core.type == "SPELL_MISSED" or core.type == "SPELL_ABSORBED") and bossReformed == true and core.sourceID == "71543" then
-		if timerStarted == false then
-			timerStarted = true
-			C_Timer.After(3, function()
-				if core.inCombat == true then 
-					core:sendMessage("Kill the Tears of the Vale Now")
-					safeToKillTears = true
-					timerStarted = false
-					bossReformed = false
-				end
-			end)
-		end
-	end
+	-- if (core.type == "SWING_DAMAGE_LANDED" or core.type == "SWING_DAMAGE" or core.type == "SPELL_DAMAGE" or core.type == "SPELL_MISSED" or core.type == "SPELL_ABSORBED") and bossReformed == true and core.sourceID == "71543" then
+	-- 	if timerStarted == false then
+	-- 		timerStarted = true
+	-- 		C_Timer.After(3, function()
+	-- 			if core.inCombat == true then 
+	-- 				core:sendMessage("Kill the Tears of the Vale Now")
+	-- 				safeToKillTears = true
+	-- 				timerStarted = false
+	-- 				bossReformed = false
+	-- 			end
+	-- 		end)
+	-- 	end
+	-- end
 
-	if core.type == "UNIT_DIED" and core.destName == "Tears of the Vale" and tearsOfTheValeKilled < 10 and safeToKillTears == true then
-		tearsOfTheValeKilled = tearsOfTheValeKilled + 1
-		core:sendMessage("Tears of the Vale Killed ("  .. tearsOfTheValeKilled .. "/10)")
-	end
+	-- if core.type == "UNIT_DIED" and core.destName == "Tears of the Vale" and tearsOfTheValeKilled < 10 and safeToKillTears == true then
+	-- 	tearsOfTheValeKilled = tearsOfTheValeKilled + 1
+	-- 	core:sendMessage("Tears of the Vale Killed ("  .. tearsOfTheValeKilled .. "/10)")
+	-- end
 
-	if tearsOfTheValeKilled == 10 then
+	-- if tearsOfTheValeKilled == 10 then
+	-- 	core:getAchievementSuccess()
+	-- end
+
+	--Blizzard Tracker has gone white so achievement completed
+	if core:getBlizzardTrackingStatus(8536) == true then
 		core:getAchievementSuccess()
 	end
 end
