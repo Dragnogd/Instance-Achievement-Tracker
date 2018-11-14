@@ -2373,7 +2373,7 @@ core.Instances = {
                     players = {L["(Enter instance to start scanning)"]},
                     tactics = "During the Siege phase, a random player will get targeted with the " .. GetSpellLink(144918) .. ". This player needs to kite the laser through the mines on the ground. Once the mines have been run over by the laser they will turn superheated. At this point click on the mines to stomp on them. Stomp on 6 superheated mines to earn the achievement.",
                     enabled = true,
-                    track = function() core._1136:IronJuggernaut() end,
+                    track = function() end,
                     partial = false,
                     encounterID = 1600,
                 },

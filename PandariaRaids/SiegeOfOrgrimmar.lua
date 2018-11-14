@@ -2,6 +2,7 @@
 -- Namespaces
 --------------------------------------
 local _, core = ...
+local L = core.L
 
 ------------------------------------------------------
 ---- Siege Of Orgrimmar Bosses
@@ -30,10 +31,8 @@ local playersRecievedMarkCounter = 0
 ------------------------------------------------------
 ---- Iron Juggernaut
 ------------------------------------------------------
-local detonationStarted = false
 local superheatedCrawlerMinesSquashed = 0
-local superheatedCrawlerMines = {}
-local superheatedCrawlerMinesTemp = 0
+local superheatedCrawlerMinesUID = {}
 
 ------------------------------------------------------
 ---- Kor'kron Dark Shaman
@@ -94,6 +93,8 @@ local step1Complete = false
 local warbringersKilled = 0
 local killedTimestamp = nil
 
+local temp123 = {}
+
 function core._1136:Immerseus()
 	-- if (core.type == "SWING_DAMAGE_LANDED" or core.type == "SWING_DAMAGE" or core.type == "SPELL_DAMAGE" or core.type == "SPELL_MISSED" or core.type == "SPELL_ABSORBED") and bossReformed == true and core.sourceID == "71543" then
 	-- 	if timerStarted == false then
@@ -118,7 +119,7 @@ function core._1136:Immerseus()
 	-- 	core:getAchievementSuccess()
 	-- end
 
-	--Blizzard Tracker has gone white so achievement completed
+	--Blizzard Tracker has gone white so achievement is completed
 	if core:getBlizzardTrackingStatus(8536) == true then
 		core:getAchievementSuccess()
 	end
@@ -172,45 +173,6 @@ function core._1136:Galakras()
 			end
 		end
 	end)
-end
-
-function core._1136:IronJuggernaut()
-	--Crawler Mine Blast
-	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 144766 then
-		if superheatedCrawlerMines[core.spawn_uid_dest] ~= nil then
-			superheatedCrawlerMinesTemp = superheatedCrawlerMinesTemp - 1
-		end
-	end
-
-	if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 144718 and detonationStarted == false then
-		detonationStarted = true
-		C_Timer.After(20, function()
-			detonationStarted = false
-			if superheatedCrawlerMinesTemp > 0 then
-				superheatedCrawlerMinesSquashed = superheatedCrawlerMinesSquashed + superheatedCrawlerMinesTemp
-				core:sendMessage(GetAchievementLink(core.achievementIDs[1]) .. " (" .. superheatedCrawlerMinesSquashed .. "/6) Superheated Crawler Mines Stomped")		
-				superheatedCrawlerMinesTemp = 0
-				superheatedCrawlerMines = {}
-			end
-		end)
-	end
-
-	f:SetScript("OnEvent", function(self, event, unitID)
-		if event == "UNIT_AURA" then
-			local name, realm = UnitName(unitID)
-			if name == "Superheated Crawler Mine" and detonationStarted == true then
-				local _, _, _, _, _, _, spawn_uid_dest = strsplit("-", UnitGUID(unitID));
-				if superheatedCrawlerMines[spawn_uid_dest] == nil then
-					superheatedCrawlerMines[spawn_uid_dest] = spawn_uid_dest
-					superheatedCrawlerMinesTemp = superheatedCrawlerMinesTemp + 1
-				end
-			end
-		end
-	end)
-
-	if superheatedCrawlerMinesSquashed >= 6 then
-		core:getAchievementSuccess()
-	end
 end
 
 function core._1136:GeneralNazgrim()
@@ -460,13 +422,15 @@ function core._1136:TrackAdditional()
 end
 
 function core._1136:InstanceCleanup()
-    core._1136.Events:UnregisterEvent("UNIT_AURA")
+    core._1136.Events:UnregisterEvent("UNIT_TARGET")
     core._1136.Events:UnregisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
+    core._1136.Events:UnregisterEvent("UNIT_SPELLCAST_SUCCEEDED")
 end
 
 function core._1136:InitialSetup()
-    core._1136.Events:RegisterEvent("UNIT_AURA")
+    core._1136.Events:RegisterEvent("UNIT_TARGET")
     core._1136.Events:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
+    core._1136.Events:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
 end
 
 core._1136.Events:SetScript("OnEvent", function(self, event, ...)
@@ -488,21 +452,48 @@ function core._1136.Events:CHAT_MSG_RAID_BOSS_EMOTE(self, message, sender, ...)
 	end
 end
 
-function core._1136.Events:UNIT_AURA(self, unitID, ...)
-	for i=1,40 do
-        local _, _, _, _, _, _, _, _, _, spellId = UnitAura("Player", i)
-        if (spellId == 145730 or spellId == 145729 or spellId == 145732) and prisonersRescued == false then
-			prisonersRescued = true
-			unitsSaved = unitsSaved + 1
-			core:sendMessage("'Rescue a set of caged prisoners,' part of "  .. GetAchievementLink(8453) .. " Completed (" .. unitsSaved .. "/3)")
-		
-			--Requirements Met
-			if unitsSaved == 3 and rescueRaidersCompleted == false then
-				rescueRaidersCompleted = true
-				core:sendMessage(GetAchievementLink(8453) .. " requirements have been met. Boss can now be killed!")
+function core._1136.Events:UNIT_TARGET(self, unitID, ...)
+	if core.Instances[core.expansion][core.instanceType][core.instance]["boss6"].enabled == true and core:has_value(core.achievementIDs, 8520) then
+		if UnitName(unitID .. "target") == L["Superheated Crawler Mine"] then
+			local unitType, _, _, _, _, destID, spawn_uid_dest = strsplit("-", UnitGUID(unitID .. "target"))
+			if superheatedCrawlerMinesUID[spawn_uid_dest] == nil then
+				superheatedCrawlerMinesUID[spawn_uid_dest] = spawn_uid_dest
+				superheatedCrawlerMinesSquashed = superheatedCrawlerMinesSquashed + 1
+				core:sendMessage(core:getAchievement() .. " " .. UnitName(unitID) .. " squashed Superheated Crawler Mine (" .. superheatedCrawlerMinesSquashed .. "/6)")
+	
+				if superheatedCrawlerMinesSquashed == 6 then
+					core:getAchievementSuccess()
+				end
 			end
-        end
-    end
+		end
+	end
+	
+
+	-- for i=1,40 do	
+	-- 	local name, icon, count, debuffType, duration, expirationTime, unitCaster, canStealOrPurge, nameplateShowPersonal, spellId, canApplyAura, isBossDebuff, isCastByPlayer, nameplateShowAll, timeMod = UnitAura(unitID, i)
+	-- 	if spellId ~= nil then
+	-- 		local name, icon, count, debuffType, duration, expirationTime, unitCaster, canStealOrPurge, nameplateShowPersonal, spellId, canApplyAura, isBossDebuff, isCastByPlayer, nameplateShowAll, timeMod = UnitAura(unitID, i)
+	-- 		if temp123[spellId] == nil then
+	-- 			print(UnitAura(unitID, i))
+	-- 			temp123[spellId] = spellId
+	-- 		end
+	-- 	end	
+	-- end
+
+	-- for i=1,40 do
+    --     local _, _, _, _, _, _, _, _, _, spellId = UnitAura("Player", i)
+    --     if (spellId == 145730 or spellId == 145729 or spellId == 145732) and prisonersRescued == false then
+	-- 		prisonersRescued = true
+	-- 		unitsSaved = unitsSaved + 1
+	-- 		core:sendMessage("'Rescue a set of caged prisoners,' part of "  .. GetAchievementLink(8453) .. " Completed (" .. unitsSaved .. "/3)")
+		
+	-- 		--Requirements Met
+	-- 		if unitsSaved == 3 and rescueRaidersCompleted == false then
+	-- 			rescueRaidersCompleted = true
+	-- 			core:sendMessage(GetAchievementLink(8453) .. " requirements have been met. Boss can now be killed!")
+	-- 		end
+    --     end
+    -- end
 end
 
 function core._1136:ClearVariables()
@@ -523,10 +514,8 @@ function core._1136:ClearVariables()
 	------------------------------------------------------
 	---- Iron Juggernaut
 	------------------------------------------------------
-	detonationStarted = false
 	superheatedCrawlerMinesSquashed = 0
-	superheatedCrawlerMines = {}
-	superheatedCrawlerMinesTemp = 0
+	superheatedCrawlerMinesUID = {}
 
 	------------------------------------------------------
 	---- Secured Stockpile Of PandarenSpoils
