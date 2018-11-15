@@ -49,7 +49,7 @@ end
 
 function core._1520:Ilgynoth()
     --Track 20 Nightmare Explosion are alive
-    core:trackMob("105721", "Nightmare Ichors", 20, "20 Nightmare Ichors have spawned. They can now be killed at the eye", 4, nil, nil)
+    core:trackMob("105721", "Nightmare Ichors", 20, "20 Nightmare Ichors have spawned. They can now be killed at the eye", 1, nil, nil)
 
     if core.mobCounter >= 20 and nightmareExplosionTrackKills == false then
         nightmareExplosionTrackKills = true
