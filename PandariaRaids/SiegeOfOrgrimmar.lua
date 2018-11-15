@@ -93,6 +93,11 @@ local step1Complete = false
 local warbringersKilled = 0
 local killedTimestamp = nil
 
+local garroshStarted = false
+local garroshTimerStarted = false
+local garroshCompleted = false
+local garroshMessageQueue = nil
+
 local temp123 = {}
 
 function core._1136:Immerseus()
@@ -290,66 +295,54 @@ function core._1136:Paragons()
 end
 
 function core._1136:GarroshHellscream()
-	if core.achievementsCompleted[1] == false then
-		if (core.type == "SWING_DAMAGE" or core.type == "SWING_MISSED") and core.sourceID == "71979" then
-			if warbringersIds[core.spawn_uid] == nil then
-				warbringersIds[core.spawn_uid] = core.spawn_uid
-				warbringersCounter = warbringersCounter + 1
-				core:sendMessageDelay("Kor'kron Warbringer (" .. warbringersCounter .. "/18)", warbringersCounter, 3)
-			end
-		end
-
-		if warbringersCounter == 18 and step1Complete == false then
-			core:sendMessage(core:getAchievement() .. " 18 Kor'kron Warbringers Alive. They can now be killed with a single Iron Star")
-			step1Complete = true		
-		end
-
-		--If a Warbringer was killed by an iron star impact and we currently have enough adds to start achievement tracking
-		if core.type == "SPELL_DAMAGE" and core.destID == "71979" and core.spellId == 144653 and core.overkill > 0 and warbringersCounter >= 18 then
-			if warbringersIds[core.spawn_uid_dest] ~= nil then
-				warbringersIds[core.spawn_uid_dest] = nil
-				warbringersCounter = warbringersCounter - 1
-				--core:sendMessage("Kor'kron Warbringer DIED (" .. warbringersCounter .. "/18)")
-			end
-
-			--Get timestamp of first kill and compare for rest of kills. If adds are killed with same timestamp we can assume that it was the same iron star
-			local timeCorrect = false
-			if killedTimestamp == nil then
-				killedTimestamp = math.floor(core.timeStamp)
-				timeCorrect = true
-			elseif killedTimestamp == math.floor(core.timeStamp) then
-				timeCorrect = true
-			end
-
-			--print("Add Died At: " .. math.floor(core.timeStamp) .. " Cached time was: " .. killedTimestamp)
-
-			if timeCorrect == true then
-				warbringersKilled = warbringersKilled + 1
-				if timerStarted == false then
-					timerStarted = true
-					C_Timer.After(2, function()
-						if warbringersKilled < 18 then
-							core:sendMessage("(" .. warbringersKilled .. "/18) killed in time (This achievement can be repeated)")
-							step1Complete = false
-							timerStarted = false
-							warbringersKilled = 0
-							killedTimestamp = nil
-						elseif warbringersKilled >= 18 then
-							core:getAchievementSuccess()										
-						end
-					end)
-				end
+	--Since this tracker can output a lot of messages, we need to have a system where it only check for message output every 5 seconds instead
+	garroshStarted = true
+	if garroshTimerStarted == false then
+		core:sendDebugMessage("Started Garrosh Timer")
+		garroshTimerStarted = true
+		C_Timer.After(5, function()
+			core:sendDebugMessage("Checking if we need to output message") 
+			if garroshMessageQueue ~= nil and garroshCompleted == false and garroshStarted == true then
+				--The achievement is not completed and we still have a pending message to output
+				core:sendDebugMessage("Outputting message in queue")
+				core:sendMessage(core:getAchievement() .. " " .. garroshMessageQueue)
 			else
-				--print("Time not correct")			
+				core:sendDebugMessage("No messasge to output")
 			end
-		elseif core.type == "UNIT_DIED" and core.destID == "71979" then
-			--print("Player has killed add")
-			if warbringersIds[core.spawn_uid_dest] ~= nil then
-				warbringersIds[core.spawn_uid_dest] = nil
-				warbringersCounter = warbringersCounter - 1
-				core:sendMessage("Kor'kron Warbringer DIED (" .. warbringersCounter .. "/18)")
-			end			 
-		end
+			garroshMessageQueue = nil
+			garroshTimerStarted = false
+		end)
+	end
+	
+	--Blizzard Tracker has gone white so achievement completed
+	if core:getBlizzardTrackingStatus(8537) == true and garroshCompleted == false then
+		core:sendDebugMessage("Success 1")
+		core:getAchievementSuccess()
+		garroshCompleted = true
+	end
+	
+	if core:getBlizzardTrackingStatus(8537, 1) == true and garroshCompleted == false then
+		core:sendDebugMessage("Success 2")		
+		core:getAchievementSuccess()
+		garroshCompleted = true
+    end
+
+	if warbringersCounter == 18 and step1Complete == false then
+		core:sendDebugMessage(core:getAchievement() .. " 18 Kor'kron Warbringers at <= 15% health. They can now be killed with a single Iron Star")
+		garroshMessageQueue = " 18 Kor'kron Warbringers at <= 15% health. They can now be killed with a single Iron Star"
+		step1Complete = true		
+	end
+
+	--If a Warbringer was killed by an iron star impact and we currently have enough adds to start achievement tracking
+	if core.type == "UNIT_DIED" and core.destID == "71979" then
+		--print("Player has killed add")
+		core:sendDebugMessage(core.spawn_uid_dest)
+		if warbringersIds[core.spawn_uid_dest] ~= nil then
+			warbringersCounter = warbringersCounter - 1
+			core:sendDebugMessage("Kor'kron Warbringer DIED (" .. warbringersCounter .. "/18)")
+			garroshMessageQueue = "Kor'kron Warbringer at <= 15% health (" .. warbringersCounter .. "/18)"
+		end	
+		warbringersIds[core.spawn_uid_dest] = "dead"		 
 	end
 end
 
@@ -425,12 +418,16 @@ function core._1136:InstanceCleanup()
     core._1136.Events:UnregisterEvent("UNIT_TARGET")
     core._1136.Events:UnregisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
     core._1136.Events:UnregisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+    core._1136.Events:UnregisterEvent("UNIT_AURA")
+    core._1136.Events:UnregisterEvent("UNIT_HEALTH")
 end
 
 function core._1136:InitialSetup()
     core._1136.Events:RegisterEvent("UNIT_TARGET")
     core._1136.Events:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
     core._1136.Events:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+    core._1136.Events:RegisterEvent("UNIT_AURA")
+    core._1136.Events:RegisterEvent("UNIT_HEALTH")
 end
 
 core._1136.Events:SetScript("OnEvent", function(self, event, ...)
@@ -467,33 +464,47 @@ function core._1136.Events:UNIT_TARGET(self, unitID, ...)
 			end
 		end
 	end
-	
 
-	-- for i=1,40 do	
-	-- 	local name, icon, count, debuffType, duration, expirationTime, unitCaster, canStealOrPurge, nameplateShowPersonal, spellId, canApplyAura, isBossDebuff, isCastByPlayer, nameplateShowAll, timeMod = UnitAura(unitID, i)
-	-- 	if spellId ~= nil then
-	-- 		local name, icon, count, debuffType, duration, expirationTime, unitCaster, canStealOrPurge, nameplateShowPersonal, spellId, canApplyAura, isBossDebuff, isCastByPlayer, nameplateShowAll, timeMod = UnitAura(unitID, i)
-	-- 		if temp123[spellId] == nil then
-	-- 			print(UnitAura(unitID, i))
-	-- 			temp123[spellId] = spellId
-	-- 		end
-	-- 	end	
-	-- end
+end
 
-	-- for i=1,40 do
-    --     local _, _, _, _, _, _, _, _, _, spellId = UnitAura("Player", i)
-    --     if (spellId == 145730 or spellId == 145729 or spellId == 145732) and prisonersRescued == false then
-	-- 		prisonersRescued = true
-	-- 		unitsSaved = unitsSaved + 1
-	-- 		core:sendMessage("'Rescue a set of caged prisoners,' part of "  .. GetAchievementLink(8453) .. " Completed (" .. unitsSaved .. "/3)")
+function core._1136.Events:UNIT_AURA(self, unitID, ...)
+	for i=1,40 do
+        local _, _, _, _, _, _, _, _, _, spellId = UnitAura("Player", i)
+        if (spellId == 145730 or spellId == 145729 or spellId == 145732) and prisonersRescued == false then
+			prisonersRescued = true
+			unitsSaved = unitsSaved + 1
+			core:sendMessage("'Rescue a set of caged prisoners,' part of "  .. GetAchievementLink(8453) .. " Completed (" .. unitsSaved .. "/3)")
 		
-	-- 		--Requirements Met
-	-- 		if unitsSaved == 3 and rescueRaidersCompleted == false then
-	-- 			rescueRaidersCompleted = true
-	-- 			core:sendMessage(GetAchievementLink(8453) .. " requirements have been met. Boss can now be killed!")
-	-- 		end
-    --     end
-    -- end
+			--Requirements Met
+			if unitsSaved == 3 and rescueRaidersCompleted == false then
+				rescueRaidersCompleted = true
+				core:sendMessage(GetAchievementLink(8453) .. " requirements have been met. Boss can now be killed!")
+			end
+        end
+    end
+end
+
+function core._1136.Events:UNIT_HEALTH(self, unitID, ...)
+	--If Warbringer health is at 15% or less than mark it as ready
+	local unitType, _, _, _, _, destID, spawn_uid_dest = strsplit("-", UnitGUID(unitID))
+	if core:getHealthPercent(unitID) <= 15 and destID == "71979" then
+		if warbringersIds[spawn_uid_dest] == nil and warbringersIds[spawn_uid_dest] ~= "dead" then
+			warbringersIds[spawn_uid_dest] = "fifteen"
+			warbringersCounter = warbringersCounter + 1
+			core:sendDebugMessage("PERCENT: " .. spawn_uid_dest)
+			core:sendDebugMessage("Kor'kron Warbringer at <= 15% health (" .. warbringersCounter .. "/18)", warbringersCounter, 1)
+			garroshMessageQueue = "Kor'kron Warbringer at <= 15% health (" .. warbringersCounter .. "/18)"
+		end
+	elseif core:getHealthPercent(unitID) > 15 and destID == "71979" then
+		--If mob was healed then we need to subtract 1 from the counter
+		if warbringersIds[spawn_uid_dest] == "fifteen" then
+			warbringersIds[spawn_uid_dest] = nil
+			warbringersCounter = warbringersCounter - 1
+			core:sendDebugMessage("HEALED: " .. spawn_uid_dest)
+			core:sendDebugMessage("Kor'kron Warbringer at <= 15% health (" .. warbringersCounter .. "/18)", warbringersCounter, 1)
+			garroshMessageQueue = "Kor'kron Warbringer at <= 15% health (" .. warbringersCounter .. "/18)"				
+		end
+	end
 end
 
 function core._1136:ClearVariables()
@@ -552,6 +563,11 @@ function core._1136:ClearVariables()
 	step1Complete = false
 	warbringersKilled = 0
 	killedTimestamp = nil
+
+	garroshStarted = false
+	garroshTimerStarted = false
+	garroshCompleted = false
+	garroshMessageQueue = false
 end
 
 -- elseif subzone == "Kor'kron Barracks" then
