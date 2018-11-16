@@ -305,7 +305,9 @@ function core._1136:GarroshHellscream()
 			if garroshMessageQueue ~= nil and garroshCompleted == false and garroshStarted == true then
 				--The achievement is not completed and we still have a pending message to output
 				core:sendDebugMessage("Outputting message in queue")
-				core:sendMessage(core:getAchievement() .. " " .. garroshMessageQueue)
+				if garroshMessageQueue ~= false and garroshMessageQueue ~= true then
+					core:sendMessage(core:getAchievement() .. " " .. garroshMessageQueue)
+				end
 			else
 				core:sendDebugMessage("No messasge to output")
 			end
