@@ -434,14 +434,14 @@ core._1136.Events:SetScript("OnEvent", function(self, event, ...)
     return self[event] and self[event](self, event, ...)
 end)
 
-function core._1136.Events:UNIT_TARGET(self, unitID, ...)
+function core._1136.Events:UNIT_SPELLCAST_SUCCEEDED(self, unitID, lineID, spellID, ...)
 	if core.Instances[core.expansion][core.instanceType][core.instance]["boss6"].enabled == true and core:has_value(core.achievementIDs, 8520) then
-		if UnitName(unitID .. "target") == L["Superheated Crawler Mine"] then
-			local unitType, _, _, _, _, destID, spawn_uid_dest = strsplit("-", UnitGUID(unitID .. "target"))
+		if UnitName(unitID) == L["Superheated Crawler Mine"] and spellID == 144781 then
+			local unitType, _, _, _, _, destID, spawn_uid_dest = strsplit("-", UnitGUID(unitID))
 			if superheatedCrawlerMinesUID[spawn_uid_dest] == nil then
 				superheatedCrawlerMinesUID[spawn_uid_dest] = spawn_uid_dest
 				superheatedCrawlerMinesSquashed = superheatedCrawlerMinesSquashed + 1
-				core:sendMessage(core:getAchievement() .. " " .. UnitName(unitID) .. " squashed Superheated Crawler Mine (" .. superheatedCrawlerMinesSquashed .. "/6)")
+				core:sendMessage(core:getAchievement() .. " Superheated Crawler Mines Stomped (" .. superheatedCrawlerMinesSquashed .. "/6)")
 	
 				if superheatedCrawlerMinesSquashed == 6 then
 					core:getAchievementSuccess()
