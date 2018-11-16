@@ -468,20 +468,22 @@ function core._1136.Events:UNIT_TARGET(self, unitID, ...)
 end
 
 function core._1136.Events:UNIT_AURA(self, unitID, ...)
-	for i=1,40 do
-        local _, _, _, _, _, _, _, _, _, spellId = UnitAura("Player", i)
-        if (spellId == 145730 or spellId == 145729 or spellId == 145732) and prisonersRescued == false then
-			prisonersRescued = true
-			unitsSaved = unitsSaved + 1
-			core:sendMessage("'Rescue a set of caged prisoners,' part of "  .. GetAchievementLink(8453) .. " Completed (" .. unitsSaved .. "/3)")
-		
-			--Requirements Met
-			if unitsSaved == 3 and rescueRaidersCompleted == false then
-				rescueRaidersCompleted = true
-				core:sendMessage(GetAchievementLink(8453) .. " requirements have been met. Boss can now be killed!")
+	if core.Instances[core.expansion][core.instanceType][core.instance]["boss7"].enabled == true
+		for i=1,40 do
+			local _, _, _, _, _, _, _, _, _, spellId = UnitAura("Player", i)
+			if (spellId == 145730 or spellId == 145729 or spellId == 145732) and prisonersRescued == false then
+				prisonersRescued = true
+				unitsSaved = unitsSaved + 1
+				core:sendMessage("'Rescue a set of caged prisoners,' part of "  .. GetAchievementLink(8453) .. " Completed (" .. unitsSaved .. "/3)")
+			
+				--Requirements Met
+				if unitsSaved == 3 and rescueRaidersCompleted == false then
+					rescueRaidersCompleted = true
+					core:sendMessage(GetAchievementLink(8453) .. " requirements have been met. Boss can now be killed!")
+				end
 			end
-        end
-    end
+		end
+	end
 end
 
 function core._1136.Events:UNIT_HEALTH(self, unitID, ...)
