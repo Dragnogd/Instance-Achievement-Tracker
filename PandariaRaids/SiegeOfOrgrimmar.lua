@@ -485,25 +485,27 @@ function core._1136.Events:UNIT_AURA(self, unitID, ...)
 end
 
 function core._1136.Events:UNIT_HEALTH(self, unitID, ...)
-	--If Warbringer health is at 15% or less than mark it as ready
-	local unitType, _, _, _, _, destID, spawn_uid_dest = strsplit("-", UnitGUID(unitID))
-	if core:getHealthPercent(unitID) <= 15 and destID == "71979" then
-		if warbringersIds[spawn_uid_dest] == nil and warbringersIds[spawn_uid_dest] ~= "dead" then
-			warbringersIds[spawn_uid_dest] = "fifteen"
-			warbringersCounter = warbringersCounter + 1
-			core:sendDebugMessage("PERCENT: " .. spawn_uid_dest)
-			core:sendDebugMessage("Kor'kron Warbringer at <= 15% health (" .. warbringersCounter .. "/18)", warbringersCounter, 1)
-			garroshMessageQueue = "Kor'kron Warbringer at <= 15% health (" .. warbringersCounter .. "/18)"
-		end
-	elseif core:getHealthPercent(unitID) > 15 and destID == "71979" then
-		--If mob was healed then we need to subtract 1 from the counter
-		if warbringersIds[spawn_uid_dest] == "fifteen" then
-			warbringersIds[spawn_uid_dest] = nil
-			warbringersCounter = warbringersCounter - 1
-			core:sendDebugMessage("HEALED: " .. spawn_uid_dest)
-			core:sendDebugMessage("Kor'kron Warbringer at <= 15% health (" .. warbringersCounter .. "/18)", warbringersCounter, 1)
-			garroshMessageQueue = "Kor'kron Warbringer at <= 15% health (" .. warbringersCounter .. "/18)"				
-		end
+	if core.Instances[core.expansion][core.instanceType][core.instance]["boss14"].enabled == true and core:has_value(core.achievementIDs, 8537) then
+		--If Warbringer health is at 15% or less than mark it as ready
+		local unitType, _, _, _, _, destID, spawn_uid_dest = strsplit("-", UnitGUID(unitID))
+		if core:getHealthPercent(unitID) <= 15 and destID == "71979" then
+			if warbringersIds[spawn_uid_dest] == nil and warbringersIds[spawn_uid_dest] ~= "dead" then
+				warbringersIds[spawn_uid_dest] = "fifteen"
+				warbringersCounter = warbringersCounter + 1
+				core:sendDebugMessage("PERCENT: " .. spawn_uid_dest)
+				core:sendDebugMessage("Kor'kron Warbringer at <= 15% health (" .. warbringersCounter .. "/18)", warbringersCounter, 1)
+				garroshMessageQueue = "Kor'kron Warbringer at <= 15% health (" .. warbringersCounter .. "/18)"
+			end
+		elseif core:getHealthPercent(unitID) > 15 and destID == "71979" then
+			--If mob was healed then we need to subtract 1 from the counter
+			if warbringersIds[spawn_uid_dest] == "fifteen" then
+				warbringersIds[spawn_uid_dest] = nil
+				warbringersCounter = warbringersCounter - 1
+				core:sendDebugMessage("HEALED: " .. spawn_uid_dest)
+				core:sendDebugMessage("Kor'kron Warbringer at <= 15% health (" .. warbringersCounter .. "/18)", warbringersCounter, 1)
+				garroshMessageQueue = "Kor'kron Warbringer at <= 15% health (" .. warbringersCounter .. "/18)"				
+			end
+		end	
 	end
 end
 
