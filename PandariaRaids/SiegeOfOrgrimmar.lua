@@ -416,7 +416,6 @@ end
 
 function core._1136:InstanceCleanup()
     core._1136.Events:UnregisterEvent("UNIT_TARGET")
-    core._1136.Events:UnregisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
     core._1136.Events:UnregisterEvent("UNIT_SPELLCAST_SUCCEEDED")
     core._1136.Events:UnregisterEvent("UNIT_AURA")
     core._1136.Events:UnregisterEvent("UNIT_HEALTH")
@@ -424,7 +423,6 @@ end
 
 function core._1136:InitialSetup()
     core._1136.Events:RegisterEvent("UNIT_TARGET")
-    core._1136.Events:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
     core._1136.Events:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
     core._1136.Events:RegisterEvent("UNIT_AURA")
     core._1136.Events:RegisterEvent("UNIT_HEALTH")
@@ -433,21 +431,6 @@ end
 core._1136.Events:SetScript("OnEvent", function(self, event, ...)
     return self[event] and self[event](self, event, ...)
 end)
-
-function core._1136.Events:CHAT_MSG_RAID_BOSS_EMOTE(self, message, sender, ...)
-	if core.Instances[core.expansion][core.instanceType][core.instance]["boss1"].enabled == true then
-		if core.achievementsCompleted[1] == false then
-			if string.match(message, "Reforms") then
-				core:sendMessage("Do not kill tears till IAT announces confirmation. Killing the tears too quickly will not count towards the achievement")
-				bossReformed = true
-			end
-		
-			if string.match(message, "Split") then
-				safeToKillTears = false
-			end	
-		end
-	end
-end
 
 function core._1136.Events:UNIT_TARGET(self, unitID, ...)
 	if core.Instances[core.expansion][core.instanceType][core.instance]["boss6"].enabled == true and core:has_value(core.achievementIDs, 8520) then
@@ -468,7 +451,7 @@ function core._1136.Events:UNIT_TARGET(self, unitID, ...)
 end
 
 function core._1136.Events:UNIT_AURA(self, unitID, ...)
-	if core.Instances[core.expansion][core.instanceType][core.instance]["boss7"].enabled == true
+	if core.Instances[core.expansion][core.instanceType][core.instance]["boss7"].enabled == true then
 		for i=1,40 do
 			local _, _, _, _, _, _, _, _, _, spellId = UnitAura("Player", i)
 			if (spellId == 145730 or spellId == 145729 or spellId == 145732) and prisonersRescued == false then
