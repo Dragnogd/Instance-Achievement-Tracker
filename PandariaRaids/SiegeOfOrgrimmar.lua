@@ -347,70 +347,72 @@ function core._1136:GarroshHellscream()
 end
 
 function core._1136:TrackAdditional()
-	------------------------------------------------------
-	---- Rescue Raiders
-	------------------------------------------------------
+	if core.Instances[core.expansion][core.instanceType][core.instance]["boss7"].enabled == true then
+		------------------------------------------------------
+		---- Rescue Raiders
+		------------------------------------------------------
 
-	--Ji Firepaw died
-	if core.type == "UNIT_DIED" and core.destID == "62445" and rescueRaidersFailed == false and jiFirepawComplete == false then
-		core:sendMessage(GetAchievementLink(8453) .. " FAILED Reason: (Ji Firepaw has died")
-		jiFirepawComplete = true
-	end
+		--Ji Firepaw died
+		if core.type == "UNIT_DIED" and core.destID == "62445" and rescueRaidersFailed == false and jiFirepawComplete == false then
+			core:sendMessage(GetAchievementLink(8453) .. " FAILED Reason: (Ji Firepaw has died")
+			jiFirepawComplete = true
+		end
 
-	--Ji Firepaw saved
-	if core.type == "UNIT_DIED" and core.destID == "72455" and rescueRaidersFailed == false and jiFirepawComplete == false then
-		unitsSaved = unitsSaved + 1
-		jiFirepawComplete = true
-		core:sendMessage("Save Ji Firepaw part of "  .. GetAchievementLink(8453) .. " Completed (" .. unitsSaved .. "/3)")
-	end
+		--Ji Firepaw saved
+		if core.type == "UNIT_DIED" and core.destID == "72455" and rescueRaidersFailed == false and jiFirepawComplete == false then
+			unitsSaved = unitsSaved + 1
+			jiFirepawComplete = true
+			core:sendMessage("Save Ji Firepaw part of "  .. GetAchievementLink(8453) .. " Completed (" .. unitsSaved .. "/3)")
+		end
 
-	--Mokvar the Treasurer Killed
-	if core.type == "UNIT_DIED" and core.destID == "72433" then
-		core:sendMessage("Mokvar the Treasurer Killed. Use the key to rescue a set of caged prisoners")
-	end
+		--Mokvar the Treasurer Killed
+		if core.type == "UNIT_DIED" and core.destID == "72433" then
+			core:sendMessage("Mokvar the Treasurer Killed. Use the key to rescue a set of caged prisoners")
+		end
 
-	---Alliance---
+		---Alliance---
 
-	--Overseer Thathung Killed
-	if core.type == "UNIT_DIED" and core.destID == "72496" then
-		C_Timer.After(3, function()
-			if theramoreCitizenKilled == false and citizensSaved == false then
-				unitsSaved = unitsSaved + 1
-				citizensSaved = true
-				core:sendMessage("Save 'A group of unwilling combat participants' part of "  .. GetAchievementLink(8453) .. " Completed (" .. unitsSaved .. "/3)")				
-			end
-		end)
-	end
+		--Overseer Thathung Killed
+		if core.type == "UNIT_DIED" and core.destID == "72496" then
+			C_Timer.After(3, function()
+				if theramoreCitizenKilled == false and citizensSaved == false then
+					unitsSaved = unitsSaved + 1
+					citizensSaved = true
+					core:sendMessage("Save 'A group of unwilling combat participants' part of "  .. GetAchievementLink(8453) .. " Completed (" .. unitsSaved .. "/3)")				
+				end
+			end)
+		end
 
-	--Theramore Citizens Killed
-	if core.type == "UNIT_DIED" and core.destID == "72498" and theramoreCitizenKilled == false then
-		theramoreCitizenKilled = true
-		core:sendMessage(GetAchievementLink(8453) .. " FAILED Reason: (Theramore Citizens killed)")
-	end
+		--Theramore Citizens Killed
+		if core.type == "UNIT_DIED" and core.destID == "72498" and theramoreCitizenKilled == false then
+			theramoreCitizenKilled = true
+			core:sendMessage(GetAchievementLink(8453) .. " FAILED Reason: (Theramore Citizens killed)")
+		end
 
-	---Horde---
+		---Horde---
 
-	---Overseer Mojka---
-	if core.type == "UNIT_DIED" and core.destID == "72490" then
-		C_Timer.After(3, function()
-			if orcsKilled == false and citizensSaved == false then
-				unitsSaved = unitsSaved + 1
-				citizensSaved = true
-				core:sendMessage("Save 'A group of unwilling combat participants' part of "  .. GetAchievementLink(8453) .. " Completed (" .. unitsSaved .. "/3)")				
-			end
-		end)		
-	end
+		---Overseer Mojka---
+		if core.type == "UNIT_DIED" and core.destID == "72490" then
+			C_Timer.After(3, function()
+				if orcsKilled == false and citizensSaved == false then
+					unitsSaved = unitsSaved + 1
+					citizensSaved = true
+					core:sendMessage("Save 'A group of unwilling combat participants' part of "  .. GetAchievementLink(8453) .. " Completed (" .. unitsSaved .. "/3)")				
+				end
+			end)		
+		end
 
-	--Orcs Killed---
-	if core.type == "UNIT_DIED" and (core.destID == "72492" or core.destID == "72493" or core.destID == "72484" or core.destID == "72485" or core.destID == "72483") and orcsKilled == false then
-		orcsKilled = true
-		core:sendMessage(GetAchievementLink(8453) .. " FAILED Reason: (Orcs killed)")
-	end
+		--Orcs Killed---
+		if core.type == "UNIT_DIED" and (core.destID == "72492" or core.destID == "72493" or core.destID == "72484" or core.destID == "72485" or core.destID == "72483") and orcsKilled == false then
+			orcsKilled = true
+			core:sendMessage(GetAchievementLink(8453) .. " FAILED Reason: (Orcs killed)")
+		end
 
-	--Requirements Met
-	if unitsSaved == 3 and rescueRaidersCompleted == false then
-		rescueRaidersCompleted = true
-		core:sendMessage(GetAchievementLink(8453) .. " requirements have been met. Boss can now be killed!")
+		--Requirements Met
+		if unitsSaved == 3 and rescueRaidersCompleted == false then
+			rescueRaidersCompleted = true
+			core:sendMessage(GetAchievementLink(8453) .. " requirements have been met. Boss can now be killed!")
+		end
 	end
 end
 
