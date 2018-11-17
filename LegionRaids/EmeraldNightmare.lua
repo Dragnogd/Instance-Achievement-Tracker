@@ -37,7 +37,7 @@ local creatureOfMadnessUID = {}
 
 function core._1520:Nythendra()
     if bugsSquished >= 15 then
-        core:getAchievementSuccessWithMessageAfter("(You may wish to get a few extra bugs in case multiple players clicked on the same bug)")
+        core:getAchievementSuccess()
     end
 end
 
