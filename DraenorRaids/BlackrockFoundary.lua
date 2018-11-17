@@ -187,7 +187,7 @@ function core._1205:InitialSetup()
 end
 
 function core._1205.Events:UNIT_SPELLCAST_SUCCEEDED(self, unitID, lineID, spellID, ...)
-	print(GetSpellInfo(spellID))
+	--print(GetSpellInfo(spellID))
 
 	--If collect ore detected. Add 1 to counter, then 2 second cooldown on that user 
 
