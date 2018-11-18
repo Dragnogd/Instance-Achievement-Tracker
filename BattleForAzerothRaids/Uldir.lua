@@ -47,6 +47,7 @@ function core._1861:FetidDevourer()
         --Player has been hit by terrible thrash
         if core.type == "SPELL_DAMAGE" and core.spellId == 262277 and core.destName ~= nil and core.spawn_uid_dest_Player ~= nil then
             local name, realm = strsplit("-", core.destName)
+            core:sendDebugMessage(name .. " was hit")
             if UnitIsPlayer(name) and playersFetidTable[core.spawn_uid_dest_Player] == nil then
                 --Check if player has any immunities on.
                 --Known immunties as of 8.0.1
