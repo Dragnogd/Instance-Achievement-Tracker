@@ -45,28 +45,63 @@ function core._1861:FetidDevourer()
 
     if fetidDevourerKilled == false then
         --Player has been hit by terrible thrash
-        if core.type == "SPELL_DAMAGE" and core.spellId == 262277 and core.destName ~= nil and core.spawn_uid_dest_Player ~= nil and core.amount > 0 then
-            core:sendDebugMessage(core.destName .. " Hit By Terrible Thrash")
+        if core.type == "SPELL_DAMAGE" and core.spellId == 262277 and core.destName ~= nil and core.spawn_uid_dest_Player ~= nil then
             local name, realm = strsplit("-", core.destName)
-            core:sendDebugMessage(name)
             if UnitIsPlayer(name) and playersFetidTable[core.spawn_uid_dest_Player] == nil then
-                core:sendDebugMessage("Added player to table")
-                playersFetid = playersFetid + 1
-                playersFetidTable[core.spawn_uid_dest_Player] = core.spawn_uid_dest_Player
-
-                core:sendMessage(core.destName .. " has been hit with Terrible Thrash (" .. playersFetid .. "/" .. core.groupSize .. ")")
-
-                --Remove player from list of players needing to get hit
-                if core:has_value(playersInGroup, name) then
-                    table.remove(playersInGroup, core:getTableIndexByValue(playersInGroup, name))
-                    core:sendDebugMessage("Removing " .. name)
-
-                    --Rebuild list of players that still need to get hit
-                    local messageStr = "Players who still need to get hit: "
-                    for k, v in pairs(playersInGroup) do
-                        messageStr = messageStr .. ", " .. v
+                --Check if player has any immunities on.
+                --Known immunties as of 8.0.1
+                --Ice block: 45438
+                --Netherwalk: 196555
+                --Aspect of the Turtle: 186265
+                --Blessing of Protection: 1022
+                --Blessing of Spellwarding: 204018
+                --Divine Shield: 642
+                local immunityFound = false
+                local immunityName = nil
+                for i=1,40 do
+                    local _, _, _, _, _, _, _, _, _, spellId = UnitBuff(name, i)
+                    if spellId == 45438 then
+                        immunityFound = true
+                        immunityName = "Ice Block"
+                    elseif spellId == 196555 then
+                        immunityFound = true
+                        immunityName = "Netherwalk"
+                    elseif spellId == 186265 then
+                        immunityFound = true
+                        immunityName = "Aspect of the Turtle"
+                    elseif spellId == 1022 then
+                        immunityFound = true
+                        immunityName = "Blessing of Protection"
+                    elseif spellId == 204018 then
+                        immunityFound = true
+                        immunityName = "Blessing of Spellwarding"
+                    elseif spellId == 642 then
+                        immunityFound = true
+                        immunityName = "Divine Shield"                                                                                                                   
                     end
-                    core:sendMessageSafe(messageStr)
+                end
+
+                if immunityFound == false then
+                    core:sendDebugMessage("Added player to table")
+                    playersFetid = playersFetid + 1
+                    playersFetidTable[core.spawn_uid_dest_Player] = core.spawn_uid_dest_Player
+
+                    core:sendMessage(core.destName .. " has been hit with Terrible Thrash (" .. playersFetid .. "/" .. core.groupSize .. ")")
+
+                    --Remove player from list of players needing to get hit
+                    if core:has_value(playersInGroup, name) then
+                        table.remove(playersInGroup, core:getTableIndexByValue(playersInGroup, name))
+                        core:sendDebugMessage("Removing " .. name)
+
+                        --Rebuild list of players that still need to get hit
+                        local messageStr = "Players who still need to get hit: "
+                        for k, v in pairs(playersInGroup) do
+                            messageStr = messageStr .. ", " .. v
+                        end
+                        core:sendMessageSafe(messageStr)
+                    end
+                elseif immunityFound == true then
+                    core:sendMessage(core.destName .. " was been hit with Terrible Thrash but used an immunity so did not count (" .. immunityName .. ")")
                 end
             end
         end

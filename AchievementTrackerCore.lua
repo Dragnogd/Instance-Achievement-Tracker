@@ -7,9 +7,9 @@ local L = core.L												--Translation Table
 local events = CreateFrame("Frame")								--All events are registered to this frame
 local UIConfig													--UIConfig is used to make a display asking the user if they would like
 local UICreated = false											--To enable achievement tracking when they enter an instances
-local debugMode = false
-local debugModeChat = false
-local sendDebugMessages = false
+local debugMode = true
+local debugModeChat = true
+local sendDebugMessages = true
 
 local ptrVersion = "8.1.0"
 
@@ -1344,6 +1344,10 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 
 	if string.match(core.type, "RANGE_") or string.match(core.type, "SPELL_") or string.match(core.type, "SPELL_PERIODIC_") or string.match(core.type, "SPELL_BUILDING_") then
 		core.spellId, core.spellName, core.spellSchool = select(12, CombatLogGetCurrentEventInfo())
+
+		if core.spellId == 262277 then
+			--print(CombatLogGetCurrentEventInfo())
+		end
 
 		if string.match(core.type, "_DAMAGE") then
 			core.amount, core.overkill, core.school, core.resisted, core.blocked, core.absorbed, core.critical, core.glancing, core.crushing = select(15, CombatLogGetCurrentEventInfo())
