@@ -2,7 +2,7 @@
 ## Notes: An addon for tracking the completion/faliure of instance achievements.
 ## Title:Instance Achievement Tracker
 ## Author: Whizzey
-## Version: 2.17.0
+## Version: 2.18.0
 ## OptionalDeps: LibStub, CallbackHandler-1.0, LibDBIcon-1.0, LibInspect
 ## SavedVariables: AchievementTrackerOptions, AchievementTrackerDebug
 
