@@ -2,9 +2,12 @@
 local _, core = ...         --Global addon namespace
 local L = core.L            --Global localisation table
 core.Config = {}            --Add a config table to the addon namespace
+core.IATInfoFrame = {}         --A frame for displaying useful information about the encounter during a fight without having to use chat channel
+local InfoFrame
 
 -- Purpose:         Stores all the frames for each tab in the GUI.
 local Config = core.Config
+local IATInfoFrame = core.IATInfoFrame
 local BattleForAzerothContent
 local BattleForAzerothContentButtons = {}
 local LegionContent
@@ -1300,3 +1303,93 @@ SLASH_EXPANDEXAMPLE1 = "/ex"
 
 Config:CreateGUI()
 UIConfig:Hide()
+
+
+------------------------------------------------------
+------- Functions to create dynamic info frame -------
+------------------------------------------------------
+
+--On user accepting load create the frame.
+
+--Add timer and text
+--Be able to cancel timer
+
+--Mirror array of players
+
+-- Method:          InfoFrame:InitialiseFrame
+-- What it Does:    Create the Info Frame shown during Fight Encounters
+-- Purpose:         This is created to allow specific bosses to add useful information about a fight without having to use just chat channels.
+local frameBackdrop = {
+	bgFile = "Interface\\DialogFrame\\UI-DialogBox-Background",
+	tile = true,
+	tileSize = 16,
+	insets = { left = 2, right = 14, top = 2, bottom = 2 },
+}
+
+function IATInfoFrame:SetupInfoFrame()
+    InfoFrame = CreateFrame("Frame", "AchievementTrackerInfoFrame", UIParent)
+    InfoFrame:SetSize(200, 300)
+    InfoFrame:SetPoint("BOTTOMLEFT", "UIParent", "BOTTOMLEFT", 0, 0)
+    InfoFrame:SetBackdrop(frameBackdrop);
+    InfoFrame:SetMovable(true)
+    InfoFrame:EnableMouse(true)
+    InfoFrame:SetClampedToScreen(true)
+    InfoFrame:RegisterForDrag("LeftButton")
+    InfoFrame:SetScript("OnDragStart", UIConfig.StartMoving)
+    InfoFrame:SetScript("OnDragStop", UIConfig.StopMovingOrSizing)
+
+    InfoFrame:SetShown(false)
+end
+
+function IATInfoFrame:SetHeading(text)
+    if InfoFrame.heading == nil then
+        InfoFrame.heading = InfoFrame:CreateFontString(nil, "BACKGROUND", "GameFontHighlightLarge")
+    end                        
+    InfoFrame.heading:SetText(text)
+    InfoFrame.heading:SetHeight(InfoFrame.heading:GetStringHeight())
+    InfoFrame.heading:SetPoint("TOPLEFT", InfoFrame, "TOPLEFT", 5, -5)                                                                                
+end
+
+function IATInfoFrame:SetSubHeading1(text)
+    if InfoFrame.subHeading1 == nil then
+        InfoFrame.subHeading1 = InfoFrame:CreateFontString(nil, "BACKGROUND", "GameFontHighlightLarge")
+    end                        
+    InfoFrame.subHeading1:SetText(text)
+    InfoFrame.subHeading1:SetHeight(InfoFrame.subHeading1:GetStringHeight())
+    InfoFrame.subHeading1:SetPoint("TOPLEFT", InfoFrame.heading, "BOTTOMLEFT", 0, -5)         
+end
+
+function IATInfoFrame:SetText1(text)
+    if InfoFrame.setText1 == nil then
+        InfoFrame.setText1 = InfoFrame:CreateFontString(nil, "BACKGROUND", "GameFontHighlight")
+    end                        
+    InfoFrame.setText1:SetText(text)
+    InfoFrame.setText1:SetHeight(InfoFrame.setText1:GetStringHeight())
+    InfoFrame.setText1:SetPoint("TOPLEFT", InfoFrame.subHeading1, "BOTTOMLEFT", 0, -5)         
+end
+
+function IATInfoFrame:SetSubHeading2(text)
+    if InfoFrame.setSubHeading2 == nil then
+        InfoFrame.setSubHeading2 = InfoFrame:CreateFontString(nil, "BACKGROUND", "GameFontHighlightLarge")     
+    end                        
+    InfoFrame.setSubHeading2:SetText(text)
+    InfoFrame.setSubHeading2:SetHeight(InfoFrame.setSubHeading2:GetStringHeight())
+    InfoFrame.setSubHeading2:SetPoint("TOPLEFT", InfoFrame.setText1, "BOTTOMLEFT", 0, -5)    
+end
+
+function IATInfoFrame:SetText2(text)
+    if InfoFrame.setText2 == nil then
+        InfoFrame.setText2 = InfoFrame:CreateFontString(nil, "BACKGROUND", "GameFontHighlight")
+    end                        
+    InfoFrame.setText2:SetText(text)
+    InfoFrame.setText2:SetHeight(InfoFrame.setText2:GetStringHeight())
+    InfoFrame.setText2:SetPoint("TOPLEFT", InfoFrame.setSubHeading2, "BOTTOMLEFT", 0, -5)         
+end
+
+function IATInfoFrame:ToggleOn()
+    InfoFrame:SetShown(true)
+end
+
+function IATInfoFrame:ToggleOff()
+    InfoFrame:SetShown(false)
+end

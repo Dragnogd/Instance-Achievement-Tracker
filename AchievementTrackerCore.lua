@@ -7,9 +7,9 @@ local L = core.L												--Translation Table
 local events = CreateFrame("Frame")								--All events are registered to this frame
 local UIConfig													--UIConfig is used to make a display asking the user if they would like
 local UICreated = false											--To enable achievement tracking when they enter an instances
-local debugMode = false
-local debugModeChat = false
-local sendDebugMessages = false
+local debugMode = true
+local debugModeChat = true
+local sendDebugMessages = true
 
 local ptrVersion = "8.1.0"
 
@@ -91,6 +91,7 @@ core.achievementsCompleted = {}					--Set to true when the requrements for a tra
 core.chatType = nil								--The chat type for the current group (say/party/raid)
 core.achievementTrackedMessageShown = false		--Set to true when the message "Tracking {achievement}" is output to the chat so that it only outputs once per fight
 core.groupSize = 1								--Amount of players currently in the group. Set to 1 by default
+core.groupSizeInInstance = 0					--Amount of players currently in the group and also in the current instance
 core.achievementIDs = {}						--Stores a list of the achievements to track for the current boss
 core.achievementTrackingEnabled = false			--Whether the user wants to track achievements for the particular instance or not
 core.playersFailedPersonal = {}					--List of players that have failed a personal achievement. Resets when you exit combat
@@ -135,6 +136,7 @@ core.announceTrackedAchievementsToChat = false	--Whether or not the user has cho
 core.lockDetection = false						--Once an encounter has finished. Stop the encounter being detected again straight away
 core.onlyTrackMissingAchievements = false		--Whether or not the user has chosen to only track missing achievements or not
 core.trackingSupressed = false					--Whether or not tracking is being supressed for the current fight
+local infoFrameShown = false
 
 --------------------------------------
 -- Addon Syncing 
@@ -536,6 +538,10 @@ function createEnableAchievementTrackingUI()
 	UIConfig:SetHeight(UIConfig.content:GetHeight() + UIConfig.btnYes:GetHeight() + UIConfig.title:GetHeight() + 35)
 	UIConfig.btnYes:SetScript("OnClick", enableAchievementTracking);
 	UIConfig.btnNo:SetScript("OnClick", disableAchievementTracking);
+
+	
+	--Setup the InfoFrame
+	core.IATInfoFrame:SetupInfoFrame()
 end
 
 --Players wants to track achievements for this instance
@@ -723,6 +729,8 @@ function events:ADDON_LOADED(event, name)
 		-- 	print("Whizzey Addon")
 		-- 	return AchievementFrameComparison_UpdateStatusBars(...); -- (6)
 		-- end
+
+		_G["AchievementFrameComparison"]:UnregisterEvent("INSPECT_ACHIEVEMENT_READY");
 	end
 	
 	if name ~= "InstanceAchievementTracker" then return end
@@ -1032,7 +1040,7 @@ function events:ENCOUNTER_END()
 	core.encounterDetected = false
 	core:sendDebugMessage("Locking Detection for 3 seconds")
 	core.lockDetection = true
-	C_Timer.After(3, function() 
+	C_Timer.After(5, function() 
 		core.lockDetection = false
 		core:sendDebugMessage("Detection unlocked")
 	end)
@@ -1461,6 +1469,13 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 			if core.currentBosses[i].enabled == true then
 				if core.onlyTrackMissingAchievements == false or (core.onlyTrackMissingAchievements == true and core.currentBosses[i].players ~= L["No players in the group need this achievement"]) then
 					core.currentBosses[i].track()
+
+					--If boss has an info frame then display it
+					if core.currentBosses[i].displayInfoFrame == true and infoFrameShown == false then
+						core.IATInfoFrame:ToggleOn()
+						core.IATInfoFrame:SetHeading(GetAchievementLink(core.currentBosses[i].achievement))
+						infoFrameShown = true
+					end
 				end
 			end
 		end
@@ -2318,6 +2333,16 @@ function core:clearVariables()
 	electionFinished = false
 	messageQueue = {}
 	core.trackingSupressed = false
+
+	core.groupSizeInInstance = 0
+
+	core.IATInfoFrame:ToggleOff()
+	core.IATInfoFrame:SetHeading()
+	core.IATInfoFrame:SetSubHeading1()
+	core.IATInfoFrame:SetText1()
+	core.IATInfoFrame:SetSubHeading2()
+	core.IATInfoFrame:SetText2()
+	infoFrameShown = false
 end
 
 --Clears variables for the current instance the player is in
@@ -2402,32 +2427,39 @@ end
 
 function core:getPlayersInGroupForAchievement()
 	local players = {}
-    if core.groupSize > 1 then
-        --We are in a group
-        local currentUnit
-        core:detectGroupType() --Detect the type of group the player is in so we can do the appropriate scanning
-        for i = 1, core.groupSize do
-            if core.chatType == "PARTY" then
-                if i < core.groupSize then
-                    currentUnit = "party" .. i
-                else
-                    currentUnit = "player"
-                end
-            elseif core.chatType == "RAID" then
-                currentUnit = "raid" .. i
+	local location = nil
+	if core.groupSize > 1 then
+		--Get the current zone of the "Player"
+		for i = 1,core.groupSize do
+			local name, rank, subgroup, level, class, fileName, zone, online, isDead, role, isML, combatRole = GetRaidRosterInfo(i)
+			if UnitName("Player") == name then
+				location = zone
 			end
-			
-			--Add to the current group so we can remove players that have left the group
-			local name, realm = UnitName(currentUnit)
-            if name ~= "Unknown" then
-                table.insert(players, name)
-            end
-        end
+		end
+
+		--Scan raid. If players are in same location as "Player" then add them to table
+		for i = 1,core.groupSize do
+			local name, rank, subgroup, level, class, fileName, zone, online, isDead, role, isML, combatRole = GetRaidRosterInfo(i)
+			print(name,location,zone)
+			if location == zone then
+				if name ~= nil then
+					name2 = ""
+					if string.find(name, "-") then
+						name2, realm = strsplit("-", name)
+					else
+						name2 = name
+					end
+					table.insert(players, name2)
+					core.groupSizeInInstance = core.groupSizeInInstance + 1
+				end
+			end		
+		end
     else
         currentUnit = "player"
         local name, realm = UnitName(currentUnit)
-        if name ~= "Unknown" then
-            table.insert(players, name)
+		if name ~= "Unknown" and name ~= nil then
+			table.insert(players, name)
+			core.groupSizeInInstance = core.groupSizeInInstance + 1
         end
 	end
 	return players
@@ -2440,4 +2472,3 @@ function core:getTableIndexByValue(tab,el)
 		end
 	end
 end
-	

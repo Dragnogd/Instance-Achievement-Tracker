@@ -64,6 +64,7 @@ core.Instances = {
                     track = function() core._1861:FetidDevourer() end,
                     partial = false,
                     encounterID = 2128,
+                    displayInfoFrame = true,
                 },
                 boss4 = {
                     name = 2169, --Zek'voz
@@ -2137,6 +2138,7 @@ core.Instances = {
                     track = function() core._996:ProtectorsOfTheEndless() end,
                     partial = false,
                     encounterID = 1409,
+                    displayInfoFrame = true,
                 },
                 boss2 = {
                     name = 742, --Tsulong
