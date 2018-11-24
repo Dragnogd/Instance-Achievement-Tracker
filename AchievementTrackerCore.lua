@@ -7,9 +7,9 @@ local L = core.L												--Translation Table
 local events = CreateFrame("Frame")								--All events are registered to this frame
 local UIConfig													--UIConfig is used to make a display asking the user if they would like
 local UICreated = false											--To enable achievement tracking when they enter an instances
-local debugMode = true
-local debugModeChat = true
-local sendDebugMessages = true
+local debugMode = false
+local debugModeChat = false
+local sendDebugMessages = false
 
 local ptrVersion = "8.1.0"
 

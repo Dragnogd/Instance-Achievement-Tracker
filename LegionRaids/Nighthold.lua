@@ -220,13 +220,17 @@ function core._1530.Events:UNIT_AURA(self, unitID, ...)
                 end
                 if debuffFound == false then
                     --Check if player has lost the mysterious fruits debuff
-                    mysteriousFruitPlayers[fullName] = nil
-                    mysteriousFruitCounter = mysteriousFruitCounter - 1
-                    if core.groupSize >= 10 then
-                        core:sendMessage(UnitName(unitID) .. " has LOST the Mysterious Fruit debuff (" .. mysteriousFruitCounter .. "/" .. core.groupSize .. ")")
-                    else
-                        core:sendMessage(UnitName(unitID) .. " has LOST the Mysterious Fruit debuff (" .. mysteriousFruitCounter .. "/10)")
-                    end
+                    C_Timer.After(5, function() 
+                        if highBotanistTelarnKilled == false then
+                            mysteriousFruitPlayers[fullName] = nil
+                            mysteriousFruitCounter = mysteriousFruitCounter - 1
+                            if core.groupSize >= 10 then
+                                core:sendMessage(UnitName(unitID) .. " has LOST the Mysterious Fruit debuff (" .. mysteriousFruitCounter .. "/" .. core.groupSize .. ")")
+                            else
+                                core:sendMessage(UnitName(unitID) .. " has LOST the Mysterious Fruit debuff (" .. mysteriousFruitCounter .. "/10)")
+                            end                       
+                        end
+                    end)
                 end
             elseif mysteriousFruitPlayers[fullName] == nil then
                 --Check if player has picked up the mysterious fruit debuff
@@ -255,6 +259,7 @@ function core._1530:Krosus()
 
     local burningEmbersUIDTemp = {}
     --If Burning Ember Killed by player then remove from list
+        
     if core.destID == "104262" and core.overkill > 0 and burningEmbersUID[core.spawn_uid_dest] ~= "killed" then
         if core:getBlizzardTrackingStatus(10575) == false then
             if burningEmbersKilledByPlayersUID[core.sourceName] == nil then
