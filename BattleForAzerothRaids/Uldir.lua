@@ -53,7 +53,7 @@ function core._1861:FetidDevourer()
     --Player has been hit by terrible thrash
     if core.type == "SPELL_DAMAGE" and core.spellId == 262277 and core.destName ~= nil then
         local name, realm = strsplit("-", core.destName)
-        core:sendDebugMessage(name .. " was hit")
+        --core:sendDebugMessage(name .. " was hit")
         if UnitIsPlayer(name) and playersFetidTable[core.spawn_uid_dest_Player] == nil then
             --Check if player has any immunities on.
             --Known immunties as of 8.0.1
@@ -89,7 +89,7 @@ function core._1861:FetidDevourer()
             end
 
             if immunityFound == false then
-                core:sendDebugMessage("Added player to table")
+                --core:sendDebugMessage("Added player to table")
                 playersFetid = playersFetid + 1
                 playersFetidTable[core.spawn_uid_dest_Player] = core.spawn_uid_dest_Player
 
@@ -98,7 +98,7 @@ function core._1861:FetidDevourer()
                 --Remove player from list of players needing to get hit
                 if core:has_value(playersInGroup, name) then
                     table.remove(playersInGroup, core:getTableIndexByValue(playersInGroup, name))
-                    core:sendDebugMessage("Removing " .. name)
+                    --core:sendDebugMessage("Removing " .. name)
 
                     --Rebuild list of players that still need to get hit
                     local messageStr = "Players who still need to get hit: "
@@ -208,13 +208,13 @@ function core._1861:Ghuun()
                 local _, _, _, _, _, _, _, _, _, spellId = UnitDebuff("Player", i)
                 if spellId == 263420 then
                     core:getAchievementFailedWithMessageAfter("(" .. UnitName("Player") .. ")")
+                    
+                    --Stop tracker for working for remainder of fight to reduce lag
+                    achievementRedForAttempt = true
                 end
             end
         end
     end
-
-    --Stop tracker for working for remainder of fight to reduce lag
-    achievementRedForAttempt = true
 end 
 
 function core._1861:InstanceCleanup()
