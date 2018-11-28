@@ -50,18 +50,29 @@ local oreFound = false
 local playersRecentlyCollectedOre = {}
 local oreCounter = 0
 
+------------------------------------------------------
+---- Oregorger
+------------------------------------------------------
+local timer = nil
+
 function core._1205:Oregorger()
 	--Detect last player to pick up ore
-	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 163454 then
+	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 163454 and core.achievementsCompleted[1] == false then
 		oreFound = true
+
+		if timer ~= nil then
+			timer:Cancel()
+		end
 	end
 
 	--When ore is dropped wait 3 seconds for another player to get orb else faile
-	if core.type == "SPELL_AURA_REMOVED" and core.spellId == 163454 then
+	if core.type == "SPELL_AURA_REMOVED" and core.spellId == 163454 and core.achievementsCompleted[1] == false then
 		oreFound = false
-		C_Timer.After(4, function() 
+		timer = C_Timer.After(4, function() 
 			if oreFound == false then
-				core:getAchievementFailed()
+				if core.achievementsCompleted[1] == false then
+					core:getAchievementFailed()
+				end
 			end
 		end)
 	end
@@ -247,4 +258,9 @@ function core._1205:ClearVariables()
 	------------------------------------------------------
 	playersRecentlyCollectedOre = {}
 	oreCounter = 0
+
+	------------------------------------------------------
+	---- Oregorger
+	------------------------------------------------------
+	local timer = nil
 end
