@@ -47,7 +47,7 @@ local oreFound = false
 ------------------------------------------------------
 ---- Gruul
 ------------------------------------------------------
-local playersRecentlyCollectedOre = {}
+local collectedOreUID = {}
 local oreCounter = 0
 
 ------------------------------------------------------
@@ -203,16 +203,13 @@ function core._1205.Events:UNIT_SPELLCAST_SUCCEEDED(self, unitID, lineID, spellI
 	--If collect ore detected. Add 1 to counter, then 2 second cooldown on that user 
 
     if core.Instances[core.expansion][core.instanceType][core.instance]["boss7"].enabled == true then
-		if playersRecentlyCollectedOre[UnitName(unitID)] == nil and spellID == 165184 then
+		if collectedOreUID[lineID] == nil and spellID == 165184 then
 			oreCounter = oreCounter + 1
-			playersRecentlyCollectedOre[UnitName(unitID)] = UnitName(unitID)
-			core:sendMessage(core:getAchievement() .. " Ore Collected by " .. UnitName(unitID) .. " (" .. oreCounter .. "/3)")
+			collectedOreUID[lineID] = lineID
+			core:sendMessage(core:getAchievement() .. " Pristine True Iron Ore Counter (" .. oreCounter .. "/3)")
 			if oreCounter == 3 then
 				core:getAchievementSuccess()
 			end
-			C_Timer.After(3, function() 
-				playersRecentlyCollectedOre[UnitName(unitID)] = nil
-			end)
 		end
 	end
 end
@@ -256,7 +253,7 @@ function core._1205:ClearVariables()
 	------------------------------------------------------
 	---- Gruul
 	------------------------------------------------------
-	playersRecentlyCollectedOre = {}
+	collectedOreUID = {}
 	oreCounter = 0
 
 	------------------------------------------------------
