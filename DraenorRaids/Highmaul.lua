@@ -105,27 +105,27 @@ end)
 
 function core._1228.Events:UNIT_HEALTH(self, unitID)
 	if core.Instances[core.expansion][core.instanceType][core.instance]["boss3"].enabled == true then
-		local unitType, _, _, _, _, destID, spawn_uid_dest = strsplit("-", UnitGUID(unitID));
-		if destID == "80557" and core.achievementsFailed[1] == false then
-            if core:getHealthPercent(unitID) <= 1 and moteOfTectusUID[spawn_uid_dest] == nil then
-                moteOfTectusCounter = moteOfTectusCounter + 1
-                moteOfTectusUID[spawn_uid_dest] = spawn_uid_dest
-                core:sendMessageDelay(core:getAchievement() .. " Mote of Tectus Killed (" .. moteOfTectusCounter .. "/8)", moteOfTectusCounter, 2)
-                if timerStarted == false then
-                    core:sendMessage(core:getAchievement() .. " Timer Started! 10 seconds remaining")
-                    timerStarted = true
-                    C_Timer.After(10, function() 
-                        if core.inCombat == true then
-                            if moteOfTectusCounter == 8 then
-                                core:getAchievementSuccess()
-                            else
-                                core:getAchievementFailedWithMessageAfter("(" .. moteOfTectusCounter .. "/8) Mote Of Tectus Killed in Time")
-                            end
-                        end
-                    end)
-                end	
-			end
-		end
+		-- local unitType, _, _, _, _, destID, spawn_uid_dest = strsplit("-", UnitGUID(unitID));
+		-- if destID == "80557" and core.achievementsFailed[1] == false then
+        --     if core:getHealthPercent(unitID) <= 1 and moteOfTectusUID[spawn_uid_dest] == nil then
+        --         moteOfTectusCounter = moteOfTectusCounter + 1
+        --         moteOfTectusUID[spawn_uid_dest] = spawn_uid_dest
+        --         core:sendMessageDelay(core:getAchievement() .. " Mote of Tectus Killed (" .. moteOfTectusCounter .. "/8)", moteOfTectusCounter, 2)
+        --         if timerStarted == false then
+        --             core:sendMessage(core:getAchievement() .. " Timer Started! 10 seconds remaining")
+        --             timerStarted = true
+        --             C_Timer.After(10, function() 
+        --                 if core.inCombat == true then
+        --                     if moteOfTectusCounter == 8 then
+        --                         core:getAchievementSuccess()
+        --                     else
+        --                         core:getAchievementFailedWithMessageAfter("(" .. moteOfTectusCounter .. "/8) Mote Of Tectus Killed in Time")
+        --                     end
+        --                 end
+        --             end)
+        --         end	
+		-- 	end
+		-- end
 	end
 end
 
