@@ -1162,7 +1162,11 @@ function events:ZONE_CHANGED_NEW_AREA()
 		events:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 		events:UnregisterEvent("INSPECT_ACHIEVEMENT_READY")
 		events:UnregisterEvent("ENCOUNTER_START")						
-		events:UnregisterEvent("ENCOUNTER_END")						
+		events:UnregisterEvent("ENCOUNTER_END")
+		
+		--Reset variables in case user left during middle of encounter. E.g hearthstones out
+		core:clearInstanceVariables()
+		core:clearVariables()
 
 		--Reset Instance Variables
 		core.expansion = nil
@@ -2356,8 +2360,6 @@ function core:clearInstanceVariables()
 			core:sendDebugMessage("Function failed, error text: " .. ret1 .. ".")
 		end
 	end
-
-
 end
 
 ------------------------------------------------------
