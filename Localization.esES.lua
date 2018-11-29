@@ -1,4 +1,6 @@
-if(GetLocale() ~= 'esES' or GetLocale() ~= 'esMX') then return end
+print("HERE 2")
+if(GetLocale() ~= 'esES' and GetLocale() ~= 'esMX') then return end
+print("HERE 3")
 
 local _, core = ...
 local baseLocale = {
@@ -37,4 +39,10 @@ local baseLocale = {
     ["Tracking"] = "Seguimiento",
 }
 
-core:RegisterLocale('esES', baseLocale)
+print("MADE IT HERE")
+
+if(GetLocale() == "esES") then
+    core:RegisterLocale('esES', baseLocale)
+else
+    core:RegisterLocale('esMX', baseLocale)
+end
