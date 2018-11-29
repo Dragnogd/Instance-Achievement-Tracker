@@ -35,7 +35,7 @@ local achievementRedForAttempt = false
 function core._1861:FetidDevourer()
     core.IATInfoFrame:SetSubHeading1("Terrible Thrash (" .. playersFetid .. "/" .. core.groupSizeInInstance .. ")")
     
-    if #playersInGroup == 0 then
+    if #playersInGroup == 0 and core.achievementsCompleted[1] == false then
         playersInGroup = core:getPlayersInGroupForAchievement()
         getListOfPlayers = true
 
