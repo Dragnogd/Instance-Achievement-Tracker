@@ -450,7 +450,7 @@ function getInstanceInfomation()
 			instanceCompatible = true
 		end
 
-		if instanceCompatible == true then
+		if instanceCompatible == true and core.expansion ~= nil then
 			--Check if the instance has any achievements to actually track
 			local foundTracking = false
 			core:sendDebugMessage("Expansion: " .. core.expansion)
@@ -722,17 +722,6 @@ end
 ------------------------------------------------------
 
 function events:ADDON_LOADED(event, name)
-	if name == "Blizzard_AchievementUI" then
-		core:sendDebugMessage("Achiev UI Loaded")
-		-- local AchievementFrameComparison_UpdateStatusBars = AchievementFrameComparison_UpdateStatusBars; -- (1)
-		-- AchievementFrameComparison_UpdateStatusBars = function(...) -- (2)
-		-- 	print("Whizzey Addon")
-		-- 	return AchievementFrameComparison_UpdateStatusBars(...); -- (6)
-		-- end
-
-		_G["AchievementFrameComparison"]:UnregisterEvent("INSPECT_ACHIEVEMENT_READY");
-	end
-	
 	if name ~= "InstanceAchievementTracker" then return end
 
 	generateItemCache()
