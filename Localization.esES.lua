@@ -1,6 +1,4 @@
-print("HERE 2")
 if(GetLocale() ~= 'esES' and GetLocale() ~= 'esMX') then return end
-print("HERE 3")
 
 local _, core = ...
 local baseLocale = {
@@ -38,8 +36,6 @@ local baseLocale = {
     ["Enabled"] = "Activado",
     ["Tracking"] = "Seguimiento",
 }
-
-print("MADE IT HERE")
 
 if(GetLocale() == "esES") then
     core:RegisterLocale('esES', baseLocale)
