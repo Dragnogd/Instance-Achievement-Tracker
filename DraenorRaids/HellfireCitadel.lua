@@ -210,21 +210,21 @@ function core._1448:TyrantVelhari()
 end
 
 function core._1448:Mannoroth()
-	core:trackMob("91241", "Doom Lord", 1, " Doom Lord has spawned. DPS it down to ~5% health", 1, nil, nil)
+	-- core:trackMob("91241", "Doom Lord", 1, " Doom Lord has spawned. DPS it down to ~5% health", 1, nil, nil)
 
 	--Achievement Successfull
-	if core.type == "SPELL_DAMAGE" and core.spellId == 182077 and core.destID == "91241" and core.overkill > 0 then
+	if core.type == "SPELL_DAMAGE" and (core.spellId == 182076 or core.spellId == 182077 or core.spellId == 182040) and core.destID == "91241" and core.overkill > 0 then
 		core:getAchievementSuccess()			
 	end
 
-	--Achievement Failed
-	if core.type == "UNIT_DIED" and core.destID == "91241" and core.achievementsCompleted[1] == false and felSummonersKilled == 3 then
-		core:getAchievementFailed()
-	elseif core.type == "UNIT_DIED" and core.destID == "91241" and core.achievementsCompleted[1] == false then
-		core:sendMessage("Doom Lord Killed. If Red summoner is still alive wait for another Doom Lord to spawn before killing it")
-	elseif core.type == "UNIT_DIED" and core.destID == "91305" then
-		felSummonersKilled = felSummonersKilled + 1
-	end
+	-- --Achievement Failed
+	-- if core.type == "UNIT_DIED" and core.destID == "91241" and core.achievementsCompleted[1] == false and felSummonersKilled == 3 then
+	-- 	core:getAchievementFailed()
+	-- elseif core.type == "UNIT_DIED" and core.destID == "91241" and core.achievementsCompleted[1] == false then
+	-- 	core:sendMessage("Doom Lord Killed. If Red summoner is still alive wait for another Doom Lord to spawn before killing it")
+	-- elseif core.type == "UNIT_DIED" and core.destID == "91305" then
+	-- 	felSummonersKilled = felSummonersKilled + 1
+	-- end
 end
 
 function core._1448:Archimonde()
