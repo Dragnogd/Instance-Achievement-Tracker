@@ -2,6 +2,7 @@
 -- Namespaces
 --------------------------------------
 local _, core = ...
+local L = core.L
 
 ------------------------------------------------------
 ---- Trial of Valor Bosses
@@ -29,20 +30,14 @@ local fetidNames = {}
 local fetidcount = 0
 
 function core._1648:Odyn()
-    if core.type == "UNIT_DIED" and core.destID == "114263" then
-        odynKilled = true
+    --Detect when any player gets runic mastery buff to complete achievement.
+    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 229684 then
+        core:getAchievementSuccess()
     end
-
-    if odynKilled == false then
-        --Detect when any player gets runic mastery buff to complete achievement.
-        if core.type == "SPELL_AURA_APPLIED" and core.spellId == 229684 then
-            core:getAchievementSuccess()
-        end
-        
-        --Detetct when player looses buff and fail as personal achievement
-        if core.type == "SPELL_AURA_REMOVED" and core.spellId == 229684 then
-            core:getAchievementFailedPersonal()
-        end
+    
+    --Detetct when player looses buff and fail as personal achievement
+    if core.type == "SPELL_AURA_REMOVED" and core.spellId == 229684 then
+        core:getAchievementFailedPersonal()
     end
 end
 
@@ -52,10 +47,16 @@ function core._1648:Helya()
             fetidNames[core.destName] = core.destName
             fetidcount = fetidcount + 1
             --core:sendMessage(core.destName .. " Gained Fetid Rot (" .. fetidcount .. "/" .. core.groupSize .. ")")
+            if core.groupSize == 1 then
+                if core.achievementsCompleted[1] == true then
+                    core:getAchievementFailed()
+                    core.achievementsCompleted[1] = false
+                end  
+            end
         end
     end
 
-    if core.groupSize == (fetidcount - 1) then
+    if core.groupSize == (fetidcount - 1) or core.groupSize == 1 and fetidcount == 0 then
         core:getAchievementSuccess()
         core.achievementsFailed[1] = false
     end
@@ -66,7 +67,7 @@ function core._1648:Helya()
             fetidcount = fetidcount - 1
             --core:sendMessage(core.destName .. " Lost Fetid Rot (" .. fetidcount .. "/" .. core.groupSize .. ")")
         
-            --Fail achievement if compelted already
+            --Fail achievement if completed already
             if core.achievementsCompleted[1] == true then
                 core:getAchievementFailed()
                 core.achievementsCompleted[1] = false
@@ -113,29 +114,29 @@ function core._1648.Events:UNIT_AURA(self, unitID, ...)
         local saltySpittleFound = false
         local darkDischargeFound = false
         for i=1,40 do
-            local _, _, _, _, _, _, _, _, _, spellId = UnitBuff(unitID, i)
-            if spellId == 231846 then
+            local spellName, _, _, _, _, _, _, _, _, spellId = UnitDebuff(unitID, i)
+            if spellId == 231846 or spellId == 235900 then
                 chewToyFound = true
-            elseif spellId == 227539 then
+            elseif spellId == 227539 or spellId == 232777 or spellId == 228758 then
                 fieryPhelgmFound = true
-            elseif spellId == 227566 then
+            elseif spellId == 227566 or spellId == 232798 or spellId == 228768 then
                 saltySpittleFound = true
-            elseif spellId == 227570 then
+            elseif spellId == 227570 or spellId == 232800 or spellId == 228769 then
                 darkDischargeFound = true
             end
 
             if chewToyFound == true and fieryPhelgmFound == true and fieryPhelgmComplete == false then
                 fieryPhelgmComplete = true
                 breathCounter= breathCounter + 1
-                core:sendMessage("Fiery Phelgm (Orange) part of " .. core:getAchievement() .. " Completed (" .. breathCounter .. "/3)")
+                core:sendMessage(L["TrialOfValor_Guarm_Part1"] .. " " .. core:getAchievement() .. L["Completed"] .. " (" .. breathCounter .. "/3)")
             elseif chewToyFound == true and saltySpittleFound == true and saltySpittleComplete == false then
                 saltySpittleComplete = true
                 breathCounter= breathCounter + 1
-                core:sendMessage("Salty Spittle (Green) part of " .. core:getAchievement() .. " Completed (" .. breathCounter .. "/3)")
+                core:sendMessage(L["TrialOfValor_Guarm_Part2"] .. " " .. core:getAchievement() .. L["Completed"] .. " (" .. breathCounter .. "/3)")
             elseif chewToyFound == true and darkDischargeFound == true and darkDischargeComplete == false then
                 darkDischargeComplete = true
                 breathCounter= breathCounter + 1
-                core:sendMessage("Dark Discharge (Purple) part of " .. core:getAchievement() .. " Completed (" .. breathCounter .. "/3)")
+                core:sendMessage(L["TrialOfValor_Guarm_Part3"] .. " " .. core:getAchievement() .. L["Completed"] .. " (" .. breathCounter .. "/3)")
             end
         end
 
