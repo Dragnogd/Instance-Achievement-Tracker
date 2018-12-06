@@ -2,6 +2,7 @@
 -- Namespaces
 --------------------------------------
 local _, core = ...
+local L = core.L
 
 ------------------------------------------------------
 ---- Atal'Dazar Bosses
@@ -46,7 +47,7 @@ function core._1763:PriestessAlunza()
                         core:sendDebugMessage("Count: " .. count)
                     end
                     if spellId == 255558 and destID == "131009" and count == 8 then
-                        core:sendMessage(core:getAchievement() .. " Kill the Spirit of Gold NOW!")
+                        core:sendMessage(core:getAchievement() .. L["AtalDazar_PriestessAlunza_AddKill"])
 					end
 				end
 			end
@@ -57,7 +58,7 @@ function core._1763:PriestessAlunza()
         for i=1,40 do
             local _, _, count, _, _, _, _, _, _, spellId = UnitDebuff("Player", i)
             if spellId == 255558 and destID == "131009" and count >= 8 then
-                core:sendMessage(core:getAchievement() .. " Kill the Spirit of Gold NOW!")
+                core:sendMessage(core:getAchievement() .. L["AtalDazar_PriestessAlunza_AddKill"])
             end
         end
 	end
@@ -107,7 +108,7 @@ function core._1763:BringingHexyBack()
                     C_Timer.After(2000, function()
                         if playerHexed == false then
                             core.achievementsCompleted[1] = false
-                            core:getAchievementFailedWithMessageAfter("Atleast one players needs to be hexed on boss kill!")
+                            core:getAchievementFailedWithMessageAfter(L["AtalDazar_BringingHexyBack_Hex"])
                         end
                     end)
                 end

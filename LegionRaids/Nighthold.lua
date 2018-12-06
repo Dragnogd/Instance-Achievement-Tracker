@@ -2,6 +2,7 @@
 -- Namespaces
 --------------------------------------
 local _, core = ...
+local L = core.L
 
 ------------------------------------------------------
 ---- Nighthold Bosses
@@ -85,16 +86,16 @@ function core._1530:Skorpyron()
             if playersBrokenShard[name] == nil then
                 playerHit = true
                 playersFailed = playersFailed .. name .. ", "
-                core:sendDebugMessage(name .. " got hit")
+                core:sendDebugMessage(name .. " " .. L["Shared_GotHit"])
             else
-                core:sendDebugMessage(name .. " did not get hit")
+                core:sendDebugMessage(name .. " " .. L["Shared_NotHit"])
             end
         end
 
         if playerHit == true then
-            core:getAchievementFailedWithMessageAfter("Players Hit: " .. playersFailed)
+            core:getAchievementFailedWithMessageAfter(L["Shared_PlayersHit"] .. " " .. playersFailed)
         else
-            core:sendMessage(core:getAchievement() .. " No players were hit by Shockwave")
+            core:sendMessage(core:getAchievement() .. " " .. L["TheNighthold_Skorpyron_NoPlayersHit"])
         end
     end
 
@@ -122,7 +123,7 @@ end
 function core._1530:Trilliax()
     if (core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_APPLIED_DOSE") and core.spellId == 206798 then
         toxicSliceCounter = toxicSliceCounter + 1
-        core:sendMessage(core:getAchievement() .. " Toxic slice eaten. You can only eat a maximum of " ..  (20 - toxicSliceCounter) .. " more toxic slices")
+        core:sendMessage(core:getAchievement() .. " " .. L["TheNighthold_Trilliax_ToxicSlices1"] ..  (20 - toxicSliceCounter) .. " " .. L["TheNighthold_Trilliax_ToxicSlices2"])
     end			
 
     if toxicSliceCounter >= 20 then
@@ -143,7 +144,7 @@ function core._1530:StarAugurEtraeus()
             if destID == "103758" and core:getHealthPercent("boss" .. i) <= 30 and healthPercentageReached == false and wellTraveledNetherElementalFound == true then
                 healthPercentageReached = true
                 C_Timer.After(3, function() 
-                    core:sendMessage(core:getAchievement() .. " Kill the Well-Traveled Nether Elemental now")
+                    core:sendMessage(core:getAchievement() .. " " .. L["TheNighthold_StarAugur_KillAdd"])
                 end)
             end
         end
@@ -176,13 +177,13 @@ end
 
 function core._1530:SpellbladeAluriel()
     if core:getBlizzardTrackingStatus(10817, 1) == true then
-        core:getAchievementSuccessWithCustomMessage("'The Shal'dorei Terrace part of'", "will be completed once boss is killed")
+        core:getAchievementSuccessWithCustomMessage(L["TheNighthold_Spellblade_Location1"], L["Shared_CompletedBossKill"])
     end
     if core:getBlizzardTrackingStatus(10817, 2) == true then
-        core:getAchievementSuccessWithCustomMessage("'Shattered Walkway part of'", "will be completed once boss is killed")
+        core:getAchievementSuccessWithCustomMessage(L["TheNighthold_Spellblade_Location2"], L["Shared_CompletedBossKill"])
     end
     if core:getBlizzardTrackingStatus(10817, 3) == true then
-        core:getAchievementSuccessWithCustomMessage("'Astomancers Rise part of'", "will be completed once boss is killed")
+        core:getAchievementSuccessWithCustomMessage(L["TheNighthold_Spellblade_Location3"], L["Shared_CompletedBossKill"])
     end
 end
 
@@ -225,9 +226,9 @@ function core._1530.Events:UNIT_AURA(self, unitID, ...)
                             mysteriousFruitPlayers[fullName] = nil
                             mysteriousFruitCounter = mysteriousFruitCounter - 1
                             if core.groupSize >= 10 then
-                                core:sendMessage(UnitName(unitID) .. " has LOST the Mysterious Fruit debuff (" .. mysteriousFruitCounter .. "/" .. core.groupSize .. ")")
+                                core:sendMessage(UnitName(unitID) .. " " .. L["TheNighthold_Botanist_LostBuff"] .. " (" .. mysteriousFruitCounter .. "/" .. core.groupSize .. ")")
                             else
-                                core:sendMessage(UnitName(unitID) .. " has LOST the Mysterious Fruit debuff (" .. mysteriousFruitCounter .. "/10)")
+                                core:sendMessage(UnitName(unitID) .. " " .. L["TheNighthold_Botanist_LostBuff"] .. " (" .. mysteriousFruitCounter .. "/10)")
                             end                       
                         end
                     end)
@@ -241,9 +242,9 @@ function core._1530.Events:UNIT_AURA(self, unitID, ...)
                         mysteriousFruitPlayers[fullName] = fullName
                         mysteriousFruitCounter = mysteriousFruitCounter + 1
                         if core.groupSize >= 10 then
-                            core:sendMessage(UnitName(unitID) .. " has got the Mysterious Fruit debuff (" .. mysteriousFruitCounter .. "/" .. core.groupSize .. ")")
+                            core:sendMessage(UnitName(unitID) .. " " .. L["TheNighthold_Botanist_GainedBuff"] .. " (" .. mysteriousFruitCounter .. "/" .. core.groupSize .. ")")
                         else
-                            core:sendMessage(UnitName(unitID) .. " has got the Mysterious Fruit debuff (" .. mysteriousFruitCounter .. "/10)")
+                            core:sendMessage(UnitName(unitID) .. " " .. L["TheNighthold_Botanist_GainedBuff"] .. " (" .. mysteriousFruitCounter .. "/10)")
                         end
                     end
                 end
@@ -267,7 +268,7 @@ function core._1530:Krosus()
             else
                 burningEmbersKilledByPlayersUID[core.sourceName] = burningEmbersKilledByPlayersUID[core.sourceName] + 1
             end
-            core:sendMessage(core.sourceName .. " killed a Burning Ember (" .. burningEmbersKilledByPlayersUID[core.sourceName] .. ")")
+            core:sendMessage(core.sourceName .. " " .. L["TheNighthold_Krosus_AddKilled"] " (" .. burningEmbersKilledByPlayersUID[core.sourceName] .. ")")
         end
         burningEmbersUID[core.spawn_uid_dest] = "killed" 
     elseif core.sourceID == "104262" and burningEmbersUID[core.spawn_uid_dest] ~= "killed" and burningEmbersUID[core.spawn_uid] ~= "killed" then
@@ -281,7 +282,7 @@ function core._1530:Krosus()
         --If add is detected after we thought it was killed then remove from counter
         if burningEmbersUID[k] == "missing" then
             burningEmbersKilled = burningEmbersKilled - 1
-            core:sendMessage(core:getAchievement() .. " Burning Embers Killed (" .. burningEmbersKilled .. "/14)")
+            core:sendMessage(core:getAchievement() .. " " .. L["TheNighthold_Krosus_AddKilledTotal"] .. " (" .. burningEmbersKilled .. "/14)")
         end
     end
 
@@ -293,7 +294,7 @@ function core._1530:Krosus()
                     if core.encounterStarted == true and UnitName("boss1") ~= nil then
                         --This add was killed by the water so increment counter
                         burningEmbersKilled = burningEmbersKilled + 1
-                        core:sendMessage(core:getAchievement() .. " Burning Embers Killed (" .. burningEmbersKilled .. "/14)")
+                        core:sendMessage(core:getAchievement() .. " " .. L["TheNighthold_Krosus_AddKilledTotal"] .. " (" .. burningEmbersKilled .. "/14)")
                         core:sendDebugMessage(k .. " has been killed")
                         burningEmbersUID[k] = "missing"
                     end                    
@@ -316,7 +317,7 @@ function core._1530:Tichondrius()
 end
 
 function core._1530:Guldan()
-    core:trackMob("105630", "Eye of Gul'dan", 16, "16 Eye of Gul'dan have spawned", 1, nil, nil)
+    core:trackMob("105630", L["TheNighthold_Guldan_Eyes"] , 16, L["TheNighthold_Guldan_EyesTotal"] , 1, nil, nil)
 
     --Enough eyes have spawn so track next kill
     if core.mobCounter >= 16 then
@@ -327,7 +328,7 @@ function core._1530:Guldan()
         eyeOfGuldanKilled = eyeOfGuldanKilled + 1
         if timerStarted == false then
             timerStarted = true
-            core:sendMessage(core:getAchievement() .. " Timer Started! 3 seconds remaining")
+            core:sendMessage(core:getAchievement() .. L["Shared_Timer3"])
             C_Timer.After(3, function()
                 if core.inCombat == true then
                     if eyeOfGuldanKilled >= 16 then

@@ -49,7 +49,7 @@ end
 
 function core._1520:Ilgynoth()
     --Track 20 Nightmare Explosion are alive
-    core:trackMob("105721", "Nightmare Ichors", 20, "20 Nightmare Ichors have spawned. They can now be killed at the eye", 1, nil, nil)
+    core:trackMob("105721", L["TheEmeraldNightmare_NightmareIchors"], 20, L["TheEmeraldNightmare_IllgynothComplete"], 1, nil, nil)
 
     if core.mobCounter >= 20 and nightmareExplosionTrackKills == false then
         nightmareExplosionTrackKills = true
@@ -60,12 +60,12 @@ function core._1520:Ilgynoth()
         nightmareKilled = nightmareKilled + 1
         if timerStarted == false then
             timerStarted = true
-            core:sendMessage(core:getAchievement() .. " Timer Started!. 10 seconds remaining")
+            core:sendMessage(core:getAchievement() .. " " .. L["Shared_Timer10"])
             C_Timer.After(10, function() 
                 if nightmareKilled >= 20 then
                     core:getAchievementSuccess()
                 else
-                    core:sendMessage(core:getAchievement() .. " Nightmare Ichors Killed: " .. nightmareKilled)
+                    core:sendMessage(core:getAchievement() .. " " .. L["TheEmeraldNightmare_NightmareIchorsKilled"] .. nightmareKilled)
                 end
                 nightmareKilled = 0
                 nightmareExplosionTrackKills = false
@@ -147,7 +147,7 @@ function core._1520:DragonsOfNightmare()
             end
             if buff1Found == true and buff2Found == true and buff3Found == true and buff4Found == true and playersUID[spawn_uid_dest] == nil then
                 playersBuffCounter = playersBuffCounter + 1
-                core:sendMessage(core:getAchievement() " Players with all 4 buffs (" .. playersBuffCounter .. "/" .. core.groupSize .. ")")
+                core:sendMessage(core:getAchievement() " " .. L["TheEmeraldNightmare_DragonsOfNightmare_PlayersWithBuffs"] .. " (" .. playersBuffCounter .. "/" .. core.groupSize .. ")")
                 playersUID[spawn_uid_dest] = spawn_uid_dest
             end
         end
@@ -171,7 +171,7 @@ function core._1520:Xavius()
             if creatureOfMadnessUID[core.spawn_uid_dest] == nil then
                 creatureOfMadnessUID[core.spawn_uid_dest] = core.spawn_uid_dest
                 creatureOfMadnessKilled = creatureOfMadnessKilled + 1
-                core:sendMessage(core:getAchievement() .. " Creature of Madness Killed (" .. creatureOfMadnessKilled .. "/3)")
+                core:sendMessage(core:getAchievement() .. " " .. L["TheEmeraldNightmare_Xavius_CreaturesKilled"] .. " (" .. creatureOfMadnessKilled .. "/3)")
             end
         end
     end
@@ -227,7 +227,7 @@ function core._1520.Events:UNIT_SPELLCAST_SUCCEEDED(self, unitID, lineID, spellI
         if spellID == 208116 and bugsUID[lineID] == nil then
             bugsUID[lineID] = lineID
             bugsSquished = bugsSquished + 1
-            core:sendMessageDelay(core:getAchievement() .. " Glow Bugs Sqished (" .. bugsSquished .. "/15)", bugsSquished, 1)
+            core:sendMessageDelay(core:getAchievement() .. " " .. L["TheEmeraldNightmare_Nythendra_BugsSquished"] .. " (" .. bugsSquished .. "/15)", bugsSquished, 1)
         end
     end
 end
