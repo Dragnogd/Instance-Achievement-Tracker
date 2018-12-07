@@ -7,6 +7,7 @@ local _, core = ...
 ---- Shrine of the Storm Bosses
 ------------------------------------------------------
 core._1864 = {}
+local L = core.L
 
 ------------------------------------------------------
 ---- Vol'zith the Whisperer
