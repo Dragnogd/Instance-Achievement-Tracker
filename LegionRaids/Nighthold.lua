@@ -143,7 +143,7 @@ function core._1530:StarAugurEtraeus()
             local unitType, _, _, _, _, destID, spawn_uid_dest = strsplit("-", UnitGUID("boss" .. i))
             if destID == "103758" and core:getHealthPercent("boss" .. i) <= 30 and healthPercentageReached == false and wellTraveledNetherElementalFound == true then
                 healthPercentageReached = true
-                C_Timer.After(3, function() 
+                C_Timer.After(5, function() 
                     core:sendMessage(core:getAchievement() .. " " .. L["TheNighthold_StarAugur_KillAdd"])
                 end)
             end
