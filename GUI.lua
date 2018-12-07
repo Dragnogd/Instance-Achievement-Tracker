@@ -30,7 +30,7 @@ AchievementTrackerOptions = {}
 
 -- Purpose:         Information about the current release. This is mianly used to detect which addon should output messages to chat to avoid spam
 Config.majorVersion = 2						--Addon with a higher major version change have priority over a lower major version
-Config.minorVersion = 25					--Addon with a minor version change have prioirty over a lower minor version
+Config.minorVersion = 21					--Addon with a minor version change have prioirty over a lower minor version
 Config.revisionVersion = 0					--Addon with a revision change have the same priorty as a lower revision verison
 Config.releaseType = ""                     --Release type (Alpha, Beta, Release)
 
@@ -281,11 +281,13 @@ function Tab_OnClick(self)
             UIConfig.Main2.options11 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options10, "TOPLEFT", 30, -9, L["Announce messages to Raid Warning"],"GameFontHighlight")            
 
             --Links to current guides and achievement discord credit for tactics
-            UIConfig.Main2.credits = Config:CreateText2("TOPRIGHT",UIConfig.Main2.features6, "TOPRIGHT", 480, -30, L["Achievements Discord"] .. ":","GameFontNormalLarge")            
+            UIConfig.Main2.credits = Config:CreateText2("BOTTOMRIGHT",UIConfig, "BOTTOMRIGHT", -10, 180, L["Achievements Discord"] .. ":","GameFontNormalLarge")            
             UIConfig.Main2.credits:SetWidth(400)
             UIConfig.Main2.credits:SetJustifyH("LEFT")
-            UIConfig.Main2.credits2 = Config:CreateText2("TOPLEFT", UIConfig.Main2.credits, "TOPLEFT", 0, -20, L["https://discord.gg/achievements"],"GameFontNormal")
-            UIConfig.Main2.credits3 = Config:CreateText2("TOPLEFT", UIConfig.Main2.credits2, "TOPLEFT", 0, -20, L["Tactics kindly contributed by the Achievements Discord Server, the community where members can meet like-minded completionists and form groups for a variety of achievements."],"GameFontHighlight")
+            UIConfig.Main2.credits2 = Config:CreateText2("BOTTOMRIGHT", UIConfig, "BOTTOMRIGHT", -10, 167, L["https://discord.gg/achievements"],"GameFontNormal")
+            UIConfig.Main2.credits2:SetWidth(400)
+            UIConfig.Main2.credits2:SetJustifyH("LEFT")
+            UIConfig.Main2.credits3 = Config:CreateText2("BOTTOMRIGHT", UIConfig, "BOTTOMRIGHT", -10, 130, L["Tactics kindly contributed by the Achievements Discord Server, the community where members can meet like-minded completionists and form groups for a variety of achievements."],"GameFontHighlight")
             UIConfig.Main2.credits3:SetWidth(400)
             UIConfig.Main2.credits3:SetJustifyH("LEFT")
             
