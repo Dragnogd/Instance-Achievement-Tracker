@@ -2,6 +2,7 @@
 -- Namespaces
 --------------------------------------
 local _, core = ...
+local L = core.L
 
 ------------------------------------------------------
 ---- Emerald Nightmare Bosses
@@ -85,86 +86,6 @@ function core._1520:EleretheRenferal()
     end
 end
 
-function core._1520:DragonsOfNightmare()
-    if initialWait == true then
-        --Loop through every player in the group. Once each player has got all 4 buffs. Increment count by 1. Once counter equals group size then complete achievement
-        if core.groupSize > 1 then
-            for i = 1, core.groupSize do
-                local unit = nil
-                if core.chatType == "PARTY" then
-                    if i < core.groupSize then
-                        unit = "party" .. i
-                    else
-                        unit = "player"
-                end
-                elseif core.chatType == "RAID" then
-                    unit = "raid" .. i
-                end
-                
-                if unit ~= nil then
-                    local unitType, destID, spawn_uid_dest = strsplit("-",UnitGUID(unit));
-                    local buff1Found = false
-                    local buff2Found = false
-                    local buff3Found = false
-                    local buff4Found = false
-                    for i=1,40 do
-                        local _, _, _, _, _, _, _, _, _, spellId = UnitBuff(unit, i)
-                        if spellId == 214588 then
-                            buff1Found = true
-                        elseif spellId == 214601 then
-                            buff2Found = true
-                        elseif spellId == 214604  then
-                            buff3Found = true
-                        elseif spellId == 214610 then
-                            buff4Found = true
-                        end
-                    end
-                    if buff1Found == true and buff2Found == true and buff3Found == true and buff4Found == true and playersUID[spawn_uid_dest] == nil then
-                        playersBuffCounter = playersBuffCounter + 1
-                        core:sendMessage(core:getAchievement() .. " " .. UnitName(unit) .. " has all 4 buffs (" .. playersBuffCounter .. "/" .. core.groupSize .. ")")
-                        playersUID[spawn_uid_dest] = spawn_uid_dest
-                    end
-                end
-            end
-        else
-            --Player is not in a group
-            local unitType, destID, spawn_uid_dest = strsplit("-",UnitGUID("Player"));
-            local buff1Found = false
-            local buff2Found = false
-            local buff3Found = false
-            local buff4Found = false
-            for i=1,40 do
-                local _, _, _, _, _, _, _, _, _, spellId = UnitBuff("Player", i)
-                if spellId == 214588 then
-                    buff1Found = true
-                elseif spellId == 214601 then
-                    buff2Found = true
-                elseif spellId == 214604  then
-                    buff3Found = true
-                elseif spellId == 214610 then
-                    buff4Found = true
-                end
-            end
-            if buff1Found == true and buff2Found == true and buff3Found == true and buff4Found == true and playersUID[spawn_uid_dest] == nil then
-                playersBuffCounter = playersBuffCounter + 1
-                core:sendMessage(core:getAchievement() " " .. L["TheEmeraldNightmare_DragonsOfNightmare_PlayersWithBuffs"] .. " (" .. playersBuffCounter .. "/" .. core.groupSize .. ")")
-                playersUID[spawn_uid_dest] = spawn_uid_dest
-            end
-        end
-        
-        if playersBuffCounter == core.groupSize then
-            core:getAchievementSuccess()
-        end
-    else
-        if timerStarted == false then
-            timerStarted = true
-            C_Timer.After(5, function() 
-                initialWait = true
-            end)
-        end
-    end
-end
-
 function core._1520:Xavius()
     if (core.type == "RANGE_DAMAGE" or core.type == "SPELL_DAMAGE" or core.type == "SPELL_PERIODIC_DAMAGE" or core.type == "SWING_DAMAGE") and core.destID == "110732" and core.overkill ~= nil then
         if core.overkill > 0 then
@@ -211,11 +132,13 @@ end
 
 function core._1520:InstanceCleanup()
     core._1520.Events:UnregisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+    core._1520.Events:UnregisterEvent("UNIT_AURA")
     dragonsKilled = false
 end
 
 function core._1520:InitialSetup()
 	core._1520.Events:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+	core._1520.Events:RegisterEvent("UNIT_AURA")
 end
 
 core._1520.Events:SetScript("OnEvent", function(self, event, ...)
@@ -228,6 +151,53 @@ function core._1520.Events:UNIT_SPELLCAST_SUCCEEDED(self, unitID, lineID, spellI
             bugsUID[lineID] = lineID
             bugsSquished = bugsSquished + 1
             core:sendMessageDelay(core:getAchievement() .. " " .. L["TheEmeraldNightmare_Nythendra_BugsSquished"] .. " (" .. bugsSquished .. "/15)", bugsSquished, 1)
+        end
+    end
+end
+
+function core._1520.Events:UNIT_AURA(self, unitID, ...)
+    if initialWait == true then
+        if core.Instances[core.expansion][core.instanceType][core.instance]["boss3"].enabled == true then
+            if UnitIsPlayer(unitID) ~= nil then
+                local name, realm = UnitName(unitID)
+                local fullName = name
+                local unitTypePlayer, destIDPlayer, spawn_uid_dest = strsplit("-", UnitGUID(unitID))
+
+                if playersUID[spawn_uid_dest] == nil then
+                    local buff1Found = false
+                    local buff2Found = false
+                    local buff3Found = false
+                    local buff4Found = false
+                    for i=1,40 do
+                        local _, _, _, _, _, _, _, _, _, spellId = UnitBuff(unitID, i)
+                        if spellId == 214588 then
+                            buff1Found = true
+                        elseif spellId == 214601 then
+                            buff2Found = true
+                        elseif spellId == 214604  then
+                            buff3Found = true
+                        elseif spellId == 214610 then
+                            buff4Found = true
+                        end
+                    end
+                    if buff1Found == true and buff2Found == true and buff3Found == true and buff4Found == true and playersUID[spawn_uid_dest] == nil then
+                        playersBuffCounter = playersBuffCounter + 1
+                        core:sendMessage(core:getAchievement() .. " " .. UnitName(unitID) .. " has all 4 buffs (" .. playersBuffCounter .. "/" .. core.groupSize .. ")")
+                        playersUID[spawn_uid_dest] = spawn_uid_dest
+                    end
+                end
+            end
+        end
+    
+        if playersBuffCounter == core.groupSize then
+            core:getAchievementSuccess()
+        end
+    elseif core.encounterStarted == true then
+        if timerStarted == false then
+            timerStarted = true
+            C_Timer.After(5, function() 
+                initialWait = true
+            end)
         end
     end
 end
