@@ -266,50 +266,50 @@ function core._1530:Krosus()
         core:getAchievementSuccess()
     end
 
-    local burningEmbersUIDTemp = {}
-    --If Burning Ember Killed by player then remove from list
+    -- local burningEmbersUIDTemp = {}
+    -- --If Burning Ember Killed by player then remove from list
         
-    if core.destID == "104262" and core.overkill > 0 and burningEmbersUID[core.spawn_uid_dest] ~= "killed" then
-        if core:getBlizzardTrackingStatus(10575) == false then
-            if burningEmbersKilledByPlayersUID[core.sourceName] == nil then
-                burningEmbersKilledByPlayersUID[core.sourceName] = 1
-            else
-                burningEmbersKilledByPlayersUID[core.sourceName] = burningEmbersKilledByPlayersUID[core.sourceName] + 1
-            end
-            core:sendMessage(core.sourceName .. " " .. L["TheNighthold_Krosus_AddKilled"] " (" .. burningEmbersKilledByPlayersUID[core.sourceName] .. ")")
-        end
-        burningEmbersUID[core.spawn_uid_dest] = "killed" 
-    elseif core.sourceID == "104262" and burningEmbersUID[core.spawn_uid_dest] ~= "killed" and burningEmbersUID[core.spawn_uid] ~= "killed" then
-        if burningEmbersUID[core.spawn_uid] == nil and core.spawn_uid ~= nil then
-            core:sendDebugMessage("ADDED: " .. core.spawn_uid)
-        end
-        --Reset counter to current time in seconds since add has been detected again
-        burningEmbersUID[core.spawn_uid] = GetTime()
-        burningEmbersUIDTemp[core.spawn_uid] = core.spawn_uid
+    -- if core.destID == "104262" and core.overkill > 0 and burningEmbersUID[core.spawn_uid_dest] ~= "killed" then
+    --     if core:getBlizzardTrackingStatus(10575) == false then
+    --         if burningEmbersKilledByPlayersUID[core.sourceName] == nil then
+    --             burningEmbersKilledByPlayersUID[core.sourceName] = 1
+    --         else
+    --             burningEmbersKilledByPlayersUID[core.sourceName] = burningEmbersKilledByPlayersUID[core.sourceName] + 1
+    --         end
+    --         core:sendMessage(core.sourceName .. " " .. L["TheNighthold_Krosus_AddKilled"] " (" .. burningEmbersKilledByPlayersUID[core.sourceName] .. ")")
+    --     end
+    --     burningEmbersUID[core.spawn_uid_dest] = "killed" 
+    -- elseif core.sourceID == "104262" and burningEmbersUID[core.spawn_uid_dest] ~= "killed" and burningEmbersUID[core.spawn_uid] ~= "killed" then
+    --     if burningEmbersUID[core.spawn_uid] == nil and core.spawn_uid ~= nil then
+    --         core:sendDebugMessage("ADDED: " .. core.spawn_uid)
+    --     end
+    --     --Reset counter to current time in seconds since add has been detected again
+    --     burningEmbersUID[core.spawn_uid] = GetTime()
+    --     burningEmbersUIDTemp[core.spawn_uid] = core.spawn_uid
 
-        --If add is detected after we thought it was killed then remove from counter
-        if burningEmbersUID[k] == "missing" then
-            burningEmbersKilled = burningEmbersKilled - 1
-            core:sendMessage(core:getAchievement() .. " " .. L["TheNighthold_Krosus_AddKilledTotal"] .. " (" .. burningEmbersKilled .. "/14)")
-        end
-    end
+    --     --If add is detected after we thought it was killed then remove from counter
+    --     if burningEmbersUID[k] == "missing" then
+    --         burningEmbersKilled = burningEmbersKilled - 1
+    --         core:sendMessage(core:getAchievement() .. " " .. L["TheNighthold_Krosus_AddKilledTotal"] .. " (" .. burningEmbersKilled .. "/14)")
+    --     end
+    -- end
 
-    --Compare the two arrays to see if any have been killed
-    for k, v in pairs(burningEmbersUID) do
-        if v ~= "killed" and v ~= "missing" then
-            if core:has_value2(burningEmbersUIDTemp, k) == false then
-                if (GetTime() - burningEmbersUID[k]) > 5 then
-                    if core.encounterStarted == true and UnitName("boss1") ~= nil then
-                        --This add was killed by the water so increment counter
-                        burningEmbersKilled = burningEmbersKilled + 1
-                        core:sendMessage(core:getAchievement() .. " " .. L["TheNighthold_Krosus_AddKilledTotal"] .. " (" .. burningEmbersKilled .. "/14)")
-                        core:sendDebugMessage(k .. " has been killed")
-                        burningEmbersUID[k] = "missing"
-                    end                    
-                end
-            end
-        end
-    end
+    -- --Compare the two arrays to see if any have been killed
+    -- for k, v in pairs(burningEmbersUID) do
+    --     if v ~= "killed" and v ~= "missing" then
+    --         if core:has_value2(burningEmbersUIDTemp, k) == false then
+    --             if (GetTime() - burningEmbersUID[k]) > 5 then
+    --                 if core.encounterStarted == true and UnitName("boss1") ~= nil then
+    --                     --This add was killed by the water so increment counter
+    --                     burningEmbersKilled = burningEmbersKilled + 1
+    --                     core:sendMessage(core:getAchievement() .. " " .. L["TheNighthold_Krosus_AddKilledTotal"] .. " (" .. burningEmbersKilled .. "/14)")
+    --                     core:sendDebugMessage(k .. " has been killed")
+    --                     burningEmbersUID[k] = "missing"
+    --                 end                    
+    --             end
+    --         end
+    --     end
+    -- end
 end
 
 function core._1530:Elisande()
