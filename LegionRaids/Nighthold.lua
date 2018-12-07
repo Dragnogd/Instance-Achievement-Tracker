@@ -183,7 +183,15 @@ function core._1530:SpellbladeAluriel()
         core:getAchievementSuccessWithCustomMessage(L["TheNighthold_Spellblade_Location2"], L["Shared_CompletedBossKill"])
     end
     if core:getBlizzardTrackingStatus(10817, 3) == true then
-        core:getAchievementSuccessWithCustomMessage(L["TheNighthold_Spellblade_Location3"], L["Shared_CompletedBossKill"])
+        --Wait for 20 seconds for this one as you need to pass through this room to reach another location
+        if timerStarted == false then
+            timerStarted = true
+            C_Timer.After(20, function()
+                if core:getBlizzardTrackingStatus(10817, 3) == true then
+                    core:getAchievementSuccessWithCustomMessage(L["TheNighthold_Spellblade_Location3"], L["Shared_CompletedBossKill"])            
+                end
+            end)
+        end
     end
 end
 
