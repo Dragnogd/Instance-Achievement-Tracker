@@ -181,6 +181,10 @@ function core._1205:Kromog()
 					timerStarted = false			
 				end
 			end)
+		else
+			if graspingEarthKilled >= 10 then
+				core:getAchievementSuccess()
+			end
 		end
 	end
 end
