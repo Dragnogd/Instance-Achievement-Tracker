@@ -180,7 +180,8 @@ function core._1712:ClearVariables()
     ------------------------------------------------------
     --Output best attempt to chat
     if highestEnergy > 0 and highestEnergy < 80 then
-        core:sendMessage(GetAchievementLink(12257) .. " Best attempt last kill (" .. highestEnergy .. "/80). Khaz'Goroth must gain 80 energy within 5 seconds to complete this achievement")
+        --core:sendMessage(GetAchievementLink(12257) .. " Best attempt last kill (" .. highestEnergy .. "/80). Khaz'Goroth must gain 80 energy within 5 seconds to complete this achievement")
+        core:sendMessage(GetAchievementLink(12257) .. " Best attempt this pull: (" .. floor(highestEnergy / 4) .. "/20) Orbs Collected")
     else
         --core:sendMessage("Highest Energy is 0")
     end
@@ -239,7 +240,8 @@ function core._1712.Events:UNIT_POWER_UPDATE(self, unit, powerType)
                     if (newPower - currentPower) > highestEnergy and starDustCompleted == false then
                         if highestEnergy >= 0 then
                             highestEnergy = newPower - currentPower
-                            core:sendMessage(GetAchievementLink(12257) .. " Best attempt this pull (" .. highestEnergy .. "/80). Khaz'Goroth must gain 80 energy within 5 seconds to complete this achievement")
+                            --core:sendMessage(GetAchievementLink(12257) .. " Best attempt this pull (" .. highestEnergy .. "/80). Khaz'Goroth must gain 80 energy within 5 seconds to complete this achievement")
+                            core:sendMessage(GetAchievementLink(12257) .. " Best attempt this pull: (" .. floor(highestEnergy / 4) .. "/20) Orbs Collected")
                         end
                     end
 
@@ -254,6 +256,11 @@ function core._1712.Events:UNIT_POWER_UPDATE(self, unit, powerType)
                     if starDustCompleted == false and energyTooHighAnnounced == false and newPower == 100 then
                         core:sendMessage(GetAchievementLink(12257) .. " Unable to track achievement. Khaz'Goroth energy must be at 20 energy or lower for IAT to track this achievement")
                         energyTooHighAnnounced = true                        
+                    end
+
+                    --Reset energy too high message since khaz energy has got to 20 or below
+                    if starDustCompleted == false and energyTooHighAnnounced == true and newPower <= 20 then
+                        energyTooHighAnnounced = false
                     end
                 end)
             end
