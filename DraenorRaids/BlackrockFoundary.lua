@@ -161,6 +161,10 @@ function core._1205:BlastFurnace()
 					core:getAchievementFailedWithMessageAfter("(" .. primalElementalistsKilled .. "/4) Primal Elementalists killed in time")				
 				end
 			end)
+		else
+			if primalElementalistsKilled == 4 then
+				core:getAchievementSuccess()
+			end
 		end
 	end
 end
