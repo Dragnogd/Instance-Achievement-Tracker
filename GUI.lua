@@ -30,7 +30,7 @@ AchievementTrackerOptions = {}
 
 -- Purpose:         Information about the current release. This is mianly used to detect which addon should output messages to chat to avoid spam
 Config.majorVersion = 2						--Addon with a higher major version change have priority over a lower major version
-Config.minorVersion = 21					--Addon with a minor version change have prioirty over a lower minor version
+Config.minorVersion = 30					--Addon with a minor version change have prioirty over a lower minor version
 Config.revisionVersion = 0					--Addon with a revision change have the same priorty as a lower revision verison
 Config.releaseType = ""                     --Release type (Alpha, Beta, Release)
 
@@ -207,7 +207,7 @@ function Tab_OnClick(self)
             UIConfig.Main.verison = Config:CreateText2("BOTTOMLEFT", AchievementTrackerDialogBG, "BOTTOMLEFT", 5, 5, "v" .. Config.majorVersion .. "." .. Config.minorVersion .. "." .. Config.revisionVersion .. Config.releaseType,"GameFontNormal")
             
             --Currently tracking
-            UIConfig.Main2 = Config:CreateText2("TOPLEFT", UIConfig.Main, "TOPLEFT", 0, -45, L["Currently Tracking"] .. ":","GameFontNormalLarge")            
+            UIConfig.Main2 = Config:CreateText2("TOPLEFT", UIConfig.Main, "TOPLEFT", 0, -45, L["GUI_TrackingNumber"] .. ":","GameFontNormalLarge")            
             UIConfig.Main2:SetWidth(300)
             UIConfig.Main2:SetJustifyH("LEFT")
 
@@ -232,76 +232,75 @@ function Tab_OnClick(self)
                 end
             end
 
-            UIConfig.Main2.content = Config:CreateText2("TOPLEFT", UIConfig.Main2, "TOPLEFT", 0, -20, achievementsTracked .. " " .. L["Achievements"],"GameFontHighlight")
-            UIConfig.Main2.content2 = Config:CreateText2("TOPLEFT", UIConfig.Main2.content, "TOPLEFT", 0, -15, tacticsTracked .. " " .. L["Tactics"],"GameFontHighlight") 
+            UIConfig.Main2.content = Config:CreateText2("TOPLEFT", UIConfig.Main2, "TOPLEFT", 0, -20, achievementsTracked .. " " .. L["GUI_Achievements"],"GameFontHighlight")
+            UIConfig.Main2.content2 = Config:CreateText2("TOPLEFT", UIConfig.Main2.content, "TOPLEFT", 0, -15, tacticsTracked .. " " .. L["GUI_Tactics"],"GameFontHighlight") 
             
-            --Features
-            UIConfig.Main2.features = Config:CreateText2("TOPLEFT", UIConfig.Main2.content, "TOPLEFT", 0, -40, L["Features"] .. ":","GameFontNormalLarge")  
-            UIConfig.Main2.features:SetWidth(750)    
-            UIConfig.Main2.features:SetJustifyH("LEFT")        
-            UIConfig.Main2.features1 = Config:CreateText2("TOPLEFT", UIConfig.Main2.features, "TOPLEFT", 0, -20, L["- Tracks when the criteria of instance achievements have been met and output this to chat"],"GameFontHighlight")   
-            UIConfig.Main2.features2 = Config:CreateText2("TOPLEFT", UIConfig.Main2.features1, "TOPLEFT", 0, -20, L["- Tracks when the criteria of instance achievements has been failed and outputs this to chat"],"GameFontHighlight")   
-            UIConfig.Main2.features3 = Config:CreateText2("TOPLEFT", UIConfig.Main2.features2, "TOPLEFT", 0, -20, L["- Keeps track of achievements which require you to kill so many mobs within a certain time period. It will announce to chat when enough mobs have spawned and whether they were killed in the time period."],"GameFontHighlight")   
-            UIConfig.Main2.features4 = Config:CreateText2("TOPLEFT", UIConfig.Main2.features3, "TOPLEFT", 0, -30, L["- Scans all players in the group to see which achievements each player is missing for the current instance"],"GameFontHighlight")   
-            UIConfig.Main2.features5 = Config:CreateText2("TOPLEFT", UIConfig.Main2.features4, "TOPLEFT", 0, -20, L["- Announce to chat players who are missing achievements for certain bosses"],"GameFontHighlight")   
-            UIConfig.Main2.features6 = Config:CreateText2("TOPLEFT", UIConfig.Main2.features5, "TOPLEFT", 0, -20, L["- Announce to chat tactics for a certain boss"],"GameFontHighlight")   
-            UIConfig.Main2.features3:SetWidth(750)
-            UIConfig.Main2.features3:SetJustifyH("LEFT") 
+            -- --Features
+            -- UIConfig.Main2.features = Config:CreateText2("TOPLEFT", UIConfig.Main2.content, "TOPLEFT", 0, -40, L["Features"] .. ":","GameFontNormalLarge")  
+            -- UIConfig.Main2.features:SetWidth(750)    
+            -- UIConfig.Main2.features:SetJustifyH("LEFT")        
+            -- UIConfig.Main2.features1 = Config:CreateText2("TOPLEFT", UIConfig.Main2.features, "TOPLEFT", 0, -20, L["- Tracks when the criteria of instance achievements have been met and output this to chat"],"GameFontHighlight")   
+            -- UIConfig.Main2.features2 = Config:CreateText2("TOPLEFT", UIConfig.Main2.features1, "TOPLEFT", 0, -20, L["- Tracks when the criteria of instance achievements has been failed and outputs this to chat"],"GameFontHighlight")   
+            -- UIConfig.Main2.features3 = Config:CreateText2("TOPLEFT", UIConfig.Main2.features2, "TOPLEFT", 0, -20, L["- Keeps track of achievements which require you to kill so many mobs within a certain time period. It will announce to chat when enough mobs have spawned and whether they were killed in the time period."],"GameFontHighlight")   
+            -- UIConfig.Main2.features4 = Config:CreateText2("TOPLEFT", UIConfig.Main2.features3, "TOPLEFT", 0, -30, L["- Scans all players in the group to see which achievements each player is missing for the current instance"],"GameFontHighlight")   
+            -- UIConfig.Main2.features5 = Config:CreateText2("TOPLEFT", UIConfig.Main2.features4, "TOPLEFT", 0, -20, L["- Announce to chat players who are missing achievements for certain bosses"],"GameFontHighlight")   
+            -- UIConfig.Main2.features6 = Config:CreateText2("TOPLEFT", UIConfig.Main2.features5, "TOPLEFT", 0, -20, L["- Announce to chat tactics for a certain boss"],"GameFontHighlight")   
+            -- UIConfig.Main2.features3:SetWidth(750)
+            -- UIConfig.Main2.features3:SetJustifyH("LEFT") 
 
             --Options
-            UIConfig.Main2.options = Config:CreateText2("TOPLEFT", UIConfig.Main2.features6, "TOPLEFT", 0, -30, L["Options"] .. ":","GameFontNormalLarge")
+            UIConfig.Main2.options = Config:CreateText2("TOPLEFT", UIConfig.Main2.content2, "TOPLEFT", 0, -30, L["GUI_Options"] .. ":","GameFontNormalLarge")
             UIConfig.Main2.options:SetWidth(750)    
             UIConfig.Main2.options:SetJustifyH("LEFT")
 
             --Enable Addon
-            UIConfig.Main2.options2 = Config:CreateCheckBox("TOPLEFT", UIConfig, "TOPLEFT", 20, -320, "AchievementTracker_EnableAddon")
+            UIConfig.Main2.options2 = Config:CreateCheckBox("TOPLEFT", UIConfig, "TOPLEFT", 20, -160, "AchievementTracker_EnableAddon")
             UIConfig.Main2.options2:SetScript("OnClick", enableAddon_OnClick)
-            UIConfig.Main2.options3 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options2, "TOPLEFT", 30, -9, L["Enable Addon"],"GameFontHighlight")
+            UIConfig.Main2.options3 = Config:CreateText2("TOPLEFT", UIConfig, "TOPLEFT", 51, -170, L["GUI_EnableAddon"],"GameFontHighlight")
 
             --Toggle Minimap Icon
             UIConfig.Main2.options4 = Config:CreateCheckBox("TOPLEFT", UIConfig.Main2.options2, "TOPLEFT", 0, -25, "AchievementTracker_ToggleMinimapIcon")
             UIConfig.Main2.options4:SetScript("OnClick", ATToggleMinimapIcon_OnClick)
-            UIConfig.Main2.options5 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options4, "TOPLEFT", 30, -9, L["Show Minimap Button"],"GameFontHighlight")            
+            UIConfig.Main2.options5 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options4, "TOPLEFT", 30, -9, L["GUI_ToggleMinimap"],"GameFontHighlight")            
 
             --Link achievements being tracked for current boss to chat
             UIConfig.Main2.options6 = Config:CreateCheckBox("TOPLEFT", UIConfig.Main2.options4, "TOPLEFT", 0, -25, "AchievementTracker_ToggleAchievementAnnounce")
             UIConfig.Main2.options6:SetScript("OnClick", ATToggleAchievementAnnounce_OnClick)
-            UIConfig.Main2.options7 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options6, "TOPLEFT", 30, -9, L["Announce Achievements Being Tracked To Group"],"GameFontHighlight")    
+            UIConfig.Main2.options7 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options6, "TOPLEFT", 30, -9, L["GUI_AnnounceTracking"],"GameFontHighlight")    
 
             --Only track achievements in the group that players need.
             --Note this will only track achievements if players need them account wide not character wide
             --If players have achievements hidden then tracking may not start as intended
             UIConfig.Main2.options8 = Config:CreateCheckBox("TOPLEFT", UIConfig.Main2.options6, "TOPLEFT", 0, -25, "AchievementTracker_ToggleTrackMissingAchievementsOnly")
             UIConfig.Main2.options8:SetScript("OnClick", ATToggleTrackMissingAchievementsOnly_OnClick)
-            UIConfig.Main2.options9 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options8, "TOPLEFT", 30, -9, L["Only track missing achievements"],"GameFontHighlight")
+            UIConfig.Main2.options9 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options8, "TOPLEFT", 30, -9, L["GUI_OnlyTrackMissingAchievements"],"GameFontHighlight")
             
             --Announce messages to Raid Warning if player has permission
             UIConfig.Main2.options10 = Config:CreateCheckBox("TOPLEFT", UIConfig.Main2.options8, "TOPLEFT", 0, -25, "AchievementTracker_ToggleAnnounceToRaidWarning")
             UIConfig.Main2.options10:SetScript("OnClick", ATToggleAnnounceToRaidWarning_OnClick)
-            UIConfig.Main2.options11 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options10, "TOPLEFT", 30, -9, L["Announce messages to Raid Warning"],"GameFontHighlight")            
+            UIConfig.Main2.options11 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options10, "TOPLEFT", 30, -9, L["GUI_AnnounceMessagesToRaidWarning"],"GameFontHighlight")            
 
             --Links to current guides and achievement discord credit for tactics
-            UIConfig.Main2.credits = Config:CreateText2("BOTTOMRIGHT",UIConfig, "BOTTOMRIGHT", -10, 180, L["Achievements Discord"] .. ":","GameFontNormalLarge")            
+            UIConfig.Main2.credits = Config:CreateText2("BOTTOMRIGHT",UIConfig, "BOTTOMRIGHT", -10, 180, L["GUI_AchievementsDiscordTitle"] .. ":","GameFontNormalLarge")            
             UIConfig.Main2.credits:SetWidth(400)
             UIConfig.Main2.credits:SetJustifyH("LEFT")
-            UIConfig.Main2.credits2 = Config:CreateText2("BOTTOMRIGHT", UIConfig, "BOTTOMRIGHT", -10, 167, L["https://discord.gg/achievements"],"GameFontNormal")
+            UIConfig.Main2.credits2 = Config:CreateText2("BOTTOMRIGHT", UIConfig, "BOTTOMRIGHT", -10, 167, "https://discord.gg/achievements","GameFontNormal")
             UIConfig.Main2.credits2:SetWidth(400)
             UIConfig.Main2.credits2:SetJustifyH("LEFT")
-            UIConfig.Main2.credits3 = Config:CreateText2("BOTTOMRIGHT", UIConfig, "BOTTOMRIGHT", -10, 130, L["Tactics kindly contributed by the Achievements Discord Server, the community where members can meet like-minded completionists and form groups for a variety of achievements."],"GameFontHighlight")
+            UIConfig.Main2.credits3 = Config:CreateText2("BOTTOMRIGHT", UIConfig, "BOTTOMRIGHT", -10, 130, L["GUI_AchievementsDiscordDescription"],"GameFontHighlight")
             UIConfig.Main2.credits3:SetWidth(400)
             UIConfig.Main2.credits3:SetJustifyH("LEFT")
             
-            --Make a sound when an achievement has been completed or failed
+            --Make a sound when an achievement has been completed
             UIConfig.Main2.options12 = Config:CreateCheckBox("TOPLEFT", UIConfig.Main2.options10, "TOPLEFT", 0, -25, "AchievementTracker_ToggleSound")
             UIConfig.Main2.options12:SetScript("OnClick", ATToggleSound_OnClick)
-            UIConfig.Main2.options13 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options12, "TOPLEFT", 30, -9, L["Play a sound when a achievement is"],"GameFontHighlight")             
+            UIConfig.Main2.options13 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options12, "TOPLEFT", 30, -9, L["GUI_PlaySoundOnSuccess"],"GameFontHighlight")             
 
-            --Dropdown menu to select sound for completed Achievement
-            UIConfig.Main2.options14 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options12, "TOPLEFT", 260, -9, L["completed"],"GameFontHighlight")                         
+            --Dropdown menu to select sound for completed Achievement                 
             UIConfig.Main2.options15 = MSA_DropDownMenu_Create("AchievementTracker_SelectSoundDropdownCompleted", UIConfig.Main2.options12)
-            UIConfig.Main2.options15:SetPoint("TOPLEFT", UIConfig.Main2.options12, "TOPLEFT", 320, 0)
+            UIConfig.Main2.options15:SetPoint("TOPLEFT", UIConfig.Main2.options12, "TOPLEFT", UIConfig.Main2.options13:GetStringWidth() + 30, 0)
             MSA_DropDownMenu_SetWidth(UIConfig.Main2.options15, 100)
-            MSA_DropDownMenu_SetText(UIConfig.Main2.options15, "Select Sound")
+            MSA_DropDownMenu_SetText(UIConfig.Main2.options15, L["GUI_SelectSound"])
             MSA_DropDownMenu_Initialize(UIConfig.Main2.options15, function(self, level, menuList)
                 local info = MSA_DropDownMenu_CreateInfo()
                 info.func = AchievementTracker_SelectSoundCompleted
@@ -315,12 +314,16 @@ function Tab_OnClick(self)
                 end
             end)
 
-            --Dropdown menu to select sound for failed Achievement
-            UIConfig.Main2.options16 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options12, "TOPLEFT", 460, -9, L["or failed"],"GameFontHighlight")                         
-            UIConfig.Main2.options17 = MSA_DropDownMenu_Create("AchievementTracker_SelectSoundDropdownFailed", UIConfig.Main2.options12)
-            UIConfig.Main2.options17:SetPoint("TOPLEFT", UIConfig.Main2.options12, "TOPLEFT", 505, 0)
+            --Make a sound when an achievement has been completed
+            UIConfig.Main2.options012 = Config:CreateCheckBox("TOPLEFT", UIConfig.Main2.options12, "TOPLEFT", 0, -25, "AchievementTracker_ToggleSoundFailed")
+            UIConfig.Main2.options012:SetScript("OnClick", ATToggleSoundFailed_OnClick)
+            UIConfig.Main2.options013 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options012, "TOPLEFT", 30, -9, L["GUI_PlaySoundOnFailed"],"GameFontHighlight")
+
+            --Dropdown menu to select sound for failed Achievement                        
+            UIConfig.Main2.options17 = MSA_DropDownMenu_Create("AchievementTracker_SelectSoundDropdownFailed", UIConfig.Main2.options012)
+            UIConfig.Main2.options17:SetPoint("TOPLEFT", UIConfig.Main2.options012, "TOPLEFT", UIConfig.Main2.options013:GetStringWidth() + 30, 0)
             MSA_DropDownMenu_SetWidth(UIConfig.Main2.options17, 100)
-            MSA_DropDownMenu_SetText(UIConfig.Main2.options17, "Select Sound")
+            MSA_DropDownMenu_SetText(UIConfig.Main2.options17, L["GUI_SelectSound"])
             MSA_DropDownMenu_Initialize(UIConfig.Main2.options17, function(self, level, menuList)
                 local info = MSA_DropDownMenu_CreateInfo()
                 info.func = AchievementTracker_SelectSoundFailed
@@ -539,6 +542,11 @@ function ATToggleSound_OnClick(self)
     setEnableSound(self:GetChecked()) 
 end
 
+function ATToggleSoundFailed_OnClick(self)
+    AchievementTrackerOptions["toggleSoundFailed"] = self:GetChecked()
+    setEnableSound(self:GetChecked()) 
+end
+
 function ATToggleAnnounceToRaidWarning_OnClick(self)
     AchievementTrackerOptions["announceToRaidWarning"] = self:GetChecked()
     setAnnounceToRaidWarning(self:GetChecked()) 
@@ -598,10 +606,10 @@ function Config:SetupAchievementTracking(mode)
                     if boss ~= "name" then
                         if mode == false then
                             core.Instances[expansion][instanceType][instance][boss].players = {}
-                            table.insert(core.Instances[expansion][instanceType][instance][boss].players, L["(Achievement Tracking Disabled)"])
+                            table.insert(core.Instances[expansion][instanceType][instance][boss].players, L["GUI_TrackingDisabled"])
                         else
                             core.Instances[expansion][instanceType][instance][boss].players = {}
-                            table.insert(core.Instances[expansion][instanceType][instance][boss].players, L["Enter instance to start scanning"])
+                            table.insert(core.Instances[expansion][instanceType][instance][boss].players, L["GUI_EnterInstanceToStartScanning"])
                             if core.inInstance == true then
                                 if core.instance == instance and instanceFound == false then
                                     core:getPlayersInGroup2()
@@ -697,7 +705,7 @@ function Config:CreateGUI()
     --Title
     UIConfig.title = UIConfig:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
 	UIConfig.title:SetPoint("CENTER", AchievementTrackerTitleBG, "CENTER", 6, 1);
-	UIConfig.title:SetText(L["Instance Achievement Tracker"]);
+	UIConfig.title:SetText("Instance Achievement Tracker");
 
     --Scroll Frame For Buttons
     UIConfig.ScrollFrame = CreateFrame("ScrollFrame", nil, UIConfig, "UIPanelScrollFrameTemplate")
@@ -723,12 +731,13 @@ function Config:CreateGUI()
      UIConfig.ScrollFrame2.ScrollBar:SetPoint("BOTTOMRIGHT", UIConfig.ScrollFrame2, "BOTTOMRIGHT", -7, 18)    
 
     --Tabs
-    content1, BattleForAzerothNav, BattleForAzerothContent, LegionNav, LegionContent, WarlordsOfDraenorNav, WarlordsOfDraenorContent, MistsOfPandariaNav, MistsOfPandariaContent, CataclysmNav, CataclysmContent, WrathOfTheLichKingNav, WrathOfTheLichKingContent = SetTabs(UIConfig, 7, L["Main"], L["Battle for Azeroth"], L["Legion"], L["Warlords of Draenor"], L["Mists of Pandaria"], L["Cataclysm"], L["Wrath of the Lich King"])    
+    ["GUI_Legion"] = "Legion", --["Legion"]
+    content1, BattleForAzerothNav, BattleForAzerothContent, LegionNav, LegionContent, WarlordsOfDraenorNav, WarlordsOfDraenorContent, MistsOfPandariaNav, MistsOfPandariaContent, CataclysmNav, CataclysmContent, WrathOfTheLichKingNav, WrathOfTheLichKingContent = SetTabs(UIConfig, 7, L["GUI_Options"], L["GUI_BattleForAzeroth"], L["Legion"], L["GUI_WarlordsOfDraenor"], L["GUI_MistsOfPandaria"], L["GUI_Cataclysm"], L["GUI_WrathOfTheLichKing"])    
 
     --Content (Main)
     content1.title = content1:CreateFontString(nil, "OVERLAY", "GameFontHighlightLarge")
 	content1.title:SetPoint("CENTER", AchievementTrackerDialogBG, "CENTER", -2, 210);
-    content1.title:SetText("Welcome to Achievement Tracker V1.0");
+    --content1.title:SetText("Welcome to Achievement Tracker V1.0");
 
     --Create the navigation buttons for each expansion
     local expansions = 6
@@ -1106,16 +1115,16 @@ function Instance_OnClick(self)
                 button = WrathOfTheLichKingContentButtons[counter]
             end
 
-            local players = L["Players"] .. ": "
+            local players = L["GUI_Players"] .. ": "
             for i = 1, #instanceLocation["boss" .. counter2].players do
                 players = players .. instanceLocation["boss" .. counter2].players[i] .. ", "
             end
             
             --Only show players for current instances we are in
             if type(self) == "table" then
-                button.contentText:SetText(L["Achievement"] .. ": " .. GetAchievementLink(instanceLocation["boss" .. counter2].achievement) .. "\n\n" .. L["Tactics"] .. ": " .. instanceLocation["boss" .. counter2].tactics)            
+                button.contentText:SetText(L["GUI_Achievement"] .. ": " .. GetAchievementLink(instanceLocation["boss" .. counter2].achievement) .. "\n\n" .. L["GUI_Tactics"] .. ": " .. instanceLocation["boss" .. counter2].tactics)            
             else
-                button.contentText:SetText(L["Achievement"] .. ": " .. GetAchievementLink(instanceLocation["boss" .. counter2].achievement) .. "\n\n" .. players .. "\n\n" .. L["Tactics"] .. ": " .. instanceLocation["boss" .. counter2].tactics)
+                button.contentText:SetText(L["GUI_Achievement"] .. ": " .. GetAchievementLink(instanceLocation["boss" .. counter2].achievement) .. "\n\n" .. players .. "\n\n" .. L["GUI_Tactics"] .. ": " .. instanceLocation["boss" .. counter2].tactics)
             end
 
             button.contentText:Show()
@@ -1224,23 +1233,23 @@ function Player_OnClick(self)
                         if core.Instances[expansion][instanceType][instance][boss].generatedID == self:GetID() then
                             local players
                             if core.inInstance == true then
-                                if core.Instances[expansion][instanceType][instance][boss].players[1] == "(" .. L["No players in the group need this achievement"] .. ")" then
+                                if core.Instances[expansion][instanceType][instance][boss].players[1] == "(" .. L["GUI_NoPlayersNeedAchievement"] .. ")" then
                                     if core.scanFinished == true then
-                                        players = GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " " .. L["No players in the group need this achievement"]
+                                        players = GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " " .. L["GUI_NoPlayersNeedAchievement"]
                                     else
-                                        players = GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " " .. L["No players in the group need this achievement"] .. " (" .. L["scan still in progress"] .. ")"                        
+                                        players = GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " " .. L["GUI_NoPlayersNeedAchievement"] .. " (" .. L["scan still in progress"] .. ")"                        
                                     end   
-                                elseif core.Instances[expansion][instanceType][instance][boss].players[1] == L["Enter instance to start scanning"] then
+                                elseif core.Instances[expansion][instanceType][instance][boss].players[1] == L["GUI_EnterInstanceToStartScanning"] then
                                     players = GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement)   
                                 else
-                                    players = GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " " .. L["Players who need Achievement"] .. ": "
+                                    players = GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " " .. L["GUI_PlayersWhoNeedAchievement"] .. ": "
 
                                     for i = 1, #core.Instances[expansion][instanceType][instance][boss].players do
                                         players = players .. core.Instances[expansion][instanceType][instance][boss].players[i] .. ", "
                                     end
 
                                     if core.scanFinished == false then
-                                        players = players .. " (" .. L["scan still in progress"] .. ")"
+                                        players = players .. " (" .. L["GUI_ScanInProgress"] .. ")"
                                     end
                                 end
                             else
@@ -1287,11 +1296,11 @@ function Enabled_OnClick(self)
                             --Print to chat
                             local status = nil
                             if core.Instances[expansion][instanceType][instance][boss].enabled == false then
-                                status = L["Disabled"]
+                                status = L["GUI_Disabled"]
                             else
-                                status = L["Enabled"]
+                                status = L["GUI_Enabled"]
                             end
-                            core:printMessage(GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " " .. L["Tracking"] .. " " .. status)
+                            core:printMessage(GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " " .. L["GUI_Tracking"] .. " " .. status)
                         end
                     end
                 end
