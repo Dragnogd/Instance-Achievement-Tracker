@@ -14,15 +14,15 @@ local baseLocale = {
     ["GUI_MinimapEnabled"] = "Minimap icon enabled",
     ["GUI_MinimapDisabled"] = "Minimap icon disabled",
     ["GUI_AnnounceTracking"] = "Announce achievements being tracked to group", --L["Announce Achievements Being Tracked To Group"]
-    ["GUI_OnlyTrackMissingAchievements"] = "Only Track Missing Achievements", --["Only track missing achievements"]
+    ["GUI_OnlyTrackMissingAchievements"] = "Only track missing achievements", --["Only track missing achievements"]
     ["GUI_AnnounceMessagesToRaidWarning"] = "Announce messages to Raid Warning", --["Announce messages to Raid Warning"]
     ["GUI_AchievementsDiscordTitle"] = "Achievements Discord",
     ["GUI_AchievementsDiscordDescription"] = "Tactics kindly contributed by the Achievements Discord Server, the community where members can meet like-minded completionists and form groups for a variety of achievements.",
     ["GUI_PlaySoundOnSuccess"] = "Play a sound when a achievement is completed",
     ["GUI_PlaySoundOnFailed"] = "Play a sound when an achievement fails",
     ["GUI_SelectSound"] = "Select Sound",
-    ["GUI_TrackingDisabled"] = "Achievement Tracking Disabled" --["(Achievement Tracking Disabled)"]
-    ["GUI_EnterInstanceToStartScanning"] = "Enter instance to start scanning" --["Enter instance to start scanning"]
+    ["GUI_TrackingDisabled"] = "Achievement Tracking Disabled", --["(Achievement Tracking Disabled)"]
+    ["GUI_EnterInstanceToStartScanning"] = "Enter instance to start scanning", --["Enter instance to start scanning"]
     ["GUI_BattleForAzeroth"] = "Battle for Azeroth", --["Battle for Azeroth"]
     ["GUI_Legion"] = "Legion", --["Legion"]
     ["GUI_WarlordsOfDraenor"] = "Warlords of Draenor", --["Warlords of Draenor"]
@@ -35,7 +35,10 @@ local baseLocale = {
     ["GUI_PlayersWhoNeedAchievement"] = "Players who need Achievement", --["Players who need Achievement"]
     ["GUI_ScanInProgress"] = "scan still in progress", --["scan still in progress"]
     ["GUI_Tracking"] = "Tracking", --["Tracking"]
-    
+    ["GUI_Track"] = "Track", --["Track"]
+    ["GUI_OutputPlayers"] = "Output Players", --["Output Players"]
+    ["GUI_OutputTactics"] = "Output Tactics", --Output Tactics
+
     -- ["Features:"] = "Features:",
     -- ["- Tracks when the criteria of instance achievements have been met and output this to chat"] = "- Tracks when the criteria of instance achievements have been met and output this to chat",
     -- ["- Tracks when the criteria of instance achievements has been failed and outputs this to chat"] = "- Tracks when the criteria of instance achievements has been failed and outputs this to chat",
@@ -44,9 +47,9 @@ local baseLocale = {
     -- ["- Announce to chat players who are missing achievements for certain bosses"] = "- Announce to chat players who are missing achievements for certain bosses",
     -- ["- Announce to chat tactics for a certain boss"] = "- Announce to chat tactics for a certain boss",
 
-    ["Output Tactics"] = "Output Tactics",
-    ["Output Players"] = "Output Players",
-    ["Track"] = "Track",
+    
+    
+    
     
     ["Starting Achievement Scan For"] = "Starting Achievement Scan For",
     ["This may freeze your game for a few seconds"] = "This may freeze your game for a few seconds",
