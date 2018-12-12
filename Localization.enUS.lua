@@ -38,6 +38,37 @@ local baseLocale = {
     ["GUI_Track"] = "Track", --["Track"]
     ["GUI_OutputPlayers"] = "Output Players", --["Output Players"]
     ["GUI_OutputTactics"] = "Output Tactics", --Output Tactics
+    ["GUI_OnlyDisplayMissingAchievements"] = "Only display missing achievements",
+    ["GUI_GreyOutCompletedAchievements"] = "Grey out completed achievements",
+
+    -------------------------------------------------------
+    --- Core
+    -------------------------------------------------------    
+    ["Core_StartingAchievementScan"] = "Starting acchievement scan for", --["Starting Achievement Scan For"]
+    ["Core_GameFreezeWarning"] = "This may freeze your game for a few seconds", --["This may freeze your game for a few seconds"]
+    ["Core_AchievementScanFinished"] = "Achievement Scanning Finished", --["Achievement Scanning Finished"]
+    ["Core_EnableAchievementTracking"] = "Do you want to enable achievement tracking for", --["Do you want to enable achievement tracking for"]
+    ["Core_TrackAchievements"] = "Track Achievements", --["Track Achievements"]
+    ["Core_Yes"] = "Yes", --["Core_Yes"]
+    ["Core_No"] = "No", --["Core_No"]
+    ["Core_AchievementTrackingEnabledFor"] = "Achievement Tracking Enabled for", --["Achievement Tracking Enabled for"]
+    ["Core_help"] = "help", --["help"]
+    ["Core_Commands"] = "List of slash commands", --["List of slash commands"]
+    ["Core_ListCommands"] = "shows a list of avaliable slash commands", --["shows a list of avaliable slash commands"]
+    ["Core_CommandEnableTracking"] = "enable/disable IAT achievement tracking", --["enable/disable IAT achievement tracking"]
+    ["Core_Enable"] = "enable", --["enable"]
+    ["Core_NoTrackingForInstance"] = "IAT cannot track any achievements for this encounter.",
+    ["Core_Failed"] = "FAILED!",
+    ["Core_PersonalAchievement"] = "Personal Achievement",
+    ["Core_Reason"] = "Reason",
+    ["Core_CriteriaMet"] = "Criteria has been met. Boss can now be killed!",
+    ["Core_Counter"] = "Counter",
+
+    -------------------------------------------------------
+    --- Instances
+    -------------------------------------------------------  
+    ["Other"] = "Other", 
+    ["Instances_TrashAfterThirdBoss"] = "Trash after the third boss", --L["Trash after the third boss"]
 
     -- ["Features:"] = "Features:",
     -- ["- Tracks when the criteria of instance achievements have been met and output this to chat"] = "- Tracks when the criteria of instance achievements have been met and output this to chat",
@@ -46,28 +77,7 @@ local baseLocale = {
     -- ["- Scans all players in the group to see which achievements each player is missing for the current instance"] = "- Scans all players in the group to see which achievements each player is missing for the current instance",
     -- ["- Announce to chat players who are missing achievements for certain bosses"] = "- Announce to chat players who are missing achievements for certain bosses",
     -- ["- Announce to chat tactics for a certain boss"] = "- Announce to chat tactics for a certain boss",
-
     
-    
-    
-    
-    ["Starting Achievement Scan For"] = "Starting Achievement Scan For",
-    ["This may freeze your game for a few seconds"] = "This may freeze your game for a few seconds",
-    ["Achievement Scanning Finished"] = "Achievement Scanning Finished",
-    ["Do you want to enable achievement tracking for"] = "Do you want to enable achievement tracking for",
-    ["Track Achievements"] = "Track Achievements",
-    ["Yes"] = "Yes",
-    ["No"] = "No",
-    ["Achievement Tracking Enabled for"] = "Achievement Tracking Enabled for",
-    ["List of slash commands"] = "List of slash commands",
-    ["help"] = "help",
-    ["enable"] = "enable",
-    ["shows a list of avaliable slash commands"] = "shows a list of avaliable slash commands",
-    ["enable/disable IAT achievement tracking"] = "enable/disable IAT achievement tracking",
-    ["Other"] = "Other",
-    ["Play a sound when achievement is completed or failed"] = "Play a sound when achievement is completed or failed",
-    ["Trash after the third boss"] = "Trash after the third boss",
-
     -------------------------------------------------------
     --- Tactics & Boss Modules
     -------------------------------------------------------
@@ -78,6 +88,7 @@ local baseLocale = {
     ["Shared_HasGained"] = "has gained",
     ["Shared_HasLost"] = "has lost",
     ["Shared_HasFailed"] = "has failed",
+    ["Shared_HasCompleted"] = "has completed",
     ["Shared_Reason"] = "reason:",
     ["Shared_PersonalAchievement"] = "Personal Achievement",
     ["Shared_Timer10"] = "Timer Started!. 10 seconds remaining",
@@ -89,6 +100,25 @@ local baseLocale = {
     ["Shared_PlayersHit"] = "players hit:",
     ["Shared_CompletedBossKill"] = "will be completed once boss is killed",
     ["Shared_Timer3"] = "Timer Started! 3 seconds remaining",
+    ["Shared_Countdown20"] = "20 seconds remaining",
+    ["Shared_MeetsCritera"] = "meets criteria for",
+    ["Shared_DoesNotMeetCritera"] = "does not meet critera for",
+
+    -------------------------------------------------------
+    --- Battle of Dazar'alor
+    -------------------------------------------------------
+    --Tactics
+    ["BattleOfDazaralor_ChampionOfTheLight"] = "",
+    ["BattleOfDazaralor_JadefireMasters"] = "",
+    ["BattleOfDazaralor_Grong"] = "",
+    ["BattleOfDazaralor_Opulence"] = "",
+    ["BattleOfDazaralor_ConclaveOfTheChosen"] = "",
+    ["BattleOfDazaralor_KingRastakhan"] = "",
+    ["BattleOfDazaralor_HighTinkerMekkatorque"] = "",
+    ["BattleOfDazaralor_StormwallBlockade"] = "",
+    ["BattleOfDazaralor_JainaProudmoore"] = "",
+
+    --Chat Output
 
     -------------------------------------------------------
     --- Uldir
@@ -772,6 +802,8 @@ local baseLocale = {
     ["BlackrockCaverns_KarshSteelbender"] = "Pull the boss into the fire in the middle of the room until he reaches 15 stacks of Superheated Quicksilver Armor. Once he has 15 stacks you can nuke the boss.",
 
     --Chat Output
+    ["BlackrockCaverns_AngeredEarthKilled"] = "Angered Earth Killed",
+    ["BlackrockCaverns_EvolvedTwilightZealotKilled"] = "Evolved Twilight Zealot Killed",
 
     -------------------------------------------------------
     --- Throne of the Tides
@@ -805,6 +837,7 @@ local baseLocale = {
     ["GrimBatol_GeneralUmbriss"] = "Pull the boss then wait for a Malignant Trogg to spawn. Kill the Malignant Trogg next to the boss. Once the boss has got the Modgud's Malice from the killed add then you can kill the boss.",
 
     --Chat Output
+    ["GrimBatol_FailedMessage"] = "Achievement can still be completed by waiting for another Malignant Trogg",
 
     -------------------------------------------------------
     --- Halls of Origination
@@ -813,6 +846,7 @@ local baseLocale = {
     ["HallsOfOrigination_EarthragerPtah"] = "Mount one of the camels to the left or right of the boss before going up the steps. Once you have mounted a camel, just nuke down the boss.",
 
     --Chat Output
+    ["HallsOfOrigination_KnockedOffCamel"] = "has been knocked off their camel",
 
     -------------------------------------------------------
     --- Lost City of the Tol'Vir
@@ -823,6 +857,9 @@ local baseLocale = {
     ["LostCityOfTheTolVir_Siamat"] = "",
 
     --Chat Output
+    ["LostCityOfTheTolVir_FrenziedCrocodileCounter"] = "Frenzied Crocolisk Counter",
+    ["LostCityOfTheTolVir_FrenziedCrocodileKilled"] = "Frenzied Crocolisk killed in time",
+    ["LostCityOfTheTolVir_BurningSoulsKilled"] = "Burning Souls killed",
 
     -------------------------------------------------------
     --- Deadmines
