@@ -48,6 +48,12 @@ function events:GET_ITEM_INFO_RECEIVED(self, arg1)
 	end
 end
 
+function generateNPCCache()
+	for i,v in pairs(core.NPCCache) do							
+		GetNameFromNpcIDCache(core.NPCCache[v])							
+	end	
+end
+
 events:SetScript("OnEvent", function(self, event, ...)
     return self[event] and self[event](self, event, ...) 	--Allow event arguments to be called from seperate functions
 end)
@@ -105,7 +111,8 @@ local enableDisplayAchievement = true
 local currentBossNums = {}
 local detectBossWait = false
 local announceToRaidWarning = false				--Whether or not to announce messages to Raid Warning or not. Can only be done while in raid & user is raid leader or assist.
-local enableSound = false						--Whether to play a sound when achievement is completed or failed
+local enableSound = false						--Whether to play a sound when achievement is completed
+local enableSoundFailed = false					--Whether to play a sound when achievement is failed
 local failedSound = nil
 local completedSound = nil
 
@@ -168,7 +175,7 @@ function getPlayersInGroup()
 	if core.inInstance == true then
 		--Only Announce the scanning once.
 		if scanAnnounced == false then
-			printMessage(L["Starting Achievement Scan For"] .. " " .. core.instanceNameSpaces .. " (" .. L["This may freeze your game for a few seconds"] .. "!)")
+			printMessage(L["Core_StartingAchievementScan"] .. " " .. core.instanceNameSpaces .. " (" .. L["Core_GameFreezeWarning"] .. "!)")
 			scanAnnounced = true
 		end
 		core:getGroupSize() --Get current size of the group
@@ -255,7 +262,7 @@ function getPlayersInGroup()
 			--Fetch information for the next person in the group
 			getInstanceAchievements()
 		else
-			core:sendDebugMessage(L["Achievement Scanning Finished"] .. " (" .. #playersScanned .. "/" .. core.groupSize .. ")")
+			core:sendDebugMessage(L["Core_AchievementScanFinished"] .. " (" .. #playersScanned .. "/" .. core.groupSize .. ")")
 			scanInProgress = false
 			core.scanFinished = true
 
@@ -472,7 +479,7 @@ function getInstanceInfomation()
 					createEnableAchievementTrackingUI()
 				else
 					core:sendDebugMessage("Displaying Tracking UI since it was already created")
-					UIConfig.content:SetText(L["Do you want to enable achievement tracking for"] .. ": " .. core.instanceNameSpaces);
+					UIConfig.content:SetText(L["Core_EnableAchievementTracking"] .. ": " .. core.instanceNameSpaces);
 					UIConfig:Show()
 				end
 			else
@@ -513,25 +520,25 @@ function createEnableAchievementTrackingUI()
 	--Title
 	UIConfig.title = UIConfig:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
 	UIConfig.title:SetPoint("CENTER", AchievementTrackerCheckTitleBG, "CENTER", -5, 0);
-	UIConfig.title:SetText(L["Track Achievements"] .. "?");
+	UIConfig.title:SetText(L["Core_TrackAchievements"] .. "?");
 
 	--Content
 	UIConfig.content = UIConfig:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
 	UIConfig.content:SetPoint("TOPLEFT", AchievementTrackerCheckDialogBG, "TOPLEFT", 0, -5);
-	UIConfig.content:SetText(L["Do you want to enable achievement tracking for"] .. ": " .. core.instanceNameSpaces);
+	UIConfig.content:SetText(L["Core_EnableAchievementTracking"] .. ": " .. core.instanceNameSpaces);
 	UIConfig.content:SetWidth(185)
 
 	UIConfig.btnYes = CreateFrame("Button", nil, UIConfig, "GameMenuButtonTemplate");
 	UIConfig.btnYes:SetPoint("RIGHT", UIConfig.content, "BOTTOM", 0, -20);
 	UIConfig.btnYes:SetSize(80, 30);
-	UIConfig.btnYes:SetText(L["Yes"]);
+	UIConfig.btnYes:SetText(L["Core_Yes"]);
 	UIConfig.btnYes:SetNormalFontObject("GameFontNormal");
 	UIConfig.btnYes:SetHighlightFontObject("GameFontHighlight");
 
 	UIConfig.btnNo = CreateFrame("Button", nil, UIConfig, "GameMenuButtonTemplate");
 	UIConfig.btnNo:SetPoint("LEFT", UIConfig.btnYes, "RIGHT", 5, 0);
 	UIConfig.btnNo:SetSize(80, 30);
-	UIConfig.btnNo:SetText(L["No"]);
+	UIConfig.btnNo:SetText(L["Core_No"]);
 	UIConfig.btnNo:SetNormalFontObject("GameFontNormal");
 	UIConfig.btnNo:SetHighlightFontObject("GameFontHighlight");
 
@@ -598,7 +605,7 @@ function enableAchievementTracking(self)
 		--Player is not a group so set the player to the master addon
 		core:sendDebugMessage("Setting Master Addon 1")
 		masterAddon = true
-		printMessage(L["Achievement Tracking Enabled for"] .. " " .. core.instanceNameSpaces)
+		printMessage(L["Core_AchievementTrackingEnabledFor"] .. " " .. core.instanceNameSpaces)
 	else
 		--Get the rank for the current player
 		for i = 1, core.groupSize do
@@ -661,13 +668,13 @@ end
 ---- Custom Slash Command
 --------------------------------------
 core.commands = {
-	[L["help"]] = function()
-		printMessage(L["List of slash commands"] .. ":")
-		printMessage("/iat help|r - " .. L["shows a list of avaliable slash commands"])
-		printMessage("/iat enable|r - " .. L["enable/disable IAT achievement tracking"])
+	[L["Core_help"]] = function()
+		printMessage(L["Core_Commands"] .. ":")
+		printMessage("/iat help|r - " .. L["Core_ListCommands"])
+		printMessage("/iat enable|r - " .. L["Core_CommandEnableTracking"])
 	end,
 
-	[L["enable"]] = function()
+	[L["Core_Enable"]] = function()
 		print("Enable/Disable addon")
 	end,
 
@@ -724,7 +731,11 @@ end
 function events:ADDON_LOADED(event, name)
 	if name ~= "InstanceAchievementTracker" then return end
 
+	--Generate Item Cache for tactics
 	generateItemCache()
+
+	--Generate NPC Cache
+	generateNPCCache()
 
 	--Check if the options have been setup
 	
@@ -766,13 +777,21 @@ function events:ADDON_LOADED(event, name)
 	end
 	_G["AchievementTracker_ToggleAnnounceToRaidWarning"]:SetChecked(AchievementTrackerOptions["announceToRaidWarning"])
 	
-	--Play sound when achievement completed or failed
+	--Play sound when achievement completed
 	if AchievementTrackerOptions["toggleSound"] == nil then
 		AchievementTrackerOptions["toggleSound"] = false --Do not enable by default
 	elseif AchievementTrackerOptions["toggleSound"] == true then
 		enableSound = true
 	end
 	_G["AchievementTracker_ToggleSound"]:SetChecked(AchievementTrackerOptions["toggleSound"])
+
+	--Play sound when achievement completed
+	if AchievementTrackerOptions["toggleSoundFailed"] == nil then
+		AchievementTrackerOptions["toggleSoundFailed"] = false --Do not enable by default
+	elseif AchievementTrackerOptions["toggleSoundFailed"] == true then
+		enableSoundFailed = true
+	end
+	_G["AchievementTracker_ToggleSoundFailed"]:SetChecked(AchievementTrackerOptions["toggleSoundFailed"])
 
 	--Sound when achievement is completed
 	if AchievementTrackerOptions["completedSoundID"] ~= nil then
@@ -870,7 +889,16 @@ function setEnableSound(setEnableSound)
 			setCompletedSound("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Achievement Completed.ogg")
 			MSA_DropDownMenu_SetText(_G["AchievementTracker_SelectSoundDropdownCompleted"], 13)
 		end
+	else
+		enableSound = false					
+	end
+end
 
+function setEnableSound(setEnableSoundFailed)
+	if setEnableSoundFailed then
+		enableSoundFailed = true
+
+		--Set sounds for user if not done already
 		if failedSound == nil then
 			AchievementTrackerOptions["failedSound"] = "Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Achievement Failed.ogg"
 			AchievementTrackerOptions["failedSoundID"] = 11
@@ -878,7 +906,7 @@ function setEnableSound(setEnableSound)
 			MSA_DropDownMenu_SetText(_G["AchievementTracker_SelectSoundDropdownFailed"], 11)  
 		end
 	else
-		enableSound = false					
+		enableSoundFailed = false					
 	end
 end
 
@@ -1052,7 +1080,7 @@ function events:INSPECT_ACHIEVEMENT_READY(self, GUID)
 					local completed, month, day, year = GetAchievementComparisonInfo(core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
 
 					--Make sure any text being displayed currently for the achievement is removed.
-					if core.Instances[core.expansion][core.instanceType][core.instance][boss].players[1] == L["Enter instance to start scanning"] or core.Instances[core.expansion][core.instanceType][core.instance][boss].players[1] == L["No players in the group need this achievement"] then
+					if core.Instances[core.expansion][core.instanceType][core.instance][boss].players[1] == L["GUI_EnterInstanceToStartScanning"] or core.Instances[core.expansion][core.instanceType][core.instance][boss].players[1] == L["GUI_NoPlayersNeedAchievement"] then
 						table.remove(core.Instances[core.expansion][core.instanceType][core.instance][boss].players, 1)
 					end
 
@@ -1068,7 +1096,7 @@ function events:INSPECT_ACHIEVEMENT_READY(self, GUID)
 			for boss,_ in pairs(core.Instances[core.expansion][core.instanceType][core.instance]) do
 				if boss ~= "name" then
 					if #core.Instances[core.expansion][core.instanceType][core.instance][boss].players == 0 then
-						table.insert(core.Instances[core.expansion][core.instanceType][core.instance][boss].players, L["No players in the group need this achievement"])
+						table.insert(core.Instances[core.expansion][core.instanceType][core.instance][boss].players, L["GUI_NoPlayersNeedAchievement"])
 					end
 				end
 			end
@@ -1088,7 +1116,7 @@ function events:INSPECT_ACHIEVEMENT_READY(self, GUID)
 				--More players still need scanning
 				getInstanceAchievements()
 			elseif #playersToScan == 0 and rescanNeeded == false and #playersScanned == core.groupSize then
-				printMessage("Achievement Scanning Finished (" .. #playersScanned .. "/" .. core.groupSize .. ")")
+				printMessage(L["Core_AchievementScanFinished"] .. " (" .. #playersScanned .. "/" .. core.groupSize .. ")")
 				scanInProgress = false
 				core.scanFinished = true
 
@@ -1146,7 +1174,7 @@ function events:ZONE_CHANGED_NEW_AREA()
 		--Update achievement tracking
 		for boss,_ in pairs(core.Instances[core.expansion][core.instanceType][core.instance]) do
 			if boss ~= "name" then
-				core.Instances[core.expansion][core.instanceType][core.instance][boss].players = {L["Enter instance to start scanning"]}
+				core.Instances[core.expansion][core.instanceType][core.instance][boss].players = {L["GUI_EnterInstanceToStartScanning"]}
 			end
 		end
 
@@ -1460,7 +1488,7 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 		--Start tracking the particular boss if the user has not disabled tracking for that boss
 		for i = 1, #core.currentBosses do
 			if core.currentBosses[i].enabled == true then
-				if core.onlyTrackMissingAchievements == false or (core.onlyTrackMissingAchievements == true and core.currentBosses[i].players ~= L["No players in the group need this achievement"]) then
+				if core.onlyTrackMissingAchievements == false or (core.onlyTrackMissingAchievements == true and core.currentBosses[i].players ~= L["GUI_NoPlayersNeedAchievement"]) then
 					core.currentBosses[i].track()
 
 					--If boss has an info frame then display it
@@ -1511,7 +1539,7 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 			--Start tracking the particular boss if the user has not disabled tracking for that boss
 			for i = 1, #core.currentBosses do
 				if core.currentBosses[i].enabled == true then
-					if core.onlyTrackMissingAchievements == false or (core.onlyTrackMissingAchievements == true and core.currentBosses[i].players ~= L["No players in the group need this achievement"]) then
+					if core.onlyTrackMissingAchievements == false or (core.onlyTrackMissingAchievements == true and core.currentBosses[i].players ~= L["GUI_NoPlayersNeedAchievement"]) then
 						core.currentBosses[i].track()
 					end
 				end
@@ -1618,11 +1646,11 @@ function detectBossByEncounterID(id)
 	--If encounter is detected but no achievements for the boss have been found then output no achievements to track for this encounter
 	if core.outputTrackingStatus == false then
 		if core.encounterDetected == true and core.onlyTrackMissingAchievements == false then
-			core:printMessage("IAT cannot track any achievements for this encounter.")
+			core:printMessage(L["Core_NoTrackingForInstance"])
 
 			--Announce to chat if enabled
 			if core.announceTrackedAchievementsToChat == true then
-				core:sendMessage("IAT cannot track any achievements for this encounter.")
+				core:sendMessage(L["Core_NoTrackingForInstance"])
 			end
 		end
 	end
@@ -1738,12 +1766,12 @@ function core:getAchievementToTrack()
 			--print("HERE 2")
 			core:sendDebugMessage("Length of array: " .. #core.currentBosses)
 			for i = 1, #core.currentBosses do
-				core:sendDebugMessage("Achievement: " .. core.currentBosses[i].achievement)
+				core:sendDebugMessage(L["GUI_Achievement"] .. ": " .. core.currentBosses[i].achievement)
 				if core.currentBosses[i].partial == false and core.currentBosses[i].enabled == true then
 					--core.currentBosses[i].players = L["No players in the group need this achievement"] --DEBUG ONLY
 					
-					if core.onlyTrackMissingAchievements == false or (core.onlyTrackMissingAchievements == true and core.currentBosses[i].players ~= L["No players in the group need this achievement"]) then
-						printMessage("Tracking: "  .. GetAchievementLink(core.currentBosses[i].achievement))
+					if core.onlyTrackMissingAchievements == false or (core.onlyTrackMissingAchievements == true and core.currentBosses[i].players ~= L["GUI_NoPlayersNeedAchievement"]) then
+						printMessage(L["GUI_Tracking"] .. ": " .. GetAchievementLink(core.currentBosses[i].achievement))
 					else
 						--User has decided to supress achievement so will get a lower rank in the addon syncing
 						core:sendDebugMessage("User supressing addon tracking")
@@ -1756,8 +1784,8 @@ function core:getAchievementToTrack()
 
 					--Announce to chat if enabled
 					if core.announceTrackedAchievementsToChat == true then
-						if core.onlyTrackMissingAchievements == false or (core.onlyTrackMissingAchievements == true and core.currentBosses[i].players ~= L["No players in the group need this achievement"]) then
-							core:sendMessage("Tracking: "  .. GetAchievementLink(core.currentBosses[i].achievement),true)
+						if core.onlyTrackMissingAchievements == false or (core.onlyTrackMissingAchievements == true and core.currentBosses[i].players ~= L["GUI_NoPlayersNeedAchievement"]) then
+							core:sendMessage(L["GUI_Tracking"] .. ": "  .. GetAchievementLink(core.currentBosses[i].achievement),true)
 						end
 					end
 				end
@@ -1802,7 +1830,7 @@ function core:sendMessage(message, outputToRW, messageType)
 							--print(2)
 							PlaySoundFile(completedSound, "Master")
 						end
-					elseif outputToRW == true and enableSound == true and messageType == "failed" then
+					elseif outputToRW == true and enableSoundFailed == true and messageType == "failed" then
 						if type(failedSound) == "number" then
 							--print(3)
 							PlaySound(failedSound, "Master")
@@ -1851,7 +1879,7 @@ function core:sendMessage(message, outputToRW, messageType)
 										--print(6)
 										PlaySoundFile(completedSound, "Master")
 									end
-								elseif outputToRW == true and enableSound == true and messageType == "failed" then
+								elseif outputToRW == true and enableSoundFailed == true and messageType == "failed" then
 									if type(failedSound) == "number" then
 										--print(7)
 										PlaySound(failedSound, "Master")
@@ -1887,7 +1915,7 @@ function core:sendMessage(message, outputToRW, messageType)
 											--print(10)
 											PlaySoundFile(completedSound, "Master")
 										end
-									elseif outputToRW == true and enableSound == true and messageType == "failed" then
+									elseif outputToRW == true and enableSoundFailed == true and messageType == "failed" then
 										if type(failedSound) == "number" then
 											--print(11)
 											PlaySound(failedSound, "Master")
@@ -2045,7 +2073,7 @@ function core:getAchievementFailed(index)
 		value = 1
 	end
 	if core.achievementsFailed[value] == false then
-		core:sendMessage(GetAchievementLink(core.achievementIDs[value]) .. " FAILED!",true,"failed")
+		core:sendMessage(GetAchievementLink(core.achievementIDs[value]) .. " " .. L["Core_Failed"],true,"failed")
 		core.achievementsFailed[value] = true
 	end
 end
@@ -2058,7 +2086,7 @@ function core:getAchievementFailedWithMessageBefore(message, index)
 	end
 	if core.achievementsFailed[value] == false then
 
-		core:sendMessage(message .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " FAILED!",true,"failed")
+		core:sendMessage(message .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " " .. L["Core_Failed"],true,"failed")
 		core.achievementsFailed[value] = true
 	end
 end
@@ -2070,7 +2098,7 @@ function core:getAchievementFailedWithMessageAfter(message, index)
 		value = 1
 	end
 	if core.achievementsFailed[value] == false then
-		core:sendMessage(GetAchievementLink(core.achievementIDs[value]) .. " FAILED! " .. message,true,"failed")
+		core:sendMessage(GetAchievementLink(core.achievementIDs[value]) .. " " .. L["Core_Failed"] .. " " .. message,true,"failed")
 		core.achievementsFailed[value] = true
 	end
 end
@@ -2082,7 +2110,7 @@ function core:getAchievementFailedWithMessageBeforeAndAfter(messageBefore, messa
 		value = 1
 	end
 	if core.achievementsFailed[value] == false then
-		core:sendMessage(messageBefore .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " FAILED! " .. messageAfter,true,"failed")
+		core:sendMessage(messageBefore .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " " .. L["Core_Failed"] .. " " .. messageAfter,true,"failed")
 		core.achievementsFailed[value] = true
 	end
 end
@@ -2098,7 +2126,7 @@ function core:getAchievementFailedPersonal(index)
 		--Check if the player actually needs the achievement
 		if core:has_value(core.currentBosses[value].players, core.destName) then
 			--Player needs achievement but has failed it
-			core:sendMessage(core.destName .. " has failed " .. GetAchievementLink(core.achievementIDs[value]) .. " (Personal Achievement)",true,"failed")
+			core:sendMessage(core.destName .. " " .. L["Shared_HasFailed"] .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " (" .. L["Core_PersonalAchievement"] .. ")",true,"failed")
 		end
 		core.playersFailedPersonal[core.destName] = true
 	end
@@ -2115,7 +2143,7 @@ function core:getAchievementFailedPersonalWithReason(reason, index)
 		--Check if the player actually needs the achievement
 		if core:has_value(core.currentBosses[value].players, core.destName) then
 			--Player needs achievement but has failed it
-			core:sendMessage(core.destName .. " has failed " .. GetAchievementLink(core.achievementIDs[value]) .. " (Personal Achievement) (Reason: " .. reason .. ")",true,"failed")
+			core:sendMessage(core.destName .. " " .. L["Shared_HasFailed"] .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " (" .. L["Core_PersonalAchievement"] .. ")(" .. L["Core_Reason"] .. ": " .. reason .. ")",true,"failed")
 		end
 		core.playersFailedPersonal[core.destName] = true
 	end
@@ -2132,7 +2160,7 @@ function core:getAchievementSuccess(index)
 		value = 1
 	end
 	if core.achievementsCompleted[value] == false then
-		core:sendMessage(GetAchievementLink(core.achievementIDs[value]) .. " Criteria has been met. Boss can now be killed!",true,"completed")
+		core:sendMessage(GetAchievementLink(core.achievementIDs[value]) .. " " .. L["Core_CriteriaMet"],true,"completed")
 		core.achievementsCompleted[value] = true
 	end
 end
@@ -2144,7 +2172,7 @@ function core:getAchievementSuccessWithMessageBefore(message, index)
 		value = 1
 	end
 	if core.achievementsCompleted[value] == false then
-		core:sendMessage(message .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " Criteria has been met. Boss can now be killed!",true,"completed")
+		core:sendMessage(message .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " " .. L["Core_CriteriaMet"],true,"completed")
 		core.achievementsCompleted[value] = true
 	end
 end
@@ -2156,7 +2184,7 @@ function core:getAchievementSuccessWithMessageAfter(message, index)
 		value = 1
 	end
 	if core.achievementsCompleted[value] == false then
-		core:sendMessage(GetAchievementLink(core.achievementIDs[value]) .. " Criteria has been met. Boss can now be killed! " .. message,true,"completed")
+		core:sendMessage(GetAchievementLink(core.achievementIDs[value]) .. " " .. L["Core_CriteriaMet"] .. " " .. message,true,"completed")
 		core.achievementsCompleted[value] = true
 	end
 end
@@ -2168,7 +2196,7 @@ function core:getAchievementSuccessWithMessageBeforeAndAfter(messageBefore, mess
 		value = 1
 	end
 	if core.achievementsCompleted[value] == false then
-		core:sendMessage(messageBefore .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " Criteria has been met. Boss can now be killed!" .. messageAfter,true,"completed")
+		core:sendMessage(messageBefore .. " " .. GetAchievementLink(core.achievementIDs[value]) .. L["Core_CriteriaMet"] .. " " .. messageAfter,true,"completed")
 		core.achievementsCompleted[value] = true
 	end
 end
@@ -2200,7 +2228,7 @@ function core:getAchievementSuccessPersonal(index, location)
 			--Check if the player actually needs the achievement
 			if core:has_value(core.currentBosses[value].players, core.destName) then
 				--Player needs achievement but has failed it
-				core:sendMessage(core.destName .. " has completed " .. GetAchievementLink(core.achievementIDs[value]) .. " (Personal Achievement)",true,"completed")
+				core:sendMessage(core.destName .. " " .. L["Shared_HasCompleted"] .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " (" .. L["Core_PersonalAchievement"] .. ")",true,"completed")
 			end
 			core.playersSuccessPersonal[core.destName] = true
 		end
@@ -2210,7 +2238,7 @@ function core:getAchievementSuccessPersonal(index, location)
 			--Check if the player actually needs the achievement
 			if core:has_value(core.currentBosses[value].players, core.sourceName) then
 				--Player needs achievement but has failed it
-				core:sendMessage(core.sourceName .. " has completed " .. GetAchievementLink(core.achievementIDs[value]) .. " (Personal Achievement)",true,"completed")
+				core:sendMessage(core.sourceName .. " " .. L["Shared_HasCompleted"] .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " (" .. L["Core_PersonalAchievement"] .. ")",true,"completed")
 			end
 			core.playersSuccessPersonal[core.sourceName] = true
 		end	
@@ -2227,7 +2255,7 @@ function core:trackMob(mobID, mobName, threshold, message, interval, trackAchiev
         if core.mobUID[core.spawn_uid] == nil and core.mobUID[core.spawn_uid] ~= "Dead" then
             core.mobUID[core.spawn_uid] = core.spawn_uid
             core.mobCounter = core.mobCounter + 1
-			core:sendMessageDelay(mobName ..  " Counter (" .. core.mobCounter .. "/" .. threshold .. ")",core.mobCounter,interval)
+			core:sendMessageDelay(mobName .. " " .. L["Core_Counter"] ..  " (" .. core.mobCounter .. "/" .. threshold .. ")",core.mobCounter,interval)
 			--core:sendDebugMessage(core.mobCounter)
         end
     end
@@ -2235,7 +2263,7 @@ function core:trackMob(mobID, mobName, threshold, message, interval, trackAchiev
         if core.mobUID[core.spawn_uid_dest] == nil and core.mobUID[core.spawn_uid_dest] ~= "Dead" then
             core.mobUID[core.spawn_uid_dest] = core.spawn_uid_dest
             core.mobCounter = core.mobCounter + 1
-			core:sendMessageDelay(mobName .. " Counter (" .. core.mobCounter .. "/" .. threshold ..")",core.mobCounter,interval)
+			core:sendMessageDelay(mobName .. " " .. L["Core_Counter"] .. " (" .. core.mobCounter .. "/" .. threshold ..")",core.mobCounter,interval)
 			--core:sendDebugMessage(core.mobCounter)
         end
 	end

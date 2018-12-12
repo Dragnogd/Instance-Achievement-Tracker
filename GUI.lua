@@ -1416,19 +1416,47 @@ end
 local tip = myTooltipFromTemplate or CreateFrame("GAMETOOLTIP", "myTooltipFromTemplate",nil,"GameTooltipTemplate")
 
 -- takes an npcID and returns the name of the npc
-function GetNameFromNpcID(npcID)
+function GetNameFromNpcIDCache(npcID)
     tip:SetOwner(WorldFrame, "ANCHOR_NONE")
     tip:SetHyperlink(format("unit:Creature-0-0-0-0-%d-0000000000",npcID))
     if tip:NumLines()>0 then
         local name = myTooltipFromTemplateTextLeft1:GetText()
         tip:Hide()
-        return name
+		for expansion, _ in pairs(core.Instances) do
+			for instanceType, _ in pairs(core.Instances[expansion]) do
+				for instance, _ in pairs(core.Instances[expansion][instanceType]) do
+					for boss, _ in pairs(core.Instances[expansion][instanceType][instance]) do
+						if boss ~= "name" then
+							if string.find(core.Instances[expansion][instanceType][instance][boss].tactics, ("IAT_" .. npcID)) then
+                                print("FOUND BOSS!!!")
+                                core.Instances[expansion][instanceType][instance][boss].tactics = string.gsub(core.Instances[expansion][instanceType][instance][boss].tactics, ("IAT_" .. npcID), name)
+                            end
+						end
+					end
+				end
+			end
+		end
+    else
+        C_Timer.After(0.1, function()
+            if tip:NumLines()>0 then
+                local name = myTooltipFromTemplateTextLeft1:GetText()
+                tip:Hide()
+                for expansion, _ in pairs(core.Instances) do
+                    for instanceType, _ in pairs(core.Instances[expansion]) do
+                        for instance, _ in pairs(core.Instances[expansion][instanceType]) do
+                            for boss, _ in pairs(core.Instances[expansion][instanceType][instance]) do
+                                if boss ~= "name" then
+                                    if string.find(core.Instances[expansion][instanceType][instance][boss].tactics, ("IAT_" .. npcID)) then
+                                        core.Instances[expansion][instanceType][instance][boss].tactics = string.gsub(core.Instances[expansion][instanceType][instance][boss].tactics, ("IAT_" .. npcID), name)
+                                    end
+                                end
+                            end
+                        end
+                    end
+                end
+            else
+                GetNameFromNpcIDCache(npcID)
+            end
+        end)
     end
 end
-
-print("NPCCache",GetNameFromNpcID(64932))
-print("NPCCache",GetNameFromNpcID(64933))
-
-C_Timer.After(5, function() 
-    print("NPCCache",GetNameFromNpcID(64933))
-end)
