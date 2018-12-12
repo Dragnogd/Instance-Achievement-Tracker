@@ -1407,3 +1407,23 @@ end
 function IATInfoFrame:ToggleOff()
     InfoFrame:SetShown(false)
 end
+
+local tip = myTooltipFromTemplate or CreateFrame("GAMETOOLTIP", "myTooltipFromTemplate",nil,"GameTooltipTemplate")
+
+-- takes an npcID and returns the name of the npc
+function GetNameFromNpcID(npcID)
+    tip:SetOwner(WorldFrame, "ANCHOR_NONE")
+    tip:SetHyperlink(format("unit:Creature-0-0-0-0-%d-0000000000",npcID))
+    if tip:NumLines()>0 then
+        local name = myTooltipFromTemplateTextLeft1:GetText()
+        tip:Hide()
+        return name
+    end
+end
+
+print("NPCCache",GetNameFromNpcID(64932))
+print("NPCCache",GetNameFromNpcID(64933))
+
+C_Timer.After(5, function() 
+    print("NPCCache",GetNameFromNpcID(64933))
+end)
