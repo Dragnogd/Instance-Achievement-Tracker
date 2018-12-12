@@ -47,7 +47,14 @@ function Config:getLocalisedInstanceName(instanceID)
 end
 
 function Config:getLocalisedEncouterName(encounterID)
-    if tonumber(encounterID) then
+    if type(encounterID) == "table" then
+        --Decide if player is alliance or horde then return correct id
+        if UnitFactionGroup("player") == "Alliance" then
+            return EJ_GetEncounterInfo(encounterID[1])
+        else--Horde
+            return EJ_GetEncounterInfo(encounterID[2])
+        end
+    elseif tonumber(encounterID) then
         return EJ_GetEncounterInfo(encounterID)
     else
         --The encounterID is actually string since there is no dungeon journal entry for this achievement
@@ -56,8 +63,6 @@ function Config:getLocalisedEncouterName(encounterID)
         return encounterID
     end
 end
-
-
 
 -- Method:          Config:Toggle()
 -- What it Does:    Toggles the GUI to show or hide
