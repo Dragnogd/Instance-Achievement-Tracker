@@ -54,6 +54,10 @@ function generateNPCCache()
 	end	
 end
 
+function getNPCName(npcID)
+	return core.NPCCache[npcID]
+end
+
 events:SetScript("OnEvent", function(self, event, ...)
     return self[event] and self[event](self, event, ...) 	--Allow event arguments to be called from seperate functions
 end)
