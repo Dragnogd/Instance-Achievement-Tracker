@@ -34,7 +34,7 @@ local lastPlayerToAbsorbOrb = ""
 local achievementRedForAttempt = false
 
 function core._1861:FetidDevourer()
-    core.IATInfoFrame:SetSubHeading1(L["Uldir_Fetid_TerribleThrash"] .. " (" .. playersFetid .. "/" .. core.groupSizeInInstance .. ")")
+    core.IATInfoFrame:SetSubHeading1(GetSpellLink(262277) .. " (" .. playersFetid .. "/" .. core.groupSizeInInstance .. ")")
     
     if #playersInGroup == 0 and core.achievementsCompleted[1] == false then
         playersInGroup = core:getPlayersInGroupForAchievement()
@@ -94,7 +94,7 @@ function core._1861:FetidDevourer()
                 playersFetid = playersFetid + 1
                 playersFetidTable[core.spawn_uid_dest_Player] = core.spawn_uid_dest_Player
 
-                core:sendMessage(core.destName .. L["Shared_HasBeenHitWith"] .. " " .. L["Uldir_Fetid_TerribleThrash"] " (" .. playersFetid .. "/" .. core.groupSizeInInstance .. ")")
+                core:sendMessage(core.destName .. L["Shared_HasBeenHitWith"] .. " " .. GetSpellLink(262277) .. " (" .. playersFetid .. "/" .. core.groupSizeInInstance .. ")")
 
                 --Remove player from list of players needing to get hit
                 if core:has_value(playersInGroup, name) then
@@ -117,8 +117,6 @@ function core._1861:FetidDevourer()
                     end
                     core.IATInfoFrame:SetText1(messageStr2)
                 end
-            elseif immunityFound == true then
-                core:sendMessage(core.destName .. L["Uldir_Fetid_Immunity"] .. " (" .. immunityName .. ")")
             end
         end
     end
@@ -135,7 +133,7 @@ function core._1861:Vectis()
 
     --If warmother casts blood ritual then she has been infected
     if core.type == "SPELL_CAST_START" and core.spellId == 277813 and core.sourceID == "142148" and warmotherInfected == false then
-        core:sendMessage(L["Uldir_Vectis_AddKill"])
+        core:sendMessage(getNPCName(142148) .. " " .. L["Shared_HasBeenInfectedWith"] .. GetSpellLink(266948) .. ". " .. L["Shared_SheCanNowBeKilled"])
         warmotherInfected = true
     end
 

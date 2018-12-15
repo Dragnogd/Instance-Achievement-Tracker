@@ -2,6 +2,7 @@
 -- Namespaces
 --------------------------------------
 local _, core = ...
+local L = core.L
 
 ------------------------------------------------------
 ---- Blackrock Caverns Bosses
@@ -23,7 +24,7 @@ function core._645:RomoggBonecrusher()
     if core.type == "SPELL_DAMAGE" and core.spellId == 75428 and core.overkill > 0 and angeredEarthUID[core.spawn_uid_dest] == nil then
         angeredEarthKilled = angeredEarthKilled + 1
         angeredEarthUID[core.spawn_uid_dest] = core.spawn_uid_dest
-        core:sendMessage(GetAchievementLink(core.achievementIDs[1]) .. " Angered Earth Killed (" .. angeredEarthKilled .. "/10)")
+        core:sendMessage(GetAchievementLink(core.achievementIDs[1]) .. " " .. format(L["Shared_AddKillCounter"], getNPCName(50376)) .. " (" .. angeredEarthKilled .. "/10)")
     end
 
     if angeredEarthKilled == 10 then
@@ -34,7 +35,7 @@ end
 function core._645:Corla()
     if core.type == "UNIT_DIED" and core.destName == "Evolved Twilight Zealot" then
         evolvedTwilightZealotKilled = evolvedTwilightZealotKilled + 1
-        core:sendMessage(GetAchievementLink(core.achievementIDs[1]) .. " Evolved Twilight Zealot Killed (" .. evolvedTwilightZealotKilled .. "/3)")
+        core:sendMessage(GetAchievementLink(core.achievementIDs[1]) .. " " .. format(L["Shared_AddKillCounter"], getNPCName(39987)) .. " (" .. evolvedTwilightZealotKilled .. "/3)")
     end
 
     if evolvedTwilightZealotKilled == 3 then

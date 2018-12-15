@@ -1422,6 +1422,7 @@ function GetNameFromNpcIDCache(npcID)
     if tip:NumLines()>0 then
         local name = myTooltipFromTemplateTextLeft1:GetText()
         tip:Hide()
+        core.NPCCache[npcID] = name
 		for expansion, _ in pairs(core.Instances) do
 			for instanceType, _ in pairs(core.Instances[expansion]) do
 				for instance, _ in pairs(core.Instances[expansion][instanceType]) do
@@ -1441,6 +1442,7 @@ function GetNameFromNpcIDCache(npcID)
             if tip:NumLines()>0 then
                 local name = myTooltipFromTemplateTextLeft1:GetText()
                 tip:Hide()
+                core.NPCCache[npcID] = name
                 for expansion, _ in pairs(core.Instances) do
                     for instanceType, _ in pairs(core.Instances[expansion]) do
                         for instance, _ in pairs(core.Instances[expansion][instanceType]) do

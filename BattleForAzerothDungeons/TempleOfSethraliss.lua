@@ -12,7 +12,7 @@ core._1877 = {}
 function core._1877:Merektha()
     --Detect solid snake kill and tell raid to loot the body
     if core.type == "UNIT_DIED" and core.destID == "139304" then
-        core:sendMessage(core:getAchievement() .. L["TempleOfSethraliss_Merektha_LootSnake"])
+        core:sendMessage(core:getAchievement() .. format(L["TempleOfSethraliss_Merektha_LootSnake"], getNPCName(139304)))
     end
 end
 

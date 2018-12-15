@@ -35,20 +35,20 @@ function core._1594:MogulRazdunk()
                 --Detect the reason the player has failed the achievement
                 local reason = ""
                 if core.spellId == 260279 then
-                    reason = L["The_Motherlode_MogulRazdunk_Fail1"]
+                    reason = format(L["Shared_DamageFromAbility"], GetSpellLink(260279))
                 elseif core.spellId == 276234 then
-                    reason = L["The_Motherlode_MogulRazdunk_Fail2"]
+                    reason = format(L["Shared_DamageFromAbility"], GetSpellLink(276234))
                 elseif core.spellId == 270926 then
-                    reason = L["The_Motherlode_MogulRazdunk_Fail3"]
+                    reason = format(L["Shared_DirectHitFromAbility"], GetSpellLink(270926))
                 elseif core.spellId == 270277 then
-                    reason = L["The_Motherlode_MogulRazdunk_Fail4"]
+                    reason = format(L["Shared_DirectHitFromAbility"], GetSpellLink(270277))
                 end
                 if playersHit[core.destName] == nil then
                     --Players has not been hit already
                     --Check if the player actually needs the achievement
                     if core:has_value(core.currentBosses[1].players, core.destName) then
                         --Player needs achievement but has failed it
-                        core:sendMessage(core.destName .. L["Shared_HasFailed"] .. GetAchievementLink(core.achievementIDs[1]) .. "(" .. L["Shared_Reason"] .. " " .. reason .. ") (" .. L["Shared_PersonalAchievement"] .. ")")
+                        core:sendMessage(format(L["Shared_FailedPersonalAchievement"], core.destName, GetAchievementLink(core.achievementIDs[1]), reason))
                     end
                     playersHit[core.destName] = true
                 end

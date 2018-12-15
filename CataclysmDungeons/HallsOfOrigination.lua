@@ -2,6 +2,7 @@
 -- Namespaces
 --------------------------------------
 local _, core = ...
+local L = core.L
 
 ------------------------------------------------------
 ---- Halls of Origination Bosses
@@ -117,7 +118,7 @@ function core._644.Events:UNIT_EXITING_VEHICLE(self, unitID, ...)
     if core.Instances[core.expansion][core.instanceType][core.instance]["boss2"].enabled == true then
         local name = UnitName(unitID)
         if playersVehicle[name] ~= nil then
-            core:sendMessage(name .. " Has been knocked off their camel")
+            core:sendMessage(name .. " " .. L["HallsOfOrigination_KnockedOffCamel"])
         end
     end
 end

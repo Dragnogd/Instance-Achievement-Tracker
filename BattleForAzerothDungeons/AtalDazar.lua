@@ -47,7 +47,7 @@ function core._1763:PriestessAlunza()
                         core:sendDebugMessage("Count: " .. count)
                     end
                     if spellId == 255558 and destID == "131009" and count == 8 then
-                        core:sendMessage(core:getAchievement() .. L["AtalDazar_PriestessAlunza_AddKill"])
+                        core:sendMessage(core:getAchievement() .. format(L["Shared_KillTheAddNow"], getNPCName(131009)))
 					end
 				end
 			end
@@ -58,7 +58,7 @@ function core._1763:PriestessAlunza()
         for i=1,40 do
             local _, _, count, _, _, _, _, _, _, spellId = UnitDebuff("Player", i)
             if spellId == 255558 and destID == "131009" and count >= 8 then
-                core:sendMessage(core:getAchievement() .. L["AtalDazar_PriestessAlunza_AddKill"])
+                core:sendMessage(core:getAchievement() .. format(L["Shared_KillTheAddNow"], getNPCName(131009)))
             end
         end
 	end
