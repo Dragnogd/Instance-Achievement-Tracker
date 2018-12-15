@@ -14,7 +14,8 @@ core.L = setmetatable({}, { __index = function(t, k)
 end })
 
 function core:RegisterLocale(locale, tbl)
-    if locale == "enUS" or locale == GetLocale() then
+    print("Loading: " .. locale)
+    if locale == "enUS" or locale == GetLocale()then
         for k,v in pairs(tbl) do
             if v == true then
                 self.L[k] = k

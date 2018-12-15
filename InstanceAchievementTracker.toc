@@ -16,8 +16,8 @@ Libs\UTF8\utf8data.lua
 Libs\MSA-DropDownMenu-1.0\MSA-DropDownMenu-1.0.lua
 
 Localization.lua
-Localization.deDE.lua
 Localization.enUS.lua
+Localization.deDE.lua
 Localization.esES.lua
 Localization.frFR.lua
 Localization.ptBR.lua
@@ -138,5 +138,6 @@ LichKingDungeons\UtgardePinnacle.lua
 
 Instances.lua
 ItemCache.lua
+NPCCache.lua
 GUI.lua
 AchievementTrackerCore.lua

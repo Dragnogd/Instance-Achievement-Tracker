@@ -2,43 +2,75 @@ if(GetLocale() ~= 'zhCN') then return end
 
 local _, core = ...
 local baseLocale = {
-    ["Main"] = "主界面",
-    ["Battle for Azeroth"] = "争霸艾泽拉斯",
-    ["Legion"] = "军团再临",
-    ["Warlords of Draenor"] = "德拉诺之王",
-    ["Mists of Pandaria"] = "潘达利亚之谜",
-    ["Cataclysm"] = "大地的裂变",
-    ["Wrath of the Lich King"] = "巫妖王之怒",
-    ["Instance Achievement Tracker"] = "Instance Achievement Tracker(成就追踪)",
-    ["Currently Tracking"] = "当前追踪",
-    ["Achievements"] = "成就",
-    ["Achievement"] = "成就",
-    ["Tactics"] = "追踪",
-    ["Features"] = "功能:",
-    ["- Tracks when the criteria of instance achievements have been met and output this to chat"] = "- 追踪当前BOSS成就并输出到聊天框",
-    ["- Tracks when the criteria of instance achievements has been failed and outputs this to chat"] = "- 追踪当前BOSS成就失败并输出到聊天框",
-    ["- Keeps track of achievements which require you to kill so many mobs within a certain time period. It will announce to chat when enough mobs have spawned and whether they were killed in the time period."] = "- 持续追踪需要在一定时间内杀指定数量怪物成就，当有聚集足够的怪的时候他会在聊天框报告这些怪物是否在指定时间被击杀",
-    ["- Scans all players in the group to see which achievements each player is missing for the current instance"] = "- 扫描队中的所有玩家，追踪没有当前BOSS成就的玩家",
-    ["- Announce to chat players who are missing achievements for certain bosses"] = "- 通报某些BOSS还没有成就的玩家",
-    ["- Announce to chat tactics for a certain boss"] = "- 通报某些BOSS成就攻略",
-    ["Options"] = "选项",
-    ["Enable Addon"] = "启用插件",
-    ["Show Minimap Button"] = "在小地图显示按钮",
-    ["(Achievement Tracking Disabled)"] = "(Achievement Tracking Disabled)", --TODO
-    ["(Enter instance to start scanning)"] = "(Enter instance to start scanning)", --TODO
-    ["Output Tactics"] = "输出打法",
-    ["Output Players"] = "输出脚男",
-    ["Track"] = "追踪",
-    ["Players"] = "脚男",
-    ["No players in the group need this achievement"] = "No players in the group need this achievement", --TODO
-    ["scan still in progress"] = "scan still in progress", --TODO
-    ["Enter instance to start scanning"] = "Enter instance to start scanning", --TODO
-    ["Players who need Achievement"] = "Players who need Achievement", --TODO
-    ["Disabled"] = "取消",
-    ["Enabled"] = "开始",
-    ["Tracking"] = "追踪",
+    -------------------------------------------------------
+    --- GUI
+    -------------------------------------------------------
+    -- ["GUI_Achievements"] = "Achievements", --["Achievements"]
+    ["GUI_Tactics"] = "追踪",
+    ["GUI_TrackingNumber"] = "当前追踪",
+    ["GUI_Options"] = "选项",
+    ["GUI_EnableAddon"] = "启用插件",
+    ["GUI_Enabled"] = "开始",
+    ["GUI_Disabled"] = "取消",
+    ["GUI_ToggleMinimap"] = "在小地图显示按钮",
+    -- ["GUI_MinimapEnabled"] = "Minimap icon enabled",
+    -- ["GUI_MinimapDisabled"] = "Minimap icon disabled",
+    -- ["GUI_AnnounceTracking"] = "Announce achievements being tracked to group", --L["Announce Achievements Being Tracked To Group"]
+    -- ["GUI_OnlyTrackMissingAchievements"] = "Only track missing achievements", --["Only track missing achievements"]
+    -- ["GUI_AnnounceMessagesToRaidWarning"] = "Announce messages to Raid Warning", --["Announce messages to Raid Warning"]
+    -- ["GUI_AchievementsDiscordTitle"] = "Achievements Discord",
+    -- ["GUI_AchievementsDiscordDescription"] = "Tactics kindly contributed by the Achievements Discord Server, the community where members can meet like-minded completionists and form groups for a variety of achievements.",
+    -- ["GUI_PlaySoundOnSuccess"] = "Play a sound when a achievement is completed",
+    -- ["GUI_PlaySoundOnFailed"] = "Play a sound when an achievement fails",
+    -- ["GUI_SelectSound"] = "Select Sound",
+    -- ["GUI_TrackingDisabled"] = "Achievement Tracking Disabled", --["(Achievement Tracking Disabled)"]
+    -- ["GUI_EnterInstanceToStartScanning"] = "Enter instance to start scanning", --["Enter instance to start scanning"]
+    ["GUI_BattleForAzeroth"] = "争霸艾泽拉斯",
+    ["GUI_Legion"] = "军团再临",
+    ["GUI_WarlordsOfDraenor"] = "德拉诺之王",
+    ["GUI_MistsOfPandaria"] = "潘达利亚之谜",
+    ["GUI_Cataclysm"] = "大地的裂变",
+    ["GUI_WrathOfTheLichKing"] = "巫妖王之怒",
+    ["GUI_Players"] = "脚男",
+    ["GUI_Achievement"] = "成就",
+    -- ["GUI_NoPlayersNeedAchievement"] = "No players in the group need this achievement", --["No players in the group need this achievement"]
+    -- ["GUI_PlayersWhoNeedAchievement"] = "Players who need Achievement", --["Players who need Achievement"]
+    -- ["GUI_ScanInProgress"] = "scan still in progress", --["scan still in progress"]
+    ["GUI_Tracking"] = "追踪",
+    ["GUI_Track"] = "追踪",
+    ["GUI_OutputPlayers"] = "输出脚男",
+    ["GUI_OutputTactics"] = "输出打法",
+    -- ["GUI_OnlyDisplayMissingAchievements"] = "Only display missing achievements",
+    -- ["GUI_GreyOutCompletedAchievements"] = "Grey out completed achievements",
 
-    --["Only track missing achievements"] = "Only track missing achievements",
+    -------------------------------------------------------
+    --- Core
+    -------------------------------------------------------    
+    -- ["Core_StartingAchievementScan"] = "Starting acchievement scan for", --["Starting Achievement Scan For"]
+    -- ["Core_GameFreezeWarning"] = "This may freeze your game for a few seconds", --["This may freeze your game for a few seconds"]
+    -- ["Core_AchievementScanFinished"] = "Achievement Scanning Finished", --["Achievement Scanning Finished"]
+    -- ["Core_EnableAchievementTracking"] = "Do you want to enable achievement tracking for", --["Do you want to enable achievement tracking for"]
+    -- ["Core_TrackAchievements"] = "Track Achievements", --["Track Achievements"]
+    -- ["Core_Yes"] = "Yes", --["Core_Yes"]
+    -- ["Core_No"] = "No", --["Core_No"]
+    -- ["Core_AchievementTrackingEnabledFor"] = "Achievement Tracking Enabled for", --["Achievement Tracking Enabled for"]
+    -- ["Core_help"] = "help", --["help"]
+    -- ["Core_Commands"] = "List of slash commands", --["List of slash commands"]
+    -- ["Core_ListCommands"] = "shows a list of avaliable slash commands", --["shows a list of avaliable slash commands"]
+    -- ["Core_CommandEnableTracking"] = "enable/disable IAT achievement tracking", --["enable/disable IAT achievement tracking"]
+    -- ["Core_Enable"] = "enable", --["enable"]
+    -- ["Core_NoTrackingForInstance"] = "IAT cannot track any achievements for this encounter.",
+    -- ["Core_Failed"] = "FAILED!",
+    -- ["Core_PersonalAchievement"] = "Personal Achievement",
+    -- ["Core_Reason"] = "Reason",
+    -- ["Core_CriteriaMet"] = "Criteria has been met. Boss can now be killed!",
+    -- ["Core_Counter"] = "Counter",
+
+    -------------------------------------------------------
+    --- Instances
+    -------------------------------------------------------  
+    -- ["Other"] = "Other", 
+    -- ["Instances_TrashAfterThirdBoss"] = "Trash after the third boss", --L["Trash after the third boss"]    
 }
 
 core:RegisterLocale('zhCN', baseLocale)

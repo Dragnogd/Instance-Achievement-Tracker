@@ -102,7 +102,15 @@ local baseLocale = {
     ["Shared_Timer3"] = "Timer Started! 3 seconds remaining",
     ["Shared_Countdown20"] = "20 seconds remaining",
     ["Shared_MeetsCritera"] = "meets criteria for",
-    ["Shared_DoesNotMeetCritera"] = "does not meet critera for",
+    ["Shared_DoesNotMeetCritera"] = "does not meet the critera for",
+    ["Shared_HasBeenInfectedWith"] = "has been infected with",
+    ["Shared_SheCanNowBeKilled"] = "She can now be killed",
+    ["Shared_HeCanNowBeKileld"] = "He can now be killed",
+    ["Shared_KillTheAddNow"] = "Kill the %s now",
+    ["Shared_FailedPersonalAchievement"] = "%s has failed %s (Reason: %s)(Personal Achievement)",
+    ["Shared_DamageFromAbility"] = "%s Damage",
+    ["Shared_DirectHitFromAbility"] = "%s Direct Hit",
+    ["Shared_AddKillCounter"] = "%s kill counter",
 
     -------------------------------------------------------
     --- Battle of Dazar'alor
@@ -132,11 +140,6 @@ local baseLocale = {
     ["Uldir_ZulReborn_Tactics"] = "This achievement is pretty straight forward, no one has to step onto the inner ring of the platform. Here are a few tips for the encounter:\n\n Tanks should pick all the adds, and stack them so that melee dps can cleave them. The Bloodhexers don't have %s on normal difficulty (if the debuff shows on them, it's just a visual bug, don't worry about it).\n Ranged dps should be on the boss 24/7, and should not switch to the adds unless melee dps can't keep up killing them in time.\n If you have 2 priests in the group, then you should assign them to different positions (left and right outside of the group) so that both sides are covered when ads spawn.\n At 40%% Zul will knock back everyone, so you should position yourself near a wall so you don't get knocked off the platform.",
     ["Uldir_Mythrax_Tactics"] = "As of November 2018: The Existential Crisis achievement now functions as described.\n\n This makes the achievement much more easier, as you just pick up the orbs that you spawned.",
     ["Uldir_GHuun_Tactics"] = "For this achievement you will have to make groups of 3 people to do the power matrix: 2 dps + 1 healer assisting them.\n\n As of right now the fight looks a bit overtuned for smaller raid groups, so if you have a 10-14 man group then you should invite a few more people to help out.",
-    
-    --Chat Output
-    ["Uldir_Fetid_TerribleThrash"] = "Terrible Thrash",
-    ["Uldir_Fetid_Immunity"] = "was been hit with Terrible Thrash but used an immunity so did not count",
-    ["Uldir_Vectis_AddKill"] = "Warmother Rakkali has been infected with Plague Bomb. She can now be killed.",
 
     -------------------------------------------------------
     --- Atal Dazar
@@ -147,7 +150,6 @@ local baseLocale = {
     ["Atal_Dazar_Yazma"] = "In order to lite the Shadowflame Sconces, everyone in the group except the tank will have to spread and stay near one of them when the boss casts %s. The sconces will stay lit up for about 25 seconds, so you should do this when the boss is low on health around 5 to 10%%.",
     
     --Chat Output
-    ["AtalDazar_PriestessAlunza_AddKill"] = "Kill the Spirit of Gold now!",
     ["AtalDazar_BringingHexyBack_Hex"] = "Atleast one players needs to be hexed on boss kill!",
 
     -------------------------------------------------------
@@ -174,9 +176,6 @@ local baseLocale = {
     ["ShrineOfTheStorm_LordStormsong"] = "During the course of the encounter, Lord Stormsong will periodically begin to %s which summons Awoken Void that will chase players and attempt to explode upon impact. To obtain this achievement, you must not come into contact with any of the void adds so you will keep kiting them throughout the encounter.",
     ["ShrineOfTheStorm_VolZith"] = "To get the %s debuff you will have to dive down in the water before the last boss until you see Void Orbs floating around, and then swim through them. The debuff will make you hostile to all players for 24 seconds, then disappear for 6 seconds time in which your healer must use cds and heal you to full hp. Avoid using aoe spells on the boss, and instead use self heals as much as possible to help your healer out.\n\n After Vol'zith the Whisperer casts %s, you will get teleported into the sunken realm where you should quickly kill the adds and then wait 20-30 seconds for cooldowns to be available. Vol'zith the Whisperer will also cast %s, and you will have to crowd control 5 Manifestation of the Deep adds so that they won't reach the boss.",
 
-    --Chat Output
-    ["ShrineOfTheStorm_VolZith_Maddening_Dreams"] = "Maddening Dreams",
-    
     -------------------------------------------------------
     --- Siege of Boralus
     -------------------------------------------------------
@@ -194,7 +193,7 @@ local baseLocale = {
     ["TempleOfSethraliss_Trash"] = "For this achievement you will want to use class utility abilities to crowd control the Orb Guardian while you get both eyes closer. Note that there are several Orb Guardian throughout the room that will attempt to steal your eye back, there is one near each eye, one in between the eyes and the skull, and a few more in the middle of the room.\n\n Abilities such as %s, %s and %s are ideal, as you can cc the guardians on one side and then ignore them completely.",
 
     --Chat Output
-    ["TempleOfSethraliss_Merektha_LootSnake"] = "Loot the Solid Snake now to complete the achievement", 
+    ["TempleOfSethraliss_Merektha_LootSnake"] = "Loot the %s now to complete the achievement", 
 
     -------------------------------------------------------
     --- The Motherlode
@@ -202,10 +201,6 @@ local baseLocale = {
     --Tactics
     ["The_Motherlode_CoinOperatedCrowdPummeler"] = "Pick up %s before the boss and throw it at Ledley the Bold after you engage the boss. Ledley the Bold will cast %s throughout the fight so you should interrupt the spell and kill him and the other adds asap as they will throw grog, making you drunk for 10 seconds.",
     ["The_Motherlode_MogulRazdunk"] = "Similarly to the predecessors of this achievement, this is a personal achievement that requires you to dodge most of the damaging mechanics of the boss encounter.",
-    ["The_Motherlode_MogulRazdunk_Fail1"] = "Gatling Gun Damage",
-    ["The_Motherlode_MogulRazdunk_Fail2"] = "Micro Missile Damage",
-    ["The_Motherlode_MogulRazdunk_Fail3"] = "Drill Smash Direct Hit",
-    ["The_Motherlode_MogulRazdunk_Fail4"] = "Big Red Rocket Direct Hit",
 
     -------------------------------------------------------
     --- The Underrot
@@ -823,7 +818,7 @@ local baseLocale = {
     --Chat Output
 
     -------------------------------------------------------
-    --- The Vortext Pinnacle
+    --- The Vortex Pinnacle
     -------------------------------------------------------
     --Tactics
     ["TheVortexPinnacle_Other"] = "",
