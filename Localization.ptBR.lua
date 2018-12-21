@@ -42,6 +42,7 @@ local baseLocale = {
     -- ["GUI_OutputTactics"] = "Output Tactics", --Output Tactics
     -- ["GUI_OnlyDisplayMissingAchievements"] = "Only display missing achievements",
     -- ["GUI_GreyOutCompletedAchievements"] = "Grey out completed achievements",
+    -- ["GUI_HideCompletedAchievements"] = "Hide completed achievements",
 
     -------------------------------------------------------
     --- Core
