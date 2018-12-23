@@ -182,6 +182,7 @@ function core._1861:FetidDevourer()
         --         core:getAchievementSuccess()
         --     end
         -- end
+    end
 end
 
 function core._1861:Vectis()
