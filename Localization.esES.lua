@@ -70,7 +70,7 @@ local baseLocale = {
     -------------------------------------------------------
     --- Instances
     -------------------------------------------------------  
-    ["Other"] = "Otros", 
+    ["Instances_Other"] = "Otros", 
     ["Instances_TrashAfterThirdBoss"] = "Pulls después del tercer boss", --L["Trash after the third boss"]    
 }
 
