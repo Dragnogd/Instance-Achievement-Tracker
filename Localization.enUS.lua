@@ -58,7 +58,7 @@ local baseLocale = {
     ["Core_ListCommands"] = "shows a list of avaliable slash commands", --["shows a list of avaliable slash commands"]
     ["Core_CommandEnableTracking"] = "enable/disable IAT achievement tracking", --["enable/disable IAT achievement tracking"]
     ["Core_Enable"] = "enable", --["enable"]
-    ["Core_NoTrackingForInstance"] = "IAT cannot track any achievements for this encounter.",
+    ["Core_NoTrackingForInstance"] = "IAT cannot track any achievements for this encounter",
     ["Core_Failed"] = "FAILED!",
     ["Core_PersonalAchievement"] = "Personal Achievement",
     ["Core_Reason"] = "Reason",
@@ -68,7 +68,7 @@ local baseLocale = {
     -------------------------------------------------------
     --- Instances
     -------------------------------------------------------  
-    ["Other"] = "Other", 
+    ["Instances_Other"] = "Other", 
     ["Instances_TrashAfterThirdBoss"] = "Trash after the third boss", --L["Trash after the third boss"]
 
     -- ["Features:"] = "Features:",
@@ -86,6 +86,7 @@ local baseLocale = {
     --Shared
     ["Shared_HasBeenHitWith"] = "has been hit with",
     ["Shared_PlayersWhoStillNeedToGetHit"] = "Players who still need to get hit:",
+    ["Shared_PlayersWhoStillNeedToGetResurrected"] = "The following players need to be resurrected in order to recieve the achievement:",
     ["Shared_HasGained"] = "has gained",
     ["Shared_HasLost"] = "has lost",
     ["Shared_HasFailed"] = "has failed",

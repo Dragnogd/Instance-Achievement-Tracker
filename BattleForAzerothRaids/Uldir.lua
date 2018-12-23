@@ -22,6 +22,10 @@ local playersFetidTable = {}
 local playersFetid = 0
 local getListOfPlayers = false
 local playersInGroup = {}
+local setupTable = false
+-- local deadPlayers = {}
+-- local deadPlayerFound = false
+-- local deadPlayersAnnounced = false
 
 ------------------------------------------------------
 ---- Vectis
@@ -41,7 +45,7 @@ local achievementRedForAttempt = false
 function core._1861:Taloc()
     if core.type == "SPELL_AURA_APPLIED" and core.spellId == 280461 and orbCounter < 4 then
         orbCounter = orbCounter + 1
-        core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(266948) .. " " L["Core_Counter"] .. " (" .. orbCounter .. "/4)")
+        core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(266948) .. " " .. L["Core_Counter"] .. " (" .. orbCounter .. "/4)")
     end
 
     if orbCounter == 4 then
@@ -52,7 +56,8 @@ end
 function core._1861:FetidDevourer()
     core.IATInfoFrame:SetSubHeading1(GetSpellLink(262277) .. " (" .. playersFetid .. "/" .. core.groupSizeInInstance .. ")")
     
-    if #playersInGroup == 0 and core.achievementsCompleted[1] == false then
+    if setupTable == false then
+        setupTable = true
         playersInGroup = core:getPlayersInGroupForAchievement()
         getListOfPlayers = true
 
@@ -139,7 +144,44 @@ function core._1861:FetidDevourer()
 
     if playersFetid == core.groupSizeInInstance then
         core:getAchievementSuccess()
-    end
+
+        -- --All players have got hit by terrible thrash but if they are not alive then they will not get achievement on kill
+        -- --We need to check if everyone is alive then announce success. Otherwise list players who need to be ressed before end of fight
+        
+        -- --Search for dead players
+        -- if core.groupSizeInInstance > 1 then
+		-- 	for i = 1, core.groupSizeInInstance do
+		-- 		local unit = nil
+		-- 		if core.chatType == "PARTY" then
+		-- 			if i < core.groupSizeInInstance then
+		-- 				unit = "party" .. i
+		-- 			else
+		-- 				unit = "player"
+		-- 			end
+		-- 		elseif core.chatType == "RAID" then
+		-- 			unit = "raid" .. i
+        --         end
+                
+        --         --Check if the player is dead
+        --         if UnitIsDead(unit) and UnitIsPlayer(unit) and core:has_value(deadPlayers, name) then
+        --             table.insert(deadPlayers, UnitName(unit))
+        --             deadPlayerFound = true
+        --         end
+		-- 	end
+		-- else
+        --     --Check if requirements are met else output dead players
+        --     if deadPlayerFound == true and deadPlayersAnnounced = false then
+        --         deadPlayersAnnounced = true
+        --         --build list of players that still need to be ressed
+        --         local messageStr = L["Shared_PlayersWhoStillNeedToGetResurrected"]
+        --         for k, v in pairs(playersInGroup) do
+        --             messageStr = messageStr .. ", " .. v
+        --         end
+        --         core:sendMessageSafe(messageStr)
+        --     elseif deadPlayerFound == false
+        --         core:getAchievementSuccess()
+        --     end
+        -- end
 end
 
 function core._1861:Vectis()
@@ -249,6 +291,7 @@ function core._1861:ClearVariables()
     playersFetid = 0
     getListOfPlayers = false
     playersInGroup = {}
+    setupTable = false
 
     ------------------------------------------------------
     ---- Vectis
