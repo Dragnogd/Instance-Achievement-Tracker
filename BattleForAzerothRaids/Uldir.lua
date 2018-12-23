@@ -10,6 +10,11 @@ local L = core.L
 core._1861 = {}
 
 ------------------------------------------------------
+---- Taloc
+------------------------------------------------------
+local orbCounter = 0
+
+------------------------------------------------------
 ---- Fetid Devourer
 ------------------------------------------------------
 local fetidDevourerKilled = false
@@ -32,6 +37,17 @@ local lastPlayerToAbsorbOrb = ""
 ---- Ghuun
 ------------------------------------------------------
 local achievementRedForAttempt = false
+
+function core._1861:Taloc()
+    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 280461 and orbCounter < 4 then
+        orbCounter = orbCounter + 1
+        core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(266948) .. " " L["Core_Counter"] .. " (" .. orbCounter .. "/4)")
+    end
+
+    if orbCounter == 4 then
+        core:getAchievementSuccess()
+    end
+end
 
 function core._1861:FetidDevourer()
     core.IATInfoFrame:SetSubHeading1(GetSpellLink(262277) .. " (" .. playersFetid .. "/" .. core.groupSizeInInstance .. ")")
