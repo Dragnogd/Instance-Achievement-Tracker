@@ -70,8 +70,8 @@ local baseLocale = {
     -------------------------------------------------------
     --- Instances
     -------------------------------------------------------  
-    -- ["Other"] = "Other", 
-    -- ["Instances_TrashAfterThirdBoss"] = "Trash after the third boss", --L["Trash after the third boss"]    
+    ["Other"] = "其他", 
+    ["Instances_TrashAfterThirdBoss"] = "第三個首領之後的垃圾",
 }
 
 core:RegisterLocale('zhTW', baseLocale)
