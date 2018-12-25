@@ -192,6 +192,10 @@ function Tab_OnClick(self)
             UIConfig.Main2.options15:Show()
             -- UIConfig.Main2.options16:Show()
             UIConfig.Main2.options17:Show()
+            UIConfig.Main2.options18:Show()
+            UIConfig.Main2.options19:Show()
+            UIConfig.Main2.options20:Show()
+            UIConfig.Main2.options21:Show()
 
             UIConfig.Main.author:Show()
             UIConfig.Main.verison:Show()
@@ -202,6 +206,10 @@ function Tab_OnClick(self)
             UIConfig.Main2.credits:Show()
             UIConfig.Main2.credits2:Show()
             UIConfig.Main2.credits3:Show()
+
+            if UIConfig.achievementsCompleted ~= nil then
+                UIConfig.achievementsCompleted:Hide()
+            end
         else                                    --Main tab frames have not been created so need to create frames first before showing.
             --Heading
             UIConfig.Main = Config:CreateText2("TOP", AchievementTrackerDialogBG, "TOP", 0, -10, "Instance Achievement Tracker", "GameFontNormalLarge")
@@ -344,19 +352,16 @@ function Tab_OnClick(self)
                 end
             end)
 
-            --Announce which acheivements are being tracked to group
-            -- UIConfig.Main2.options6 = Config:CreateCheckBox("TOPLEFT", UIConfig.Main2.options3, "TOPLEFT", 0, -25, "AchievementTracker_ToggleMinimapIcon")
-            -- UIConfig.Main2.options6:SetScript("OnClick", ATToggleMinimapIcon_OnClick)
-            -- UIConfig.Main2.options7 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options5, "TOPLEFT", 30, -9, "Show Minimap Button","GameFontHighlight")             
+            --Hide completed achievements
+            UIConfig.Main2.options18 = Config:CreateCheckBox("TOPLEFT", UIConfig.Main2.options012, "TOPLEFT", 0, -25, "AchievementTracker_HideCompletedAchievements")
+            UIConfig.Main2.options18:SetScript("OnClick", ATToggleHideCompletedAchievements_OnClick)
+            UIConfig.Main2.options19 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options18, "TOPLEFT", 30, -9, L["GUI_HideCompletedAchievements"],"GameFontHighlight")               
 
-            -- print("Addon State: " .. AchievementTrackerOptions["enableAddon"])
+            --Grey out completed achievements
+            UIConfig.Main2.options20 = Config:CreateCheckBox("TOPLEFT", UIConfig.Main2.options18, "TOPLEFT", 0, -25, "AchievementTracker_GreyOutCompletedAchievements")
+            UIConfig.Main2.options20:SetScript("OnClick", ATToggleGreyOutCompletedAchievements_OnClick)
+            UIConfig.Main2.options21 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options20, "TOPLEFT", 30, -9, L["GUI_GreyOutCompletedAchievements"],"GameFontHighlight")   
 
-            -- if AchievementTrackerOptions["enableAddon"] == nil or AchievementTrackerOptions["enableAddon"] == true then
-            --     UIConfig.Main2.options2:SetChecked(true)
-            -- else
-            --     UIConfig.Main2.options2:SetChecked(false)
-            -- end
-            
         end
     else                                --User has selected an expansion tab so hide main menu options
         UIConfig.ScrollFrame:Show()
@@ -393,6 +398,10 @@ function Tab_OnClick(self)
         UIConfig.Main2.options15:Hide()
         -- UIConfig.Main2.options16:Hide()
         UIConfig.Main2.options17:Hide()
+        UIConfig.Main2.options18:Hide()
+        UIConfig.Main2.options19:Hide()
+        UIConfig.Main2.options20:Hide()
+        UIConfig.Main2.options21:Hide()
         
         UIConfig.Main.author:Hide()
         UIConfig.Main.verison:Hide()
@@ -403,7 +412,21 @@ function Tab_OnClick(self)
         UIConfig.Main2.credits:Hide()
         UIConfig.Main2.credits2:Hide()
         UIConfig.Main2.credits3:Hide()
+
+        if UIConfig.achievementsCompleted ~= nil then
+            UIConfig.achievementsCompleted:Hide()
+        end
     end
+end
+
+function ATToggleHideCompletedAchievements_OnClick(self)
+    AchievementTrackerOptions["hideCompletedAchievements"] = self:GetChecked()
+    setHideCompletedAchievements(self:GetChecked()) 
+end
+
+function ATToggleGreyOutCompletedAchievements_OnClick(self)
+    AchievementTrackerOptions["greyOutCompletedAchievements"] = self:GetChecked()
+    setGreyOutCompletedAchievements(self:GetChecked()) 
 end
 
 function AchievementTracker_SelectSoundCompleted(self, arg1, arg2, checked)
@@ -1040,123 +1063,180 @@ function Instance_OnClick(self)
         Config.currentInstance = core.instance     
     end
 
+    local achievementFound = false --This is so we can display "All Achievements completed for this instance" if needed
+    if UIConfig.achievementsCompleted ~= nil then
+        UIConfig.achievementsCompleted:Hide()
+    end
+
     for bossName,v in pairs(instanceLocation) do
         if bossName ~= "name" then --Don't fetch the name of the instance that has been clicked
-            local button
+            --Check if any players in the group need the achievement
+            local playersFound = false
+            local inThisInstance = false
+            local currentAchievementNeeded = false
 
-            --Header
-            --Get the set of buttons for the current selected tab
-            if Config.currentTab == 2 then
-                button = BattleForAzerothContentButtons[counter]               
-            elseif Config.currentTab == 3 then
-                button = LegionContentButtons[counter]
-            elseif Config.currentTab == 4 then
-                button = WarlordsOfDraenorContentButtons[counter]
-            elseif Config.currentTab == 5 then
-                button = MistsOfPandariaContentButtons[counter]
-            elseif Config.currentTab == 6 then
-                button = CataclysmContentButtons[counter]
-            elseif Config.currentTab == 7 then
-                button = WrathOfTheLichKingContentButtons[counter]
-            end
-            button:Show()
-            if counter > 1 then
-                button:ClearAllPoints()
-                if Config.currentTab == 2 then
-                    button:SetPoint("TOPLEFT",BattleForAzerothContentButtons[counter-1],"BOTTOMLEFT",0,30-heightDifference)
-                elseif Config.currentTab == 3 then
-                    button:SetPoint("TOPLEFT",LegionContentButtons[counter-1],"BOTTOMLEFT",0,30-heightDifference)
-                elseif Config.currentTab == 4 then
-                    button:SetPoint("TOPLEFT",WarlordsOfDraenorContentButtons[counter-1],"BOTTOMLEFT",0,30-heightDifference)
-                elseif Config.currentTab == 5 then
-                    button:SetPoint("TOPLEFT",MistsOfPandariaContentButtons[counter-1],"BOTTOMLEFT",0,30-heightDifference)
-                elseif Config.currentTab == 6 then
-                    button:SetPoint("TOPLEFT",CataclysmContentButtons[counter-1],"BOTTOMLEFT",0,30-heightDifference)
-                elseif Config.currentTab == 7 then
-                    button:SetPoint("TOPLEFT",WrathOfTheLichKingContentButtons[counter-1],"BOTTOMLEFT",0,30-heightDifference)
-                end                
-            end
-            button.headerText:SetText(Config:getLocalisedEncouterName(instanceLocation["boss" .. counter2].name))
-            button.headerText:Show()
-            button.contentText:Hide()
-            button:SetNormalTexture("Interface\\Common\\Dark-GoldFrame-Button")
-
-            button.tactics:Show()
-            button.tactics:SetSize(120, 15)
-            button.tactics:SetScript("OnClick", Tactics_OnClick);
-            button.players:Show()
-            button.players:SetSize(120, 15)
-            button.players:SetScript("OnClick", Player_OnClick);
-            button.enabled:Show()
-            button.enabled:SetSize(20, 15)
-            button.enabled:SetChecked(instanceLocation["boss" .. counter2].enabled)
-            button.enabled:SetScript("OnClick", Enabled_OnClick);
-            if instanceLocation["boss" .. counter2].track ~= nil then
-                button.enabledText:Show()
-                button.enabledText:SetSize(30, 15)
-            else
-                button.enabledText:Hide()
-                button.enabled:Hide()
+            if core:has_value(instanceLocation["boss" .. counter2].players, L["GUI_NoPlayersNeedAchievement"]) == false and #instanceLocation["boss" .. counter2].players ~= 0 then
+                playersFound = true
+                core:sendDebugMessage("Found players for: " .. bossName)       
             end
 
-            --print(instanceLocation["boss" .. counter2].generatedID)
-
-            --We need to set the ID of the tactics/players/track buttons to the id of the current boss so when clicked we know which boss we need to fetch info for
-            button.tactics:SetID(instanceLocation["boss" .. counter2].generatedID)
-            button.players:SetID(instanceLocation["boss" .. counter2].generatedID)
-            button.enabled:SetID(instanceLocation["boss" .. counter2].generatedID)
-
-            counter = counter + 1  
-
-            --Content        
-            if Config.currentTab == 2 then
-                button = BattleForAzerothContentButtons[counter]
-            elseif Config.currentTab == 3 then
-                button = LegionContentButtons[counter]
-            elseif Config.currentTab == 4 then
-                button = WarlordsOfDraenorContentButtons[counter]
-            elseif Config.currentTab == 5 then
-                button = MistsOfPandariaContentButtons[counter]
-            elseif Config.currentTab == 6 then
-                button = CataclysmContentButtons[counter]
-            elseif Config.currentTab == 7 then
-                button = WrathOfTheLichKingContentButtons[counter]
-            end
-
-            local players = L["GUI_Players"] .. ": "
-            for i = 1, #instanceLocation["boss" .. counter2].players do
-                players = players .. instanceLocation["boss" .. counter2].players[i] .. ", "
-            end
-            
-            --Only show players for current instances we are in
+            --If player has selected an instance by hand then just scan the current player for achievement for hide/grey out option unless its current instance we are in
             if type(self) == "table" then
-                button.contentText:SetText(L["GUI_Achievement"] .. ": " .. GetAchievementLink(instanceLocation["boss" .. counter2].achievement) .. "\n\n" .. L["GUI_Tactics"] .. ": " .. instanceLocation["boss" .. counter2].tactics)            
-            else
-                button.contentText:SetText(L["GUI_Achievement"] .. ": " .. GetAchievementLink(instanceLocation["boss" .. counter2].achievement) .. "\n\n" .. players .. "\n\n" .. L["GUI_Tactics"] .. ": " .. instanceLocation["boss" .. counter2].tactics)
+                if core.inInstance then
+                    --Player has manually clicked on a table and is an instance so lets check whether the instance they are in matches the button which was clicked
+                    if core.instance ~= nil then
+                        if core.instance == self:GetID() then
+                            inThisInstance = true
+                        end
+                    end
+                end
             end
 
-            button.contentText:Show()
-            button.headerText:Hide()
-            button:SetNormalTexture(nil)
-            button.contentText:SetWidth(500)
-            button.contentText:SetHeight(500)
+            if inThisInstance == false and core.achievementDisplayStatus == "hide" then
+                --Player is not in the currently selected instance we can just display the achievements they do not need.
+                local id, name, points, completed, month, day, year, description, flags, icon, rewardText, isGuild, wasEarnedByMe, earnedBy = GetAchievementInfo(instanceLocation["boss" .. counter2].achievement)
 
-            button.contentText:SetWordWrap(true)
-            button.contentText:SetHeight(button.contentText:GetStringHeight())
-            heightDifference = button.contentText:GetStringHeight();
+                if completed == false then
+                    currentAchievementNeeded = true
+                end
+            end
 
-            button.tactics:Hide()
-            button.players:Hide()
-            button.enabled:Hide()
-            button.enabledText:Hide()
+            --Check whether or not to display the current achievements. This is done incase user wants to hide completed achievements
+            if core.achievementDisplayStatus == "hide" and playersFound == true or core.achievementDisplayStatus == "show" or (type(self) == "table" and inThisInstance == false and currentAchievementNeeded == true) then
+                achievementFound = true
 
-            button.achievementID = instanceLocation["boss" .. counter2].achievement
-            button:SetScript("OnEnter", Achievement_OnEnter)
-            button:Show()
+                --We need to display the current achievement
+                local button
 
-            counter = counter + 1
+                --Header
+                --Get the set of buttons for the current selected tab
+                if Config.currentTab == 2 then
+                    button = BattleForAzerothContentButtons[counter]               
+                elseif Config.currentTab == 3 then
+                    button = LegionContentButtons[counter]
+                elseif Config.currentTab == 4 then
+                    button = WarlordsOfDraenorContentButtons[counter]
+                elseif Config.currentTab == 5 then
+                    button = MistsOfPandariaContentButtons[counter]
+                elseif Config.currentTab == 6 then
+                    button = CataclysmContentButtons[counter]
+                elseif Config.currentTab == 7 then
+                    button = WrathOfTheLichKingContentButtons[counter]
+                end
+    
+                button:Show()
+    
+                if counter > 1 then
+                    button:ClearAllPoints()
+                    if Config.currentTab == 2 then
+                        button:SetPoint("TOPLEFT",BattleForAzerothContentButtons[counter-1],"BOTTOMLEFT",0,30-heightDifference)
+                    elseif Config.currentTab == 3 then
+                        button:SetPoint("TOPLEFT",LegionContentButtons[counter-1],"BOTTOMLEFT",0,30-heightDifference)
+                    elseif Config.currentTab == 4 then
+                        button:SetPoint("TOPLEFT",WarlordsOfDraenorContentButtons[counter-1],"BOTTOMLEFT",0,30-heightDifference)
+                    elseif Config.currentTab == 5 then
+                        button:SetPoint("TOPLEFT",MistsOfPandariaContentButtons[counter-1],"BOTTOMLEFT",0,30-heightDifference)
+                    elseif Config.currentTab == 6 then
+                        button:SetPoint("TOPLEFT",CataclysmContentButtons[counter-1],"BOTTOMLEFT",0,30-heightDifference)
+                    elseif Config.currentTab == 7 then
+                        button:SetPoint("TOPLEFT",WrathOfTheLichKingContentButtons[counter-1],"BOTTOMLEFT",0,30-heightDifference)
+                    end                
+                end
+                button.headerText:SetText(Config:getLocalisedEncouterName(instanceLocation["boss" .. counter2].name))
+                button.headerText:Show()
+                button.contentText:Hide()
+                button:SetNormalTexture("Interface\\Common\\Dark-GoldFrame-Button")
+    
+                button.tactics:Show()
+                button.tactics:SetSize(120, 15)
+                button.tactics:SetScript("OnClick", Tactics_OnClick);
+                button.players:Show()
+                button.players:SetSize(120, 15)
+                button.players:SetScript("OnClick", Player_OnClick);
+                button.enabled:Show()
+                button.enabled:SetSize(20, 15)
+                button.enabled:SetChecked(instanceLocation["boss" .. counter2].enabled)
+                button.enabled:SetScript("OnClick", Enabled_OnClick);
+                if instanceLocation["boss" .. counter2].track ~= nil then
+                    button.enabledText:Show()
+                    button.enabledText:SetSize(30, 15)
+                else
+                    button.enabledText:Hide()
+                    button.enabled:Hide()
+                end
+    
+                --print(instanceLocation["boss" .. counter2].generatedID)
+    
+                --We need to set the ID of the tactics/players/track buttons to the id of the current boss so when clicked we know which boss we need to fetch info for
+                button.tactics:SetID(instanceLocation["boss" .. counter2].generatedID)
+                button.players:SetID(instanceLocation["boss" .. counter2].generatedID)
+                button.enabled:SetID(instanceLocation["boss" .. counter2].generatedID)
+    
+                counter = counter + 1  
+    
+                --Content        
+                if Config.currentTab == 2 then
+                    button = BattleForAzerothContentButtons[counter]
+                elseif Config.currentTab == 3 then
+                    button = LegionContentButtons[counter]
+                elseif Config.currentTab == 4 then
+                    button = WarlordsOfDraenorContentButtons[counter]
+                elseif Config.currentTab == 5 then
+                    button = MistsOfPandariaContentButtons[counter]
+                elseif Config.currentTab == 6 then
+                    button = CataclysmContentButtons[counter]
+                elseif Config.currentTab == 7 then
+                    button = WrathOfTheLichKingContentButtons[counter]
+                end
+    
+                local players = L["GUI_Players"] .. ": "
+                local playersFound = false
+                for i = 1, #instanceLocation["boss" .. counter2].players do
+                    players = players .. instanceLocation["boss" .. counter2].players[i] .. ", "
+                end
+                
+                --Only show players for current instances we are in
+                if type(self) == "table" then
+                    button.contentText:SetText(L["GUI_Achievement"] .. ": " .. GetAchievementLink(instanceLocation["boss" .. counter2].achievement) .. "\n\n" .. L["GUI_Tactics"] .. ": " .. instanceLocation["boss" .. counter2].tactics)            
+                else
+                    button.contentText:SetText(L["GUI_Achievement"] .. ": " .. GetAchievementLink(instanceLocation["boss" .. counter2].achievement) .. "\n\n" .. players .. "\n\n" .. L["GUI_Tactics"] .. ": " .. instanceLocation["boss" .. counter2].tactics)
+                end
+    
+                button.contentText:Show()
+                button.headerText:Hide()
+                button:SetNormalTexture(nil)
+                button.contentText:SetWidth(500)
+                button.contentText:SetHeight(500)
+    
+                button.contentText:SetWordWrap(true)
+                button.contentText:SetHeight(button.contentText:GetStringHeight())
+                heightDifference = button.contentText:GetStringHeight();
+    
+                button.tactics:Hide()
+                button.players:Hide()
+                button.enabled:Hide()
+                button.enabledText:Hide()
+    
+                button.achievementID = instanceLocation["boss" .. counter2].achievement
+                button:SetScript("OnEnter", Achievement_OnEnter)
+
+                button:Show()
+                counter = counter + 1
+            end
             counter2 = counter2 + 1
         end
+    end
+
+    if achievementFound == false then
+        if UIConfig.achievementsCompleted == nil then
+            UIConfig.achievementsCompleted = UIConfig:CreateFontString(nil, "OVERLAY", "GameFontHighlightLarge")
+            UIConfig.achievementsCompleted:SetPoint("CENTER", UIConfig.ScrollFrame2, "CENTER", -20, 0);
+            UIConfig.achievementsCompleted:SetWordWrap(true)
+            UIConfig.achievementsCompleted:SetWidth(500)
+        end
+
+        UIConfig.achievementsCompleted:SetText(L["GUI_AchievementsCompletedForInstance"] .. " " .. Config:getLocalisedInstanceName(instanceLocation.name));
+        UIConfig.achievementsCompleted:Show()
     end
 
     --Hide the remaining buttons

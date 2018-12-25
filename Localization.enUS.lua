@@ -41,6 +41,7 @@ local baseLocale = {
     ["GUI_OnlyDisplayMissingAchievements"] = "Only display missing achievements",
     ["GUI_GreyOutCompletedAchievements"] = "Grey out completed achievements",
     ["GUI_HideCompletedAchievements"] = "Hide completed achievements",
+    ["GUI_AchievementsCompletedForInstance"] = "All achievements have been completed for",
 
     -------------------------------------------------------
     --- Core
