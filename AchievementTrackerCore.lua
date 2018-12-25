@@ -9,7 +9,7 @@ local UIConfig													--UIConfig is used to make a display asking the user 
 local UICreated = false											--To enable achievement tracking when they enter an instances
 local debugMode = false
 local debugModeChat = false
-local sendDebugMessages = false
+local sendDebugMessages = true
 
 local ptrVersion = "8.1.0"
 
@@ -119,6 +119,7 @@ local enableSound = false						--Whether to play a sound when achievement is com
 local enableSoundFailed = false					--Whether to play a sound when achievement is failed
 local failedSound = nil
 local completedSound = nil
+core.achievementDisplayStatus = "show"			--How achievements should be display within the GUI (Show/Hide/Grey)
 
 --------------------------------------
 -- Current Instance Variables
@@ -816,14 +817,21 @@ function events:ADDON_LOADED(event, name)
 		failedSound = AchievementTrackerOptions["failedSound"]
 	end
 
-	-- if AchievementTrackerOptions["enableAchievementScan"] == nil then
-	-- 	core:sendDebugMessage("Setting Initial Settings")
-	-- 	AchievementTrackerOptions["enableAchievementScan"] = true
-	-- end
-	-- _G["AchievementTracker_EnableAchievementScan"]:SetChecked(AchievementTrackerOptions["enableAchievementScan"])
-	-- core.enableAchievementScanning = _G["AchievementTracker_EnableAchievementScan"]:GetChecked()
-	
-    -- core.Config:SetupAchievementTracking(core.enableAchievementScanning)
+	--Hide completed achievements
+	if AchievementTrackerOptions["hideCompletedAchievements"] == nil then
+		AchievementTrackerOptions["hideCompletedAchievements"] = false --Disabled by default
+	elseif AchievementTrackerOptions["hideCompletedAchievements"] == true then
+		core.achievementDisplayStatus = "hide"
+	end
+	_G["AchievementTracker_HideCompletedAchievements"]:SetChecked(AchievementTrackerOptions["hideCompletedAchievements"])	
+
+	--Grey out completed achievements
+	if AchievementTrackerOptions["greyOutCompletedAchievements"] == nil then
+		AchievementTrackerOptions["greyOutCompletedAchievements"] = false --Disabled by default
+	elseif AchievementTrackerOptions["greyOutCompletedAchievements"] == true then
+		core.achievementDisplayStatus = "grey"
+	end
+	_G["AchievementTracker_GreyOutCompletedAchievements"]:SetChecked(AchievementTrackerOptions["greyOutCompletedAchievements"])
 
 	SLASH_IAT1 = "/iat";
 	SlashCmdList.IAT = HandleSlashCommands;
@@ -868,6 +876,26 @@ function events:ADDON_LOADED(event, name)
 
 	--Set whether addon should be enabled or disabled
 	setAddonEnabled(AchievementTrackerOptions["enableAddon"])
+end
+
+function setHideCompletedAchievements(setHideCompletedAchievements)
+	core.achievementDisplayStatus = setHideCompletedAchievements
+	
+	--If grey out completed achievments is true then toggle off
+	if AchievementTrackerOptions["greyOutCompletedAchievements"] == true then
+		AchievementTrackerOptions["greyOutCompletedAchievements"] = false
+		_G["AchievementTracker_GreyOutCompletedAchievements"]:SetChecked(AchievementTrackerOptions["greyOutCompletedAchievements"])
+	end	
+end
+
+function setGreyOutCompletedAchievements(setGreyOutCompletedAchievements)
+	core.achievementDisplayStatus = setGreyOutCompletedAchievements
+
+	--If hide completed achievements is true then toggle off
+	if AchievementTrackerOptions["hideCompletedAchievements"] == true then
+		AchievementTrackerOptions["hideCompletedAchievements"] = false
+		_G["AchievementTracker_HideCompletedAchievements"]:SetChecked(AchievementTrackerOptions["hideCompletedAchievements"])
+	end	
 end
 
 function setCompletedSound(setCompletedSound)
@@ -1220,9 +1248,22 @@ function events:ZONE_CHANGED_NEW_AREA()
 		scanAnnounced = false
 
 		--Unregister events if set
-		if pcall(function() core[core.instanceClear]:InstanceCleanup() end) == true then
-			core:sendDebugMessage("Cleaning up instance events")
+		
+		local retOK, ret1 = pcall(function() core[core.instanceClear]:IATInstanceCleanup() end);
+		if (retOK) then
+			core:sendDebugMessage("Cleaning up instance events for " .. core.instanceClear)
+			
+			core[core.instanceClear]:IATInstanceCleanup()
+		else
+			core:sendDebugMessage("Function failed, error text: " .. ret1 .. ".")
+		end
+		local retOK, ret1 = pcall(function() core[core.instanceClear]:InstanceCleanup() end);
+		if (retOK) then
+			core:sendDebugMessage("Cleaning up instance events for " .. core.instanceClear)
+			
 			core[core.instanceClear]:InstanceCleanup()
+		else
+			core:sendDebugMessage("Function failed, error text: " .. ret1 .. ".")
 		end
 	end
 end
