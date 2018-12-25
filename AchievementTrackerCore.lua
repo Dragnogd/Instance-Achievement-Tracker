@@ -891,7 +891,7 @@ function setHideCompletedAchievements(setHideCompletedAchievements)
 		_G["AchievementTracker_GreyOutCompletedAchievements"]:SetChecked(AchievementTrackerOptions["greyOutCompletedAchievements"])
 	end	
 
-	core:sendDebugMessage(core.achievementDisplayStatus)
+	ClearGUITabs()
 end
 
 function setGreyOutCompletedAchievements(setGreyOutCompletedAchievements)
@@ -907,7 +907,7 @@ function setGreyOutCompletedAchievements(setGreyOutCompletedAchievements)
 		_G["AchievementTracker_HideCompletedAchievements"]:SetChecked(AchievementTrackerOptions["hideCompletedAchievements"])
 	end	
 
-	core:sendDebugMessage(core.achievementDisplayStatus)
+	ClearGUITabs()
 end
 
 function setCompletedSound(setCompletedSound)

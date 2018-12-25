@@ -1167,11 +1167,6 @@ function Instance_OnClick(self)
                 button.headerText:Show()
                 button.contentText:Hide()
                 button:SetNormalTexture("Interface\\Common\\Dark-GoldFrame-Button")
-                if (core.achievementDisplayStatus == "grey" and type(self) == "table" and inThisInstance == false and currentAchievementNeeded == false) or (core.achievementDisplayStatus == "grey" and playersFound == false and inThisInstance == true) or (core.achievementDisplayStatus == "grey" and playersFound == false and type(self) ~= "table") then
-                    button.headerText:SetTextColor(0.827, 0.811, 0.811, 0.3)
-                else
-                    button.headerText:SetTextColor(1,1,1,1)
-                end
     
                 button.tactics:Show()
                 button.tactics:SetSize(120, 15)
@@ -1199,6 +1194,15 @@ function Instance_OnClick(self)
                 button.enabled:SetID(instanceLocation["boss" .. counter2].generatedID)
     
                 counter = counter + 1  
+
+                if (core.achievementDisplayStatus == "grey" and type(self) == "table" and inThisInstance == false and currentAchievementNeeded == false) or (core.achievementDisplayStatus == "grey" and playersFound == false and inThisInstance == true) or (core.achievementDisplayStatus == "grey" and playersFound == false and type(self) ~= "table") then
+                    button.headerText:SetTextColor(0.827, 0.811, 0.811, 0.3)
+                    button.tactics:Hide()
+                    button.players:Hide()
+                    button.enabled:Hide()
+                else
+                    button.headerText:SetTextColor(1, 0.854, 0.039)
+                end
     
                 --Content        
                 if Config.currentTab == 2 then
@@ -1288,6 +1292,24 @@ function Instance_OnClick(self)
         end  
         button:Hide()
     end  
+end
+
+function ClearGUITabs()
+    for i = 1, 200 do
+        local button
+        button = BattleForAzerothContentButtons[i]        
+        button:Hide()
+        button = LegionContentButtons[i]
+        button:Hide()
+        button = WarlordsOfDraenorContentButtons[i]
+        button:Hide()
+        button = MistsOfPandariaContentButtons[i]
+        button:Hide()
+        button = CataclysmContentButtons[i]
+        button:Hide()
+        button = WrathOfTheLichKingContentButtons[i]
+        button:Hide()
+    end
 end
 
 function Achievement_OnEnter(self)
