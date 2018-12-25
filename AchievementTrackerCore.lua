@@ -1218,7 +1218,7 @@ function events:ZONE_CHANGED_NEW_AREA()
 		--Update achievement tracking
 		for boss,_ in pairs(core.Instances[core.expansion][core.instanceType][core.instance]) do
 			if boss ~= "name" then
-				core.Instances[core.expansion][core.instanceType][core.instance][boss].players = {L["GUI_EnterInstanceToStartScanning"]}
+				core.Instances[core.expansion][core.instanceType][core.instance][boss].players = {}
 			end
 		end
 
