@@ -879,23 +879,35 @@ function events:ADDON_LOADED(event, name)
 end
 
 function setHideCompletedAchievements(setHideCompletedAchievements)
-	core.achievementDisplayStatus = setHideCompletedAchievements
-	
+	if setHideCompletedAchievements then
+		core.achievementDisplayStatus = "hide"
+	else
+		core.achievementDisplayStatus = "show"
+	end
+
 	--If grey out completed achievments is true then toggle off
 	if AchievementTrackerOptions["greyOutCompletedAchievements"] == true then
 		AchievementTrackerOptions["greyOutCompletedAchievements"] = false
 		_G["AchievementTracker_GreyOutCompletedAchievements"]:SetChecked(AchievementTrackerOptions["greyOutCompletedAchievements"])
 	end	
+
+	core:sendDebugMessage(core.achievementDisplayStatus)
 end
 
 function setGreyOutCompletedAchievements(setGreyOutCompletedAchievements)
-	core.achievementDisplayStatus = setGreyOutCompletedAchievements
+	if setGreyOutCompletedAchievements then
+		core.achievementDisplayStatus = "grey"
+	else
+		core.achievementDisplayStatus = "show"
+	end
 
 	--If hide completed achievements is true then toggle off
 	if AchievementTrackerOptions["hideCompletedAchievements"] == true then
 		AchievementTrackerOptions["hideCompletedAchievements"] = false
 		_G["AchievementTracker_HideCompletedAchievements"]:SetChecked(AchievementTrackerOptions["hideCompletedAchievements"])
 	end	
+
+	core:sendDebugMessage(core.achievementDisplayStatus)
 end
 
 function setCompletedSound(setCompletedSound)
@@ -1247,8 +1259,7 @@ function events:ZONE_CHANGED_NEW_AREA()
 		core.scanFinished = false
 		scanAnnounced = false
 
-		--Unregister events if set
-		
+		--Unregister events if set	
 		local retOK, ret1 = pcall(function() core[core.instanceClear]:IATInstanceCleanup() end);
 		if (retOK) then
 			core:sendDebugMessage("Cleaning up instance events for " .. core.instanceClear)

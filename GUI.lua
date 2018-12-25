@@ -1068,6 +1068,25 @@ function Instance_OnClick(self)
         UIConfig.achievementsCompleted:Hide()
     end
 
+    --Hide all buttons initially
+    for i = 1, numButtons do
+        local button
+        if Config.currentTab == 2 then
+            button = BattleForAzerothContentButtons[i]        
+        elseif Config.currentTab == 3 then
+            button = LegionContentButtons[i]
+        elseif Config.currentTab == 4 then
+            button = WarlordsOfDraenorContentButtons[i]
+        elseif Config.currentTab == 5 then
+            button = MistsOfPandariaContentButtons[i]
+        elseif Config.currentTab == 6 then
+            button = CataclysmContentButtons[i]
+        elseif Config.currentTab == 7 then
+            button = WrathOfTheLichKingContentButtons[i]
+        end  
+        button:Hide()
+    end 
+
     for bossName,v in pairs(instanceLocation) do
         if bossName ~= "name" then --Don't fetch the name of the instance that has been clicked
             --Check if any players in the group need the achievement
@@ -1075,6 +1094,7 @@ function Instance_OnClick(self)
             local inThisInstance = false
             local currentAchievementNeeded = false
 
+            --Check if any players in the group need the current achievement for the current instance they are inside off
             if core:has_value(instanceLocation["boss" .. counter2].players, L["GUI_NoPlayersNeedAchievement"]) == false and #instanceLocation["boss" .. counter2].players ~= 0 then
                 playersFound = true
                 core:sendDebugMessage("Found players for: " .. bossName)       
@@ -1092,7 +1112,8 @@ function Instance_OnClick(self)
                 end
             end
 
-            if inThisInstance == false and core.achievementDisplayStatus == "hide" then
+            --Check if player has got the current achievement for instances they are not currently inside off
+            if inThisInstance == false and (core.achievementDisplayStatus == "hide" or core.achievementDisplayStatus == "grey") then
                 --Player is not in the currently selected instance we can just display the achievements they do not need.
                 local id, name, points, completed, month, day, year, description, flags, icon, rewardText, isGuild, wasEarnedByMe, earnedBy = GetAchievementInfo(instanceLocation["boss" .. counter2].achievement)
 
@@ -1102,7 +1123,7 @@ function Instance_OnClick(self)
             end
 
             --Check whether or not to display the current achievements. This is done incase user wants to hide completed achievements
-            if core.achievementDisplayStatus == "hide" and playersFound == true or core.achievementDisplayStatus == "show" or (type(self) == "table" and inThisInstance == false and currentAchievementNeeded == true) then
+            if (core.achievementDisplayStatus == "hide" and playersFound == true) or core.achievementDisplayStatus == "show" or (type(self) == "table" and inThisInstance == false and currentAchievementNeeded == true) or core.achievementDisplayStatus == "grey" then
                 achievementFound = true
 
                 --We need to display the current achievement
@@ -1146,6 +1167,11 @@ function Instance_OnClick(self)
                 button.headerText:Show()
                 button.contentText:Hide()
                 button:SetNormalTexture("Interface\\Common\\Dark-GoldFrame-Button")
+                if (core.achievementDisplayStatus == "grey" and type(self) == "table" and inThisInstance == false and currentAchievementNeeded == false) or (core.achievementDisplayStatus == "grey" and playersFound == false and inThisInstance == true) or (core.achievementDisplayStatus == "grey" and playersFound == false and type(self) ~= "table") then
+                    button.headerText:SetTextColor(0.827, 0.811, 0.811, 0.3)
+                else
+                    button.headerText:SetTextColor(1,1,1,1)
+                end
     
                 button.tactics:Show()
                 button.tactics:SetSize(120, 15)
@@ -1196,12 +1222,17 @@ function Instance_OnClick(self)
                 end
                 
                 --Only show players for current instances we are in
-                if type(self) == "table" then
+                if type(self) == "table" and inThisInstance == false then
                     button.contentText:SetText(L["GUI_Achievement"] .. ": " .. GetAchievementLink(instanceLocation["boss" .. counter2].achievement) .. "\n\n" .. L["GUI_Tactics"] .. ": " .. instanceLocation["boss" .. counter2].tactics)            
                 else
                     button.contentText:SetText(L["GUI_Achievement"] .. ": " .. GetAchievementLink(instanceLocation["boss" .. counter2].achievement) .. "\n\n" .. players .. "\n\n" .. L["GUI_Tactics"] .. ": " .. instanceLocation["boss" .. counter2].tactics)
                 end
-    
+
+                if (core.achievementDisplayStatus == "grey" and type(self) == "table" and inThisInstance == false and currentAchievementNeeded == false) or (core.achievementDisplayStatus == "grey" and playersFound == false and inThisInstance == true) or (core.achievementDisplayStatus == "grey" and playersFound == false and type(self) ~= "table") then
+                    button.contentText:SetTextColor(0.827, 0.811, 0.811, 0.3)
+                else
+                    button.contentText:SetTextColor(1,1,1,1)
+                end
                 button.contentText:Show()
                 button.headerText:Hide()
                 button:SetNormalTexture(nil)
