@@ -69,7 +69,7 @@ function events:onUpdate(sinceLastUpdate)
 		-- do stuff here
 		self.sinceLastUpdate = 0;
 		local combatStatus = getCombatStatus()
-		if combatStatus == false then
+		if combatStatus == false and core.encounterDetected == false then
 			core:clearInstanceVariables()
 			core:clearVariables()
 			core:sendDebugMessage("Left Combat")
@@ -1077,7 +1077,7 @@ end
 function events:ENCOUNTER_START(self, encounterID, encounterName, difficultyID, groupSize)
 	core:sendDebugMessage("---Encounter Started---")
 	core:sendDebugMessage("Encounter ID: " .. encounterID)
-	--table.insert(--TargetLogData, "---Encounter Started---")
+
 	core.encounterStarted = true
 
 	if core.displayAchievements == true then
@@ -1412,11 +1412,16 @@ function events:PLAYER_REGEN_ENABLED()
 		if core.encounterDetected == false then
 			core:clearInstanceVariables()
 			core:clearVariables()
+
+			--Since variables have been cleared we can stop checking if the player is in combat
+			core:sendDebugMessage("Left Combat")
+			events:SetScript("OnUpdate",nil)
 		else
 			core:sendDebugMessage("Not clearing global variables since encounter is still in progress")
+
+			--Lets keep checking every 1 second to see if we have left combat
+			events:SetScript("OnUpdate",events.onUpdate)
 		end
-	   core:sendDebugMessage("Left Combat")
-	   events:SetScript("OnUpdate",nil)
    else
 	   --Someone in the group is still in combat. Wait 1 second then check again
 	   events:SetScript("OnUpdate",events.onUpdate)
