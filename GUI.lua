@@ -1562,7 +1562,6 @@ function GetNameFromNpcIDCache(npcID)
 					for boss, _ in pairs(core.Instances[expansion][instanceType][instance]) do
 						if boss ~= "name" then
 							if string.find(core.Instances[expansion][instanceType][instance][boss].tactics, ("IAT_" .. npcID)) then
-                                print("FOUND BOSS!!!")
                                 core.Instances[expansion][instanceType][instance][boss].tactics = string.gsub(core.Instances[expansion][instanceType][instance][boss].tactics, ("IAT_" .. npcID), name)
                             end
 						end

@@ -43,6 +43,7 @@ local baseLocale = {
     ["GUI_OnlyDisplayMissingAchievements"] = "Muestra sólo los logros que faltan",
     ["GUI_GreyOutCompletedAchievements"] = "Ensombrece los logros completados",
     ["GUI_HideCompletedAchievements"] = "Oculta los logros completados",
+    -- ["GUI_AchievementsCompletedForInstance"] = "All achievements have been completed for",
 
     -------------------------------------------------------
     --- Core

@@ -43,6 +43,7 @@ local baseLocale = {
     ["GUI_OnlyDisplayMissingAchievements"] = "只顯示缺少的成就",
     ["GUI_GreyOutCompletedAchievements"] = "用灰色顯示已完成的成就",
     ["GUI_HideCompletedAchievements"] = "隱藏已完成的成就",
+    -- ["GUI_AchievementsCompletedForInstance"] = "All achievements have been completed for",
 
     -------------------------------------------------------
     --- Core

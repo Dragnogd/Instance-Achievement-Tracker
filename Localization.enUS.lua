@@ -87,24 +87,24 @@ local baseLocale = {
     --Shared
     ["Shared_HasBeenHitWith"] = "has been hit with",
     ["Shared_PlayersWhoStillNeedToGetHit"] = "Players who still need to get hit:",
-    ["Shared_PlayersWhoStillNeedToGetResurrected"] = "The following players need to be resurrected in order to recieve the achievement:",
+    ["Shared_PlayersWhoStillNeedToGetResurrected"] = "The following players need to be resurrected in order to receive the achievement:",
     ["Shared_HasGained"] = "has gained",
     ["Shared_HasLost"] = "has lost",
     ["Shared_HasFailed"] = "has failed",
     ["Shared_HasCompleted"] = "has completed",
-    ["Shared_Reason"] = "reason:",
-    ["Shared_PersonalAchievement"] = "Personal Achievement",
-    ["Shared_Timer10"] = "Timer Started!. 10 seconds remaining",
-    ["Completed"] = "Completed",
-    ["Shared_JustKillBoss"] = "At max level, you can simply just kill the boss to get this achievement.",
-    ["Shared_JustKillBossSingleTarget"] = "At max level, you can simply just kill the boss with single target abilities to get this achievement.",
+    ["Shared_Reason"] = "reason:", -----TODO duplicate
+    ["Shared_PersonalAchievement"] = "Personal Achievement", -----------TODO duplicate
+    ["Shared_Timer10"] = "Timer Started!. 10 seconds remaining", --TODO insert number of seconds remaining
+    ["Completed"] = "Completed", --TODO wrong format
+    ["Shared_JustKillBoss"] = "At max level, you can simply just kill the boss to get this achievement",
+    ["Shared_JustKillBossSingleTarget"] = "At max level, you can simply just kill the boss with single target abilities to get this achievement",
     ["Shared_GotHit"] = "got hit",
     ["Shared_NotHit"] = "did not get hit",
     ["Shared_PlayersHit"] = "players hit:",
     ["Shared_CompletedBossKill"] = "will be completed once boss is killed",
-    ["Shared_Timer3"] = "Timer Started! 3 seconds remaining",
+    ["Shared_Timer3"] = "Timer Started! 3 seconds remaining", --TODO insert number of seconds remaining
     ["Shared_Countdown20"] = "20 seconds remaining",
-    ["Shared_MeetsCritera"] = "meets criteria for",
+    ["Shared_MeetsCritera"] = "meets the criteria for",
     ["Shared_DoesNotMeetCritera"] = "does not meet the critera for",
     ["Shared_HasBeenInfectedWith"] = "has been infected with",
     ["Shared_SheCanNowBeKilled"] = "She can now be killed",
@@ -114,6 +114,26 @@ local baseLocale = {
     ["Shared_DamageFromAbility"] = "%s Damage",
     ["Shared_DirectHitFromAbility"] = "%s Direct Hit",
     ["Shared_AddKillCounter"] = "%s kill counter",
+    ["Shared_One"] = "1",
+    ["Shared_Two"] = "2",
+    ["Shared_Three"] = "3",
+    ["Shared_Four"] = "4",
+    ["Shared_Five"] = "5",
+    ["Shared_Six"] = "6",
+    ["Shared_Seven"] = "7",
+    ["Shared_Eight"] = "8",
+    ["Shared_Nine"] = "9",
+    ["Shared_Ten"] = "10",
+    ["Shared_Eleven"] = "11",
+    ["Shared_Twelve"] = "12",
+    ["Shared_Thirteen"] = "13",
+    ["Shared_Fourteen"] = "14",
+    ["Shared_Fifteen"] = "15",
+    ["Shared_Sixteen"] = "16",
+    ["Shared_Seventeen"] = "17",
+    ["Shared_Eighteen"] = "18",
+    ["Shared_Nineteen"] = "19",
+    ["Shared_Twenty"] = "20",
 
     -------------------------------------------------------
     --- Battle of Dazar'alor
@@ -135,31 +155,31 @@ local baseLocale = {
     --- Uldir
     -------------------------------------------------------
     --Tactics
-    ["Uldir_Taloc_Tactics"] = "For this achievement you will have to collect 4 Orbs of Harmony while the Elevator is going down in phase 2.\n\n The positions of the orbs seem to be ranzomized, however a Demon Hunter can easily get all of them by Fel Rushing and Gliding.",
+    ["Uldir_Taloc_Tactics"] = "For this achievement you will have to collect 4 %s while the Elevator is going down in phase 2.\n\n The positions of the orbs seem to be randomised, however a Demon Hunter can easily get all of them by using %s and %s",
     ["Uldir_MOTHER_Tactics"] = "To enter the 'passcode' you will have to click the buttons in each chamber in a specific order that is randomized for every group. The order can be 321, 213, 231 or similar combinations.\n\n Check if the buttons in the first room stop blinking, and then send a group of 2-3 dps and a healer to click on the buttons in the second and the third room. If the buttons are clicked in the right sequence, they will stop blinking and won't be clickable anymore. Once you've done that you can kill the boss and get the achievement.",
-    ["Uldir_Fetid_Devourer_Tactics"] = "Every fourth melee attack the boss will cast %s on the target closest to the current tank, a hit which deals physical damage equal to 300%% of a standard melee attack.\n\n Every player will have to be hit, and it's recommended to use a personal cooldown when that happens. The fight itself isn't that hard, but you should prioritize people without a good defensive cooldown, as the boss enrages at 50%%: %s",
-    ["Uldir_ZekVoz_Tactics"] = "This achievement is pretty easy, however you should use the IAT_64482 after Yogg's image disappears in phase 2. The puzzle will activate the next time the Projection of Yogg-saron appears (the second time), which helps your healers with healing & mana (you won't have to deal with the mechanics for an extra minute).\n\n The %s deal anywhere from 25k to 35k damage, so make sure to dodge them as much as possible so your healers don't get overwhelmed.",
-    ["Uldir_Vectis_Tactics"] = "Warmother Rakkali is located down on the platform right before you go to Vectis.\n\n After you get the Plague Bomb debuff on her, you can safely kill her, then kill the boss and you'll get the achievement.",
-    ["Uldir_ZulReborn_Tactics"] = "This achievement is pretty straight forward, no one has to step onto the inner ring of the platform. Here are a few tips for the encounter:\n\n Tanks should pick all the adds, and stack them so that melee dps can cleave them. The Bloodhexers don't have %s on normal difficulty (if the debuff shows on them, it's just a visual bug, don't worry about it).\n Ranged dps should be on the boss 24/7, and should not switch to the adds unless melee dps can't keep up killing them in time.\n If you have 2 priests in the group, then you should assign them to different positions (left and right outside of the group) so that both sides are covered when ads spawn.\n At 40%% Zul will knock back everyone, so you should position yourself near a wall so you don't get knocked off the platform.",
-    ["Uldir_Mythrax_Tactics"] = "As of November 2018: The Existential Crisis achievement now functions as described.\n\n This makes the achievement much more easier, as you just pick up the orbs that you spawned.",
-    ["Uldir_GHuun_Tactics"] = "For this achievement you will have to make groups of 3 people to do the power matrix: 2 dps + 1 healer assisting them.\n\n As of right now the fight looks a bit overtuned for smaller raid groups, so if you have a 10-14 man group then you should invite a few more people to help out.",
+    ["Uldir_Fetid_Devourer_Tactics"] = "Every fourth melee attack the boss will cast %s on the target closest to the current tank, a hit which deals physical damage equal to 300%% of a standard melee attack.\n\n Every player will have to be hit, and it's recommended to use a personal cooldown when that happens. The fight itself isn't that hard, but you should prioritize people without a good defensive cooldown, as the boss enrages at 50%% (%s)",
+    ["Uldir_ZekVoz_Tactics"] = "This achievement is pretty easy, however you should use the IAT_64482 after IAT_135129 disappears in phase 2. The puzzle will activate the next time the IAT_135129 appears (the second time), which helps your healers with healing & mana (you won't have to deal with the mechanics for an extra minute).\n\n The %s deal anywhere from 25k to 35k damage, so make sure to dodge them as much as possible so your healers don't get overwhelmed.",
+    ["Uldir_Vectis_Tactics"] = "IAT_142148 is located down on the platform right before you go to IAT_134442.\n\n After you get the %s debuff on her, you can safely kill her, then kill the boss and you'll get the achievement.",
+    ["Uldir_ZulReborn_Tactics"] = "This achievement is pretty straight forward, no one has to step onto the inner ring of the platform. Here are a few tips for the encounter:\n\n Tanks should pick all the adds, and stack them so that melee dps can cleave them.\n Ranged dps should be on the boss 24/7, and should not switch to the adds unless melee dps can't keep up killing them in time.\n If you have 2 priests in the group, then you should assign them to different positions (left and right outside of the group) so that both sides are covered when adds spawn.\n At 40%% IAT_138967 will knock back everyone, so you should position yourself near a wall so you don't get knocked off the platform.",
+    ["Uldir_Mythrax_Tactics"] = "As of November 2018: The achievement now functions as described.\n\n This makes the achievement much more easier, as you just pick up the orbs that you spawned.",
+    ["Uldir_GHuun_Tactics"] = "For this achievement you will have to make groups of 3 people to do the %s: 2 dps + 1 healer assisting them.\n\n If you have a smaller group then you should invite a few more people to help out with killing the adds",
 
     -------------------------------------------------------
     --- Atal Dazar
     -------------------------------------------------------
     --Tactics
-    ["AtalDazar_Other"] = "The Zanchuli Witch-Doctor throughout the dungeon cast %s on a random player which hexes them for 5 seconds, and at the end of its duration anyone who is stood near that player will also get hexed. \n\nBefore pulling any Zanchuli Witch-Doctor you will want to clear all the trash in the dungeon. You will have to bring the add to every boss, and if you have a class with a long cc (such as Monk with %s, Hunter with %s, Mage with %s) then you should keep it crowd controlled until close to the end of the fight. If you don't have any class with cc, then you should just focus on interrupting its %s cast throughout the fight.",
-    ["AtalDazar_Priestess_AlunZa"] = "Boss will summon an add by casting %s. This add will move to any %s puddles and soak them, and when there are no puddles up, it will turn to attack the players. At this point, you should cc the add in order to prevent excessive damage. The add will have to soak 8 puddles of %s in order to turn into a Fatal Corruption.",
+    ["AtalDazar_Other"] = "The IAT_122969 throughout the dungeon casts %s on a random player which hexes them for 5 seconds, and at the end of its duration anyone who is stood near that player will also get hexed. \n\nBefore pulling any IAT_122969 you will want to clear all the trash in the dungeon. You will have to bring the add to every boss, and if you have a class with a long cc (such as Monk with %s, Hunter with %s, Mage with %s) then you should keep it crowd controlled until close to the end of the fight. If you don't have any class with cc, then you should just focus on interrupting its %s cast throughout the fight.",
+    ["AtalDazar_Priestess_AlunZa"] = "Boss will summon an add by casting %s. This add will move to any %s puddles and soak them, and when there are no puddles up, it will turn to attack the players. At this point, you should cc the add in order to prevent excessive damage. The add will have to soak 8 puddles of %s in order to turn into a IAT_131140.",
     ["Atal_Dazar_Yazma"] = "In order to lite the Shadowflame Sconces, everyone in the group except the tank will have to spread and stay near one of them when the boss casts %s. The sconces will stay lit up for about 25 seconds, so you should do this when the boss is low on health around 5 to 10%%.",
     
     --Chat Output
-    ["AtalDazar_BringingHexyBack_Hex"] = "Atleast one players needs to be hexed on boss kill!",
+    ["AtalDazar_BringingHexyBack_Hex"] = "Atleast one players needs to be hexed on boss kill!", --TODO
 
     -------------------------------------------------------
     --- Freehold
     -------------------------------------------------------
     --Tactics
-    ["Freehold_SkycapNKragg"] = "To summon Patches you have to place a %s before you pull the boss.",
+    ["Freehold_SkycapNKragg"] = "To summon IAT_138314 you have to place a %s before you pull the boss.",
     ["Freehold_RingOfBooty"] = "For this achievement you will have to pick up 3 items throughout the instance. Sharkbait's Empty Dish spawns in the nest at the first boss after you defeat it, Gourmet Parrot Chow is found on top of a platform in The Rum Quarter, and Serve Sharkbait's Meal is found near Sharkbait after the third boss.",
     ["Freehold_HarlanSweete"] = "Harlan Sweete will target a random player for %s, which will have to position near one of the chests, so that they will end up being destroyed.",
 

@@ -9,4 +9,10 @@ core.NPCCache = {
     [139304] = 139304, --Solid Snake
     [50376] = 50376, --Angered Earth
     [39987] = 39987, --Evolved Twilight Zealot
+    [135129] = 135129, --Projection of Yogg Saron
+    [134442] = 134442, --Vectis
+    [138967] = 138967, --Zul
+    [122969] = 122969, --Zanchuli Witch-Doctor
+    [131140] = 131140, --Fatal Corruption
+    [138314] = 138314, --Patches
 }
