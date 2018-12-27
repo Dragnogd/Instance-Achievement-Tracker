@@ -7,6 +7,7 @@ local _, core = ...
 ---- Tomb of Sargeras Bosses
 ------------------------------------------------------
 core._1676 = {}
+core._1676.Events = CreateFrame("Frame")
 
 ------------------------------------------------------
 ---- Demonic Inquisition
@@ -158,6 +159,12 @@ function core._1676:Kiljaeden()
     end
 end
 
+function core._1676:DesolateHost()
+    if core:getBlizzardTrackingStatus(11674) == false then
+        core:getAchievementFailed()
+    end
+end
+
 function core._1676:ClearVariables()
     ------------------------------------------------------
     ---- Sisters of the Moon
@@ -182,6 +189,3 @@ function core._1676:ClearVariables()
     playersTorment = 0
 end
 
-function core._1676:InstanceCleanup()
-    demonicInquisitionKilled = false
-end
