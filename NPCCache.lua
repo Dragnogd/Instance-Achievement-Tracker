@@ -15,4 +15,8 @@ core.NPCCache = {
     [122969] = 122969, --Zanchuli Witch-Doctor
     [131140] = 131140, --Fatal Corruption
     [138314] = 138314, --Patches
+    [124166] = 124166, --Torment of Khaz'goroth
+    [123503] = 123503, --Torment of Norgannon
+    [124164] = 124164, --Torment of Golganneth
+    [125837] = 125837, --Torment of Aman'Thul
 }

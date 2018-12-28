@@ -2,6 +2,7 @@
 -- Namespaces
 --------------------------------------
 local _, core = ...
+local L = core.L
 
 ------------------------------------------------------
 ---- Antorus The Burning Throne Bosses
@@ -22,11 +23,25 @@ local timerStarted = false
 local fhargComplete = false
 local shatugComplete = false
 local felhoundsKilled = false
+local fhargCounter = 0
+local shatugCounter = 0
 
 ------------------------------------------------------
 ---- Antoran High Command
 ------------------------------------------------------
 local felshieldEmitterCounter = 3
+
+------------------------------------------------------
+---- Coven of Shivarra
+------------------------------------------------------
+local norgannonUID = {}
+local norgannonCounter = 0
+local khazgorothUID = {}
+local khazgorothCounter = 0
+local amanthulUID = {}
+local amanthulCounter = 0
+local golgannethUID = {}
+local golgannethCounter = 0
 
 ------------------------------------------------------
 ---- Argus
@@ -50,15 +65,21 @@ function core._1712:FelhoundsOfSargeras()
     if felhoundsKilled == false then
         --F'harg
         if core.type == "SPELL_AURA_APPLIED_DOSE" and core.destID == "122477" and core.spellId == 253602 then
-            core:sendMessage("F'harg Fel Imbuement Counter (" .. core.amount .. "/5)")
+            --core:sendMessage("F'harg Fel Imbuement Counter (" .. core.amount .. "/5)")
+            fhargCounter = core.amount
+            core:sendMessage("F'harg Fel " .. L["Core_Counter"] .. " (" .. fhargCounter .. "/5) Shatug " .. L["Core_Counter"] .. " (" .. shatugCounter .. "/5)")
 
             if core.amount == 5 then
                 fhargComplete = true
             end
         elseif core.type == "SPELL_AURA_APPLIED" and core.destID == "122477" and core.spellId == 253602 then
-            core:sendMessage("F'harg Fel Imbuement Counter (1/5)")        
+            --core:sendMessage("F'harg Fel Imbuement Counter (1/5)")        
+            fhargCounter = 1
+            core:sendMessage("F'harg Fel " .. L["Core_Counter"] .. " (" .. fhargCounter .. "/5) Shatug " .. L["Core_Counter"] .. " (" .. shatugCounter .. "/5)")
         elseif core.type == "SPELL_AURA_REMOVED" and core.destID == "122477" and core.spellId == 253602 then
-            core:sendMessage("F'harg Fel Imbuement Counter (0/5)")
+            --core:sendMessage("F'harg Fel Imbuement Counter (0/5)")
+            fhargCounter = 0
+            core:sendMessage("F'harg Fel " .. L["Core_Counter"] .. " (" .. fhargCounter .. "/5) Shatug " .. L["Core_Counter"] .. " (" .. shatugCounter .. "/5)")
             fhargComplete = false
             
             if core.achievementsCompleted[1] == true then
@@ -69,15 +90,21 @@ function core._1712:FelhoundsOfSargeras()
 
         --Shatug
         if core.type == "SPELL_AURA_APPLIED_DOSE" and core.destID == "122135" and core.spellId == 253602 then
-            core:sendMessage("Shatug Fel Imbuement Counter (" .. core.amount .. "/5)")
+            --core:sendMessage("Shatug Fel Imbuement Counter (" .. core.amount .. "/5)")
+            shatugCounter = core.amount
+            core:sendMessage("F'harg Fel " .. L["Core_Counter"] .. " (" .. fhargCounter .. "/5) Shatug " .. L["Core_Counter"] .. " (" .. shatugCounter .. "/5)")
 
             if core.amount == 5 then
                 shatugComplete = true
             end
         elseif core.type == "SPELL_AURA_APPLIED" and core.destID == "122135" and core.spellId == 253602 then
-            core:sendMessage("Shatug Fel Imbuement Counter (1/5)")        
+            --core:sendMessage("Shatug Fel Imbuement Counter (1/5)")  
+            shatugCounter = 1
+            core:sendMessage("F'harg Fel " .. L["Core_Counter"] .. " (" .. fhargCounter .. "/5) Shatug " .. L["Core_Counter"] .. " (" .. shatugCounter .. "/5)")
         elseif core.type == "SPELL_AURA_REMOVED" and core.destID == "122135" and core.spellId == 253602 then
-            core:sendMessage("Shatug Fel Imbuement Counter (0/5)")
+            --core:sendMessage("Shatug Fel Imbuement Counter (0/5)")
+            shatugCounter = 0
+            core:sendMessage("F'harg Fel " .. L["Core_Counter"] .. " (" .. fhargCounter .. "/5) Shatug " .. L["Core_Counter"] .. " (" .. shatugCounter .. "/5)")
             shatugComplete = false
             
             if core.achievementsCompleted[1] == true then
@@ -147,6 +174,153 @@ function core._1712:KinGaroth()
     end 
 end
 
+function core._1712:CovenOfShivarra()
+    -- Torment of Khaz'goroth
+    --Spawned
+    if core.type == "SPELL_CAST_START" and core.sourceID == "124166" and core.spellId == 245671 then
+        if khazgorothUID[core.spawn_uid] == nil then
+            khazgorothUID[core.spawn_uid] = core.spawn_uid
+            khazgorothCounter = khazgorothCounter + 1
+        end
+    end
+
+    --Killed
+    if core.type == "SPELL_AURA_REMOVED" and core.sourceID == "124166" and core.spellId == 245671 then
+        if khazgorothUID[core.spawn_uid] ~= nil then
+            khazgorothUID[core.spawn_uid] = nil
+            khazgorothCounter = khazgorothCounter - 1
+        end
+    elseif (core.destID == "124166" and core.overkill > 0) or (core.type == "UNIT_DIED" and core.destID == "124166") then
+        if khazgorothUID[core.spawn_uid_dest] ~= nil then
+            khazgorothUID[core.spawn_uid_dest] = nil
+            khazgorothCounter = khazgorothCounter - 1
+        end
+    end
+
+    -- Torment of Norgannon
+    --Spawned
+    if core.type == "SPELL_AURA_APPLIED" and core.sourceID == "123503" and core.spellId == 249863 then
+        if norgannonUID[core.spawn_uid] == nil then
+            norgannonUID[core.spawn_uid] = core.spawn_uid
+            norgannonCounter = norgannonCounter + 1
+        end
+    end
+
+    --Killed
+    if (core.type == "UNIT_DIED" and core.destID == "123503") then
+        if norgannonUID[core.spawn_uid_dest] ~= nil then
+            norgannonUID[core.spawn_uid_dest] = nil
+            norgannonCounter = norgannonCounter - 1
+        end
+    elseif core.destID == "123503" then
+        if core.amount ~= nil then
+            if core.amount > 0 then
+                if norgannonUID[core.spawn_uid_dest] ~= nil then
+                    norgannonUID[core.spawn_uid_dest] = nil
+                    norgannonCounter = norgannonCounter - 1
+                end
+            end
+        end
+    end
+    
+    -- Torment of Golganneth
+    --Spawned
+    if core.type == "SPELL_CAST_START" and core.sourceID == "124164" and core.spellId == 246739 then
+        if golgannethUID[core.spawn_uid] == nil then
+            golgannethUID[core.spawn_uid] = core.spawn_uid
+            golgannethCounter = golgannethCounter + 1
+        end
+    end
+
+    --Killed
+    if (core.type == "SPELL_AURA_REMOVED" and core.sourceID == "124164" and core.spellId == 246739) then
+        if golgannethUID[core.spawn_uid] ~= nil then
+            golgannethUID[core.spawn_uid] = nil
+            golgannethCounter = golgannethCounter - 1
+        end
+    elseif (core.destID == "124164" and core.overkill > 0) or (core.type == "UNIT_DIED" and core.destID == "124164") then
+        if golgannethUID[core.spawn_uid_dest] ~= nil then
+            golgannethUID[core.spawn_uid_dest] = nil
+            golgannethCounter = golgannethCounter - 1
+        end
+    end
+    
+    -- Torment of Aman'Thul
+    if (core.type == "SPELL_CAST_SUCCESS" and core.sourceID == "125837" and core.spellId == 250097) or (core.sourceID == "125837") then
+        if amanthulUID[core.spawn_uid] == nil then
+            amanthulUID[core.spawn_uid] = core.spawn_uid
+            amanthulCounter = amanthulCounter + 1
+        end
+    elseif core.destID == "125837" then
+        if amanthulUID[core.spawn_uid_dest] == nil then
+            amanthulUID[core.spawn_uid_dest] = core.spawn_uid_dest
+            amanthulCounter = amanthulCounter + 1
+        end     
+    end
+
+    if (core.type == "SPELL_AURA_REMOVED" and core.sourceID == "125837" and core.spellId == 250097) then
+        if amanthulUID[core.spawn_uid] ~= nil then
+            amanthulUID[core.spawn_uid] = nil
+            amanthulCounter = amanthulCounter - 1
+        end
+    elseif (core.destID == "125837" and core.overkill > 0) or (core.type == "UNIT_DIED" and core.destID == "125837") then
+        if amanthulUID[core.spawn_uid_dest] ~= nil then
+            amanthulUID[core.spawn_uid_dest] = nil
+            amanthulCounter = amanthulCounter - 1
+        end
+    end
+
+    local tormentsCounter = 0
+    if khazgorothCounter >= 1 then
+        tormentsCounter = tormentsCounter + 1
+    end
+    if norgannonCounter >= 1 then
+        tormentsCounter = tormentsCounter + 1
+    end
+    if golgannethCounter >= 1 then
+        tormentsCounter = tormentsCounter + 1
+    end
+    if amanthulCounter >= 1 then
+        tormentsCounter = tormentsCounter + 1
+    end
+    core.IATInfoFrame:SetSubHeading1("Torments Found (" .. tormentsCounter .. "/4)")
+
+    local messageStr = getNPCName(124166) .. " " .. khazgorothCounter .. "\n" .. getNPCName(123503) .. " " .. norgannonCounter .. "\n" .. getNPCName(124164) .. " " .. golgannethCounter .. "\n" .. getNPCName(125837) .. " " .. amanthulCounter
+    core.IATInfoFrame:SetText1(messageStr)
+    
+    --Achievement Completed
+    if khazgorothCounter >= 1 and norgannonCounter >= 1 and golgannethCounter >= 1 and amanthulCounter >= 1 then
+        core:getAchievementSuccess()
+
+        --If achievement had already failed then set back to not failed
+        if core.achievementsFailed[1] == true then
+            core.achievementsFailed[1] = false
+        end
+    end
+
+
+    --Achievement Failed
+    if core.achievementsCompleted[1] == true and (khazgorothCounter == 0 or norgannonCounter == 0 or golgannethCounter == 0 or amanthulCounter == 0) then
+        local addKilled = ""
+        if khazgorothCounter == 0 then
+            addKilled = getNPCName(124166)
+        elseif norgannonCounter == 0 then
+            addKilled = getNPCName(123503)
+        elseif golgannethCounter == 0 then
+            addKilled = getNPCName(124164)
+        elseif amanthulCounter == 0 then
+            addKilled = getNPCName(125837)
+        end
+
+        core:getAchievementFailedWithMessageAfter(L["Core_Reason"] .. " " .. addKilled .. " " .. L["Shared_WasKilled"])
+
+        --If achievement had already completed then set back to not completed
+        if core.achievementsCompleted[1] == true then
+            core.achievementsCompleted[1] = false
+        end
+    end
+end
+
 function core._1712:Aggramar()
     if core.type == "UNIT_DIED" and core.destName == "Manifestation of Taeshalach" then
         core:getAchievementSuccess()
@@ -188,6 +362,18 @@ function core._1712:ClearVariables()
     highestEnergy = 0
     energyTooHighAnnounced = false
     starDustCompleted = false
+
+    ------------------------------------------------------
+    ---- Coven of Shivarra
+    ------------------------------------------------------
+    norgannonUID = {}
+    norgannonCounter = 0
+    khazgorothUID = {}
+    khazgorothCounter = 0
+    amanthulUID = {}
+    amanthulCounter = 0
+    golgannethUID = {}
+    golgannethCounter = 0
 end
 
 function core._1712:InstanceCleanup()
