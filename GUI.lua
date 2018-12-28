@@ -1481,14 +1481,24 @@ local frameBackdrop = {
 function IATInfoFrame:SetupInfoFrame()
     InfoFrame = CreateFrame("Frame", "AchievementTrackerInfoFrame", UIParent)
     InfoFrame:SetSize(200, 300)
-    InfoFrame:SetPoint("BOTTOMLEFT", "UIParent", "BOTTOMLEFT", 0, 0)
+    InfoFrame:SetPoint("BOTTOMLEFT", "UIParent", "BOTTOMLEFT", 420, 500)
     InfoFrame:SetBackdrop(frameBackdrop);
     InfoFrame:SetMovable(true)
     InfoFrame:EnableMouse(true)
     InfoFrame:SetClampedToScreen(true)
     InfoFrame:RegisterForDrag("LeftButton")
     InfoFrame:SetScript("OnDragStart", UIConfig.StartMoving)
-    InfoFrame:SetScript("OnDragStop", UIConfig.StopMovingOrSizing)
+    InfoFrame:SetScript("OnDragStop", function(self) 
+        self:StopMovingOrSizing()
+        AchievementTrackerOptions["infoFrameXPos"] = self:GetLeft()
+        AchievementTrackerOptions["infoFrameYPos"] = self:GetBottom()
+    end)
+
+    --Info Frame X/Y Posiions
+	if AchievementTrackerOptions["infoFrameXPos"] ~= nil and AchievementTrackerOptions["infoFrameYPos"] ~= nil then
+		InfoFrame:ClearAllPoints()
+		InfoFrame:SetPoint("BOTTOMLEFT",AchievementTrackerOptions["infoFrameXPos"],AchievementTrackerOptions["infoFrameYPos"])
+	end
 
     InfoFrame:SetShown(false)
 end

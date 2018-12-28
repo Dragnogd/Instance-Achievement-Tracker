@@ -1002,7 +1002,7 @@ core.Instances = {
                 },
                 boss9 = {
                     name = 1986, --Coven of Shivarra
-                    bossIDs = {122467},
+                    bossIDs = {},
                     achievement = 12046,
                     players = {},
                     tactics = format(L["AntorusTheBurningThrone_CovenOfShivarra"], GetSpellLink(250095), GetSpellLink(245910), GetSpellLink(710), GetSpellLink(187650), GetSpellLink(339), GetSpellLink(246763), GetSpellLink(245671)),
