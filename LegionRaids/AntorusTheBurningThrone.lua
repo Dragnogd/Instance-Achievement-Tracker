@@ -42,6 +42,11 @@ local amanthulUID = {}
 local amanthulCounter = 0
 local golgannethUID = {}
 local golgannethCounter = 0
+local covenKilled = false
+local khazgorothAnnounced = false
+local norgannonAnnounced = false
+local amanthulAnnounced = false
+local golgannethAnnounced = false
 
 ------------------------------------------------------
 ---- Argus
@@ -175,6 +180,11 @@ function core._1712:KinGaroth()
 end
 
 function core._1712:CovenOfShivarra()
+    --Coven Killed
+    if core.type == "UNIT_DIED" and (core.destID == "122467" or core.destID == "122469" or core.destID == "122468") then
+        covenKilled = true
+    end
+
     -- Torment of Khaz'goroth
     --Spawned
     if core.type == "SPELL_CAST_START" and core.sourceID == "124166" and core.spellId == 245671 then
@@ -207,19 +217,15 @@ function core._1712:CovenOfShivarra()
     end
 
     --Killed
-    if (core.type == "UNIT_DIED" and core.destID == "123503") then
+    if core.type == "UNIT_DIED" and core.destID == "123503" then
         if norgannonUID[core.spawn_uid_dest] ~= nil then
             norgannonUID[core.spawn_uid_dest] = nil
             norgannonCounter = norgannonCounter - 1
         end
-    elseif core.destID == "123503" then
-        if core.amount ~= nil then
-            if core.amount > 0 then
-                if norgannonUID[core.spawn_uid_dest] ~= nil then
-                    norgannonUID[core.spawn_uid_dest] = nil
-                    norgannonCounter = norgannonCounter - 1
-                end
-            end
+    elseif core.destID == "123503" and core.overkill > 0 and string.find(core.type, "_MISSED") == nil then
+        if norgannonUID[core.spawn_uid_dest] ~= nil then
+            norgannonUID[core.spawn_uid_dest] = nil
+            norgannonCounter = norgannonCounter - 1
         end
     end
     
@@ -270,22 +276,62 @@ function core._1712:CovenOfShivarra()
         end
     end
 
+    --Get text colours
+    local khazgorothColour, norgannonColour, golgannethColour, amanthulColour
+
     local tormentsCounter = 0
     if khazgorothCounter >= 1 then
         tormentsCounter = tormentsCounter + 1
+        khazgorothColour = "|cff59FF00"
+    else
+        khazgorothColour = "|cffFF0000"
     end
     if norgannonCounter >= 1 then
         tormentsCounter = tormentsCounter + 1
+        norgannonColour = "|cff59FF00"
+    else
+        norgannonColour = "|cffFF0000"
     end
     if golgannethCounter >= 1 then
         tormentsCounter = tormentsCounter + 1
+        golgannethColour = "|cff59FF00"
+    else
+        golgannethColour = "|cffFF0000"
     end
     if amanthulCounter >= 1 then
         tormentsCounter = tormentsCounter + 1
+        amanthulColour = "|cff59FF00"
+    else
+        amanthulColour = "|cffFF0000"
     end
     core.IATInfoFrame:SetSubHeading1("Torments Found (" .. tormentsCounter .. "/4)")
 
-    local messageStr = getNPCName(124166) .. " " .. khazgorothCounter .. "\n" .. getNPCName(123503) .. " " .. norgannonCounter .. "\n" .. getNPCName(124164) .. " " .. golgannethCounter .. "\n" .. getNPCName(125837) .. " " .. amanthulCounter
+    if khazgorothCounter >= 1 then
+        if khazgorothAnnounced == false then
+            core:sendMessage(core:getAchievement() .. " " .. getNPCName(124166) .. L["Shared_Found"] .. " (" .. tormentsCounter .. "/4)")
+            khazgorothAnnounced = true
+        end
+    end
+    if norgannonCounter >= 1 then
+        if norgannonAnnounced == false then
+            core:sendMessage(core:getAchievement() .. " " .. getNPCName(124166) .. L["Shared_Found"] .. " (" .. tormentsCounter .. "/4)")
+            norgannonAnnounced = true
+        end
+    end
+    if golgannethCounter >= 1 then
+        if golgannethAnnounced == false then
+            core:sendMessage(core:getAchievement() .. " " .. getNPCName(124166) .. L["Shared_Found"] .. " (" .. tormentsCounter .. "/4)")
+            golgannethAnnounced = true
+        end
+    end
+    if amanthulCounter >= 1 then
+        if amanthulAnnounced == false then
+            core:sendMessage(core:getAchievement() .. " " .. getNPCName(124166) .. L["Shared_Found"] .. " (" .. tormentsCounter .. "/4)")
+            amanthulAnnounced = true
+        end
+    end
+
+    local messageStr = khazgorothColour .. getNPCName(124166) .. " " .. khazgorothCounter .. "|r\n" .. norgannonColour .. getNPCName(123503) .. " " .. norgannonCounter .. "|r\n" .. golgannethColour .. getNPCName(124164) .. " " .. golgannethCounter .. "|r\n" .. amanthulColour .. getNPCName(125837) .. " " .. amanthulCounter .. "|r"
     core.IATInfoFrame:SetText1(messageStr)
     
     --Achievement Completed
@@ -304,15 +350,23 @@ function core._1712:CovenOfShivarra()
         local addKilled = ""
         if khazgorothCounter == 0 then
             addKilled = getNPCName(124166)
+            khazgorothAnnounced = false
         elseif norgannonCounter == 0 then
             addKilled = getNPCName(123503)
+            norgannonAnnounced = false
         elseif golgannethCounter == 0 then
             addKilled = getNPCName(124164)
+            golgannethAnnounced = false
         elseif amanthulCounter == 0 then
             addKilled = getNPCName(125837)
+            amanthulAnnounced = false
         end
 
-        core:getAchievementFailedWithMessageAfter(L["Core_Reason"] .. " " .. addKilled .. " " .. L["Shared_WasKilled"])
+        C_Timer.After(1, function() 
+            if covenKilled == false then
+                core:getAchievementFailedWithMessageAfter(L["Core_Reason"] .. " " .. addKilled .. " " .. L["Shared_WasKilled"])            
+            end
+        end)
 
         --If achievement had already completed then set back to not completed
         if core.achievementsCompleted[1] == true then
@@ -374,12 +428,17 @@ function core._1712:ClearVariables()
     amanthulCounter = 0
     golgannethUID = {}
     golgannethCounter = 0
+    khazgorothAnnounced = false
+    norgannonAnnounced = false
+    amanthulAnnounced = false
+    golgannethAnnounced = false
 end
 
 function core._1712:InstanceCleanup()
     core._1712.Events:UnregisterEvent("UNIT_SPELLCAST_SUCCEEDED")
     core._1712.Events:UnregisterEvent("UNIT_POWER_UPDATE")
     felhoundsKilled = false
+    covenKilled = false
 end
 
 core._1712.Events:SetScript("OnEvent", function(self, event, ...)

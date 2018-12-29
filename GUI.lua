@@ -1478,11 +1478,17 @@ local frameBackdrop = {
 	insets = { left = 2, right = 14, top = 2, bottom = 2 },
 }
 
+local headingHeight = 50
+local subHeading1Height = 50
+local text1Height = 50
+local subHeading2Height = 50
+local text2Height = 50
+
 function IATInfoFrame:SetupInfoFrame()
     InfoFrame = CreateFrame("Frame", "AchievementTrackerInfoFrame", UIParent)
     InfoFrame:SetSize(200, 300)
     InfoFrame:SetPoint("BOTTOMLEFT", "UIParent", "BOTTOMLEFT", 420, 500)
-    InfoFrame:SetBackdrop(frameBackdrop);
+    --InfoFrame:SetBackdrop(frameBackdrop);
     InfoFrame:SetMovable(true)
     InfoFrame:EnableMouse(true)
     InfoFrame:SetClampedToScreen(true)
@@ -1509,7 +1515,11 @@ function IATInfoFrame:SetHeading(text)
     end                        
     InfoFrame.heading:SetText(text)
     InfoFrame.heading:SetHeight(InfoFrame.heading:GetStringHeight())
-    InfoFrame.heading:SetPoint("TOPLEFT", InfoFrame, "TOPLEFT", 5, -5)                                                                                
+    InfoFrame.heading:SetPoint("TOPLEFT", InfoFrame, "TOPLEFT", 5, -5)
+    
+    InfoFrame:SetSize(InfoFrame.heading:GetWidth(), InfoFrame.heading:GetHeight())
+    
+    headingHeight = InfoFrame.heading:GetHeight()
 end
 
 function IATInfoFrame:SetSubHeading1(text)
@@ -1518,7 +1528,15 @@ function IATInfoFrame:SetSubHeading1(text)
     end                        
     InfoFrame.subHeading1:SetText(text)
     InfoFrame.subHeading1:SetHeight(InfoFrame.subHeading1:GetStringHeight())
-    InfoFrame.subHeading1:SetPoint("TOPLEFT", InfoFrame.heading, "BOTTOMLEFT", 0, -5)         
+    InfoFrame.subHeading1:SetPoint("TOPLEFT", InfoFrame.heading, "BOTTOMLEFT", 0, -5)
+
+    subHeading1Height = InfoFrame.subHeading1:GetHeight()
+    
+    if InfoFrame.subHeading1:GetWidth() > InfoFrame:GetWidth()then
+        InfoFrame:SetSize(InfoFrame.subHeading1:GetWidth(), headingHeight + subHeading1Height)
+    else
+        InfoFrame:SetSize(InfoFrame:GetWidth(), headingHeight + subHeading1Height)    
+    end
 end
 
 function IATInfoFrame:SetText1(text)
@@ -1527,7 +1545,15 @@ function IATInfoFrame:SetText1(text)
     end                        
     InfoFrame.setText1:SetText(text)
     InfoFrame.setText1:SetHeight(InfoFrame.setText1:GetStringHeight())
-    InfoFrame.setText1:SetPoint("TOPLEFT", InfoFrame.subHeading1, "BOTTOMLEFT", 0, -5)         
+    InfoFrame.setText1:SetPoint("TOPLEFT", InfoFrame.subHeading1, "BOTTOMLEFT", 0, -5) 
+
+    text1Height = InfoFrame.setText1:GetStringHeight()
+
+    if InfoFrame.setText1:GetWidth() > InfoFrame:GetWidth()then
+        InfoFrame:SetSize(InfoFrame.setText1:GetWidth(), headingHeight + subHeading1Height + text1Height)
+    else
+        InfoFrame:SetSize(InfoFrame:GetWidth(), headingHeight + subHeading1Height + text1Height)    
+    end
 end
 
 function IATInfoFrame:SetSubHeading2(text)

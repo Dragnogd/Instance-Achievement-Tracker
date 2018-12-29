@@ -135,6 +135,7 @@ local baseLocale = {
     ["Shared_Nineteen"] = "19",
     ["Shared_Twenty"] = "20",
     ["Shared_WasKilled"] = "was killed",
+    ["Shared_Found"] = "found",
 
     -------------------------------------------------------
     --- Battle of Dazar'alor
