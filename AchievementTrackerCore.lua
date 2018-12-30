@@ -1085,14 +1085,18 @@ function events:ENCOUNTER_START(self, encounterID, encounterName, difficultyID, 
 		core:sendDebugMessage("WARNING: IAT has not reset correctly from previous fight. Attempting to reset tracking for current fight now....")
 		core:sendDebugMessage("Attempting to clear Instance Variables")
 		clearInstanceVariables()
-		core:sendDebugMessage("Attempting to clear global variables")
-		
+
+		core:sendDebugMessage("Attempting to clear global variables")	
+		core:clearVariables()
+
+		--This may of been fired before ENCOUNTER_START so set to true again
+		core.inCombat = true
 	end
 
 	core.encounterStarted = true
 
 	if core.displayAchievements == true then
-		core.disableAchievementTracking = false
+		core.disableAchievementTracksing = false
 	end
 
 	--If encounter ID is detected then use that to detectBoss
