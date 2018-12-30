@@ -73,7 +73,7 @@ function core._1763:BringingHexyBack()
     --If any of the four bosses die then we need to call the clear global variables manually since the group will constantly be in combat otherwise with the add
     --And the necessary end of boss functions will never be called
 
-    if core.type == "UNIT_DIED" and (destID == "122965" or destID == "122963" or destID == "122967" or destID == "122968") then
+    if core.type == "UNIT_DIED" and (core.destID == "122965" or core.destID == "122963" or core.destID == "122967" or core.destID == "122968") then
         core:clearInstanceVariables()
         core:clearVariables()
     end
