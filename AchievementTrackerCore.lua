@@ -158,6 +158,7 @@ local masterAddon = false					--The master addon for the group. This stop multip
 local playerRank = -1						--The rank of the player is the group. Players with higher rank get priorty over outputting messages unless they have an outdated addon
 local addonID = 0
 local messageQueue = {}
+local blockRequirementsCheck				--This blocks comparing who is the master addon for remainder of fight since it has been determined an addon already has better requirements than this addon
 
 --Get the current size of the group
 function core:getGroupSize()
@@ -1330,7 +1331,7 @@ function events:CHAT_MSG_ADDON(self, prefix, message, channel, sender)
 				core:sendDebugMessage("Only Track Missing Achievements: " .. onlyTrackMissingAchievementsRecieved .. " : " .. tostring(core.trackingSupressed))
 			end
 
-			if masterAddonRecieved == "true" then
+			if masterAddonRecieved == "true" and blockRequirementsCheck == false then
 
 				if onlyTrackMissingAchievementsRecieved == "true" and core.trackingSupressed == false then
 					--Other player is supressing achievements but this addon is not so set this to the master addon
@@ -1341,6 +1342,9 @@ function events:CHAT_MSG_ADDON(self, prefix, message, channel, sender)
 					core:sendDebugMessage("0.2: This addon is supressing messages so demote")
 					--This addon is supressing achievements but other addon is not so demote this addon
 					masterAddon = false
+
+					--Since we have found an addon with higher requirements there is no need to check further requests for this encounter
+					blockRequirementsCheck = true
 				elseif tonumber(majorVersionRecieved) < core.Config.majorVersion then
 					--Major version recieved from other player is lower so set this addon to the master addon
 					core:sendDebugMessage("1: " .. sender .. " has a lower major version. Setting this addon to master")
@@ -1384,6 +1388,9 @@ function events:CHAT_MSG_ADDON(self, prefix, message, channel, sender)
 							else
 								core:sendDebugMessage("5.5: Demoting this addon")
 								masterAddon = false
+
+								--Since we have found an addon with higher requirements there is no need to check further requests for this encounter
+								blockRequirementsCheck = true
 							end
 							counter = counter + 1
 						end
@@ -1392,8 +1399,11 @@ function events:CHAT_MSG_ADDON(self, prefix, message, channel, sender)
 					core:sendDebugMessage("4: " .. sender .. " has better requirements. Not setting this addon to master")
 					--Other addon has the better requirements so this addon should not be the master addon
 					masterAddon = false
+
+					--Since we have found an addon with higher requirements there is no need to check further requests for this encounter
+					blockRequirementsCheck = true
 				end
-			elseif masterAddonRecieved == "false" then
+			elseif masterAddonRecieved == "false" and blockRequirementsCheck == false then
 				--Other player addon is not master addon so set this addon to the master addon
 				core:sendDebugMessage("5: " .. sender .. " is not the master addon. Setting this addon to master")
 				core:sendDebugMessage("Setting Master Addon 7")
@@ -2430,6 +2440,7 @@ function core:clearVariables()
 	electionFinished = false
 	messageQueue = {}
 	core.trackingSupressed = false
+	blockRequirementsCheck = false
 
 	core.groupSizeInInstance = 0
 
