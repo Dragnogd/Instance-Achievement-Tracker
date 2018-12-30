@@ -139,6 +139,10 @@ function core._1712:PortalKeeperHasabel()
     if core.type == "SPELL_AURA_APPLIED" and (core.spellId == 246929 or core.spellId == 246925 or core.spellId == 246911) then
         core:getAchievementSuccess()
     end
+
+    if core:getBlizzardTrackingStatus(11928) == true then
+        core:getAchievementSuccess()
+    end
 end
 
 function core._1712:Varimathras()
