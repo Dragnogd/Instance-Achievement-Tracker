@@ -70,6 +70,7 @@ function events:onUpdate(sinceLastUpdate)
 		self.sinceLastUpdate = 0;
 		local combatStatus = getCombatStatus()
 		if combatStatus == false and core.encounterDetected == false then
+			--Once out of combat and encounter end has fired. Reset the variables
 			core:clearInstanceVariables()
 			core:clearVariables()
 			core:sendDebugMessage("Left Combat")
@@ -1077,6 +1078,16 @@ end
 function events:ENCOUNTER_START(self, encounterID, encounterName, difficultyID, groupSize)
 	core:sendDebugMessage("---Encounter Started---")
 	core:sendDebugMessage("Encounter ID: " .. encounterID)
+
+	--Check if variables have been reset correctly from last fight
+	if core.encounterStarted == true then
+		--We have an error. The variables from the previous fight have not reset correctly. We need to reset them now or tracking for this current fight may not work as intended
+		core:sendDebugMessage("WARNING: IAT has not reset correctly from previous fight. Attempting to reset tracking for current fight now....")
+		core:sendDebugMessage("Attempting to clear Instance Variables")
+		clearInstanceVariables()
+		core:sendDebugMessage("Attempting to clear global variables")
+		
+	end
 
 	core.encounterStarted = true
 
