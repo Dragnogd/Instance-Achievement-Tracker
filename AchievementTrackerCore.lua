@@ -2444,13 +2444,15 @@ function core:clearVariables()
 
 	core.groupSizeInInstance = 0
 
-	core.IATInfoFrame:ToggleOff()
-	core.IATInfoFrame:SetHeading()
-	core.IATInfoFrame:SetSubHeading1()
-	core.IATInfoFrame:SetText1()
-	core.IATInfoFrame:SetSubHeading2()
-	core.IATInfoFrame:SetText2()
-	infoFrameShown = false
+	if infoFrameShown == true then
+		core.IATInfoFrame:ToggleOff()
+		core.IATInfoFrame:SetHeading()
+		core.IATInfoFrame:SetSubHeading1()
+		core.IATInfoFrame:SetText1()
+		core.IATInfoFrame:SetSubHeading2()
+		core.IATInfoFrame:SetText2()
+		infoFrameShown = false
+	end
 end
 
 --Clears variables for the current instance the player is in
