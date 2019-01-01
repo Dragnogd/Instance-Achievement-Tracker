@@ -1085,7 +1085,7 @@ function events:ENCOUNTER_START(self, encounterID, encounterName, difficultyID, 
 		--We have an error. The variables from the previous fight have not reset correctly. We need to reset them now or tracking for this current fight may not work as intended
 		core:sendDebugMessage("WARNING: IAT has not reset correctly from previous fight. Attempting to reset tracking for current fight now....")
 		core:sendDebugMessage("Attempting to clear Instance Variables")
-		clearInstanceVariables()
+		core:clearInstanceVariables()
 
 		core:sendDebugMessage("Attempting to clear global variables")	
 		core:clearVariables()
@@ -1345,6 +1345,7 @@ function events:CHAT_MSG_ADDON(self, prefix, message, channel, sender)
 
 					--Since we have found an addon with higher requirements there is no need to check further requests for this encounter
 					blockRequirementsCheck = true
+					core:sendDebugMessage("Blocking additional requests till end of fight since another addon has better requirements")
 				elseif tonumber(majorVersionRecieved) < core.Config.majorVersion then
 					--Major version recieved from other player is lower so set this addon to the master addon
 					core:sendDebugMessage("1: " .. sender .. " has a lower major version. Setting this addon to master")
@@ -1391,6 +1392,7 @@ function events:CHAT_MSG_ADDON(self, prefix, message, channel, sender)
 
 								--Since we have found an addon with higher requirements there is no need to check further requests for this encounter
 								blockRequirementsCheck = true
+								core:sendDebugMessage("Blocking additional requests till end of fight since another addon has better requirements")
 							end
 							counter = counter + 1
 						end
@@ -1402,6 +1404,7 @@ function events:CHAT_MSG_ADDON(self, prefix, message, channel, sender)
 
 					--Since we have found an addon with higher requirements there is no need to check further requests for this encounter
 					blockRequirementsCheck = true
+					core:sendDebugMessage("Blocking additional requests till end of fight since another addon has better requirements")
 				end
 			elseif masterAddonRecieved == "false" and blockRequirementsCheck == false then
 				--Other player addon is not master addon so set this addon to the master addon
@@ -2452,6 +2455,8 @@ function core:clearVariables()
 		core.IATInfoFrame:SetSubHeading2()
 		core.IATInfoFrame:SetText2()
 		infoFrameShown = false
+	else
+		core:sendDebugMessage("InfoFrame does not need to be reset")
 	end
 end
 
