@@ -175,8 +175,8 @@ core.Instances = {
                     achievement = 13325,
                     players = {},
                     tactics = L["BattleOfDazaralor_ConclaveOfTheChosen"],
-                    enabled = false,
-                    track = nil,
+                    enabled = true,
+                    track = function() core._2070:ConclaveOfTheChosen() end,
                     partial = false,
                     encounterID = 2268,
                 },
@@ -2498,6 +2498,7 @@ core.Instances = {
                     track = function() core._1136:GarroshHellscream() end,
                     partial = false,
                     encounterID = 1623,
+                    displayInfoFrame = true,
                 },
             },
 
