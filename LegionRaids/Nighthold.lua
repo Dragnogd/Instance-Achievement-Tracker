@@ -196,17 +196,11 @@ function core._1530:SpellbladeAluriel()
 end
 
 function core._1530:InitialSetup()
-    print("Running Nighthold setup")
     core._1530.Events:RegisterEvent("UNIT_AURA")
     core._1530.Events:RegisterEvent("UNIT_TARGETABLE_CHANGED")
 end
 
-function core._1530:Test123()
-    print("Test 123 here")
-end
-
 function core._1530:IATInstanceCleanup()
-    print("Running Nighthold cleanup")
     core._1530.Events:UnregisterEvent("UNIT_AURA")
     core._1530.Events:UnregisterEvent("UNIT_TARGETABLE_CHANGED")
     burningEmbersKilledByPlayersUID = {}
