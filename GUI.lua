@@ -431,77 +431,77 @@ end
 
 function AchievementTracker_SelectSoundCompleted(self, arg1, arg2, checked)
     if arg1 == 1 then
-        PlaySound(SOUNDKIT.READY_CHECK) --Success
+        PlaySound(SOUNDKIT.READY_CHECK, "Master") --Success
         AchievementTrackerOptions["completedSound"] = SOUNDKIT.RAID_WARNING
         AchievementTrackerOptions["completedSoundID"] = 1
         setCompletedSound(SOUNDKIT.READY_CHECK) 
     elseif arg1 == 2 then
-        PlaySound(SOUNDKIT.ALARM_CLOCK_WARNING_2) --Success
+        PlaySound(SOUNDKIT.ALARM_CLOCK_WARNING_2, "Master") --Success
         AchievementTrackerOptions["completedSound"] = SOUNDKIT.RAID_WARNING
         AchievementTrackerOptions["completedSoundID"] = 2
         setCompletedSound(SOUNDKIT.ALARM_CLOCK_WARNING_2) 
     elseif arg1 == 3 then
-        PlaySound(SOUNDKIT.ALARM_CLOCK_WARNING_3) --Success
+        PlaySound(SOUNDKIT.ALARM_CLOCK_WARNING_3, "Master") --Success
         AchievementTrackerOptions["completedSound"] = SOUNDKIT.RAID_WARNING
         AchievementTrackerOptions["completedSoundID"] = 3
         setCompletedSound(SOUNDKIT.ALARM_CLOCK_WARNING_3)
     elseif arg1 == 4 then
-        PlaySound(SOUNDKIT.AUCTION_WINDOW_CLOSE) --Success
+        PlaySound(SOUNDKIT.AUCTION_WINDOW_CLOSE, "Master") --Success
         AchievementTrackerOptions["completedSound"] = SOUNDKIT.RAID_WARNING
         AchievementTrackerOptions["completedSoundID"] = 4
         setCompletedSound(SOUNDKIT.AUCTION_WINDOW_CLOSE)
     elseif arg1 == 4 then
-        PlaySound(SOUNDKIT.AUCTION_WINDOW_CLOSE) --Success
+        PlaySound(SOUNDKIT.AUCTION_WINDOW_CLOSE, "Master") --Success
         AchievementTrackerOptions["completedSound"] = SOUNDKIT.RAID_WARNING
         AchievementTrackerOptions["completedSoundID"] = 4
         setCompletedSound(SOUNDKIT.AUCTION_WINDOW_CLOSE)
     elseif arg1 == 4 then
-        PlaySound(SOUNDKIT.AUCTION_WINDOW_CLOSE) --Success
+        PlaySound(SOUNDKIT.AUCTION_WINDOW_CLOSE, "Master") --Success
         AchievementTrackerOptions["completedSound"] = SOUNDKIT.RAID_WARNING
         AchievementTrackerOptions["completedSoundID"] = 4
         setCompletedSound(SOUNDKIT.AUCTION_WINDOW_CLOSE)
     elseif arg1 == 5 then
-        PlaySoundFile("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\You_Are_Prepared.ogg") --Success
+        PlaySoundFile("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\You_Are_Prepared.ogg", "Master") --Success
         AchievementTrackerOptions["completedSound"] = "Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\You_Are_Prepared.ogg"
         AchievementTrackerOptions["completedSoundID"] = 5
         setCompletedSound("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\You_Are_Prepared.ogg")
     elseif arg1 == 6 then
-        PlaySoundFile("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound 6.ogg") --Success
+        PlaySoundFile("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound 6.ogg", "Master") --Success
         AchievementTrackerOptions["completedSound"] = "Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound 6.ogg"
         AchievementTrackerOptions["completedSoundID"] = 6
         setCompletedSound("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound 6.ogg")
     elseif arg1 == 7 then
-        PlaySoundFile("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound 7.ogg") --Success
+        PlaySoundFile("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound 7.ogg", "Master") --Success
         AchievementTrackerOptions["completedSound"] = "Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound 7.ogg"
         AchievementTrackerOptions["completedSoundID"] = 7
         setCompletedSound("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound 7.ogg")
     elseif arg1 == 8 then
-        PlaySoundFile("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound 8.ogg") --Success
+        PlaySoundFile("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound 8.ogg", "Master") --Success
         AchievementTrackerOptions["completedSound"] = "Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound 8.ogg"
         AchievementTrackerOptions["completedSoundID"] = 8
         setCompletedSound("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound 8.ogg")
     elseif arg1 == 9 then
-        PlaySoundFile("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound 9.ogg") --Success
+        PlaySoundFile("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound 9.ogg", "Master") --Success
         AchievementTrackerOptions["completedSound"] = "Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound 9.ogg"
         AchievementTrackerOptions["completedSoundID"] = 9
         setCompletedSound("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound 9.ogg")
     elseif arg1 == 10 then
-        PlaySoundFile("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound 10.ogg") --Success
+        PlaySoundFile("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound 10.ogg", "Master") --Success
         AchievementTrackerOptions["completedSound"] = "Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound 10.ogg"
         AchievementTrackerOptions["completedSoundID"] = 10
         setCompletedSound("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound 10.ogg")
     elseif arg1 == 11 then
-        PlaySoundFile("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound 11.ogg") --Success
+        PlaySoundFile("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound 11.ogg", "Master") --Success
         AchievementTrackerOptions["completedSound"] = "Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound 11.ogg"
         AchievementTrackerOptions["completedSoundID"] = 11
         setCompletedSound("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound 11.ogg")
     elseif arg1 == 12 then
-        PlaySoundFile("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound 12.ogg") --Success
+        PlaySoundFile("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound 12.ogg", "Master") --Success
         AchievementTrackerOptions["completedSound"] = "Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound 12.ogg"
         AchievementTrackerOptions["completedSoundID"] = 12
         setCompletedSound("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound 12.ogg")
     elseif arg1 == 13 then
-        PlaySoundFile("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Achievement Completed.ogg") --Success
+        PlaySoundFile("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Achievement Completed.ogg", "Master") --Success
         AchievementTrackerOptions["completedSound"] = "Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Achievement Completed.ogg"
         AchievementTrackerOptions["completedSoundID"] = 13
         setCompletedSound("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Achievement Completed.ogg")
@@ -511,57 +511,57 @@ end
 
 function AchievementTracker_SelectSoundFailed(self, arg1, arg2, checked)
     if arg1 == 1 then
-        PlaySound(SOUNDKIT.RAID_WARNING) --Fail
+        PlaySound(SOUNDKIT.RAID_WARNING, "Master") --Fail
         AchievementTrackerOptions["failedSound"] = SOUNDKIT.RAID_WARNING
         AchievementTrackerOptions["failedSoundID"] = 1
         setFailedSound(SOUNDKIT.RAID_WARNING)
     elseif arg1 == 2 then
-        PlaySound(SOUNDKIT.LFG_REWARDS) --Fail
+        PlaySound(SOUNDKIT.LFG_REWARDS, "Master") --Fail
         AchievementTrackerOptions["failedSound"] = SOUNDKIT.LFG_REWARDS
         AchievementTrackerOptions["failedSoundID"] = 2
         setFailedSound(SOUNDKIT.LFG_REWARDS)
     elseif arg1 == 3 then
-        PlaySound(SOUNDKIT.UI_BATTLEGROUND_COUNTDOWN_FINISHED) --Fail
+        PlaySound(SOUNDKIT.UI_BATTLEGROUND_COUNTDOWN_FINISHED, "Master") --Fail
         AchievementTrackerOptions["failedSound"] = SOUNDKIT.UI_BATTLEGROUND_COUNTDOWN_FINISHED
         AchievementTrackerOptions["failedSoundID"] = 3
         setFailedSound(SOUNDKIT.UI_BATTLEGROUND_COUNTDOWN_FINISHED)
     elseif arg1 == 4 then
-        PlaySound(SOUNDKIT.UI_SCENARIO_ENDING) --Fail
+        PlaySound(SOUNDKIT.UI_SCENARIO_ENDING, "Master") --Fail
         AchievementTrackerOptions["failedSound"] = SOUNDKIT.UI_SCENARIO_ENDING
         AchievementTrackerOptions["failedSoundID"] = 4
         setFailedSound(SOUNDKIT.UI_SCENARIO_ENDING)
     elseif arg1 == 5 then
-        PlaySound(SOUNDKIT.UI_GARRISON_MISSION_COMPLETE_ENCOUNTER_FAIL) --Fail
+        PlaySound(SOUNDKIT.UI_GARRISON_MISSION_COMPLETE_ENCOUNTER_FAIL, "Master") --Fail
         AchievementTrackerOptions["failedSound"] = SOUNDKIT.UI_GARRISON_MISSION_COMPLETE_ENCOUNTER_FAIL
         AchievementTrackerOptions["failedSoundID"] = 5
         setFailedSound(SOUNDKIT.UI_GARRISON_MISSION_COMPLETE_ENCOUNTER_FAIL)
     elseif arg1 == 6 then
-        PlaySoundFile("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\You_Are_Not_Prepared.ogg") --Fail
+        PlaySoundFile("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\You_Are_Not_Prepared.ogg", "Master") --Fail
         AchievementTrackerOptions["failedSound"] = "Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\You_Are_Not_Prepared.ogg"
         AchievementTrackerOptions["failedSoundID"] = 6
         setFailedSound("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\You_Are_Not_Prepared.ogg")
     elseif arg1 == 7 then
-        PlaySoundFile("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound_2.ogg") --Fail
+        PlaySoundFile("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound_2.ogg", "Master") --Fail
         AchievementTrackerOptions["failedSound"] = "Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound_2.ogg"
         AchievementTrackerOptions["failedSoundID"] = 7
         setFailedSound("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound_2.ogg")
     elseif arg1 == 8 then
-        PlaySoundFile("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound_3.ogg") --Fail
+        PlaySoundFile("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound_3.ogg", "Master") --Fail
         AchievementTrackerOptions["failedSound"] = "Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound_3.ogg"
         AchievementTrackerOptions["failedSoundID"] = 8
         setFailedSound("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound_3.ogg")
     elseif arg1 == 9 then
-        PlaySoundFile("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound_4.ogg") --Fail
+        PlaySoundFile("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound_4.ogg", "Master") --Fail
         AchievementTrackerOptions["failedSound"] = "Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound_4.ogg"
         AchievementTrackerOptions["failedSoundID"] = 9
         setFailedSound("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound_4.ogg")
     elseif arg1 == 10 then
-        PlaySoundFile("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound_5.ogg") --Fail
+        PlaySoundFile("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound_5.ogg", "Master") --Fail
         AchievementTrackerOptions["failedSound"] = "Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound_5.ogg"
         AchievementTrackerOptions["failedSoundID"] = 10
         setFailedSound("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound_5.ogg")
     elseif arg1 == 11 then
-        PlaySoundFile("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Achievement Failed.ogg") --Fail
+        PlaySoundFile("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Achievement Failed.ogg", "Master") --Fail
         AchievementTrackerOptions["failedSound"] = "Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Achievement Failed.ogg"
         AchievementTrackerOptions["failedSoundID"] = 11
         setFailedSound("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Achievement Failed.ogg")        
