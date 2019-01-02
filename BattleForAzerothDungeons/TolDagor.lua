@@ -36,4 +36,8 @@ function core._1771:KnightCaptainValyri()
 end
 
 function core._1771:ClearVariables()
+    ------------------------------------------------------
+    ---- Overseer Korgus
+    ------------------------------------------------------
+    heartstopperVenomCounter = 0
 end
