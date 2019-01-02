@@ -516,8 +516,8 @@ core.Instances = {
                     achievement = 12457,
                     players = {},
                     tactics = format(L["TolDagor_KnightCaptainValyri"], GetSpellLink(256976), GetSpellLink(256955), GetSpellLink(257033)),
-                    enabled = false,
-                    track = nil, --function() core._1771:KnightCaptainValyri() end
+                    enabled = true,
+                    track = function() core._1771:KnightCaptainValyri() end,
                     partial = false,
                     encounterID = 2103,
                 },

@@ -30,7 +30,7 @@ function core._1771:OverseerKorgus()
 end
 
 function core._1771:KnightCaptainValyri()
-    if core.type == "SPELL_DAMAGE" and core.spellId == 256710 then
+    if core:getBlizzardTrackingStatus(12457) == false then
         core:getAchievementFailed()
     end
 end
