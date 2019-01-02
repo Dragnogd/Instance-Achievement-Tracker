@@ -76,10 +76,6 @@ function core._533:GrandWidowFaerlina()
 end
 
 function core._533:Subtraction()
-    if core.inCombat == true then
-        core:getAchievementToTrack()
-    end
-
     if core.difficultyID == 3 then
         --10 Man
         if core.groupSize < 9 then
@@ -98,20 +94,12 @@ function core._533:Subtraction()
 end
 
 function core._533:Shocking()
-    if core.inCombat == true then
-        core:getAchievementToTrack()
-    end
-
     if core.spellId == 28085 or core.spellId == 28059 then
         core:getAchievementFailed(2)
     end
 end
 
 function core._533:FourHorsemen()
-    if core.inCombat == true then
-        core:getAchievementToTrack()
-    end
-
     if core.type == "UNIT_DIED" and (core.destID == "16063" or core.destID == "16064" or core.destID == "16065" or core.destID == "30549") then
         if timerStarted == false then
             timerStarted = true
@@ -123,10 +111,6 @@ function core._533:FourHorsemen()
 end
 
 function core._533:KelThuzad()
-    if core.inCombat == true then
-        core:getAchievementToTrack()
-    end
-
     if core.type == "UNIT_DIED" and (core.destID == "23562" or core.destID == "16428") and abominationsKilled < 18 then
         abominationsKilled = abominationsKilled + 1
         core:sendMessageDelay("Unstoppable Abomination Killed (" .. abominationsKilled .. "/18)", abominationsKilled, 3)
