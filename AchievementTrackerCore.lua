@@ -21,37 +21,6 @@ AchievementTrackerDebug = {}
 
 events:RegisterEvent("ADDON_LOADED")							--This is the first event that is called as soon as the addon loaded. Does Initial Setup							
 events:RegisterEvent("GET_ITEM_INFO_RECEIVED")					--Get Item Information after the game has loaded to finish loading tactics
-events:RegisterEvent("CHAT_MSG_TEXT_EMOTE")
-
-core.emoteType = nil
-core.emoteUnit = nil
-core.emote1 = "You hugged Protector 1"
-core.emote2 = "You hugged asdhjksad 2"
-core.hugString = nil
-
-hooksecurefunc("DoEmote", function(token, unit)
-	token = token:upper() -- Convert token to uppercase
-
-	core.emoteType = token
-	core.emoteUnit = unit
-    print("HERE123")
-end)
-
-function getCommonWordsInString(word1, word2)
-	local newWord = ""
-	for i = 1, #word1 do
-		local c = word1:sub(i,i)
-		if c == word2:sub(i, i) then
-			newWord = newWord .. c
-		end
-	end
-	core.hugString = newWord
-	return newWord
-end
-
-C_Timer.After(10, function() 
-	print(getCommonWordsInString(core.emote1, core.emote2))
-end)
 
 function generateItemCache()									--The Item Cache can only be generated once the game has loaded		
 	for i,v in pairs(core.ItemCache) do							--We need to first get information about the item to load into the cache
@@ -108,13 +77,6 @@ function events:onUpdate(sinceLastUpdate)
 			events:SetScript("OnUpdate",nil)
 		end
 	end
-end
-
-function events:CHAT_MSG_TEXT_EMOTE(self, message, sender, lineID, senderGUID)
-	if core.emoteType == "HUG" then
-		print("FOUND A HUG FOR UNIT ")
-	end
-	print(message)
 end
 
 --------------------------------------
