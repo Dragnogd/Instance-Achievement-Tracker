@@ -294,7 +294,23 @@ function core._1136:Paragons()
 	end
 end
 
+local testCount = 0
+
 function core._1136:GarroshHellscream()
+	if core.type == "SPELL_DAMAGE" and core.destID == "71979" and core.spellId == 144653 then
+		print("Amount: " .. core.amount .. "(" .. core.spawn_uid_dest .. ")")
+		if core.overkill ~= nil then
+			print("Overkill: " .. core.overkill .. "(" .. core.spawn_uid_dest .. ")")
+		end
+	end
+
+	if core.type == "UNIT_DIED" and core.destID == "71979" then
+		testCount = testCount + 1
+		print(testCount)
+	end
+
+	core.IATInfoFrame:SetSubHeading1("TEST")
+
 	--Since this tracker can output a lot of messages, we need to have a system where it only check for message output every 5 seconds instead
 	garroshStarted = true
 	if garroshTimerStarted == false then
@@ -335,17 +351,29 @@ function core._1136:GarroshHellscream()
 		step1Complete = true		
 	end
 
-	--If a Warbringer was killed by an iron star impact and we currently have enough adds to start achievement tracking
-	if core.type == "UNIT_DIED" and core.destID == "71979" then
-		--print("Player has killed add")
-		core:sendDebugMessage(core.spawn_uid_dest)
-		if warbringersIds[core.spawn_uid_dest] ~= nil then
-			warbringersCounter = warbringersCounter - 1
-			core:sendDebugMessage("Kor'kron Warbringer DIED (" .. warbringersCounter .. "/18)")
-			garroshMessageQueue = "Kor'kron Warbringer at <= 15% health (" .. warbringersCounter .. "/18)"
-		end	
-		warbringersIds[core.spawn_uid_dest] = "dead"		 
+	--If Warbring gets Warsong buff then mark it
+	if core.type == "SPELL_AURA_APPLIED" and core.destID == "71979" and core.spellId == 144821 then
+		core:sendDebugMessage("Added 1 for : " .. core.spawn_uid_dest)
+		warbringersIds[core.spawn_uid_dest] = "one"
+	elseif core.type == "SPELL_AURA_APPLIED_DOSE" and core.destID == "71979" and core.spellId == 144821 then
+		core:sendDebugMessage("Added DOSE for : " .. core.spawn_uid_dest)
+		warbringersIds[core.spawn_uid_dest] = core.amount
 	end
+
+	--If a Warbringer was killed by an iron star impact and we currently have enough adds to start achievement tracking
+	-- if core.type == "UNIT_DIED" and core.destID == "71979" then
+	-- 	--print("Player has killed add")
+	-- 	core:sendDebugMessage(core.spawn_uid_dest)
+	-- 	if warbringersIds[core.spawn_uid_dest] ~= nil then
+	-- 		warbringersCounter = warbringersCounter - 1
+	-- 		core:sendDebugMessage("Kor'kron Warbringer DIED (" .. warbringersCounter .. "/18)")
+	-- 		garroshMessageQueue = "Kor'kron Warbringer at <= 15% health (" .. warbringersCounter .. "/18)"
+	-- 	end	
+	-- 	warbringersIds[core.spawn_uid_dest] = "dead"		 
+	-- end
+
+	--Update counter on InfoFrame
+	core.IATInfoFrame:SetText1(warbringersCounter)
 end
 
 function core._1136:TrackAdditional()
@@ -475,26 +503,64 @@ end
 
 function core._1136.Events:UNIT_HEALTH(self, unitID, ...)
 	if core.Instances[core.expansion][core.instanceType][core.instance]["boss14"].enabled == true and core:has_value(core.achievementIDs, 8537) then
-		--If Warbringer health is at 15% or less than mark it as ready
+		--If Warbringer health is at required % of health depending on the Warsong Hellscream debuff then mark as ready
+		
+		local requiredPercentage = nil
 		local unitType, _, _, _, _, destID, spawn_uid_dest = strsplit("-", UnitGUID(unitID))
-		if core:getHealthPercent(unitID) <= 15 and destID == "71979" then
-			if warbringersIds[spawn_uid_dest] == nil and warbringersIds[spawn_uid_dest] ~= "dead" then
-				warbringersIds[spawn_uid_dest] = "fifteen"
-				warbringersCounter = warbringersCounter + 1
-				core:sendDebugMessage("PERCENT: " .. spawn_uid_dest)
-				core:sendDebugMessage("Kor'kron Warbringer at <= 15% health (" .. warbringersCounter .. "/18)", warbringersCounter, 1)
-				garroshMessageQueue = "Kor'kron Warbringer at <= 15% health (" .. warbringersCounter .. "/18)"
-			end
-		elseif core:getHealthPercent(unitID) > 15 and destID == "71979" then
-			--If mob was healed then we need to subtract 1 from the counter
-			if warbringersIds[spawn_uid_dest] == "fifteen" then
-				warbringersIds[spawn_uid_dest] = nil
-				warbringersCounter = warbringersCounter - 1
-				core:sendDebugMessage("HEALED: " .. spawn_uid_dest)
-				core:sendDebugMessage("Kor'kron Warbringer at <= 15% health (" .. warbringersCounter .. "/18)", warbringersCounter, 1)
-				garroshMessageQueue = "Kor'kron Warbringer at <= 15% health (" .. warbringersCounter .. "/18)"				
-			end
-		end	
+		if warbringersIds[spawn_uid_dest] ~= nil then
+			core:sendDebugMessage(warbringersIds[spawn_uid_dest])		
+		end
+		if warbringersIds[spawn_uid_dest] == "one" then
+			requiredPercentage = 62
+			core:sendDebugMessage("Required Percentage Found")
+			core:sendDebugMessage(requiredPercentage)
+		elseif warbringersIds[spawn_uid_dest] == "two" then
+			core:sendDebugMessage("Required Percentage Found")
+			core:sendDebugMessage(requiredPercentage)
+			requiredPercentage = 37
+		elseif warbringersIds[spawn_uid_dest] == "three" then
+			requiredPercentage = 26
+		elseif warbringersIds[spawn_uid_dest] == "four" then
+			requiredPercentage = 20
+		elseif warbringersIds[spawn_uid_dest] == "five" then
+			requiredPercentage = 16
+		end
+		
+		if requiredPercentage ~= nil then
+			print("HEREA")
+			if core:getHealthPercent(unitID) <= requiredPercentage and destID == "71979" then
+				print("HEREB")
+				if warbringersIds[spawn_uid_dest] == "one" or warbringersIds[spawn_uid_dest] == "two" or warbringersIds[spawn_uid_dest] == "three" or warbringersIds[spawn_uid_dest] == "four" or warbringersIds[spawn_uid_dest] == "five" then
+					print("HEREC")
+					warbringersIds[spawn_uid_dest] = "ready"
+					warbringersCounter = warbringersCounter + 1
+					core.IATInfoFrame:SetText1(warbringersCounter)
+				end
+
+
+				-- if warbringersIds[spawn_uid_dest] == nil and warbringersIds[spawn_uid_dest] ~= "dead" and warbringersIds[spawn_uid_dest] ~= "ready" then
+				-- 	
+				-- 	
+				-- 	core:sendDebugMessage("PERCENT: " .. spawn_uid_dest)
+				-- 	core:sendDebugMessage("Kor'kron Warbringer at <= 15% health (" .. warbringersCounter .. "/18)", warbringersCounter, 1)
+				-- 	garroshMessageQueue = "Kor'kron Warbringer at <= 15% health (" .. warbringersCounter .. "/18)"
+				-- end
+			elseif core:getHealthPercent(unitID) > requiredPercentage and destID == "71979" then
+				--If mob was healed then we need to subtract 1 from the counter
+				if warbringersIds[spawn_uid_dest] == "one" or warbringersIds[spawn_uid_dest] == "two" or warbringersIds[spawn_uid_dest] == "three" or warbringersIds[spawn_uid_dest] == "four" or warbringersIds[spawn_uid_dest] == "five" then
+					print("HERED")
+					warbringersCounter = warbringersCounter - 1
+				end
+
+				-- if warbringersIds[spawn_uid_dest] == "ready" then
+				-- 	warbringersIds[spawn_uid_dest] = nil
+				-- 	warbringersCounter = warbringersCounter - 1
+				-- 	core:sendDebugMessage("HEALED: " .. spawn_uid_dest)
+				-- 	core:sendDebugMessage("Kor'kron Warbringer at <= 15% health (" .. warbringersCounter .. "/18)", warbringersCounter, 1)
+				-- 	garroshMessageQueue = "Kor'kron Warbringer at <= 15% health (" .. warbringersCounter .. "/18)"				
+				-- end
+			end			
+		end
 	end
 end
 

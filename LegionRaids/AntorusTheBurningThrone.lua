@@ -256,6 +256,7 @@ function core._1712:CovenOfShivarra()
     end
     
     -- Torment of Aman'Thul
+    --Spawned
     if (core.type == "SPELL_CAST_SUCCESS" and core.sourceID == "125837" and core.spellId == 250097) or (core.sourceID == "125837") then
         if amanthulUID[core.spawn_uid] == nil then
             amanthulUID[core.spawn_uid] = core.spawn_uid
@@ -268,6 +269,7 @@ function core._1712:CovenOfShivarra()
         end     
     end
 
+    --Killed
     if (core.type == "SPELL_AURA_REMOVED" and core.sourceID == "125837" and core.spellId == 250097) then
         if amanthulUID[core.spawn_uid] ~= nil then
             amanthulUID[core.spawn_uid] = nil
@@ -312,25 +314,25 @@ function core._1712:CovenOfShivarra()
 
     if khazgorothCounter >= 1 then
         if khazgorothAnnounced == false then
-            core:sendMessage(core:getAchievement() .. " " .. getNPCName(124166) .. L["Shared_Found"] .. " (" .. tormentsCounter .. "/4)")
+            core:sendMessage(core:getAchievement() .. " " .. getNPCName(124166) .. " " .. L["Shared_Found"] .. " (" .. tormentsCounter .. "/4)")
             khazgorothAnnounced = true
         end
     end
     if norgannonCounter >= 1 then
         if norgannonAnnounced == false then
-            core:sendMessage(core:getAchievement() .. " " .. getNPCName(124166) .. L["Shared_Found"] .. " (" .. tormentsCounter .. "/4)")
+            core:sendMessage(core:getAchievement() .. " " .. getNPCName(123503) .. " " .. L["Shared_Found"] .. " (" .. tormentsCounter .. "/4)")
             norgannonAnnounced = true
         end
     end
     if golgannethCounter >= 1 then
         if golgannethAnnounced == false then
-            core:sendMessage(core:getAchievement() .. " " .. getNPCName(124166) .. L["Shared_Found"] .. " (" .. tormentsCounter .. "/4)")
+            core:sendMessage(core:getAchievement() .. " " .. getNPCName(124164) .. " " .. L["Shared_Found"] .. " (" .. tormentsCounter .. "/4)")
             golgannethAnnounced = true
         end
     end
     if amanthulCounter >= 1 then
         if amanthulAnnounced == false then
-            core:sendMessage(core:getAchievement() .. " " .. getNPCName(124166) .. L["Shared_Found"] .. " (" .. tormentsCounter .. "/4)")
+            core:sendMessage(core:getAchievement() .. " " .. getNPCName(125837) .. " " .. L["Shared_Found"] .. " (" .. tormentsCounter .. "/4)")
             amanthulAnnounced = true
         end
     end
