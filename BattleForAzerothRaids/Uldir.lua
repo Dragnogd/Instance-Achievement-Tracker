@@ -45,7 +45,7 @@ local achievementRedForAttempt = false
 function core._1861:Taloc()
     if core.type == "SPELL_AURA_APPLIED" and core.spellId == 280461 and orbCounter < 4 then
         orbCounter = orbCounter + 1
-        core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(266948) .. " " .. L["Core_Counter"] .. " (" .. orbCounter .. "/4)")
+        core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(280461) .. " " .. L["Core_Counter"] .. " (" .. orbCounter .. "/4)")
     end
 
     if orbCounter == 4 then
