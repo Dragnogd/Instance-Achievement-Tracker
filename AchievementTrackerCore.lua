@@ -21,6 +21,37 @@ AchievementTrackerDebug = {}
 
 events:RegisterEvent("ADDON_LOADED")							--This is the first event that is called as soon as the addon loaded. Does Initial Setup							
 events:RegisterEvent("GET_ITEM_INFO_RECEIVED")					--Get Item Information after the game has loaded to finish loading tactics
+events:RegisterEvent("CHAT_MSG_TEXT_EMOTE")
+
+core.emoteType = nil
+core.emoteUnit = nil
+core.emote1 = "You hugged Protector 1"
+core.emote2 = "You hugged asdhjksad 2"
+core.hugString = nil
+
+hooksecurefunc("DoEmote", function(token, unit)
+	token = token:upper() -- Convert token to uppercase
+
+	core.emoteType = token
+	core.emoteUnit = unit
+    print("HERE123")
+end)
+
+function getCommonWordsInString(word1, word2)
+	local newWord = ""
+	for i = 1, #word1 do
+		local c = word1:sub(i,i)
+		if c == word2:sub(i, i) then
+			newWord = newWord .. c
+		end
+	end
+	core.hugString = newWord
+	return newWord
+end
+
+C_Timer.After(10, function() 
+	print(getCommonWordsInString(core.emote1, core.emote2))
+end)
 
 function generateItemCache()									--The Item Cache can only be generated once the game has loaded		
 	for i,v in pairs(core.ItemCache) do							--We need to first get information about the item to load into the cache
@@ -77,6 +108,13 @@ function events:onUpdate(sinceLastUpdate)
 			events:SetScript("OnUpdate",nil)
 		end
 	end
+end
+
+function events:CHAT_MSG_TEXT_EMOTE(self, message, sender, lineID, senderGUID)
+	if core.emoteType == "HUG" then
+		print("FOUND A HUG FOR UNIT ")
+	end
+	print(message)
 end
 
 --------------------------------------
@@ -2036,7 +2074,7 @@ function core:sendMessage(message, outputToRW, messageType)
 	--The master addon check will be reset after every boss fight so we don't have to worry about players out of range/offline players etc
 end
 
-function core:sendMessageSafe(message)
+function core:sendMessageSafe(message, requireMasterAddon)
 	message = message:gsub("[\r\n]+","") --Remove newlines before ouputting to chat
 	local openBracketOpen = false
 	local tmpMessageStr = ""
@@ -2108,7 +2146,12 @@ function core:sendMessageSafe(message)
 	for i in ipairs(tmpMessageArr) do
 		if debugMode == false then
 			--print("Printing Safe Message")
-			SendChatMessage("[IAT] " .. tmpMessageArr[i],core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+			--Check if we just want the master addon to output or anyone can output this message
+			if requireMasterAddon == true then
+				core:sendMessage(tmpMessageArr[i])
+			else
+				SendChatMessage("[IAT] " .. tmpMessageArr[i],core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+			end
 		else
 			print("[DEBUG] " .. tmpMessageArr[i])
 		end
