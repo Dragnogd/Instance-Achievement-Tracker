@@ -127,7 +127,7 @@ function core._1861:FetidDevourer()
                     for k, v in pairs(playersInGroup) do
                         messageStr = messageStr .. ", " .. v
                     end
-                    core:sendMessageSafe(messageStr)
+                    core:sendMessageSafe(messageStr, true)
                     local messageStr2 = nil
                     for k, v in pairs(playersInGroup) do
                         if messageStr2 ~= nil then
