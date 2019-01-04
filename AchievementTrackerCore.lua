@@ -9,7 +9,7 @@ local UIConfig													--UIConfig is used to make a display asking the user 
 local UICreated = false											--To enable achievement tracking when they enter an instances
 local debugMode = false
 local debugModeChat = false
-local sendDebugMessages = true
+local sendDebugMessages = false
 
 local ptrVersion = "8.1.0"
 
@@ -2558,7 +2558,7 @@ function core:getPlayersInGroupForAchievement()
 		--Scan raid. If players are in same location as "Player" then add them to table
 		for i = 1,core.groupSize do
 			local name, rank, subgroup, level, class, fileName, zone, online, isDead, role, isML, combatRole = GetRaidRosterInfo(i)
-			print(name,location,zone)
+			--print(name,location,zone)
 			if location == zone then
 				if name ~= nil then
 					name2 = ""
