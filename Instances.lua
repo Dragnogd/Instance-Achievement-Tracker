@@ -2498,7 +2498,6 @@ core.Instances = {
                     track = function() core._1136:GarroshHellscream() end,
                     partial = false,
                     encounterID = 1623,
-                    displayInfoFrame = true,
                 },
             },
 
