@@ -54,6 +54,7 @@ local eyeTarget = false
 local mysteriousFruitCounter = 0
 local mysteriousFruitPlayers = {}
 local highBotanistTelarnKilled = false
+local inTerrace = false
 
 function core._1530:Skorpyron()
 
@@ -193,16 +194,29 @@ function core._1530:SpellbladeAluriel()
             end)
         end
     end
+
+    --InfoFrame code
+    InfoFrame_UpdatePlayersOnInfoFrame()
+    InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],mysteriousFruitCounter)
 end
 
 function core._1530:InitialSetup()
     core._1530.Events:RegisterEvent("UNIT_AURA")
     core._1530.Events:RegisterEvent("UNIT_TARGETABLE_CHANGED")
+    core._1530.Events:RegisterEvent("ZONE_CHANGED")
+
+    if C_Map.GetBestMapForUnit("Player") == 767 then
+        core.IATInfoFrame:ToggleOn()
+        core.IATInfoFrame:SetHeading(GetAchievementLink(10754))
+        infoFrameShown = true
+        inTerrace = true
+    end
 end
 
 function core._1530:IATInstanceCleanup()
     core._1530.Events:UnregisterEvent("UNIT_AURA")
     core._1530.Events:UnregisterEvent("UNIT_TARGETABLE_CHANGED")
+    core._1530.Events:UnregisterEvent("ZONE_CHANGED")
     burningEmbersKilledByPlayersUID = {}
 end
 
@@ -210,49 +224,76 @@ core._1530.Events:SetScript("OnEvent", function(self, event, ...)
     return self[event] and self[event](self, event, ...)
 end)
 
+function core._1530.Events:ZONE_CHANGED()
+    if C_Map.GetBestMapForUnit("Player") == 767 then
+        core.IATInfoFrame:ToggleOn()
+        core.IATInfoFrame:SetHeading(GetAchievementLink(10754))
+        infoFrameShown = true
+        inTerrace = true
+    else
+        core.IATInfoFrame:ToggleOff()
+        infoFrameShown = false    
+        inTerrace = false    
+    end
+end
+
 function core._1530.Events:UNIT_AURA(self, unitID, ...)
+    if inTerrace == true then
+        InfoFrame_UpdatePlayersOnInfoFrame()
+        InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],mysteriousFruitCounter,core.groupSize)
+    end
+
     if core.Instances[core.expansion][core.instanceType][core.instance]["boss6"].enabled == true then
         if highBotanistTelarnKilled == false then
 
             local name, realm = UnitName(unitID)
-            local fullName = name
 
-            if mysteriousFruitPlayers[fullName] ~= nil then
+            if mysteriousFruitPlayers[UnitName(unitID)] ~= nil then
                 --Check if player still has the mysterious fruits debuff
                 local debuffFound = false
                 for i=1,40 do
-                    local _, _, _, _, _, _, _, _, _, spellId = UnitDebuff(unitID, i)
+                    local name, _, _, _, _, _, _, _, _, spellId = UnitDebuff(unitID, i)
                     if spellId == 220114 then
-                        --We have found the debuff so no action needs to be taken
+                        --We have found the debuff so no action needs to be  taken
                         debuffFound = true
                     end
                 end
                 if debuffFound == false then
                     --Check if player has lost the mysterious fruits debuff
+                    print("DEBUFF LOST: " .. name)
+                    InfoFrame_SetPlayerFailed(UnitName(unitID))
                     C_Timer.After(5, function() 
                         if highBotanistTelarnKilled == false then
-                            mysteriousFruitPlayers[fullName] = nil
-                            mysteriousFruitCounter = mysteriousFruitCounter - 1
-                            if core.groupSize >= 10 then
-                                core:sendMessage(UnitName(unitID) .. " " .. L["TheNighthold_Botanist_LostBuff"] .. " (" .. mysteriousFruitCounter .. "/" .. core.groupSize .. ")")
-                            else
-                                core:sendMessage(UnitName(unitID) .. " " .. L["TheNighthold_Botanist_LostBuff"] .. " (" .. mysteriousFruitCounter .. "/10)")
-                            end                       
+                            print("5 SECONDS PASSED")
+                            --Make sure player still doesnt have the debuff
+                            print(core.InfoFrame_PlayersTable[UnitName(unitID)])
+                            if core.InfoFrame_PlayersTable[UnitName(unitID)] == 3 and mysteriousFruitPlayers[UnitName(unitID)] ~= nil then
+                                print("REMOVING")
+                                mysteriousFruitPlayers[UnitName(unitID)] = nil
+                                mysteriousFruitCounter = mysteriousFruitCounter - 1
+                                if core.groupSize >= 10 then
+                                    core:sendMessage(UnitName(unitID) .. " " .. L["TheNighthold_Botanist_LostBuff"] .. " (" .. mysteriousFruitCounter .. "/" .. core.groupSize .. ")")
+                                else
+                                    core:sendMessage(UnitName(unitID) .. " " .. L["TheNighthold_Botanist_LostBuff"] .. " (" .. mysteriousFruitCounter .. "/10)")
+                                end                                  
+                            end
                         end
                     end)
                 end
-            elseif mysteriousFruitPlayers[fullName] == nil then
+            elseif mysteriousFruitPlayers[UnitName(unitID)] == nil then
                 --Check if player has picked up the mysterious fruit debuff
                 for i=1,40 do
                     local _, _, _, _, _, _, _, _, _, spellId = UnitDebuff(unitID, i)
                     if spellId == 220114 then
                         --We have found the debuff so add player to the table
-                        mysteriousFruitPlayers[fullName] = fullName
+                        mysteriousFruitPlayers[UnitName(unitID)] = UnitName(unitID)
                         mysteriousFruitCounter = mysteriousFruitCounter + 1
                         if core.groupSize >= 10 then
                             core:sendMessage(UnitName(unitID) .. " " .. L["TheNighthold_Botanist_GainedBuff"] .. " (" .. mysteriousFruitCounter .. "/" .. core.groupSize .. ")")
+                            InfoFrame_SetPlayerComplete(UnitName(unitID))
                         else
                             core:sendMessage(UnitName(unitID) .. " " .. L["TheNighthold_Botanist_GainedBuff"] .. " (" .. mysteriousFruitCounter .. "/10)")
+                            InfoFrame_SetPlayerComplete(UnitName(unitID))
                         end
                     end
                 end
