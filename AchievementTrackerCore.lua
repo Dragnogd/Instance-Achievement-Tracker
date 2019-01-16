@@ -9,7 +9,7 @@ local UIConfig													--UIConfig is used to make a display asking the user 
 local UICreated = false											--To enable achievement tracking when they enter an instances
 local debugMode = false
 local debugModeChat = false
-local sendDebugMessages = false
+local sendDebugMessages = true
 
 local ptrVersion = "8.1.0"
 
@@ -150,6 +150,8 @@ core.lockDetection = false						--Once an encounter has finished. Stop the encou
 core.onlyTrackMissingAchievements = false		--Whether or not the user has chosen to only track missing achievements or not
 core.trackingSupressed = false					--Whether or not tracking is being supressed for the current fight
 local infoFrameShown = false
+local automaticBlizzardTracking = true			--By Default blizzard trackers are almost always white (true)
+local automaticBlizzardTrackingInitialCheck = false --Initial check for value at start of each encounter
 
 --------------------------------------
 -- Addon Syncing 
@@ -1587,6 +1589,9 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 						infoFrameShown = true
 					end
 				end
+			elseif core.currentBosses[i].enabled == false and core.currentBosses[i].track == nil then
+				--We have detected a boss fight but have no tracking for it. Lets automatically detect blizzard tracking and if something is found ask the user to report to author
+				core:detectBlizzardTrackingAutomatically()
 			end
 		end
 	else
@@ -1631,6 +1636,9 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 					if core.onlyTrackMissingAchievements == false or (core.onlyTrackMissingAchievements == true and core.currentBosses[i].players ~= L["GUI_NoPlayersNeedAchievement"]) then
 						core.currentBosses[i].track()
 					end
+				elseif core.currentBosses[i].enabled == false and core.currentBosses[i].track == nil then
+					--We have detected a boss fight but have no tracking for it. Lets automatically detect blizzard tracking and if something is found ask the user to report to author
+					core:detectBlizzardTrackingAutomatically()
 				end
 			end
 
@@ -2440,6 +2448,9 @@ function core:clearVariables()
 	core.achievementIDs = {}
 	currentBossNums = {}
 
+	automaticBlizzardTracking = true
+	automaticBlizzardTrackingInitialCheck = false
+
 	currentBoss = nil
 
 	--Addon Syncing variables
@@ -2540,6 +2551,33 @@ function core:getBlizzardTrackingStatus(achievementID, index)
 	else
 		--Achievement has no criteria so we can just check whether criteria has failed or completed
 		return IsAchievementEligible(achievementID)
+	end
+end
+
+--Automatically detect blizzard tracking for new instances and ask user to report.
+function core:detectBlizzardTrackingAutomatically()
+	--score:sendDebugMessage(tostring(core:getBlizzardTrackingStatus(core.achievementIDs[1])))
+	if automaticBlizzardTrackingInitialCheck == false then
+		automaticBlizzardTracking = core:getBlizzardTrackingStatus(core.achievementIDs[1])
+		core:sendDebugMessage("Automatic Blizzard Tracking set to: " .. tostring(automaticBlizzardTracking))
+		automaticBlizzardTrackingInitialCheck = true
+	elseif automaticBlizzardTrackingInitialCheck == true and core:getBlizzardTrackingStatus(core.achievementIDs[1]) ~= automaticBlizzardTracking then
+		--The value of blizzard tracking has changed. Check if it failed or succeded
+		core:sendDebugMessage("Blizzard Tracking Has changed")
+		if automaticBlizzardTracking == false then
+			--Achievement Succedded
+			core:getAchievementSuccess()
+		
+			--Send a message to user asking them to report tracking to user
+			core:printMessage("has detected that " .. core:getAchievement() .. " (" .. core.achievementIDs[1] .. ") can be tracked for success. Please report this to the Instance Achievement Tracker author")
+		elseif automaticBlizzardTracking == true then
+			--Achievement Failed
+			core:getAchievementFailed()
+
+			--Send a message to user asking them to report tracking to user
+			core:printMessage("has detected that " .. core:getAchievement() .. " (" .. core.achievementIDs[1] .. ") can be tracked for faliure. Please report this to the Instance Achievement Tracker author")
+		end
+		automaticBlizzardTracking = core:getBlizzardTrackingStatus(core.achievementIDs[1])
 	end
 end
 
