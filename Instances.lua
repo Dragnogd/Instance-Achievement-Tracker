@@ -831,6 +831,7 @@ core.Instances = {
                     track = function() core._1676:DemonicInquisition() end,
                     partial = false,
                     encounterID = 2048,
+                    displayInfoFrame = true,
                 },
                 boss3 = {
                     name = 1856, --Harjatan
@@ -2002,7 +2003,7 @@ core.Instances = {
                     achievement = 9034,
                     players = {},
                     tactics = L["Skyreach_HighSageViryx2"],
-                    enabled = true,
+                    enabled = false,
                     track = nil,
                     partial = false,
                     encounterID = 1701,
