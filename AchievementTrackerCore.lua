@@ -555,7 +555,6 @@ function createEnableAchievementTrackingUI()
 	UIConfig:SetHeight(UIConfig.content:GetHeight() + UIConfig.btnYes:GetHeight() + UIConfig.title:GetHeight() + 35)
 	UIConfig.btnYes:SetScript("OnClick", enableAchievementTracking);
 	UIConfig.btnNo:SetScript("OnClick", disableAchievementTracking);
-
 	
 	--Setup the InfoFrame
 	core.IATInfoFrame:SetupInfoFrame()
@@ -1932,6 +1931,36 @@ end
 ------------------------------------------------------
 ---- Messaging Functions
 ------------------------------------------------------
+function core:logMessage(message)
+	local date = C_DateAndTime.GetCurrentCalendarTime()
+	local monthDay, weekday, month, minute, hour, year
+	for k, v in pairs(date) do
+		if k == "monthDay" then
+			monthDay = v
+		elseif k == "weekday" then
+			weekday = v
+		elseif k == "month" then
+			month = v
+		elseif k == "minute" then
+			minute = v
+		elseif k == "hour" then
+			hour = v
+		elseif k == "year" then
+			year = v
+		end
+	end
+	
+	--If table is below maximun amount of entries then insert value. Else make table shrink to correct size
+	if #AchievementTrackerDebug < 50000 then
+		table.insert(AchievementTrackerDebug, monthDay .. "/" .. month .. "/" .. year .. " " .. hour .. ":" .. minute ..  " " .. message)
+	else
+		while #AchievementTrackerDebug >= 50000 do
+			table.remove(AchievementTrackerDebug, 1)
+		end
+		table.insert(AchievementTrackerDebug, monthDay .. "/" .. month .. "/" .. year .. " " .. hour .. ":" .. minute ..  " " .. message)
+	end
+
+end
 
 --Output messages to the chat. All messages get sent this function for easy management
 function core:sendMessage(message, outputToRW, messageType)
@@ -1942,13 +1971,16 @@ function core:sendMessage(message, outputToRW, messageType)
 					if outputToRW == true and core.chatType == "RAID" and announceToRaidWarning == true and (UnitIsGroupAssistant("Player") or UnitIsGroupLeader("Player")) then
 						--Important message output to raid warning from user request
 						--print("Outputting to Raid Warning")
-						SendChatMessage("[IAT] " .. message,"RAID_WARNING",DEFAULT_CHAT_FRAME.editBox.languageID)
+						SendChatMessage("[IAT] " .. message,"RAID_WARNING",DEFAULT_CHAT_FRAME.editBox.languageID)						
+						core:logMessage("[IAT] " .. message)
 					elseif outputToRW == true and announceToRaidWarning == true then
 						SendChatMessage("[IAT] " .. message,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+						core:logMessage("[IAT] " .. message)
 						RaidNotice_AddMessage(RaidWarningFrame, "[IAT] " .. message, ChatTypeInfo["RAID_WARNING"])
 					else
 						--print("Outputting normally")
 						SendChatMessage("[IAT] " .. message,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+						core:logMessage("[IAT] " .. message)
 					end
 
 					if outputToRW == true and enableSound == true and messageType == "completed" then
@@ -1992,12 +2024,15 @@ function core:sendMessage(message, outputToRW, messageType)
 									--Important message output to raid warning from user request
 									--print("Outputting to Raid Warning")
 									SendChatMessage("[IAT] " .. message,"RAID_WARNING",DEFAULT_CHAT_FRAME.editBox.languageID)
+									core:logMessage("[IAT] " .. message)
 								elseif outputToRW == true and announceToRaidWarning == true then
 									SendChatMessage("[IAT] " .. message,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+									core:logMessage("[IAT] " .. message)
 									RaidNotice_AddMessage(RaidWarningFrame, "[IAT] " .. message, ChatTypeInfo["RAID_WARNING"])
 								else
 									--print("Outputting normally")
 									SendChatMessage("[IAT] " .. message,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+									core:logMessage("[IAT] " .. message)
 								end
 
 								if outputToRW == true and enableSound == true and messageType == "completed" then
@@ -2028,12 +2063,15 @@ function core:sendMessage(message, outputToRW, messageType)
 										--Important message output to raid warning from user request
 										--print("Outputting to Raid Warning")									
 										SendChatMessage("[IAT] " .. v,"RAID_WARNING",DEFAULT_CHAT_FRAME.editBox.languageID)
+										core:logMessage("[IAT] " .. v)
 									elseif outputToRW == true and announceToRaidWarning == true then
 										SendChatMessage("[IAT] " .. message,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+										core:logMessage("[IAT] " .. message)
 										RaidNotice_AddMessage(RaidWarningFrame, "[IAT] " .. message, ChatTypeInfo["RAID_WARNING"])
 									else
 										--print("Outputting to normal")										
 										SendChatMessage("[IAT] " .. v,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+										core:logMessage("[IAT] " .. v)
 									end
 
 									if outputToRW == true and enableSound == true and messageType == "completed" then
@@ -2178,15 +2216,18 @@ function core:sendDebugMessage(message)
 	if sendDebugMessages == true then
 		print("[DEBUG] " .. message)
 	end
+	core:logMessage("[DEBUG] " .. message)
 end
 
 --TODO: tidy this up so it can print out any colour
 function printMessage(message)
 	print("|cff00ccffIAT: |cffffffff" .. message)
+	core:logMessage("|cff00ccffIAT: |cffffffff" .. message)
 end
 
 function core:printMessage(message)
 	print("|cff00ccffIAT: |cffffffff" .. message)
+	core:logMessage("|cff00ccffIAT: |cffffffff" .. message)
 end
 
 --Get the current achievement being tracked for custom output messages
