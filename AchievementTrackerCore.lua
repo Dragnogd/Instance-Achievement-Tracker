@@ -152,6 +152,7 @@ core.trackingSupressed = false					--Whether or not tracking is being supressed 
 local infoFrameShown = false
 local automaticBlizzardTracking = true			--By Default blizzard trackers are almost always white (true)
 local automaticBlizzardTrackingInitialCheck = false --Initial check for value at start of each encounter
+local enableCombatLogging = false
 
 --------------------------------------
 -- Addon Syncing 
@@ -837,6 +838,14 @@ function events:ADDON_LOADED(event, name)
 	end
 	_G["AchievementTracker_GreyOutCompletedAchievements"]:SetChecked(AchievementTrackerOptions["greyOutCompletedAchievements"])
 
+	if AchievementTrackerOptions["enableAutomaticCombatLogging"] == nil then
+		AchievementTrackerOptions["enableAutomaticCombatLogging"] = false --Disabled by default
+		enableCombatLogging = false
+	elseif AchievementTrackerOptions["enableAutomaticCombatLogging"] == true then
+		enableCombatLogging = true
+	end
+	_G["AchievementTracker_EnableAutomaticCombatLogging"]:SetChecked(AchievementTrackerOptions["enableAutomaticCombatLogging"])
+
 	SLASH_IAT1 = "/iat";
 	SlashCmdList.IAT = HandleSlashCommands;
 
@@ -880,6 +889,14 @@ function events:ADDON_LOADED(event, name)
 
 	--Set whether addon should be enabled or disabled
 	setAddonEnabled(AchievementTrackerOptions["enableAddon"])
+end
+
+function setEnableAutomaticCombatLogging(setEnableAutomaticCombatLogging)
+	if setEnableAutomaticCombatLogging then
+		enableCombatLogging = true
+	else
+		enableCombatLogging = false					
+	end
 end
 
 function setHideCompletedAchievements(setHideCompletedAchievements)
@@ -1108,6 +1125,23 @@ function events:ENCOUNTER_START(self, encounterID, encounterName, difficultyID, 
 		if core.lockDetection == false then
 			detectBossByEncounterID(encounterID)
 		end
+	end
+
+	--Check if user has combat logging enabled or not
+	if enableCombatLogging == true then
+		core:sendDebugMessage("Enable CombatLog")
+		local isLogging = LoggingCombat()
+		print(isLogging)
+		if LoggingCombat() ~= true then
+			LoggingCombat(1)
+			core:printMessage(L["Core_CombatLogEnabled"])
+		end
+		if Transcriptor:IsLogging() == nil then
+			Transcriptor:StartLog(1)
+			core:printMessage(L["Core_TranscriptorLogEnabled"])
+		end
+	else
+		core:sendDebugMessage("Disable CombatLogs")
 	end
 end
 
@@ -2473,6 +2507,18 @@ function core:clearVariables()
 		infoFrameShown = false
 	else
 		core:sendDebugMessage("InfoFrame does not need to be reset")
+	end
+
+	--Check if user has combat logging enabled or not
+	if enableCombatLogging == true then
+		if LoggingCombat() ~= nil then
+			LoggingCombat(false)
+			core:printMessage(L["Core_CombatLogDisabled"])
+		end
+		if Transcriptor:IsLogging() == 1 then
+			Transcriptor:StopLog(1)
+			core:printMessage(L["Core_TranscriptorLogDisabled"])
+		end
 	end
 end
 

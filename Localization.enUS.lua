@@ -42,11 +42,12 @@ local baseLocale = {
     ["GUI_GreyOutCompletedAchievements"] = "Grey out completed achievements",
     ["GUI_HideCompletedAchievements"] = "Hide completed achievements",
     ["GUI_AchievementsCompletedForInstance"] = "All achievements have been completed for",
+    ["GUI_EnableAutomaticCombatLogging"] = "Enable automatic combat logging",
 
     -------------------------------------------------------
     --- Core
     -------------------------------------------------------    
-    ["Core_StartingAchievementScan"] = "Starting acchievement scan for", --["Starting Achievement Scan For"]
+    ["Core_StartingAchievementScan"] = "Starting achievement scan for", --["Starting Achievement Scan For"]
     ["Core_GameFreezeWarning"] = "This may freeze your game for a few seconds", --["This may freeze your game for a few seconds"]
     ["Core_AchievementScanFinished"] = "Achievement Scanning Finished", --["Achievement Scanning Finished"]
     ["Core_EnableAchievementTracking"] = "Do you want to enable achievement tracking for", --["Do you want to enable achievement tracking for"]
@@ -65,6 +66,10 @@ local baseLocale = {
     ["Core_Reason"] = "Reason",
     ["Core_CriteriaMet"] = "Criteria has been met. Boss can now be killed!",
     ["Core_Counter"] = "Counter",
+    ["Core_CombatLogEnabled"] = "Combat Logging enabled",
+    ["Core_CombatLogDisabled"] = "Combat Logging disabled",
+    ["Core_TranscriptorLogEnabled"] = "Transcriptor Log enabled",
+    ["Core_TranscriptorLogDisabled"] = "Transcriptor Log disabled",
 
     -------------------------------------------------------
     --- Instances
@@ -87,6 +92,7 @@ local baseLocale = {
     --Shared
     ["Shared_HasBeenHitWith"] = "has been hit with",
     ["Shared_PlayersWhoStillNeedToGetHit"] = "Players who still need to get hit:",
+    ["Shared_PlayersWithBuff"] = "Players with buff",
     ["Shared_PlayersWhoStillNeedToGetResurrected"] = "The following players need to be resurrected in order to receive the achievement:",
     ["Shared_HasGained"] = "has gained",
     ["Shared_HasLost"] = "has lost",
@@ -182,30 +188,30 @@ local baseLocale = {
     -------------------------------------------------------
     --Tactics
     ["Freehold_SkycapNKragg"] = "To summon IAT_138314 you have to place a %s before you pull the boss.",
-    ["Freehold_RingOfBooty"] = "For this achievement you will have to pick up 3 items throughout the instance. Sharkbait's Empty Dish spawns in the nest at the first boss after you defeat it, Gourmet Parrot Chow is found on top of a platform in The Rum Quarter, and Serve Sharkbait's Meal is found near Sharkbait after the third boss.",
-    ["Freehold_HarlanSweete"] = "Harlan Sweete will target a random player for %s, which will have to position near one of the chests, so that they will end up being destroyed.",
+    ["Freehold_RingOfBooty"] = "For this achievement you will have to pick up 3 items throughout the instance. %s spawns in the nest at the first boss after you defeat it, %s is found on top of a platform in The Rum Quarter, and %s is found near Sharkbait after the third boss.",
+    ["Freehold_HarlanSweete"] = "%s will target a random player for %s, which will have to position near one of the chests, so that they will end up being destroyed.",
 
     -------------------------------------------------------
     --- Kings Reset
     -------------------------------------------------------
     --Tactics
-    ["KingsRest_Other"] = "The first trinket is in the first room of the dungeon, behind the sarcophagus, undeath the baskets.\n The second trinket is in the first boss hallway, at the end of the platform, behind the last set of stairs.\n The third trinket - (Check out the Glory of the Wartorn Hero Achievement Guide for details on WowHead)\n The fourth trinket is located before the final boss room, at the bottom of the strairs, at the top of the right pillar.",
-    ["KingsRest_MchimbaTheEmbalmer"] = "For this achievement you will have to free the player targeted by %s without him using %s more than once, and also free him before the boss finishes casting %s.\n\n Note: Players have reported a minor bug with this achievement, and it's recommended that the entombed player does not use Struggle before the boss casts Open Coffin.",
-    ["KingsRest_DazarTheFirstKing"] = "This achievement is obtained at King Dazar, the last boss in the instance. Have two players each stay on top of the stones in front of the two sarcophagi, and the lights will start filling up around the stone. Once they are both lit up, the right sarcophagus will start shaking which means that you can kill the boss.",
+    ["KingsRest_Other"] = "The first trinket is in the first room of the dungeon, behind the sarcophagus, underneath the baskets.\n The second trinket is in the first boss hallway, at the end of the platform, behind the last set of stairs.\n The third trinket - (Check out the Glory of the Wartorn Hero Achievement Guide for details on WowHead)\n The fourth trinket is located before the final boss room, at the bottom of the strairs, at the top of the right pillar.",
+    ["KingsRest_MchimbaTheEmbalmer"] = "For this achievement you will have to free the player targeted by %s without him using %s more than once, and also free him before the boss finishes casting %s.\n\n Note: Players have reported a minor bug with this achievement, and it's recommended that the entombed player does not use %s before the boss casts %s",
+    ["KingsRest_DazarTheFirstKing"] = "This achievement is obtained at %s, the last boss in the instance. Have two players each stay on top of the stones in front of the two sarcophagi, and the lights will start filling up around the stone. Once they are both lit up, the right sarcophagus will start shaking which means that you can kill the boss.",
 
     -------------------------------------------------------
     --- Shrine of the Storm
     -------------------------------------------------------
     --Tactics
     ["ShrineOfTheStorm_Other"] = "The %s is picked up at the start of the dungeon, in the first room. If you receive any frost damage then the spirit flames will be extinguished so it's recommended to first clear all the trash to the third boss, and then pick up the breath. Do not kill the first boss as that will make the breath despawn. Once you light up the shrines to the third boss you will get the achievement.",
-    ["ShrineOfTheStorm_LordStormsong"] = "During the course of the encounter, Lord Stormsong will periodically begin to %s which summons Awoken Void that will chase players and attempt to explode upon impact. To obtain this achievement, you must not come into contact with any of the void adds so you will keep kiting them throughout the encounter.",
-    ["ShrineOfTheStorm_VolZith"] = "To get the %s debuff you will have to dive down in the water before the last boss until you see Void Orbs floating around, and then swim through them. The debuff will make you hostile to all players for 24 seconds, then disappear for 6 seconds time in which your healer must use cds and heal you to full hp. Avoid using aoe spells on the boss, and instead use self heals as much as possible to help your healer out.\n\n After Vol'zith the Whisperer casts %s, you will get teleported into the sunken realm where you should quickly kill the adds and then wait 20-30 seconds for cooldowns to be available. Vol'zith the Whisperer will also cast %s, and you will have to crowd control 5 Manifestation of the Deep adds so that they won't reach the boss.",
+    ["ShrineOfTheStorm_LordStormsong"] = "During the course of the encounter, %s will periodically begin to %s which summons %s that will chase players and attempt to explode upon impact. To obtain this achievement, you must not come into contact with any of the void adds so you will keep kiting them throughout the encounter.",
+    ["ShrineOfTheStorm_VolZith"] = "To get the %s debuff you will have to dive down in the water before the last boss until you see Void Orbs floating around, and then swim through them. The debuff will make you hostile to all players for 24 seconds, then disappear for 6 seconds time in which your healer must use cds and heal you to full hp. Avoid using aoe spells on the boss, and instead use self heals as much as possible to help your healer out.\n\n After %s casts %s, you will get teleported into the sunken realm where you should quickly kill the adds and then wait 20-30 seconds for cooldowns to be available. %s will also cast %s, and you will have to crowd control 5 %s adds so that they won't reach the boss.",
 
     -------------------------------------------------------
     --- Siege of Boralus
     -------------------------------------------------------
     --Tactics
-    ["SiegeOfBoralus_DreadCaptainLockwood"] = "Dread Captain Lockwood will continuously attempt to retreat from players using %s unless she is snared or rooted. As the achievement description implies, you have to keep her snared or rooted and prevent her from ever using %s. \n\n This achievement is currently bugged, and this has been confirmed by multiple game masters.\n\n You can bypass the bug by using a long cc spell on her at 97%% energy, spells has such as %s, %s, %s, %s as ideal as they last 15 seconds or more. You will have to kill the Ashvane Cannoneer really fast and use %s before the snare fades away.",
+    ["SiegeOfBoralus_DreadCaptainLockwood"] = "%s will continuously attempt to retreat from players using %s unless she is snared or rooted. As the achievement description implies, you have to keep her snared or rooted and prevent her from ever using %s. \n\n This achievement is currently bugged, and this has been confirmed by multiple game masters.\n\n You can bypass the bug by using a long cc spell on her at 97%% energy, spells has such as %s, %s, %s, %s as ideal as they last 15 seconds or more. You will have to kill the Ashvane Cannoneer really fast and use %s before the snare fades away.",
     ["SiegeOfBoralus_ViqGoth"] = "During the encounter, Viq'Goth will use %s which causes a barrage of putrid water around the area. During this, several Gasping Flounders will be thrown on the land which you will have to kick back into the water before defeating the boss.",
     ["SiegeOfBoralus_Other"] = "As the name of the achievement implies, this is a profession-based achievement where you to interact with items to summon bosses. In order to use the items throughout the dungeons, a minimum of 75 skill level is required.\n\n (Blacksmithing) Brutik Blackanvil - The hammer is found down the stairs to the docks at 58, 70.\n (Engineering) Threshanator 3000 - The NPC is found right at the start of the instance.\n (Alchemy) Liz Vilepot - The 'Strange Vial' is found near a table at at 54, 74.",
 

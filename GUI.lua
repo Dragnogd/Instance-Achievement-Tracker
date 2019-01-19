@@ -196,6 +196,8 @@ function Tab_OnClick(self)
             UIConfig.Main2.options19:Show()
             UIConfig.Main2.options20:Show()
             UIConfig.Main2.options21:Show()
+            UIConfig.Main2.options22:Show()
+            UIConfig.Main2.options23:Show()
 
             UIConfig.Main.author:Show()
             UIConfig.Main.verison:Show()
@@ -361,8 +363,13 @@ function Tab_OnClick(self)
             UIConfig.Main2.options20 = Config:CreateCheckBox("TOPLEFT", UIConfig.Main2.options18, "TOPLEFT", 0, -25, "AchievementTracker_GreyOutCompletedAchievements")
             UIConfig.Main2.options20:SetScript("OnClick", ATToggleGreyOutCompletedAchievements_OnClick)
             UIConfig.Main2.options21 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options20, "TOPLEFT", 30, -9, L["GUI_GreyOutCompletedAchievements"],"GameFontHighlight") 
-            UIConfig.Main2.options20:Hide()
-            UIConfig.Main2.options21:Hide()
+            -- UIConfig.Main2.options20:Hide()
+            -- UIConfig.Main2.options21:Hide()
+
+            --Enable Automatic Combat Logging
+            UIConfig.Main2.options22 = Config:CreateCheckBox("TOPLEFT", UIConfig.Main2.options20, "TOPLEFT", 0, -25, "AchievementTracker_EnableAutomaticCombatLogging")
+            UIConfig.Main2.options22:SetScript("OnClick", ATToggleAutomaticCombatLogging_OnClick)
+            UIConfig.Main2.options23 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options22, "TOPLEFT", 30, -9, L["GUI_EnableAutomaticCombatLogging"],"GameFontHighlight") 
         end
     else                                --User has selected an expansion tab so hide main menu options
         UIConfig.ScrollFrame:Show()
@@ -403,6 +410,8 @@ function Tab_OnClick(self)
         UIConfig.Main2.options19:Hide()
         UIConfig.Main2.options20:Hide()
         UIConfig.Main2.options21:Hide()
+        UIConfig.Main2.options22:Hide()
+        UIConfig.Main2.options23:Hide()
         
         UIConfig.Main.author:Hide()
         UIConfig.Main.verison:Hide()
@@ -418,6 +427,11 @@ function Tab_OnClick(self)
             UIConfig.achievementsCompleted:Hide()
         end
     end
+end
+
+function ATToggleAutomaticCombatLogging_OnClick(self)
+    AchievementTrackerOptions["enableAutomaticCombatLogging"] = self:GetChecked()
+    setEnableAutomaticCombatLogging(self:GetChecked()) 
 end
 
 function ATToggleHideCompletedAchievements_OnClick(self)
