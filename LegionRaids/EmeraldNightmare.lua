@@ -81,8 +81,8 @@ function core._1520:Ilgynoth()
 end
 
 function core._1520:EleretheRenferal()
-    if core:getBlizzardTrackingStatus(10817) == true then
-        core:getAchievementSuccess(10771)
+    if core:getBlizzardTrackingStatus(10771) == true then
+        core:getAchievementSuccess()
     end
 end
 
@@ -100,6 +100,11 @@ function core._1520:Xavius()
     if creatureOfMadnessKilled == 3 then
         core:getAchievementSuccess()
     end
+end
+
+function core._1520:DragonsOfNightmare()
+    InfoFrame_UpdatePlayersOnInfoFrame()
+    InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],playersBuffCounter)
 end
 
 function core._1520:ClearVariables()
@@ -184,6 +189,7 @@ function core._1520.Events:UNIT_AURA(self, unitID, ...)
                         playersBuffCounter = playersBuffCounter + 1
                         core:sendMessage(core:getAchievement() .. " " .. UnitName(unitID) .. " has all 4 buffs (" .. playersBuffCounter .. "/" .. core.groupSize .. ")")
                         playersUID[spawn_uid_dest] = spawn_uid_dest
+                        InfoFrame_SetPlayerComplete(UnitName(unitID))
                     end
                 end
             end
