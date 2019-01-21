@@ -2,6 +2,7 @@
 -- Namespaces
 --------------------------------------
 local _, core = ...
+local L = core.L
 
 ------------------------------------------------------
 ---- Tomb of Sargeras Bosses
@@ -40,6 +41,9 @@ function core._1676:Goroth()
 end
 
 function core._1676:DemonicInquisition()
+    InfoFrame_UpdatePlayersOnInfoFrame()
+    InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],playersTorment,core.groupSize)
+    
     if core.type == "UNIT_DIED" and (core.destID == "116689" or core.destID == "116691") then
         demonicInquisitionKilled = true
     end
@@ -52,6 +56,7 @@ function core._1676:DemonicInquisition()
                 playersTormentTable[core.destName] = core.destName
                 core:sendMessage(core.destName .. " has gained Unbearable Torment (" .. playersTorment .. "/" .. core.groupSize .. ")")
                 --print(core.destName .. " has gained Unbearable Torment (" .. playersTorment .. "/" .. core.groupSize .. ")")
+                InfoFrame_SetPlayerComplete(core.destName)
             end
         end
 
@@ -62,6 +67,7 @@ function core._1676:DemonicInquisition()
                 playersTormentTable[core.destName] = nil
                 --core:sendMessage(core.destName .. " has lost Unbearable Torment (" .. playersTorment .. "/" .. core.groupSize .. ")")
                 --print(core.destName .. " has lost Unbearable Torment (" .. playersTorment .. "/" .. core.groupSize .. ")")
+                InfoFrame_SetPlayerFailed(core.destName)
 
                 --If achievement was already completed then fail it
                 if core.achievementsCompleted[1] == true then
