@@ -209,6 +209,10 @@ function Tab_OnClick(self)
             UIConfig.Main2.credits2:Show()
             UIConfig.Main2.credits3:Show()
 
+            if UIConfig.Main.translators ~= nil then
+                UIConfig.Main.translators:Show()
+            end
+
             if UIConfig.achievementsCompleted ~= nil then
                 UIConfig.achievementsCompleted:Hide()
             end
@@ -427,6 +431,10 @@ function Tab_OnClick(self)
         UIConfig.Main2.credits:Hide()
         UIConfig.Main2.credits2:Hide()
         UIConfig.Main2.credits3:Hide()
+
+        if UIConfig.Main.translators ~= nil then
+            UIConfig.Main.translators:Hide()
+        end
 
         if UIConfig.achievementsCompleted ~= nil then
             UIConfig.achievementsCompleted:Hide()
