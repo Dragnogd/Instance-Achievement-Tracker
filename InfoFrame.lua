@@ -56,8 +56,6 @@ function InfoFrame_SetPlayerFailed(player)
     if string.find(player, "-") then
         local name, realm = strsplit("-", player)
         player = name
-    else
-        player = name
     end
 
     if core.InfoFrame_PlayersTable[player] ~= nil then
@@ -70,8 +68,6 @@ function InfoFrame_SetPlayerComplete(player)
     if string.find(player, "-") then
         local name, realm = strsplit("-", player)
         player = name
-    else
-        player = name
     end
 
     if core.InfoFrame_PlayersTable[player] ~= nil then
@@ -83,8 +79,6 @@ function InfoFrame_SetPlayerIncomplete(player)
     --Make sure we remove realm info from player before checking name
     if string.find(player, "-") then
         local name, realm = strsplit("-", player)
-        player = name
-    else
         player = name
     end
 
