@@ -2,7 +2,7 @@ if(GetLocale() ~= 'zhCN') then return end
 
 local _, core = ...
 local baseLocale = {
-    ["- Announce to chat players who are missing achievements for certain bosses"] = "通报某些BOSS还没有成就的玩家",
+	["- Announce to chat players who are missing achievements for certain bosses"] = "通报某些BOSS还没有成就的玩家",
 	["- Announce to chat tactics for a certain boss"] = "通报某些BOSS成就攻略",
 	["- Keeps track of achievements which require you to kill so many mobs within a certain time period. It will announce to chat when enough mobs have spawned and whether they were killed in the time period."] = "持续追踪需要在一定时间内杀指定数量怪物成就，当有聚集足够的怪的时候他会在聊天框报告这些怪物是否在指定时间被击杀",
 	["- Scans all players in the group to see which achievements each player is missing for the current instance"] = "扫描队中的所有玩家，追踪没有当前BOSS成就的玩家",
@@ -36,6 +36,10 @@ local baseLocale = {
 	["Core_Yes"] = "是",
 	["Features"] = "功能",
 	--[[Translation missing --]]
+	--[[ ["Freehold_HarlanSweete"] = "%s will target a random player for %s, which will have to position near one of the chests, so that they will end up being destroyed.",--]] 
+	--[[Translation missing --]]
+	--[[ ["Freehold_RingOfBooty"] = "For this achievement you will have to pick up 3 items throughout the instance. %s spawns in the nest at the first boss after you defeat it, %s is found on top of a platform in The Rum Quarter, and %s is found near Sharkbait after the third boss.",--]] 
+	--[[Translation missing --]]
 	--[[ ["Freehold_SkycapNKragg"] = "To summon IAT_138314 you have to place a %s before you pull the boss.",--]] 
 	["GUI_Achievement"] = "成就",
 	["GUI_Achievements"] = "成就",
@@ -47,10 +51,14 @@ local baseLocale = {
 	--[[ ["GUI_AchievementsDiscordTitle"] = "Achievements Discord",--]] 
 	["GUI_AnnounceMessagesToRaidWarning"] = "在团队警告中显示信息",
 	["GUI_AnnounceTracking"] = "在团队中显示成就追踪",
+	--[[Translation missing --]]
+	--[[ ["GUI_Author"] = "Author",--]] 
 	["GUI_BattleForAzeroth"] = "争霸艾泽拉斯",
 	["GUI_Cataclysm"] = "大地的裂变",
 	["GUI_Disabled"] = "取消",
 	["GUI_EnableAddon"] = "启用插件",
+	--[[Translation missing --]]
+	--[[ ["GUI_EnableAutomaticCombatLogging"] = "Enable automatic combat logging",--]] 
 	["GUI_Enabled"] = "开始",
 	["GUI_EnterInstanceToStartScanning"] = "进入副本开始扫描",
 	["GUI_GreyOutCompletedAchievements"] = "淡出已完成的成就",
@@ -77,11 +85,21 @@ local baseLocale = {
 	["GUI_Tracking"] = "追踪",
 	["GUI_TrackingDisabled"] = "成就追踪已停用",
 	["GUI_TrackingNumber"] = "当前追踪",
+	--[[Translation missing --]]
+	--[[ ["Gui_TranslatorNames"] = "Gui_TranslatorNames",--]] 
+	--[[Translation missing --]]
+	--[[ ["GUI_Translators"] = "Translators",--]] 
 	["GUI_WarlordsOfDraenor"] = "德拉诺之王",
 	["GUI_WrathOfTheLichKing"] = "巫妖王之怒",
 	["Instance Achievement Tracker"] = "Instance Achievement Tracker(成就追踪)",
 	["Instances_Other"] = "其他",
 	["Instances_TrashAfterThirdBoss"] = "第三个BOSS后的集市",
+	--[[Translation missing --]]
+	--[[ ["KingsRest_DazarTheFirstKing"] = "This achievement is obtained at %s, the last boss in the instance. Have two players each stay on top of the stones in front of the two sarcophagi, and the lights will start filling up around the stone. Once they are both lit up, the right sarcophagus will start shaking which means that you can kill the boss.",--]] 
+	--[[Translation missing --]]
+	--[[ ["KingsRest_MchimbaTheEmbalmer"] = "For this achievement you will have to free the player targeted by %s without him using %s more than once, and also free him before the boss finishes casting %s.\\n\\n Note: Players have reported a minor bug with this achievement, and it's recommended that the entombed player does not use %s before the boss casts %s",--]] 
+	--[[Translation missing --]]
+	--[[ ["KingsRest_Other"] = "The first trinket is in the first room of the dungeon, behind the sarcophagus, underneath the baskets.\\n The second trinket is in the first boss hallway, at the end of the platform, behind the last set of stairs.\\n The third trinket - (Check out the Glory of the Wartorn Hero Achievement Guide for details on WowHead)\\n The fourth trinket is located before the final boss room, at the bottom of the strairs, at the top of the right pillar.",--]] 
 	["Main"] = "主界面",
 	["Shared_AddKillCounter"] = "%s 击杀次数",
 	["Shared_CompletedBossKill"] = "将完成(当BOSS被击杀)",
@@ -119,6 +137,8 @@ local baseLocale = {
 	["Shared_PlayersHit"] = "击中玩家",
 	["Shared_PlayersWhoStillNeedToGetHit"] = "仍然需要被击中的玩家:",
 	["Shared_PlayersWhoStillNeedToGetResurrected"] = "以下玩家需要复活才能获得成就:",
+	--[[Translation missing --]]
+	--[[ ["Shared_ReportString"] = "Please report the following string to the IAT author",--]] 
 	["Shared_Seven"] = "7",
 	["Shared_Seventeen"] = "17",
 	["Shared_SheCanNowBeKilled"] = "她现在可以被击杀",
@@ -130,6 +150,14 @@ local baseLocale = {
 	["Shared_Twelve"] = "12",
 	["Shared_Twenty"] = "20",
 	["Shared_Two"] = "2",
+	--[[Translation missing --]]
+	--[[ ["Shared_WasKilled"] = "was killed",--]] 
+	--[[Translation missing --]]
+	--[[ ["ShrineOfTheStorm_LordStormsong"] = "During the course of the encounter, %s will periodically begin to %s which summons %s that will chase players and attempt to explode upon impact. To obtain this achievement, you must not come into contact with any of the void adds so you will keep kiting them throughout the encounter.",--]] 
+	--[[Translation missing --]]
+	--[[ ["ShrineOfTheStorm_Other"] = "The %s is picked up at the start of the dungeon, in the first room. If you receive any frost damage then the spirit flames will be extinguished so it's recommended to first clear all the trash to the third boss, and then pick up the breath. Do not kill the first boss as that will make the breath despawn. Once you light up the shrines to the third boss you will get the achievement.",--]] 
+	--[[Translation missing --]]
+	--[[ ["ShrineOfTheStorm_VolZith"] = "To get the %s debuff you will have to dive down in the water before the last boss until you see Void Orbs floating around, and then swim through them. The debuff will make you hostile to all players for 24 seconds, then disappear for 6 seconds time in which your healer must use cds and heal you to full hp. Avoid using aoe spells on the boss, and instead use self heals as much as possible to help your healer out.\\n\\n After %s casts %s, you will get teleported into the sunken realm where you should quickly kill the adds and then wait 20-30 seconds for cooldowns to be available. %s will also cast %s, and you will have to crowd control 5 %s adds so that they won't reach the boss.",--]] 
 	--[[Translation missing --]]
 	--[[ ["Uldir_Fetid_Devourer_Tactics"] = "Every fourth melee attack the boss will cast %s on the target closest to the current tank, a hit which deals physical damage equal to 300%% of a standard melee attack.\\n\\n Every player will have to be hit, and it's recommended to use a personal cooldown when that happens. The fight itself isn't that hard, but you should prioritize people without a good defensive cooldown, as the boss enrages at 50%% (%s)\",",--]] 
 	--[[Translation missing --]]

@@ -43,6 +43,9 @@ local baseLocale = {
     ["GUI_HideCompletedAchievements"] = "Hide completed achievements",
     ["GUI_AchievementsCompletedForInstance"] = "All achievements have been completed for",
     ["GUI_EnableAutomaticCombatLogging"] = "Enable automatic combat logging",
+    ["GUI_Author"] = "Author",
+    ["GUI_Translators"] = "Translators",
+    ["Gui_TranslatorNames"] = "",
 
     -------------------------------------------------------
     --- Core
@@ -142,6 +145,7 @@ local baseLocale = {
     ["Shared_Twenty"] = "20",
     ["Shared_WasKilled"] = "was killed",
     ["Shared_Found"] = "found",
+    ["Shared_ReportString"] = "Please report the following string to the IAT author",
 
     -------------------------------------------------------
     --- Battle of Dazar'alor
@@ -158,6 +162,7 @@ local baseLocale = {
     ["BattleOfDazaralor_JainaProudmoore"] = "",
 
     --Chat Output
+    --["BattleOfDazaralor_PraiseEmote"] = "You praise %s",
 
     -------------------------------------------------------
     --- Uldir

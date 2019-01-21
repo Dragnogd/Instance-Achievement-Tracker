@@ -19,4 +19,15 @@ core.NPCCache = {
     [123503] = 123503, --Torment of Norgannon
     [124164] = 124164, --Torment of Golganneth
     [125837] = 125837, --Torment of Aman'Thul
+    [138718] = 138718, --Sharkbait's Empty Dish
+    [138705] = 138705, --Gourmet Parrot Chow
+    [138719] = 138719, --Serve Sharkbait's Meal
+    [129440] = 129440, --Harlan Sweete
+    [136160] = 136160, --King Dazar <The First>
+    [139737] = 139737, --Lord Stormsong
+    [137036] = 137036, --Awoken Void
+    [134069] = 134069, --Vol'zith the Whisperer
+    [135903] = 135903, --Manifestation of the Deep
+    [129208] = 129208, --Dread Captain Lockwood
+    [104262] = 104262, --Burning Ember
 }
