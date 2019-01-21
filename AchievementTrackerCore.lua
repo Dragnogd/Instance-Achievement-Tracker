@@ -294,7 +294,7 @@ function getInstanceAchievements()
 	--Make sure the player we are about to scan is still in the group
 	if UnitName(playersToScan[1]) ~= nil then
 		playerCurrentlyScanning = playersToScan[1]
-		core:sendDebugMessage("Setting Comparison Unit to: " .. UnitName(playersToScan[1]))
+		--core:sendDebugMessage("Setting Comparison Unit to: " .. UnitName(playersToScan[1]))
 		core.currentComparisonUnit = UnitName(playersToScan[1])
 
 		--Check if the achievement ui is open before setting the comparison unit
@@ -333,7 +333,7 @@ function getInstanceAchievements()
 				-- end
 
 				--Last player to scan was not successfull
-				core:sendDebugMessage("Last scan was unsuccessfull: " .. scanCounterloc)
+				--core:sendDebugMessage("Last scan was unsuccessfull: " .. scanCounterloc)
 				rescanNeeded = true
 				if playersToScan[1] ~= nil then
 					--print("Cannot Scan " .. playersToScan[1])
@@ -350,7 +350,7 @@ function getInstanceAchievements()
 					end)
 				end
 			else
-				core:sendDebugMessage("Cancelling: " .. scanCounterloc)
+				--core:sendDebugMessage("Cancelling: " .. scanCounterloc)
 			end
 		end)
 	else
@@ -1713,7 +1713,7 @@ function detectBossByEncounterID(id)
 		if boss ~= "name" then
 			if core.Instances[core.expansion][core.instanceType][core.instance][boss].encounterID ~= nil then
 				--Detect boss by the encounter ID
-				core:sendDebugMessage("Type:")
+				--core:sendDebugMessage("Type:")
 				--core:sendDebugMessage(core.Instances[core.expansion][core.instanceType][core.instance][boss].encounterID)
 				if type(core.Instances[core.expansion][core.instanceType][core.instance][boss].encounterID) == "table" then
 					--If achievement relates to multiple encounters

@@ -1125,7 +1125,7 @@ function Instance_OnClick(self)
             --Check if any players in the group need the current achievement for the current instance they are inside off
             if core:has_value(instanceLocation["boss" .. counter2].players, L["GUI_NoPlayersNeedAchievement"]) == false and #instanceLocation["boss" .. counter2].players ~= 0 then
                 playersFound = true
-                core:sendDebugMessage("Found players for: " .. bossName)       
+                --core:sendDebugMessage("Found players for: " .. bossName)       
             end
 
             --If player has selected an instance by hand then just scan the current player for achievement for hide/grey out option unless its current instance we are in
