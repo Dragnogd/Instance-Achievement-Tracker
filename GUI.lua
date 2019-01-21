@@ -217,8 +217,13 @@ function Tab_OnClick(self)
             UIConfig.Main = Config:CreateText2("TOP", AchievementTrackerDialogBG, "TOP", 0, -10, "Instance Achievement Tracker", "GameFontNormalLarge")
             UIConfig.Main:SetWidth(750)
 
-            --Author
-            UIConfig.Main.author = Config:CreateText2("BOTTOMRIGHT", AchievementTrackerDialogBG, "BOTTOMRIGHT", -5, 5, "(EU) Whizzey-Doomhammer","GameFontNormal")
+            --Author & Translators
+            if (GetLocale() == "enGB" or GetLocale() == "enUS") then
+                UIConfig.Main.author = Config:CreateText2("BOTTOMRIGHT", AchievementTrackerDialogBG, "BOTTOMRIGHT", -5, 5, L["GUI_Author"] .. ": (EU) Whizzey-Doomhammer","GameFontNormal")
+            else
+                UIConfig.Main.author = Config:CreateText2("BOTTOMRIGHT", AchievementTrackerDialogBG, "BOTTOMRIGHT", -5, 20, L["GUI_Author"] .. ": (EU) Whizzey-Doomhammer","GameFontNormal")
+                UIConfig.Main.translators = Config:CreateText2("BOTTOMRIGHT", AchievementTrackerDialogBG, "BOTTOMRIGHT", -5, 5,L["GUI_Translators"] .. ": " .. L["Gui_TranslatorNames"],"GameFontNormal")            
+            end
             
             --Version
             UIConfig.Main.verison = Config:CreateText2("BOTTOMLEFT", AchievementTrackerDialogBG, "BOTTOMLEFT", 5, 5, "v" .. Config.majorVersion .. "." .. Config.minorVersion .. "." .. Config.revisionVersion .. Config.releaseType,"GameFontNormal")
