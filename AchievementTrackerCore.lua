@@ -1135,9 +1135,11 @@ function events:ENCOUNTER_START(self, encounterID, encounterName, difficultyID, 
 			LoggingCombat(1)
 			core:printMessage(L["Core_CombatLogEnabled"])
 		end
-		if Transcriptor:IsLogging() == nil then
-			Transcriptor:StartLog(1)
-			core:printMessage(L["Core_TranscriptorLogEnabled"])
+		if Transcriptor ~= nil then
+			if Transcriptor:IsLogging() == nil then
+				Transcriptor:StartLog(1)
+				core:printMessage(L["Core_TranscriptorLogEnabled"])
+			end
 		end
 	else
 		core:sendDebugMessage("Disable CombatLogs")
@@ -2556,9 +2558,11 @@ function core:clearVariables()
 			LoggingCombat(false)
 			core:printMessage(L["Core_CombatLogDisabled"])
 		end
-		if Transcriptor:IsLogging() == 1 then
-			Transcriptor:StopLog(1)
-			core:printMessage(L["Core_TranscriptorLogDisabled"])
+		if Transcriptor ~= nil then
+			if Transcriptor:IsLogging() == 1 then
+				Transcriptor:StopLog(1)
+				core:printMessage(L["Core_TranscriptorLogDisabled"])
+			end
 		end
 	end
 end
