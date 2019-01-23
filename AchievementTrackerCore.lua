@@ -9,7 +9,7 @@ local UIConfig													--UIConfig is used to make a display asking the user 
 local UICreated = false											--To enable achievement tracking when they enter an instances
 local debugMode = false
 local debugModeChat = false
-local sendDebugMessages = false
+local sendDebugMessages = true
 
 local ptrVersion = "8.1.0"
 
@@ -1619,6 +1619,7 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 
 					--If boss has an info frame then display it
 					if core.currentBosses[i].displayInfoFrame == true and infoFrameShown == false then
+						core:sendDebugMessage("Showing InfoFrame")
 						core.IATInfoFrame:ToggleOn()
 						core.IATInfoFrame:SetHeading(GetAchievementLink(core.currentBosses[i].achievement))
 						infoFrameShown = true
@@ -2541,6 +2542,7 @@ function core:clearVariables()
 	core.groupSizeInInstance = 0
 
 	if infoFrameShown == true then
+		core:sendDebugMessage("Resetting InfoFrame")
 		core.IATInfoFrame:ToggleOff()
 		core.IATInfoFrame:SetHeading()
 		core.IATInfoFrame:SetSubHeading1()
@@ -2548,6 +2550,7 @@ function core:clearVariables()
 		core.IATInfoFrame:SetSubHeading2()
 		core.IATInfoFrame:SetText2()
 		infoFrameShown = false
+		core.InfoFrame_PlayersTable = {}
 	else
 		core:sendDebugMessage("InfoFrame does not need to be reset")
 	end
