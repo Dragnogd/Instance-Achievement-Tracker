@@ -48,14 +48,12 @@ local baseLocale = {
 	["GUI_AchievementsDiscordTitle"] = "Achievements Discord",
 	["GUI_AnnounceMessagesToRaidWarning"] = "通報到團隊警告 (可用時)",
 	["GUI_AnnounceTracking"] = "通報隊伍開始追蹤成就",
-	--[[Translation missing --]]
-	--[[ ["GUI_Author"] = "Author",--]] 
+	["GUI_Author"] = "作者",
 	["GUI_BattleForAzeroth"] = "決戰艾澤拉斯",
 	["GUI_Cataclysm"] = "浩劫與重生",
 	["GUI_Disabled"] = "已停用",
 	["GUI_EnableAddon"] = "啟用插件",
-	--[[Translation missing --]]
-	--[[ ["GUI_EnableAutomaticCombatLogging"] = "Enable automatic combat logging",--]] 
+	["GUI_EnableAutomaticCombatLogging"] = "啟用自動戰鬥記錄",
 	["GUI_Enabled"] = "已啟用",
 	["GUI_EnterInstanceToStartScanning"] = "進入副本開始掃描",
 	["GUI_GreyOutCompletedAchievements"] = "用灰色顯示已完成的成就",
@@ -83,8 +81,7 @@ local baseLocale = {
 	["GUI_TrackingDisabled"] = "(成就追蹤已停用)",
 	["GUI_TrackingNumber"] = "目前追蹤",
 	["Gui_TranslatorNames"] = "gaspy10",
-	--[[Translation missing --]]
-	--[[ ["GUI_Translators"] = "Translators",--]] 
+	["GUI_Translators"] = "翻譯",
 	["GUI_WarlordsOfDraenor"] = "德拉諾之霸",
 	["GUI_WrathOfTheLichKing"] = "巫妖王之怒",
 	["Instance Achievement Tracker"] = "副本成就追蹤",

@@ -10,7 +10,7 @@ local baseLocale = {
 	["- Tracks when the criteria of instance achievements have been met and output this to chat"] = "- Сообщение, когда критерии достижений подземелья выполнены и выводят его в чат",
 	["(Enter instance to start scanning)"] = "(Войдите в подземелье, чтобы начать сканирование)",
 	["Atal_Dazar_Yazma"] = "Все игроки, входящие в состав группы, за исключением танка, должны рассредоточиться и оставаться возле одной из жаровен, пока босс будет применять способность %s. Жаровни Пламени Тьмы будут гореть примерно 25 сек. — рекомендуем зажигать жаровни лишь тогда, когда у босса останется от 5 до 10%% здоровья.",
-	["AtalDazar_Other"] = "В ходе прохождения подземелья IAT_122969 будет применять к случайному игроку %s способность, обращающую противника в существо на 5 сек. После того, как действие эффекта прекратится, все игроки, находящиеся рядом с этим игроком, также обратятся в это существо. \\n\\nРекомендуем расправиться со всеми противниками в подземелье до начала боя с IAT_122969. Вам придется подводить знахарку к каждому боссу подземелья. Также помогут классы, имеющие способности контроля, действующие в течение долгого периода времени (Монахи с %s, Охотники с %s, Маги с %s). Не позволяйте знахарке освободиться из-под эффектов контроля до того, пока у босса не останется мало здоровья. Если в группе отсутствуют классы, имеющие способности контроля, то сосредоточьте усилия на прерывании применения способности %s в ходе всего боя.",
+	["AtalDazar_Other"] = "В ходе прохождения подземелья IAT_122969 будет применять к случайному игроку %s способность, обращающую противника в существо на 5 сек. После того, как действие эффекта прекратится, все игроки, находящиеся рядом с этим игроком, также обратятся в это существо. \\n\\n Рекомендуем расправиться со всеми противниками в подземелье до начала боя с IAT_122969. Вам придется подводить знахарку к каждому боссу подземелья. Также помогут классы, имеющие способности контроля, действующие в течение долгого периода времени (Монахи с %s, Охотники с %s, Маги с %s). Не позволяйте знахарке освободиться из-под эффектов контроля до того, пока у босса не останется мало здоровья. Если в группе отсутствуют классы, имеющие способности контроля, то сосредоточьте усилия на прерывании применения способности %s в ходе всего боя.",
 	["AtalDazar_Priestess_AlunZa"] = "Босс будет призывать дополнительных противников с помощью заклинания %s. Призванный противник будет идти к лужам %s и осушать их. Когда луж не останется, противник начнет атаковать игроков. В этот момент игроки должны применить эффект контроля к нему, чтобы избежать получения дополнительного урона. После осушения 8 луж %s, он обратиться в IAT_131140.",
 	["Core_AchievementScanFinished"] = "Сканирование достижений завершено",
 	["Core_AchievementTrackingEnabledFor"] = "Отслеживание достижений включено для",
@@ -32,24 +32,22 @@ local baseLocale = {
 	["Core_TrackAchievements"] = "Отслеживать Достижения",
 	["Core_Yes"] = "Да",
 	["Features"] = "Возможности",
-	["Freehold_HarlanSweete"] = "%s нацелится на случайного игрока за %s, который должен будет расположиться рядом с одним из сундуков, чтобы они в конечном итоге были уничтожены.",
-	["Freehold_RingOfBooty"] = "Для этого достижения вам нужно будет собрать 3 предмета по всему подземелью. %s появляется в гнезде у первого босса после того, как вы победили его, %s находится на вершине платформы в Ромовом квартале, а %s можно найти около самого попугая (после третьего босса).",
+	["Freehold_HarlanSweete"] = "%s нацеливает на случайного игрока %s, этот игрок должен будет расположиться рядом с одним из сундуков, чтобы они в конечном итоге были уничтожены.",
+	["Freehold_RingOfBooty"] = "Для этого достижения вам нужно будет собрать 3 предмета по всему подземелью. %s появляется в гнезде у первого босса после того, как вы победили его, %s находится на вершине платформы в Ромовом квартале, а %s можно после убийства третьего босса.",
 	["Freehold_SkycapNKragg"] = "Чтобы вызвать IAT_138314, вы должны поместить %s, прежде чем атаковать босса.",
 	["GUI_Achievement"] = "Достижение",
 	["GUI_Achievements"] = "Достижений",
 	["GUI_AchievementsCompletedForInstance"] = "Все достижения были завершены",
 	["GUI_AchievementsDiscordDescription"] = "Тактика любезно предоставлена Дискорд сервером по достижениям, сообществом, участники которого могут встречаться с единомышленниками и формировать группы для различных достижений.",
 	["GUI_AchievementsDiscordTitle"] = "Дискорд Достижений",
-	["GUI_AnnounceMessagesToRaidWarning"] = "Отправлять сообщение в чат Оповещения Рейда",
+	["GUI_AnnounceMessagesToRaidWarning"] = "Отправлять сообщение в чат Оповещение Рейда",
 	["GUI_AnnounceTracking"] = "Объявить о достижениях, отслеживаемых в группе",
-	--[[Translation missing --]]
-	--[[ ["GUI_Author"] = "Author",--]] 
+	["GUI_Author"] = "Автор",
 	["GUI_BattleForAzeroth"] = "Battle for Azeroth",
 	["GUI_Cataclysm"] = "Cataclysm",
 	["GUI_Disabled"] = "Провалено",
 	["GUI_EnableAddon"] = "Включить Аддон",
-	--[[Translation missing --]]
-	--[[ ["GUI_EnableAutomaticCombatLogging"] = "Enable automatic combat logging",--]] 
+	["GUI_EnableAutomaticCombatLogging"] = "Включить автоматическое ведение журнала боя",
 	["GUI_Enabled"] = "Включено",
 	["GUI_EnterInstanceToStartScanning"] = "Войдите в подземелье, чтобы начать сканирование",
 	["GUI_GreyOutCompletedAchievements"] = "Серый цвет завершенных достижений",
@@ -70,26 +68,22 @@ local baseLocale = {
 	["GUI_PlaySoundOnSuccess"] = "Воспроизвести звук, когда достижение завершено",
 	["GUI_ScanInProgress"] = "сканирование продолжается",
 	["GUI_SelectSound"] = "Выберите Звук",
-	["GUI_Tactics"] = "Тактика",
+	["GUI_Tactics"] = "Тактик",
 	["GUI_ToggleMinimap"] = "Показывать кнопку на Миникарте",
 	["GUI_Track"] = "Следить",
 	["GUI_Tracking"] = "Отслеживание",
 	["GUI_TrackingDisabled"] = "(Отслеживание достижений отключено)",
 	["GUI_TrackingNumber"] = "В настоящее время отслеживается",
-	["Gui_TranslatorNames"] = "Hubbotu",
-	--[[Translation missing --]]
-	--[[ ["GUI_Translators"] = "Translators",--]] 
+	["Gui_TranslatorNames"] = "Хоргул-Гордунни",
+	["GUI_Translators"] = "Перевод на Русский язык",
 	["GUI_WarlordsOfDraenor"] = "Warlords of Draenor",
 	["GUI_WrathOfTheLichKing"] = "Wrath of the Lich King",
 	["Instance Achievement Tracker"] = "Instance Achievement Tracker",
-	["Instances_Other"] = "Другой",
+	["Instances_Other"] = "Общее",
 	["Instances_TrashAfterThirdBoss"] = "Треш после третьего босса",
-	--[[Translation missing --]]
-	--[[ ["KingsRest_DazarTheFirstKing"] = "This achievement is obtained at %s, the last boss in the instance. Have two players each stay on top of the stones in front of the two sarcophagi, and the lights will start filling up around the stone. Once they are both lit up, the right sarcophagus will start shaking which means that you can kill the boss.",--]] 
-	--[[Translation missing --]]
-	--[[ ["KingsRest_MchimbaTheEmbalmer"] = "For this achievement you will have to free the player targeted by %s without him using %s more than once, and also free him before the boss finishes casting %s.\\n\\n Note: Players have reported a minor bug with this achievement, and it's recommended that the entombed player does not use %s before the boss casts %s",--]] 
-	--[[Translation missing --]]
-	--[[ ["KingsRest_Other"] = "The first trinket is in the first room of the dungeon, behind the sarcophagus, underneath the baskets.\\n The second trinket is in the first boss hallway, at the end of the platform, behind the last set of stairs.\\n The third trinket - (Check out the Glory of the Wartorn Hero Achievement Guide for details on WowHead)\\n The fourth trinket is located before the final boss room, at the bottom of the strairs, at the top of the right pillar.",--]] 
+	["KingsRest_DazarTheFirstKing"] = "Это достижение можно получить во время сражения с %s последним боссом подземелья. Два игрока должны встать на камни, стоящих напротив двух саркофагов, после чего вокруг камней появятся огоньки. После того, как все огоньки загорятся, саркофаг, расположенный с правой стороны, начнет трястись. Это означает, что вы можете убить босса.",
+	["KingsRest_MchimbaTheEmbalmer"] = "Для этого достижения вам нужно будет освободить игрока, на которого нацелено %s для этого использовать %s нельзя более одного раза. А также, вы должны освободить игрока до того, как босс завершит применение способности %s.\\n\\n Примечание: игроки сообщают, что столкнулись с небольшой ошибкой при выполнении достижения. Застрявшему игроку не рекомендуется использовать %s до того как босс применил %s.",
+	["KingsRest_Other"] = "Первое украшение можно найти в первой комнате подземелья, позади саркофагами за корзинами.\\n Второе украшение можно найти в пролете по пути к первому боссу, за лестницами, расположенными в конце платформы.\\n Местоположение третьего украшения и его получения (смотрите гайд на WowHead)\\n Четвертое украшение можно найти у входа в помещение с заключительным боссом, на вершине правой колонны.",
 	["Main"] = "Главное Меню",
 	["Shared_AddKillCounter"] = "%s счетчик убийств",
 	["Shared_CompletedBossKill"] = "будет завершено после убийства босса",
@@ -124,8 +118,7 @@ local baseLocale = {
 	["Shared_PlayersHit"] = "игроки бьют:",
 	["Shared_PlayersWhoStillNeedToGetHit"] = "Игроки, которым еще нужно ударить:",
 	["Shared_PlayersWhoStillNeedToGetResurrected"] = "Чтобы получить достижение, необходимо воскресить следующих игроков:",
-	--[[Translation missing --]]
-	--[[ ["Shared_ReportString"] = "Please report the following string to the IAT author",--]] 
+	["Shared_ReportString"] = "Пожалуйста, сообщите следующую строку автору IAT",
 	["Shared_Seven"] = "7",
 	["Shared_Seventeen"] = "17",
 	["Shared_SheCanNowBeKilled"] = "Теперь она может быть убита",
@@ -138,19 +131,16 @@ local baseLocale = {
 	["Shared_Twenty"] = "20",
 	["Shared_Two"] = "2",
 	["Shared_WasKilled"] = "был убит",
-	--[[Translation missing --]]
-	--[[ ["ShrineOfTheStorm_LordStormsong"] = "During the course of the encounter, %s will periodically begin to %s which summons %s that will chase players and attempt to explode upon impact. To obtain this achievement, you must not come into contact with any of the void adds so you will keep kiting them throughout the encounter.",--]] 
-	--[[Translation missing --]]
-	--[[ ["ShrineOfTheStorm_Other"] = "The %s is picked up at the start of the dungeon, in the first room. If you receive any frost damage then the spirit flames will be extinguished so it's recommended to first clear all the trash to the third boss, and then pick up the breath. Do not kill the first boss as that will make the breath despawn. Once you light up the shrines to the third boss you will get the achievement.",--]] 
-	--[[Translation missing --]]
-	--[[ ["ShrineOfTheStorm_VolZith"] = "To get the %s debuff you will have to dive down in the water before the last boss until you see Void Orbs floating around, and then swim through them. The debuff will make you hostile to all players for 24 seconds, then disappear for 6 seconds time in which your healer must use cds and heal you to full hp. Avoid using aoe spells on the boss, and instead use self heals as much as possible to help your healer out.\\n\\n After %s casts %s, you will get teleported into the sunken realm where you should quickly kill the adds and then wait 20-30 seconds for cooldowns to be available. %s will also cast %s, and you will have to crowd control 5 %s adds so that they won't reach the boss.",--]] 
+	["ShrineOfTheStorm_LordStormsong"] = "Во время боя с %s он будет периодически использовать %s которая призывает %s, они будут преследовать игрока и пытаться взорваться после соприкосновения с ним. Для получения этого достижения вы не должны коснутся этих созданий, и кайтить их в течение всего боя.",
+	["ShrineOfTheStorm_Other"] = "Найти %s можно в первой комнате, после начала прохождения подземелья. Если вы получите урон от магии льда, то огонь. Рекомендуется предварительно очистить путь до третьего босса от всех противников, после чего подобрать огонь. Не убивайте первого босса — в противном случае огонь пропадет и более не появится. Вы получите достижение после того, как огни у третьего босса будут зажжены.",
+	["ShrineOfTheStorm_VolZith"] = "Чтобы получить дебафф %s вы должны будите нырнуть в воду перед последним боссом и доплыть до той глубины, на которой появляются Сферы Пустоты, и проплыть через них. Дебафф сделает вас враждебным ко всем игрокам в течение 24 сек., после чего эффект будет снят на 6 сек., в течение которых лекарь должен использовать мощные заклинания исцеления и восстановить вам полный запас здоровья. Избегайте использования урона по области во время боя с боссом, и используйте способности самоисцеления, чтобы помочь лекарю.\\n\\n После того как %s произнесет %s, вы будете перемещены в затонувший мир. Ваша задача заключается в быстром убийстве противников. Выждите 20-30 сек., чтобы мощные способности успели восстановиться. Также %s применит %s. Применяйте эффекты контроля к 5 %s, и не позволить им дойти до босса.",
 	--[[Translation missing --]]
 	--[[ ["Uldir_Fetid_Devourer_Tactics"] = "Every fourth melee attack the boss will cast %s on the target closest to the current tank, a hit which deals physical damage equal to 300%% of a standard melee attack.\\n\\n Every player will have to be hit, and it's recommended to use a personal cooldown when that happens. The fight itself isn't that hard, but you should prioritize people without a good defensive cooldown, as the boss enrages at 50%% (%s)\",",--]] 
 	--[[Translation missing --]]
 	--[[ ["Uldir_GHuun_Tactics"] = "For this achievement you will have to make groups of 3 people to do the %s: 2 dps + 1 healer assisting them.\\n\\n If you have a smaller group then you should invite a few more people to help out with killing the adds",--]] 
 	--[[Translation missing --]]
 	--[[ ["Uldir_MOTHER_Tactics"] = "To enter the 'passcode' you will have to click the buttons in each chamber in a specific order that is randomized for every group. The order can be 321, 213, 231 or similar combinations.\\n\\n Check if the buttons in the first room stop blinking, and then send a group of 2-3 dps and a healer to click on the buttons in the second and the third room. If the buttons are clicked in the right sequence, they will stop blinking and won't be clickable anymore. Once you've done that you can kill the boss and get the achievement.",--]] 
-	["Uldir_Mythrax_Tactics"] = "По состоянию на ноябрь 2018 года: теперь достижение функционирует так, как описано.\\n\\n Это значительно облегчает достижение, поскольку вы просто подбираете свои шары.",
+	["Uldir_Mythrax_Tactics"] = "По состоянию на ноябрь 2018 года: теперь достижение функционирует так, как описано.\\n\\nЭто значительно облегчает достижение, поскольку вы просто подбираете свои шары.",
 	--[[Translation missing --]]
 	--[[ ["Uldir_Taloc_Tactics"] = "For this achievement you will have to collect 4 %s while the Elevator is going down in phase 2.\\n\\n The positions of the orbs seem to be randomised, however a Demon Hunter can easily get all of them by using %s and %s",--]] 
 	--[[Translation missing --]]
@@ -158,7 +148,7 @@ local baseLocale = {
 	--[[Translation missing --]]
 	--[[ ["Uldir_ZekVoz_Tactics"] = "This achievement is pretty easy, however you should use the IAT_64482 after IAT_135129 disappears in phase 2. The puzzle will activate the next time the IAT_135129 appears (the second time), which helps your healers with healing & mana (you won't have to deal with the mechanics for an extra minute).\\n\\n The %s deal anywhere from 25k to 35k damage, so make sure to dodge them as much as possible so your healers don't get overwhelmed.",--]] 
 	--[[Translation missing --]]
-	--[[ ["Uldir_ZulReborn_Tactics"] = "This achievement is pretty straight forward, no one has to step onto the inner ring of the platform. Here are a few tips for the encounter:\\n\\n Tanks should pick all the adds, and stack them so that melee dps can cleave them.\\n Ranged dps should be on the boss 24/7, and should not switch to the adds unless melee dps can't keep up killing them in time.\\n If you have 2 priests in the group, then you should assign them to different positions (left and right outside of the group) so that both sides are covered when adds spawn.\\n At 40%% IAT_138967 will knock back everyone, so you should position yourself near a wall so you don't get knocked off the platform.\"",--]]   
+	--[[ ["Uldir_ZulReborn_Tactics"] = "This achievement is pretty straight forward, no one has to step onto the inner ring of the platform. Here are a few tips for the encounter:\\n\\n Tanks should pick all the adds, and stack them so that melee dps can cleave them.\\n Ranged dps should be on the boss 24/7, and should not switch to the adds unless melee dps can't keep up killing them in time.\\n If you have 2 priests in the group, then you should assign them to different positions (left and right outside of the group) so that both sides are covered when adds spawn.\\n At 40%% IAT_138967 will knock back everyone, so you should position yourself near a wall so you don't get knocked off the platform.\"",--]] 
 }
 
 core:RegisterLocale('ruRU', baseLocale)
