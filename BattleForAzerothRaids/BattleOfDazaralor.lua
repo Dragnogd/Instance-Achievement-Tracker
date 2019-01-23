@@ -79,6 +79,13 @@ function core._2070:Opulence()
 	InfoFrame_SetHeaderCounter(L["Shared_PlayersWhoNeedAchievement"],playersCompletedAchievement,core.currentBosses[1].players)
 end
 
+function core._2070:JainaProudmoore()
+    --Build a Frosty Snowmon then destroy it before defeating Jaina Proudmoore in the Battle of Dazar'alor on Normal Difficulty or higher.
+    if core:getBlizzardTrackingStatus(13410, 1) == true then
+        core:getAchievementSuccess()
+    end
+end
+
 function core._2070:ClearVariables()
     ------------------------------------------------------
     ---- Grong  

@@ -2,6 +2,7 @@
 -- Namespaces
 --------------------------------------
 local _, core = ...
+local L = core.L
 
 --------------------------------------
 -- Terrace Of Endless Spring Bosses --
@@ -45,14 +46,19 @@ function core._996:Tsulong()
 end
 
 function core._996:LeiShi()
+	InfoFrame_UpdatePlayersOnInfoFrame()
+	InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],parasiticClutchCounter,core.groupSize)
+	
 	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 125652 then
 		parasiticClutchCounter = parasiticClutchCounter + 1
 		core:sendMessage(core.destName .. " Inflicted with Parasitic Clutch (" .. parasiticClutchCounter .. "/" .. core.groupSize .. ")")
+		InfoFrame_SetPlayerComplete(core.destName)
 	end
 
 	if core.type == "SPELL_AURA_REMOVED" and core.spellId == 125652 then
 		parasiticClutchCounter = parasiticClutchCounter - 1
-		core:sendMessage(core.destName .. " LOST Parasitic Clutch (" .. parasiticClutchCounter .. "/" .. core.groupSize .. ")")	
+		core:sendMessage(core.destName .. " LOST Parasitic Clutch (" .. parasiticClutchCounter .. "/" .. core.groupSize .. ")")
+		InfoFrame_SetPlayerFailed(core.destName)	
 		
 		--If the achievement was already completed then alert the user not to kill the boss
 		if core.achievementsCompleted[1] == true then
