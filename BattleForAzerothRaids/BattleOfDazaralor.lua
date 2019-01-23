@@ -15,12 +15,6 @@ core._2070.Events = CreateFrame("Frame")
 ------------------------------------------------------
 local barrelCounter = 0
 
-------------------------------------------------------
----- Conclave of the Chosen
-------------------------------------------------------
-local ravenousStalkersUID = {}
-local initialRaptorsTime = nil
-
 function core._2070:Grong()
     --Defeat Grong in the Battle of Dazar'alor after destroying 6 Barrels on Normal Difficulty or higher.
 
@@ -58,33 +52,12 @@ end
 function core._2070:ConclaveOfTheChosen()
     --Defeat the Conclave of the Chosen in the Battle of Dazar'alor without killing all the initial raptors summoned by Gonk's Wrath on Normal difficulty or higher.
 
-    --When we detect first raptor has spawned. Collect UID of all raptors that spawned at same time as the initial raptor
-    if core.type == "SPELL_AURA_APPLIED" and core.destID == "144807" and core.spellId == 257650 and initialRaptorsTime == nil then
-        --Set the initial time so we can collect other raptors which spawned at same time
-        initialRaptorsTime = core.timestamp
-        table.insert(ravenousStalkersUID, core.spawn_uid_dest)
-    elseif core.type == "SPELL_AURA_APPLIED" and core.destID == "144807" and core.spellId == 257650 and initialRaptorsTime ~= nil then
-        --If timestamp matches then add to table
-        if core.timestamp == initialRaptorsTime then
-            table.insert(ravenousStalkersUID, core.spawn_uid_dest)
-        end
-    end
-
-    --If raptors dies as in table then fail achievement
-    if core.type == "UNIT_DIED" and core.destID == "144807" and core:has_value(ravenousStalkersUID, core.spawn_uid_dest) then
+    if core:getBlizzardTrackingStatus(13325) == false then
         core:getAchievementFailed()
     end
-
-    core:detectBlizzardTrackingAutomatically()
 end
 
 function core._2070:ClearVariables()
-    ------------------------------------------------------
-    ---- Conclave of the Chosen
-    ------------------------------------------------------
-    ravenousStalkersUID = {}
-    initialRaptorsTime = nil
-
     ------------------------------------------------------
     ---- Grong  
     ------------------------------------------------------
