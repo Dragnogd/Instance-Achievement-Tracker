@@ -49,9 +49,22 @@ end
 
 function core._2070:ConclaveOfTheChosen()
     --Defeat the Conclave of the Chosen in the Battle of Dazar'alor without killing all the initial raptors summoned by Gonk's Wrath on Normal difficulty or higher.
-
     if core:getBlizzardTrackingStatus(13325) == false then
         core:getAchievementFailed()
+    end
+end
+
+function core._2070:HighTinkerMekkatorque()
+    --Defeat High Tinker Mekkatorque in the Battle of Dazar'alor after defeating the Blingtron MK2 on Normal Difficulty or higher.
+    if core:getBlizzardTrackingStatus(13401, 1) == true then
+        core:getAchievementSuccess()
+    end
+end
+
+function core._2070:StormwallBlockade()
+    --Fish up the De Lurker Be'loa, then defeat the Stormwall Blockade on Normal Difficulty or higher.
+    if core:getBlizzardTrackingStatus(13430) == true then
+        core:getAchievementSuccess()
     end
 end
 
