@@ -11,10 +11,28 @@ core._2070 = {}
 core._2070.Events = CreateFrame("Frame")
 
 ------------------------------------------------------
+---- Grong  
+------------------------------------------------------
+local barrelCounter = 0
+
+------------------------------------------------------
 ---- Conclave of the Chosen
 ------------------------------------------------------
 local ravenousStalkersUID = {}
 local initialRaptorsTime = nil
+
+function core._2070:Grong()
+    --Defeat Grong in the Battle of Dazar'alor after destroying 6 Barrels on Normal Difficulty or higher.
+
+    if (core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_APPLIED_DOSE") and core.spellId == 289050 then
+        barrelCounter = barrelCounter + 1
+        core:sendMessage(core:getAchievement() .. L["BattleOfDazzarlor_BarrelsDestroyed"] .. " (" .. barrelCounter .. "/6)")
+    end
+
+    if barrelCounter == 6 then
+        core:getAchievementSuccess()
+    end
+end
 
 function core._2070:KingRastakhan()
     --Defeat King Rastakhan with the Phantom of Retribution, Phantom of Rage and Phantom of Slaughter still alive on Normal difficulty or higher.
@@ -66,6 +84,11 @@ function core._2070:ClearVariables()
     ------------------------------------------------------
     ravenousStalkersUID = {}
     initialRaptorsTime = nil
+
+    ------------------------------------------------------
+    ---- Grong  
+    ------------------------------------------------------
+    barrelCounter = 0
 end
 
 -- function core._2070:InstanceCleanup()

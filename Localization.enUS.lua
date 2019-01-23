@@ -163,6 +163,7 @@ local baseLocale = {
 
     --Chat Output
     --["BattleOfDazaralor_PraiseEmote"] = "You praise %s",
+    ["BattleOfDazzarlor_BarrelsDestroyed"] = "barrels destroyed",
 
     -------------------------------------------------------
     --- Uldir

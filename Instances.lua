@@ -153,8 +153,8 @@ core.Instances = {
                     achievement = 13383,
                     players = {},
                     tactics = L["BattleOfDazaralor_Grong"],
-                    enabled = false,
-                    track = nil,
+                    enabled = true,
+                    track = function() core._2070:Grong() end,
                     partial = false,
                     encounterID = {2263, 2284},
                 },
@@ -2188,7 +2188,7 @@ core.Instances = {
                 },
                 boss3 = {
                     name = "729", --Lei Shi
-                    bossIDs = {62983},
+                    bossIDs = {},
                     achievement = 6824,
                     players = {},
                     tactics = L["TerraceOfEndlessSpring_LeiShi"],
@@ -2196,6 +2196,7 @@ core.Instances = {
                     track = function() core._996:LeiShi() end,
                     partial = false,
                     encounterID = 1506,
+                    displayInfoFrame = true,
                 },
                 boss4 = {
                     name = 709, --Sha of Fear
