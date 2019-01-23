@@ -45,8 +45,6 @@ function core._2070:KingRastakhan()
     if (core.type == "UNIT_DIED" and core.destID == "146493") or (core.overkill > 0 and core.destID == "146493") then
         core:getAchievementFailed()
     end
-
-    core:detectBlizzardTrackingAutomatically()
 end
 
 function core._2070:ConclaveOfTheChosen()
