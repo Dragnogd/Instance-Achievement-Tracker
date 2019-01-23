@@ -168,6 +168,7 @@ core.Instances = {
                     track = function() core._2070:Opulence() end,
                     partial = false,
                     encounterID = 2271,
+                    displayInfoFrame = true,
                 },
                 boss5 = {
                     name = 2330, --Conclave of the Chosen
