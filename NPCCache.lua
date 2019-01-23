@@ -30,4 +30,5 @@ core.NPCCache = {
     [135903] = 135903, --Manifestation of the Deep
     [129208] = 129208, --Dread Captain Lockwood
     [104262] = 104262, --Burning Ember
+    [51090] = 51090, --Singing Sunflower
 }

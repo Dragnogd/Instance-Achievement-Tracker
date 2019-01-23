@@ -15,6 +15,11 @@ core._2070.Events = CreateFrame("Frame")
 ------------------------------------------------------
 local barrelCounter = 0
 
+------------------------------------------------------
+---- Opulence  
+------------------------------------------------------
+local playersCompletedAchievement = 0
+
 function core._2070:Grong()
     --Defeat Grong in the Battle of Dazar'alor after destroying 6 Barrels on Normal Difficulty or higher.
 
@@ -68,137 +73,73 @@ function core._2070:StormwallBlockade()
     end
 end
 
+function core._2070:Opulence()
+    --Defeat the Opulence in Battle of Dazar'alor after /praising a Singing Sunflower while under the effects of Brilliant Aura on Normal Difficulty or higher.
+    InfoFrame_UpdatePlayersOnInfoFrame()
+	InfoFrame_SetHeaderCounter(L["Shared_PlayersWhoNeedAchievement"],playersCompletedAchievement,core.currentBosses[1].players)
+end
+
 function core._2070:ClearVariables()
     ------------------------------------------------------
     ---- Grong  
     ------------------------------------------------------
     barrelCounter = 0
+
+    ------------------------------------------------------
+    ---- Opulence  
+    ------------------------------------------------------
+    playersCompletedAchievement = 0
 end
 
--- function core._2070:InstanceCleanup()
---     core._2070.Events:UnregisterEvent("CHAT_MSG_TEXT_EMOTE")
--- end
+function core._2070:InstanceCleanup()
+    core._2070.Events:UnregisterEvent("CHAT_MSG_TEXT_EMOTE")
+end
 
--- core._2070.Events:SetScript("OnEvent", function(self, event, ...)
---     return self[event] and self[event](self, event, ...)
--- end)
+core._2070.Events:SetScript("OnEvent", function(self, event, ...)
+    return self[event] and self[event](self, event, ...)
+end)
 
--- function core._2070:InitialSetup()
---     core._2070.Events:RegisterEvent("CHAT_MSG_TEXT_EMOTE")
--- end
+function core._2070:InitialSetup()
+    core._2070.Events:RegisterEvent("CHAT_MSG_TEXT_EMOTE")
+end
 
--- function core._2070.Events:CHAT_MSG_TEXT_EMOTE(self, message, sender, lineID, senderGUID)
---     if core.Instances[core.expansion][core.instanceType][core.instance]["boss4"].enabled == true then
---         if core.emoteType == "HUG" then
---             print("FOUND A HUG FOR UNIT ")
---             print(message)
---         end
---     end
--- end
-
--- events:RegisterEvent("CHAT_MSG_TEXT_EMOTE")
-
--- function core._1466:InstanceCleanup()
---     core._1466.Events:UnregisterEvent("CHAT_MSG_TEXT_EMOTE")
---     core._1466.Events:UnregisterEvent("UNIT_TARGET")
--- end
-
--- core._1466.Events:SetScript("OnEvent", function(self, event, ...)
---     return self[event] and self[event](self, event, ...)
--- end)
-
--- function core._1466:InitialSetup()
---     core._1466.Events:RegisterEvent("CHAT_MSG_TEXT_EMOTE")
---     core._1466.Events:RegisterEvent("UNIT_TARGET")
--- end
-
--- local emoteType = nil
--- local praiseString1 = nil
--- local praiseString2 = nil
--- local praiseString3 = nil
--- local praiseString4 = nil
--- local praiseString5 = nil
--- local praiseStringFinal = nil
-
--- hooksecurefunc("DoEmote", function(token, unit)
--- 	token = token:upper() -- Convert token to uppercase
-
--- 	emoteType = token
--- end)
-
--- function core._1466.Events:UNIT_TARGET(self, unitID)
---     if praiseStringFinal == nil and UnitIsUnit("target", "player") == false and L["BattleOfDazaralor_PraiseEmote"] == "BattleOfDazaralor_PraiseEmote" then
---         local blockpraise = false
---         if praiseString1 ~= nil then
---             if string.find(praiseString1, UnitName("target")) then
---                 blockpraise = true
---             end 
---         end
---         if praiseString2 ~= nil then
---             if string.find(praiseString2, UnitName("target")) then
---                 blockpraise = true
---             end 
---         end
---         if praiseString3 ~= nil then
---             if string.find(praiseString3, UnitName("target")) then
---                 blockpraise = true
---             end 
---         end
---         if praiseString4 ~= nil then
---             if string.find(praiseString4, UnitName("target")) then
---                 blockpraise = true
---             end 
---         end
---         if praiseString5 ~= nil then
---             if string.find(praiseString5, UnitName("target")) then
---                 blockpraise = true
---             end 
---         end
-        
---         if blockpraise == false then
---             DoEmote("PRAISE")       
---         end 
---     end
--- end
-
--- function core._1466.Events:CHAT_MSG_TEXT_EMOTE(self, message, sender, lineID, senderGUID)
---     if core.Instances[core.expansion][core.instanceType][core.instance]["boss1"].enabled == true then
---         if emoteType == "PRAISE" then
---             emoteType = nil
---             if praiseString1 == nil then
---                 praiseString1 = message
---             elseif praiseString2 == nil and praiseString1 ~= message then
---                 praiseString2 = message
---             elseif praiseString3 == nil and praiseString1 ~= message and praiseString2 ~= message then
---                 praiseString3 = message
---             elseif praiseString4 == nil and praiseString1 ~= message and praiseString2 ~= message and praiseString3 ~= message then
---                 praiseString4 = message
---             elseif praiseString5 == nil and praiseString1 ~= message and praiseString2 ~= message and praiseString3 ~= message and praiseString4 ~= message then
---                 praiseString5 = message 
---             end
-
---             if praiseString1 ~= nil and praiseString2 ~= nil and praiseString3 ~= nil and praiseString4 ~= nil and praiseString5 ~= nil and praiseStringFinal == nil then
---                 praiseStringFinal = getCommonWordsInString(praiseString1, praiseString2, praiseString3, praiseString4, praiseString5)
---                 core:printMessage(L["Shared_ReportString"] .. " " .. core.instance .. " '" .. praiseStringFinal .. "'")
-
---                 L["BattleOfDazaralor_PraiseEmote"] = praiseStringFinal
---             end 
---         end
---     end
--- end
-
--- function getCommonWordsInString(word1, word2, word3, word4, word5)
--- 	local newWord = ""
--- 	for i = 1, #word1 do
--- 		local c = word1:sub(i,i)
--- 		if c == word2:sub(i, i) and c == word3:sub(i, i) and c == word4:sub(i, i) and c == word5:sub(i, i) then
---             newWord = newWord .. c
---         else
---             break     
--- 		end
--- 	end
--- 	return newWord
--- end
-
-
-
+function core._2070.Events:CHAT_MSG_TEXT_EMOTE(self, message, sender, lineID, senderGUID)
+    if core.Instances[core.expansion][core.instanceType][core.instance]["boss4"].enabled == true then
+        --Lets get the target they praised
+        if UnitIsPlayer(sender) then
+            if sender == UnitName("Player") then
+                if string.match(message, L["BattleOfDazzarlor_PraiseSelf"]) then
+                    if string.match(message, getNPCName(51090)) then
+                        --They have praised the correct npc. Check if they have the correct buff
+                        for i=1,40 do
+                            local _, _, _, _, _, _, _, _, _, spellId = UnitAura(sender, i)
+                            if spellId == 284802 then
+                                --Check if the player actually needs the achievement since it is personal
+                                
+                                InfoFrame_SetPlayerComplete(sender)
+                                playersCompletedAchievement = playersCompletedAchievement + 1
+                                core:getAchievementSuccessPersonalWithName(1, sender)	
+                            end
+                        end
+                    end
+                end
+            else
+                if string.match(message, L["BattleOfDazzarlor_PraiseOther"]) then
+                    if string.match(message, getNPCName(51090)) then
+                        --They have praised the correct npc. Check if they have the correct buff
+                        for i=1,40 do
+                            local _, _, _, _, _, _, _, _, _, spellId = UnitAura(sender, i)
+                            if spellId == 284802 then
+                                --Check if the player actually needs the achievement since it is personal
+                                
+                                InfoFrame_SetPlayerComplete(sender)
+                                playersCompletedAchievement = playersCompletedAchievement + 1
+                                core:getAchievementSuccessPersonalWithName(1, sender)	
+                            end
+                        end
+                    end
+                end 
+            end
+        end
+    end
+end

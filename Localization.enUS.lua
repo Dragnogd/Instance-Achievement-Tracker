@@ -146,6 +146,7 @@ local baseLocale = {
     ["Shared_WasKilled"] = "was killed",
     ["Shared_Found"] = "found",
     ["Shared_ReportString"] = "Please report the following string to the IAT author",
+    ["Shared_PlayersWhoNeedAchievement"] = "Players who need achievement",
 
     -------------------------------------------------------
     --- Battle of Dazar'alor
@@ -164,6 +165,8 @@ local baseLocale = {
     --Chat Output
     --["BattleOfDazaralor_PraiseEmote"] = "You praise %s",
     ["BattleOfDazzarlor_BarrelsDestroyed"] = "barrels destroyed",
+    ["BattleOfDazzarlor_PraiseSelf"] = "You lavish praise upon",
+    ["BattleOfDazzarlor_PraiseOther"] = "lavishes praise upon",
 
     -------------------------------------------------------
     --- Uldir

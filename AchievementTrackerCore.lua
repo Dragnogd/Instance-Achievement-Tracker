@@ -2425,6 +2425,21 @@ function core:getAchievementSuccessPersonal(index, location)
 	end
 end
 
+function core:getAchievementSuccessPersonalWithName(index, sender)
+	local value = index
+	if index == nil then
+		value = 1
+	end
+	if core.playersSuccessPersonal[sender] == nil then
+		--Players has not already completed the achievement
+		if core:has_value(core.currentBosses[value].players, sender) then
+			--Player needs achievement but has failed it
+			core:sendMessage(sender .. " " .. L["Shared_HasCompleted"] .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " (" .. L["Core_PersonalAchievement"] .. ")",true,"completed")
+		end
+		core.playersSuccessPersonal[sender] = true
+	end
+end
+
 ------------------------------------------------------
 ---- Tracking certain achievement objectives
 ------------------------------------------------------
