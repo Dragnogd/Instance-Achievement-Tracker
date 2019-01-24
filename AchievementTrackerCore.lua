@@ -1701,6 +1701,11 @@ function core:detectGroupType()
 		core.chatType = "SAY"
 	end
 
+	--If player is in LFG/LFG then output to instance chat
+	if IsInGroup(LE_PARTY_CATEGORY_INSTANCE) then
+		core.chatType = "INSTANCE_CHAT"
+	end
+
 	--Debug to stop message going out to other people by accident
 	--core.chatType = "OFFICER"
 end
