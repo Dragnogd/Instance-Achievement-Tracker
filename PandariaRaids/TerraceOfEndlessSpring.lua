@@ -63,7 +63,7 @@ function core._996:LeiShi()
 			
 			--If the achievement was already completed then alert the user not to kill the boss
 			if core.achievementsCompleted[1] == true then
-				core:sendMessage("DO NOT KILL BOSS. (Wait for " .. core.destName .. " to collect another Parasitic Clutch)")
+				core:getAchievementFailedWithMessageAfter("(Wait for " .. core.destName .. " to collect another Parasitic Clutch)")
 				core.achievementsCompleted[1] = false
 			end
 		end
