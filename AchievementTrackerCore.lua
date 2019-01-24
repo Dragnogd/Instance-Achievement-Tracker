@@ -9,7 +9,7 @@ local UIConfig													--UIConfig is used to make a display asking the user 
 local UICreated = false											--To enable achievement tracking when they enter an instances
 local debugMode = false
 local debugModeChat = false
-local sendDebugMessages = true
+local sendDebugMessages = false
 
 local ptrVersion = "8.1.0"
 
@@ -1275,6 +1275,24 @@ function events:ZONE_CHANGED_NEW_AREA()
 			end
 		end
 
+		--Unregister events if set	
+		local retOK, ret1 = pcall(function() core[core.instanceClear]:IATInstanceCleanup() end);
+		if (retOK) then
+			core:sendDebugMessage("Cleaning up instance events for " .. core.instanceClear)
+			
+			core[core.instanceClear]:IATInstanceCleanup()
+		else
+			core:sendDebugMessage("Function failed, error text: " .. ret1 .. ".")
+		end
+		local retOK, ret1 = pcall(function() core[core.instanceClear]:InstanceCleanup() end);
+		if (retOK) then
+			core:sendDebugMessage("Cleaning up instance events for " .. core.instanceClear)
+			
+			core[core.instanceClear]:InstanceCleanup()
+		else
+			core:sendDebugMessage("Function failed, error text: " .. ret1 .. ".")
+		end
+
 		--Update the GUI
 		core.Config:Instance_OnClickAutomatic()
 
@@ -1311,24 +1329,6 @@ function events:ZONE_CHANGED_NEW_AREA()
 		scanInProgress = false
 		core.scanFinished = false
 		scanAnnounced = false
-
-		--Unregister events if set	
-		local retOK, ret1 = pcall(function() core[core.instanceClear]:IATInstanceCleanup() end);
-		if (retOK) then
-			core:sendDebugMessage("Cleaning up instance events for " .. core.instanceClear)
-			
-			core[core.instanceClear]:IATInstanceCleanup()
-		else
-			core:sendDebugMessage("Function failed, error text: " .. ret1 .. ".")
-		end
-		local retOK, ret1 = pcall(function() core[core.instanceClear]:InstanceCleanup() end);
-		if (retOK) then
-			core:sendDebugMessage("Cleaning up instance events for " .. core.instanceClear)
-			
-			core[core.instanceClear]:InstanceCleanup()
-		else
-			core:sendDebugMessage("Function failed, error text: " .. ret1 .. ".")
-		end
 	end
 end
 

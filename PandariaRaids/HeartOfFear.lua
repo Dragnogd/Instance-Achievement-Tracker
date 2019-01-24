@@ -82,7 +82,7 @@ function core._1009:ClearVariables()
 	reaversKilled = 0
 end
 
-function core._1009:InstanceCleanup()
+function core._1009:IATInstanceCleanup()
     core._1520.Events:UnregisterEvent("UNIT_AURA")
 end
 
@@ -95,41 +95,43 @@ core._1009.Events:SetScript("OnEvent", function(self, event, ...)
 end)
 
 function core._1009.Events:UNIT_AURA(self, unitID, ...)
-	if core.Instances[core.expansion][core.instanceType][core.instance]["boss1"].enabled == true and core.encounterStarted == true then
-		if UnitIsPlayer(unitID) ~= nil then
-			local name, realm = UnitName(unitID)
-			local unitTypePlayer, destIDPlayer, spawn_uid_dest = strsplit("-", UnitGUID(unitID))
-
-			if parasitePlayers[spawn_uid_dest] == nil then
-				--Check to see if player has gained debuff
-				for i=1,40 do
-					local _, _, _, _, _, _, _, _, _, spellId = UnitDebuff(unitID, i)
-					if spellId == 125785 then
-						parasiteCounter = parasiteCounter + 1
-						core:sendMessage(UnitName(unitID) .. " has got the Zealous Parasite debuff (" .. parasiteCounter .. "/" .. core.groupSize .. ")")
-						parasitePlayers[spawn_uid_dest] = spawn_uid_dest
-						InfoFrame_SetPlayerComplete(UnitName(unitID))
+	if core.instance ~= nil then
+		if core.Instances[core.expansion][core.instanceType][core.instance]["boss1"].enabled == true and core.encounterStarted == true then
+			if UnitIsPlayer(unitID) ~= nil then
+				local name, realm = UnitName(unitID)
+				local unitTypePlayer, destIDPlayer, spawn_uid_dest = strsplit("-", UnitGUID(unitID))
+	
+				if parasitePlayers[spawn_uid_dest] == nil then
+					--Check to see if player has gained debuff
+					for i=1,40 do
+						local _, _, _, _, _, _, _, _, _, spellId = UnitDebuff(unitID, i)
+						if spellId == 125785 then
+							parasiteCounter = parasiteCounter + 1
+							core:sendMessage(UnitName(unitID) .. " has got the Zealous Parasite debuff (" .. parasiteCounter .. "/" .. core.groupSize .. ")")
+							parasitePlayers[spawn_uid_dest] = spawn_uid_dest
+							InfoFrame_SetPlayerComplete(UnitName(unitID))
+						end
 					end
-				end
-			elseif parasitePlayers[spawn_uid_dest] ~= nil then
-				--Check to see if player has not lost debuff
-				local debuffFound = false
-				for i=1,40 do
-					local _, _, _, _, _, _, _, _, _, spellId = UnitDebuff(unitID, i)
-					if spellId == 125785 then
-						debuffFound = true
+				elseif parasitePlayers[spawn_uid_dest] ~= nil then
+					--Check to see if player has not lost debuff
+					local debuffFound = false
+					for i=1,40 do
+						local _, _, _, _, _, _, _, _, _, spellId = UnitDebuff(unitID, i)
+						if spellId == 125785 then
+							debuffFound = true
+						end
 					end
-				end
-				if debuffFound == false then
-					--Player has lost debuff
-					parasiteCounter = parasiteCounter - 1
-					parasitePlayers[spawn_uid_dest] = nil
-					InfoFrame_SetPlayerFailed(UnitName(unitID))	
-		
-					--If achievement had already completed then fail it
-					if core.achievementsCompleted[1] == true then
-						core:getAchievementFailedWithMessageAfter("(Reason: " .. UnitName(unitID) .. " has died) DO NOT KILL BOSS!")
-						core.achievementsCompleted[1] = false
+					if debuffFound == false then
+						--Player has lost debuff
+						parasiteCounter = parasiteCounter - 1
+						parasitePlayers[spawn_uid_dest] = nil
+						InfoFrame_SetPlayerFailed(UnitName(unitID))	
+			
+						--If achievement had already completed then fail it
+						if core.achievementsCompleted[1] == true then
+							core:getAchievementFailedWithMessageAfter("(Reason: " .. UnitName(unitID) .. " has died) DO NOT KILL BOSS!")
+							core.achievementsCompleted[1] = false
+						end
 					end
 				end
 			end
