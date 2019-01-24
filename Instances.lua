@@ -2517,6 +2517,7 @@ core.Instances = {
                     track = function() core._1009:ImperialVizierZorlok() end,
                     partial = false,
                     encounterID = 1507,
+                    displayInfoFrame = true,
                 },
                 boss2 = {
                     name = 744, --Blade Lord Ta'yak
