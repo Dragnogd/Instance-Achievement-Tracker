@@ -46,29 +46,31 @@ function core._996:Tsulong()
 end
 
 function core._996:LeiShi()
-	InfoFrame_UpdatePlayersOnInfoFrame()
-	InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],parasiticClutchCounter,core.groupSize)
-	
-	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 125652 then
-		parasiticClutchCounter = parasiticClutchCounter + 1
-		core:sendMessage(core.destName .. " Inflicted with Parasitic Clutch (" .. parasiticClutchCounter .. "/" .. core.groupSize .. ")")
-		InfoFrame_SetPlayerComplete(core.destName)
-	end
-
-	if core.type == "SPELL_AURA_REMOVED" and core.spellId == 125652 then
-		parasiticClutchCounter = parasiticClutchCounter - 1
-		core:sendMessage(core.destName .. " LOST Parasitic Clutch (" .. parasiticClutchCounter .. "/" .. core.groupSize .. ")")
-		InfoFrame_SetPlayerFailed(core.destName)	
+	if core.encounterStarted == true then
+		InfoFrame_UpdatePlayersOnInfoFrame()
+		InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],parasiticClutchCounter,core.groupSize)
 		
-		--If the achievement was already completed then alert the user not to kill the boss
-		if core.achievementsCompleted[1] == true then
-			core:sendMessage("DO NOT KILL BOSS. (Wait for " .. core.destName .. " to collect another Parasitic Clutch)")
-			core.achievementsCompleted[1] = false
+		if core.type == "SPELL_AURA_APPLIED" and core.spellId == 125652 then
+			parasiticClutchCounter = parasiticClutchCounter + 1
+			core:sendMessage(core.destName .. " Inflicted with Parasitic Clutch (" .. parasiticClutchCounter .. "/" .. core.groupSize .. ")")
+			InfoFrame_SetPlayerComplete(core.destName)
 		end
-	end
-
-	if parasiticClutchCounter == core.groupSize then
-		core:getAchievementSuccess()		
+	
+		if core.type == "SPELL_AURA_REMOVED" and core.spellId == 125652 then
+			parasiticClutchCounter = parasiticClutchCounter - 1
+			core:sendMessage(core.destName .. " LOST Parasitic Clutch (" .. parasiticClutchCounter .. "/" .. core.groupSize .. ")")
+			InfoFrame_SetPlayerFailed(core.destName)	
+			
+			--If the achievement was already completed then alert the user not to kill the boss
+			if core.achievementsCompleted[1] == true then
+				core:sendMessage("DO NOT KILL BOSS. (Wait for " .. core.destName .. " to collect another Parasitic Clutch)")
+				core.achievementsCompleted[1] = false
+			end
+		end
+	
+		if parasiticClutchCounter == core.groupSize then
+			core:getAchievementSuccess()		
+		end
 	end
 end
 
