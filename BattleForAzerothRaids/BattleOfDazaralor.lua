@@ -20,6 +20,13 @@ local barrelCounter = 0
 ------------------------------------------------------
 local playersCompletedAchievement = 0
 
+function core._2070:JadefireMasters()
+    --Hatch the cloud serpent egg during the Jadefire Masters encounter in the Battle of Dazar'alor on Normal difficulty or higher.
+    if core.type == "SPELL_AURA_REMOVED" and core.spellId == 289547 then
+        core:getAchievementFailed()
+    end
+end
+
 function core._2070:Grong()
     --Defeat Grong in the Battle of Dazar'alor after destroying 6 Barrels on Normal Difficulty or higher.
 
