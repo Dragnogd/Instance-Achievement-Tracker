@@ -2301,14 +2301,19 @@ function core:getAchievementFailedPersonal(index)
 	if index == nil then
 		value = 1
 	end
-	if core.playersFailedPersonal[core.destName] == nil then
+	local playerName = core.destName
+	if string.find(playerName, "-") then
+		local name, realm = strsplit("-", playerName)
+		playerName = name
+	end
+	if core.playersFailedPersonal[playerName] == nil then
 		--Players has not been hit already
 		--Check if the player actually needs the achievement
-		if core:has_value(core.currentBosses[value].players, core.destName) then
+		if core:has_value(core.currentBosses[value].players, playerName) then
 			--Player needs achievement but has failed it
-			core:sendMessage(core.destName .. " " .. L["Shared_HasFailed"] .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " (" .. L["Core_PersonalAchievement"] .. ")",true,"failed")
+			core:sendMessage(playerName .. " " .. L["Shared_HasFailed"] .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " (" .. L["Core_PersonalAchievement"] .. ")",true,"failed")
 		end
-		core.playersFailedPersonal[core.destName] = true
+		core.playersFailedPersonal[playerName] = true
 	end
 end
 
@@ -2318,14 +2323,19 @@ function core:getAchievementFailedPersonalWithReason(reason, index)
 	if index == nil then
 		value = 1
 	end
-	if core.playersFailedPersonal[core.destName] == nil then
+	local playerName = core.destName
+	if string.find(playerName, "-") then
+		local name, realm = strsplit("-", playerName)
+		playerName = name
+	end
+	if core.playersFailedPersonal[playerName] == nil then
 		--Players has not been hit already
 		--Check if the player actually needs the achievement
-		if core:has_value(core.currentBosses[value].players, core.destName) then
+		if core:has_value(core.currentBosses[value].players, playerName) then
 			--Player needs achievement but has failed it
-			core:sendMessage(core.destName .. " " .. L["Shared_HasFailed"] .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " (" .. L["Core_PersonalAchievement"] .. ")(" .. L["Core_Reason"] .. ": " .. reason .. ")",true,"failed")
+			core:sendMessage(playerName .. " " .. L["Shared_HasFailed"] .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " (" .. L["Core_PersonalAchievement"] .. ")(" .. L["Core_Reason"] .. ": " .. reason .. ")",true,"failed")
 		end
-		core.playersFailedPersonal[core.destName] = true
+		core.playersFailedPersonal[playerName] = true
 	end
 end
 
@@ -2395,6 +2405,7 @@ end
 
 --Display the failed achievement message for personal achievements
 function core:getAchievementSuccessPersonal(index, location)
+    --Make sure we remove realm info from player before checking name
 	local value = index
 	if index == nil then
 		value = 1
@@ -2403,24 +2414,34 @@ function core:getAchievementSuccessPersonal(index, location)
 		location = "dest"
 	end
 	if location == "dest" then
-		if core.playersSuccessPersonal[core.destName] == nil then
+		local playerName = core.destName
+		if string.find(playerName, "-") then
+			local name, realm = strsplit("-", playerName)
+			playerName = name
+		end
+		if core.playersSuccessPersonal[playerName] == nil then
 			--Players has not been hit already
 			--Check if the player actually needs the achievement
-			if core:has_value(core.currentBosses[value].players, core.destName) then
+			if core:has_value(core.currentBosses[value].players, playerName) then
 				--Player needs achievement but has failed it
-				core:sendMessage(core.destName .. " " .. L["Shared_HasCompleted"] .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " (" .. L["Core_PersonalAchievement"] .. ")",true,"completed")
+				core:sendMessage(playerName .. " " .. L["Shared_HasCompleted"] .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " (" .. L["Core_PersonalAchievement"] .. ")",true,"completed")
 			end
-			core.playersSuccessPersonal[core.destName] = true
+			core.playersSuccessPersonal[playerName] = true
 		end
 	elseif location == "source" then
-		if core.playersSuccessPersonal[core.sourceName] == nil then
+		local playerName = core.sourceName
+		if string.find(playerName, "-") then
+			local name, realm = strsplit("-", playerName)
+			playerName = name
+		end
+		if core.playersSuccessPersonal[playerName] == nil then
 			--Players has not been hit already
 			--Check if the player actually needs the achievement
-			if core:has_value(core.currentBosses[value].players, core.sourceName) then
+			if core:has_value(core.currentBosses[value].players, playerName) then
 				--Player needs achievement but has failed it
-				core:sendMessage(core.sourceName .. " " .. L["Shared_HasCompleted"] .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " (" .. L["Core_PersonalAchievement"] .. ")",true,"completed")
+				core:sendMessage(playerName .. " " .. L["Shared_HasCompleted"] .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " (" .. L["Core_PersonalAchievement"] .. ")",true,"completed")
 			end
-			core.playersSuccessPersonal[core.sourceName] = true
+			core.playersSuccessPersonal[playerName] = true
 		end	
 	end
 end
@@ -2429,6 +2450,10 @@ function core:getAchievementSuccessPersonalWithName(index, sender)
 	local value = index
 	if index == nil then
 		value = 1
+	end
+	if string.find(sender, "-") then
+		local name, realm = strsplit("-", sender)
+		sender = name
 	end
 	if core.playersSuccessPersonal[sender] == nil then
 		--Players has not already completed the achievement
