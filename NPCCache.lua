@@ -31,4 +31,10 @@ core.NPCCache = {
     [129208] = 129208, --Dread Captain Lockwood
     [104262] = 104262, --Burning Ember
     [51090] = 51090, --Singing Sunflower
+    [145903] = 145903, --Darkforged Crusader
+    [145898] = 145898, --Anointed Disciple
+    [144680] = 144680, --Frida Ironbellows
+    [147895] = 147895, --Rezani Disciple
+    [147896] = 147896, --Zandalari Crusader
+    [144683] = 144683, --Ra'wani Kanae
 }

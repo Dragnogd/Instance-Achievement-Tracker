@@ -11,6 +11,13 @@ core._2070 = {}
 core._2070.Events = CreateFrame("Frame")
 
 ------------------------------------------------------
+---- Champion of the Light
+------------------------------------------------------
+local crusadersCounter = 0
+local disciplesCounter = 0
+local championOfTheLightCounter = 0
+
+------------------------------------------------------
 ---- Grong  
 ------------------------------------------------------
 local barrelCounter = 0
@@ -19,6 +26,51 @@ local barrelCounter = 0
 ---- Opulence  
 ------------------------------------------------------
 local playersCompletedAchievement = 0
+
+function core._2070:ChampionOfTheLight()
+    --Defeat the Champion of the Light in the Battle of Dazar'alor after stealing 3 shinies from each of the Crusaders, Disciples and Champion of the Light on Normal Difficulty or higher.
+
+    --Everyone must have the Jani's Favor debuff
+    --3 Shinies From Crusaders
+    --6 Shinies From Disciples
+    --3 Shinies From Champion of the Light
+
+    --Player has picked up shiny. Check if this is shiny we need
+    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 288626 then
+        --Get the players target and check which mob they stole the shiny from is one we want
+        local unitType, _, _, _, _, destID, spawn_uid_dest = strsplit("-", UnitGUID(core.destName .. "-target"))
+        
+        if destID == "145903" then
+            --Darkforged Crusader
+            crusadersCounter = crusadersCounter + 1
+            core:sendMessage(core:getAchievement() .. " " .. getNPCName(145903) .. " " .. L["Core_Counter"] .. "(" .. crusadersCounter .. "/3)")
+        elseif destID == "145898" then
+            --Anointed Disciple
+            disciplesCounter = disciplesCounter + 1
+            core:sendMessage(core:getAchievement() .. " " .. getNPCName(145898) .. " " .. L["Core_Counter"] .. "(" .. disciplesCounter .. "/6)")
+        elseif destID == "144680" then
+            --Frida Ironbellows
+            championOfTheLightCounter = championOfTheLightCounter + 1
+            core:sendMessage(core:getAchievement() .. " " .. getNPCName(144680) .. " " .. L["Core_Counter"] .. "(" .. championOfTheLightCounter .. "/3)")
+        elseif destID == "147895" then
+            --Rezani Disciple
+            disciplesCounter = disciplesCounter + 1
+            core:sendMessage(core:getAchievement() .. " " .. getNPCName(147895) .. " " .. L["Core_Counter"] .. "(" .. disciplesCounter .. "/6)")
+        elseif destID == "147896" then
+            --Zandalari Crusader
+            crusadersCounter = crusadersCounter + 1
+            core:sendMessage(core:getAchievement() .. " " .. getNPCName(147896) .. " " .. L["Core_Counter"] .. "(" .. crusadersCounter .. "/3)")
+        elseif destID == "144683" then
+            --Ra'wani Kanae
+            championOfTheLightCounter = championOfTheLightCounter + 1
+            core:sendMessage(core:getAchievement() .. " " .. getNPCName(144683) .. " " .. L["Core_Counter"] .. "(" .. championOfTheLightCounter .. "/3)")
+        end
+    end
+
+    if crusadersCounter >= 3 and disciplesCounter >=6 and championOfTheLightCounter >= 3 then
+        core:getAchievementSuccess()
+    end
+end
 
 function core._2070:JadefireMasters()
     --Hatch the cloud serpent egg during the Jadefire Masters encounter in the Battle of Dazar'alor on Normal difficulty or higher.
@@ -94,6 +146,13 @@ function core._2070:JainaProudmoore()
 end
 
 function core._2070:ClearVariables()
+    ------------------------------------------------------
+    ---- Champion of the Light
+    ------------------------------------------------------
+    crusadersCounter = 0
+    disciplesCounter = 0
+    championOfTheLightCounter = 0
+
     ------------------------------------------------------
     ---- Grong  
     ------------------------------------------------------
