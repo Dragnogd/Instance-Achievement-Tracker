@@ -16,6 +16,15 @@ core._2070.Events = CreateFrame("Frame")
 local crusadersCounter = 0
 local disciplesCounter = 0
 local championOfTheLightCounter = 0
+local playersAspect1 = nil
+local playersAspect2 = nil
+local playersAspect3 = nil
+local playersAspect1Tribute = false
+local playersAspect2Tribute = false
+local playersAspect3Tribute = false
+local playersAspect1Timer = nil
+local playersAspect2Timer = nil
+local playersAspect3Timer = nil
 
 ------------------------------------------------------
 ---- Grong  
@@ -34,36 +43,97 @@ function core._2070:ChampionOfTheLight()
     --3 Shinies From Crusaders
     --6 Shinies From Disciples
     --3 Shinies From Champion of the Light
+    --Shinies have to be deposited at the trashpile
+    
+    --Player has gained Aspect of Jani debuff. They need to loose the debuff within 30 seconds with the tribute for counter to increment
+    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 288610 then
+        --Set the player status to false since they don't have tribute yet
+        if playersAspect1 == nil then
+            playersAspect1 = core.destName
+            playersAspect1Timer = C_Timer.NewTimer(30, function() 
+                playersAspect1Timer = nil
+                playersAspect1 = nil
+                playersAspect1Tribute = nil
+            end)
+        elseif playersAspect2 == nil then
+            playersAspect2 = core.destName
+            playersAspect2Timer = C_Timer.NewTimer(30, function() 
+                playersAspect2Timer = nil
+                playersAspect2 = nil
+                playersAspect2Tribute = nil
+            end)
+        elseif playersAspect3 == nil then
+            playersAspect3 = core.destName
+            playersAspect3Timer = C_Timer.NewTimer(30, function() 
+                playersAspect3Timer = nil
+                playersAspect3 = nil
+                playersAspect3Tribute = nil
+            end)
+        end
+    end
 
-    --Player has picked up shiny. Check if this is shiny we need
-    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 288626 then
-        --Get the players target and check which mob they stole the shiny from is one we want
-        local unitType, _, _, _, _, destID, spawn_uid_dest = strsplit("-", UnitGUID(core.destName .. "-target"))
-        
-        if destID == "145903" then
-            --Darkforged Crusader
-            crusadersCounter = crusadersCounter + 1
-            core:sendMessage(core:getAchievement() .. " " .. getNPCName(145903) .. " " .. L["Core_Counter"] .. "(" .. crusadersCounter .. "/3)")
-        elseif destID == "145898" then
-            --Anointed Disciple
-            disciplesCounter = disciplesCounter + 1
-            core:sendMessage(core:getAchievement() .. " " .. getNPCName(145898) .. " " .. L["Core_Counter"] .. "(" .. disciplesCounter .. "/6)")
-        elseif destID == "144680" then
-            --Frida Ironbellows
-            championOfTheLightCounter = championOfTheLightCounter + 1
-            core:sendMessage(core:getAchievement() .. " " .. getNPCName(144680) .. " " .. L["Core_Counter"] .. "(" .. championOfTheLightCounter .. "/3)")
-        elseif destID == "147895" then
-            --Rezani Disciple
-            disciplesCounter = disciplesCounter + 1
-            core:sendMessage(core:getAchievement() .. " " .. getNPCName(147895) .. " " .. L["Core_Counter"] .. "(" .. disciplesCounter .. "/6)")
-        elseif destID == "147896" then
-            --Zandalari Crusader
-            crusadersCounter = crusadersCounter + 1
-            core:sendMessage(core:getAchievement() .. " " .. getNPCName(147896) .. " " .. L["Core_Counter"] .. "(" .. crusadersCounter .. "/3)")
-        elseif destID == "144683" then
-            --Ra'wani Kanae
-            championOfTheLightCounter = championOfTheLightCounter + 1
-            core:sendMessage(core:getAchievement() .. " " .. getNPCName(144683) .. " " .. L["Core_Counter"] .. "(" .. championOfTheLightCounter .. "/3)")
+    --Player has stolen a shiny
+    if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 288630 then
+        --Get mob which had stolen shiny from
+        if core.destID == "145903" or core.destID == "147896" or core.destID == "145898" or core.destID == "147895" or core.destID == "144680" or core.destID == "144683" then
+             --Set the stolen shiny to the player
+            if core.sourceName == playersAspect1 then
+                playersAspect1Tribute = core.destID
+            elseif core.sourceName == playersAspect2 then
+                playersAspect2Tribute = core.destID
+            elseif core.sourceName == playersAspect3 then
+                playersAspect3Tribute = core.destID
+            end
+        end
+    end
+
+    --Player has lost aspect
+    --Check if this was because they handed it in or ran out of time
+    if core.type == "SPELL_AURA_REMOVED" and core.spellId == 288610 then
+
+        --If player found then they handed shiny in on time
+        local playerFound = false
+        local shinyID = nil
+        if core.destName == playersAspect1 then
+            --Stop timer and increment counter
+            if playersAspect1Timer ~= nil then
+                playersAspect1Timer:Cancel()
+            end
+            shinyID = playersAspect1Tribute
+            playersAspect1 = nil
+            playersAspect1Tribute = nil
+            playerFound = true    
+        elseif core.destName == playersAspect2 then
+            --Stop timer and increment counter
+            if playersAspect2Timer ~= nil then
+                playersAspect2Timer:Cancel()
+            end
+            shinyID = playersAspect2Tribute
+            playersAspect2 = nil
+            playersAspect2Tribute = nil
+            playerFound = true
+        elseif core.destName == playersAspect3 then
+            --Stop timer and increment counter
+            if playersAspect3Timer ~= nil then
+                playersAspect3Timer:Cancel()
+            end
+            shinyID = playersAspect3Tribute
+            playersAspect3 = nil
+            playersAspect3Tribute = nil
+            playerFound = true  
+        end
+
+        if playerFound == true then   
+            if shinyID == "145903" or shinyID == "147896" then
+                crusadersCounter = crusadersCounter + 1
+                core:sendMessage(core:getAchievement() .. " " .. getNPCName(shinyID) .. " " .. L["Core_Counter"] .. "(" .. crusadersCounter .. "/3)") 
+            elseif shinyID == "147895" or shinyID == "145898" then
+                disciplesCounter = disciplesCounter + 1
+                core:sendMessage(core:getAchievement() .. " " .. getNPCName(shinyID) .. " " .. L["Core_Counter"] .. "(" .. disciplesCounter .. "/6)") 
+            elseif shinyID == "144683" or shinyID == "144680" then
+                championOfTheLightCounter = championOfTheLightCounter + 1
+                core:sendMessage(core:getAchievement() .. " " .. getNPCName(shinyID) .. " " .. L["Core_Counter"] .. "(" .. championOfTheLightCounter .. "/3)") 
+            end
         end
     end
 
@@ -152,6 +222,15 @@ function core._2070:ClearVariables()
     crusadersCounter = 0
     disciplesCounter = 0
     championOfTheLightCounter = 0
+    playersAspect1 = nil
+    playersAspect2 = nil
+    playersAspect3 = nil
+    playersAspect1Tribute = false
+    playersAspect2Tribute = false
+    playersAspect3Tribute = false
+    playersAspect1Timer = nil
+    playersAspect2Timer = nil
+    playersAspect3Timer = nil
 
     ------------------------------------------------------
     ---- Grong  
