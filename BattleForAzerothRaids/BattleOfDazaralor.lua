@@ -149,15 +149,15 @@ function core._2070:ChampionOfTheLight()
             if shinyID == "145903" or shinyID == "147896" then
                 core:sendDebugMessage("Crusader found")
                 crusadersCounter = crusadersCounter + 1
-                core:sendMessage(core:getAchievement() .. " " .. getNPCName(shinyID) .. " " .. L["Core_Counter"] .. "(" .. crusadersCounter .. "/3)") 
+                core:sendMessage(core:getAchievement() .. " " .. getNPCName(tonumber(shinyID)) .. " " .. L["Core_Counter"] .. "(" .. crusadersCounter .. "/3)") 
             elseif shinyID == "147895" or shinyID == "145898" then
                 core:sendDebugMessage("Disciple Found")
                 disciplesCounter = disciplesCounter + 1
-                core:sendMessage(core:getAchievement() .. " " .. getNPCName(shinyID) .. " " .. L["Core_Counter"] .. "(" .. disciplesCounter .. "/6)") 
+                core:sendMessage(core:getAchievement() .. " " .. getNPCName(tonumber(shinyID)) .. " " .. L["Core_Counter"] .. "(" .. disciplesCounter .. "/6)") 
             elseif shinyID == "144683" or shinyID == "144680" then
                 core:sendDebugMessage("Champion found")
                 championOfTheLightCounter = championOfTheLightCounter + 1
-                core:sendMessage(core:getAchievement() .. " " .. getNPCName(shinyID) .. " " .. L["Core_Counter"] .. "(" .. championOfTheLightCounter .. "/3)") 
+                core:sendMessage(core:getAchievement() .. " " .. getNPCName(tonumber(shinyID)) .. " " .. L["Core_Counter"] .. "(" .. championOfTheLightCounter .. "/3)") 
             end
         end
     end
