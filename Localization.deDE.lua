@@ -33,10 +33,8 @@ local baseLocale = {
 	["Core_help"] = "Hilfe",
 	["Core_ListCommands"] = "Zeigt eine Liste verfügbarer Slash-Befehle",
 	["Core_No"] = "Nein",
-	--[[Translation missing --]]
-	--[[ ["Core_NoTrackingForInstance"] = "IAT cannot track any achievements for this encounter",--]] 
-	--[[Translation missing --]]
-	--[[ ["Core_PersonalAchievement"] = "Personal Achievement",--]] 
+	["Core_NoTrackingForInstance"] = "IAT kann bei diesem Gefecht keine Erfolge verfolgen",
+	["Core_PersonalAchievement"] = "persönlicher Erfolg",
 	["Core_Reason"] = "Grund",
 	["Core_StartingAchievementScan"] = "Starte Erfolgsscan für",
 	["Core_TrackAchievements"] = "Verfolge Erfolge",
@@ -50,23 +48,17 @@ local baseLocale = {
 	--[[ ["Freehold_SkycapNKragg"] = "To summon IAT_138314 you have to place a %s before you pull the boss.",--]] 
 	["GUI_Achievement"] = "Erfolg",
 	["GUI_Achievements"] = "Erfolge",
-	--[[Translation missing --]]
-	--[[ ["GUI_AchievementsCompletedForInstance"] = "All achievements have been completed for",--]] 
-	--[[Translation missing --]]
-	--[[ ["GUI_AchievementsDiscordDescription"] = "Tactics kindly contributed by the Achievements Discord Server, the community where members can meet like-minded completionists and form groups for a variety of achievements.",--]] 
-	--[[Translation missing --]]
-	--[[ ["GUI_AchievementsDiscordTitle"] = "Achievements Discord",--]] 
+	["GUI_AchievementsCompletedForInstance"] = "Alle Erfolge sind abgeschlossen für",
+	["GUI_AchievementsDiscordDescription"] = "Die Taktiken wurden vom Erfolgs Discord Server bereit gestellt, die Mitglieder können sich mit gleichgesinnte Mitglieder und Gruppen für bestimme Erfolge treffen.",
+	["GUI_AchievementsDiscordTitle"] = "Erfolge Discord",
 	["GUI_AnnounceMessagesToRaidWarning"] = "Zeige Nachrichten als Raidwarnung",
-	--[[Translation missing --]]
-	--[[ ["GUI_AnnounceTracking"] = "Announce achievements being tracked to group",--]] 
-	--[[Translation missing --]]
-	--[[ ["GUI_Author"] = "Author",--]] 
+	["GUI_AnnounceTracking"] = "Erfolge die beobachtet werden and die Gruppe ansagen.",
+	["GUI_Author"] = "Autor",
 	["GUI_BattleForAzeroth"] = "Battle for Azeroth",
 	["GUI_Cataclysm"] = "Cataclysm",
 	["GUI_Disabled"] = "Deaktiviert",
 	["GUI_EnableAddon"] = "Addon aktivieren",
-	--[[Translation missing --]]
-	--[[ ["GUI_EnableAutomaticCombatLogging"] = "Enable automatic combat logging",--]] 
+	["GUI_EnableAutomaticCombatLogging"] = "Aktiviere automatisch den Kampflog",
 	["GUI_Enabled"] = "Aktiviert",
 	["GUI_EnterInstanceToStartScanning"] = "Instanz betreten, um den Scanvorgang zu starten",
 	["GUI_GreyOutCompletedAchievements"] = "Graue abgeschlossene Erfolge aus",
@@ -84,8 +76,7 @@ local baseLocale = {
 	["GUI_Players"] = "Spieler",
 	["GUI_PlayersWhoNeedAchievement"] = "Spieler, welche den Erfolg benötigen",
 	["GUI_PlaySoundOnFailed"] = "Spiele einen Sound wenn ein Erfolg fehlschlägt",
-	--[[Translation missing --]]
-	--[[ ["GUI_PlaySoundOnSuccess"] = "Play a sound when a achievement is completed",--]] 
+	["GUI_PlaySoundOnSuccess"] = "Spiel ein Sound wenn der Erfolg abgeschlossen ist",
 	["GUI_ScanInProgress"] = "Scan läuft noch",
 	["GUI_SelectSound"] = "Wähle Sound",
 	["GUI_Tactics"] = "Taktik",
@@ -94,9 +85,8 @@ local baseLocale = {
 	["GUI_Tracking"] = "Verfolgung",
 	["GUI_TrackingDisabled"] = "(Erfolgsverfolgung deaktiviert)",
 	["GUI_TrackingNumber"] = "Derzeitige Verfolgung",
-	["Gui_TranslatorNames"] = "gOOvER, Kaspi_1",
-	--[[Translation missing --]]
-	--[[ ["GUI_Translators"] = "Translators",--]] 
+	["Gui_TranslatorNames"] = "gOOvER, Kaspi_1, sekorhex",
+	["GUI_Translators"] = "Übersetzer",
 	["GUI_WarlordsOfDraenor"] = "Warlords of Draenor",
 	["GUI_WrathOfTheLichKing"] = "Wrath of the Lich King",
 	["Instance Achievement Tracker"] = "Instance Achievement Tracker",
@@ -109,18 +99,15 @@ local baseLocale = {
 	--[[Translation missing --]]
 	--[[ ["KingsRest_Other"] = "The first trinket is in the first room of the dungeon, behind the sarcophagus, underneath the baskets.\\n The second trinket is in the first boss hallway, at the end of the platform, behind the last set of stairs.\\n The third trinket - (Check out the Glory of the Wartorn Hero Achievement Guide for details on WowHead)\\n The fourth trinket is located before the final boss room, at the bottom of the strairs, at the top of the right pillar.",--]] 
 	["Main"] = "Hauptmenü",
-	--[[Translation missing --]]
-	--[[ ["Shared_AddKillCounter"] = "%s kill counter",--]] 
+	["Shared_AddKillCounter"] = "%s Kill-Zähler",
 	["Shared_CompletedBossKill"] = "wird erfüllt wenn der Boss getötet wurde",
 	["Shared_DamageFromAbility"] = "%s Schaden",
-	--[[Translation missing --]]
-	--[[ ["Shared_DirectHitFromAbility"] = "%s Direct Hit",--]] 
+	["Shared_DirectHitFromAbility"] = "%s direkter Schlag",
 	["Shared_DoesNotMeetCritera"] = "erfüllt nicht die Voraussetzungen für",
 	["Shared_Eight"] = "8",
 	["Shared_Eighteen"] = "18",
 	["Shared_Eleven"] = "11",
-	--[[Translation missing --]]
-	--[[ ["Shared_FailedPersonalAchievement"] = "%s has failed %s (Reason: %s)(Personal Achievement)",--]] 
+	["Shared_FailedPersonalAchievement"] = "%s ist gescheitert %s (Grund: %s)(Persönlicher Erfolg)",
 	["Shared_Fifteen"] = "15",
 	["Shared_Five"] = "5",
 	["Shared_Found"] = "gefunden",
@@ -129,13 +116,10 @@ local baseLocale = {
 	["Shared_GotHit"] = "wurde getroffen",
 	["Shared_HasBeenHitWith"] = "wurde getroffen von",
 	["Shared_HasBeenInfectedWith"] = "wurde infiziert mit",
-	--[[Translation missing --]]
-	--[[ ["Shared_HasCompleted"] = "has completed",--]] 
+	["Shared_HasCompleted"] = "hat abgeschlossen",
 	["Shared_HasFailed"] = "ist fehlgeschlagen",
-	--[[Translation missing --]]
-	--[[ ["Shared_HasGained"] = "has gained",--]] 
-	--[[Translation missing --]]
-	--[[ ["Shared_HasLost"] = "has lost",--]] 
+	["Shared_HasGained"] = "hat gewonnen",
+	["Shared_HasLost"] = "hat verloren",
 	["Shared_HeCanNowBeKileld"] = "Er kann jetzt getötet werden",
 	["Shared_JustKillBoss"] = "Auf Maximallevel kann der Boss einfach getötet werden um den Erfolg zu bekommen",
 	["Shared_JustKillBossSingleTarget"] = "Um den Erfolg zu bekommen, kann der Boss einfach mit einer Single-Target Fähigkeit getötet werden",
@@ -148,8 +132,7 @@ local baseLocale = {
 	["Shared_PlayersHit"] = "Spieler getroffen:",
 	["Shared_PlayersWhoStillNeedToGetHit"] = "Spieler die noch getroffen werden müssen:",
 	["Shared_PlayersWhoStillNeedToGetResurrected"] = "Die folgenden Spieler müssen wiederbelebt werden um den Erfolg zu erhalten:",
-	--[[Translation missing --]]
-	--[[ ["Shared_ReportString"] = "Please report the following string to the IAT author",--]] 
+	["Shared_ReportString"] = "Bitte melde den folgenden string zum IAT Autor",
 	["Shared_Seven"] = "7",
 	["Shared_Seventeen"] = "17",
 	["Shared_SheCanNowBeKilled"] = "Sie kann jetzt getötet werden",
@@ -183,7 +166,7 @@ local baseLocale = {
 	--[[Translation missing --]]
 	--[[ ["Uldir_ZekVoz_Tactics"] = "This achievement is pretty easy, however you should use the IAT_64482 after IAT_135129 disappears in phase 2. The puzzle will activate the next time the IAT_135129 appears (the second time), which helps your healers with healing & mana (you won't have to deal with the mechanics for an extra minute).\\n\\n The %s deal anywhere from 25k to 35k damage, so make sure to dodge them as much as possible so your healers don't get overwhelmed.",--]] 
 	--[[Translation missing --]]
-	--[[ ["Uldir_ZulReborn_Tactics"] = "This achievement is pretty straight forward, no one has to step onto the inner ring of the platform. Here are a few tips for the encounter:\\n\\n Tanks should pick all the adds, and stack them so that melee dps can cleave them.\\n Ranged dps should be on the boss 24/7, and should not switch to the adds unless melee dps can't keep up killing them in time.\\n If you have 2 priests in the group, then you should assign them to different positions (left and right outside of the group) so that both sides are covered when adds spawn.\\n At 40%% IAT_138967 will knock back everyone, so you should position yourself near a wall so you don't get knocked off the platform.\"",--]] 
+	--[[ ["Uldir_ZulReborn_Tactics"] = "This achievement is pretty straight forward, no one has to step onto the inner ring of the platform. Here are a few tips for the encounter:\\n\\n Tanks should pick all the adds, and stack them so that melee dps can cleave them.\\n Ranged dps should be on the boss 24/7, and should not switch to the adds unless melee dps can't keep up killing them in time.\\n If you have 2 priests in the group, then you should assign them to different positions (left and right outside of the group) so that both sides are covered when adds spawn.\\n At 40%% IAT_138967 will knock back everyone, so you should position yourself near a wall so you don't get knocked off the platform.\"",--]]
 }
 
 core:RegisterLocale('deDE', baseLocale)
