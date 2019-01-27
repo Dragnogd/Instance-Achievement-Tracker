@@ -37,4 +37,16 @@ core.NPCCache = {
     [147895] = 147895, --Rezani Disciple
     [147896] = 147896, --Zandalari Crusader
     [144683] = 144683, --Ra'wani Kanae
+    [144637] = 144637, --Grong
+    [149043] = 149043, --Heavy Barrel
+    [58321] = 58321, --Jade Serpent Egg
+    [146107] = 146107, --Living Bomb
+    [99009] = 99009, --Jade Serpent
+    [69181] = 69181, --Saurid
+    [144807] = 144807, --Ravenous Stalker
+    [149240] = 149240, --Blingtron MK2
+    [149289] = 149289, --De Lurker Be'loa
+    [149244] = 149244, --Frosty Snowmon
+    
+    [62442] = 62442,
 }

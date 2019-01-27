@@ -8,4 +8,6 @@ core.ItemCache = {
     [143660] = 143660, --Mrgrglhjorn
     [129207] = 129207, --Aegis of Aggramar
     [64482] = 64482, --Puzzle Box of Yogg-Saron
+    [87214] = 87214, --Blingtron 4000
+    [111821] = 111821, --Blingtron 5000
 }
