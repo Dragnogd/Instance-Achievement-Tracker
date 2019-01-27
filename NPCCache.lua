@@ -47,6 +47,4 @@ core.NPCCache = {
     [149240] = 149240, --Blingtron MK2
     [149289] = 149289, --De Lurker Be'loa
     [149244] = 149244, --Frosty Snowmon
-    
-    [62442] = 62442,
 }

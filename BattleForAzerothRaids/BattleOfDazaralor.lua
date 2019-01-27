@@ -25,10 +25,6 @@ local playersAspect3Tribute = false
 local playersAspect1Timer = nil
 local playersAspect2Timer = nil
 local playersAspect3Timer = nil
-local playersUID1 = nil
-local playersUID2 = nil
-local playersUID3 = nil
-local mobsUIDcache = {}
 
 ------------------------------------------------------
 ---- Grong  
@@ -97,15 +93,12 @@ function core._2070:ChampionOfTheLight()
             if core.sourceName == playersAspect1 then
                 core:sendDebugMessage("Found player 1")
                 playersAspect1Tribute = core.destID
-                playersUID1 = core.spawn_uid_dest
             elseif core.sourceName == playersAspect2 then
                 core:sendDebugMessage("Found player 2")
                 playersAspect2Tribute = core.destID
-                playersUID2 = core.spawn_uid_dest
             elseif core.sourceName == playersAspect3 then
                 core:sendDebugMessage("Found player 3")
                 playersAspect3Tribute = core.destID
-                playersUID3 = core.spawn_uid_dest
             end
         end
     end
@@ -158,26 +151,10 @@ function core._2070:ChampionOfTheLight()
                 core:sendDebugMessage("Crusader found")
                 crusadersCounter = crusadersCounter + 1
                 core:sendMessage(core:getAchievement() .. " " .. getNPCName(tonumber(shinyID)) .. " " .. L["Core_Counter"] .. "(" .. crusadersCounter .. "/3)") 
-
-                --Add to cahce
-                if core:has_value(mobsUIDcache, playersUID1) then
-                    core:sendMessage("Warning The last Crusader was already done before. Decrementing Counter")
-                    crusadersCounter = crusadersCounter - 1
-                else
-                    table.insert(mobsUIDcache, playersUID1)
-                end
             elseif shinyID == "147895" or shinyID == "145898" then
                 core:sendDebugMessage("Disciple Found")
                 disciplesCounter = disciplesCounter + 1
                 core:sendMessage(core:getAchievement() .. " " .. getNPCName(tonumber(shinyID)) .. " " .. L["Core_Counter"] .. "(" .. disciplesCounter .. "/6)") 
-                
-                --Add to cahce
-                if core:has_value(mobsUIDcache, playersUID2) then
-                    core:sendMessage("Warning The last Disciple was already done before. Decrementing counter")
-                    disciplesCounter = disciplesCounter - 1
-                else
-                    table.insert(mobsUIDcache, playersUID2)
-                end
             elseif shinyID == "144683" or shinyID == "144680" then
                 core:sendDebugMessage("Champion found")
                 championOfTheLightCounter = championOfTheLightCounter + 1
@@ -257,8 +234,8 @@ end
 
 function core._2070:Opulence()
     --Defeat the Opulence in Battle of Dazar'alor after /praising a Singing Sunflower while under the effects of Brilliant Aura on Normal Difficulty or higher.
-    InfoFrame_UpdatePlayersOnInfoFrame()
-	InfoFrame_SetHeaderCounter(L["Shared_PlayersWhoNeedAchievement"],playersCompletedAchievement,#core.currentBosses[1].players)
+    -- InfoFrame_UpdatePlayersOnInfoFrame()
+	-- InfoFrame_SetHeaderCounter(L["Shared_PlayersWhoNeedAchievement"],playersCompletedAchievement,#core.currentBosses[1].players)
 end
 
 function core._2070:JainaProudmoore()
@@ -284,10 +261,6 @@ function core._2070:ClearVariables()
     playersAspect1Timer = nil
     playersAspect2Timer = nil
     playersAspect3Timer = nil
-    playersUID1 = nil
-    playersUID2 = nil
-    playersUID3 = nil
-    mobsUIDcache = {}
 
     ------------------------------------------------------
     ---- Grong  
@@ -313,44 +286,44 @@ function core._2070:InitialSetup()
 end
 
 function core._2070.Events:CHAT_MSG_TEXT_EMOTE(self, message, sender, lineID, senderGUID)
-    if core.Instances[core.expansion][core.instanceType][core.instance]["boss4"].enabled == true then
-        --Lets get the target they praised
-        if UnitIsPlayer(sender) then
-            if sender == UnitName("Player") then
-                if string.match(message, L["BattleOfDazzarlor_PraiseSelf"]) then
-                    if string.match(message, getNPCName(51090)) then
-                        --They have praised the correct npc. Check if they have the correct buff
-                        for i=1,40 do
-                            local _, _, _, _, _, _, _, _, _, spellId = UnitAura(sender, i)
-                            if spellId == 284802 then
-                                --Check if the player actually needs the achievement since it is personal
-                                core:sendDebugMessage("Found player who hugged singing sunflower")
-                                core:sendDebugMessage(sender)
-                                InfoFrame_SetPlayerComplete(sender)
-                                playersCompletedAchievement = playersCompletedAchievement + 1
-                                core:getAchievementSuccessPersonalWithName(1, sender)	
-                            end
-                        end
-                    end
-                end
-            else
-                if string.match(message, L["BattleOfDazzarlor_PraiseOther"]) then
-                    if string.match(message, getNPCName(51090)) then
-                        --They have praised the correct npc. Check if they have the correct buff
-                        for i=1,40 do
-                            local _, _, _, _, _, _, _, _, _, spellId = UnitAura(sender, i)
-                            if spellId == 284802 then
-                                --Check if the player actually needs the achievement since it is personal
-                                core:sendDebugMessage("Found player who hugged singing sunflower")
-                                core:sendDebugMessage(sender)
-                                InfoFrame_SetPlayerComplete(sender)
-                                playersCompletedAchievement = playersCompletedAchievement + 1
-                                core:getAchievementSuccessPersonalWithName(1, sender)	
-                            end
-                        end
-                    end
-                end 
-            end
-        end
-    end
+    -- if core.Instances[core.expansion][core.instanceType][core.instance]["boss4"].enabled == true then
+    --     --Lets get the target they praised
+    --     if UnitIsPlayer(sender) then
+    --         if sender == UnitName("Player") then
+    --             if string.match(message, L["BattleOfDazzarlor_PraiseSelf"]) then
+    --                 if string.match(message, getNPCName(51090)) then
+    --                     --They have praised the correct npc. Check if they have the correct buff
+    --                     for i=1,40 do
+    --                         local _, _, _, _, _, _, _, _, _, spellId = UnitAura(sender, i)
+    --                         if spellId == 284802 then
+    --                             --Check if the player actually needs the achievement since it is personal
+    --                             core:sendDebugMessage("Found player who hugged singing sunflower")
+    --                             core:sendDebugMessage(sender)
+    --                             InfoFrame_SetPlayerComplete(sender)
+    --                             playersCompletedAchievement = playersCompletedAchievement + 1
+    --                             core:getAchievementSuccessPersonalWithName(1, sender)	
+    --                         end
+    --                     end
+    --                 end
+    --             end
+    --         else
+    --             if string.match(message, L["BattleOfDazzarlor_PraiseOther"]) then
+    --                 if string.match(message, getNPCName(51090)) then
+    --                     --They have praised the correct npc. Check if they have the correct buff
+    --                     for i=1,40 do
+    --                         local _, _, _, _, _, _, _, _, _, spellId = UnitAura(sender, i)
+    --                         if spellId == 284802 then
+    --                             --Check if the player actually needs the achievement since it is personal
+    --                             core:sendDebugMessage("Found player who hugged singing sunflower")
+    --                             core:sendDebugMessage(sender)
+    --                             InfoFrame_SetPlayerComplete(sender)
+    --                             playersCompletedAchievement = playersCompletedAchievement + 1
+    --                             core:getAchievementSuccessPersonalWithName(1, sender)	
+    --                         end
+    --                     end
+    --                 end
+    --             end 
+    --         end
+    --     end
+    -- end
 end
