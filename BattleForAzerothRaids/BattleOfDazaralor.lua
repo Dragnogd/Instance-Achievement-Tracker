@@ -25,6 +25,10 @@ local playersAspect3Tribute = false
 local playersAspect1Timer = nil
 local playersAspect2Timer = nil
 local playersAspect3Timer = nil
+local playersUID1 = nil
+local playersUID2 = nil
+local playersUID3 = nil
+local mobsUIDcache = {}
 
 ------------------------------------------------------
 ---- Grong  
@@ -85,6 +89,7 @@ function core._2070:ChampionOfTheLight()
         if core.destName ~= nil then
             core:sendDebugMessage(core.destName)
             core:sendDebugMessage(core.destID)
+            core:sendDebugMessage(core.spawn_uid_dest)
         end
         --Get mob which had stolen shiny from
         if core.destID == "145903" or core.destID == "147896" or core.destID == "145898" or core.destID == "147895" or core.destID == "144680" or core.destID == "144683" then
@@ -92,12 +97,15 @@ function core._2070:ChampionOfTheLight()
             if core.sourceName == playersAspect1 then
                 core:sendDebugMessage("Found player 1")
                 playersAspect1Tribute = core.destID
+                playersUID1 = core.spawn_uid_dest
             elseif core.sourceName == playersAspect2 then
                 core:sendDebugMessage("Found player 2")
                 playersAspect2Tribute = core.destID
+                playersUID2 = core.spawn_uid_dest
             elseif core.sourceName == playersAspect3 then
                 core:sendDebugMessage("Found player 3")
                 playersAspect3Tribute = core.destID
+                playersUID3 = core.spawn_uid_dest
             end
         end
     end
@@ -150,10 +158,26 @@ function core._2070:ChampionOfTheLight()
                 core:sendDebugMessage("Crusader found")
                 crusadersCounter = crusadersCounter + 1
                 core:sendMessage(core:getAchievement() .. " " .. getNPCName(tonumber(shinyID)) .. " " .. L["Core_Counter"] .. "(" .. crusadersCounter .. "/3)") 
+
+                --Add to cahce
+                if core:has_value(mobsUIDcache, playersUID1) then
+                    core:sendMessage("Warning The last Crusader was already done before. Decrementing Counter")
+                    crusadersCounter = crusadersCounter - 1
+                else
+                    table.insert(mobsUIDcache, playersUID1)
+                end
             elseif shinyID == "147895" or shinyID == "145898" then
                 core:sendDebugMessage("Disciple Found")
                 disciplesCounter = disciplesCounter + 1
                 core:sendMessage(core:getAchievement() .. " " .. getNPCName(tonumber(shinyID)) .. " " .. L["Core_Counter"] .. "(" .. disciplesCounter .. "/6)") 
+                
+                --Add to cahce
+                if core:has_value(mobsUIDcache, playersUID2) then
+                    core:sendMessage("Warning The last Disciple was already done before. Decrementing counter")
+                    disciplesCounter = disciplesCounter - 1
+                else
+                    table.insert(mobsUIDcache, playersUID2)
+                end
             elseif shinyID == "144683" or shinyID == "144680" then
                 core:sendDebugMessage("Champion found")
                 championOfTheLightCounter = championOfTheLightCounter + 1
@@ -260,6 +284,10 @@ function core._2070:ClearVariables()
     playersAspect1Timer = nil
     playersAspect2Timer = nil
     playersAspect3Timer = nil
+    playersUID1 = nil
+    playersUID2 = nil
+    playersUID3 = nil
+    mobsUIDcache = {}
 
     ------------------------------------------------------
     ---- Grong  
