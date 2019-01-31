@@ -147,6 +147,7 @@ local baseLocale = {
     ["Shared_Found"] = "found",
     ["Shared_ReportString"] = "Please report the following string to the IAT author",
     ["Shared_PlayersWhoNeedAchievement"] = "Players who need achievement",
+    ["Shared_HasStolenFrom"] = "has stolen from",
 
     -------------------------------------------------------
     --- Battle of Dazar'alor
@@ -220,8 +221,8 @@ local baseLocale = {
     --- Siege of Boralus
     -------------------------------------------------------
     --Tactics
-    ["SiegeOfBoralus_DreadCaptainLockwood"] = "%s will continuously attempt to retreat from players using %s unless she is snared or rooted. As the achievement description implies, you have to keep her snared or rooted and prevent her from ever using %s. \n\n This achievement is currently bugged, and this has been confirmed by multiple game masters.\n\n You can bypass the bug by using a long cc spell on her at 97%% energy, spells has such as %s, %s, %s, %s as ideal as they last 15 seconds or more. You will have to kill the Ashvane Cannoneer really fast and use %s before the snare fades away.",
-    ["SiegeOfBoralus_ViqGoth"] = "During the encounter, Viq'Goth will use %s which causes a barrage of putrid water around the area. During this, several Gasping Flounders will be thrown on the land which you will have to kick back into the water before defeating the boss.",
+    ["SiegeOfBoralus_DreadCaptainLockwood"] = "%s will continuously attempt to retreat from players using %s unless she is snared or rooted. As the achievement description implies, you have to keep her snared or rooted and prevent her from ever using %s.",
+    ["SiegeOfBoralus_ViqGoth"] = "During the encounter, %s will use %s which causes a barrage of %s around the area. During this, several %s will be thrown on the land which you will have to kick back into the water before defeating the boss.",
     ["SiegeOfBoralus_Other"] = "As the name of the achievement implies, this is a profession-based achievement where you to interact with items to summon bosses. In order to use the items throughout the dungeons, a minimum of 75 skill level is required.\n\n (Blacksmithing) Brutik Blackanvil - The hammer is found down the stairs to the docks at 58, 70.\n (Engineering) Threshanator 3000 - The NPC is found right at the start of the instance.\n (Alchemy) Liz Vilepot - The 'Strange Vial' is found near a table at at 54, 74.",
 
     -------------------------------------------------------
