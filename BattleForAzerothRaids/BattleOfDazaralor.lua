@@ -40,6 +40,7 @@ local playersCompletedAchievement = 0
 ---- Jaina
 ------------------------------------------------------
 local snowCounter = 0
+local snowComplete = false
 
 function core._2070:ChampionOfTheLight()
     --Defeat the Champion of the Light in the Battle of Dazar'alor after stealing 3 shinies from each of the Crusaders, Disciples and Champion of the Light on Normal Difficulty or higher.
@@ -250,16 +251,20 @@ function core._2070:JainaProudmoore()
     if core.type == "SPELL_AURA_APPLIED" and (core.spellId == 289408 or core.spellId == 289405) then
         snowCounter = snowCounter + 1
         core:sendMessage(core:getAchievement() .. " " .. core.destName .. " " .. L["Shared_HasGained"] .. " " .. GetSpellLink(289408) .. " (" .. snowCounter .. "/3)")
+
+        if snowCounter == 3 then
+            snowComplete = true
+        end
     end
 
     --Player has lost snow mound. If counter does not equal 3 then fail achievement. Otherwise wait 3 seconds to see if counter reaches 0. If not also fail achievement
     --If counter did reach 0 in allocated time this means that snowman was built successfully
     if core.type == "SPELL_AURA_REMOVED" and (core.spellId == 289408 or core.spellId == 289405) then
-        if snowCounter ~= 3 then
+        if snowCounter ~= 3 and snowComplete == false then
             --Since we lost one before even reaching 3 then this must be a fail
             core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")")
             snowCounter = snowCounter - 1
-        elseif snowCounter == 3 then
+        else
             --We had met the requirements but a snow mound has been lost. Lets check if this was because achievement was success or players failed it
             snowCounter = snowCounter - 1
             C_Timer.After(function() 
@@ -308,6 +313,7 @@ function core._2070:ClearVariables()
     ---- Jaina
     ------------------------------------------------------
     snowCounter = 0
+    snowComplete = false
 end
 
 function core._2070:InstanceCleanup()
