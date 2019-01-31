@@ -16,15 +16,7 @@ core._2070.Events = CreateFrame("Frame")
 local crusadersCounter = 0
 local disciplesCounter = 0
 local championOfTheLightCounter = 0
-local playersAspect1 = nil
-local playersAspect2 = nil
-local playersAspect3 = nil
-local playersAspect1Tribute = false
-local playersAspect2Tribute = false
-local playersAspect3Tribute = false
-local playersAspect1Timer = nil
-local playersAspect2Timer = nil
-local playersAspect3Timer = nil
+local playersWithFavour = {}
 
 ------------------------------------------------------
 ---- Grong  
@@ -52,124 +44,98 @@ function core._2070:ChampionOfTheLight()
     --Shinies have to be deposited at the trashpile
     
     --Player has gained Aspect of Jani debuff. They need to loose the debuff within 30 seconds with the tribute for counter to increment
-    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 288610 then
-        --Set the player status to false since they don't have tribute yet
-        core:sendDebugMessage("Aspect of Jani Found")
+    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 288610 then --288610
         if core.destName ~= nil then
-            core:sendDebugMessage(core.destName)
-        end
-        if playersAspect1 == nil then
-            core:sendDebugMessage("Setting to player 1")
-            playersAspect1 = core.destName
-            playersAspect1Timer = C_Timer.NewTimer(30, function() 
-                playersAspect1Timer = nil
-                playersAspect1 = nil
-                playersAspect1Tribute = nil
-            end)
-        elseif playersAspect2 == nil then
-            core:sendDebugMessage("Setting to player 2")
-            playersAspect2 = core.destName
-            playersAspect2Timer = C_Timer.NewTimer(30, function() 
-                playersAspect2Timer = nil
-                playersAspect2 = nil
-                playersAspect2Tribute = nil
-            end)
-        elseif playersAspect3 == nil then
-            core:sendDebugMessage("Setting to player 3")
-            playersAspect3 = core.destName
-            playersAspect3Timer = C_Timer.NewTimer(30, function() 
-                playersAspect3Timer = nil
-                playersAspect3 = nil
-                playersAspect3Tribute = nil
-            end)
+            core:sendDebugMessage("Found the following player with the Aspect of Jani Debuff: " .. core.destName)
+            --Check if player is already in the table
+            if playersWithFavour[core.destName] == nil then
+                --Player was not found. Add new entry
+                --{Timer,npcName}
+                local playerAspect = core.destName
+                aspectTimer = C_Timer.NewTimer(13, function() 
+                    core:sendDebugMessage(playerAspect)
+                    playersWithFavour[playerAspect] = nil
+                    core:sendDebugMessage("Stopped timer as player did not return shiny in time: " .. playerAspect)
+                end)
+                playersWithFavour[core.destName] = {aspectTimer, nil}
+                core:sendDebugMessage("Inserted new entry into playersWithFavour for and started timer: " .. core.destName)
+            else
+                --Player removed debuff before it had expired (in case this is possible)
+                core:sendDebugMessage("Error unexpected entry was found for: " .. core.destName)
+            end
         end
     end
 
     --Player has stolen a shiny
-    if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 288630 then
-        core:sendDebugMessage("Stolen Shiny")
+    if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 288630 then --288630
         if core.destName ~= nil then
-            core:sendDebugMessage(core.destName)
-            core:sendDebugMessage(core.destID)
-            core:sendDebugMessage(core.spawn_uid_dest)
-        end
-        --Get mob which had stolen shiny from
-        if core.destID == "145903" or core.destID == "147896" or core.destID == "145898" or core.destID == "147895" or core.destID == "144680" or core.destID == "144683" then
-             --Set the stolen shiny to the player
-            if core.sourceName == playersAspect1 then
-                core:sendDebugMessage("Found player 1")
-                playersAspect1Tribute = core.destID
-            elseif core.sourceName == playersAspect2 then
-                core:sendDebugMessage("Found player 2")
-                playersAspect2Tribute = core.destID
-            elseif core.sourceName == playersAspect3 then
-                core:sendDebugMessage("Found player 3")
-                playersAspect3Tribute = core.destID
+            core:sendDebugMessage("The following player has stolen a shiny: " .. core.destName)
+            --Get mob which had stolen shiny from
+            if core.destID == "145903" or core.destID == "147896" or core.destID == "145898" or core.destID == "147895" or core.destID == "144680" or core.destID == "144683" then
+                -- core.destID = "145903"
+                if playersWithFavour[core.sourceName] ~= nil then
+                    --Assigned shiny picked up to player
+                    if playersWithFavour[core.sourceName][1] ~= nil then
+                        --Player still has time left on counter so assigned shiny to that player
+                        playersWithFavour[core.sourceName][2] = core.destID
+                        core:sendDebugMessage("The NPC the shiny was stolen from was: " .. playersWithFavour[core.sourceName][2])
+                    end
+                end
             end
-        end
+        end            
     end
 
     --Player has lost aspect
-    --Check if this was because they handed it in or ran out of time
-    if core.type == "SPELL_AURA_REMOVED" and core.spellId == 288610 then
-        core:sendDebugMessage("Aspect Lost")
+    if core.type == "SPELL_AURA_REMOVED" and core.spellId == 288610 then --288610
         if core.destName ~= nil then
-            core:sendDebugMessage(core.destName)
-        end
-        --If player found then they handed shiny in on time
-        local playerFound = false
-        local shinyID = nil
-        if core.destName == playersAspect1 then
-            core:sendDebugMessage("Player 1 Found")
-            --Stop timer and increment counter
-            if playersAspect1Timer ~= nil then
-                playersAspect1Timer:Cancel()
-            end
-            shinyID = playersAspect1Tribute
-            playersAspect1 = nil
-            playersAspect1Tribute = nil
-            playerFound = true    
-        elseif core.destName == playersAspect2 then
-            core:sendDebugMessage("Player 2 found")
-            --Stop timer and increment counter
-            if playersAspect2Timer ~= nil then
-                playersAspect2Timer:Cancel()
-            end
-            shinyID = playersAspect2Tribute
-            playersAspect2 = nil
-            playersAspect2Tribute = nil
-            playerFound = true
-        elseif core.destName == playersAspect3 then
-            core:sendDebugMessage("Player 3 found")
-            --Stop timer and increment counter
-            if playersAspect3Timer ~= nil then
-                playersAspect3Timer:Cancel()
-            end
-            shinyID = playersAspect3Tribute
-            playersAspect3 = nil
-            playersAspect3Tribute = nil
-            playerFound = true  
-        end
+            core:sendDebugMessage("The following player has lost Aspect of Jani: " .. core.destName)
+            if playersWithFavour[core.destName] ~= nil then
+                --Check if the timer has not finished
+                core:sendDebugMessage("Found the following player in the table: " .. core.destName)
+                if playersWithFavour[core.destName][1] ~= nil then
+                    --Check if player had a shiny
+                    if playersWithFavour[core.destName][2] ~= nil then
+                        --Lets stop the timer since we now know player has met the requirements so far, unless player had died
+                        core:sendDebugMessage("Cancelling Aspect of Jani timer for: " .. core.destName)
+                        playersWithFavour[core.destName][1]:Cancel()
 
-        if playerFound == true then   
-            core:sendDebugMessage("Found Player")
-            if shinyID == "145903" or shinyID == "147896" then
-                core:sendDebugMessage("Crusader found")
-                crusadersCounter = crusadersCounter + 1
-                core:sendMessage(core:getAchievement() .. " " .. getNPCName(tonumber(shinyID)) .. " " .. L["Core_Counter"] .. "(" .. crusadersCounter .. "/3)") 
-            elseif shinyID == "147895" or shinyID == "145898" then
-                core:sendDebugMessage("Disciple Found")
-                disciplesCounter = disciplesCounter + 1
-                core:sendMessage(core:getAchievement() .. " " .. getNPCName(tonumber(shinyID)) .. " " .. L["Core_Counter"] .. "(" .. disciplesCounter .. "/6)") 
-            elseif shinyID == "144683" or shinyID == "144680" then
-                core:sendDebugMessage("Champion found")
-                championOfTheLightCounter = championOfTheLightCounter + 1
-                core:sendMessage(core:getAchievement() .. " " .. getNPCName(tonumber(shinyID)) .. " " .. L["Core_Counter"] .. "(" .. championOfTheLightCounter .. "/3)") 
+                        --Now wait 1 second to make sure player has not died as this does not count
+                        local playerName = core.destName
+                        C_Timer.After(1, function() 
+                            if UnitIsDeadOrGhost(playerName) ~= true then
+                                if core.inCombat == true then
+                                    --Player is still alive so lets increment the counter
+                                    core:sendDebugMessage("The following player was alive so we can increment counter: " .. playerName)
+                                    if playersWithFavour[playerName][2] == "145903" or playersWithFavour[playerName][2] == "147896" then
+                                        core:sendDebugMessage("Crusader found")                                
+                                        crusadersCounter = crusadersCounter + 1
+                                        core:sendMessage(core:getAchievement() .. " " .. playerName .. " " .. L["Shared_HasStolenFrom"] .. " " .. getNPCName(tonumber(playersWithFavour[playerName][2])) .. " " .. L["Core_Counter"] .. "(" .. crusadersCounter .. "/3)") 
+                                    elseif playersWithFavour[playerName][2] == "147895" or playersWithFavour[playerName][2] == "145898" then
+                                        core:sendDebugMessage("Disciple Found")
+                                        disciplesCounter = disciplesCounter + 1
+                                        core:sendMessage(core:getAchievement() .. " " .. playerName .. " " .. L["Shared_HasStolenFrom"] .. " " .. getNPCName(tonumber(playersWithFavour[playerName][2])) .. " " .. L["Core_Counter"] .. "(" .. disciplesCounter .. "/3)") 
+                                    elseif playersWithFavour[playerName][2] == "144683" or playersWithFavour[playerName][2] == "144680" then
+                                        core:sendDebugMessage("Champion found")
+                                        championOfTheLightCounter = championOfTheLightCounter + 1
+                                        core:sendMessage(core:getAchievement() .. " " .. playerName .. " " .. L["Shared_HasStolenFrom"] .. " " .. getNPCName(tonumber(playersWithFavour[playerName][2])) .. " " .. L["Core_Counter"] .. "(" .. championOfTheLightCounter .. "/3)") 
+                                    end
+                                end
+                            else
+                                core:sendDebugMessage("The following player has died but had the shiny debuff so do not count: " .. playerName)
+                            end
+
+                            --Cleanup variables
+                            playersWithFavour[playerName][1] = nil
+                            playersWithFavour[playerName][2] = nil
+                            playersWithFavour[playerName] = nil
+                        end)
+                    end                    
+                end
             end
         end
     end
 
-    if crusadersCounter >= 3 and disciplesCounter >=6 and championOfTheLightCounter >= 3 then
+    if crusadersCounter >= 3 and disciplesCounter >=3 and championOfTheLightCounter >= 3 then
         core:getAchievementSuccess()
     end
 end
@@ -289,15 +255,7 @@ function core._2070:ClearVariables()
     crusadersCounter = 0
     disciplesCounter = 0
     championOfTheLightCounter = 0
-    playersAspect1 = nil
-    playersAspect2 = nil
-    playersAspect3 = nil
-    playersAspect1Tribute = false
-    playersAspect2Tribute = false
-    playersAspect3Tribute = false
-    playersAspect1Timer = nil
-    playersAspect2Timer = nil
-    playersAspect3Timer = nil
+    playersWithFavour = {}
 
     ------------------------------------------------------
     ---- Grong  
