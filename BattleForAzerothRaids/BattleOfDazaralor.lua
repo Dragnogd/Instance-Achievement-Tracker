@@ -52,7 +52,7 @@ function core._2070:ChampionOfTheLight()
                 --Player was not found. Add new entry
                 --{Timer,npcName}
                 local playerAspect = core.destName
-                aspectTimer = C_Timer.NewTimer(13, function() 
+                aspectTimer = C_Timer.NewTimer(29, function() 
                     core:sendDebugMessage(playerAspect)
                     playersWithFavour[playerAspect] = nil
                     core:sendDebugMessage("Stopped timer as player did not return shiny in time: " .. playerAspect)
@@ -233,7 +233,7 @@ function core._2070:JainaProudmoore()
         else
             --We had met the requirements but a snow mound has been lost. Lets check if this was because achievement was success or players failed it
             snowCounter = snowCounter - 1
-            C_Timer.After(function() 
+            C_Timer.After(3, function() 
                 if snowCounter ~= 0 then
                     --This is a fail since snow counter would be 0 if achievement was a success
                     core:getAchievementFailed()
