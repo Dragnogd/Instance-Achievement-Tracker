@@ -52,7 +52,7 @@ function core._2070:ChampionOfTheLight()
                 --Player was not found. Add new entry
                 --{Timer,npcName}
                 local playerAspect = core.destName
-                aspectTimer = C_Timer.NewTimer(28, function() 
+                aspectTimer = C_Timer.NewTimer(29, function() 
                     core:sendDebugMessage(playerAspect)
                     playersWithFavour[playerAspect] = nil
                     core:sendDebugMessage("Stopped timer as player did not return shiny in time: " .. playerAspect)
@@ -69,7 +69,7 @@ function core._2070:ChampionOfTheLight()
     --Player has stolen a shiny
     if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 288630 then --288630
         if core.destName ~= nil then
-            core:sendDebugMessage("The following player has stolen a shiny: " .. core.destName)
+            core:sendDebugMessage("The following player has stolen a shiny: " .. core.sourceName)
             --Get mob which had stolen shiny from
             if core.destID == "145903" or core.destID == "147896" or core.destID == "145898" or core.destID == "147895" or core.destID == "144680" or core.destID == "144683" then
                 -- core.destID = "145903"
