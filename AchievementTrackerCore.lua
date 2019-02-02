@@ -2561,6 +2561,8 @@ function core:clearVariables()
 	core.playersFailedPersonal = {}
 	core.outputTrackingStatus = false
 	lastMessageSent = nil
+	core.playersFailedPersonal = {}
+	core.playersSuccessPersonal = {}
 
 	core.mobCounter = 0
 	core.mobUID = {}
