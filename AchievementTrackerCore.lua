@@ -7,8 +7,8 @@ local L = core.L												--Translation Table
 local events = CreateFrame("Frame")								--All events are registered to this frame
 local UIConfig													--UIConfig is used to make a display asking the user if they would like
 local UICreated = false											--To enable achievement tracking when they enter an instances
-local debugMode = true
-local debugModeChat = true
+local debugMode = false
+local debugModeChat = false
 local sendDebugMessages = true
 
 local ptrVersion = "8.1.0"
@@ -153,6 +153,7 @@ local infoFrameShown = false
 local automaticBlizzardTracking = true			--By Default blizzard trackers are almost always white (true)
 local automaticBlizzardTrackingInitialCheck = false --Initial check for value at start of each encounter
 local enableCombatLogging = false
+core.syncMessageQueue = {}							--Messages sent from sync to other addons. Used when range is too small for one addon to cover.
 
 --------------------------------------
 -- Addon Syncing 
@@ -161,7 +162,7 @@ local masterAddon = false					--The master addon for the group. This stop multip
 local playerRank = -1						--The rank of the player is the group. Players with higher rank get priorty over outputting messages unless they have an outdated addon
 local addonID = 0
 local messageQueue = {}
-local blockRequirementsCheck				--This blocks comparing who is the master addon for remainder of fight since it has been determined an addon already has better requirements than this addon
+local blockRequirementsCheck = false		--This blocks comparing who is the master addon for remainder of fight since it has been determined an addon already has better requirements than this addon
 
 --Get the current size of the group
 function core:getGroupSize()
@@ -1370,6 +1371,8 @@ function events:CHAT_MSG_ADDON(self, prefix, message, channel, sender)
 
 			if masterAddonRecieved == "true" and blockRequirementsCheck == false then
 
+				core:sendDebugMessage("Make it to tracking")
+
 				if onlyTrackMissingAchievementsRecieved == "true" and core.trackingSupressed == false then
 					--Other player is supressing achievements but this addon is not so set this to the master addon
 					core:sendDebugMessage("0.1: " .. sender .. " is supressing achievements so demote")
@@ -1456,6 +1459,12 @@ function events:CHAT_MSG_ADDON(self, prefix, message, channel, sender)
 			core:sendDebugMessage("Asking " .. sender .. " to demote themselves")
 			C_ChatInfo.SendAddonMessage("Whizzey", sender .. "-demote", "RAID")
 		end
+	elseif string.match(message, "syncMessage") then
+		local sync, message = strsplit("-", message)
+		core:sendDebugMessage("Recieved the following message from addon user: " .. message)
+
+		--Add new message to the message queue
+		table.insert(core.syncMessageQueue, message)
 	end
 end
 
@@ -2451,7 +2460,7 @@ function core:getAchievementSuccessPersonal(index, location)
 	end
 end
 
-function core:getAchievementSuccessPersonalWithName(index, sender)
+function core:getAchievementSuccessPersonalWithName(index, sender, outputMessage)
 	local value = index
 	if index == nil then
 		value = 1
@@ -2463,8 +2472,10 @@ function core:getAchievementSuccessPersonalWithName(index, sender)
 	if core.playersSuccessPersonal[sender] == nil then
 		--Players has not already completed the achievement
 		if core:has_value(core.currentBosses[value].players, sender) then
-			--Player needs achievement but has failed it
-			core:sendMessage(sender .. " " .. L["Shared_HasCompleted"] .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " (" .. L["Core_PersonalAchievement"] .. ")",true,"completed")
+			--Player needed achievements and has met requirements
+			if outputMessage == true then
+				core:sendMessage(sender .. " " .. L["Shared_HasCompleted"] .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " (" .. L["Core_PersonalAchievement"] .. ")",true,"completed")			
+			end
 		end
 		core.playersSuccessPersonal[sender] = true
 	end
