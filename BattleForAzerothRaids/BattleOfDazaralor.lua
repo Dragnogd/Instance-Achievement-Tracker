@@ -52,7 +52,7 @@ function core._2070:ChampionOfTheLight()
                 --Player was not found. Add new entry
                 --{Timer,npcName}
                 local playerAspect = core.destName
-                aspectTimer = C_Timer.NewTimer(29, function() 
+                aspectTimer = C_Timer.NewTimer(28, function() 
                     core:sendDebugMessage(playerAspect)
                     playersWithFavour[playerAspect] = nil
                     core:sendDebugMessage("Stopped timer as player did not return shiny in time: " .. playerAspect)
