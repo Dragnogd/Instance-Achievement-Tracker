@@ -1582,6 +1582,9 @@ function IATInfoFrame:SetText1(text)
     else
         InfoFrame:SetSize(InfoFrame:GetWidth(), headingHeight + subHeading1Height + text1Height)    
     end
+
+    InfoFrame.setText1:SetJustifyH("LEFT")
+    InfoFrame.setText1:SetJustifyV("TOP")
 end
 
 function IATInfoFrame:SetSubHeading2(text)
@@ -1599,7 +1602,10 @@ function IATInfoFrame:SetText2(text)
     end                        
     InfoFrame.setText2:SetText(text)
     InfoFrame.setText2:SetHeight(InfoFrame.setText2:GetStringHeight())
-    InfoFrame.setText2:SetPoint("TOPLEFT", InfoFrame.setSubHeading2, "BOTTOMLEFT", 0, -5)         
+    InfoFrame.setText2:SetPoint("TOPLEFT", InfoFrame.setSubHeading2, "BOTTOMLEFT", 0, -5)       
+    
+    InfoFrame.setText2:SetJustifyH("LEFT")
+    InfoFrame.setText2:SetJustifyV("TOP")
 end
 
 function IATInfoFrame:ToggleOn()
