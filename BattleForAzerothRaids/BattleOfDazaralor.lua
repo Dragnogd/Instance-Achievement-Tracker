@@ -206,8 +206,32 @@ end
 
 function core._2070:Opulence()
     --Defeat the Opulence in Battle of Dazar'alor after /praising a Singing Sunflower while under the effects of Brilliant Aura on Normal Difficulty or higher.
-    -- InfoFrame_UpdatePlayersOnInfoFrame()
-	-- InfoFrame_SetHeaderCounter(L["Shared_PlayersWhoNeedAchievement"],playersCompletedAchievement,#core.currentBosses[1].players)
+	if core:has_value(core.currentBosses[1].players, L["GUI_NoPlayersNeedAchievement"]) == false then
+		InfoFrame_UpdatePlayersOnInfoFramePersonal()
+		InfoFrame_SetHeaderCounter(L["Shared_PlayersWhoNeedAchievement"],playersCompletedAchievement,#core.currentBosses[1].players)
+		InfoFrame_GetRangeCheck(25)
+	else
+		InfoFrame_SetHeaderCounter(L["Shared_PlayersWhoNeedAchievement"],playersCompletedAchievement,0)
+		core.IATInfoFrame:SetText1(L["GUI_NoPlayersNeedAchievement"])
+	end
+
+	--Check for message in the sync queue
+	for k,sender in ipairs(core.syncMessageQueue) do
+		if sender ~= nil then
+			core:sendDebugMessage("Found Message:" .. sender)
+			--If someone is found then they have completed the achievement.
+			if core.playersSuccessPersonal[sender] == nil and core:has_value(core.currentBosses[1].players, sender) then
+				InfoFrame_SetPlayerComplete(sender)
+				playersCompletedAchievement = playersCompletedAchievement + 1
+				core:getAchievementSuccessPersonalWithName(1, sender)
+			end
+			core.syncMessageQueue[k] = nil
+		end
+	end
+
+	if #core.currentBosses[1].players == playersCompletedAchievement then
+		core:getAchievementSuccess()
+	end
 end
 
 function core._2070:JainaProudmoore()
@@ -287,44 +311,54 @@ function core._2070:InitialSetup()
 end
 
 function core._2070.Events:CHAT_MSG_TEXT_EMOTE(self, message, sender, lineID, senderGUID)
-    -- if core.Instances[core.expansion][core.instanceType][core.instance]["boss4"].enabled == true then
-    --     --Lets get the target they praised
-    --     if UnitIsPlayer(sender) then
-    --         if sender == UnitName("Player") then
-    --             if string.match(message, L["BattleOfDazzarlor_PraiseSelf"]) then
-    --                 if string.match(message, getNPCName(51090)) then
-    --                     --They have praised the correct npc. Check if they have the correct buff
-    --                     for i=1,40 do
-    --                         local _, _, _, _, _, _, _, _, _, spellId = UnitAura(sender, i)
-    --                         if spellId == 284802 then
-    --                             --Check if the player actually needs the achievement since it is personal
-    --                             core:sendDebugMessage("Found player who hugged singing sunflower")
-    --                             core:sendDebugMessage(sender)
-    --                             InfoFrame_SetPlayerComplete(sender)
-    --                             playersCompletedAchievement = playersCompletedAchievement + 1
-    --                             core:getAchievementSuccessPersonalWithName(1, sender)	
-    --                         end
-    --                     end
-    --                 end
-    --             end
-    --         else
-    --             if string.match(message, L["BattleOfDazzarlor_PraiseOther"]) then
-    --                 if string.match(message, getNPCName(51090)) then
-    --                     --They have praised the correct npc. Check if they have the correct buff
-    --                     for i=1,40 do
-    --                         local _, _, _, _, _, _, _, _, _, spellId = UnitAura(sender, i)
-    --                         if spellId == 284802 then
-    --                             --Check if the player actually needs the achievement since it is personal
-    --                             core:sendDebugMessage("Found player who hugged singing sunflower")
-    --                             core:sendDebugMessage(sender)
-    --                             InfoFrame_SetPlayerComplete(sender)
-    --                             playersCompletedAchievement = playersCompletedAchievement + 1
-    --                             core:getAchievementSuccessPersonalWithName(1, sender)	
-    --                         end
-    --                     end
-    --                 end
-    --             end 
-    --         end
-    --     end
-    -- end
+    if core.Instances[core.expansion][core.instanceType][core.instance]["boss1"].enabled == true then
+        --Lets get the target they praised
+        if UnitIsPlayer(sender) then
+            if sender == UnitName("Player") then
+                if string.match(message, L["BattleOfDazzarlor_PraiseSelf"]) then
+                    if string.match(message, getNPCName(51090)) then
+                        --They have praised the correct npc. Check if they have the correct buff
+                        for i=1,40 do
+                            local _, _, _, _, _, _, _, _, _, spellId = UnitAura(sender, i)
+                            if spellId == 774 then
+                                --Check if the player actually needs the achievement since it is personal
+                                core:sendDebugMessage("Found player who hugged singing sunflower")
+								core:sendDebugMessage(sender)
+								if core.playersSuccessPersonal[sender] == nil and core:has_value(core.currentBosses[1].players, sender) then
+									InfoFrame_SetPlayerComplete(sender)
+									playersCompletedAchievement = playersCompletedAchievement + 1
+									core:getAchievementSuccessPersonalWithName(1, sender)
+
+									--Send message to other addon users
+									C_ChatInfo.SendAddonMessage("Whizzey", "syncMessage" .. "-" .. sender, "RAID")
+								end
+                            end
+                        end
+                    end
+                end
+            else
+                if string.match(message, L["BattleOfDazzarlor_PraiseOther"]) then
+                    if string.match(message, getNPCName(51090)) then
+                        --They have praised the correct npc. Check if they have the correct buff
+                        for i=1,40 do
+                            local _, _, _, _, _, _, _, _, _, spellId = UnitAura(sender, i)
+                            if spellId == 774 then
+                                --Check if the player actually needs the achievement since it is personal
+                                core:sendDebugMessage("Found player who hugged singing sunflower")
+								core:sendDebugMessage(sender)
+								if core.playersSuccessPersonal[sender] == nil and core:has_value(core.currentBosses[1].players, sender) then
+									InfoFrame_SetPlayerComplete(sender)
+									playersCompletedAchievement = playersCompletedAchievement + 1
+									core:getAchievementSuccessPersonalWithName(1, sender)
+									
+									--Send message to other addon users
+									C_ChatInfo.SendAddonMessage("Whizzey", "syncMessage" .. "-" .. sender, "RAID")
+								end
+                            end
+                        end
+                    end
+                end 
+            end
+        end
+    end
 end
