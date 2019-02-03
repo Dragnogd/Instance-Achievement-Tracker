@@ -55,7 +55,12 @@ function generateNPCCache()
 end
 
 function getNPCName(npcID)
-	return core.NPCCache[npcID]
+	if not tonumber(core.NPCCache[npcID]) then
+		return core.NPCCache[npcID]	
+	else
+		GetNameFromNpcIDCache(npcID)
+		return ""	
+	end
 end
 
 events:SetScript("OnEvent", function(self, event, ...)
