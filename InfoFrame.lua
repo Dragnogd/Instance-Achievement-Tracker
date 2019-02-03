@@ -24,7 +24,7 @@ core.InfoFrame_PlayersTable = {}    --List of all players in the group and the c
 local colourRed = "|cffFF0000"
 local colourGreen = "|cff59FF00"
 local colourWhite = "|cffFFFFFF"
-local colourOrange = "|cffffd933"
+local colourOrange = "|cffff6100"
 
 function InfoFrame_UpdatePlayersOnInfoFrame()
     --This will update list of players on the info frame
@@ -54,7 +54,7 @@ function InfoFrame_UpdatePlayersOnInfoFrame()
     end
 end
 
-function InfoFrame_UpdatePlayersOnInfoFramePersonal(checkRange, range)
+function InfoFrame_UpdatePlayersOnInfoFramePersonal()
     --This will update list of players on the info frame for personal achievements.
     --This will only display names of players who still need the achievement
 
@@ -67,18 +67,7 @@ function InfoFrame_UpdatePlayersOnInfoFramePersonal(checkRange, range)
         --Update Info Frame with values from table
         local messageStr = ""
         for player, status in pairs(core.InfoFrame_PlayersTable) do
-            --1 = incomplete, 2 = complete, 3 = failed
-            if checkRange == true and status ~= 2 then
-                --Check if player is within specified range or not
-                local minRange, maxRange = rc:GetRange(player)
-                if maxRange ~= nil then
-                    if maxRange > range then
-                        messageStr = messageStr .. colourOrange .. player .. "|r\n"
-                    else
-                        messageStr = messageStr .. colourWhite .. player .. "|r\n"
-                    end
-                end
-            elseif status == 1 then
+            if status == 1 then
                 --Player has not completed the requirements for the achievement yet
                 messageStr = messageStr .. colourWhite .. player .. "|r\n"
             elseif status == 2 then
@@ -87,9 +76,26 @@ function InfoFrame_UpdatePlayersOnInfoFramePersonal(checkRange, range)
             elseif status == 3 then
                 --Player had completed the requirements for the achievement but has since failed it
                 messageStr = messageStr .. colourRed .. player .. "|r\n"
+            elseif status == 4 then
+                --Player is out of tracking range
+                messageStr = messageStr .. colourOrange .. player .. "|r\n"
             end
         end
         core.IATInfoFrame:SetText1(messageStr)
+    end
+end
+
+function InfoFrame_GetRangeCheck(range)
+    local maxChecker = rc:GetFriendMaxChecker(range)
+    for player, status in pairs(core.InfoFrame_PlayersTable) do
+        if not maxChecker(player) then
+            --print(player .. " is not in range")
+            if core.InfoFrame_PlayersTable[player] ~= 2 then
+                core.InfoFrame_PlayersTable[player] = 4            
+            end
+        elseif core.InfoFrame_PlayersTable[player] ~= 2 then
+            core.InfoFrame_PlayersTable[player] = 1
+        end
     end
 end
 
