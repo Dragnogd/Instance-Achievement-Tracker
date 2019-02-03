@@ -2175,7 +2175,6 @@ core.Instances = {
                     track = function() core._996:ProtectorsOfTheEndless() end,
                     partial = false,
                     encounterID = 1409,
-                    displayInfoFrame = true,
                 },
                 boss2 = {
                     name = 742, --Tsulong
