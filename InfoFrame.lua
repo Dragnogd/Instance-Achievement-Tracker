@@ -3,6 +3,8 @@
 --------------------------------------
 local _, core = ...
 
+local rc = LibStub("LibRangeCheck-2.0")
+
 --Info Frame Ideas
 
 --Show a list of players in the group and each player should have a flag on the current status
@@ -22,6 +24,7 @@ core.InfoFrame_PlayersTable = {}    --List of all players in the group and the c
 local colourRed = "|cffFF0000"
 local colourGreen = "|cff59FF00"
 local colourWhite = "|cffFFFFFF"
+local colourOrange = "|cffffd933"
 
 function InfoFrame_UpdatePlayersOnInfoFrame()
     --This will update list of players on the info frame
@@ -51,7 +54,7 @@ function InfoFrame_UpdatePlayersOnInfoFrame()
     end
 end
 
-function InfoFrame_UpdatePlayersOnInfoFramePersonal()
+function InfoFrame_UpdatePlayersOnInfoFramePersonal(checkRange, range)
     --This will update list of players on the info frame for personal achievements.
     --This will only display names of players who still need the achievement
 
@@ -65,7 +68,17 @@ function InfoFrame_UpdatePlayersOnInfoFramePersonal()
         local messageStr = ""
         for player, status in pairs(core.InfoFrame_PlayersTable) do
             --1 = incomplete, 2 = complete, 3 = failed
-            if status == 1 then
+            if checkRange == true and status ~= 2 then
+                --Check if player is within specified range or not
+                local minRange, maxRange = rc:GetRange(player)
+                if maxRange ~= nil then
+                    if maxRange > range then
+                        messageStr = messageStr .. colourOrange .. player .. "|r\n"
+                    else
+                        messageStr = messageStr .. colourWhite .. player .. "|r\n"
+                    end
+                end
+            elseif status == 1 then
                 --Player has not completed the requirements for the achievement yet
                 messageStr = messageStr .. colourWhite .. player .. "|r\n"
             elseif status == 2 then
