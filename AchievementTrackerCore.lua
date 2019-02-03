@@ -2128,7 +2128,10 @@ function core:sendMessage(message, outputToRW, messageType)
 		elseif debugModeChat == true then
 			core:sendDebugMessage("[DEBUG] " .. message)
 		end
-		lastMessageSent = message
+
+		if message ~= "setup" then
+			lastMessageSent = message
+		end
 	else
 		--DEBUG
 		core:sendDebugMessage("Cannot Send Message: " .. message)
