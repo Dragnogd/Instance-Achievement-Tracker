@@ -22,11 +22,6 @@ local elderRegailKilled = false
 ------------------------------------------------------
 local parasiticClutchCounter = 0
 
-------------------------------------------------------
----- Opulence  
-------------------------------------------------------
-local playersCompletedAchievement = 0
-
 function core._996:ProtectorsOfTheEndless()
 	if core.type == "UNIT_DIED" and core.destID == "60586" then
 		elderAsaniKilled = true
@@ -43,13 +38,6 @@ function core._996:ProtectorsOfTheEndless()
 	elseif protectorKaolanKilled == true and elderRegailKilled == true then
 		core:getAchievementSuccessWithCustomMessage("'Elder Asani Defeated Last' part of", "will be completed once boss is killed")
 	end
-
-	if core:has_value(core.currentBosses[1].players, "Whizzey") == false then
-		table.insert(core.currentBosses[1].players, "Whizzey")
-	end
-
-	InfoFrame_UpdatePlayersOnInfoFramePersonal()
-	InfoFrame_SetHeaderCounter(L["Shared_PlayersWhoNeedAchievement"],playersCompletedAchievement,#core.currentBosses[1].players)
 end
 
 function core._996:Tsulong()
@@ -111,79 +99,4 @@ function core._996:ClearVariables()
 	---- Lei Shi
 	------------------------------------------------------
 	parasiticClutchCounter = 0
-
-	playersCompletedAchievement = 0
-end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function core._996:InstanceCleanup()
-    core._996.Events:UnregisterEvent("CHAT_MSG_TEXT_EMOTE")
-end
-
-core._996.Events:SetScript("OnEvent", function(self, event, ...)
-    return self[event] and self[event](self, event, ...)
-end)
-
-function core._996:InitialSetup()
-    core._996.Events:RegisterEvent("CHAT_MSG_TEXT_EMOTE")
-end
-
-function core._996.Events:CHAT_MSG_TEXT_EMOTE(self, message, sender, lineID, senderGUID)
-    if core.Instances[core.expansion][core.instanceType][core.instance]["boss1"].enabled == true then
-        --Lets get the target they praised
-        if UnitIsPlayer(sender) then
-            if sender == UnitName("Player") then
-                if string.match(message, L["BattleOfDazzarlor_PraiseSelf"]) then
-                    if string.match(message, getNPCName(51090)) then
-                        --They have praised the correct npc. Check if they have the correct buff
-                        for i=1,40 do
-                            local _, _, _, _, _, _, _, _, _, spellId = UnitAura(sender, i)
-                            if spellId == 774 then
-                                --Check if the player actually needs the achievement since it is personal
-                                core:sendDebugMessage("Found player who hugged singing sunflower")
-								core:sendDebugMessage(sender)
-								if core.playersSuccessPersonal[sender] == nil and core:has_value(core.currentBosses[1].players, sender) then
-									InfoFrame_SetPlayerComplete(sender)
-									playersCompletedAchievement = playersCompletedAchievement + 1
-									core:getAchievementSuccessPersonalWithName(1, sender)
-								end
-                            end
-                        end
-                    end
-                end
-            else
-                if string.match(message, L["BattleOfDazzarlor_PraiseOther"]) then
-                    if string.match(message, getNPCName(51090)) then
-                        --They have praised the correct npc. Check if they have the correct buff
-                        for i=1,40 do
-                            local _, _, _, _, _, _, _, _, _, spellId = UnitAura(sender, i)
-                            if spellId == 774 then
-                                --Check if the player actually needs the achievement since it is personal
-                                core:sendDebugMessage("Found player who hugged singing sunflower")
-								core:sendDebugMessage(sender)
-								if core.playersSuccessPersonal[sender] == nil and core:has_value(core.currentBosses[1].players, sender) then
-									InfoFrame_SetPlayerComplete(sender)
-									playersCompletedAchievement = playersCompletedAchievement + 1
-									core:getAchievementSuccessPersonalWithName(1, sender)									
-								end
-                            end
-                        end
-                    end
-                end 
-            end
-        end
-    end
 end
