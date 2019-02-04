@@ -5535,7 +5535,7 @@ core.Instances = {
                     players = {},
                     tactics = L["TheCullingOfStratholme_Other1"],
                     enabled = true,
-                    track = function() core.__595:ZombieFest() end,
+                    track = function() core._595:ZombieFest() end,
 					partial = false,
                 },
                 boss2 = {
