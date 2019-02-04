@@ -9,7 +9,7 @@ local UIConfig													--UIConfig is used to make a display asking the user 
 local UICreated = false											--To enable achievement tracking when they enter an instances
 local debugMode = false
 local debugModeChat = false
-local sendDebugMessages = true
+local sendDebugMessages = false
 
 local ptrVersion = "8.1.0"
 
@@ -598,7 +598,7 @@ function enableAchievementTracking(self)
 	events:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")			--Used to track the completion/failiure of achievements
 	events:RegisterEvent("ENCOUNTER_START")						--Used to detect the start of a boss fight
 	events:RegisterEvent("ENCOUNTER_END")						--Used to detect the end of a boss fight
-	events:RegisterEvent("UPDATE_MOUSEOVER_UNIT")				--Used to output achievement for boss and players missing achievements on hover
+	-- events:RegisterEvent("UPDATE_MOUSEOVER_UNIT")				--Used to output achievement for boss and players missing achievements on hoverkk
 
 	--Start the achievement scan
 	if core.enableAchievementScanning == true then
@@ -1346,7 +1346,7 @@ function events:ZONE_CHANGED_NEW_AREA()
 		events:UnregisterEvent("INSPECT_ACHIEVEMENT_READY")
 		events:UnregisterEvent("ENCOUNTER_START")						
 		events:UnregisterEvent("ENCOUNTER_END")
-		events:UnregisterEvent("UPDATE_MOUSEOVER_UNIT")
+		-- events:UnregisterEvent("UPDATE_MOUSEOVER_UNIT")
 		
 		--Reset variables in case user left during middle of encounter. E.g hearthstones out
 		core:clearInstanceVariables()
