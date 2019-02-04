@@ -38,7 +38,11 @@ function events:GET_ITEM_INFO_RECEIVED(self, arg1)
 						if boss ~= "name" then
 							if string.find(core.Instances[expansion][instanceType][instance][boss].tactics, ("IAT_" .. arg1)) then
 								local itemName, itemLink = GetItemInfo(arg1)
+<<<<<<< HEAD
 								if itemLink ~= nil then
+=======
+								if itemlink ~= nil then
+>>>>>>> 8eb3fa8f057ddba0311a3633c7e3f6debe71adf1
 									core.Instances[expansion][instanceType][instance][boss].tactics = string.gsub(core.Instances[expansion][instanceType][instance][boss].tactics, ("IAT_" .. arg1), itemLink)
 								end
 							end
