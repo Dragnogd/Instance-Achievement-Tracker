@@ -17,6 +17,7 @@ local crusadersCounter = 0
 local disciplesCounter = 0
 local championOfTheLightCounter = 0
 local playersWithFavour = {}
+local aspectCounter = 0
 
 ------------------------------------------------------
 ---- Grong  
@@ -39,10 +40,12 @@ function core._2070:ChampionOfTheLight()
 
     --Everyone must have the Jani's Favor debuff
     --3 Shinies From Crusaders
-    --6 Shinies From Disciples
+    --3 Shinies From Disciples
     --3 Shinies From Champion of the Light
     --Shinies have to be deposited at the trashpile
-    
+    --All players must pick up debuff before pull
+    --Boss must not be killed while people are raptors
+
     --Player has gained Aspect of Jani debuff. They need to loose the debuff within 30 seconds with the tribute for counter to increment
     if core.type == "SPELL_AURA_APPLIED" and core.spellId == 288610 then --288610
         if core.destName ~= nil then
@@ -55,9 +58,13 @@ function core._2070:ChampionOfTheLight()
                 aspectTimer = C_Timer.NewTimer(29, function() 
                     core:sendDebugMessage(playerAspect)
                     playersWithFavour[playerAspect] = nil
+                    aspectCounter = aspectCounter - 1
+                    core:sendDebugMessage("Aspect Counter: " .. aspectCounter)
                     core:sendDebugMessage("Stopped timer as player did not return shiny in time: " .. playerAspect)
                 end)
                 playersWithFavour[core.destName] = {aspectTimer, nil}
+                aspectCounter = aspectCounter + 1
+                core:sendDebugMessage("Aspect Counter: " .. aspectCounter)
                 core:sendDebugMessage("Inserted new entry into playersWithFavour for and started timer: " .. core.destName)
             else
                 --Player removed debuff before it had expired (in case this is possible)
@@ -128,6 +135,8 @@ function core._2070:ChampionOfTheLight()
                             playersWithFavour[playerName][1] = nil
                             playersWithFavour[playerName][2] = nil
                             playersWithFavour[playerName] = nil
+                            aspectCounter = aspectCounter - 1
+                            core:sendDebugMessage("Aspect Counter: " .. aspectCounter)
                         end)
                     end                    
                 end
@@ -135,8 +144,16 @@ function core._2070:ChampionOfTheLight()
         end
     end
 
-    if crusadersCounter >= 3 and disciplesCounter >=3 and championOfTheLightCounter >= 3 then
+    if crusadersCounter >= 3 and disciplesCounter >=3 and championOfTheLightCounter >= 3 and aspectCounter <= 0 then
+        --Only announce success once we have enough mobs and no one is currently a raptor. Set achievement failed back to false
         core:getAchievementSuccess()
+        core.achievementsFailed[1] = false
+    end
+
+    --If achievement was completed but aspect counter has increased again then achievement has failed till raptors despawn
+    if core.achievementsCompleted[1] == true and aspectCounter > 0 then
+        core:getAchievementFailedWithMessageAfter(L["BattleOfDazzarlor_PlayersTransformed"])
+        core.achievementsCompleted[1] = false
     end
 end
 
@@ -280,6 +297,7 @@ function core._2070:ClearVariables()
     disciplesCounter = 0
     championOfTheLightCounter = 0
     playersWithFavour = {}
+    aspectCounter = 0
 
     ------------------------------------------------------
     ---- Grong  

@@ -168,6 +168,7 @@ local baseLocale = {
     ["BattleOfDazzarlor_BarrelsDestroyed"] = "barrels destroyed",
     ["BattleOfDazzarlor_PraiseSelf"] = "You lavish praise upon",
     ["BattleOfDazzarlor_PraiseOther"] = "lavishes praise upon",
+    ["BattleOfDazzarlor_PlayersTransformed"] = "Some players are currently transformed. Do not kill boss yet",
 
     -------------------------------------------------------
     --- Uldir
