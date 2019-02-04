@@ -604,7 +604,7 @@ end
 
 function ATToggleSoundFailed_OnClick(self)
     AchievementTrackerOptions["toggleSoundFailed"] = self:GetChecked()
-    setEnableSound(self:GetChecked()) 
+    setEnableSoundFailed(self:GetChecked()) 
 end
 
 function ATToggleAnnounceToRaidWarning_OnClick(self)

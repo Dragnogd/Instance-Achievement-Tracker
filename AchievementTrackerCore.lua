@@ -126,6 +126,7 @@ local enableSoundFailed = false					--Whether to play a sound when achievement i
 local failedSound = nil
 local completedSound = nil
 core.achievementDisplayStatus = "show"			--How achievements should be display within the GUI (Show/Hide/Grey)
+local mobMouseoverCache = {}
 
 --------------------------------------
 -- Current Instance Variables
@@ -595,6 +596,7 @@ function enableAchievementTracking(self)
 	events:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")			--Used to track the completion/failiure of achievements
 	events:RegisterEvent("ENCOUNTER_START")						--Used to detect the start of a boss fight
 	events:RegisterEvent("ENCOUNTER_END")						--Used to detect the end of a boss fight
+	events:RegisterEvent("UPDATE_MOUSEOVER_UNIT")				--Used to output achievement for boss and players missing achievements on hover
 
 	--Start the achievement scan
 	if core.enableAchievementScanning == true then
@@ -797,14 +799,26 @@ function events:ADDON_LOADED(event, name)
 		AchievementTrackerOptions["toggleSound"] = false --Do not enable by default
 	elseif AchievementTrackerOptions["toggleSound"] == true then
 		enableSound = true
+
+		--Make sure that there is a sound selected by default. To fix error from earlier version of addon
+		if AchievementTrackerOptions["completedSoundID"] == nil or AchievementTrackerOptions["completedSound"] == nil then
+			AchievementTrackerOptions["completedSound"] = "Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Achievement Completed.ogg"
+			AchievementTrackerOptions["completedSoundID"] = 13
+		end
 	end
 	_G["AchievementTracker_ToggleSound"]:SetChecked(AchievementTrackerOptions["toggleSound"])
 
-	--Play sound when achievement completed
+	--Play sound when achievement fails
 	if AchievementTrackerOptions["toggleSoundFailed"] == nil then
 		AchievementTrackerOptions["toggleSoundFailed"] = false --Do not enable by default
 	elseif AchievementTrackerOptions["toggleSoundFailed"] == true then
 		enableSoundFailed = true
+
+		--Make sure that there is a sound selected by default. To fix error from earlier version of addon
+		if AchievementTrackerOptions["failedSoundID"] == nil or AchievementTrackerOptions["failedSound"] == nil then
+			AchievementTrackerOptions["failedSound"] = "Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Achievement Failed.ogg"
+			AchievementTrackerOptions["failedSoundID"] = 11
+		end
 	end
 	_G["AchievementTracker_ToggleSoundFailed"]:SetChecked(AchievementTrackerOptions["toggleSoundFailed"])
 
@@ -964,7 +978,7 @@ function setEnableSound(setEnableSound)
 	end
 end
 
-function setEnableSound(setEnableSoundFailed)
+function setEnableSoundFailed(setEnableSoundFailed)
 	if setEnableSoundFailed then
 		enableSoundFailed = true
 
@@ -1033,6 +1047,24 @@ end
 function core:getPlayersInGroup2()
 	getPlayersInGroup()
 end
+
+-- function events:UPDATE_MOUSEOVER_UNIT()
+-- 	--Get the mouseover target. If it identified as current boss in instance then output the achievments and players that are missing it.
+-- 	--Otherwise cache the result so we are not constantly looking over the database
+-- 	if UnitIsEnemy("mouseover") then	
+-- 		if core:has_value(mobMouseoverCache, UnitName("mouseover")) == false then
+-- 			--Search database for mob
+-- 			for boss, _ in pairs(core.Instances[core.expansion][core.instanceType][core.instance]) do
+-- 				if boss ~= "name" then
+-- 					local encounterName = core.Config:getLocalisedEncouterName(core.Instances[core.expansion][core.instanceType][core.instance][boss].name)
+-- 					if encounterName == UnitName("mouseover") then
+-- 						print("Found Encounter")
+-- 					end
+-- 				end
+-- 			end
+-- 		end
+-- 	end
+-- end
 
 --Fired whenever the composition of the group changes.
 --Used to alter size of group variables and which player in group is running the master addon
@@ -1312,6 +1344,7 @@ function events:ZONE_CHANGED_NEW_AREA()
 		events:UnregisterEvent("INSPECT_ACHIEVEMENT_READY")
 		events:UnregisterEvent("ENCOUNTER_START")						
 		events:UnregisterEvent("ENCOUNTER_END")
+		events:UnregisterEvent("UPDATE_MOUSEOVER_UNIT")
 		
 		--Reset variables in case user left during middle of encounter. E.g hearthstones out
 		core:clearInstanceVariables()
