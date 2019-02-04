@@ -3401,7 +3401,7 @@ core.Instances = {
                     players = {},
                     tactics = L["TheStonecore_HighPriestessAzil"],
                     enabled = true,
-                    track = function() core.__725:HighPriestessAzil() end,
+                    track = function() core._725:HighPriestessAzil() end,
                     partial = false,
                     encounterID = 1057,
                 },               
@@ -5535,7 +5535,7 @@ core.Instances = {
                     players = {},
                     tactics = L["TheCullingOfStratholme_Other1"],
                     enabled = true,
-                    track = function() core.__595:ZombieFest() end,
+                    track = function() core._595:ZombieFest() end,
 					partial = false,
                 },
                 boss2 = {
