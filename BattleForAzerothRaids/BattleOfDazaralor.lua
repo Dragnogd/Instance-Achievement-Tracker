@@ -338,7 +338,7 @@ function core._2070.Events:CHAT_MSG_TEXT_EMOTE(self, message, sender, lineID, se
                         --They have praised the correct npc. Check if they have the correct buff
                         for i=1,40 do
                             local _, _, _, _, _, _, _, _, _, spellId = UnitAura(sender, i)
-                            if spellId == 774 then
+                            if spellId == 284802 then
                                 --Check if the player actually needs the achievement since it is personal
                                 core:sendDebugMessage("Found player who hugged singing sunflower")
 								core:sendDebugMessage(sender)
@@ -360,7 +360,7 @@ function core._2070.Events:CHAT_MSG_TEXT_EMOTE(self, message, sender, lineID, se
                         --They have praised the correct npc. Check if they have the correct buff
                         for i=1,40 do
                             local _, _, _, _, _, _, _, _, _, spellId = UnitAura(sender, i)
-                            if spellId == 774 then
+                            if spellId == 284802 then
                                 --Check if the player actually needs the achievement since it is personal
                                 core:sendDebugMessage("Found player who hugged singing sunflower")
 								core:sendDebugMessage(sender)
