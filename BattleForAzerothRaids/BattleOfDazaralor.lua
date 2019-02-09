@@ -62,11 +62,9 @@ function core._2070:ChampionOfTheLight()
                 aspectTimer = C_Timer.NewTimer(29, function() 
                     core:sendDebugMessage(playerAspect)
                     playersWithFavour[playerAspect] = nil
-                    core:sendDebugMessage("Aspect Counter: " .. aspectCounter)
                     core:sendDebugMessage("Stopped timer as player did not return shiny in time: " .. playerAspect)
                 end)
                 playersWithFavour[core.destName] = {aspectTimer, nil}
-                core:sendDebugMessage("Aspect Counter: " .. aspectCounter)
                 core:sendDebugMessage("Inserted new entry into playersWithFavour for and started timer: " .. core.destName)
             else
                 --Player removed debuff before it had expired (in case this is possible)
@@ -137,7 +135,6 @@ function core._2070:ChampionOfTheLight()
                             playersWithFavour[playerName][1] = nil
                             playersWithFavour[playerName][2] = nil
                             playersWithFavour[playerName] = nil
-                            core:sendDebugMessage("Aspect Counter: " .. aspectCounter)
                         end)
                     end                    
                 end
