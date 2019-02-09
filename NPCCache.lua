@@ -49,4 +49,5 @@ core.NPCCache = {
     [149244] = 149244, --Frosty Snowmon
     [128652] = 128652, --Viq'Goth
     [137588] = 137588, --Gasping Flounder
+    [146107] = 146107, --Living Bomb
 }
