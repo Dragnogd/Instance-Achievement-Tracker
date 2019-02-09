@@ -20,6 +20,11 @@ local playersWithFavour = {}
 local aspectCounter = 0
 
 ------------------------------------------------------
+---- Jadefire Masters
+------------------------------------------------------
+local eggFound = false
+
+------------------------------------------------------
 ---- Grong  
 ------------------------------------------------------
 local barrelCounter = 0
@@ -159,8 +164,31 @@ end
 
 function core._2070:JadefireMasters()
     --Hatch the cloud serpent egg during the Jadefire Masters encounter in the Battle of Dazar'alor on Normal difficulty or higher.
+    
+    --Egg has been found
+    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 289547 then
+        eggFound = true
+    end
+
+    --Player has either dropped or passed the egg to someone else. Wait 5 seconds before failing achievement if not found
     if core.type == "SPELL_AURA_REMOVED" and core.spellId == 289547 then
-        core:getAchievementFailed()
+        eggFound = false
+        C_Timer.After(5, function() 
+            if eggFound == false then
+                core:getAchievementFailed()
+            end
+        end)
+    end
+
+    --Player has been hit with Dragons Breath and is holding the egg so requirements have been met
+    if core.type == "SPELL_DAMAGE" and core.spellId == 286565 and core.destName ~= nil then
+        --Check if the player that has been hit has the egg debuff on them
+        for i=1,40 do
+            local _, _, _, _, _, _, _, _, _, spellId = UnitAura(core.destName, i)
+            if spellId == 289547 then
+                core:getAchievementSuccess()
+            end
+        end        
     end
 end
 
@@ -298,6 +326,11 @@ function core._2070:ClearVariables()
     championOfTheLightCounter = 0
     playersWithFavour = {}
     aspectCounter = 0
+
+    ------------------------------------------------------
+    ---- Jadefire Masters
+    ------------------------------------------------------
+    eggFound = false
 
     ------------------------------------------------------
     ---- Grong  
