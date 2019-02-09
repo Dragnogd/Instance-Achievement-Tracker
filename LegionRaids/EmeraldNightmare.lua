@@ -104,7 +104,7 @@ end
 
 function core._1520:DragonsOfNightmare()
     InfoFrame_UpdatePlayersOnInfoFrame()
-    InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],playersBuffCounter)
+    InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],playersBuffCounter,core.groupSize)
 end
 
 function core._1520:ClearVariables()
