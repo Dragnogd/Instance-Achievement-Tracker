@@ -2183,8 +2183,11 @@ function core:sendMessageSafe(message, requireMasterAddon)
 	local tmpMessageArr = {}
 	local lastSpacePosition = 0
 	local currentStrPosition = 0
+	local currentStrPositionUTF8 = 0
 	for i = 1, string.utf8len(message) do
-		currentStrPosition = currentStrPosition + 1
+		currentStrPosition = currentStrPosition + strlen(string.utf8sub(message, i, i))
+		currentStrPositionUTF8 = currentStrPositionUTF8 + 1
+
 		if string.utf8sub(message, i, i) == "[" then
 			--If we are opening a bracket we don't want to check for whitespaces as this will break links if they are cutoff between multiple lines.
 			openBracketOpen = true
@@ -2207,30 +2210,32 @@ function core:sendMessageSafe(message, requireMasterAddon)
 			--1: If current character is white space and not in brackets then add to tmpArr and empty string
 			--2: If we are in a middle of word then break the string at last space position. Add first half to array and 2nd half set as current string
 
-			--print("Splitting String")
+			-- print("Splitting String")
 
 			if string.utf8sub(message, i, i) == " " and openBracketOpen == false then
 				--Since we are on a space and not in brackets, we can just split here
 				table.insert(tmpMessageArr, tmpMessageStr)
 				tmpMessageStr = ""
 				currentStrPosition = 0
+				currentStrPositionUTF8 = 0
 			else
 				--Split the current str at the position of the last space and the beginning and add to tmpArr
 				table.insert(tmpMessageArr, string.utf8sub(tmpMessageStr, 1, lastSpacePosition)) --We don't need the space at the end of the line
-				--print(string.utf8sub(tmpMessageStr, 1, lastSpacePosition))
+				-- print(string.utf8sub(tmpMessageStr, 1, lastSpacePosition))
 
 				--Split the current str at the position of the last space till the end and set this as the new str.
 				tmpMessageStr = string.utf8sub(tmpMessageStr, lastSpacePosition + 1) --We don't need the space since we are going to new line
 				tmpMessageStr = tmpMessageStr .. string.utf8sub(message, i, i)
-				currentStrPosition = string.utf8len(tmpMessageStr)
+				currentStrPosition = strlen(tmpMessageStr)
+				currentStrPositionUTF8 = string.utf8len(tmpMessageStr)
 
-				--print(tmpMessageStr)
+				-- print(tmpMessageStr)
 			end
 		end
 
 		if string.utf8sub(message, i, i) == " " and openBracketOpen == false then
 			--Only count spaces that are not inside of brackets
-			lastSpacePosition = currentStrPosition
+			lastSpacePosition = currentStrPositionUTF8
 			--print("Space Detected: " .. lastSpacePosition)
 		end
 	end
@@ -2238,20 +2243,22 @@ function core:sendMessageSafe(message, requireMasterAddon)
 	--Insert the remaining string into array if length is greater than 0
 	if string.utf8len(tmpMessageStr) > 0 then
 		table.insert(tmpMessageArr, tmpMessageStr)
-		--print("Inserting Remaining String...")
-		--print("---" .. tmpMessageStr)
+		-- print("Inserting Remaining String...")
+		-- print("---" .. tmpMessageStr)
 	end
 
-	--print(tmpMessageArr[1])
+	-- print(tmpMessageArr[1])
 
 	--Print the chat
 	for i in ipairs(tmpMessageArr) do
 		if debugMode == false then
-			--print("Printing Safe Message")
+			-- print("Printing Safe Message")
 			--Check if we just want the master addon to output or anyone can output this message
 			if requireMasterAddon == true then
 				core:sendMessage(tmpMessageArr[i])
 			else
+				-- print("Attempting to send... with length " .. strlen("[IAT] " .. tmpMessageArr[i]))
+				-- print(tmpMessageArr[i])
 				SendChatMessage("[IAT] " .. tmpMessageArr[i],core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
 			end
 		else
