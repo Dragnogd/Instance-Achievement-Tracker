@@ -366,7 +366,7 @@ function core._2070:InitialSetup()
 end
 
 function core._2070.Events:CHAT_MSG_TEXT_EMOTE(self, message, sender, lineID, senderGUID)
-    if core.Instances[core.expansion][core.instanceType][core.instance]["boss1"].enabled == true then
+    if core.Instances[core.expansion][core.instanceType][core.instance]["boss4"].enabled == true then
         --Lets get the target they praised
         if UnitIsPlayer(sender) then
             if sender == UnitName("Player") then
