@@ -17,7 +17,6 @@ local crusadersCounter = 0
 local disciplesCounter = 0
 local championOfTheLightCounter = 0
 local playersWithFavour = {}
-local aspectCounter = 0
 
 ------------------------------------------------------
 ---- Jadefire Masters
@@ -63,15 +62,9 @@ function core._2070:ChampionOfTheLight()
                 aspectTimer = C_Timer.NewTimer(29, function() 
                     core:sendDebugMessage(playerAspect)
                     playersWithFavour[playerAspect] = nil
-                    if aspectCounter > 0 then
-                        aspectCounter = aspectCounter - 1                            
-                    end
-                    core:sendDebugMessage("Aspect Counter: " .. aspectCounter)
                     core:sendDebugMessage("Stopped timer as player did not return shiny in time: " .. playerAspect)
                 end)
                 playersWithFavour[core.destName] = {aspectTimer, nil}
-                aspectCounter = aspectCounter + 1
-                core:sendDebugMessage("Aspect Counter: " .. aspectCounter)
                 core:sendDebugMessage("Inserted new entry into playersWithFavour for and started timer: " .. core.destName)
             else
                 --Player removed debuff before it had expired (in case this is possible)
@@ -142,10 +135,6 @@ function core._2070:ChampionOfTheLight()
                             playersWithFavour[playerName][1] = nil
                             playersWithFavour[playerName][2] = nil
                             playersWithFavour[playerName] = nil
-                            if aspectCounter > 0 then
-                                aspectCounter = aspectCounter - 1                            
-                            end
-                            core:sendDebugMessage("Aspect Counter: " .. aspectCounter)
                         end)
                     end                    
                 end
@@ -153,16 +142,9 @@ function core._2070:ChampionOfTheLight()
         end
     end
 
-    if crusadersCounter >= 3 and disciplesCounter >=3 and championOfTheLightCounter >= 3 and aspectCounter <= 0 then
-        --Only announce success once we have enough mobs and no one is currently a raptor. Set achievement failed back to false
+    if crusadersCounter >= 3 and disciplesCounter >=3 and championOfTheLightCounter >= 3 then
+        --Only announce success once we have enough mobs
         core:getAchievementSuccess()
-        core.achievementsFailed[1] = false
-    end
-
-    --If achievement was completed but aspect counter has increased again then achievement has failed till raptors despawn
-    if core.achievementsCompleted[1] == true and aspectCounter > 0 then
-        core:getAchievementFailedWithMessageAfter(L["BattleOfDazzarlor_PlayersTransformed"])
-        core.achievementsCompleted[1] = false
     end
 end
 
@@ -329,7 +311,6 @@ function core._2070:ClearVariables()
     disciplesCounter = 0
     championOfTheLightCounter = 0
     playersWithFavour = {}
-    aspectCounter = 0
 
     ------------------------------------------------------
     ---- Jadefire Masters
