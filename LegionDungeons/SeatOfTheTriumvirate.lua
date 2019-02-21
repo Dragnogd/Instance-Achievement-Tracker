@@ -43,9 +43,7 @@ function core._1753:TrackAdditional()
     if core.Instances[core.expansion][core.instanceType][core.instance]["boss3"].enabled == true then
         --Gained Crushing Darkness
         if core.type == "SPELL_AURA_APPLIED" and core.spellId == 250821 then
-            print("HERE 2")
             if crushingDarknessUID[core.spawn_uid_dest_Player] == nil then
-                print("HERE 3")
                 crushingDarknessUID[core.spawn_uid_dest_Player] = core.spawn_uid_dest_Player
                 crushingDarknessCounter = crushingDarknessCounter + 1
                 core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. GetSpellLink(250821) ..  " (" .. crushingDarknessCounter .. "/" .. core.groupSize .. ")")
