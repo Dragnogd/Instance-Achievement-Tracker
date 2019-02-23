@@ -21,6 +21,7 @@ local rc = LibStub("LibRangeCheck-2.0")
 --  Update table
 
 core.InfoFrame_PlayersTable = {}    --List of all players in the group and the current status of the achievement for the player.
+core.InfoFrame_RangeCheckCooldown = false   --Cooldown for checking range of players for 5 seconds to reduce lag in game for expensive operation
 local colourRed = "|cffFF0000"
 local colourGreen = "|cff59FF00"
 local colourWhite = "|cffFFFFFF"
@@ -86,16 +87,24 @@ function InfoFrame_UpdatePlayersOnInfoFramePersonal()
 end
 
 function InfoFrame_GetRangeCheck(range)
-    local maxChecker = rc:GetFriendMaxChecker(range)
-    for player, status in pairs(core.InfoFrame_PlayersTable) do
-        if not maxChecker(player) then
-            --print(player .. " is not in range")
-            if core.InfoFrame_PlayersTable[player] ~= 2 then
-                core.InfoFrame_PlayersTable[player] = 4            
+    if core.InfoFrame_RangeCheckCooldown == false then
+        local maxChecker = rc:GetFriendMaxChecker(range)
+        for player, status in pairs(core.InfoFrame_PlayersTable) do
+            if not maxChecker(player) then
+                --print(player .. " is not in range")
+                if core.InfoFrame_PlayersTable[player] ~= 2 then
+                    core.InfoFrame_PlayersTable[player] = 4            
+                end
+            elseif core.InfoFrame_PlayersTable[player] ~= 2 then
+                core.InfoFrame_PlayersTable[player] = 1
             end
-        elseif core.InfoFrame_PlayersTable[player] ~= 2 then
-            core.InfoFrame_PlayersTable[player] = 1
         end
+
+        --Stop this firing again for another 5 seconds
+        core.InfoFrame_RangeCheckCooldown = true
+        C_Timer.After(5, function() 
+            core.InfoFrame_RangeCheckCooldown = false
+        end)
     end
 end
 
