@@ -197,19 +197,19 @@ function core._2070:KingRastakhan()
     --Defeat King Rastakhan with the Phantom of Retribution, Phantom of Rage and Phantom of Slaughter still alive on Normal difficulty or higher.
 
     --Phantom of Retribution
-    if (core.type == "UNIT_DIED" and core.destID == "146491") or (core.overkill > 0 and core.destID == "146491") then
+    if (core.type == "UNIT_DIED" and core.destID == "146491") then
         core:sendDebugMessage("Retribtuion died")
         core:getAchievementFailed()
     end
 
     --Phantom of Rage
-    if (core.type == "UNIT_DIED" and core.destID == "146492") or (core.overkill > 0 and core.destID == "146492") then
+    if (core.type == "UNIT_DIED" and core.destID == "146492") then
         core:sendDebugMessage("Rage died")
         core:getAchievementFailed()
     end
 
     --Phantom of Slaughter
-    if (core.type == "UNIT_DIED" and core.destID == "146493") or (core.overkill > 0 and core.destID == "146493") then
+    if (core.type == "UNIT_DIED" and core.destID == "146493") then
         core:sendDebugMessage("Slaughter died")
         core:getAchievementFailed()
     end
