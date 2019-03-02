@@ -87,24 +87,16 @@ function InfoFrame_UpdatePlayersOnInfoFramePersonal()
 end
 
 function InfoFrame_GetRangeCheck(range)
-    if core.InfoFrame_RangeCheckCooldown == false then
-        local maxChecker = rc:GetFriendMaxChecker(range)
-        for player, status in pairs(core.InfoFrame_PlayersTable) do
-            if not maxChecker(player) then
-                --print(player .. " is not in range")
-                if core.InfoFrame_PlayersTable[player] ~= 2 then
-                    core.InfoFrame_PlayersTable[player] = 4            
-                end
-            elseif core.InfoFrame_PlayersTable[player] ~= 2 then
-                core.InfoFrame_PlayersTable[player] = 1
+    local maxChecker = rc:GetFriendMaxChecker(range)
+    for player, status in pairs(core.InfoFrame_PlayersTable) do
+        if not maxChecker(player) then
+            --print(player .. " is not in range")
+            if core.InfoFrame_PlayersTable[player] ~= 2 then
+                core.InfoFrame_PlayersTable[player] = 4            
             end
+        elseif core.InfoFrame_PlayersTable[player] ~= 2 then
+            core.InfoFrame_PlayersTable[player] = 1
         end
-
-        --Stop this firing again for another 5 seconds
-        core.InfoFrame_RangeCheckCooldown = true
-        C_Timer.After(5, function() 
-            core.InfoFrame_RangeCheckCooldown = false
-        end)
     end
 end
 
