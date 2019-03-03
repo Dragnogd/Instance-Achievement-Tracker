@@ -33,6 +33,7 @@ local barrelCounter = 0
 ------------------------------------------------------
 local playersCompletedAchievement = 0
 local rangeCheckCooldown = false
+local initialMessageAnnounced = false
 
 ------------------------------------------------------
 ---- Jaina
@@ -238,6 +239,12 @@ end
 
 function core._2070:Opulence()
     --Defeat the Opulence in Battle of Dazar'alor after /praising a Singing Sunflower while under the effects of Brilliant Aura on Normal Difficulty or higher.
+    if initialMessageAnnounced == false then
+        RaidNotice_AddMessage(RaidBossEmoteFrame, format(L["OpulenceRangeWarning"], getNPCName(51090)), ChatTypeInfo["RAID_BOSS_EMOTE"])
+        core:sendMessageSafe(format(L["OpulenceRangeWarning"], getNPCName(51090), GetSpellLink(284645)),true)
+        initialMessageAnnounced = true
+    end
+
 	if core:has_value(core.currentBosses[1].players, L["GUI_NoPlayersNeedAchievement"]) == false then
 		InfoFrame_UpdatePlayersOnInfoFramePersonal()
         InfoFrame_SetHeaderCounter(L["Shared_PlayersWhoNeedAchievement"],playersCompletedAchievement,#core.currentBosses[1].players)
@@ -334,6 +341,7 @@ function core._2070:ClearVariables()
     ------------------------------------------------------
     playersCompletedAchievement = 0
     rangeCheckCooldown = false
+    initialMessageAnnounced = false
 
     ------------------------------------------------------
     ---- Jaina
