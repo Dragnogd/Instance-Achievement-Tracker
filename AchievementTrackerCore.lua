@@ -1170,7 +1170,6 @@ function events:ENCOUNTER_START(self, encounterID, encounterName, difficultyID, 
 	if enableCombatLogging == true then
 		core:sendDebugMessage("Enable CombatLog")
 		local isLogging = LoggingCombat()
-		print(isLogging)
 		if LoggingCombat() ~= true then
 			LoggingCombat(1)
 			core:printMessage(L["Core_CombatLogEnabled"])
