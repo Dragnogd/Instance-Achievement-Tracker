@@ -36,12 +36,31 @@ function events:GET_ITEM_INFO_RECEIVED(self, arg1)
 				for instance, _ in pairs(core.Instances[expansion][instanceType]) do
 					for boss, _ in pairs(core.Instances[expansion][instanceType][instance]) do
 						if boss ~= "name" then
-							if string.find(core.Instances[expansion][instanceType][instance][boss].tactics, ("IAT_" .. arg1)) then
-								local itemName, itemLink = GetItemInfo(arg1)
-								if itemLink ~= nil then
-									core.Instances[expansion][instanceType][instance][boss].tactics = string.gsub(core.Instances[expansion][instanceType][instance][boss].tactics, ("IAT_" .. arg1), itemLink)
+							if type(core.Instances[expansion][instanceType][instance][boss].tactics) == "table" then
+								if UnitFactionGroup("player") == "Alliance" then
+									if string.find(core.Instances[expansion][instanceType][instance][boss].tactics[1], ("IAT_" .. arg1)) then
+										local itemName, itemLink = GetItemInfo(arg1)
+										if itemLink ~= nil then
+											core.Instances[expansion][instanceType][instance][boss].tactics[1] = string.gsub(core.Instances[expansion][instanceType][instance][boss].tactics[1], ("IAT_" .. arg1), itemLink)
+										end
+									end
+								else    
+									if string.find(core.Instances[expansion][instanceType][instance][boss].tactics[2], ("IAT_" .. arg1)) then
+										local itemName, itemLink = GetItemInfo(arg1)
+										if itemLink ~= nil then
+											core.Instances[expansion][instanceType][instance][boss].tactics[2] = string.gsub(core.Instances[expansion][instanceType][instance][boss].tactics[2], ("IAT_" .. arg1), itemLink)
+										end
+									end
+								end
+							else
+								if string.find(core.Instances[expansion][instanceType][instance][boss].tactics, ("IAT_" .. arg1)) then
+									local itemName, itemLink = GetItemInfo(arg1)
+									if itemLink ~= nil then
+										core.Instances[expansion][instanceType][instance][boss].tactics = string.gsub(core.Instances[expansion][instanceType][instance][boss].tactics, ("IAT_" .. arg1), itemLink)
+									end
 								end
 							end
+
 						end
 					end
 				end

@@ -1252,12 +1252,24 @@ function Instance_OnClick(self)
                 for i = 1, #instanceLocation["boss" .. counter2].players do
                     players = players .. instanceLocation["boss" .. counter2].players[i] .. ", "
                 end
-                
+
+                --If tactics are in a table then we need to show diferent tactics for each faction
+                local tactics
+                if type(instanceLocation["boss" .. counter2].tactics) == "table" then
+                    if UnitFactionGroup("player") == "Alliance" then
+                        tactics = instanceLocation["boss" .. counter2].tactics[1]
+                    else    
+                        tactics = instanceLocation["boss" .. counter2].tactics[2]
+                    end
+                else
+                    tactics = instanceLocation["boss" .. counter2].tactics
+                end
+
                 --Only show players for current instances we are in
                 if type(self) == "table" and inThisInstance == false then
-                    button.contentText:SetText(L["GUI_Achievement"] .. ": " .. GetAchievementLink(instanceLocation["boss" .. counter2].achievement) .. "\n\n" .. L["GUI_Tactics"] .. ": " .. instanceLocation["boss" .. counter2].tactics)            
+                    button.contentText:SetText(L["GUI_Achievement"] .. ": " .. GetAchievementLink(instanceLocation["boss" .. counter2].achievement) .. "\n\n" .. L["GUI_Tactics"] .. ": " .. tactics)            
                 else
-                    button.contentText:SetText(L["GUI_Achievement"] .. ": " .. GetAchievementLink(instanceLocation["boss" .. counter2].achievement) .. "\n\n" .. players .. "\n\n" .. L["GUI_Tactics"] .. ": " .. instanceLocation["boss" .. counter2].tactics)
+                    button.contentText:SetText(L["GUI_Achievement"] .. ": " .. GetAchievementLink(instanceLocation["boss" .. counter2].achievement) .. "\n\n" .. players .. "\n\n" .. L["GUI_Tactics"] .. ": " .. tactics)
                 end
 
                 if (core.achievementDisplayStatus == "grey" and type(self) == "table" and inThisInstance == false and currentAchievementNeeded == false) or (core.achievementDisplayStatus == "grey" and playersFound == false and inThisInstance == true) or (core.achievementDisplayStatus == "grey" and playersFound == false and type(self) ~= "table") then
@@ -1630,10 +1642,24 @@ function GetNameFromNpcIDCache(npcID)
 			for instanceType, _ in pairs(core.Instances[expansion]) do
 				for instance, _ in pairs(core.Instances[expansion][instanceType]) do
 					for boss, _ in pairs(core.Instances[expansion][instanceType][instance]) do
-						if boss ~= "name" then
-							if string.find(core.Instances[expansion][instanceType][instance][boss].tactics, ("IAT_" .. npcID)) then
-                                core.Instances[expansion][instanceType][instance][boss].tactics = string.gsub(core.Instances[expansion][instanceType][instance][boss].tactics, ("IAT_" .. npcID), name)
+                        if boss ~= "name" then
+                            if type(core.Instances[expansion][instanceType][instance][boss].tactics) == "table" then
+                                if UnitFactionGroup("player") == "Alliance" then
+                                    if string.find(core.Instances[expansion][instanceType][instance][boss].tactics[1], ("IAT_" .. npcID)) then
+                                        core.Instances[expansion][instanceType][instance][boss].tactics[1] = string.gsub(core.Instances[expansion][instanceType][instance][boss].tactics[1], ("IAT_" .. npcID), name)
+                                    end
+                                else    
+                                    if string.find(core.Instances[expansion][instanceType][instance][boss].tactics[2], ("IAT_" .. npcID)) then
+                                        core.Instances[expansion][instanceType][instance][boss].tactics[2] = string.gsub(core.Instances[expansion][instanceType][instance][boss].tactics[2], ("IAT_" .. npcID), name)
+                                    end
+                                end
+                            else
+                                if string.find(core.Instances[expansion][instanceType][instance][boss].tactics, ("IAT_" .. npcID)) then
+                                    core.Instances[expansion][instanceType][instance][boss].tactics = string.gsub(core.Instances[expansion][instanceType][instance][boss].tactics, ("IAT_" .. npcID), name)
+                                end
                             end
+
+
 						end
 					end
 				end
