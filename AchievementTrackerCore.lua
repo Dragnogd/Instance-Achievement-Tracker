@@ -7,9 +7,9 @@ local L = core.L												--Translation Table
 local events = CreateFrame("Frame")								--All events are registered to this frame
 local UIConfig													--UIConfig is used to make a display asking the user if they would like
 local UICreated = false											--To enable achievement tracking when they enter an instances
-local debugMode = false
-local debugModeChat = false
-local sendDebugMessages = false
+local debugMode = true
+local debugModeChat = true
+local sendDebugMessages = true
 
 local ptrVersion = "8.1.0"
 
@@ -1032,6 +1032,9 @@ function setAddonEnabled(addonEnabled)
 		
 		core:sendDebugMessage("Registering CHAT_MSG_ADDON prefix")
 		C_ChatInfo.RegisterAddonMessagePrefix("Whizzey") 
+
+		--Attempt to fetch instance information in case player has enabled addon while inside of an instance
+		getInstanceInfomation()
 	else
 		core:sendDebugMessage("Disabling Addon")
 		events:UnregisterEvent("PLAYER_ENTERING_WORLD")				
