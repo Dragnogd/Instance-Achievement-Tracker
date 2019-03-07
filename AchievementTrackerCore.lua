@@ -24,7 +24,35 @@ events:RegisterEvent("GET_ITEM_INFO_RECEIVED")					--Get Item Information after 
 
 function generateItemCache()									--The Item Cache can only be generated once the game has loaded		
 	for i,v in pairs(core.ItemCache) do							--We need to first get information about the item to load into the cache
-		GetItemInfo(core.ItemCache[v])							--Then we can insert this information into the tactics. Tactics hold string "IAT_12345" to eventually get replaced
+		--If item does not return nil then add to tactics now as GET_ITEM_INFO_RECEIVED only fires if items are not in the cache
+		local itemName, itemLink = GetItemInfo(core.ItemCache[v])
+		if itemLink ~= nil then
+			for expansion, _ in pairs(core.Instances) do
+				for instanceType, _ in pairs(core.Instances[expansion]) do
+					for instance, _ in pairs(core.Instances[expansion][instanceType]) do
+						for boss, _ in pairs(core.Instances[expansion][instanceType][instance]) do
+							if boss ~= "name" then
+								if type(core.Instances[expansion][instanceType][instance][boss].tactics) == "table" then
+									if UnitFactionGroup("player") == "Alliance" then
+										if string.find(core.Instances[expansion][instanceType][instance][boss].tactics[1], ("IAT_" .. core.ItemCache[v])) then
+											core.Instances[expansion][instanceType][instance][boss].tactics[1] = string.gsub(core.Instances[expansion][instanceType][instance][boss].tactics[1], ("IAT_" .. core.ItemCache[v]), itemLink)
+										end
+									else    
+										if string.find(core.Instances[expansion][instanceType][instance][boss].tactics[2], ("IAT_" .. core.ItemCache[v])) then
+											core.Instances[expansion][instanceType][instance][boss].tactics[2] = string.gsub(core.Instances[expansion][instanceType][instance][boss].tactics[2], ("IAT_" .. core.ItemCache[v]), itemLink)
+										end
+									end
+								else
+									if string.find(core.Instances[expansion][instanceType][instance][boss].tactics, ("IAT_" .. core.ItemCache[v])) then
+										core.Instances[expansion][instanceType][instance][boss].tactics = string.gsub(core.Instances[expansion][instanceType][instance][boss].tactics, ("IAT_" .. core.ItemCache[v]), itemLink)
+									end
+								end
+							end
+						end
+					end
+				end
+			end
+		end
 	end
 end
 
@@ -60,7 +88,6 @@ function events:GET_ITEM_INFO_RECEIVED(self, arg1)
 									end
 								end
 							end
-
 						end
 					end
 				end

@@ -1658,8 +1658,6 @@ function GetNameFromNpcIDCache(npcID)
                                     core.Instances[expansion][instanceType][instance][boss].tactics = string.gsub(core.Instances[expansion][instanceType][instance][boss].tactics, ("IAT_" .. npcID), name)
                                 end
                             end
-
-
 						end
 					end
 				end
