@@ -161,6 +161,7 @@ core.achievementTrackingEnabled = false			--Whether the user wants to track achi
 core.playersFailedPersonal = {}					--List of players that have failed a personal achievement. Resets when you exit combat
 core.playersSuccessPersonal = {}				--List of players that have successfully completed a personal acheievement. Resets when you exit combat
 core.enableAchievementScanning = true			--Whether the addon is allowed to scan for achievements
+core.addonEnabled = false
 local combatTimerStarted = false				--Used to determine if players in the group are still in combat with a boss
 local lastMessageSent = ""   					--Stores the last message sent to the chat. This is used to prevent the same message being sent more than once in case of an error and to prevent unwanted spam
 local requestToRun = false						--Store whether the current addon sent the request to enable itself or not for achievement tracking
@@ -437,6 +438,22 @@ function getInstanceInfomation()
 	-- 		UIConfig:Show()
 	-- 	end
 	-- end
+
+	--If the instance is different to the one we last checked then we need to reset varaibles and re-scan
+	if IsInInstance() and core.inInstance == true then
+		local instanceNameSpaces, _, difficultyID, _, maxPlayers, _, _, currentZoneID, _ = GetInstanceInfo()
+		if instanceNameSpaces ~= core.instanceNameSpaces then
+			--Instances don't match. Lets rescan
+			core.inInstance = false
+			if UIConfig ~= nil and core.inInstance == false then
+				core:sendDebugMessage("Hiding Tracking UI")
+				UIConfig:Hide()
+			end
+	
+			--Disable achievement tracking if currently tracking
+			checkAndClearInstanceVariables()	
+		end
+	end
 
 	if IsInInstance() and core.inInstance == false then
 		core:sendDebugMessage("Player has entered instance")
@@ -1051,6 +1068,7 @@ function setAnnounceToRaidWarning(setAnnounceToRaidWarning)
 end
 
 function setAddonEnabled(addonEnabled)
+	core.addonEnabled = addonEnabled
 	if addonEnabled then
 		core:sendDebugMessage("Enabling Addon")
 		events:RegisterEvent("PLAYER_ENTERING_WORLD")				--Used to detect if player is inside an instance when they enter the world
@@ -1066,7 +1084,17 @@ function setAddonEnabled(addonEnabled)
 		core:sendDebugMessage("Disabling Addon")
 		events:UnregisterEvent("PLAYER_ENTERING_WORLD")				
 		events:UnregisterEvent("ZONE_CHANGED_NEW_AREA")				
-		events:UnregisterEvent("CHAT_MSG_ADDON")						
+		events:UnregisterEvent("CHAT_MSG_ADDON")
+
+		core.inInstance = false
+
+		if UIConfig ~= nil and core.inInstance == false then
+			core:sendDebugMessage("Hiding Tracking UI")
+			UIConfig:Hide()
+		end
+
+		--Disable achievement tracking if currently tracking
+		checkAndClearInstanceVariables()	
 	end
 end
 
@@ -1353,9 +1381,15 @@ function events:ZONE_CHANGED_NEW_AREA()
 		UIConfig:Hide()
 	end
 
+	--Check and setup achievement tracking if needed
 	getInstanceInfomation()
 
-	if core.inInstance == false and core.instanceVariablesReset == false then
+	--Check and disable achievement tracking if needed
+	checkAndClearInstanceVariables()
+end
+
+function checkAndClearInstanceVariables()
+	if (core.inInstance == false or core.addonEnabled == false) and core.instanceVariablesReset == false then
 		--Update achievement tracking
 		for boss,_ in pairs(core.Instances[core.expansion][core.instanceType][core.instance]) do
 			if boss ~= "name" then
