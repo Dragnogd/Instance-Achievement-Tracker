@@ -240,8 +240,8 @@ end
 function core._2070:Opulence()
     --Defeat the Opulence in Battle of Dazar'alor after /praising a Singing Sunflower while under the effects of Brilliant Aura on Normal Difficulty or higher.
     if initialMessageAnnounced == false then
-        RaidNotice_AddMessage(RaidBossEmoteFrame, format(L["OpulenceRangeWarning"], getNPCName(51090)), ChatTypeInfo["RAID_BOSS_EMOTE"])
-        core:sendMessageSafe(format(L["OpulenceRangeWarning"], getNPCName(51090), GetSpellLink(284645)),true)
+        RaidNotice_AddMessage(RaidBossEmoteFrame, format(L["OpulenceRangeWarning"], UnitName("player"), getNPCName(51090), GetSpellLink(284645)), ChatTypeInfo["RAID_WARNING"])
+        core:sendMessageSafe(format(L["OpulenceRangeWarning"], UnitName("player"), getNPCName(51090), GetSpellLink(284645)),true)
         initialMessageAnnounced = true
     end
 

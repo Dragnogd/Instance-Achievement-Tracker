@@ -171,7 +171,7 @@ local baseLocale = {
     ["BattleOfDazzarlor_PraiseSelf"] = "You lavish praise upon",
     ["BattleOfDazzarlor_PraiseOther"] = "lavishes praise upon",
     ["BattleOfDazzarlor_PlayersTransformed"] = "Some players are currently transformed. Do not kill boss yet",
-    ["OpulenceRangeWarning"] = "Warning: For IAT to track this achievement correctly, you will need to be within 25 yards of players when they are praising the %s. Players with the %s should stand together in one corner of the room to make this easier",
+    ["OpulenceRangeWarning"] = "Warning: For IAT to track this achievement correctly, %s must be within 25 yards of players praising the %s. Players with the %s should stand together to make this easier",
 
     -------------------------------------------------------
     --- Uldir
