@@ -1093,10 +1093,10 @@ function setAddonEnabled(addonEnabled)
 			UIConfig:Hide()
 		end
 
+		core.achievementTrackingEnabled = false
+
 		--Disable achievement tracking if currently tracking
 		checkAndClearInstanceVariables()	
-
-		core.achievementTrackingEnabled = false
 
 		ClearGUITabs()
 	end

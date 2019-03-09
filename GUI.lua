@@ -1285,6 +1285,8 @@ function Instance_OnClick(self)
             UIConfig.achievementsCompleted:SetWidth(500)
         end
 
+        print(Config.currentTab)
+        print("ttt")
         UIConfig.achievementsCompleted:SetText(L["GUI_AchievementsCompletedForInstance"] .. " " .. Config:getLocalisedInstanceName(instanceLocation.name));
         UIConfig.achievementsCompleted:Show()
     end
