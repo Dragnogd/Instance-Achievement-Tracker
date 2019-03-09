@@ -1049,7 +1049,6 @@ end
 -- What it Does:    Updates frame text for current instance clicked
 -- Purpose:         This is used when clicking on an instance to update the contents with current instance
 function Instance_OnClick(self)
-    
     local instanceLocation
     local currentTabCompressed
     local str
@@ -1119,39 +1118,14 @@ function Instance_OnClick(self)
         if bossName ~= "name" then --Don't fetch the name of the instance that has been clicked
             --Check if any players in the group need the achievement
             local playersFound = false
-            local inThisInstance = false
-            local currentAchievementNeeded = false
 
             --Check if any players in the group need the current achievement for the current instance they are inside off
             if core:has_value(instanceLocation["boss" .. counter2].players, L["GUI_NoPlayersNeedAchievement"]) == false and #instanceLocation["boss" .. counter2].players ~= 0 then
                 playersFound = true
-                --core:sendDebugMessage("Found players for: " .. bossName)       
-            end
-
-            --If player has selected an instance by hand then just scan the current player for achievement for hide/grey out option unless its current instance we are in
-            if type(self) == "table" then
-                if core.inInstance then
-                    --Player has manually clicked on a table and is an instance so lets check whether the instance they are in matches the button which was clicked
-                    if core.instance ~= nil then
-                        if core.instance == self:GetID() then
-                            inThisInstance = true
-                        end
-                    end
-                end
-            end
-
-            --Check if player has got the current achievement for instances they are not currently inside off
-            if inThisInstance == false and (core.achievementDisplayStatus == "hide" or core.achievementDisplayStatus == "grey") then
-                --Player is not in the currently selected instance we can just display the achievements they do not need.
-                local id, name, points, completed, month, day, year, description, flags, icon, rewardText, isGuild, wasEarnedByMe, earnedBy = GetAchievementInfo(instanceLocation["boss" .. counter2].achievement)
-
-                if completed == false then
-                    currentAchievementNeeded = true
-                end
             end
 
             --Check whether or not to display the current achievements. This is done incase user wants to hide completed achievements
-            if (core.achievementDisplayStatus == "hide" and playersFound == true) or core.achievementDisplayStatus == "show" or (type(self) == "table" and inThisInstance == false and currentAchievementNeeded == true) or core.achievementDisplayStatus == "grey" then
+            if playersFound == true or core.achievementDisplayStatus == "show" or core.achievementDisplayStatus == "grey" or core.achievementTrackingEnabled == false then
                 achievementFound = true
 
                 --We need to display the current achievement
@@ -1223,12 +1197,11 @@ function Instance_OnClick(self)
     
                 counter = counter + 1  
 
-                if (core.achievementDisplayStatus == "grey" and type(self) == "table" and inThisInstance == false and currentAchievementNeeded == false) or (core.achievementDisplayStatus == "grey" and playersFound == false and inThisInstance == true) or (core.achievementDisplayStatus == "grey" and playersFound == false and type(self) ~= "table") then
+                if playersFound == false and core.achievementDisplayStatus == "grey" and core.achievementTrackingEnabled == true then
+                    --Grey Out/Hide achievements
                     button.headerText:SetTextColor(0.827, 0.811, 0.811, 0.3)
-                    button.tactics:Hide()
-                    button.players:Hide()
-                    button.enabled:Hide()
                 else
+                    --Show/Un-grey achievements
                     button.headerText:SetTextColor(1, 0.854, 0.039)
                 end
     
@@ -1248,7 +1221,6 @@ function Instance_OnClick(self)
                 end
     
                 local players = L["GUI_Players"] .. ": "
-                local playersFound = false
                 for i = 1, #instanceLocation["boss" .. counter2].players do
                     players = players .. instanceLocation["boss" .. counter2].players[i] .. ", "
                 end
@@ -1265,18 +1237,21 @@ function Instance_OnClick(self)
                     tactics = instanceLocation["boss" .. counter2].tactics
                 end
 
-                --Only show players for current instances we are in
-                if type(self) == "table" and inThisInstance == false then
+                --Only show players if user has enabled achievement tracking
+                if core.achievementTrackingEnabled == false then
                     button.contentText:SetText(L["GUI_Achievement"] .. ": " .. GetAchievementLink(instanceLocation["boss" .. counter2].achievement) .. "\n\n" .. L["GUI_Tactics"] .. ": " .. tactics)            
                 else
                     button.contentText:SetText(L["GUI_Achievement"] .. ": " .. GetAchievementLink(instanceLocation["boss" .. counter2].achievement) .. "\n\n" .. players .. "\n\n" .. L["GUI_Tactics"] .. ": " .. tactics)
                 end
 
-                if (core.achievementDisplayStatus == "grey" and type(self) == "table" and inThisInstance == false and currentAchievementNeeded == false) or (core.achievementDisplayStatus == "grey" and playersFound == false and inThisInstance == true) or (core.achievementDisplayStatus == "grey" and playersFound == false and type(self) ~= "table") then
+                if playersFound == false and core.achievementDisplayStatus == "grey" and core.achievementTrackingEnabled == true then
+                    --Grey Out/Hide achievements
                     button.contentText:SetTextColor(0.827, 0.811, 0.811, 0.3)
                 else
-                    button.contentText:SetTextColor(1,1,1,1)
+                    --Show/Un-grey achievements
+                    button.contentText:SetTextColor(1, 1, 1)
                 end
+
                 button.contentText:Show()
                 button.headerText:Hide()
                 button:SetNormalTexture(nil)
@@ -1302,7 +1277,7 @@ function Instance_OnClick(self)
         end
     end
 
-    if achievementFound == false then
+    if achievementFound == false and core.achievementTrackingEnabled == true then
         if UIConfig.achievementsCompleted == nil then
             UIConfig.achievementsCompleted = UIConfig:CreateFontString(nil, "OVERLAY", "GameFontHighlightLarge")
             UIConfig.achievementsCompleted:SetPoint("CENTER", UIConfig.ScrollFrame2, "CENTER", -20, 0);

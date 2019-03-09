@@ -1095,6 +1095,10 @@ function setAddonEnabled(addonEnabled)
 
 		--Disable achievement tracking if currently tracking
 		checkAndClearInstanceVariables()	
+
+		core.achievementTrackingEnabled = false
+
+		ClearGUITabs()
 	end
 end
 
@@ -1287,29 +1291,41 @@ function events:INSPECT_ACHIEVEMENT_READY(self, GUID)
 		if UnitName(playerCurrentlyScanning) ~= nil then
 			local name2, realm2 = UnitName(playerCurrentlyScanning)
 			--Find all bosses for the current instance the player is in.
-			for boss,_ in pairs(core.Instances[core.expansion][core.instanceType][core.instance]) do
-				if boss ~= "name" then
-					--Check if the player has completed the achievement for the current boss
-					local completed, month, day, year = GetAchievementComparisonInfo(core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
+			for expansion,_ in pairs(core.Instances) do
+				for instanceType,_ in pairs(core.Instances[expansion]) do
+					for instance,_ in pairs(core.Instances[expansion][instanceType]) do
+						for boss,_ in pairs(core.Instances[expansion][instanceType][instance]) do
+							if boss ~= "name" then
+								--Check if the player has completed the achievement for the current boss
+								local completed, month, day, year = GetAchievementComparisonInfo(core.Instances[expansion][instanceType][instance][boss].achievement)
 
-					--Make sure any text being displayed currently for the achievement is removed.
-					if core.Instances[core.expansion][core.instanceType][core.instance][boss].players[1] == L["GUI_EnterInstanceToStartScanning"] or core.Instances[core.expansion][core.instanceType][core.instance][boss].players[1] == L["GUI_NoPlayersNeedAchievement"] then
-						table.remove(core.Instances[core.expansion][core.instanceType][core.instance][boss].players, 1)
-					end
+								--Make sure any text being displayed currently for the achievement is removed.
+								if core.Instances[expansion][instanceType][instance][boss].players[1] == L["GUI_EnterInstanceToStartScanning"] or core.Instances[expansion][instanceType][instance][boss].players[1] == L["GUI_NoPlayersNeedAchievement"] then
+									table.remove(core.Instances[expansion][instanceType][instance][boss].players, 1)
+								end
 
-					--If the player has not completed the achievement then add them to the players string to display in the GUI
-					if completed == nil then
-						local name, _ = UnitName(playersToScan[1])
-						table.insert(core.Instances[core.expansion][core.instanceType][core.instance][boss].players, name)
+								--If the player has not completed the achievement then add them to the players string to display in the GUI
+								if completed == nil then
+									local name, _ = UnitName(playersToScan[1])
+									table.insert(core.Instances[expansion][instanceType][instance][boss].players, name)
+								end
+							end
+						end
 					end
 				end
 			end
 
 			--Check if any of the achievements have been achieved by every player in the group. If they have then update GUI with appropriate text
-			for boss,_ in pairs(core.Instances[core.expansion][core.instanceType][core.instance]) do
-				if boss ~= "name" then
-					if #core.Instances[core.expansion][core.instanceType][core.instance][boss].players == 0 then
-						table.insert(core.Instances[core.expansion][core.instanceType][core.instance][boss].players, L["GUI_NoPlayersNeedAchievement"])
+			for expansion,_ in pairs(core.Instances) do
+				for instanceType,_ in pairs(core.Instances[expansion]) do
+					for instance,_ in pairs(core.Instances[expansion][instanceType]) do
+						for boss,_ in pairs(core.Instances[expansion][instanceType][instance]) do
+							if boss ~= "name" then
+								if #core.Instances[expansion][instanceType][instance][boss].players == 0 then
+									table.insert(core.Instances[expansion][instanceType][instance][boss].players, L["GUI_NoPlayersNeedAchievement"])
+								end
+							end
+						end
 					end
 				end
 			end
@@ -1391,9 +1407,15 @@ end
 function checkAndClearInstanceVariables()
 	if (core.inInstance == false or core.addonEnabled == false) and core.instanceVariablesReset == false then
 		--Update achievement tracking
-		for boss,_ in pairs(core.Instances[core.expansion][core.instanceType][core.instance]) do
-			if boss ~= "name" then
-				core.Instances[core.expansion][core.instanceType][core.instance][boss].players = {}
+		for expansion,_ in pairs(core.Instances) do
+			for instanceType,_ in pairs(core.Instances[expansion]) do
+				for instance,_ in pairs(core.Instances[expansion][instanceType]) do
+					for boss,_ in pairs(core.Instances[expansion][instanceType][instance]) do
+						if boss ~= "name" then
+							core.Instances[expansion][instanceType][instance][boss].players = {}
+						end
+					end
+				end
 			end
 		end
 
