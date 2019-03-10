@@ -638,8 +638,13 @@ end
 -- What it Does:    Toggle the addon on or off
 -- Purpose:         This will toggle whether the addon will ask if user wants to track achievements or not when entering instances
 function enableAddon_OnClick(self)
-    AchievementTrackerOptions["enableAddon"] = self:GetChecked()
-    setAddonEnabled(self:GetChecked())
+    if (core.inCombat == false and self:GetChecked() == false) or self:GetChecked() == true then
+        AchievementTrackerOptions["enableAddon"] = self:GetChecked()
+        setAddonEnabled(self:GetChecked())
+    else
+        core:printMessage(L["GUI_BlockDisableAddon"])
+        self:SetChecked(true) 
+    end 
 end
 
 -- Method:          EnableAchievementScan_OnClick()
@@ -1285,8 +1290,6 @@ function Instance_OnClick(self)
             UIConfig.achievementsCompleted:SetWidth(500)
         end
 
-        print(Config.currentTab)
-        print("ttt")
         UIConfig.achievementsCompleted:SetText(L["GUI_AchievementsCompletedForInstance"] .. " " .. Config:getLocalisedInstanceName(instanceLocation.name));
         UIConfig.achievementsCompleted:Show()
     end
