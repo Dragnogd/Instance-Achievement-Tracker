@@ -9,7 +9,7 @@ local UIConfig													--UIConfig is used to make a display asking the user 
 local UICreated = false											--To enable achievement tracking when they enter an instances
 local debugMode = false
 local debugModeChat = false
-local sendDebugMessages = true
+local sendDebugMessages = false
 
 local ptrVersion = "8.1.0"
 
@@ -176,6 +176,7 @@ local failedSound = nil
 local completedSound = nil
 core.achievementDisplayStatus = "show"			--How achievements should be display within the GUI (Show/Hide/Grey)
 local mobMouseoverCache = {}
+local encounterCache = {}
 
 --------------------------------------
 -- Current Instance Variables
@@ -646,7 +647,7 @@ function enableAchievementTracking(self)
 	events:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")			--Used to track the completion/failiure of achievements
 	events:RegisterEvent("ENCOUNTER_START")						--Used to detect the start of a boss fight
 	events:RegisterEvent("ENCOUNTER_END")						--Used to detect the end of a boss fight
-	-- events:RegisterEvent("UPDATE_MOUSEOVER_UNIT")				--Used to output achievement for boss and players missing achievements on hoverkk
+	events:RegisterEvent("UPDATE_MOUSEOVER_UNIT")				--Used to output achievement for boss and players missing achievements on hoverkk
 
 	--Start the achievement scan
 	if core.enableAchievementScanning == true then
@@ -1127,24 +1128,6 @@ function core:getPlayersInGroup2()
 	getPlayersInGroup()
 end
 
--- function events:UPDATE_MOUSEOVER_UNIT()
--- 	--Get the mouseover target. If it identified as current boss in instance then output the achievments and players that are missing it.
--- 	--Otherwise cache the result so we are not constantly looking over the database
--- 	if UnitIsEnemy("mouseover") then	
--- 		if core:has_value(mobMouseoverCache, UnitName("mouseover")) == false then
--- 			--Search database for mob
--- 			for boss, _ in pairs(core.Instances[core.expansion][core.instanceType][core.instance]) do
--- 				if boss ~= "name" then
--- 					local encounterName = core.Config:getLocalisedEncouterName(core.Instances[core.expansion][core.instanceType][core.instance][boss].name)
--- 					if encounterName == UnitName("mouseover") then
--- 						print("Found Encounter")
--- 					end
--- 				end
--- 			end
--- 		end
--- 	end
--- end
-
 --Fired whenever the composition of the group changes.
 --Used to alter size of group variables and which player in group is running the master addon
 function events:GROUP_ROSTER_UPDATE()
@@ -1275,6 +1258,57 @@ function events:ENCOUNTER_END()
 		core:sendDebugMessage("Detection unlocked")
 	end)
 end
+
+--Used to display current boss achievement on mouseover and playing that are currently missing the achievment
+function events:UPDATE_MOUSEOVER_UNIT()
+	--If not in cache
+	--Loop through each boss in db
+	--Loop through EJ_GetCreatureInfo for each boss and compare with mouseover target
+	local currentMouseoverTarget, _ = UnitName("mouseover")
+	if core:has_value(mobMouseoverCache, UnitName("mouseover")) == false then
+		local bossFound = false
+		for boss,_ in pairs(core.Instances[core.expansion][core.instanceType][core.instance]) do
+			if boss ~= "name" then
+				local counter = 1
+				
+				while EJ_GetCreatureInfo(counter, core.Instances[core.expansion][core.instanceType][core.instance][boss].name) ~= nil do
+					local _, name, _, _, _ = EJ_GetCreatureInfo(counter, core.Instances[core.expansion][core.instanceType][core.instance][boss].name)
+					if currentMouseoverTarget == name and core:has_value(encounterCache, core.Instances[core.expansion][core.instanceType][core.instance][boss].name) == false then
+						bossFound = true
+						local players = L["GUI_PlayersWhoNeedAchievement"] .. ": "
+						for i = 1, #core.Instances[core.expansion][core.instanceType][core.instance][boss].players do
+							players = players .. core.Instances[core.expansion][core.instanceType][core.instance][boss].players[i] .. ", "
+						end
+						core:printMessage(GetAchievementLink(core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement) .. " " .. players)
+						table.insert(encounterCache, core.Instances[core.expansion][core.instanceType][core.instance][boss].name)
+					end
+					counter = counter + 1
+				end
+			end
+		end
+		if bossFound == false then
+			table.insert(mobMouseoverCache, currentMouseoverTarget)
+		end
+	end
+end
+
+function PrintAllEncounterSections(encounterID, difficultyID)
+	EJ_SetDifficulty(difficultyID)
+	local stack, encounter, _, _, curSectionID = {}, EJ_GetEncounterInfo(encounterID)
+	print(encounter .. " abilities:")
+	repeat
+	 local title, desc, depth, icon, model, siblingID, nextSectionID, filteredByDifficulty, link, _, f1, f2, f3, f4 = EJ_GetSectionInfo(curSectionID)
+	 if not filteredByDifficulty then
+	  print(("  "):rep(depth) .. link .. ": " .. desc)
+	 end
+	 table.insert(stack, siblingID)
+	 table.insert(stack, nextSectionID)
+	 curSectionID = table.remove(stack)
+	until not curSectionID
+   end
+   
+   -- Print everything in 25-man Normal Madness of Deathwing:
+   
 
 --This event is used to scan players in the group to see which achievements they are currently missing
 function events:INSPECT_ACHIEVEMENT_READY(self, GUID)
@@ -1446,7 +1480,7 @@ function checkAndClearInstanceVariables()
 		events:UnregisterEvent("INSPECT_ACHIEVEMENT_READY")
 		events:UnregisterEvent("ENCOUNTER_START")						
 		events:UnregisterEvent("ENCOUNTER_END")
-		-- events:UnregisterEvent("UPDATE_MOUSEOVER_UNIT")
+		events:UnregisterEvent("UPDATE_MOUSEOVER_UNIT")
 		
 		--Reset variables in case user left during middle of encounter. E.g hearthstones out
 		core:clearInstanceVariables()
