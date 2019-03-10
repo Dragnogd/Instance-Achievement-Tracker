@@ -7,9 +7,9 @@ local L = core.L												--Translation Table
 local events = CreateFrame("Frame")								--All events are registered to this frame
 local UIConfig													--UIConfig is used to make a display asking the user if they would like
 local UICreated = false											--To enable achievement tracking when they enter an instances
-local debugMode = true
-local debugModeChat = true
-local sendDebugMessages = true
+local debugMode = false
+local debugModeChat = false
+local sendDebugMessages = false
 
 local ptrVersion = "8.1.0"
 
@@ -218,6 +218,8 @@ local playerRank = -1						--The rank of the player is the group. Players with h
 local addonID = 0
 local messageQueue = {}
 local blockRequirementsCheck = false		--This blocks comparing who is the master addon for remainder of fight since it has been determined an addon already has better requirements than this addon
+local relayAddonPlayer = nil
+local relayAddonVersion = 0
 
 --Get the current size of the group
 function core:getGroupSize()
@@ -1480,8 +1482,8 @@ end
 --Used to communicate between everyone in the group using the addon to decide which addon is the master addon
 --The master addon is detected at the start of every fight so we don't have to worry about if a player is in the instance/offline etc
 function events:CHAT_MSG_ADDON(self, prefix, message, channel, sender)
-	--core:sendDebugMessage("CHAT_MSG_ADDON FIRED")
-	--core:sendDebugMessage(message)
+	core:sendDebugMessage("CHAT_MSG_ADDON FIRED")
+	core:sendDebugMessage(sender .. " : " .. message)
 
 	--Addon is checking who should be leader
 	local name, realm = UnitName("Player")
@@ -1609,6 +1611,41 @@ function events:CHAT_MSG_ADDON(self, prefix, message, channel, sender)
 
 		--Add new message to the message queue
 		table.insert(core.syncMessageQueue, message)
+	elseif string.match(message, "relay123") then
+		-- core:sendDebugMessage(sender)	
+		--The master addon does not have RW privalleges. If this addon has permission then let the masterAddon know
+		if playerRank > 0 and core.trackingSupressed == false then
+			--We do have permission. Let the master addon know
+			C_ChatInfo.SendAddonMessage("Whizzey", "relaySend," .. tostring(core.Config.majorVersion) .. "," .. tostring(core.Config.minorVersion), "RAID")
+			-- core:sendDebugMessage("relaySend," .. tostring(core.Config.majorVersion) .. "," .. tostring(core.Config.minorVersion))
+			
+		end
+	elseif string.match(message, "relaySend") and masterAddon == true then
+		--The master addon has recieved an addon/addons that have the ability to output to raid warning. Lets ask highest Minor and same Major version to relay message
+		local name, realm = strsplit("-", sender)
+		local sync, major, minor = strsplit(",", message)
+		core:sendDebugMessage("Made it to relaySend")
+		-- print(relayAddonPlayer,core.Config.majorVersion,major,minor,core.Config.minorVersion)
+		if relayAddonPlayer == nil and tonumber(core.Config.majorVersion) >= tonumber(major) and tonumber(minor) >= 35 then
+			--First addon found so set to relay addon
+			relayAddonPlayer = name
+			relayAddonVersion = minor
+			core:sendDebugMessage("Setting the following addon to relay addon: " .. relayAddonPlayer .. " with version: " .. relayAddonVersion)
+		elseif tonumber(core.Config.majorVersion) >= tonumber(major) and tonumber(minor) > tonumber(relayAddonVersion) and tonumber(minor) >= 35 then
+			--This addon has better version so set to relay addon
+			relayAddonPlayer = name
+			relayAddonVersion = minor
+			core:sendDebugMessage("Setting the following addon to relay addon: " .. relayAddonPlayer .. " with version: " .. relayAddonVersion)		
+		end
+	elseif string.match(message, "relayMessage") then
+		--Relay message if this addon has been asked to relay the message
+		local sync, player, message = strsplit(",", message)
+
+		-- print(player ..  " : " .. UnitName("player"))
+		if player == UnitName("player") then
+			core:sendDebugMessage("Relay message outputting message...")
+			SendChatMessage("[IAT] " .. message,"RAID_WARNING",DEFAULT_CHAT_FRAME.editBox.languageID)
+		end
 	end
 end
 
@@ -2137,7 +2174,7 @@ function core:sendMessage(message, outputToRW, messageType)
 					elseif outputToRW == true and announceToRaidWarning == true then
 						SendChatMessage("[IAT] " .. message,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
 						core:logMessage("[IAT] " .. message)
-						RaidNotice_AddMessage(RaidWarningFrame, "[IAT] " .. message, ChatTypeInfo["RAID_WARNING"])
+						--RaidNotice_AddMessage(RaidWarningFrame, "[IAT] " .. message, ChatTypeInfo["RAID_WARNING"])
 					else
 						--print("Outputting normally")
 						SendChatMessage("[IAT] " .. message,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
@@ -2189,7 +2226,7 @@ function core:sendMessage(message, outputToRW, messageType)
 								elseif outputToRW == true and announceToRaidWarning == true then
 									SendChatMessage("[IAT] " .. message,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
 									core:logMessage("[IAT] " .. message)
-									RaidNotice_AddMessage(RaidWarningFrame, "[IAT] " .. message, ChatTypeInfo["RAID_WARNING"])
+									--RaidNotice_AddMessage(RaidWarningFrame, "[IAT] " .. message, ChatTypeInfo["RAID_WARNING"])
 								else
 									--print("Outputting normally")
 									SendChatMessage("[IAT] " .. message,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
@@ -2257,6 +2294,14 @@ function core:sendMessage(message, outputToRW, messageType)
 								end
 							end
 							messageQueue = {}
+
+							--Lets check if this addon has RW privallages. If not lets send a request to forward RW messages onto this addon from another addon is raid.
+							--We will only do this if major versions are the same and not minor.
+							if playerRank == 0 and core.chatType == "RAID" then
+								core:sendDebugMessage("This addon has no RW permissions. Requesting help")
+								--This addon does not have permission to output to RW. Ask other users in group to output message
+								C_ChatInfo.SendAddonMessage("Whizzey", "relay123", "RAID")
+							end
 						else
 							core:sendDebugMessage("Another addon is currently in charge of outputting messages for this fight")
 						end
@@ -2423,6 +2468,11 @@ function core:getAchievementFailed(index)
 	if core.achievementsFailed[value] == false then
 		core:sendMessage(GetAchievementLink(core.achievementIDs[value]) .. " " .. L["Core_Failed"],true,"failed")
 		core.achievementsFailed[value] = true
+
+		--Relay message to addon which has RW permissions if masterAddon does have permissions
+		if relayAddonPlayer ~= nil then
+			C_ChatInfo.SendAddonMessage("Whizzey", "relayMessage," .. relayAddonPlayer .. "," .. GetAchievementLink(core.achievementIDs[value]) .. " " .. L["Core_Failed"], "RAID")
+		end
 	end
 end
 
@@ -2436,6 +2486,11 @@ function core:getAchievementFailedWithMessageBefore(message, index)
 
 		core:sendMessage(message .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " " .. L["Core_Failed"],true,"failed")
 		core.achievementsFailed[value] = true
+
+		--Relay message to addon which has RW permissions if masterAddon does have permissions
+		if relayAddonPlayer ~= nil then
+			C_ChatInfo.SendAddonMessage("Whizzey", "relayMessage," .. relayAddonPlayer .. "," .. message .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " " .. L["Core_Failed"], "RAID")
+		end
 	end
 end
 
@@ -2448,6 +2503,11 @@ function core:getAchievementFailedWithMessageAfter(message, index)
 	if core.achievementsFailed[value] == false then
 		core:sendMessage(GetAchievementLink(core.achievementIDs[value]) .. " " .. L["Core_Failed"] .. " " .. message,true,"failed")
 		core.achievementsFailed[value] = true
+
+		--Relay message to addon which has RW permissions if masterAddon does have permissions
+		if relayAddonPlayer ~= nil then
+			C_ChatInfo.SendAddonMessage("Whizzey", "relayMessage," .. relayAddonPlayer .. "," .. GetAchievementLink(core.achievementIDs[value]) .. " " .. L["Core_Failed"] .. " " .. message, "RAID")
+		end
 	end
 end
 
@@ -2460,6 +2520,11 @@ function core:getAchievementFailedWithMessageBeforeAndAfter(messageBefore, messa
 	if core.achievementsFailed[value] == false then
 		core:sendMessage(messageBefore .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " " .. L["Core_Failed"] .. " " .. messageAfter,true,"failed")
 		core.achievementsFailed[value] = true
+
+		--Relay message to addon which has RW permissions if masterAddon does have permissions
+		if relayAddonPlayer ~= nil then
+			C_ChatInfo.SendAddonMessage("Whizzey", "relayMessage," .. relayAddonPlayer .. "," .. messageBefore .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " " .. L["Core_Failed"] .. " " .. messageAfter, "RAID")
+		end
 	end
 end
 
@@ -2480,6 +2545,11 @@ function core:getAchievementFailedPersonal(index)
 		if core:has_value(core.currentBosses[value].players, playerName) then
 			--Player needs achievement but has failed it
 			core:sendMessage(playerName .. " " .. L["Shared_HasFailed"] .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " (" .. L["Core_PersonalAchievement"] .. ")",true,"failed")
+			
+			--Relay message to addon which has RW permissions if masterAddon does have permissions
+			if relayAddonPlayer ~= nil then
+				C_ChatInfo.SendAddonMessage("Whizzey", "relayMessage," .. relayAddonPlayer .. "," .. playerName .. " " .. L["Shared_HasFailed"] .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " (" .. L["Core_PersonalAchievement"] .. ")", "RAID")
+			end
 		end
 		core.playersFailedPersonal[playerName] = true
 	end
@@ -2502,6 +2572,11 @@ function core:getAchievementFailedPersonalWithReason(reason, index)
 		if core:has_value(core.currentBosses[value].players, playerName) then
 			--Player needs achievement but has failed it
 			core:sendMessage(playerName .. " " .. L["Shared_HasFailed"] .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " (" .. L["Core_PersonalAchievement"] .. ")(" .. L["Core_Reason"] .. ": " .. reason .. ")",true,"failed")
+		
+			--Relay message to addon which has RW permissions if masterAddon does have permissions
+			if relayAddonPlayer ~= nil then
+				C_ChatInfo.SendAddonMessage("Whizzey", "relayMessage," .. relayAddonPlayer .. "," .. playerName .. " " .. L["Shared_HasFailed"] .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " (" .. L["Core_PersonalAchievement"] .. ")(" .. L["Core_Reason"] .. ": " .. reason .. ")", "RAID")
+			end
 		end
 		core.playersFailedPersonal[playerName] = true
 	end
@@ -2520,6 +2595,11 @@ function core:getAchievementSuccess(index)
 	if core.achievementsCompleted[value] == false then
 		core:sendMessage(GetAchievementLink(core.achievementIDs[value]) .. " " .. L["Core_CriteriaMet"],true,"completed")
 		core.achievementsCompleted[value] = true
+
+		--Relay message to addon which has RW permissions if masterAddon does have permissions
+		if relayAddonPlayer ~= nil then
+			C_ChatInfo.SendAddonMessage("Whizzey", "relayMessage," .. relayAddonPlayer .. "," .. GetAchievementLink(core.achievementIDs[value]) .. " " .. L["Core_CriteriaMet"], "RAID")
+		end
 	end
 end
 
@@ -2532,6 +2612,11 @@ function core:getAchievementSuccessWithMessageBefore(message, index)
 	if core.achievementsCompleted[value] == false then
 		core:sendMessage(message .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " " .. L["Core_CriteriaMet"],true,"completed")
 		core.achievementsCompleted[value] = true
+		
+		--Relay message to addon which has RW permissions if masterAddon does have permissions
+		if relayAddonPlayer ~= nil then
+			C_ChatInfo.SendAddonMessage("Whizzey", "relayMessage," .. relayAddonPlayer .. "," .. message .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " " .. L["Core_CriteriaMet"], "RAID")
+		end
 	end
 end
 
@@ -2544,6 +2629,11 @@ function core:getAchievementSuccessWithMessageAfter(message, index)
 	if core.achievementsCompleted[value] == false then
 		core:sendMessage(GetAchievementLink(core.achievementIDs[value]) .. " " .. L["Core_CriteriaMet"] .. " " .. message,true,"completed")
 		core.achievementsCompleted[value] = true
+
+		--Relay message to addon which has RW permissions if masterAddon does have permissions
+		if relayAddonPlayer ~= nil then
+			C_ChatInfo.SendAddonMessage("Whizzey", "relayMessage," .. relayAddonPlayer .. "," .. GetAchievementLink(core.achievementIDs[value]) .. " " .. L["Core_CriteriaMet"] .. " " .. message, "RAID")
+		end
 	end
 end
 
@@ -2556,6 +2646,11 @@ function core:getAchievementSuccessWithMessageBeforeAndAfter(messageBefore, mess
 	if core.achievementsCompleted[value] == false then
 		core:sendMessage(messageBefore .. " " .. GetAchievementLink(core.achievementIDs[value]) .. L["Core_CriteriaMet"] .. " " .. messageAfter,true,"completed")
 		core.achievementsCompleted[value] = true
+
+		--Relay message to addon which has RW permissions if masterAddon does have permissions
+		if relayAddonPlayer ~= nil then
+			C_ChatInfo.SendAddonMessage("Whizzey", "relayMessage," .. relayAddonPlayer .. "," .. messageBefore .. " " .. GetAchievementLink(core.achievementIDs[value]) .. L["Core_CriteriaMet"] .. " " .. messageAfter, "RAID")
+		end
 	end
 end
 
@@ -2568,6 +2663,11 @@ function core:getAchievementSuccessWithCustomMessage(messageBefore, messageAfter
 	if core.achievementsCompleted[value] == false then
 		core:sendMessage(messageBefore .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " " .. messageAfter,true,"completed")
 		core.achievementsCompleted[value] = true
+
+		--Relay message to addon which has RW permissions if masterAddon does have permissions
+		if relayAddonPlayer ~= nil then
+			C_ChatInfo.SendAddonMessage("Whizzey", "relayMessage," .. relayAddonPlayer .. "," .. messageBefore .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " " .. messageAfter, "RAID")
+		end
 	end
 end
 
@@ -2593,6 +2693,11 @@ function core:getAchievementSuccessPersonal(index, location)
 			if core:has_value(core.currentBosses[value].players, playerName) then
 				--Player needs achievement but has failed it
 				core:sendMessage(playerName .. " " .. L["Shared_HasCompleted"] .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " (" .. L["Core_PersonalAchievement"] .. ")",true,"completed")
+			
+				--Relay message to addon which has RW permissions if masterAddon does have permissions
+				if relayAddonPlayer ~= nil then
+					C_ChatInfo.SendAddonMessage("Whizzey", "relayMessage," .. relayAddonPlayer .. "," .. playerName .. " " .. L["Shared_HasCompleted"] .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " (" .. L["Core_PersonalAchievement"] .. ")", "RAID")
+				end
 			end
 			core.playersSuccessPersonal[playerName] = true
 		end
@@ -2608,6 +2713,11 @@ function core:getAchievementSuccessPersonal(index, location)
 			if core:has_value(core.currentBosses[value].players, playerName) then
 				--Player needs achievement but has failed it
 				core:sendMessage(playerName .. " " .. L["Shared_HasCompleted"] .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " (" .. L["Core_PersonalAchievement"] .. ")",true,"completed")
+			
+				--Relay message to addon which has RW permissions if masterAddon does have permissions
+				if relayAddonPlayer ~= nil then
+					C_ChatInfo.SendAddonMessage("Whizzey", "relayMessage," .. relayAddonPlayer .. "," .. playerName .. " " .. L["Shared_HasCompleted"] .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " (" .. L["Core_PersonalAchievement"] .. ")", "RAID")
+				end
 			end
 			core.playersSuccessPersonal[playerName] = true
 		end	
@@ -2629,6 +2739,11 @@ function core:getAchievementSuccessPersonalWithName(index, sender, outputMessage
 			--Player needed achievements and has met requirements
 			if outputMessage == true then
 				core:sendMessage(sender .. " " .. L["Shared_HasCompleted"] .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " (" .. L["Core_PersonalAchievement"] .. ")",true,"completed")			
+			
+				--Relay message to addon which has RW permissions if masterAddon does have permissions
+				if relayAddonPlayer ~= nil then
+					C_ChatInfo.SendAddonMessage("Whizzey", "relayMessage," .. relayAddonPlayer .. "," .. sender .. " " .. L["Shared_HasCompleted"] .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " (" .. L["Core_PersonalAchievement"] .. ")", "RAID")
+				end
 			end
 		end
 		core.playersSuccessPersonal[sender] = true
@@ -2750,6 +2865,8 @@ function core:clearVariables()
 	messageQueue = {}
 	core.trackingSupressed = false
 	blockRequirementsCheck = false
+	relayAddonPlayer = nil
+	relayAddonVersion = 0
 
 	core.groupSizeInInstance = 0
 
