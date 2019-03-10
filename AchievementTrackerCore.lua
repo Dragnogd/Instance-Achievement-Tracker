@@ -9,7 +9,7 @@ local UIConfig													--UIConfig is used to make a display asking the user 
 local UICreated = false											--To enable achievement tracking when they enter an instances
 local debugMode = false
 local debugModeChat = false
-local sendDebugMessages = false
+local sendDebugMessages = true
 
 local ptrVersion = "8.1.0"
 
@@ -424,23 +424,6 @@ end
 
 --Run when the player initially enters an instance to setup variables such as instanceName, expansion etc so we can track the correct bosses
 function getInstanceInfomation()
-	--DEBUG
-	-- if debugMode == true then
-	-- 	core.instance = "Ulduar"
-	-- 	core.instanceClear = "Ulduar"
-	-- 	core.instanceNameSpaces = "Ulduar"
-	-- 	core.expansion = "WrathOfTheLichKing"
-	-- 	core.instanceType = "Raids"
-	-- 	core.inInstance = true
-	-- 	if UICreated == false then
-	-- 		core:sendDebugMessage("Creating Tracking UI")
-	-- 		createEnableAchievementTrackingUI()
-	-- 	else
-	-- 		core:sendDebugMessage("Displaying Tracking UI since it was already created")
-	-- 		UIConfig:Show()
-	-- 	end
-	-- end
-
 	--If the instance is different to the one we last checked then we need to reset varaibles and re-scan
 	if IsInInstance() and core.inInstance == true then
 		local instanceNameSpaces, _, difficultyID, _, maxPlayers, _, _, currentZoneID, _ = GetInstanceInfo()
@@ -708,6 +691,7 @@ end
 --Hide the achievment tracking UI once the player has left the instance
 function disableAchievementTracking(self)
 	UIConfig:Hide()
+	core.inInstance = false
 end
 
 --Used to detect when everyone in the group has left combat so we can reset global and instance variables
@@ -755,7 +739,7 @@ core.commands = {
 	[L["Core_help"]] = function()
 		printMessage(L["Core_Commands"] .. ":")
 		printMessage("/iat help|r - " .. L["Core_ListCommands"])
-		printMessage("/iat enable|r - " .. L["Core_CommandEnableTracking"])
+		printMessage("/iat toggle|r - " .. L["Core_CommandToggleTracking"])
 	end,
 
 	[L["Core_Enable"]] = function()
@@ -769,6 +753,16 @@ core.commands = {
 			debugMode = true
 		end
 		print(debugMode)
+	end,
+
+	[L["Core_Toggle"]] = function()
+		if core.achievementTrackingEnabled == false and core.addonEnabled == true then
+			getInstanceInfomation()
+		elseif core.achievementTrackingEnabled == true and core.addonEnabled == true then
+			core:printMessage(L["Core_AlreadyEnabled"])
+		elseif core.addonEnabled == false then
+			core:printMessage(L["Core_EnableAddonFirst"])
+		end
 	end,
 };
 
