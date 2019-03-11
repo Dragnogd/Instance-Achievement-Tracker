@@ -767,23 +767,18 @@ core.commands = {
 	end,
 
 	["debug"] = function()
-		if debugMode == true then
-			debugMode = false
+		if sendDebugMessages == true then
+			sendDebugMessages = false
 		else
-			debugMode = true
+			sendDebugMessages = true
 		end
-		print(debugMode)
+		print(sendDebugMessages)
 	end,
 
 	[L["Core_Toggle"]] = function()
 		if core.achievementTrackingEnabled == false and core.addonEnabled == true then
 			getInstanceInfomation()
 		elseif core.achievementTrackingEnabled == true and core.addonEnabled == true then
-			core:sendDebugMessage("Disabling Addon")
-			events:UnregisterEvent("PLAYER_ENTERING_WORLD")				
-			events:UnregisterEvent("ZONE_CHANGED_NEW_AREA")				
-			events:UnregisterEvent("CHAT_MSG_ADDON")
-
 			core.inInstance = false
 
 			if UIConfig ~= nil and core.inInstance == false then
@@ -1437,9 +1432,9 @@ function events:INSPECT_ACHIEVEMENT_READY(self, GUID)
 				end
 
 				if foundAchievement == false then
-					core:printMessage(L["Core_CompletedAllAchievements"] .. " " .. achievements)
+					core:printMessage(L["Core_CompletedAllAchievements"])
 				else
-					core:printMessage(L["Core_IncompletedAchievements"])	
+					core:printMessage(L["Core_IncompletedAchievements"] .. " " .. achievements)	
 				end
 			elseif #playersToScan == 0 and rescanNeeded == true then
 				core:sendDebugMessage("Achievement Scanning Finished but some players still need scanning. Waiting 20 seconds then trying again (" .. #playersScanned .. "/" .. core.groupSize .. ")")
