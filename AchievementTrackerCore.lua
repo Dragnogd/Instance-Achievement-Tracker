@@ -177,6 +177,7 @@ local completedSound = nil
 core.achievementDisplayStatus = "show"			--How achievements should be display within the GUI (Show/Hide/Grey)
 local mobMouseoverCache = {}
 local encounterCache = {}
+local announceMissingAchievements = false
 
 --------------------------------------
 -- Current Instance Variables
@@ -342,22 +343,25 @@ function getPlayersInGroup()
 			end
 
 			--Announce which achievements this addon player needs to still get in this instance
-			local achievements = ""
-			local foundAchievement = false
-			for boss,_ in pairs(core.Instances[core.expansion][core.instanceType][core.instance]) do
-				if boss ~= "name" then
-					local name, _ = UnitName("player")
-					if core:has_value(core.Instances[core.expansion][core.instanceType][core.instance][boss].players, name) == true then
-						foundAchievement = true
-						achievements = achievements .. GetAchievementLink(core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
+			if announceMissingAchievements == false then
+				announceMissingAchievements = true
+				local achievements = ""
+				local foundAchievement = false
+				for boss,_ in pairs(core.Instances[core.expansion][core.instanceType][core.instance]) do
+					if boss ~= "name" then
+						local name, _ = UnitName("player")
+						if core:has_value(core.Instances[core.expansion][core.instanceType][core.instance][boss].players, name) == true then
+							foundAchievement = true
+							achievements = achievements .. GetAchievementLink(core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
+						end
 					end
 				end
-			end
 
-			if foundAchievement == false then
-				core:printMessage(L["Core_CompletedAllAchievements"] .. " " .. achievements)
-			else
-				core:printMessage(L["Core_IncompletedAchievements"])	
+				if foundAchievement == false then
+					core:printMessage(L["Core_CompletedAllAchievements"] .. " " .. achievements)
+				else
+					core:printMessage(L["Core_IncompletedAchievements"])	
+				end
 			end
 		end
 	else
@@ -1303,20 +1307,40 @@ function events:UPDATE_MOUSEOVER_UNIT()
 		for boss,_ in pairs(core.Instances[core.expansion][core.instanceType][core.instance]) do
 			if boss ~= "name" then
 				local counter = 1
-				
-				while EJ_GetCreatureInfo(counter, core.Instances[core.expansion][core.instanceType][core.instance][boss].name) ~= nil do
-					local _, name, _, _, _ = EJ_GetCreatureInfo(counter, core.Instances[core.expansion][core.instanceType][core.instance][boss].name)
-					if currentMouseoverTarget == name and core:has_value(encounterCache, core.Instances[core.expansion][core.instanceType][core.instance][boss].name) == false then
-						bossFound = true
-						local players = L["GUI_PlayersWhoNeedAchievement"] .. ": "
-						for i = 1, #core.Instances[core.expansion][core.instanceType][core.instance][boss].players do
-							players = players .. core.Instances[core.expansion][core.instanceType][core.instance][boss].players[i] .. ", "
-						end
-						core:printMessage(GetAchievementLink(core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement) .. " " .. players)
-						table.insert(encounterCache, core.Instances[core.expansion][core.instanceType][core.instance][boss].name)
+				--If the name property is a table then loop through each value in table
+				if type(core.Instances[core.expansion][core.instanceType][core.instance][boss].name) == "table" then
+					for i = 1, #core.Instances[core.expansion][core.instanceType][core.instance][boss].name do
+						while EJ_GetCreatureInfo(counter, core.Instances[core.expansion][core.instanceType][core.instance][boss].name[i]) ~= nil do
+							local _, name, _, _, _ = EJ_GetCreatureInfo(counter, core.Instances[core.expansion][core.instanceType][core.instance][boss].name[i])
+							if currentMouseoverTarget == name and core:has_value(encounterCache, core.Instances[core.expansion][core.instanceType][core.instance][boss].name[i]) == false then
+								bossFound = true
+								local players = L["GUI_PlayersWhoNeedAchievement"] .. ": "
+								for i = 1, #core.Instances[core.expansion][core.instanceType][core.instance][boss].players do
+									players = players .. core.Instances[core.expansion][core.instanceType][core.instance][boss].players[i] .. ", "
+								end
+								core:printMessage(GetAchievementLink(core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement) .. " " .. players)
+								table.insert(encounterCache, core.Instances[core.expansion][core.instanceType][core.instance][boss].name[i])
+							end
+							counter = counter + 1
+						end	
 					end
-					counter = counter + 1
+				else	
+					while EJ_GetCreatureInfo(counter, core.Instances[core.expansion][core.instanceType][core.instance][boss].name) ~= nil do
+						local _, name, _, _, _ = EJ_GetCreatureInfo(counter, core.Instances[core.expansion][core.instanceType][core.instance][boss].name)
+						if currentMouseoverTarget == name and core:has_value(encounterCache, core.Instances[core.expansion][core.instanceType][core.instance][boss].name) == false then
+							bossFound = true
+							local players = L["GUI_PlayersWhoNeedAchievement"] .. ": "
+							for i = 1, #core.Instances[core.expansion][core.instanceType][core.instance][boss].players do
+								players = players .. core.Instances[core.expansion][core.instanceType][core.instance][boss].players[i] .. ", "
+							end
+							core:printMessage(GetAchievementLink(core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement) .. " " .. players)
+							table.insert(encounterCache, core.Instances[core.expansion][core.instanceType][core.instance][boss].name)
+						end
+						counter = counter + 1
+					end
 				end
+				
+
 			end
 		end
 		if bossFound == false then
@@ -1419,22 +1443,25 @@ function events:INSPECT_ACHIEVEMENT_READY(self, GUID)
 				end
 
 				--Announce which achievements this addon player needs to still get in this instance
-				local achievements = ""
-				local foundAchievement = false
-				for boss,_ in pairs(core.Instances[core.expansion][core.instanceType][core.instance]) do
-					if boss ~= "name" then
-						local name, _ = UnitName("player")
-						if core:has_value(core.Instances[core.expansion][core.instanceType][core.instance][boss].players, name) == true then
-							foundAchievement = true
-							achievements = achievements .. GetAchievementLink(core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
+				if announceMissingAchievements == false then
+					announceMissingAchievements = true
+					local achievements = ""
+					local foundAchievement = false
+					for boss,_ in pairs(core.Instances[core.expansion][core.instanceType][core.instance]) do
+						if boss ~= "name" then
+							local name, _ = UnitName("player")
+							if core:has_value(core.Instances[core.expansion][core.instanceType][core.instance][boss].players, name) == true then
+								foundAchievement = true
+								achievements = achievements .. GetAchievementLink(core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
+							end
 						end
 					end
-				end
 
-				if foundAchievement == false then
-					core:printMessage(L["Core_CompletedAllAchievements"])
-				else
-					core:printMessage(L["Core_IncompletedAchievements"] .. " " .. achievements)	
+					if foundAchievement == false then
+						core:printMessage(L["Core_CompletedAllAchievements"])
+					else
+						core:printMessage(L["Core_IncompletedAchievements"] .. " " .. achievements)	
+					end				
 				end
 			elseif #playersToScan == 0 and rescanNeeded == true then
 				core:sendDebugMessage("Achievement Scanning Finished but some players still need scanning. Waiting 20 seconds then trying again (" .. #playersScanned .. "/" .. core.groupSize .. ")")
@@ -1556,6 +1583,7 @@ function checkAndClearInstanceVariables()
 		scanInProgress = false
 		core.scanFinished = false
 		scanAnnounced = false
+		announceMissingAchievements = false
 	end
 end
 
