@@ -340,6 +340,25 @@ function getPlayersInGroup()
 				--Re-register this event so achievement ui and inspect achievement ui work as intended
 				_G["AchievementFrameComparison"]:RegisterEvent("INSPECT_ACHIEVEMENT_READY")
 			end
+
+			--Announce which achievements this addon player needs to still get in this instance
+			local achievements = ""
+			local foundAchievement = false
+			for boss,_ in pairs(core.Instances[core.expansion][core.instanceType][core.instance]) do
+				if boss ~= "name" then
+					local name, _ = UnitName("player")
+					if core:has_value(core.Instances[core.expansion][core.instanceType][core.instance][boss].players, name) == true then
+						foundAchievement = true
+						achievements = achievements .. GetAchievementLink(core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
+					end
+				end
+			end
+
+			if foundAchievement == false then
+				core:printMessage(L["Core_CompletedAllAchievements"] .. " " .. achievements)
+			else
+				core:printMessage(L["Core_IncompletedAchievements"])	
+			end
 		end
 	else
 		core:sendDebugMessage("Player is not in an instance. Cancelling scan")
@@ -760,7 +779,26 @@ core.commands = {
 		if core.achievementTrackingEnabled == false and core.addonEnabled == true then
 			getInstanceInfomation()
 		elseif core.achievementTrackingEnabled == true and core.addonEnabled == true then
-			core:printMessage(L["Core_AlreadyEnabled"])
+			core:sendDebugMessage("Disabling Addon")
+			events:UnregisterEvent("PLAYER_ENTERING_WORLD")				
+			events:UnregisterEvent("ZONE_CHANGED_NEW_AREA")				
+			events:UnregisterEvent("CHAT_MSG_ADDON")
+
+			core.inInstance = false
+
+			if UIConfig ~= nil and core.inInstance == false then
+				core:sendDebugMessage("Hiding Tracking UI")
+				UIConfig:Hide()
+			end
+
+			core.achievementTrackingEnabled = false
+
+			--Disable achievement tracking if currently tracking
+			checkAndClearInstanceVariables()	
+
+			ClearGUITabs()
+
+			getInstanceInfomation()
 		elseif core.addonEnabled == false then
 			core:printMessage(L["Core_EnableAddonFirst"])
 		end
@@ -1383,6 +1421,25 @@ function events:INSPECT_ACHIEVEMENT_READY(self, GUID)
 				if _G["AchievementFrameComparison"] ~= nil then
 					--Re-register this event so achievement ui and inspect achievement ui work as intended
 					_G["AchievementFrameComparison"]:RegisterEvent("INSPECT_ACHIEVEMENT_READY")
+				end
+
+				--Announce which achievements this addon player needs to still get in this instance
+				local achievements = ""
+				local foundAchievement = false
+				for boss,_ in pairs(core.Instances[core.expansion][core.instanceType][core.instance]) do
+					if boss ~= "name" then
+						local name, _ = UnitName("player")
+						if core:has_value(core.Instances[core.expansion][core.instanceType][core.instance][boss].players, name) == true then
+							foundAchievement = true
+							achievements = achievements .. GetAchievementLink(core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
+						end
+					end
+				end
+
+				if foundAchievement == false then
+					core:printMessage(L["Core_CompletedAllAchievements"] .. " " .. achievements)
+				else
+					core:printMessage(L["Core_IncompletedAchievements"])	
 				end
 			elseif #playersToScan == 0 and rescanNeeded == true then
 				core:sendDebugMessage("Achievement Scanning Finished but some players still need scanning. Waiting 20 seconds then trying again (" .. #playersScanned .. "/" .. core.groupSize .. ")")
