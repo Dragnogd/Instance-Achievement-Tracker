@@ -98,4 +98,10 @@ core.NPCCache = {
     [115902] = 115902, --Razorjaw Waverunner
     [108600] = 108600, --Sister of the Moon
     [121498] = 121498, --Twilight Soul
+    [101976] = 101976, --Millificent Manastorm
+    [102169] = 102169, --Black Bile
+    [101995] = 101995, --Festerface
+    [98293] = 98293, --Saltsea Globules
+    [99200] = 99200, --Dresaron
+    [111008] = 111008, --Hatespawn Abomination
 }

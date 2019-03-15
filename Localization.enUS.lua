@@ -46,6 +46,7 @@ local baseLocale = {
     ["GUI_Author"] = "Author",
     ["GUI_Translators"] = "Translators",
     ["Gui_TranslatorNames"] = "",
+    ["GUI_BlockDisableAddon"] = "You cannot disable the addon while you are are in combat. Wait till you are out of combat then try again",
 
     -------------------------------------------------------
     --- Core
@@ -73,6 +74,12 @@ local baseLocale = {
     ["Core_CombatLogDisabled"] = "Combat Logging disabled",
     ["Core_TranscriptorLogEnabled"] = "Transcriptor Log enabled",
     ["Core_TranscriptorLogDisabled"] = "Transcriptor Log disabled",
+    ["Core_Toggle"] = "toggle",
+    ["Core_CommandToggleTracking"] = "Toggles the window to enable or disable achievement tracking for the current instance",
+    ["Core_AlreadyEnabled"] = "IAT is already enabled for this instance",
+    ["Core_EnableAddonFirst"] = "Please enable IAT in the options first before trying to toggle achievement tracking",
+    ["Core_CompletedAllAchievements"] = "You have completed all achievements for this instance",
+    ["Core_IncompletedAchievements"] = "Incomplete achievements for this instance",
 
     -------------------------------------------------------
     --- Instances
@@ -380,8 +387,8 @@ local baseLocale = {
     --- Assault on Violet Hold
     -------------------------------------------------------
     --Tactics
-    ["AssaultOnVioletHold_MillificentManastorm"] = "",
-    ["AssaultOnVioletHold_Festerface"] = "",
+    ["AssaultOnVioletHold_MillificentManastorm"] = "To complete this achievement you will need to use the %s toy while fighting %s",
+    ["AssaultOnVioletHold_Festerface"] = "In order to get the %s to spawn, %s needs to reach 100 energy. His energy decreases when he is near a pool on the floor so the boss will need to be kited away from the pools. Once the %s has spawned kill it then kill the boss to get this achievement.",
 
     --Chat Output
 
@@ -389,9 +396,7 @@ local baseLocale = {
     --- Eye of Azshara
     -------------------------------------------------------
     --Tactics
-    ["EyeOfAzshara_WarlordParjesh"] = "",
-    ["EyeOfAzshara_LadyHatecoil"] = "",
-    ["EyeOfAzshara_WrathOfAzshara"] = "",
+    ["EyeOfAzshara_LadyHatecoil"] = "When the %s debuff expires or is dispelled you will do a breath in the direction that you are currently facing killing any %s in its path. In order to get the achievement you need to do 1 breath on 11 or more %s. The %s will spawn over time so face yourself away from the adds until 11 or more have spawned.",
 
     --Chat Output
 
@@ -399,7 +404,7 @@ local baseLocale = {
     --- Darkheart Thicket
     -------------------------------------------------------
     --Tactics
-    ["DarkheartThicket_Dresaron"] = "At max level, pull the boss, run through the big egg behind the boss to hatch it. Next kill the Hatespawn Abomination that spawns then kill the boss",
+    ["DarkheartThicket_Dresaron"] = "After pulling the boss, run through the big egg behind %s to hatch it. Next kill the %ss that spawns then kill the boss.",
     ["DarkheartThicket_ShadeOfXavius"] = "DPS the boss down to 15%%-20%% health. Drag the boss through the swirly puddles on the ground until the boss has 10 stacks of %s then kill the boss.",
 
     --Chat Output
@@ -681,7 +686,7 @@ local baseLocale = {
     --- Mogu'shan Vaults
     -------------------------------------------------------
     --Tactics
-    ["MogushanVaults_TheStoneGuard"] = "For this achievement every player must have a canine companion pet summoned. The following pets definately work with the achievement: %s %s %s ",
+    ["MogushanVaults_TheStoneGuard"] = "For this achievement every player must have a canine companion pet summoned. The following pets definately work with the achievement: %s %s %s",
     ["MogushanVaults_FengTheAccursed"] = "For this achievment you need to reverse the following abilities: %s %s %s %s %s. To reverse these abilities a tank spec'ed player need to pick up the %s which is located to left of the boss. Phase 1: 95%%; Epicenter is cast by boss; Lighting fists has to be reversed on a player who gets stunned by soaking the ability. Phase 2: 66%%; Wildfire Spark is cast on a player. Phase 3: At 33%%; Arcane Velocity is cast by boss; Arcane Resonance is cast on a player. Once all 5 abilities have been reversed you can kill boss. Note: if you do the instance on heroic difficulty the phases may be in a different order",
     ["MogushanVaults_GarajalTheSpiritbinder"] = "",
     ["MogushanVaults_TheSpiritKings"] = "",
