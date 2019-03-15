@@ -30,7 +30,7 @@ AchievementTrackerOptions = {}
 
 -- Purpose:         Information about the current release. This is mianly used to detect which addon should output messages to chat to avoid spam
 Config.majorVersion = 2						--Addon with a higher major version change have priority over a lower major version
-Config.minorVersion = 35    					--Addon with a minor version change have prioirty over a lower minor version
+Config.minorVersion = 37    					--Addon with a minor version change have prioirty over a lower minor version
 Config.revisionVersion = 0					--Addon with a revision change have the same priorty as a lower revision verison
 Config.releaseType = ""                     --Release type (Alpha, Beta, Release)
 
@@ -1435,8 +1435,15 @@ function Tactics_OnClick(self)
                 for boss,_ in pairs(core.Instances[expansion][instanceType][instance]) do
                     if boss ~= "name" then
                         if core.Instances[expansion][instanceType][instance][boss].generatedID == self:GetID() then
-                            local tactics = GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " " .. core.Instances[expansion][instanceType][instance][boss].tactics
-                            core:sendMessageSafe(tactics)
+                            if type(core.Instances[expansion][instanceType][instance][boss].tactics) == "table" then
+                                if UnitFactionGroup("player") == "Alliance" then
+                                    core:sendMessageSafe(GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " " .. core.Instances[expansion][instanceType][instance][boss].tactics[1])
+                                else    
+                                    core:sendMessageSafe(GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " " .. core.Instances[expansion][instanceType][instance][boss].tactics[2])
+                                end
+                            else
+                                core:sendMessageSafe(GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " " .. core.Instances[expansion][instanceType][instance][boss].tactics)
+                            end
                         end
                     end
                 end

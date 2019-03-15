@@ -226,6 +226,32 @@ core.Instances = {
                     encounterID = 2281,
                 },
             },
+
+            [2096] = { --Battle of Dazar'alor
+                name = 1177,
+                boss1 = {
+                    name = 2328, --The Restless Cabal
+                    bossIDs = {},
+                    achievement = 13501,
+                    players = {},
+                    tactics = L["CrucibleOfStorms_TheRestlessCabal"],
+                    enabled = true,
+                    track = nil,
+                    partial = false,
+                    encounterID = 2269,
+                },
+                boss2 = {
+                    name = 2332, --Uu'nat, Harbinger of the Void
+                    bossIDs = {},
+                    achievement = 13506,
+                    players = {},
+                    tactics = L["CrucibleOfStorms_UunatHarbingerOfTheVoid"],
+                    enabled = true,
+                    track = nil,
+                    partial = false,
+                    encounterID = 2273,
+                },
+            },
         },
 
         Dungeons = {

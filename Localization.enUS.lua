@@ -157,6 +157,15 @@ local baseLocale = {
     ["Shared_HasStolenFrom"] = "has stolen from",
 
     -------------------------------------------------------
+    --- Crucible Of Storms
+    -------------------------------------------------------
+    --Tactics
+    ["CrucibleOfStorms_TheRestlessCabal"] = "",
+    ["CrucibleOfStorms_UunatHarbingerOfTheVoid"] = "",
+
+    --Chat Output
+
+    -------------------------------------------------------
     --- Battle of Dazar'alor
     -------------------------------------------------------
     --Tactics
