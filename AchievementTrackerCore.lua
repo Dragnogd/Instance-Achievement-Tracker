@@ -9,7 +9,7 @@ local UIConfig													--UIConfig is used to make a display asking the user 
 local UICreated = false											--To enable achievement tracking when they enter an instances
 local debugMode = false
 local debugModeChat = false
-local sendDebugMessages = false
+local sendDebugMessages = true
 
 local ptrVersion = "8.1.0"
 
@@ -1506,6 +1506,8 @@ function events:ZONE_CHANGED_NEW_AREA()
 		UIConfig:Hide()
 	end
 
+	core.achievementTrackingEnabled = false
+
 	--Check and setup achievement tracking if needed
 	getInstanceInfomation()
 
@@ -1590,9 +1592,6 @@ end
 --Used to communicate between everyone in the group using the addon to decide which addon is the master addon
 --The master addon is detected at the start of every fight so we don't have to worry about if a player is in the instance/offline etc
 function events:CHAT_MSG_ADDON(self, prefix, message, channel, sender)
-	core:sendDebugMessage("CHAT_MSG_ADDON FIRED")
-	core:sendDebugMessage(sender .. " : " .. message)
-
 	--Addon is checking who should be leader
 	local name, realm = UnitName("Player")
 	local nameSend, realmSend = strsplit("-", sender)
