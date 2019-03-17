@@ -628,8 +628,7 @@ local baseLocale = {
     --- Terrace of Endless Spring
     -------------------------------------------------------
     --Tactics
-    ["TerraceOfEndlessSpring_ProtectorsOfTheEndless"] = "This achievement takes 3 weeks to complete. All you need to do is rotate which 1 of the 3 bosses is to be killed last each week",
-    ["TerraceOfEndlessSpring_Tsulong"] = "At 110 you can simply nuke the boss since it takes ~70 seconds for the enchanted plant to die without any healing",
+    ["TerraceOfEndlessSpring_ProtectorsOfTheEndless"] = "This achievement will take 3 weeks to complete All you need to do is rotate which 1 of the 3 bosses is killed last each week",
     ["TerraceOfEndlessSpring_LeiShi"] = "Once you have started the fight. Every player must go down the steps to left and right of the boss into the water and walk up to a Parasitoid Sha. Once a player is close enough to the Parasitoid Sha it will attach itself to the head of that player. Once everyone in the raid has a Parasitoid Sha on their head, you can single target the boss down. Do not use multi-target abilities since you may accidently kill a Parasitoid Sha",
     ["TerraceOfEndlessSpring_ShaOfFear"] = "At 110 you can simply nuke the boss. Make sure you stand in the light to avoid getting feared",
 
