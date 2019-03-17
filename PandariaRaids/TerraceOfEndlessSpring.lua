@@ -21,6 +21,7 @@ local elderRegailKilled = false
 ---- Lei Shi
 ------------------------------------------------------
 local parasiticClutchCounter = 0
+local parasiticClutchUID = {}
 
 function core._996:ProtectorsOfTheEndless()
 	if core.type == "UNIT_DIED" and core.destID == "60586" then
@@ -32,11 +33,11 @@ function core._996:ProtectorsOfTheEndless()
 	end
 	
 	if elderAsaniKilled == true and protectorKaolanKilled == true then
-		core:getAchievementSuccessWithCustomMessage("'Elder Regail Defeated Last' part of", "will be completed once boss is killed")
+		core:getAchievementSuccessWithCustomMessage(format(L["TerraceOfEndlessSpring_DefeatedLast"], getNPCName(60585)), L["Shared_CompletedBossKill"])
 	elseif elderAsaniKilled == true and elderRegailKilled == true then
-		core:getAchievementSuccessWithCustomMessage("'Protector Kaolan Defeated Last' part of", "will be completed once boss is killed")
+		core:getAchievementSuccessWithCustomMessage(format(L["TerraceOfEndlessSpring_DefeatedLast"], getNPCName(60583)), L["Shared_CompletedBossKill"])
 	elseif protectorKaolanKilled == true and elderRegailKilled == true then
-		core:getAchievementSuccessWithCustomMessage("'Elder Asani Defeated Last' part of", "will be completed once boss is killed")
+		core:getAchievementSuccessWithCustomMessage(format(L["TerraceOfEndlessSpring_DefeatedLast"], getNPCName(60586)), L["Shared_CompletedBossKill"])
 	end
 end
 
@@ -51,26 +52,29 @@ function core._996:LeiShi()
 		InfoFrame_UpdatePlayersOnInfoFrame()
 		InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],parasiticClutchCounter,core.groupSize)
 		
-		if core.type == "SPELL_AURA_APPLIED" and core.spellId == 125652 then
+		if core.type == "SPELL_AURA_APPLIED" and core.spellId == 125652 and parasiticClutchUID[core.spawn_uid_dest_Player] == nil then
 			parasiticClutchCounter = parasiticClutchCounter + 1
-			core:sendMessage(core.destName .. " Inflicted with Parasitic Clutch (" .. parasiticClutchCounter .. "/" .. core.groupSize .. ")")
+			parasiticClutchUID[core.spawn_uid_dest_Player] = core.spawn_uid_dest_Player
+			core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. GetSpellLink(125652) .. " (" .. parasiticClutchCounter .. "/" .. core.groupSize .. ")")
 			InfoFrame_SetPlayerComplete(core.destName)
 		end
 	
-		if core.type == "SPELL_AURA_REMOVED" and core.spellId == 125652 then
+		if core.type == "SPELL_AURA_REMOVED" and core.spellId == 125652 and parasiticClutchUID[core.spawn_uid_dest_Player] ~= nil then
 			parasiticClutchCounter = parasiticClutchCounter - 1
-			core:sendMessage(core.destName .. " LOST Parasitic Clutch (" .. parasiticClutchCounter .. "/" .. core.groupSize .. ")")
+			parasiticClutchUID[core.spawn_uid_dest_Player] = nil
+			core:sendMessage(core.destName .. " " .. L["Shared_HasLost"] .. " " .. GetSpellLink(125652) .. " (" .. parasiticClutchCounter .. "/" .. core.groupSize .. ")")
 			InfoFrame_SetPlayerFailed(core.destName)	
 			
 			--If the achievement was already completed then alert the user not to kill the boss
 			if core.achievementsCompleted[1] == true then
-				core:getAchievementFailedWithMessageAfter("(Wait for " .. core.destName .. " to collect another Parasitic Clutch)")
+				core:getAchievementFailedWithMessageAfter("(" .. format(L["Shared_WaitForAnother"], core.destName, GetSpellLink(125652)) .. ")")
 				core.achievementsCompleted[1] = false
 			end
 		end
 	
 		if parasiticClutchCounter == core.groupSize then
-			core:getAchievementSuccess()		
+			core:getAchievementSuccess()
+			core.achievementsFailed[1] = false		
 		end
 	end
 end
@@ -78,12 +82,12 @@ end
 function core._996:ShaOfFear()
 	--Spray of Breath
 	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 125786 then
-		core:getAchievementFailedWithMessageAfter("(" .. core.destName .. " got feared by Spray of Breath)")
+		core:getAchievementFailedWithMessageAfter("(" .. core.destName .. " " .. L["Core_Reason"] .. ": " .. GetSpellLink(125786) .. ")")
 	end
 
 	--Dread Spray
 	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 119985 then
-		core:getAchievementFailedWithMessageAfter("(" .. core.destName .. " got feared by Dread Spray)")		
+		core:getAchievementFailedWithMessageAfter("(" .. core.destName .. " " .. L["Core_Reason"] .. ": " .. GetSpellLink(119985) .. ")")		
 	end
 end
 
@@ -99,4 +103,5 @@ function core._996:ClearVariables()
 	---- Lei Shi
 	------------------------------------------------------
 	parasiticClutchCounter = 0
+	parasiticClutchUID = {}
 end

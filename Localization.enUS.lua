@@ -155,6 +155,7 @@ local baseLocale = {
     ["Shared_ReportString"] = "Please report the following string to the IAT author",
     ["Shared_PlayersWhoNeedAchievement"] = "Players who need achievement",
     ["Shared_HasStolenFrom"] = "has stolen from",
+    ["Shared_WaitForAnother"] = "Wait for %s to collect another %s",
 
     -------------------------------------------------------
     --- Crucible Of Storms
@@ -386,9 +387,9 @@ local baseLocale = {
     --- Seat of the Triumvirate
     -------------------------------------------------------
     --Tactics
-    ["SeatOfTheTriumvirate_ZuraalTheAscended"] = "",
-    ["SeatOfTheTriumvirate_Saprish"] = "",
-    ["SeatOfTheTriumvirate_Lura"] = "",
+    ["SeatOfTheTriumvirate_ZuraalTheAscended"] = "About forty seconds into the fight the boss will target a random player and cast %s which will knock that player backwards into the void realm.\n\n Now that player will want to fill up their energy bar, attack %s and then use the extra action button %s near him so that both of them will get sent back to the normal realm.\n\n From there you just kill %s, then %s and there's your achievement.",
+    ["SeatOfTheTriumvirate_Saprish"] = "For this achievement you will need to stand on top of the 4 %s around the room so that %s breaks it when he jumps to one of the players. Once all the %s have been broken you can kill %s and get the achievement.",
+    ["SeatOfTheTriumvirate_Lura"] = "On your way from the second to the third boss you will find pools of void that pull you towards the center of them where you will get a stack of %s every second. Once you get 10 stacks, the debuff gets replaced by a new one called %s. Killing %s while affected by %s will award the achievement.",
 
     --Chat Output
 
@@ -422,9 +423,8 @@ local baseLocale = {
     --- Halls of Valor
     -------------------------------------------------------
     --Tactics
-    ["HallsOfValor_Other1"] = "",
-    ["HallsOfValor_Other2"] = "",
-    ["HallsOfValor_Odyn"] = "",
+    ["HallsOfValor_Other1"] = "Make your way over to the %s area. Clear the entire area except for the %s you see when you teleport in and any %s. Once you're done, aggro the %s and kite him over to the 10 %s in the area. Once the %s has 10 stacks of %s you can kill it to get the achievement.",
+    ["HallsOfValor_Other2"] = "Note: This achievement requires a minimum of 4 players to complete.\n\n After you defeated both %s and %s the path to the four kings will now be open. Before you take the path, head back to the dining hall and have every player click on a %s on the table to gain the %s buff.\n\n Once you pick up the buff players will have 20 seconds to head up the stairs and throw their %s to one of the four kings (%s, %s, %s and %s). Note: Each player will need to pick a different boss.",
 
     --Chat Output
 
@@ -441,7 +441,7 @@ local baseLocale = {
     --- Vault of the Wardens
     -------------------------------------------------------
     --Tactics
-    ["VaultOfTheWardens_AshGolm"] = "",
+    ["VaultOfTheWardens_AshGolm"] = "To complete this achievement everyone in your group needs to soak %s around the room in order to get the %s debuff. Once everyone in the group has the %s debuff you can kill the boss.",
     ["VaultOfTheWardens_Cordana"] = "",
     ["VaultOfTheWardens_Other"] = "",
 
@@ -453,7 +453,6 @@ local baseLocale = {
     --Tactics
     ["BlackRookHold_Other"] = "",
     ["BlackRookHold_AmalgamOfSouls"] = "",
-    ["BlackRookHold_IlysannaRavencrest"] = "",
 
     --Chat Output
 
@@ -464,16 +463,6 @@ local baseLocale = {
     ["MawOfSouls_Ymiron"] = "",
     ["MawOfSouls_Helya"] = "",
     ["MawOfSouls_Other"] = "",
-
-    --Chat Output
-
-    -------------------------------------------------------
-    --- The Arcway
-    -------------------------------------------------------
-    --Tactics
-    ["TheArcway_Ivanyr"] = "",
-    ["TheArcway_Corstilax"] = "",
-    ["TheArcway_AdvisorVandros"] = "",
 
     --Chat Output
 
@@ -505,7 +494,7 @@ local baseLocale = {
     --Tactics
     ["CathedralOfEternalNight_Agronox"] = "For this achievement, you need to stand on top of the 4 Budding Seed pods around the boss room and wait for a Fulminating Lasher to %s onto each of the Budding Seed. Once this is done for each of the 4 seeds you can kill the boss.",
     ["CathedralOfEternalNight_ThrashbiteTheScornful"] = "Around the room there are 4 bookcases. To complete this achievement, you need to stand behind each of the bookcases and wait for the boss to cast %s in order to break a bookcase. Once a bookcase is broken, a clickable book appears on the floor. Each member in the group needs to click on this book. Rinse and repeat this for the other 3 bookcases in the boss room making sure you go in a clockwise direction. Once this is done, everyone in the group should have the %s buff and you can kill the boss.\n\n Note: You must have a full 5 man party to complete this achievement.",
-    ["CathedralOfEternalNight_Mephistroth"] = "At the start of the fight pick up the IAT_129207. You then need to wait for the boss to reach 100 energy which will begin phase 2. During phase 2 face the shield you picked up at the start of the fight towards the %s. Once 20 %s have been reflected with the shield, the achievement tracker will turn white and you can kill the boss.",
+    ["CathedralOfEternalNight_Mephistroth"] = "At the start of the fight pick up the %s. You then need to wait for the boss to reach 100 energy which will begin phase 2. During phase 2 face the shield you picked up at the start of the fight towards the %s. Once 20 %s have been reflected with the shield, you can kill the boss.",
 
     --Chat Output
 
@@ -645,6 +634,7 @@ local baseLocale = {
     ["TerraceOfEndlessSpring_ShaOfFear"] = "At 110 you can simply nuke the boss. Make sure you stand in the light to avoid getting feared",
 
     --Chat Output
+    ["TerraceOfEndlessSpring_DefeatedLast"] = "'%s Defeated Last' part of",
 
     -------------------------------------------------------
     --- Throne of Thunder
