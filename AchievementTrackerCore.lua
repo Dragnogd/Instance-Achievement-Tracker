@@ -9,7 +9,7 @@ local UIConfig													--UIConfig is used to make a display asking the user 
 local UICreated = false											--To enable achievement tracking when they enter an instances
 local debugMode = false
 local debugModeChat = false
-local sendDebugMessages = true
+local sendDebugMessages = false
 
 local ptrVersion = "8.1.0"
 
@@ -847,6 +847,10 @@ end
 function events:ADDON_LOADED(event, name)
 	if name ~= "InstanceAchievementTracker" then return end
 
+	--Output IAT version info
+	core:sendDebugMessage("---IAT Runtime---")
+	core:sendDebugMessage("Version: " .. core.Config.majorVersion .. "." .. core.Config.minorVersion .. "." .. core.Config.revisionVersion)
+
 	--Generate Item Cache for tactics
 	generateItemCache()
 
@@ -1348,24 +1352,6 @@ function events:UPDATE_MOUSEOVER_UNIT()
 		end
 	end
 end
-
-function PrintAllEncounterSections(encounterID, difficultyID)
-	EJ_SetDifficulty(difficultyID)
-	local stack, encounter, _, _, curSectionID = {}, EJ_GetEncounterInfo(encounterID)
-	print(encounter .. " abilities:")
-	repeat
-	 local title, desc, depth, icon, model, siblingID, nextSectionID, filteredByDifficulty, link, _, f1, f2, f3, f4 = EJ_GetSectionInfo(curSectionID)
-	 if not filteredByDifficulty then
-	  print(("  "):rep(depth) .. link .. ": " .. desc)
-	 end
-	 table.insert(stack, siblingID)
-	 table.insert(stack, nextSectionID)
-	 curSectionID = table.remove(stack)
-	until not curSectionID
-   end
-   
-   -- Print everything in 25-man Normal Madness of Deathwing:
-   
 
 --This event is used to scan players in the group to see which achievements they are currently missing
 function events:INSPECT_ACHIEVEMENT_READY(self, GUID)
