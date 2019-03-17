@@ -37,7 +37,11 @@ function core._1648:Odyn()
     
     --Detetct when player looses buff and fail as personal achievement
     if core.type == "SPELL_AURA_REMOVED" and core.spellId == 229684 then
-        core:getAchievementFailedPersonal()
+        C_Timer.After(1, function() 
+            if core.encounterStarted == true then
+                core:getAchievementFailedPersonal()  
+            end      
+        end)
     end
 end
 
