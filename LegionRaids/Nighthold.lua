@@ -194,10 +194,6 @@ function core._1530:SpellbladeAluriel()
             end)
         end
     end
-
-    --InfoFrame code
-    InfoFrame_UpdatePlayersOnInfoFrame()
-    InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],mysteriousFruitCounter)
 end
 
 function core._1530:InitialSetup()
