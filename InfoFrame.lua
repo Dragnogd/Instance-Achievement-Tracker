@@ -55,6 +55,34 @@ function InfoFrame_UpdatePlayersOnInfoFrame()
     end
 end
 
+function InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo(message)
+    --This will update list of players on the info frame
+
+    if next(core.InfoFrame_PlayersTable) == nil then
+        --If table is empty then generate players
+        for k,player in pairs(core:getPlayersInGroupForAchievement()) do
+            core.InfoFrame_PlayersTable[player] = 1
+        end
+    else
+        --Update Info Frame with values from table
+        local messageStr = ""
+        for player, status in pairs(core.InfoFrame_PlayersTable) do
+            --1 = incomplete, 2 = complete, 3 = failed
+            if status.colour == 1 then
+                --Player has not completed the requirements for the achievement yet
+                messageStr = messageStr .. colourWhite .. player .. " " .. message .. ": " .. status.message .. "|r\n"
+            elseif status.colour == 2 then
+                --Player has completed the requirements for the achievement
+                messageStr = messageStr .. colourGreen .. player .. " " .. message .. ": " .. status.message .. "|r\n"
+            elseif status == 3 then
+                --Player had completed the requirements for the achievement but has since failed it
+                messageStr.colour = messageStr .. colourRed .. player .. " " .. message .. ": " .. status.message .. "|r\n"
+            end
+        end
+        core.IATInfoFrame:SetText1(messageStr)
+    end
+end
+
 function InfoFrame_UpdatePlayersOnInfoFramePersonal()
     --This will update list of players on the info frame for personal achievements.
     --This will only display names of players who still need the achievement
@@ -87,40 +115,56 @@ function InfoFrame_UpdatePlayersOnInfoFramePersonal()
 end
 
 function InfoFrame_GetRangeCheck(range)
-    local maxChecker = rc:GetFriendMaxChecker(range)
-    for player, status in pairs(core.InfoFrame_PlayersTable) do
-        if not maxChecker(player) then
-            --print(player .. " is not in range")
-            if core.InfoFrame_PlayersTable[player] ~= 2 then
-                core.InfoFrame_PlayersTable[player] = 4            
+    local maxChecker = rc:GetFriendChecker(range)
+    if maxChecker ~= nil then
+        for player, status in pairs(core.InfoFrame_PlayersTable) do
+            if not maxChecker(player) then
+                --print(player .. " is not in range")
+                if core.InfoFrame_PlayersTable[player] ~= 2 then
+                    core.InfoFrame_PlayersTable[player] = 4            
+                end
+            elseif core.InfoFrame_PlayersTable[player] ~= 2 then
+                core.InfoFrame_PlayersTable[player] = 1
             end
-        elseif core.InfoFrame_PlayersTable[player] ~= 2 then
-            core.InfoFrame_PlayersTable[player] = 1
         end
     end
 end
 
-function InfoFrame_SetPlayerFailed(player)
+function InfoFrame_SetPlayerFailed(player,additionalInfo)
     --Make sure we remove realm info from player before checking name
     if string.find(player, "-") then
         local name, realm = strsplit("-", player)
         player = name
     end
 
-    if core.InfoFrame_PlayersTable[player] ~= nil then
+    if core.InfoFrame_PlayersTable[player] ~= nil and additionalInfo == nil then
         core.InfoFrame_PlayersTable[player] = 3
+    else
+        core.InfoFrame_PlayersTable[player].colour = 3
+        core.InfoFrame_PlayersTable[player].message = additionalInfo
     end
 end
 
-function InfoFrame_SetPlayerComplete(player)
+function InfoFrame_GetPlayerFailed(player)
+    if core.InfoFrame_PlayersTable[player] == 3 then
+        return true
+    else
+        return false
+    end
+end
+
+function InfoFrame_SetPlayerComplete(player,additionalInfo)
     --Make sure we remove realm info from player before checking name
     if string.find(player, "-") then
         local name, realm = strsplit("-", player)
         player = name
     end
 
-    if core.InfoFrame_PlayersTable[player] ~= nil then
+    if core.InfoFrame_PlayersTable[player] ~= nil and additionalInfo == nil  then
         core.InfoFrame_PlayersTable[player] = 2
+    else
+        core.InfoFrame_PlayersTable[player].colour = 2
+        core.InfoFrame_PlayersTable[player].message = additionalInfo
     end   
 end
 
