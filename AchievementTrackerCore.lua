@@ -7,9 +7,9 @@ local L = core.L												--Translation Table
 local events = CreateFrame("Frame")								--All events are registered to this frame
 local UIConfig													--UIConfig is used to make a display asking the user if they would like
 local UICreated = false											--To enable achievement tracking when they enter an instances
-local debugMode = false
-local debugModeChat = false
-local sendDebugMessages = false
+local debugMode = true
+local debugModeChat = true
+local sendDebugMessages = true
 
 local ptrVersion = "8.1.0"
 
@@ -211,6 +211,7 @@ local automaticBlizzardTracking = true			--By Default blizzard trackers are almo
 local automaticBlizzardTrackingInitialCheck = false --Initial check for value at start of each encounter
 local enableCombatLogging = false
 core.syncMessageQueue = {}							--Messages sent from sync to other addons. Used when range is too small for one addon to cover.
+local enableInfoFrame = true					--Whether or not user has Info Frame enabled or not
 
 --------------------------------------
 -- Addon Syncing 
@@ -448,140 +449,149 @@ end
 
 --Run when the player initially enters an instance to setup variables such as instanceName, expansion etc so we can track the correct bosses
 function getInstanceInfomation()
-	--If the instance is different to the one we last checked then we need to reset varaibles and re-scan
-	if IsInInstance() and core.inInstance == true then
-		local instanceNameSpaces, _, difficultyID, _, maxPlayers, _, _, currentZoneID, _ = GetInstanceInfo()
-		if instanceNameSpaces ~= core.instanceNameSpaces then
-			--Instances don't match. Lets rescan
-			core.inInstance = false
-			if UIConfig ~= nil and core.inInstance == false then
-				core:sendDebugMessage("Hiding Tracking UI")
-				UIConfig:Hide()
+	--Delay the execution of this function to make sure difficultyID information is ready to be fetched from the server
+	C_Timer.After(2, function() 
+		--If the instance is different to the one we last checked then we need to reset varaibles and re-scan
+		if IsInInstance() and core.inInstance == true then
+			local instanceNameSpaces, _, difficultyID, _, maxPlayers, _, _, currentZoneID, _ = GetInstanceInfo()
+			if instanceNameSpaces ~= core.instanceNameSpaces then
+				--Instances don't match. Lets rescan
+				core.inInstance = false
+				if UIConfig ~= nil and core.inInstance == false then
+					core:sendDebugMessage("Hiding Tracking UI")
+					UIConfig:Hide()
+				end
+		
+				--Disable achievement tracking if currently tracking
+				checkAndClearInstanceVariables()	
 			end
+		end
 	
-			--Disable achievement tracking if currently tracking
-			checkAndClearInstanceVariables()	
-		end
-	end
+		if IsInInstance() and core.inInstance == false then
+			core:sendDebugMessage("Player has entered instance")
+			local instanceCompatible = false --Check whether player is on correct difficulty to earn achievements
+			core.instanceNameSpaces, _, core.difficultyID, _, core.maxPlayers, _, _, core.currentZoneID, _ = GetInstanceInfo()
 
-	if IsInInstance() and core.inInstance == false then
-		core:sendDebugMessage("Player has entered instance")
-		local instanceCompatible = false --Check whether player is on correct difficulty to earn achievements
-		core.instanceNameSpaces, _, core.difficultyID, _, core.maxPlayers, _, _, core.currentZoneID, _ = GetInstanceInfo()
-
-		core:sendDebugMessage(core.currentZoneID)
-
-		core.instance = core.currentZoneID --Instance name without any puntuation
-		core.instanceClear = "_" .. core.currentZoneID --Instance name with _ to fetch functions for tracking of the particular instance
-
-		core:sendDebugMessage("Offical Instance Name: " .. core.instance .. " " .. core.instanceClear)
-
-		--If the raid is in the lich king expansion then detect whether player is on the 10man or 25man difficulty
-		--This is only needed for raids that have seperate achievements for 10man and 25man. Happens for the majority of WOTLK raids
-		if core.instance == 615 or core.instance == 616 or core.instance == 249 or core.instance == 649 or core.instance == 624 or core.instance == 533 or core.instance == 631 then
-			if core.difficultyID == 3 or core.difficultyID == 5 then
-				--10 Man
-				core:sendDebugMessage("Detected Legacy 10 man Raid")
-				core.instance = core.instance .. -10
-				core:sendDebugMessage("New Instance Name: " .. core.instance)
-			elseif core.difficultyID == 4 or core.difficultyID == 6 then
-				--25 Man
-				core:sendDebugMessage("Detected Legacy 25 man raid")
-				core.instance = core.instance .. -25
-				core:sendDebugMessage("New Instance Name: " .. core.instance)
-			end
-		end
-
-		--Find the instance in the core.instances table so we can cache the value to be used later
-		for expansion,_ in pairs(core.Instances) do
-			for instanceType,_ in pairs(core.Instances[expansion]) do
-				for instance,_ in pairs(core.Instances[expansion][instanceType]) do
-					if instance == core.instance then
-						core.expansion = expansion
-						core.instanceType = instanceType
-						core.instance = instance
-						core.inInstance = true
-						core.instanceVariablesReset = false
-
-						core:sendDebugMessage("Expansion: " .. core.expansion)
-						core:sendDebugMessage("Instance Type: " .. core.instanceType)
-						core:sendDebugMessage("Instance: " .. core.instance)
+			if core.difficultyID ~= 0 then
+				core:sendDebugMessage(core.currentZoneID)
+	
+				core.instance = core.currentZoneID --Instance name without any puntuation
+				core.instanceClear = "_" .. core.currentZoneID --Instance name with _ to fetch functions for tracking of the particular instance
+		
+				core:sendDebugMessage("Offical Instance Name: " .. core.instance .. " " .. core.instanceClear)
+		
+				--If the raid is in the lich king expansion then detect whether player is on the 10man or 25man difficulty
+				--This is only needed for raids that have seperate achievements for 10man and 25man. Happens for the majority of WOTLK raids
+				if core.instance == 615 or core.instance == 616 or core.instance == 249 or core.instance == 649 or core.instance == 624 or core.instance == 533 or core.instance == 631 then
+					if core.difficultyID == 3 or core.difficultyID == 5 then
+						--10 Man
+						core:sendDebugMessage("Detected Legacy 10 man Raid")
+						core.instance = core.instance .. -10
+						core:sendDebugMessage("New Instance Name: " .. core.instance)
+					elseif core.difficultyID == 4 or core.difficultyID == 6 then
+						--25 Man
+						core:sendDebugMessage("Detected Legacy 25 man raid")
+						core.instance = core.instance .. -25
+						core:sendDebugMessage("New Instance Name: " .. core.instance)
 					end
 				end
-			end
-		end
-
-		--Check whether achievements can be earned for the instance the player has entered
-		core:sendDebugMessage("DifficultyID: " .. core.difficultyID)
-		if core.difficultyID == 2 then
-			--WOTLK/Cata/Mop/Wod heroic dungeons
-			if core.expansion == 7 or core.expansion == 6 or core.expansion == 5 or core.expansion == 4 then
-				instanceCompatible = true
-			end
-		elseif core.difficultyID == 23 then
-			--Legion/BFA Mythics
-			if core.expansion == 3 or core.expansion == 2 then
-				instanceCompatible = true
-			end
-		elseif core.difficultyID == 3 or core.difficultyID == 5 then
-			--legacy10
-			instanceCompatible = true
-		elseif core.difficultyID == 4 or core.difficultyID == 6 then
-			--legacy25
-			instanceCompatible = true
-		elseif core.difficultyID == 11 or core.difficultyID == 12 then
-			--scenerios"
-			if core.expansion == 5 then
-				instanceCompatible = true
-			end
-		elseif core.difficultyID == 13 or core.difficultyID == 14 or core.difficultyID == 15 or core.difficultyID == 16 then
-			--current
-			instanceCompatible = true
-		elseif core.difficultyID == 7 or core.difficultyID == 17 and debugMode == true then
-			instanceCompatible = true
-		elseif core.difficultyID == 24 or core.difficultyID == 33 then
-			--Timewalking
-			instanceCompatible = true
-		end
-
-		if debugMode == true then
-			instanceCompatible = true
-		end
-
-		if instanceCompatible == true and core.expansion ~= nil then
-			--Check if the instance has any achievements to actually track
-			local foundTracking = false
-			core:sendDebugMessage("Expansion: " .. core.expansion)
-			core:sendDebugMessage("Instance Type: " .. core.instanceType)
-			core:sendDebugMessage("Instance: " .. core.instance)
-			for boss,_ in pairs(core.Instances[core.expansion][core.instanceType][core.instance]) do
-				if boss ~= "name" then
-					if core.Instances[core.expansion][core.instanceType][core.instance][boss].track ~= nil then
-						foundTracking = true
+		
+				--Find the instance in the core.instances table so we can cache the value to be used later
+				for expansion,_ in pairs(core.Instances) do
+					for instanceType,_ in pairs(core.Instances[expansion]) do
+						for instance,_ in pairs(core.Instances[expansion][instanceType]) do
+							if instance == core.instance then
+								core.expansion = expansion
+								core.instanceType = instanceType
+								core.instance = instance
+								core.inInstance = true
+								core.instanceVariablesReset = false
+		
+								core:sendDebugMessage("Expansion: " .. core.expansion)
+								core:sendDebugMessage("Instance Type: " .. core.instanceType)
+								core:sendDebugMessage("Instance: " .. core.instance)
+							end
+						end
 					end
 				end
-			end
-
-			--Ask the user whether they want to enable Achievement Tracking in the instance. Only do this if there is any achievements to track for the particular instance
-			if foundTracking == true then
-				core:sendDebugMessage("Asking user whether they want to track this instance")
-				if UICreated == false then
-					core:sendDebugMessage("Creating Tracking UI")
-					createEnableAchievementTrackingUI()
+		
+				--Check whether achievements can be earned for the instance the player has entered
+				core:sendDebugMessage("DifficultyID: " .. core.difficultyID)
+				if core.difficultyID == 2 then
+					--WOTLK/Cata/Mop/Wod heroic dungeons
+					if core.expansion == 7 or core.expansion == 6 or core.expansion == 5 or core.expansion == 4 then
+						instanceCompatible = true
+					end
+				elseif core.difficultyID == 23 then
+					--Legion/BFA Mythics
+					if core.expansion == 3 or core.expansion == 2 then
+						instanceCompatible = true
+					end
+				elseif core.difficultyID == 3 or core.difficultyID == 5 then
+					--legacy10
+					instanceCompatible = true
+				elseif core.difficultyID == 4 or core.difficultyID == 6 then
+					--legacy25
+					instanceCompatible = true
+				elseif core.difficultyID == 11 or core.difficultyID == 12 then
+					--scenerios"
+					if core.expansion == 5 then
+						instanceCompatible = true
+					end
+				elseif core.difficultyID == 13 or core.difficultyID == 14 or core.difficultyID == 15 or core.difficultyID == 16 then
+					--current
+					instanceCompatible = true
+				elseif core.difficultyID == 7 or core.difficultyID == 17 and debugMode == true then
+					instanceCompatible = true
+				elseif core.difficultyID == 24 or core.difficultyID == 33 then
+					--Timewalking
+					instanceCompatible = true
+				end
+		
+				if debugMode == true then
+					instanceCompatible = true
+				end
+		
+				if instanceCompatible == true and core.expansion ~= nil then
+					--Check if the instance has any achievements to actually track
+					local foundTracking = false
+					core:sendDebugMessage("Expansion: " .. core.expansion)
+					core:sendDebugMessage("Instance Type: " .. core.instanceType)
+					core:sendDebugMessage("Instance: " .. core.instance)
+					for boss,_ in pairs(core.Instances[core.expansion][core.instanceType][core.instance]) do
+						if boss ~= "name" then
+							if core.Instances[core.expansion][core.instanceType][core.instance][boss].track ~= nil then
+								foundTracking = true
+							end
+						end
+					end
+		
+					--Ask the user whether they want to enable Achievement Tracking in the instance. Only do this if there is any achievements to track for the particular instance
+					if foundTracking == true then
+						core:sendDebugMessage("Asking user whether they want to track this instance")
+						if UICreated == false then
+							core:sendDebugMessage("Creating Tracking UI")
+							createEnableAchievementTrackingUI()
+						else
+							core:sendDebugMessage("Displaying Tracking UI since it was already created")
+							UIConfig.content:SetText(L["Core_EnableAchievementTracking"] .. ": " .. core.instanceNameSpaces);
+							UIConfig:Show()
+						end
+					else
+						core:sendDebugMessage("No Achievements to track for this instance")
+					end
 				else
-					core:sendDebugMessage("Displaying Tracking UI since it was already created")
-					UIConfig.content:SetText(L["Core_EnableAchievementTracking"] .. ": " .. core.instanceNameSpaces);
-					UIConfig:Show()
+					core:sendDebugMessage("Achievements cannot be earned for the following difficulty " .. core.difficultyID)
 				end
 			else
-				core:sendDebugMessage("No Achievements to track for this instance")
+				--Information about the instance difficulty has not finished loading. Re-call function and try again
+				core:sendDebugMessage("Unable to fetch DifficultyID for current instance. Waiting 2 seconds then trying again")
+				getInstanceInfomation()
 			end
-		else
-			core:sendDebugMessage("Achievements cannot be earned for the following difficulty " .. core.difficultyID)
+		elseif IsInInstance() == false and core.inInstance == true then
+			core.inInstance = false
 		end
-	elseif IsInInstance() == false and core.inInstance == true then
-		core.inInstance = false
-	end
+	end)
 end
 
 --Run if we need to setup additional events/variables for a certain instance. For example if we need to track additional events such as messages from bosses
@@ -960,6 +970,7 @@ function events:ADDON_LOADED(event, name)
 	end
 	_G["AchievementTracker_GreyOutCompletedAchievements"]:SetChecked(AchievementTrackerOptions["greyOutCompletedAchievements"])
 
+	--Enable combat logging
 	if AchievementTrackerOptions["enableAutomaticCombatLogging"] == nil then
 		AchievementTrackerOptions["enableAutomaticCombatLogging"] = false --Disabled by default
 		enableCombatLogging = false
@@ -967,6 +978,15 @@ function events:ADDON_LOADED(event, name)
 		enableCombatLogging = true
 	end
 	_G["AchievementTracker_EnableAutomaticCombatLogging"]:SetChecked(AchievementTrackerOptions["enableAutomaticCombatLogging"])
+
+	--Enable Info Frame
+	if AchievementTrackerOptions["displayInfoFrame"] == nil then
+		AchievementTrackerOptions["displayInfoFrame"] = true --Enabled by default
+		enableInfoFrame = true
+	elseif AchievementTrackerOptions["displayInfoFrame"] == false then
+		enableInfoFrame = false
+	end
+	_G["AchievementTracker_DisplayInfoFrame"]:SetChecked(AchievementTrackerOptions["displayInfoFrame"])
 
 	SLASH_IAT1 = "/iat";
 	SlashCmdList.IAT = HandleSlashCommands;
@@ -1011,6 +1031,14 @@ function events:ADDON_LOADED(event, name)
 
 	--Set whether addon should be enabled or disabled
 	setAddonEnabled(AchievementTrackerOptions["enableAddon"])
+end
+
+function setDisplayInfoFrame(setDisplayInfoFrame)
+	if setDisplayInfoFrame then
+		enableInfoFrame = true
+	else
+		enableInfoFrame = false					
+	end
 end
 
 function setEnableAutomaticCombatLogging(setEnableAutomaticCombatLogging)
@@ -1902,10 +1930,12 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 
 					--If boss has an info frame then display it
 					if core.currentBosses[i].displayInfoFrame == true and infoFrameShown == false then
-						core:sendDebugMessage("Showing InfoFrame")
-						core.IATInfoFrame:ToggleOn()
-						core.IATInfoFrame:SetHeading(GetAchievementLink(core.currentBosses[i].achievement))
-						infoFrameShown = true
+						if enableInfoFrame == true then
+							core:sendDebugMessage("Showing InfoFrame")
+							core.IATInfoFrame:ToggleOn()
+							core.IATInfoFrame:SetHeading(GetAchievementLink(core.currentBosses[i].achievement))
+							infoFrameShown = true
+						end
 					end
 				end
 			elseif core.currentBosses[i].enabled == false and core.currentBosses[i].track == nil then
