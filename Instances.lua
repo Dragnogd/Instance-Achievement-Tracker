@@ -2202,6 +2202,7 @@ core.Instances = {
                     track = function() core._996:ProtectorsOfTheEndless() end,
                     partial = false,
                     encounterID = 1409,
+                    displayInfoFrame = true,
                 },
                 boss2 = {
                     name = 742, --Tsulong
@@ -2670,6 +2671,7 @@ core.Instances = {
                     track = function() core._1008:WillOfTheEmperor() end,
                     partial = false,
                     encounterID = 1407,
+                    displayInfoFrame = true,
                 },
             },
         },

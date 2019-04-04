@@ -198,6 +198,8 @@ function Tab_OnClick(self)
             UIConfig.Main2.options21:Show()
             UIConfig.Main2.options22:Show()
             UIConfig.Main2.options23:Show()
+            UIConfig.Main2.options24:Show()
+            UIConfig.Main2.options25:Show()
 
             UIConfig.Main.author:Show()
             UIConfig.Main.verison:Show()
@@ -379,6 +381,11 @@ function Tab_OnClick(self)
             UIConfig.Main2.options22 = Config:CreateCheckBox("TOPLEFT", UIConfig.Main2.options20, "TOPLEFT", 0, -25, "AchievementTracker_EnableAutomaticCombatLogging")
             UIConfig.Main2.options22:SetScript("OnClick", ATToggleAutomaticCombatLogging_OnClick)
             UIConfig.Main2.options23 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options22, "TOPLEFT", 30, -9, L["GUI_EnableAutomaticCombatLogging"],"GameFontHighlight") 
+
+            --Disable InfoFrame
+            UIConfig.Main2.options24 = Config:CreateCheckBox("TOPLEFT", UIConfig.Main2.options22, "TOPLEFT", 0, -25, "AchievementTracker_DisplayInfoFrame")
+            UIConfig.Main2.options24:SetScript("OnClick", ATToggleInfoFrame_OnClick)
+            UIConfig.Main2.options25 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options24, "TOPLEFT", 30, -9, L["GUI_DisplayInfoFrame"],"GameFontHighlight")
         end
     else                                --User has selected an expansion tab so hide main menu options
         UIConfig.ScrollFrame:Show()
@@ -421,6 +428,8 @@ function Tab_OnClick(self)
         UIConfig.Main2.options21:Hide()
         UIConfig.Main2.options22:Hide()
         UIConfig.Main2.options23:Hide()
+        UIConfig.Main2.options24:Hide()
+        UIConfig.Main2.options25:Hide()
         
         UIConfig.Main.author:Hide()
         UIConfig.Main.verison:Hide()
@@ -440,6 +449,11 @@ function Tab_OnClick(self)
             UIConfig.achievementsCompleted:Hide()
         end
     end
+end
+
+function ATToggleInfoFrame_OnClick(self)
+    AchievementTrackerOptions["displayInfoFrame"] = self:GetChecked()
+    setDisplayInfoFrame(self:GetChecked()) 
 end
 
 function ATToggleAutomaticCombatLogging_OnClick(self)
