@@ -17,6 +17,7 @@ local crusadersCounter = 0
 local disciplesCounter = 0
 local championOfTheLightCounter = 0
 local playersWithFavour = {}
+local inititalDebuffScan = false
 
 ------------------------------------------------------
 ---- Jadefire Masters
@@ -51,6 +52,63 @@ function core._2070:ChampionOfTheLight()
     --Shinies have to be deposited at the trashpile
     --All players must pick up debuff before pull
     --Boss must not be killed while people are raptors
+
+
+
+    --On initial pull lets make sure everyone in the group has the Jani Favor debuff otherwise achievement cannot be completed
+    if inititalDebuffScan == false then
+        inititalDebuffScan = true
+        core:sendDebugMessage("Starting Initital Scan For Debuff")
+        if core.groupSize > 1 then
+            for i = 1, core.groupSize do
+                local unit = nil
+                if core.chatType == "PARTY" then
+                    if i < core.groupSize then
+                        unit = "party" .. i
+                    else
+                        unit = "player"
+                    end
+                elseif core.chatType == "RAID" then
+                    unit = "raid" .. i
+                end
+                
+                if unit ~= nil then
+                    local unitType, destID, spawn_uid_dest = strsplit("-",UnitGUID(unit));
+                    local debuffFound = false
+                    for i=1,40 do
+                        local _, _, _, _, _, _, _, _, _, spellId = UnitDebuff(unit, i)
+                        if spellId == 288579 then
+                            debuffFound = true
+                            core:sendDebugMessage(UnitName(unit) .. " has debuff")
+                        end 
+                    end
+                    if debuffFound == false then
+                        --Player has not picked up debuff before boss pull so fail achievement
+                        core:sendDebugMessage(UnitName(unit) .. " does not have debuff")
+                        C_Timer.After(4, function() 
+                            core:getAchievementFailedWithMessageAfter(L["Shared_MissingDebuff"] .. " " .. GetSpellLink(288579))
+                        end)
+                    end
+                end
+            end
+        else
+            --Player is not in a group
+            local unitType, destID, spawn_uid_dest = strsplit("-",UnitGUID("Player"));
+            local debuffFound = false
+            for i=1,40 do
+                local _, _, _, _, _, _, _, _, _, spellId = UnitDebuff("Player", i)
+                if spellId == 288579 then
+                    debuffFound = true
+                end
+                if debuffFound == false then
+                    --Player has not picked up debuff before boss pull so fail achievement
+                    C_Timer.After(2, function() 
+                        core:getAchievementFailedWithMessageAfter(L["Shared_MissingDebuff"] .. " " .. GetSpellLink(288579))
+                    end)
+                end
+            end
+        end
+    end
 
     --Player has gained Aspect of Jani debuff. They need to loose the debuff within 30 seconds with the tribute for counter to increment
     if core.type == "SPELL_AURA_APPLIED" and core.spellId == 288610 then --288610
@@ -127,6 +185,14 @@ function core._2070:ChampionOfTheLight()
                                         core:sendDebugMessage("Champion found")
                                         championOfTheLightCounter = championOfTheLightCounter + 1
                                         core:sendMessage(core:getAchievement() .. " " .. playerName .. " " .. L["Shared_HasStolenFrom"] .. " " .. getNPCName(tonumber(playersWithFavour[playerName][2])) .. " " .. L["Core_Counter"] .. "(" .. championOfTheLightCounter .. "/3)") 
+                                    end
+                                    
+                                    --Output completed status overview
+                                    local faction1, faction2 = UnitFactionGroup("Player")
+                                    if faction1 == "Alliance" then
+                                        core:sendMessage(getNPCName(147895) .. ": (" .. disciplesCounter .. "/3), " .. getNPCName(147896) .. ": (" .. crusadersCounter .. "/3), " .. getNPCName(144683) .. ": (" .. championOfTheLightCounter .. "/3)")
+                                    elseif faction1 == "Horde" then
+                                        core:sendMessage(getNPCName(145898) .. ": (" .. disciplesCounter .. "/3), " .. getNPCName(145903) .. ": (" .. crusadersCounter .. "/3), " .. getNPCName(144680) .. ": (" .. championOfTheLightCounter .. "/3)")
                                     end
                                 end
                             else
@@ -325,6 +391,7 @@ function core._2070:ClearVariables()
     disciplesCounter = 0
     championOfTheLightCounter = 0
     playersWithFavour = {}
+    inititalDebuffScan = false
 
     ------------------------------------------------------
     ---- Jadefire Masters
