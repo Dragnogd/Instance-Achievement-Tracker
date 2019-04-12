@@ -2,6 +2,7 @@
 -- Namespaces
 --------------------------------------
 local _, core = ...
+local L = core.L
 
 ------------------------------------------------------
 ---- Bastion of Twilight Bosses
@@ -13,7 +14,8 @@ core._671.Events = CreateFrame("Frame")
 ---- Halfus Wyrmbreaker
 ------------------------------------------------------
 local timerStarted = false
-local secondAddKilled = false
+local drakesKilled = 0
+local whelpsKilled = 0
 
 ------------------------------------------------------
 ---- Valiona And Theralion
@@ -21,19 +23,59 @@ local secondAddKilled = false
 local TwilightFiendsKilled = 0
 
 function core._671:HalfusWyrmbreaker()
-	if core.type == "UNIT_DIED" and core.destID == "44650" or core.destID == "44797" or core.destID == "44645" or core.destID == "44652" then
-		if timerStarted == false then
-			core:sendMessage(core:getAchievement() .." Timer Started! 10 Seconds Remaining")
-			timerStarted = true
-            C_Timer.After(10, function()
-				if secondAddKilled == true then
+	--Defeat Halfus Wyrmbreaker after defeating two drakes within 10 seconds of each other. The Emerald Whelp pack counts as one drake for this purpose.
+	--Nether Scion: 44645
+	--Slate Dragon: 44652
+	--Storm Rider: 44650
+	--Time Warden: 44797
+	--Orphaned Emerald Whelp: 44641 
+
+	if core.achievementsCompleted[1] == false then
+		--Dragons
+		if core.type == "UNIT_DIED" and (core.destID == "44650" or core.destID == "44797" or core.destID == "44645" or core.destID == "44652") then
+			drakesKilled = drakesKilled + 1
+			if timerStarted == false then
+				timerStarted = true
+				core:sendMessage(L["Shared_Timer10"])
+				C_Timer.After(10, function() 
+					if drakesKilled >= 2 then
+						core:getAchievementSuccess()
+					else
+						core:getAchievementFailed()
+						drakesKilled = 0
+						timerStarted = false
+					end
+				end)
+			else
+				if drakesKilled >= 2 then
 					core:getAchievementSuccess()
-				else
-					core:getAchievementFailed()					
 				end
-            end)
-		else
-			secondAddKilled = true			
+			end
+		end
+
+		--Whelps
+		if core.type == "UNIT_DIED" and core.destID == "44641" then
+			whelpsKilled = whelpsKilled + 1
+			if whelpsKilled == 8 then
+				drakesKilled = drakesKilled + 1
+				if timerStarted == false then
+					timerStarted = true
+					core:sendMessage(L["Shared_Timer10"])
+					C_Timer.After(10, function() 
+						if drakesKilled >= 2 then
+							core:getAchievementSuccess()
+						else
+							core:getAchievementFailed()
+							drakesKilled = 0
+							timerStarted = false
+						end
+					end)
+				else
+					if drakesKilled >= 2 then
+						core:getAchievementSuccess()
+					end
+				end
+			end
 		end
 	end
 end
@@ -76,7 +118,8 @@ function core._671:ClearVariables()
 	---- Halfus Wyrmbreaker
 	------------------------------------------------------
 	timerStarted = false
-	secondAddKilled = false
+	drakesKilled = 0
+	whelpsKilled = 0
 
 	------------------------------------------------------
 	---- Valiona And Theralion
