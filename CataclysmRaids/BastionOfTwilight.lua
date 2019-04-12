@@ -80,10 +80,10 @@ function core._671:HalfusWyrmbreaker()
 	end
 end
 
-function core._671_ValionaAndTheralion()
+function core._671:ValionaAndTheralion()
 	if core.type == "UNIT_DIED" and core.destID == "49864" then
 		TwilightFiendsKilled = TwilightFiendsKilled + 1
-		core:sendMessage("(" .. TwilightFiendsKilled .. " /6) Twilight Fiends Killed")
+		core:sendMessage(format(L["Shared_AddKillCounter"] .. " (" .. TwilightFiendsKilled .. "/6)", getNPCName(49864)))
 	end
 
 	if TwilightFiendsKilled == 6 then
