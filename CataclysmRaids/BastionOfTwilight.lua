@@ -91,6 +91,13 @@ function core._671:ValionaAndTheralion()
 	end
 end
 
+function core._671:AscendantCouncil()
+	--Blizzard Tracker has gone red so fail achievement
+	if core:getBlizzardTrackingStatus(5311) == false then
+		core:getAchievementFailed()
+	end
+end
+
 function core._671:InstanceCleanup()
     core._671.Events:UnregisterEvent("UNIT_POWER_UPDATE")
 end
