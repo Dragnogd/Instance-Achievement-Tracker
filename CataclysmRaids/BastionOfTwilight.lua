@@ -114,7 +114,7 @@ function core._671.Events:UNIT_POWER_UPDATE(self, unit, powerType)
 	if core.Instances[core.expansion][core.instanceType][core.instance]["boss4"].enabled == true then
 		if powerType == "ALTERNATE" then
 			if UnitPower(unit, ALTERNATE_POWER_INDEX) > 30 then
-				core:getAchievementFailedWithMessageAfter("by (" .. UnitName(unit) .. ")")
+				core:getAchievementFailedWithMessageAfter("(" .. UnitName(unit) .. ")")
 			end
 		end
     end
