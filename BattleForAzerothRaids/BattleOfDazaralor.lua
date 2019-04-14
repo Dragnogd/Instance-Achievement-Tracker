@@ -51,9 +51,6 @@ function core._2070:ChampionOfTheLight()
     --3 Shinies From Champion of the Light
     --Shinies have to be deposited at the trashpile
     --All players must pick up debuff before pull
-    --Boss must not be killed while people are raptors
-
-
 
     --On initial pull lets make sure everyone in the group has the Jani Favor debuff otherwise achievement cannot be completed
     if inititalDebuffScan == false then
@@ -102,7 +99,7 @@ function core._2070:ChampionOfTheLight()
                 end
                 if debuffFound == false then
                     --Player has not picked up debuff before boss pull so fail achievement
-                    C_Timer.After(2, function() 
+                    C_Timer.After(4, function() 
                         core:getAchievementFailedWithMessageAfter(L["Shared_MissingDebuff"] .. " " .. GetSpellLink(288579))
                     end)
                 end
@@ -229,7 +226,9 @@ function core._2070:JadefireMasters()
         eggFound = false
         C_Timer.After(5, function() 
             if eggFound == false then
-                core:getAchievementFailed()
+                if core.achievementsCompleted[1] == false then
+                    core:getAchievementFailed()                
+                end
             end
         end)
     end
