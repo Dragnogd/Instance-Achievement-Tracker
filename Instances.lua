@@ -236,7 +236,7 @@ core.Instances = {
                     players = {},
                     tactics = L["CrucibleOfStorms_TheRestlessCabal"],
                     enabled = true,
-                    track = function() end,
+                    track = function() core._2096:TheRestlessCabal() end,
                     partial = false,
                     encounterID = 2269,
                 },
