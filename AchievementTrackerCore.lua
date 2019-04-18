@@ -2236,7 +2236,7 @@ function core:getAchievementToTrack()
 					--Announce to chat if enabled
 					if core.announceTrackedAchievementsToChat == true then
 						if core.onlyTrackMissingAchievements == false or (core.onlyTrackMissingAchievements == true and core.currentBosses[i].players ~= L["GUI_NoPlayersNeedAchievement"]) then
-							core:sendMessage(L["GUI_Tracking"] .. ": "  .. GetAchievementLink(core.currentBosses[i].achievement),true)
+							core:sendMessage(L["GUI_Tracking"] .. ": "  .. GetAchievementLink(core.currentBosses[i].achievement))
 						end
 					end
 				end
@@ -2326,7 +2326,11 @@ function core:sendMessage(message, outputToRW, messageType)
 				end
 			elseif masterAddon == true and requestToRun == true then
 				--We need to store the messages in a queue while the master addon is being decided
-				table.insert(messageQueue, message)
+				if outputToRW == true then
+					table.insert(messageQueue, message .. ",true")
+				else
+					table.insert(messageQueue, message .. ",false")
+				end
 			else
 				if requestToRun == false then
 					requestToRun = true
@@ -2380,22 +2384,23 @@ function core:sendMessage(message, outputToRW, messageType)
 							--If the message queue has messages in then ouput these messages as well
 							if #messageQueue > 0 then
 								for k, v in pairs(messageQueue) do
-									if outputToRW == true and core.chatType == "RAID" and announceToRaidWarning == true and (UnitIsGroupAssistant("Player") or UnitIsGroupLeader("Player")) then
+									local v, outputToRW2 = strsplit(",", v)
+									if outputToRW2 == "true" and core.chatType == "RAID" and announceToRaidWarning == true and (UnitIsGroupAssistant("Player") or UnitIsGroupLeader("Player")) then
 										--Important message output to raid warning from user request
-										--print("Outputting to Raid Warning")									
+										-- print("Outputting to Raid Warning")									
 										SendChatMessage("[IAT] " .. v,"RAID_WARNING",DEFAULT_CHAT_FRAME.editBox.languageID)
 										core:logMessage("[IAT] " .. v)
-									elseif outputToRW == true and announceToRaidWarning == true then
+									elseif outputToRW2 == "true" and announceToRaidWarning == true then
 										SendChatMessage("[IAT] " .. message,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
 										core:logMessage("[IAT] " .. message)
 										RaidNotice_AddMessage(RaidWarningFrame, "[IAT] " .. message, ChatTypeInfo["RAID_WARNING"])
 									else
-										--print("Outputting to normal")										
+										-- print("Outputting to normal")								
 										SendChatMessage("[IAT] " .. v,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
 										core:logMessage("[IAT] " .. v)
 									end
 
-									if outputToRW == true and enableSound == true and messageType == "completed" then
+									if outputToRW2 == true and enableSound == true and messageType == "completed" then
 										--print(type(completedSound))
 										--print(completedSound)
 										if type(completedSound) == "number" then
@@ -2405,7 +2410,7 @@ function core:sendMessage(message, outputToRW, messageType)
 											--print(10)
 											PlaySoundFile(completedSound, "Master")
 										end
-									elseif outputToRW == true and enableSoundFailed == true and messageType == "failed" then
+									elseif outputToRW2 == true and enableSoundFailed == true and messageType == "failed" then
 										if type(failedSound) == "number" then
 											--print(11)
 											PlaySound(failedSound, "Master")
