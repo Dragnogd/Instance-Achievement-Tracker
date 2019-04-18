@@ -157,15 +157,19 @@ local baseLocale = {
     ["Shared_PlayersWhoNeedAchievement"] = "Players who need achievement",
     ["Shared_HasStolenFrom"] = "has stolen from",
     ["Shared_WaitForAnother"] = "Wait for %s to collect another %s",
+    ["Shared_MissingDebuff"] = "Some players are missing",
+    ["Shared_JustKillBossesTogether"] = "At max level, you can simply just kill the bosses at the same time to get this achievement.",
 
     -------------------------------------------------------
     --- Crucible Of Storms
     -------------------------------------------------------
     --Tactics
-    ["CrucibleOfStorms_TheRestlessCabal"] = "",
-    ["CrucibleOfStorms_UunatHarbingerOfTheVoid"] = "",
+    ["CrucibleOfStorms_TheRestlessCabal"] = "During the fight, Fa'thuul the Feared will spawn  Void Crashes. These are large purple meteors that will bounce around the room until it hits a player. The impact radius will reduce everytime it bounces without being soaked. (this will only occur twice). Simply avoid all crashes until you have 10 and then kill the boss.\n\nYou only need to have 10 crashes active at some point during the fight. It is recommend doing this at the start of the fight.",
+    ["CrucibleOfStorms_UunatHarbingerOfTheVoid"] = "For this achievement you must not move while N'Zoth's eye is open. This achievement is personal, and you can also get it while you are dead.\n\nN'Zoth's eye opens for a few seconds when Uu'nat casts Gift of N'Zoth, so stop moving completely once the boss gets close to 90 energy. Avoid jumping or using abilities such as  Whirling Dragon Punch and  Blink, as they will most likely fail the achievement.",    
 
     --Chat Output
+    ["CrucibleOfStorms_StopMoving"] = "Stop Moving NOW!",
+    ["CrucibleOfStorms_StartMoving"] = "You can now move again",
 
     -------------------------------------------------------
     --- Battle of Dazar'alor
@@ -433,8 +437,8 @@ local baseLocale = {
     --- Neltharion's Lair
     -------------------------------------------------------
     --Tactics
-    ["NeltharionsLair_Other"] = "",
-    ["NeltharionsLair_Naraxas"] = "",
+    ["NeltharionsLair_Other"] = "You will first need to buy a %s from the %s which is found by walking down the narrow path to the right after entering the instance. You will then need to hit snails throughout the instance with the %s. Make sure not to kill the snails before hitting them with the %s.\n\n %s is found on a mushroom during the barrel river part of the instance. You will need to throw a fish at him to get him to move. Once you have hit him with a fish, he will be waiting for you at the bottom of the waterfall.\n\n %s is found in the cave behind the waterfall where you just found %s. You will need someone to taunt %s so he will move away from the electricity field before hitting him with the %s.\n\n %s is found before the 2nd boss in the long pathway towards the bat world quest at the back of the cave.\n\n %s, %s and %s are found directly after the 2nd boss running around in circles.\n\n %s is just after the previous 3 snails. You will need to go into the water on your right and then swim to the cave. %s is hanging on the celling of the cave so you will need to hit him once so he falls down. You will then be able to hit him with the %s.",
+    ["NeltharionsLair_Naraxas"] = "To complete this achievement you will need to wait for the boss to gain 6 stacks of %s. This can be done in the following ways:\n\n -The tank getting eaten by the boss\n -Leaving the adds alive allowing them to get eaten by the boss.\n\n Once 6 stacks of %s has been reached you can kill the boss to get the achievement.",
 
     --Chat Output
 
@@ -453,7 +457,7 @@ local baseLocale = {
     -------------------------------------------------------
     --Tactics
     ["BlackRookHold_Other"] = "",
-    ["BlackRookHold_AmalgamOfSouls"] = "",
+    ["BlackRookHold_AmalgamOfSouls"] = "Bring the %s down to 50%% HP. When the %s spawn you will need to CC one of them to prevent it reaching the boss. After 1 minute the %s will transform into a %s. You can then kill the %s then the boss to get this achievement",
 
     --Chat Output
 
@@ -461,9 +465,9 @@ local baseLocale = {
     --- Maw of Souls
     -------------------------------------------------------
     --Tactics
-    ["MawOfSouls_Ymiron"] = "",
+    ["MawOfSouls_Ymiron"] = "Before you get to the boss you need to atleast keep 1 %s alive. During the boss encounter %s will summon %s. You will need to face the %s towards the %s so his %s ability kills them. Once 6 %s have bene killed with %s, you can kill the boss",
     ["MawOfSouls_Helya"] = "",
-    ["MawOfSouls_Other"] = "",
+    ["MawOfSouls_Other"] = "To complete this achievement, you must kill the second boss within 3 minutes and 30 seconds after boarding the ship just after the first boss.",
 
     --Chat Output
 
@@ -481,9 +485,8 @@ local baseLocale = {
     -------------------------------------------------------
     --Tactics
     ["ReturnToKarazhan_Other1"] = "",
-    ["ReturnToKarazhan_OperaHall"] = "",
-    ["ReturnToKarazhan_Moroes"] = "",
-    ["ReturnToKarazhan_ShadeOfMedivh"] = "",
+    ["ReturnToKarazhan_OperaHall"] = "This achievement will take 3 weeks to complete as the plays rotate on a 3 week schedule.",
+    ["ReturnToKarazhan_ShadeOfMedivh"] = "This achievement requires 5 players to complete. All players in the group will need to click on a book found on the floor to the left after entering the boss room. This will give everyone in the group the %s debuff. Once everyone has got the %s debuff you can kill the boss.",
     ["ReturnToKarazhan_ManaDevourer"] = "",
     ["ReturnToKarazhan_Other2"] = "",
 
@@ -515,11 +518,9 @@ local baseLocale = {
     --- Blackrock Foundry
     -------------------------------------------------------
     --Tactics
-    ["BlackrockFoundry_BeastlordDarmac"] = "Takes 3 kills to complete. Boss will mount the beast that is closest to him. DPS the boss down slowly and wait for boss to mount beast before killing.",
+    ["BlackrockFoundry_BeastlordDarmac"] = "This achievement will take 3 kills to complete. The boss will mount the beast that is closest to him on pull, therefore on each attempt you will need to wait for the boss to be closet to a different beast.",
     ["BlackrockFoundry_OperatorThogar"] = "Wait 10 seconds after pulling the boss then place Toy train set and then immediately after the wind up train wrecker on the first set of tracks as you enter the boss room. Achievement will be earned as soon as the requirements have been met.",
-    ["BlackrockFoundry_IronMaidens"] = "Nuke all 3 bosses within 10 seconds of one another",
     ["BlackrockFoundry_HansgarFranzok"] = "Nuke boss down as quick as possible without anyone in the group getting hit by a stamping press. The stamping press display an orange glow on the floor a few seconds before stamping.",
-    ["BlackrockFoundry_FlamebenderKagraz"] = "1 person tank Aknor Stellbringer away from the boss. Everyone else single target the boss down.",
     ["BlackrockFoundry_Kromog"] = "Requires atleast 10 players but more players makes achievement easier. Spread out around the room and wait for orange runes to spawn. When they spawn each player stand on their own rune. When hands spawn from runes and grab players nuke hands down as quickly as possible.",
     ["BlackrockFoundry_Gruul"] = "1 player tank boss at entrance to room with boss facing into the center of the room. Everyone else stand underneath the ore which is positioned on the ceiling of the boss room. When boss casts overhead smash, players will be flung into the air. Click on the ore on the ceiling to collect it. Once all 3 ores have been collected you can nuke boss.",
     ["BlackrockFoundry_Oregorger"] = "",
@@ -549,8 +550,7 @@ local baseLocale = {
     -------------------------------------------------------
     --Tactics
     ["BloodmaulSlagMines_SlaveWatcherCrushto"] = "",
-    ["BloodmaulSlagMines_Magmolatus"] = "At 110, dps down the boss slowly so that both Calamity and Ruination have a chance to spawn",
-    ["BloodmaulSlagMines_Gugrokk"] = "At 110, single target the boss down so that no Unstable Slags are killed",
+    ["BloodmaulSlagMines_Magmolatus"] = "At max level you will need to dps down the boss slowly so that both %s and %s have spawned before killing the boss.",
 
     --Chat Output
 
@@ -560,7 +560,6 @@ local baseLocale = {
     --Tactics
     ["IronDocks_FleshrenderNokgar"] = "",
     ["IronDocks_Other"] = "",
-    ["IronDocks_Skulloc"] = "",
 
     --Chat Output
 
@@ -578,7 +577,6 @@ local baseLocale = {
     --- 
     -------------------------------------------------------
     --Tactics
-    ["Skyreach_Ranjit"] = "",
     ["Skyreach_Rukhran"] = "",
     ["Skyreach_HighSageViryx1"] = "",
     ["Skyreach_HighSageViryx2"] = "",
@@ -812,8 +810,8 @@ local baseLocale = {
     --- Bastion of Twilight
     -------------------------------------------------------
     --Tactics
-    ["BastionOfTwilight_HalfusWyrmbreaker"] = "Pull the boss but kill him. Free 2 of the dragons around the room by interacting with them. The whelps count as 1 dragon as well. Kill the 2 dragons within 10 seconds of one another then kill the boss.",
-    ["BastionOfTwilight_ValionaAndTheralion"] = "Pull then bosses but don’t kill them. Wait for the spell Dazzling Destruction to cast. Once the boss has cast the spell stand in the pool that was created by the spell so that you get transferred to the shadow realm. Once you are in the shadow realm, kill 6 Twilight Fiends. Once the requirements have been met you can kill boss.",
+    ["BastionOfTwilight_HalfusWyrmbreaker"] = "To complete this achievement, you must first pull the boss then free 2 of the dragons around the room. This is done by clicking on the dragons that do not have the %s debuff. You then need to single target down both dragons within 10 seconds of one another before killing the boss.",
+    ["BastionOfTwilight_ValionaAndTheralion"] = "To complete this achievement, pull %s to start the fight then wait for %s to cast %s. Once you stand in the pool created from %s you will teleported into the shadow realm at which point you will need to kill 6 %s which spawn at random intervals. When you have killed 6 %s you can kill the boss.",
 
     --Chat Output
 
@@ -843,7 +841,7 @@ local baseLocale = {
     --Tactics
     ["BlackrockCaverns_RomoggBonecrusher"] = "",
     ["BlackrockCaverns_Corla"] = "After pulling the boss wait for the three zealots evolve. This is done by not standing in the way of the beams being channelled to the mobs. Once they have all evolved you can nuke the boss.",
-    ["BlackrockCaverns_KarshSteelbender"] = "Pull the boss into the fire in the middle of the room until he reaches 15 stacks of Superheated Quicksilver Armor. Once he has 15 stacks you can nuke the boss.",
+    ["BlackrockCaverns_KarshSteelbender"] = "Pull the boss into the fire in the middle of the room until he reaches 15 stacks of %s. Once he has 15 stacks of %s you can kill the boss.",
 
     --Chat Output
     ["BlackrockCaverns_AngeredEarthKilled"] = "Angered Earth Killed",
@@ -896,7 +894,7 @@ local baseLocale = {
     --- Lost City of the Tol'Vir
     -------------------------------------------------------
     --Tactics
-    ["LostCityOfTheTolVir_Lockmaw"] = "Pull the boss and wait for 20 Frenzied Crocolisk to spawn. Once they have spawned nuke them down within 10 seconds. Make sure you don’t kill the boss before nuking down the adds.",
+    ["LostCityOfTheTolVir_Lockmaw"] = "Pull the boss then wait for 20 %s to spawn. After 20 %s have spawned, AOE them down then kill the boss.",
     ["LostCityOfTheTolVir_HighProphetBarim"] = "",
     ["LostCityOfTheTolVir_Siamat"] = "",
 
@@ -1015,28 +1013,22 @@ local baseLocale = {
     --- Ulduar
     -------------------------------------------------------
     --Tactics
-    ["Ulduar_Other1"] = "At 110, this achievement is a lot easier to complete without a vehicle. Just run up between 2 of the pillars towards the boss. Wait for 100 adds to attack you then just AOE all the adds down.",
-    ["Ulduar_Other2"] = "Kill the boss without going over any of the repair pads located at the entrance to the boss room on the right and right.",
-    ["Ulduar_FlameLeviathan1"] = "This achievement will take 3 runs to complete since you will need to mount a different vehicle each time.",
-    ["Ulduar_FlameLeviathan2"] = "This achievement requires at least 2 players. The player not going for the achievement needs to drive a demolisher and the player going for the achievements needs to be the passenger of the demolisher. Once you have pulled the boss, load the passenger into the catapult and throw them at the turrets on the boss. Once the player is up on the boss, they need to kill the turret to gain the achievement.",
-    ["Ulduar_FlameLeviathan3"] = "This achievement can only be completed on the hard mode of the encounter. Hard mode is started by talking to Lore Keeper of Norgannon. This achievement will be awarded if at least one tower is kept alive. At 110 you can simply ignore all the towers and just kill the boss to get the achievement.",
-    ["Ulduar_FlameLeviathan4"] = "This achievement can only be completed on the hard mode of the encounter. Hard mode is started by talking to Lore Keeper of Norgannon. This achievement will be awarded if at least two towers are kept alive. At 110 you can simply ignore all the towers and just kill the boss to get the achievement.",
-    ["Ulduar_FlameLeviathan5"] = "This achievement can only be completed on the hard mode of the encounter. Hard mode is started by talking to Lore Keeper of Norgannon. This achievement will be awarded if at least three towers are kept alive. At 110 you can simply ignore all the towers and just kill the boss to get the achievement.",
-    ["Ulduar_FlameLeviathan6"] = "This achievement can only be completed on the hard mode of the encounter. Hard mode is started by talking to Lore Keeper of Norgannon. This achievement will be awarded if all four towers are kept alive. At 110 you can simply ignore all the towers and just kill the boss to get the achievement.",
+    ["Ulduar_Other1"] = "At max level, this achievement is a lot easier to complete without using a vehicle. Just run up between 2 of the pillars where the %s are coming out from. Next Wait for 100 %s to attack you then just AOE them all down together to get this achievement.",
+    ["Ulduar_Other2"] = "Kill the boss without going over any of the repair pads located just before the boss",
+    ["Ulduar_FlameLeviathan1"] = "This achievement will take 3 runs to complete since you will need to kill the boss while inside each of the 3 vehicles",
+    ["Ulduar_FlameLeviathan2"] = "To complete this achievement, you need to be the passenger in the demolisher. As the passenger hit the %s button, then have the driver face %s and use the %s action. Once atop of %s, there are 2 turrets. Killing one of the turrets will award the achievement",
+    ["Ulduar_FlameLeviathan3"] = "To complete this achievement you will need to activate %s hard mode by speaking to %s at the start of the instance. After that you just need to kill the boss without destroying any of the towers leading up to the boss.",
     ["Ulduar_Razorscale"] = "Wait for 25 Dark Rune Guardian Dwarves to spawn then use the harpoons to pull Razorscale down. Once Razorscale is down dps the boss down to below 50% so the boss is permanently grounded. Be careful you don’t one shot the boss. Once the boss is grounded, place the Dark Rune Guardians in front of the boss until they are killed by Razorscale breath ability.",
     ["Ulduar_IgnisTheFurnaceMaster1"] = "Pull the boss then wait for 2 Iron Constructs to spawn. Place the 2 Iron Constructs in the fire on the ground until they gain 10 stacks of the Heat Buff. Next drag the 2 Iron Constructs into the water so they turn to stone. Finally nuke down the 2 adds within 5 seconds of one another. Once both adds have died you can kill boss.",
     ["Ulduar_IgnisTheFurnaceMaster2"] = "This achievement requires 2 players or a player with a pet class. The boss will randomly pick players to enter the pot that do not have aggro of the boss. Just pull the boss and wait till everyone gets thrown into the pot.",
     ["Ulduar_XTDeconstructor1"] = "",
     ["Ulduar_XTDeconstructor2"] = "Pull the boss and dps down until you reach 75%, 50% or 25% to start the heart phase. Careful you don’t one shot the boss. Once the heart is exposed nuke it down then kill the boss.",
-    ["Ulduar_AssemblyOfIron1"] = "At max level, just kill Runemaster Molgeim last",
-    ["Ulduar_AssemblyOfIron2"] = "At max level, just kill Stormcaller Brundir last",
-    ["Ulduar_AssemblyOfIron3"] = "At max level, just kill Steelbreaker last.",
+    ["Ulduar_AssemblyOfIron1"] = "To complete this achievement you just need to kill %s last",
     ["Ulduar_AssemblyOfIron4"] = "At max level, use the Iron Boot Flask toy then nuke down the boss.",
     ["Ulduar_AssemblyOfIron5"] = "After pulling the boss you must interrupt the first cast of Chain Lightning from Stormcaller Brundir before killing him. Once you have interrupted the spell, nuke down Stormcaller Brundir and then kill the other two bosses.",
     ["Ulduar_Kologarn1"] = "At max level, just single target down the boss without killing the arms.",
     ["Ulduar_Kologarn2"] = "At max level, single target down the two arms then kill the boss.",
     ["Ulduar_Kologarn3"] = "After pulling the boss kill the arms until 25 Rubble has spawned. Don’t damage the boss since killing the arms already does a lot of damage to the boss.",
-    ["Ulduar_Auriaya1"] = "At 110, just single target down the boss.",
     ["Ulduar_Auriaya2"] = "After pulling the boss wait for the Feral Defender to spawn. Once the Feral Defender has spawned kill him. He will then respawn after a short amount of time. Once the Feral Defender has been killed 9 times you can kill the boss.",
     ["Ulduar_Hodir1"] = "At 110, free the adds from the ice tombs then nuke down the boss.",
     ["Ulduar_Hodir2"] = "",
@@ -1048,7 +1040,7 @@ local baseLocale = {
     ["Ulduar_Freya3"] = "Defeat Freya leaving at least two of the following mini bosses alive: Elder Brightleaf, Elder Ironbranch and Elder Stonebark. At 110, just nuke down the boss within killing the mini bosses.",
     ["Ulduar_Freya4"] = "Defeat Freya leaving all three of the following mini bosses alive: Elder Brightleaf, Elder Ironbranch and Elder Stonebark. At 110, just nuke down the boss within killing the mini bosses.",
     ["Ulduar_Mimiron1"] = "",
-    ["Ulduar_Mimiron2"] = "Push the red button behind the boss to active hard mode to earn this achievement.",
+    ["Ulduar_Mimiron2"] = "To complete this achievement, press the red button behind the boss before pulling then just kill the boss",
     ["Ulduar_GeneralVezax"] = "Pull the boss then wait for the Saronite Animus to spawn. Once the Saronite Animus has spawned, kill it then kill the boss. The Saronite Animus takes about 5 minutes to spawn.",
     ["Ulduar_YoggSaron1"] = "After bring Sara down to 0% at the start of phase one, she will turn angry. Use /kiss on her to complete this achievement at this point.",
     ["Ulduar_YoggSaron2"] = "After starting the encounter, run into the clouds around the room to spawn Guardians of Yogg-Saron. Once 9 Guardians of Yogg-Saron have spawned, AOE then down within 12 seconds of one another. You can then kill the boss.",
@@ -1061,7 +1053,6 @@ local baseLocale = {
     --- Naxxramas
     -------------------------------------------------------
     --Tactics
-    ["Naxxramas_GrandWidowFaerlina"] = "At max level, single target the boss down without touching any of the adds.",
     ["Naxxramas_KelThuzad"] = "",
 
     --Chat Output
@@ -1134,7 +1125,7 @@ local baseLocale = {
     --- Halls of Stone
     -------------------------------------------------------
     --Tactics
-    ["HallsOfStone_SjonnirTheIronshaper"] = "Pull the boss then wait for the Malformed Ooze to form into one Iron Sludge. Once the Iron Sludge is formed, kill it then kill the boss.",
+    ["HallsOfStone_SjonnirTheIronshaper"] = "To complete this achievement, you will need to get the boss down to atleast 50%% health. At which point %s will start to spawn, which will eventually combine into %s. Once 5 %s have spawned, single target them down then kill the boss.",
 
     --Chat Output
 

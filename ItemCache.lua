@@ -11,4 +11,5 @@ core.ItemCache = {
     [87214] = 87214, --Blingtron 4000
     [111821] = 111821, --Blingtron 5000
     [118938] = 118938, --Manastorm's Duplicator
+    [140212] = 140212, --Ketchum Tablet
 }
