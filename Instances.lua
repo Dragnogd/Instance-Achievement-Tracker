@@ -250,6 +250,7 @@ core.Instances = {
                     track = function() core._2096:UunatHarbingerOfTheVoid() end,
                     partial = false,
                     encounterID = 2273,
+                    displayInfoFrame = true,
                 },
             },
         },
