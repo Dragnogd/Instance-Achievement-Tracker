@@ -223,6 +223,7 @@ local messageQueue = {}
 local blockRequirementsCheck = false		--This blocks comparing who is the master addon for remainder of fight since it has been determined an addon already has better requirements than this addon
 local relayAddonPlayer = nil
 local relayAddonVersion = 0
+local masterAddonPlayer = nil				--The player who is currently the master addon
 
 --Get the current size of the group
 function core:getGroupSize()
@@ -1406,7 +1407,7 @@ function events:INSPECT_ACHIEVEMENT_READY(self, GUID)
 								end
 
 								--If the player has not completed the achievement then add them to the players string to display in the GUI
-								if completed == nil then
+								if completed == nil or completed ~= nil then
 									local name, _ = UnitName(playersToScan[1])
 									table.insert(core.Instances[expansion][instanceType][instance][boss].players, name)
 								end
@@ -1767,6 +1768,37 @@ function events:CHAT_MSG_ADDON(self, prefix, message, channel, sender)
 			core:sendDebugMessage("Relay message outputting message...")
 			SendChatMessage("[IAT] " .. message,"RAID_WARNING",DEFAULT_CHAT_FRAME.editBox.languageID)
 		end
+	elseif string.match(message, "masterAddonPlayer") then
+		--This is so independent tracking achievements can be sent to the master addon
+		local sync, player = strsplit(",", message)
+		masterAddonPlayer = player
+	elseif string.match(message, "masterOutput") then
+		--Master Addon should output independent achievmeent tracking
+		core:sendDebugMessage("In Master")
+		if masterAddon == true then
+			core:sendDebugMessage("Im master addon")
+			local sync, messageOutput = strsplit(",", message)
+			core:sendDebugMessage(messageOutput)
+			core:sendMessage(messageOutput,true)
+		end
+	elseif string.match(message, "reqIAT") then
+		--We have been asked by another addon if we are tracking this achievement. Lets respond and update InfoFrame
+		local sync, major, minor, updateInfoFrame = strsplit(",", message)
+		if updateInfoFrame == "true" and core.achievementTrackingEnabled == true then
+			if tonumber(core.Config.majorVersion) >= tonumber(major) and tonumber(core.Config.minorVersion) >= tonumber(minor) then
+				core:sendDebugMessage(major .. core.Config.majorVersion .. minor .. core.Config.minorVersion)
+				InfoFrame_SetPlayerComplete(UnitName("Player"))
+
+				core:sendDebugMessage("HEREE")
+				--Tell all other addons to set me to green
+				C_ChatInfo.SendAddonMessage("Whizzey", "IATGreen," .. UnitName("Player"), "RAID")
+			end
+		end
+	elseif string.match(message, "IAT") then
+		local sync, name = strsplit(",", message)
+
+		core:sendDebugMessage("Attempting to set to green: " .. name)
+		InfoFrame_SetPlayerComplete(name)
 	end
 end
 
@@ -2344,6 +2376,10 @@ function core:sendMessage(message, outputToRW, messageType)
 					C_Timer.After(3, function()
 						if masterAddon == true then
 							core:sendDebugMessage("This addon is in charge of outputting messages")
+
+							--Announce we are the master addon to all other addons in the group so other addons can relay personal and independent tracking achievments
+							C_ChatInfo.SendAddonMessage("Whizzey", "masterAddonPlayer," .. UnitName("Player"), "RAID")
+
 							if message ~= "setup" then
 								if outputToRW == true and core.chatType == "RAID" and announceToRaidWarning == true and (UnitIsGroupAssistant("Player") or UnitIsGroupLeader("Player")) then
 									--Important message output to raid warning from user request
@@ -2677,6 +2713,34 @@ function core:getAchievementFailedPersonal(index)
 			--Relay message to addon which has RW permissions if masterAddon does have permissions
 			if relayAddonPlayer ~= nil then
 				C_ChatInfo.SendAddonMessage("Whizzey", "relayMessage," .. relayAddonPlayer .. "," .. playerName .. " " .. L["Shared_HasFailed"] .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " (" .. L["Core_PersonalAchievement"] .. ")", "RAID")
+			end
+		end
+		core.playersFailedPersonal[playerName] = true
+	end
+end
+
+function core:getAchievementFailedPersonalIndependent(playerName, index)
+	local value = index
+	if index == nil then
+		value = 1
+	end
+	if string.find(playerName, "-") then
+		local name, realm = strsplit("-", playerName)
+		playerName = name
+	end
+	if core.playersFailedPersonal[playerName] == nil then
+		--Players has not been hit already
+		--Check if the player actually needs the achievement
+		if core:has_value(core.currentBosses[value].players, playerName) then
+			--Player needs achievement but has failed it			
+			--Relay message to addon which has RW permissions if masterAddon does have permissions
+			if relayAddonPlayer ~= nil then
+				core:sendDebugMessage("Relaying Addon Player")
+				C_ChatInfo.SendAddonMessage("Whizzey", "relayMessage," .. relayAddonPlayer .. "," .. playerName .. " " .. L["Shared_HasFailed"] .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " (" .. L["Core_PersonalAchievement"] .. ")", "RAID")
+			else
+				--Relay to masterAddon
+				core:sendDebugMessage("Master Output Message")
+				C_ChatInfo.SendAddonMessage("Whizzey", "masterOutput," .. playerName .. " " .. L["Shared_HasFailed"] .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " (" .. L["Core_PersonalAchievement"] .. ")", "RAID")
 			end
 		end
 		core.playersFailedPersonal[playerName] = true

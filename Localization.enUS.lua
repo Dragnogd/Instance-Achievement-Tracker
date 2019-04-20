@@ -159,6 +159,9 @@ local baseLocale = {
     ["Shared_WaitForAnother"] = "Wait for %s to collect another %s",
     ["Shared_MissingDebuff"] = "Some players are missing",
     ["Shared_JustKillBossesTogether"] = "At max level, you can simply just kill the bosses at the same time to get this achievement.",
+    ["Shared_TrackingStatus"] = "Tracking Status",
+    ["Shared_Notes"] = "Notes",
+    ["Shared_PlayersRunningAddon"] = "For IAT to track this achievement, each player needs to be running the addon. Players marked green are currently running the addon",
 
     -------------------------------------------------------
     --- Crucible Of Storms
@@ -568,7 +571,6 @@ local baseLocale = {
     -------------------------------------------------------
     --Tactics
     ["Auchindoun_SoulbinderNyami"] = "",
-    ["Auchindoun_Azzakel"] = "",
     ["Auchindoun_Terongor"] = "",
 
     --Chat Output
@@ -578,8 +580,7 @@ local baseLocale = {
     -------------------------------------------------------
     --Tactics
     ["Skyreach_Rukhran"] = "",
-    ["Skyreach_HighSageViryx1"] = "",
-    ["Skyreach_HighSageViryx2"] = "",
+    ["Skyreach_HighSageViryx"] = "",
 
     --Chat Output
 
@@ -596,9 +597,7 @@ local baseLocale = {
     --- The Everbloom
     -------------------------------------------------------
     --Tactics
-    ["TheEverbloom_Witherbark"] = "",
     ["TheEverbloom_ArchmageSol"] = "",
-    ["TheEverbloom_Yalnu"] = "",
 
     --Chat Output
 
@@ -616,7 +615,6 @@ local baseLocale = {
     --- Upper Blackrock Spire
     -------------------------------------------------------
     --Tactics
-    ["UpperBlackrockSpire_OrebenderGorashan"] = "",
     ["UpperBlackrockSpire_Other"] = "",
     ["UpperBlackrockSpire_RagewingTheUntamed"] = "",
     ["UpperBlackrockSpire_WarlordZaela"] = "",
@@ -727,7 +725,6 @@ local baseLocale = {
     -------------------------------------------------------
     --Tactics
     ["Scholomance_JandiceBarov"] = "",
-    ["Scholomance_Rattlegore"] = "",
     ["Scholomance_Other1"] = "",
     ["Scholomance_Other2"] = "",
     ["Scholomance_Other3"] = "",

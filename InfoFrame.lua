@@ -163,8 +163,10 @@ function InfoFrame_SetPlayerComplete(player,additionalInfo)
     if core.InfoFrame_PlayersTable[player] ~= nil and additionalInfo == nil  then
         core.InfoFrame_PlayersTable[player] = 2
     else
-        core.InfoFrame_PlayersTable[player].colour = 2
-        core.InfoFrame_PlayersTable[player].message = additionalInfo
+        if player ~= nil then
+            --core.InfoFrame_PlayersTable[player].colour = 2
+            --core.InfoFrame_PlayersTable[player].message = additionalInfo
+        end
     end   
 end
 

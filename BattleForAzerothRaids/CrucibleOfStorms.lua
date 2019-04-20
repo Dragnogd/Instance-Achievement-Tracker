@@ -19,6 +19,10 @@ local voidCrashesActive = 0
 ---- Uu'nat, Harbinger of the Void
 ------------------------------------------------------
 local stopMovingAnnounced = false
+local safeToMove = true
+local playerCurrentlyMoving = false
+local playersWithTracking = 0
+local initialScan = false
 
 function core._2096:TheRestlessCabal()
     --Defeat the Restless Cabal in Crucible of Storms after having at least 10 Void Crashes active simultaneously in Normal Difficulty or higher.
@@ -30,29 +34,55 @@ function core._2096:TheRestlessCabal()
 end
 
 function core._2096:UunatHarbingerOfTheVoid()
-        -- --Defeat Uu'nat, Harbinger of the Void in Crucible of Storms without allowing N'Zoth to see your movement in Normal Difficulty or higher.
+	--Defeat Uu'nat, Harbinger of the Void in Crucible of Storms without allowing N'Zoth to see your movement in Normal Difficulty or higher.
 
-        -- --When boss starts casing Gift of N'Zoth get the original ranges of all players in the raid
-        -- if core.type == "SPELL_CAST_START" and (core.spellId = "285638" or core.spellId == "285685" or core.spellId == "285453") then
-        --     local maxChecker = rc:GetFriendChecker(range)
-        --     if maxChecker ~= nil then
-        --         for player, status in pairs(core.InfoFrame_PlayersTable) do
-        --             if not maxChecker(player) then
-        --                 --print(player .. " is not in range")
-        --                 if core.InfoFrame_PlayersTable[player] ~= 2 then
-        --                     core.InfoFrame_PlayersTable[player] = 4            
-        --                 end
-        --             elseif core.InfoFrame_PlayersTable[player] ~= 2 then
-        --                 core.InfoFrame_PlayersTable[player] = 1
-        --             end
-        --         end
-        --     end
-        -- end
+	if core:has_value(core.currentBosses[1].players, L["GUI_NoPlayersNeedAchievement"]) == false then
+		InfoFrame_UpdatePlayersOnInfoFramePersonal()
+		InfoFrame_SetHeaderCounter(L["Shared_TrackingStatus"],playersWithTracking,#core.currentBosses[1].players)
+		core.IATInfoFrame:SetSubHeading2(L["Shared_Notes"])
+		core.IATInfoFrame:SetText2(L["Shared_PlayersRunningAddon"],200)
+		
+		--Request which players are currently tracking this achievement
+		--Sync Message, Major Version, Minor Version, update Infoframe
+		if initialScan == false then
+			initialScan = true
+			for k,player in ipairs(core.currentBosses[1].players) do
+				InfoFrame_SetPlayerFailed(player)
+			end
+			C_Timer.After(3, function()
+				--Set everyone to red inititally then alter to green afterwards if addon found
+				C_ChatInfo.SendAddonMessage("Whizzey", "reqIAT,2,38,true", "RAID")		
 
-        -- --When boss has finished casting Gift of N'Zoth get all ranges again then compare to original
-        -- --If any of the ranges changed between this time then we can assume that a player has moved
-        -- --This way is not hugely accurate but it's the best we can do since blizzard do not allow us to get players positions in the raid
+				C_Timer.After(1, function() 
+					for player, status in pairs(core.InfoFrame_PlayersTable) do
+						core:sendDebugMessage(status)
+						if status == 2 then
+							playersWithTracking = playersWithTracking + 1
+						end
+					end
+				end)
+			end)
+		end	
+	else
+		InfoFrame_SetHeaderCounter(L["Shared_PlayersWhoNeedAchievement"],playersWithTracking,0)
+		core.IATInfoFrame:SetText1(L["GUI_NoPlayersNeedAchievement"])
+	end
 
+    --When boss starts casing Gift of N'Zoth get the original ranges of all players in the raid
+	if core.type == "SPELL_CAST_START" and (core.spellId == 285638 or core.spellId == 285685 or core.spellId == 285453) then
+		core:sendDebugMessage("Stop Moving")
+		safeToMove = false
+		
+		if playerCurrentlyMoving == true then
+			core:getAchievementFailedPersonalIndependent(UnitName("Player"))
+		end
+    end
+
+    --When boss has finished casting Gift of N'Zoth
+	if core.type == "SPELL_CAST_SUCCESS" and (core.spellId == 285638 or core.spellId == 285685 or core.spellId == 285453) then
+		core:sendDebugMessage("Start Moving")
+        safeToMove = true
+    end
 end
 
 function core._2096:ClearVariables()
@@ -65,10 +95,15 @@ function core._2096:ClearVariables()
     ---- Uu'nat, Harbinger of the Void
     ------------------------------------------------------
     stopMovingAnnounced = false
+	safeToMove = true
+	playersWithTracking = 0
+	initialScan = false
 end
 
 function core._2096:InstanceCleanup()
     core._2096.Events:UnregisterEvent("UNIT_POWER_UPDATE")
+    core._2096.Events:UnregisterEvent("PLAYER_STARTED_MOVING")
+    core._2096.Events:UnregisterEvent("PLAYER_STOPPED_MOVING")
 end
 
 core._2096.Events:SetScript("OnEvent", function(self, event, ...)
@@ -77,6 +112,8 @@ end)
 
 function core._2096:InitialSetup()
     core._2096.Events:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+    core._2096.Events:RegisterEvent("PLAYER_STARTED_MOVING")
+    core._2096.Events:RegisterEvent("PLAYER_STOPPED_MOVING")
 end
 
 function core._2096.Events:UNIT_POWER_UPDATE(self, unit, powerType)
@@ -99,4 +136,17 @@ function core._2096.Events:UNIT_POWER_UPDATE(self, unit, powerType)
             end
         end
     end
+end
+
+function core._2096.Events:PLAYER_STARTED_MOVING(self)
+	core:sendDebugMessage("Player is moving")
+	playerCurrentlyMoving = true
+    if safeToMove == false then
+        core:getAchievementFailedPersonalIndependent(UnitName("Player"))
+    end
+end
+
+function core._2096.Events:PLAYER_STOPPED_MOVING(self)
+	playerCurrentlyMoving = false
+	core:sendDebugMessage("Player stopped moving")
 end
