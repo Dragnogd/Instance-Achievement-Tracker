@@ -9,7 +9,7 @@ local UIConfig													--UIConfig is used to make a display asking the user 
 local UICreated = false											--To enable achievement tracking when they enter an instances
 local debugMode = false
 local debugModeChat = false
-local sendDebugMessages = false
+local sendDebugMessages = true
 
 local ptrVersion = "8.1.0"
 
@@ -224,6 +224,7 @@ local blockRequirementsCheck = false		--This blocks comparing who is the master 
 local relayAddonPlayer = nil
 local relayAddonVersion = 0
 local masterAddonPlayer = nil				--The player who is currently the master addon
+local versionRequestSent = false			--When adds send version request, only do this once per fight.
 
 --Get the current size of the group
 function core:getGroupSize()
@@ -1407,7 +1408,7 @@ function events:INSPECT_ACHIEVEMENT_READY(self, GUID)
 								end
 
 								--If the player has not completed the achievement then add them to the players string to display in the GUI
-								if completed == nil or completed ~= nil then
+								if completed == nil then
 									local name, _ = UnitName(playersToScan[1])
 									table.insert(core.Instances[expansion][instanceType][instance][boss].players, name)
 								end
@@ -1773,7 +1774,7 @@ function events:CHAT_MSG_ADDON(self, prefix, message, channel, sender)
 		local sync, player = strsplit(",", message)
 		masterAddonPlayer = player
 	elseif string.match(message, "masterOutput") then
-		--Master Addon should output independent achievmeent tracking
+		--Master Addon should output independent achievement tracking
 		core:sendDebugMessage("In Master")
 		if masterAddon == true then
 			core:sendDebugMessage("Im master addon")
@@ -1789,11 +1790,16 @@ function events:CHAT_MSG_ADDON(self, prefix, message, channel, sender)
 				core:sendDebugMessage(major .. core.Config.majorVersion .. minor .. core.Config.minorVersion)
 				InfoFrame_SetPlayerComplete(UnitName("Player"))
 
-				core:sendDebugMessage("HEREE")
-				--Tell all other addons to set me to green
-				C_ChatInfo.SendAddonMessage("Whizzey", "IATGreen," .. UnitName("Player"), "RAID")
+				--Tell all other addons to set me to green. Only do this once per fight
+				if versionRequestSent == false then
+					versionRequestSent = true
+					C_ChatInfo.SendAddonMessage("Whizzey", "IATGreen," .. UnitName("Player"), "RAID")
+				end
 			end
 		end
+
+		--If we have not set green to the addon that sent the request then do so as this we can assume that since the request was sent, they are running the addon
+
 	elseif string.match(message, "IAT") then
 		local sync, name = strsplit(",", message)
 
@@ -2741,6 +2747,10 @@ function core:getAchievementFailedPersonalIndependent(playerName, index)
 				--Relay to masterAddon
 				core:sendDebugMessage("Master Output Message")
 				C_ChatInfo.SendAddonMessage("Whizzey", "masterOutput," .. playerName .. " " .. L["Shared_HasFailed"] .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " (" .. L["Core_PersonalAchievement"] .. ")", "RAID")
+				
+				if IsInGroup() == false then
+					core:sendMessage(playerName .. " " .. L["Shared_HasFailed"] .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " (" .. L["Core_PersonalAchievement"] .. ")")
+				end
 			end
 		end
 		core.playersFailedPersonal[playerName] = true
@@ -3059,6 +3069,7 @@ function core:clearVariables()
 	blockRequirementsCheck = false
 	relayAddonPlayer = nil
 	relayAddonVersion = 0
+	versionRequestSent = false
 
 	core.groupSizeInInstance = 0
 
