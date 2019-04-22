@@ -234,7 +234,7 @@ core.Instances = {
                     bossIDs = {},
                     achievement = 13501,
                     players = {},
-                    tactics = L["CrucibleOfStorms_TheRestlessCabal"],
+                    tactics = format(L["CrucibleOfStorms_TheRestlessCabal"], GetSpellLink(282407), GetSpellLink(282407), GetSpellLink(282407)),
                     enabled = true,
                     track = function() core._2096:TheRestlessCabal() end,
                     partial = false,
@@ -2203,7 +2203,6 @@ core.Instances = {
                     track = function() core._996:ProtectorsOfTheEndless() end,
                     partial = false,
                     encounterID = 1409,
-                    displayInfoFrame = true,
                 },
                 boss2 = {
                     name = 742, --Tsulong
