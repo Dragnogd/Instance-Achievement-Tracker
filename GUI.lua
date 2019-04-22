@@ -1531,7 +1531,7 @@ function IATInfoFrame:SetupInfoFrame()
     InfoFrame = CreateFrame("Frame", "AchievementTrackerInfoFrame", UIParent)
     InfoFrame:SetSize(200, 300)
     InfoFrame:SetPoint("BOTTOMLEFT", "UIParent", "BOTTOMLEFT", 420, 500)
-    InfoFrame:SetBackdrop(frameBackdrop);
+    -- InfoFrame:SetBackdrop(frameBackdrop);
     InfoFrame:SetMovable(true)
     InfoFrame:EnableMouse(true)
     InfoFrame:SetClampedToScreen(true)
@@ -1546,7 +1546,7 @@ function IATInfoFrame:SetupInfoFrame()
     --Info Frame X/Y Posiions
 	if AchievementTrackerOptions["infoFrameXPos"] ~= nil and AchievementTrackerOptions["infoFrameYPos"] ~= nil then
 		InfoFrame:ClearAllPoints()
-		InfoFrame:SetPoint("BOTTOMLEFT",AchievementTrackerOptions["infoFrameXPos"],AchievementTrackerOptions["infoFrameYPos"])
+        InfoFrame:SetPoint("BOTTOMLEFT",AchievementTrackerOptions["infoFrameXPos"],AchievementTrackerOptions["infoFrameYPos"])        
 	end
 
     InfoFrame:SetShown(false)
@@ -1560,9 +1560,9 @@ function IATInfoFrame:SetHeading(text)
     InfoFrame.heading:SetHeight(InfoFrame.heading:GetStringHeight())
     InfoFrame.heading:SetPoint("TOPLEFT", InfoFrame, "TOPLEFT", 5, -5)
     
-    if InfoFrame.heading:GetStringWidth() > InfoFrame:GetWidth() then
-        InfoFrame:SetWidth(InfoFrame.heading:GetRight() - InfoFrame.heading:GetLeft() + 23)
-    end
+    -- if InfoFrame.heading:GetStringWidth() > InfoFrame:GetWidth() then
+    --     InfoFrame:SetWidth(InfoFrame.heading:GetRight() - InfoFrame.heading:GetLeft() + 23)
+    -- end
 end
 
 function IATInfoFrame:SetSubHeading1(text)
@@ -1573,30 +1573,34 @@ function IATInfoFrame:SetSubHeading1(text)
     InfoFrame.subHeading1:SetHeight(InfoFrame.subHeading1:GetStringHeight())
     InfoFrame.subHeading1:SetPoint("TOPLEFT", InfoFrame.heading, "BOTTOMLEFT", 0, -5)
     
-    if InfoFrame.subHeading1:GetStringWidth() > InfoFrame:GetWidth()then
-        InfoFrame:SetWidth(InfoFrame.subHeading1:GetRight() - InfoFrame.subHeading1:GetLeft() + 23)
-    end
+    -- if InfoFrame.subHeading1:GetStringWidth() > InfoFrame:GetWidth()then
+    --     InfoFrame:SetWidth(InfoFrame.subHeading1:GetRight() - InfoFrame.subHeading1:GetLeft() + 23)
+    -- end
 
-    if InfoFrame.subHeading1:GetBottom() ~= nil and InfoFrame:GetTop() ~= nil then
-        InfoFrame:SetHeight(InfoFrame.subHeading1:GetBottom() - InfoFrame:GetTop() - 10)
-    end
+    -- if InfoFrame.subHeading1:GetBottom() ~= nil and InfoFrame:GetTop() ~= nil then
+    --     InfoFrame:SetHeight(InfoFrame.subHeading1:GetBottom() - InfoFrame:GetTop() - 10)
+    -- end
 end
 
-function IATInfoFrame:SetText1(text)
+function IATInfoFrame:SetText1(text,size,colour)
     if InfoFrame.setText1 == nil then
-        InfoFrame.setText1 = InfoFrame:CreateFontString(nil, "BACKGROUND", "GameFontHighlight")
+        if size == nil then
+            InfoFrame.setText1 = InfoFrame:CreateFontString(nil, "BACKGROUND", "GameFontHighlight")
+        else
+            InfoFrame.setText1 = InfoFrame:CreateFontString(nil, "BACKGROUND", size)        
+        end 
     end                        
     InfoFrame.setText1:SetText(text)
     InfoFrame.setText1:SetHeight(InfoFrame.setText1:GetStringHeight())
     InfoFrame.setText1:SetPoint("TOPLEFT", InfoFrame.subHeading1, "BOTTOMLEFT", 0, -5) 
 
-    if InfoFrame.setText1:GetStringWidth() > InfoFrame:GetWidth()then
-        InfoFrame:SetWidth(InfoFrame.setText1:GetRight() - InfoFrame.setText1:GetLeft() + 23)
-    end
+    -- if InfoFrame.setText1:GetStringWidth() > InfoFrame:GetWidth()then
+    --     InfoFrame:SetWidth(InfoFrame.setText1:GetRight() - InfoFrame.setText1:GetLeft() + 23)
+    -- end
 
-    if InfoFrame.setText1:GetBottom() ~= nil and InfoFrame:GetTop() ~= nil then
-        InfoFrame:SetHeight(InfoFrame.setText1:GetBottom() - InfoFrame:GetTop() - 10)
-    end
+    -- if InfoFrame.setText1:GetBottom() ~= nil and InfoFrame:GetTop() ~= nil then
+    --     InfoFrame:SetHeight(InfoFrame.setText1:GetBottom() - InfoFrame:GetTop() - 10)
+    -- end
 
     InfoFrame.setText1:SetJustifyH("LEFT")
     InfoFrame.setText1:SetJustifyV("TOP")
@@ -1610,13 +1614,13 @@ function IATInfoFrame:SetSubHeading2(text)
     InfoFrame.setSubHeading2:SetHeight(InfoFrame.setSubHeading2:GetStringHeight())
     InfoFrame.setSubHeading2:SetPoint("TOPLEFT", InfoFrame.setText1, "BOTTOMLEFT", 0, -5)
     
-    if InfoFrame.setSubHeading2:GetStringWidth() > InfoFrame:GetWidth()then
-        InfoFrame:SetWidth(InfoFrame.setSubHeading2:GetRight() - InfoFrame.setSubHeading2:GetLeft() + 23)
-    end
+    -- if InfoFrame.setSubHeading2:GetStringWidth() > InfoFrame:GetWidth()then
+    --     InfoFrame:SetWidth(InfoFrame.setSubHeading2:GetRight() - InfoFrame.setSubHeading2:GetLeft() + 23)
+    -- end
 
-    if InfoFrame.setSubHeading2:GetBottom() ~= nil and InfoFrame:GetTop() ~= nil then
-        InfoFrame:SetHeight(InfoFrame.setSubHeading2:GetBottom() - InfoFrame:GetTop() - 10)
-    end
+    -- if InfoFrame.setSubHeading2:GetBottom() ~= nil and InfoFrame:GetTop() ~= nil then
+    --     InfoFrame:SetHeight(InfoFrame.setSubHeading2:GetBottom() - InfoFrame:GetTop() - 10)
+    -- end
 
     InfoFrame.setSubHeading2:SetJustifyH("LEFT")
     InfoFrame.setSubHeading2:SetJustifyV("TOP")
@@ -1635,13 +1639,13 @@ function IATInfoFrame:SetText2(text,width)
     InfoFrame.setText2:SetHeight(InfoFrame.setText2:GetStringHeight())
     InfoFrame.setText2:SetPoint("TOPLEFT", InfoFrame.setSubHeading2, "BOTTOMLEFT", 0, -5)     
 
-    if InfoFrame.setText2:GetStringWidth() > InfoFrame:GetWidth() and width == nil then
-        InfoFrame:SetWidth(InfoFrame.setText2:GetRight() - InfoFrame.setText2:GetLeft() + 23)
-    end
+    -- if InfoFrame.setText2:GetStringWidth() > InfoFrame:GetWidth() and width == nil then
+    --     InfoFrame:SetWidth(InfoFrame.setText2:GetRight() - InfoFrame.setText2:GetLeft() + 23)
+    -- end
 
-    if InfoFrame.setText2:GetBottom() ~= nil and InfoFrame:GetTop() ~= nil then
-        InfoFrame:SetHeight(InfoFrame.setText2:GetBottom() - InfoFrame:GetTop() - 10)
-    end
+    -- if InfoFrame.setText2:GetBottom() ~= nil and InfoFrame:GetTop() ~= nil then
+    --     InfoFrame:SetHeight(InfoFrame.setText2:GetBottom() - InfoFrame:GetTop() - 10)
+    -- end
     
     InfoFrame.setText2:SetJustifyH("LEFT")
     InfoFrame.setText2:SetJustifyV("TOP")
