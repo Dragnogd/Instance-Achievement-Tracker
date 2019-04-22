@@ -224,9 +224,6 @@ function core._2096.Events:UNIT_POWER_UPDATE(self, unit, powerType)
     end
 end
 
-core._2096.Events:RegisterEvent("PLAYER_STARTED_MOVING")
-core._2096.Events:RegisterEvent("PLAYER_STOPPED_MOVING")
-
 function core._2096.Events:PLAYER_STARTED_MOVING(self)
     --Mind Flay and other spells incorrectly trigger this event so if PLAYER_STOPPED moving triggered at exactly the same time as PLAYER_STARTED_MOVING
     --then we know the player hasen't really moved.
