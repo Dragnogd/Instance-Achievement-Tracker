@@ -27,7 +27,7 @@ local colourGreen = "|cff59FF00"
 local colourWhite = "|cffFFFFFF"
 local colourOrange = "|cffff6100"
 
-function InfoFrame_UpdatePlayersOnInfoFrame()
+function InfoFrame_UpdatePlayersOnInfoFrame(updateInfoFrame)
     --This will update list of players on the info frame
 
     if next(core.InfoFrame_PlayersTable) == nil then
@@ -51,7 +51,9 @@ function InfoFrame_UpdatePlayersOnInfoFrame()
                 messageStr = messageStr .. colourRed .. player .. "|r\n"
             end
         end
-        core.IATInfoFrame:SetText1(messageStr)
+        if updateInfoFrame ~= false then
+            core.IATInfoFrame:SetText1(messageStr)
+        end
     end
 end
 

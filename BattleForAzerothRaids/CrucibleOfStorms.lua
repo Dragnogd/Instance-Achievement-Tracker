@@ -26,6 +26,8 @@ local initialScan = false
 local playerMovingStartTimestamp = nil
 local playerStoppedMovingTimestamp = nil
 local giftOfNzothActive = false
+local phase1Complete = false
+local phase2Complete = false
 
 function core._2096:TheRestlessCabal()
     --Defeat the Restless Cabal in Crucible of Storms after having at least 10 Void Crashes active simultaneously in Normal Difficulty or higher.
@@ -52,67 +54,117 @@ function core._2096:UunatHarbingerOfTheVoid()
     -- 4.) If players moved during a period of non movement then announce fail
     -- 5.) If PLAYER_STARTED_MOVING and PLAYER_STOPPED_MOVING happened at same time we can assume this is caused by spellcast rather than player actually moving
 
-	-- if core:has_value(core.currentBosses[1].players, L["GUI_NoPlayersNeedAchievement"]) == false then
-	-- 	InfoFrame_UpdatePlayersOnInfoFramePersonal()
-	-- 	InfoFrame_SetHeaderCounter(L["Shared_TrackingStatus"],playersWithTracking,#core.currentBosses[1].players)
-	-- 	core.IATInfoFrame:SetSubHeading2(L["Shared_Notes"])
-	-- 	core.IATInfoFrame:SetText2(L["Shared_PlayersRunningAddon"],200)
+	if core:has_value(core.currentBosses[1].players, L["GUI_NoPlayersNeedAchievement"]) == false then
+		InfoFrame_SetHeaderCounter(L["Shared_TrackingStatus"],playersWithTracking,#core.currentBosses[1].players)
+		InfoFrame_UpdatePlayersOnInfoFrame(false)
 		
-	-- 	--Request which players are currently tracking this achievement
-	-- 	--Sync Message, Major Version, Minor Version, update Infoframe
-	-- 	if initialScan == false then
-	-- 		initialScan = true
-	-- 		for k,player in ipairs(core.currentBosses[1].players) do
-	-- 			InfoFrame_SetPlayerFailed(player)
-	-- 		end
-	-- 		C_Timer.After(3, function()
-	-- 			--Set everyone to red inititally then alter to green afterwards if addon found
-	-- 			C_ChatInfo.SendAddonMessage("Whizzey", "reqIAT,2,38,true", "RAID")		
+	    --Request which players are currently tracking this achievement
+	    --Sync Message, Major Version, Minor Version, update Infoframe
+		if initialScan == false then
+			core.IATInfoFrame:SetText1("|cff59FF00" .. L["CrucibleOfStorms_StartMoving"] .. "|r","GameFontHighlightLarge")
+			core.IATInfoFrame:SetSubHeading2(L["Shared_Notes"])
+            core.IATInfoFrame:SetText2(L["Shared_PlayersRunningAddon"],200)
+			 initialScan = true
+			 --Set all players to fail initially as we have not determined yet if they have the addon installed
+	 		for k,player in ipairs(core.currentBosses[1].players) do
+	 			InfoFrame_SetPlayerFailed(player)
+	 		end
+	 		C_Timer.After(3, function()
+	 			--Ask all other addons in the group to see if they are running the addon and tracking this achievement
+	 			C_ChatInfo.SendAddonMessage("Whizzey", "reqIAT,2,38,true", "RAID")		
 
-	-- 			C_Timer.After(1, function() 
-	-- 				for player, status in pairs(core.InfoFrame_PlayersTable) do
-	-- 					core:sendDebugMessage(status)
-	-- 					if status == 2 then
-	-- 						playersWithTracking = playersWithTracking + 1
-	-- 					end
-	-- 				end
-	-- 			end)
-	-- 		end)
-	-- 	end	
-	-- else
-	-- 	InfoFrame_SetHeaderCounter(L["Shared_PlayersWhoNeedAchievement"],playersWithTracking,0)
-	-- 	core.IATInfoFrame:SetText1(L["GUI_NoPlayersNeedAchievement"])
-	-- end
+				--Wait 1 second for a response from other addon in the group
+				 C_Timer.After(2, function() 
+					local playersStr = L["Shared_TrackingAchievementFor"] .. ": "
+					for player, status in pairs(core.InfoFrame_PlayersTable) do
+						--For all players that have the addon running, increment the counter by 1
+	 					core:sendDebugMessage(status) 
+						 if status == 2 then
+							playersStr = playersStr .. player .. ", "
+	 						playersWithTracking = playersWithTracking + 1
+	 					end
+					 end
+					 core:sendMessageSafe(playersStr,true)
+	 			end)
+	 		end)
+	 	end	
+    else
+	    InfoFrame_SetHeaderCounter(L["Shared_PlayersWhoNeedAchievement"],playersWithTracking,0)
+	    core.IATInfoFrame:SetText1(L["GUI_NoPlayersNeedAchievement"],"GameFontHighlightLarge")
+	end
 
-    --When boss starts casing Gift of N'Zoth tell players to stop moving
+    --When boss starts casting Gift of N'Zoth tell players to stop moving
 	if core.type == "SPELL_CAST_START" and (core.spellId == 285638 or core.spellId == 285685 or core.spellId == 285453) then
+		core:sendDebugMessage(1)
         core:sendDebugMessage("Stop Moving: Gift of N'Zoth")
         giftOfNzothActive = true
         if stopMovingAnnounced == false then
             stopMovingAnnounced = true
-            core:sendMessage(L["CrucibleOfStorms_StopMoving"],true)
+            core:sendMessage(core:getAchievement() .. " " .. L["CrucibleOfStorms_StopMoving"],true)
+            core.IATInfoFrame:SetText1("|cffFF0000" .. L["CrucibleOfStorms_StopMoving"] .. "|r","GameFontHighlightLarge")
         end
-    end
+	end
+	
+	--When boss has finished casting Gift of N'Zoth players are no longer allowed to move
+	if core.type == "SPELL_CAST_SUCCESS" and (core.spellId == 285638 or core.spellId == 285685 or core.spellId == 285453) then
+		core:sendDebugMessage("Stop Moving: Gift of N'Zoth")
+		safeToMove = false
+		if playerCurrentlyMoving == true then
+			core:getAchievementFailedPersonalIndependent(UnitName("Player"))
+		end
+	end
 
     --When boss is changing phase then player must stop moving
-    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 286310 then
+	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 286310 then
+		core:sendDebugMessage(2)
         core:sendDebugMessage("Stop Moving: Phase Change")
         safeToMove = false
         if stopMovingAnnounced == false then
             stopMovingAnnounced = true
-            core:sendMessage(L["CrucibleOfStorms_StopMoving"],true)
+            core:sendMessage(core:getAchievement() .. " " .. L["CrucibleOfStorms_StopMoving"],true)
+			core.IATInfoFrame:SetText1("|cffFF0000" .. L["CrucibleOfStorms_StopMoving"] .. "|r","GameFontHighlightLarge")
+			if playerCurrentlyMoving == true then
+				core:getAchievementFailedPersonalIndependent(UnitName("Player"))
+			end
         end
     end
 
     --Boss has finished changing phases so players can move again aslong as Gift of N'zoth is not active
     --We believe that Gift of N'zoth currently takes precedence over phase change but need more data to confirm
-    if core.type == "SPELL_AURA_REMOVED" and core.spellId == 286310 then
+	if core.type == "SPELL_AURA_REMOVED" and core.spellId == 286310 then
+		core:sendDebugMessage(3)		
         if stopMovingAnnounced == true then
             stopMovingAnnounced = false
             safeToMove = true
-            core:sendMessage(L["CrucibleOfStorms_StartMoving"],true)
+            core:sendMessage(core:getAchievement() .. " " .. L["CrucibleOfStorms_StartMoving"],true)
+            core.IATInfoFrame:SetText1("|cff59FF00" .. L["CrucibleOfStorms_StartMoving"] .. "|r","GameFontHighlightLarge")
         end
     end
+
+	--If boss is at 70% or 45% health then warn players to stop moving
+	if UnitName("boss1") ~= nil then
+		if core:getHealthPercent("boss1") <= 70 and phase1Complete == false then
+			phase1Complete = true
+			core:sendDebugMessage(4)
+			core:sendDebugMessage(core:getHealthPercent("boss1"))
+			core:sendDebugMessage("Stop Moving: Boss about to change phase")
+			if stopMovingAnnounced == false then
+				stopMovingAnnounced = true
+				core:sendMessage(core:getAchievement() .. " " .. L["CrucibleOfStorms_StopMoving"],true)
+				core.IATInfoFrame:SetText1("|cffFF0000" .. L["CrucibleOfStorms_StopMoving"] .. "|r","GameFontHighlightLarge")
+			end  
+		elseif core:getHealthPercent("boss1") <= 45 and phase2Complete == false then
+			phase2Complete = true
+			core:sendDebugMessage(4)
+			core:sendDebugMessage(core:getHealthPercent("boss1"))
+			core:sendDebugMessage("Stop Moving: Boss about to change phase")
+			if stopMovingAnnounced == false then
+				stopMovingAnnounced = true
+				core:sendMessage(core:getAchievement() .. " " .. L["CrucibleOfStorms_StopMoving"],true)
+				core.IATInfoFrame:SetText1("|cffFF0000" .. L["CrucibleOfStorms_StopMoving"] .. "|r","GameFontHighlightLarge")
+			end  
+		end
+	end
 end
 
 function core._2096:ClearVariables()
@@ -130,7 +182,9 @@ function core._2096:ClearVariables()
     initialScan = false
     playerMovingStartTimestamp = nil
     playerStoppedMovingTimestamp = nil
-    giftOfNzothActive = false
+	giftOfNzothActive = false
+	phase1Complete = false
+	phase2Complete = false
 end
 
 function core._2096:InstanceCleanup()
@@ -162,24 +216,29 @@ function core._2096.Events:UNIT_POWER_UPDATE(self, unit, powerType)
                     stopMovingAnnounced = false
                     safeToMove = true
                     giftOfNzothActive = false
-                    core:sendMessage(L["CrucibleOfStorms_StartMoving"],true)
+                    core:sendMessage(core:getAchievement() .. " " .. L["CrucibleOfStorms_StartMoving"],true)
+                    core.IATInfoFrame:SetText1("|cff59FF00" .. L["CrucibleOfStorms_StartMoving"] .. "|r","GameFontHighlightLarge")
                 end
             end
         end
     end
 end
 
+core._2096.Events:RegisterEvent("PLAYER_STARTED_MOVING")
+core._2096.Events:RegisterEvent("PLAYER_STOPPED_MOVING")
+
 function core._2096.Events:PLAYER_STARTED_MOVING(self)
     --Mind Flay and other spells incorrectly trigger this event so if PLAYER_STOPPED moving triggered at exactly the same time as PLAYER_STARTED_MOVING
     --then we know the player hasen't really moved.
     playerMovingStartTimestamp = GetTime()
     local safeMove = safeToMove
-    C_Timer.After(0.2, function() 
-        if playerMovingStartTimestamp ~= playerStoppedMovingTimestamp then
-            --Player has moved
+	C_Timer.After(0.2, function()
+		--If we have any start and stop events that took 0 seconds then we can assume this was  
+		if playerMovingStartTimestamp ~= playerStoppedMovingTimestamp and UnitChannelInfo("Player") == nil then
+			--Player has moved
             core:sendDebugMessage("Player is moving")
             playerCurrentlyMoving = true
-            if safeMove == true then
+            if safeMove == false then
                 core:getAchievementFailedPersonalIndependent(UnitName("Player"))
             end
         end
