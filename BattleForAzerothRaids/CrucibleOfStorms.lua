@@ -107,7 +107,7 @@ function core._2096:UunatHarbingerOfTheVoid()
 	
 	--When boss has finished casting Gift of N'Zoth players are no longer allowed to move
 	if core.type == "SPELL_CAST_SUCCESS" and (core.spellId == 285638 or core.spellId == 285685 or core.spellId == 285453) then
-		core:sendDebugMessage("Stop Moving: Gift of N'Zoth")
+		core:sendDebugMessage("Stop Moving: Gift of N'Zoth 2")
 		safeToMove = false
 		if playerCurrentlyMoving == true then
 			core:getAchievementFailedPersonalIndependent(UnitName("Player"))
@@ -138,12 +138,19 @@ function core._2096:UunatHarbingerOfTheVoid()
             safeToMove = true
             core:sendMessage(core:getAchievement() .. " " .. L["CrucibleOfStorms_StartMoving"],true)
             core.IATInfoFrame:SetText1("|cff59FF00" .. L["CrucibleOfStorms_StartMoving"] .. "|r","GameFontHighlightLarge")
+
+            --If boss transitioned early then set phase transition to true
+            if phase1Complete == false then
+                phase1Complete = true
+            elseif phase2Complete == false then
+                phase2Complete = true
+            end
         end
     end
 
 	--If boss is at 70% or 45% health then warn players to stop moving
 	if UnitName("boss1") ~= nil then
-		if core:getHealthPercent("boss1") <= 70 and phase1Complete == false then
+		if core:getHealthPercent("boss1") <= 71 and phase1Complete == false then
 			phase1Complete = true
 			core:sendDebugMessage(4)
 			core:sendDebugMessage(core:getHealthPercent("boss1"))
@@ -153,7 +160,7 @@ function core._2096:UunatHarbingerOfTheVoid()
 				core:sendMessage(core:getAchievement() .. " " .. L["CrucibleOfStorms_StopMoving"],true)
 				core.IATInfoFrame:SetText1("|cffFF0000" .. L["CrucibleOfStorms_StopMoving"] .. "|r","GameFontHighlightLarge")
 			end  
-		elseif core:getHealthPercent("boss1") <= 45 and phase2Complete == false then
+		elseif core:getHealthPercent("boss1") <= 46 and phase2Complete == false then
 			phase2Complete = true
 			core:sendDebugMessage(4)
 			core:sendDebugMessage(core:getHealthPercent("boss1"))
