@@ -1266,9 +1266,9 @@ function Instance_OnClick(self)
 
                 --Only show players if user has enabled achievement tracking
                 if core.achievementTrackingEnabled == false then
-                    button.contentText:SetText(L["GUI_Achievement"] .. ": " .. GetAchievementLink(instanceLocation["boss" .. counter2].achievement) .. "\n\n" .. L["GUI_Tactics"] .. ": " .. tactics)            
+                    button.contentText:SetText(L["GUI_Achievement"] .. ": " .. GetAchievementLink(instanceLocation["boss" .. counter2].achievement) .. "\n\n" .. L["GUI_Tactic"] .. ": " .. tactics)            
                 else
-                    button.contentText:SetText(L["GUI_Achievement"] .. ": " .. GetAchievementLink(instanceLocation["boss" .. counter2].achievement) .. "\n\n" .. players .. "\n\n" .. L["GUI_Tactics"] .. ": " .. tactics)
+                    button.contentText:SetText(L["GUI_Achievement"] .. ": " .. GetAchievementLink(instanceLocation["boss" .. counter2].achievement) .. "\n\n" .. players .. "\n\n" .. L["GUI_Tactic"] .. ": " .. tactics)
                 end
 
                 if playersFound == false and core.achievementDisplayStatus == "grey" then

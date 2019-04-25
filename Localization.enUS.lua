@@ -48,6 +48,7 @@ local baseLocale = {
     ["Gui_TranslatorNames"] = "",
     ["GUI_BlockDisableAddon"] = "You cannot disable the addon while you are are in combat. Wait till you are out of combat then try again",
     ["GUI_DisplayInfoFrame"] = "Enable Info Frame",
+    ["GUI_Tactic"] = "Tactic",
 
     -------------------------------------------------------
     --- Core
