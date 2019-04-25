@@ -141,8 +141,10 @@ function core._2096:UunatHarbingerOfTheVoid()
 
             --If boss transitioned early then set phase transition to true
             if phase1Complete == false then
+                core:sendDebugMessage("Phase 1 transition happened early. Setting to true")
                 phase1Complete = true
-            elseif phase2Complete == false then
+            elseif phase2Complete == false and core:getHealthPercent("boss1") < 60 then
+                core:sendDebugMessage("Phase 2 transition happened early. Setting to true")
                 phase2Complete = true
             end
         end
