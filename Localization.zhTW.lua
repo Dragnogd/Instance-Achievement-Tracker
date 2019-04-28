@@ -85,6 +85,8 @@ local baseLocale = {
 	["Core_TrackAchievements"] = "追蹤成就",
 	["Core_Yes"] = "是",
 	--[[Translation missing --]]
+	--[[ ["CourtOfStars_PatrolCaptainGerdo"] = "To complete this this achievement, you must first clear all the trash in the boss room. While killing the trash make sure that neither the mobs nor players activate the beacons as this will fail the achievement.\n\n Once all the trash is dead, pull the boss then wait for him to cast %s. Once the boss has cast this ability, you will need to click on all 5 beacons around the room. Once all 5 beacons have been disabled, you can kill the boss.",--]] 
+	--[[Translation missing --]]
 	--[[ ["DarkheartThicket_Dresaron"] = "After pulling the boss, run through the big egg behind %s to hatch it. Next kill the %ss that spawns then kill the boss.",--]] 
 	--[[Translation missing --]]
 	--[[ ["DarkheartThicket_ShadeOfXavius"] = "DPS the boss down to 15%%-20%% health. Drag the boss through the swirly puddles on the ground until the boss has 10 stacks of %s then kill the boss.",--]] 
@@ -131,6 +133,7 @@ local baseLocale = {
 	["GUI_PlaySoundOnSuccess"] = "成就完成時播放音效",
 	["GUI_ScanInProgress"] = "掃描仍在進行中",
 	["GUI_SelectSound"] = "選擇音效",
+	["GUI_Tactic"] = "戰術",
 	["GUI_Tactics"] = "戰術",
 	["GUI_ToggleMinimap"] = "顯示小地圖按鈕",
 	["GUI_Track"] = "追蹤",

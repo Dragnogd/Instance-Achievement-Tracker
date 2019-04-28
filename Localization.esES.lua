@@ -56,6 +56,7 @@ local baseLocale = {
 	["Core_StartingAchievementScan"] = "Comenzando exploración de logro para",
 	["Core_TrackAchievements"] = "Seguimiento de Logros",
 	["Core_Yes"] = "Sí",
+	["CourtOfStars_PatrolCaptainGerdo"] = "Para completar este logro, primero hay que limpiar de enemigos desde el principio de la mazmorra a la sala del boss. Mientras se van matando hay que asegurarse de que nadie (jugador o enemigo) desactive ninguna de las 5 balizas ya que esto hará fallar el logro.\n\n Una vez matados todos los pulls, comenzar el combate contra el boss y esperar a que lance %s. Una vez matados los 5 adds que invoca, hará falta desactivar las 5 balizas haciendo click en ellas (3 en la sala del boss y  1 antes de cada puente). Una vez desactivadas las 5 balizas, ya se puede matar al boss.",
 	["DarkheartThicket_Dresaron"] = "Después de pullear al boss, hay que correr a través del gran huevo que hay detrás de %s para romperlo. Entonces habrá que matar la %s que aparecerá y después al boss.",
 	["DarkheartThicket_ShadeOfXavius"] = "Hay que bajar al boss hasta el 15%%-20%% de vida. Entonces habrá que arrastrar al boss a través de los charcos de remolinos del suelo hasta que consiga 10 acumulaciones de %s para poder matarlo.",
 	["EyeOfAzshara_LadyHatecoil"] = "Cuando el debuff %s expira o es dispeleado se hará un aliento en la dirección a la que se esté mirando matando cualquier %s en su camino. Para conseguir este logro habrá que hacer 1 aliento que mate 11 o más %s. Los %s aparecen a lo largo del tiempo así que habrá que habrá que estar alejado de los adds hasta que hayan aparecido 11 o más.",
@@ -97,6 +98,7 @@ local baseLocale = {
 	["GUI_PlaySoundOnSuccess"] = "Reproduce un sonido cuando un logro se complete",
 	["GUI_ScanInProgress"] = "escaneo todavía en proceso",
 	["GUI_SelectSound"] = "Selecciona Sonido",
+	["GUI_Tactic"] = "Táctica",
 	["GUI_Tactics"] = "Tácticas",
 	["GUI_ToggleMinimap"] = "Muestra el Botón del Minimapa",
 	["GUI_Track"] = "Seguir",
@@ -230,7 +232,7 @@ local baseLocale = {
 	["VaultOfTheWardens_AshGolm"] = "Para completar este logro todos los jugadores del grupo han de pisar el fuego para tener %s durante 12 segundos tras los cuales tendrá el debuff %s. Una vez todo el grupo tenga el debuff %s ya se podrá matar al boss.",
 	["WaycrestManor_GorakTul"] = "Durante el %s encuentro, el boss lanzará periódicamente %s el cual es necesario para quemar los cuerpos de %s para que no resuciten. Cuando el boss lance %s e invoque al tercer add habrá que matarlos a los tres, y entonces usar rápidamente %s para quemar sus 3 cuerpos de golpe (haced el encuentro a melé para evitar que el boss salte).",
 	["WaycrestManor_Other"] = "Este es un logro basado en profesiones donde has de interactuar con objetos para invocar bosses. Para poder usar dichos objetos a lo largo de las mazmorras, es necesario un mínimo de nivel 75 de habilidad en Battle for Azeroth.\n\n (Peletería) %s - El mapa para invocar el boss se encuentra en la sección de caza  de la Mansión, en una esquina bajo un timón.\n (Sastrería) %s - El '%s' (un rollo de tela) está en el Salón del Banquete, en el piso superior.\n (Herboristería) %s - La '%s' está en la fuente de la zona abierta donde está %s.\n (Inscripción) %s - El '%s' está en una librería en un pasillo paralelo a donde está el boss de las hermanas, en la parte izquierda justo antes de bajar a la bodega.\n (Cocina) %s - El vino está en la bodega, junto a unas barricas de vino.",
-	["WaycrestManor_SoulboundGoliath"] = "%s obtiene un bufo que se acumula cada 2 segundos llamado %s . Así que para conseguir este logro habrá que ir paseando al boss a través de los parches de fuego de %s que aparecerán en el área de combate para mantenerle bajas las acumulaciones de %s  (por debajo de 12).",	  
+	["WaycrestManor_SoulboundGoliath"] = "%s obtiene un bufo que se acumula cada 2 segundos llamado %s . Así que para conseguir este logro habrá que ir paseando al boss a través de los parches de fuego de %s que aparecerán en el área de combate para mantenerle bajas las acumulaciones de %s  (por debajo de 12).",
 }
 
 if(GetLocale() == "esES") then
