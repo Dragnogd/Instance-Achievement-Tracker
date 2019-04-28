@@ -237,4 +237,4 @@ local baseLocale = {
 
 core:RegisterLocale('ruRU', baseLocale)
 
---core:RegisterLocale('enUS', baseLocale)
+-- core:RegisterLocale('enUS', baseLocale)

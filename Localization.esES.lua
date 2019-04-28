@@ -241,4 +241,4 @@ else
     core:RegisterLocale('esMX', baseLocale)
 end
 
-core:RegisterLocale('enUS', baseLocale)
+-- core:RegisterLocale('enUS', baseLocale)

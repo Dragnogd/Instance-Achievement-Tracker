@@ -351,3 +351,5 @@ local baseLocale = {
 }
 
 core:RegisterLocale('deDE', baseLocale)
+
+-- core:RegisterLocale('enUS', baseLocale)
