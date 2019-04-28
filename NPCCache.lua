@@ -150,6 +150,19 @@ core.NPCCache = {
     [43658] = 43658, --Frenzied Crocolisk
     [27981] = 27981, --Malformed Ooze
     [28165] = 28165, --Iron sludge
+    [58739] = 58739, --Borokhula the Destroyer
+    [63313] = 63313, --Little Liuyang
+    [67879] = 67879, --Commander Tel'vrak
+    [70544] = 70544, --Hekima the Wise
+    [61707] = 61707, --Abomination of Anger
+    [67264] = 67264, --Broodmaster Noshi
+    [67263] = 67263, --Darkhatched Lizard-Lord
+    [67266] = 67266, --Rak'gor Bloodrazor
+    [64900] = 64900, --Gash'nul
+    [58777] = 58777, --Baldruc
+    [64479] = 64479, --Gatecrusher
+    [58787] = 58787, --Big Bessa
+    [62465] = 62465, --Captain Ook
 }
 
 --[] = , --

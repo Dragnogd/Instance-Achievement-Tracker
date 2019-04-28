@@ -481,7 +481,7 @@ local baseLocale = {
     --- Court of Stars
     -------------------------------------------------------
     --Tactics
-    ["CourtOfStars_PatrolCaptainGerdo"] = "",
+    ["CourtOfStars_PatrolCaptainGerdo"] = "To complete this this achievement, you must first clear all the trash in the boss room. While killing the trash make sure that neither the mobs nor players activate the beacons as this will fail the achievement.\n\n Once all the trash is dead, pull the boss then wait for him to cast %s. Once the boss has cast this ability, you will need to click on all 5 beacons around the room. Once all 5 beacons have been disabled, you can kill the boss.",
     ["CourtOfStars_Other"] = "For this achievement, it is suggested that you follow the steps below to increase your chances of the conversation procing.\n\n - Kill all 5 Duskwatch Sentries before engaging the first boss\n - Disable all 5 Arcane Beacons before engaging the first boss\n - Guess the Spy on first try\n\n Check out https://www.wowhead.com/achievement=10611/dropping-some-eaves#comments:id=2622946 for more info on this achievement",
 
     --Chat Output
@@ -783,6 +783,123 @@ local baseLocale = {
     ["GateOfTheSettingSun_Raigonn"] = "",
 
     --Chat Output
+
+    -------------------------------------------------------
+    --- A Brewing Storm
+    -------------------------------------------------------
+    --Tactics
+    ["ABrewingStorm_DontShakeTheKeg"] = "",
+    ["ABrewingStorm_PartyOfSix"] = "",
+    ["ABrewingStorm_ThePerfectPour"] = "",
+
+    -------------------------------------------------------
+    --- A Little Patience
+    -------------------------------------------------------
+    --Tactics
+    ["ALittlePatience_Bubbletrapped"] = "",
+    ["ALittlePatience_Cannonballer"] = "",
+    ["ALittlePatience_IUsedToLoveThem"] = "",
+    ["ALittlePatience_WeveBeenDancin"] = "",
+    ["ALittlePatience_WhichCameFirst"] = "",
+
+    -------------------------------------------------------
+    --- Arena of Annihilation 
+    -------------------------------------------------------
+    --Tactics
+    ["ArenaOfAnnihilation_BeatTheHeat"] = "",
+    ["ArenaOfAnnihilation_InTheEyeOfTheTiger"] = "",
+
+    -------------------------------------------------------
+    --- Assault on Zan'vess
+    -------------------------------------------------------
+    --Tactics
+    ["AssaultOnZanvess_ForTheSwarm"] = "",
+
+    -------------------------------------------------------
+    --- Battle on the High Seas
+    -------------------------------------------------------
+    --Tactics
+    ["BattleOnTheHighSeas_KeepThoseBombsAway"] = "",
+
+    -------------------------------------------------------
+    --- Blood in the Snow
+    -------------------------------------------------------
+    --Tactics
+    ["BloodInTheSnow_HeedTheWeed"] = "",
+    ["BloodInTheSnow_HekimasHealHalter"] = "",
+
+    -------------------------------------------------------
+    --- Brewmoon Festival
+    -------------------------------------------------------
+    --Tactics
+    ["BrewmoonFestival_BinanVillageAllStar"] = "",
+    ["BrewmoonFestival_YaungolianBarbecue"] = "",
+
+    -------------------------------------------------------
+    --- Crypt of Forgotten Kings
+    -------------------------------------------------------
+    --Tactics
+    ["CryptOfForgottenKings_FancyFootwork"] = "",
+    ["CryptOfForgottenKings_FightAngerWithAnger"] = "",
+    ["CryptOfForgottenKings_ItsATrap"] = "",
+
+    -------------------------------------------------------
+    --- Dagger in the Dark
+    -------------------------------------------------------
+    --Tactics
+    ["DaggerInTheDark_NoEggLeftBehind"] = "",
+    ["DaggerInTheDark_WateryGrave"] = "",
+    ["DaggerInTheDark_YouMeanThatWasntAVoidZone"] = "",
+
+    -------------------------------------------------------
+    --- Dark Heart of Pandaria
+    -------------------------------------------------------
+    --Tactics
+    ["DarkHeartOfPandaria_AcceleratedArchaeology"] = "",
+
+    -------------------------------------------------------
+    --- Lion's Landing
+    -------------------------------------------------------
+    --Tactics
+    ["LionsLanding_NumberFiveIsAlive"] = "",
+    ["LionsLanding_WasteNotWantNot"] = "",
+
+    -------------------------------------------------------
+    --- Domination Point
+    -------------------------------------------------------
+    --Tactics
+    ["DominationPoint_NumberFiveIsAlive"] = "",
+    ["DominationPoint_WasteNotWantNot"] = "",
+
+    -------------------------------------------------------
+    --- Greenstone Village
+    -------------------------------------------------------
+    --Tactics
+    ["GreenstoneVillage_PerfectDelivery"] = "",
+    ["GreenstoneVillage_SaveItForLater"] = "",
+
+    -------------------------------------------------------
+    --- Theramore's Fall
+    -------------------------------------------------------
+    --Tactics
+    ["TheramoresFallAlliance_KiteFight"] = "",
+    ["TheramoresFallAlliance_NoTankYou"] = "",
+    ["TheramoresFallHorde_KiteFight"] = "",
+    ["TheramoresFallHorde_NoTankYou"] = "",
+
+    -------------------------------------------------------
+    --- Secrets of Ragefire
+    -------------------------------------------------------
+    --Tactics
+    ["SecretsOfRagefire_TheFewTheProudTheGobSquad"] = "",
+
+    -------------------------------------------------------
+    --- Unga Ingoo
+    -------------------------------------------------------
+    --Tactics
+    ["UngaIngoo_MonkeyInTheMiddle"] = "",
+    ["UngaIngoo_MonkeySeeMonkeyKill"] = "",
+    ["UngaIngoo_SpillNoEvil"] = "",
 
     -------------------------------------------------------
     --- Dragon Soul

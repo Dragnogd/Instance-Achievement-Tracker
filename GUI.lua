@@ -46,7 +46,11 @@ function Config:getLocalisedInstanceName(instanceID)
     return EJ_GetInstanceInfo(instanceID)
 end
 
-function Config:getLocalisedEncouterName(encounterID)
+function Config:getLocalisedScenarioName(dungeonID)
+    return GetDungeonInfo(dungeonID)
+end
+
+function Config:getLocalisedEncouterName(encounterID,instanceType)
     if type(encounterID) == "table" then
         --Decide if player is alliance or horde then return correct id
         if UnitFactionGroup("player") == "Alliance" then
@@ -55,7 +59,11 @@ function Config:getLocalisedEncouterName(encounterID)
             return EJ_GetEncounterInfo(encounterID[2])
         end
     elseif tonumber(encounterID) then
-        return EJ_GetEncounterInfo(encounterID)
+        if instanceType == "Scenarios" then
+            return getNPCName(encounterID)
+        else
+            return EJ_GetEncounterInfo(encounterID)
+        end
     else
         --The encounterID is actually string since there is no dungeon journal entry for this achievement
         --This will happen for achievements that are not tied directly to a boss.
@@ -827,6 +835,7 @@ function Config:CreateGUI()
 
         local localisedRaidNames = {}
         local localisedDungeonNames = {}
+        local localisedScenarioNames = {}
 
         --Lets get all localised names of the instances and place in a table, this can then be sorted alphabetically before we create the buttons
         --We need to save the original ID aswell so key value pairs
@@ -837,6 +846,29 @@ function Config:CreateGUI()
         for instance,v in pairs(core.Instances[i].Dungeons) do
             local instanceName = Config:getLocalisedInstanceName(core.Instances[i].Dungeons[instance].name)
             table.insert(localisedDungeonNames, {name = instanceName, id = instance});
+        end
+
+        --Scenarios only happen for MOP expansion. Needs updating each expansion
+        if i == 5 then
+            for instance,v in pairs(core.Instances[i].Scenarios) do
+                if instance == 1103 or instance == 1000 then
+                    --Alliance only scenarios
+                    if UnitFactionGroup("Player") == "Alliance" then
+                        local instanceName = Config:getLocalisedScenarioName(core.Instances[i].Scenarios[instance].name)
+                        table.insert(localisedScenarioNames, {name = instanceName, id = instance});
+                    end
+                elseif instance == 1102 or instance == 999 then
+                    --Horde only scenarios
+                    if UnitFactionGroup("Player") == "Horde" then
+                        local instanceName = Config:getLocalisedScenarioName(core.Instances[i].Scenarios[instance].name)
+                        table.insert(localisedScenarioNames, {name = instanceName, id = instance});
+                    end
+                else
+                    local instanceName = Config:getLocalisedScenarioName(core.Instances[i].Scenarios[instance].name)
+                    table.insert(localisedScenarioNames, {name = instanceName, id = instance});
+                end
+            end
+            table.sort(localisedScenarioNames, function( a,b ) return a.name < b.name end)
         end
 
         table.sort(localisedRaidNames, function( a,b ) return a.name < b.name end)
@@ -934,6 +966,21 @@ function Config:CreateGUI()
                     WrathOfTheLichKingNav[instanceTable.id] = self:CreateButton("TOPLEFT", WrathOfTheLichKingNav[previousInstance], "TOPLEFT", -32, instanceTable.name, instanceTable.id);
                     WrathOfTheLichKingNav[instanceTable.id]:SetScript("OnClick", Instance_OnClick);
                 end
+                previousInstance = instanceTable.id
+            end            
+        end
+
+        --Scenarios
+        local firstScenario = false
+        for instance,instanceTable in pairs(localisedScenarioNames) do
+            if firstScenario == false then
+                MistsOfPandariaNav[instanceTable.id] = self:CreateButton("TOPLEFT", MistsOfPandariaNav[previousInstance], "TOPLEFT", -40, instanceTable.name, instanceTable.id);
+                MistsOfPandariaNav[instanceTable.id]:SetScript("OnClick", Instance_OnClick);
+                firstScenario = true
+                previousInstance = instanceTable.id
+            else
+                MistsOfPandariaNav[instanceTable.id] = self:CreateButton("TOPLEFT", MistsOfPandariaNav[previousInstance], "TOPLEFT", -32, instanceTable.name, instanceTable.id);
+                MistsOfPandariaNav[instanceTable.id]:SetScript("OnClick", Instance_OnClick);
                 previousInstance = instanceTable.id
             end            
         end
@@ -1075,6 +1122,7 @@ function Instance_OnClick(self)
     local counter = 1
     local counter2 = 1
     local heightDifference = 30
+    local instanceType
 
     if type(self) == "table" then
         --Button has been pressed by the user
@@ -1091,15 +1139,25 @@ function Instance_OnClick(self)
 
         if core.Instances[Config.currentTab].Raids[InstanceID] ~= nil then
             instanceLocation = core.Instances[Config.currentTab].Raids[InstanceID]
-        else
+            instanceType = "Raids"
+        elseif core.Instances[Config.currentTab].Dungeons[InstanceID] ~= nil then
             instanceLocation = core.Instances[Config.currentTab].Dungeons[InstanceID]
+            instanceType = "Dungeons"
+        elseif core.Instances[Config.currentTab].Scenarios[InstanceID] ~= nil then
+            instanceLocation = core.Instances[Config.currentTab].Scenarios[InstanceID]
+            instanceType = "Scenarios"
         end
     else
         --Button needs updating for current instance. Automatically clicked by addon
         if core.instanceType == "Raids" then
             instanceLocation = core.Instances[core.expansion].Raids[core.instance]
+            instanceType = "Raids"
         elseif core.instanceType == "Dungeons" then
             instanceLocation = core.Instances[core.expansion].Dungeons[core.instance]
+            instanceType = "Dungeons"
+        elseif core.instanceType == "Scenarios" then
+            instanceType = "Scenarios"
+            instanceLocation = core.Instances[core.expansion].Scenarios[core.instance]
         end        
 
         --Set the current tab to the expansion of the current instance
@@ -1192,7 +1250,7 @@ function Instance_OnClick(self)
                         button:SetPoint("TOPLEFT",WrathOfTheLichKingContentButtons[counter-1],"BOTTOMLEFT",0,30-heightDifference)
                     end                
                 end
-                button.headerText:SetText(Config:getLocalisedEncouterName(instanceLocation["boss" .. counter2].name))
+                button.headerText:SetText(Config:getLocalisedEncouterName(instanceLocation["boss" .. counter2].name,instanceType))
                 button.headerText:Show()
                 button.contentText:Hide()
                 button:SetNormalTexture("Interface\\Common\\Dark-GoldFrame-Button")
@@ -1312,7 +1370,11 @@ function Instance_OnClick(self)
             UIConfig.achievementsCompleted:SetWidth(500)
         end
 
-        UIConfig.achievementsCompleted:SetText(L["GUI_AchievementsCompletedForInstance"] .. " " .. Config:getLocalisedInstanceName(instanceLocation.name));
+        if instanceType == "Scenarios" then
+            UIConfig.achievementsCompleted:SetText(L["GUI_AchievementsCompletedForInstance"] .. " " .. Config:getLocalisedScenarioName(instanceLocation.name));
+        else
+            UIConfig.achievementsCompleted:SetText(L["GUI_AchievementsCompletedForInstance"] .. " " .. Config:getLocalisedInstanceName(instanceLocation.name));
+        end
         UIConfig.achievementsCompleted:Show()
     end
 

@@ -91,6 +91,24 @@ PandariaDungeons\ShadoPanMonastery.lua
 PandariaDungeons\TempleOfTheJadeSerpent.lua
 PandariaDungeons\SiegeOfNiuzaoTemple.lua
 
+PandariaScenarios\ABrewingStorm.lua
+PandariaScenarios\ALittlePatience.lua
+PandariaScenarios\ArenaOfAnnihilation.lua
+PandariaScenarios\AssaultOnZanvess.lua
+PandariaScenarios\BattleOnTheHighSeas.lua
+PandariaScenarios\BloodInTheSnow.lua
+PandariaScenarios\BrewmoonFestival.lua
+PandariaScenarios\CryptOfForgottenKings.lua
+PandariaScenarios\DaggerInTheDark.lua
+PandariaScenarios\DarkHeartOfPandaria.lua
+PandariaScenarios\GreenstoneVillage.lua
+PandariaScenarios\LionsLanding.lua
+PandariaScenarios\DominationPoint.lua
+PandariaScenarios\SecretsOfRagefire.lua
+PandariaScenarios\TheramoresFallAlliance.lua
+PandariaScenarios\TheramoresFallHorde.lua
+PandariaScenarios\UngaIngoo.lua
+
 CataclysmRaids\BastionOfTwilight.lua
 CataclysmRaids\BlackwingDescent.lua
 CataclysmRaids\DragonSoul.lua
