@@ -784,11 +784,38 @@ core.commands = {
 
 	["debug"] = function()
 		if sendDebugMessages == true then
+			debugMode = false
+			debugModeChat = false
 			sendDebugMessages = false
+			printMessage("Debug Mode Disabled")
 		else
+			debugMode = true
+			debugModeChat = true
 			sendDebugMessages = true
+			printMessage("Debug Mode Enabled")
+
+			if core.achievementTrackingEnabled == false and core.addonEnabled == true then
+				getInstanceInfomation()
+			elseif core.achievementTrackingEnabled == true and core.addonEnabled == true then
+				core.inInstance = false
+	
+				if UIConfig ~= nil and core.inInstance == false then
+					core:sendDebugMessage("Hiding Tracking UI")
+					UIConfig:Hide()
+				end
+	
+				core.achievementTrackingEnabled = false
+	
+				--Disable achievement tracking if currently tracking
+				checkAndClearInstanceVariables()	
+	
+				ClearGUITabs()
+	
+				getInstanceInfomation()
+			elseif core.addonEnabled == false then
+				core:printMessage(L["Core_EnableAddonFirst"])
+			end
 		end
-		print(sendDebugMessages)
 	end,
 
 	[L["Core_Toggle"]] = function()
@@ -2751,6 +2778,7 @@ function core:getAchievementFailedPersonalIndependent(playerName, index)
 				if IsInGroup() == false then
 					core:sendMessage(playerName .. " " .. L["Shared_HasFailed"] .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " (" .. L["Core_PersonalAchievement"] .. ")")
 				end
+				core:sendMessage(playerName .. " " .. L["Shared_HasFailed"] .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " (" .. L["Core_PersonalAchievement"] .. ")")
 			end
 		end
 		core.playersFailedPersonal[playerName] = true
