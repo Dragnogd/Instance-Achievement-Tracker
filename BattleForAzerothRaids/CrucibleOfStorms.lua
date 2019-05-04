@@ -198,8 +198,6 @@ end
 
 function core._2096:InstanceCleanup()
     core._2096.Events:UnregisterEvent("UNIT_POWER_UPDATE")
-    core._2096.Events:UnregisterEvent("PLAYER_STARTED_MOVING")
-    core._2096.Events:UnregisterEvent("PLAYER_STOPPED_MOVING")
 end
 
 core._2096.Events:SetScript("OnEvent", function(self, event, ...)
