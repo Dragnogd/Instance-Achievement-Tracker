@@ -3115,12 +3115,12 @@ core.Instances = {
                 name = 511,
                 boss1 = {
                     name = 63313,
-                    bossIDs = {},
+                    bossIDs = {63313},
                     achievement = 7273,
                     players = {},
                     tactics = L["ArenaOfAnnihilation_BeatTheHeat"],
-                    enabled = false,
-                    track = nil,
+                    enabled = true,
+                    track = function() core._1031:BeatTheHeat() end,
                     partial = false,
                 },
                 boss2 = {
