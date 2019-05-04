@@ -206,10 +206,60 @@ core._2096.Events:SetScript("OnEvent", function(self, event, ...)
     return self[event] and self[event](self, event, ...)
 end)
 
+local function playerMoving(...)
+    if IsPlayerMoving() == true and UnitIsDead("Player") == false then
+        core:sendDebugMessage(GetTime() .. " Player is moving")
+        playerCurrentlyMoving = true
+        if safeToMove == false then
+            core:getAchievementFailedPersonalIndependent(UnitName("Player"))
+        end
+    end
+end
+
+local function playerMovingMouse(...)
+    if IsPlayerMoving() == true and UnitIsDead("Player") == false and IsMouseButtonDown("LeftButton") then
+        core:sendDebugMessage(GetTime() .. " Player is moving")
+        playerCurrentlyMoving = true
+        if safeToMove == false then
+            core:getAchievementFailedPersonalIndependent(UnitName("Player"))
+        end
+    end
+end
+
+local function playerStoppedMoving(...)
+    if IsPlayerMoving() == false and UnitIsDead("Player") == false then
+        core:sendDebugMessage(GetTime() .. " Player stopped moving")
+        playerCurrentlyMoving = false
+    end
+end
+
 function core._2096:InitialSetup()
     core._2096.Events:RegisterEvent("UNIT_POWER_UPDATE")
-    core._2096.Events:RegisterEvent("PLAYER_STARTED_MOVING")
-    core._2096.Events:RegisterEvent("PLAYER_STOPPED_MOVING")
+
+    --Player Moving
+    hooksecurefunc("MoveForwardStart", playerMoving)
+    hooksecurefunc("MoveBackwardStart", playerMoving)
+    hooksecurefunc("StrafeLeftStart", playerMoving)
+    hooksecurefunc("StrafeRightStart", playerMoving)
+    hooksecurefunc("JumpOrAscendStart", playerMoving)
+    hooksecurefunc("TurnOrActionStart", playerMovingMouse)
+    hooksecurefunc("ToggleAutoRun", playerMoving)
+    hooksecurefunc("ToggleRun", playerMoving)
+    hooksecurefunc("StartAutoRun", playerMoving)
+    hooksecurefunc("MoveAndSteerStart", playerMoving)
+    hooksecurefunc("CameraOrSelectOrMoveStart",playerMoving)
+
+    --Player Stopped Moving
+    hooksecurefunc("MoveForwardStop", playerStoppedMoving)
+    hooksecurefunc("MoveBackwardStop", playerStoppedMoving)
+    hooksecurefunc("StrafeLeftStop", playerStoppedMoving)
+    hooksecurefunc("StrafeRightStop", playerStoppedMoving)
+    hooksecurefunc("TurnOrActionStop", playerStoppedMoving)
+    hooksecurefunc("ToggleAutoRun", playerStoppedMoving)
+    hooksecurefunc("ToggleRun", playerStoppedMoving)
+    hooksecurefunc("StopAutoRun", playerStoppedMoving)
+    hooksecurefunc("MoveAndSteerStop", playerStoppedMoving)
+    hooksecurefunc("CameraOrSelectOrMoveStop",playerStoppedMoving)
 end
 
 function core._2096.Events:UNIT_POWER_UPDATE(self, unit, powerType)
@@ -231,27 +281,4 @@ function core._2096.Events:UNIT_POWER_UPDATE(self, unit, powerType)
             end
         end
     end
-end
-
-function core._2096.Events:PLAYER_STARTED_MOVING(self)
-    --Mind Flay and other spells incorrectly trigger this event so if PLAYER_STOPPED moving triggered at exactly the same time as PLAYER_STARTED_MOVING
-    --then we know the player hasen't really moved.
-    playerMovingStartTimestamp = GetTime()
-    local safeMove = safeToMove
-	C_Timer.After(0.2, function()
-		--If we have any start and stop events that took 0 seconds then we can assume this was  
-		if playerMovingStartTimestamp ~= playerStoppedMovingTimestamp and UnitChannelInfo("Player") == nil then
-			--Player has moved
-            core:sendDebugMessage("Player is moving")
-            playerCurrentlyMoving = true
-            if safeMove == false then
-                core:getAchievementFailedPersonalIndependent(UnitName("Player"))
-            end
-        end
-    end)
-end
-
-function core._2096.Events:PLAYER_STOPPED_MOVING(self)
-    playerStoppedMovingTimestamp = GetTime()
-	playerCurrentlyMoving = false
 end
