@@ -51,11 +51,13 @@ function core._1008:FengTheAccursed()
 		if core.spellId == 116936 and EpicenterReversed == false then
 			EpicenterReversed = true
 			itemsReversed = itemsReversed + 1
-			core:sendMessage("Epicenter Reversed (" .. itemsReversed .. "/5)")
+			C_Timer.After(8, function() 
+				core:sendMessage("Epicenter Reversed (" .. itemsReversed .. "/5)")
+			end)
 		elseif core.spellId == 118307 and WildfireSparkReversed == false then
 			WildfireSparkReversed = true
 			itemsReversed = itemsReversed + 1
-			core:sendMessage("WildfireSpark Reversed (" .. itemsReversed .. "/5)")
+			core:sendMessage("WildfireSpark Reversed (" .. itemsReversed .. "/5)")			
 		elseif core.spellId == 118194 and ArcaneResonanceReversed == false then
 			ArcaneResonanceReversed = true
 			itemsReversed = itemsReversed + 1
@@ -69,7 +71,9 @@ function core._1008:FengTheAccursed()
 		if core.spellId == 116938 and ArcaneVelocityReversed == false then
 			ArcaneVelocityReversed = true
 			itemsReversed = itemsReversed + 1
-			core:sendMessage("Arcane Velocity Reversed (" .. itemsReversed .. "/5)")
+			C_Timer.After(8, function() 
+				core:sendMessage("Arcane Velocity Reversed (" .. itemsReversed .. "/5)")			
+			end)
 		end
 	end
 
@@ -206,9 +210,6 @@ function core._1008.Events:UNIT_SPELLCAST_SUCCEEDED(self, unit, castGUID, spellI
 			unitFound = true
 		elseif spellID == 15999 then
 			success = InfoFrame_SetPlayerCompleteWithMessage(UnitName(unit), "Worg Pup")
-			unitFound = true
-		else
-			failed = InfoFrame_SetPlayerFailedWithMessage(UnitName(unit), "?")
 			unitFound = true
 		end
 
