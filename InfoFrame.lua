@@ -154,14 +154,16 @@ function InfoFrame_SetPlayerFailedWithMessage(player,additionalInfo)
         player = name
     end
 
-    if core.InfoFrame_PlayersTable[player][1] == 3 or core.InfoFrame_PlayersTable[player][1] == 1 then
-        core.InfoFrame_PlayersTable[player][1] = 3
-        core.InfoFrame_PlayersTable[player][2] = additionalInfo
-        return false
-    else
-        core.InfoFrame_PlayersTable[player][1] = 3
-        core.InfoFrame_PlayersTable[player][2] = additionalInfo
-        return true
+    if core.InfoFrame_PlayersTable[player] ~= nil then
+        if core.InfoFrame_PlayersTable[player][1] == 3 or core.InfoFrame_PlayersTable[player][1] == 1 then
+            core.InfoFrame_PlayersTable[player][1] = 3
+            core.InfoFrame_PlayersTable[player][2] = additionalInfo
+            return false
+        else
+            core.InfoFrame_PlayersTable[player][1] = 3
+            core.InfoFrame_PlayersTable[player][2] = additionalInfo
+            return true
+        end
     end
 end
 
@@ -196,14 +198,16 @@ function InfoFrame_SetPlayerCompleteWithMessage(player,additionalInfo)
         player = name
     end
 
-    if core.InfoFrame_PlayersTable[player][1] == 2 then
-        core.InfoFrame_PlayersTable[player][1] = 2
-        core.InfoFrame_PlayersTable[player][2] = additionalInfo
-        return false
-    else
-        core.InfoFrame_PlayersTable[player][1] = 2
-        core.InfoFrame_PlayersTable[player][2] = additionalInfo
-        return true
+    if core.InfoFrame_PlayersTable[player] ~= nil then
+        if core.InfoFrame_PlayersTable[player][1] == 2 then
+            core.InfoFrame_PlayersTable[player][1] = 2
+            core.InfoFrame_PlayersTable[player][2] = additionalInfo
+            return false
+        else
+            core.InfoFrame_PlayersTable[player][1] = 2
+            core.InfoFrame_PlayersTable[player][2] = additionalInfo
+            return true
+        end
     end
 end
 
