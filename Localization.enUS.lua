@@ -165,6 +165,7 @@ local baseLocale = {
     ["Shared_PlayersRunningAddon"] = "For IAT to track this achievement accurately, every player is the group needs to be running the addon",
     ["Shared_AchievementFailed"] = "Achievement Failed",
     ["Shared_TrackingAchievementFor"] = "Tracking achievement for",
+    ["Shared_PlayersWithPet"] = "Players with pet",
 
     -------------------------------------------------------
     --- Crucible Of Storms
@@ -692,6 +693,8 @@ local baseLocale = {
     ["MogushanVaults_WillOfTheEmperor"] = "",
 
     --Chat Output
+    ["MogushanVaults_HoverOverPets"] = "Hover over players pets to update the display",
+    
 
     -------------------------------------------------------
     --- Stormstout Brewery

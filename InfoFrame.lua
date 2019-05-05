@@ -57,28 +57,28 @@ function InfoFrame_UpdatePlayersOnInfoFrame(updateInfoFrame)
     end
 end
 
-function InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo(message)
+function InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
     --This will update list of players on the info frame
 
     if next(core.InfoFrame_PlayersTable) == nil then
-        --If table is empty then generate players
+        --If table is empty then generate players and place to store additional message
         for k,player in pairs(core:getPlayersInGroupForAchievement()) do
-            core.InfoFrame_PlayersTable[player] = 1
+            core.InfoFrame_PlayersTable[player] = {1,""}
         end
     else
         --Update Info Frame with values from table
         local messageStr = ""
         for player, status in pairs(core.InfoFrame_PlayersTable) do
             --1 = incomplete, 2 = complete, 3 = failed
-            if status.colour == 1 then
+            if status[1] == 1 then
                 --Player has not completed the requirements for the achievement yet
-                messageStr = messageStr .. colourWhite .. player .. " " .. message .. ": " .. status.message .. "|r\n"
-            elseif status.colour == 2 then
+                messageStr = messageStr .. colourWhite .. player .. " (" .. status[2] .. ")|r\n"
+            elseif status[1] == 2 then
                 --Player has completed the requirements for the achievement
-                messageStr = messageStr .. colourGreen .. player .. " " .. message .. ": " .. status.message .. "|r\n"
-            elseif status == 3 then
+                messageStr = messageStr .. colourGreen .. player .. " (" .. status[2] .. ")|r\n"
+            elseif status[1] then
                 --Player had completed the requirements for the achievement but has since failed it
-                messageStr.colour = messageStr .. colourRed .. player .. " " .. message .. ": " .. status.message .. "|r\n"
+                messageStr = messageStr .. colourRed .. player .. " (" .. status[2] .. ")|r\n"
             end
         end
         core.IATInfoFrame:SetText1(messageStr)
@@ -147,6 +147,24 @@ function InfoFrame_SetPlayerFailed(player,additionalInfo)
     end
 end
 
+function InfoFrame_SetPlayerFailedWithMessage(player,additionalInfo)
+    --Make sure we remove realm info from player before checking name
+    if string.find(player, "-") then
+        local name, realm = strsplit("-", player)
+        player = name
+    end
+
+    if core.InfoFrame_PlayersTable[player][1] == 3 or core.InfoFrame_PlayersTable[player][1] == 1 then
+        core.InfoFrame_PlayersTable[player][1] = 3
+        core.InfoFrame_PlayersTable[player][2] = additionalInfo
+        return false
+    else
+        core.InfoFrame_PlayersTable[player][1] = 3
+        core.InfoFrame_PlayersTable[player][2] = additionalInfo
+        return true
+    end
+end
+
 function InfoFrame_GetPlayerFailed(player)
     if core.InfoFrame_PlayersTable[player] == 3 then
         return true
@@ -170,6 +188,23 @@ function InfoFrame_SetPlayerComplete(player,additionalInfo)
             --core.InfoFrame_PlayersTable[player].message = additionalInfo
         end
     end   
+end
+function InfoFrame_SetPlayerCompleteWithMessage(player,additionalInfo)
+    --Make sure we remove realm info from player before checking name
+    if string.find(player, "-") then
+        local name, realm = strsplit("-", player)
+        player = name
+    end
+
+    if core.InfoFrame_PlayersTable[player][1] == 2 then
+        core.InfoFrame_PlayersTable[player][1] = 2
+        core.InfoFrame_PlayersTable[player][2] = additionalInfo
+        return false
+    else
+        core.InfoFrame_PlayersTable[player][1] = 2
+        core.InfoFrame_PlayersTable[player][2] = additionalInfo
+        return true
+    end
 end
 
 function InfoFrame_SetPlayerIncomplete(player)
