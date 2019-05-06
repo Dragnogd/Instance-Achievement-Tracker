@@ -44,7 +44,10 @@ local energyChargeKilled = false
 ------------------------------------------------------
 local playerExecutedStrike = 0
 local playersFailCounter = {}
+local playersStrikeFailCounter = {}
 local timerStarted = false
+local inititalFailSetup = false
+local playerExecutedStrikeDisplay = 0
 
 function core._1008:TheStoneGuard()
 	--Defeat the Stone Guard in Mogu'shan Vaults on Normal or Heroic difficulty while every member of your raid is accompanied by a canine companion pet.
@@ -180,7 +183,9 @@ function core._1008:ClearVariables()
 	---- Will of The Emperor
 	------------------------------------------------------
 	playerExecutedStrike = 0
+	playerExecutedStrikeDisplay = 0
 	timerStarted = false
+	inititalFailSetup = false
 
 	------------------------------------------------------
 	---- The Spirit Kings
@@ -201,6 +206,11 @@ function core._1008:InstanceCleanup()
 	mustLoveDogsActive = false
 	mustLoveDogsCounter = 0
 	TheStoneGuardKilled = false
+
+	------------------------------------------------------
+	---- Will of The Emperor
+	------------------------------------------------------
+	playersStrikeFailCounter = {}
 end
 
 core._1008.Events:SetScript("OnEvent", function(self, event, ...)
@@ -231,7 +241,7 @@ function core._1008.Events:ZONE_CHANGED_INDOORS()
 		mustLoveDogsActive = true
 		InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
 		InfoFrame_SetHeaderCounter(L["Shared_PlayersWithPet"],mustLoveDogsCounter,core.groupSize)
-	elseif C_Map.GetBestMapForUnit("Player") == 472 then
+	elseif C_Map.GetBestMapForUnit("Player") == 472 or C_Map.GetBestMapForUnit("Player") == 473 then
 		TheStoneGuardKilled = true
 		core.IATInfoFrame:ToggleOff()
 		infoFrameShown = false   
@@ -356,6 +366,18 @@ end
 --If counter equals 10 or 25 then complete achievement
 
 function core._1008:WillOfTheEmperor()
+	InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
+	InfoFrame_SetHeaderCounter(GetSpellLink(116809) .. " " .. L["Core_Counter"],playerExecutedStrikeDisplay,core.maxPlayers)
+
+	if inititalFailSetup == false then
+		inititalFailSetup = true
+		for player,status in pairs(core.InfoFrame_PlayersTable) do
+			if playersStrikeFailCounter[player] == nil then
+				playersStrikeFailCounter[player] = 0
+			end
+		end
+	end
+
 	--Hit by Devestating Arc
 	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 116835 then
 		if playersFailCounter[core.destName] == nil then
@@ -363,7 +385,7 @@ function core._1008:WillOfTheEmperor()
 		else
 			playersFailCounter[core.destName] = playersFailCounter[core.destName] + 1
 		end
-		core:sendMessage(core.destName .. " hit by Devestating Arc (" .. playersFailCounter[core.destName] .. ")")
+		core:sendMessage(core.destName .. " " .. L["Shared_HitBy"] .. " " .. GetSpellLink(116835) .. " (" .. playersFailCounter[core.destName] .. ")")
 	end
 
 	--Hit by Stomp
@@ -373,11 +395,28 @@ function core._1008:WillOfTheEmperor()
 		else
 			playersFailCounter[core.destName] = playersFailCounter[core.destName] + 1
 		end
-		core:sendMessage(core.destName .. " hit by Stomp (" .. playersFailCounter[core.destName] .. ")")
+		core:sendMessage(core.destName .. " " .. L["Shared_HitBy"] .. " " .. GetSpellLink(116969) .. " (" .. playersFailCounter[core.destName] .. ")")
 	end
 
 	--Executed opportunistic strike
 	if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 116809 then
+		if playerExecutedStrike == 0 then
+			core:sendDebugMessage("Resetting Players")
+			--Reset Players
+			for player,status in pairs(core.InfoFrame_PlayersTable) do
+				core.InfoFrame_PlayersTable[player][1] = 3
+			end
+			playerExecutedStrikeDisplay = 0
+		end
+		local playerName = core.sourceName
+		if string.find(core.sourceName, "-") then
+			local name, realm = strsplit("-", player)
+			playerName = name
+		end
+		core:sendDebugMessage(playerName)
+		core:sendDebugMessage(playersStrikeFailCounter[playerName])
+		InfoFrame_SetPlayerCompleteWithMessage(playerName, L["Shared_Fails"] .. ": " .. playersStrikeFailCounter[playerName])
+
 		playerExecutedStrike = playerExecutedStrike + 1
 		if timerStarted == false then
 			timerStarted = true
@@ -387,10 +426,21 @@ function core._1008:WillOfTheEmperor()
 					--core:sendMessage(core:getAchievement() .. " (" .. playerExecutedStrike .. "/" .. core.maxPlayers .. ") Opportunistic Strikes executed in time")					
 					core:getAchievementSuccess()
 				else
-					core:sendMessage(core:getAchievement() .. " (" .. playerExecutedStrike .. "/" .. core.maxPlayers .. ") Opportunistic Strikes executed in time")
+					core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(116809) .. " " .. L["Core_Counter"] .. " (" .. playerExecutedStrike .. "/" .. core.maxPlayers .. ")")
+					core:sendMessageSafe(core:getAchievement() .. " " .. L["Shared_PlayersWhoDidNotUse"] .. " " .. GetSpellLink(116809) .. " " .. InfoFrame_GetIncompletePlayersWithAdditionalInfo(),true)
+				
+					--Increase Fail Counter for players who did not execute in time
+					--Loop through all failed players increase counter by 1
+					for player,status in pairs(core.InfoFrame_PlayersTable) do
+						if status[1] ~= 2 then
+							playersStrikeFailCounter[player] = playersStrikeFailCounter[player] + 1
+							InfoFrame_SetPlayerFailedWithMessage(player, L["Shared_Fails"] .. ": " .. playersStrikeFailCounter[player])
+						end
+					end
 				end
 	
 				playerExecutedStrike = 0
+				playerExecutedStrikeDisplay = playerExecutedStrike
 				timerStarted = false
 			end)
 		else

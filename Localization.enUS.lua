@@ -167,6 +167,9 @@ local baseLocale = {
     ["Shared_TrackingAchievementFor"] = "Tracking achievement for",
     ["Shared_PlayersWithPet"] = "Players with pet",
     ["Shared_PlayersTwentyFiveyards"] = "For IAT to track this achievement accurately, players must be within 25 yards of each other when completing the achievement",
+    ["Shared_HitBy"] = "hit by",
+    ["Shared_PlayersWhoDidNotUse"] = "Players who did not use",
+    ["Shared_Fails"] = "Fails",
 
     -------------------------------------------------------
     --- Crucible Of Storms

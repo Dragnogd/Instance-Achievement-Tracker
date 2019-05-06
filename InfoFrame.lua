@@ -29,7 +29,6 @@ local colourOrange = "|cffff6100"
 
 function InfoFrame_UpdatePlayersOnInfoFrame(updateInfoFrame)
     --This will update list of players on the info frame
-
     if next(core.InfoFrame_PlayersTable) == nil then
         --If table is empty then generate players
         for k,player in pairs(core:getPlayersInGroupForAchievement()) do
@@ -59,9 +58,9 @@ end
 
 function InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
     --This will update list of players on the info frame
-
     if next(core.InfoFrame_PlayersTable) == nil then
         --If table is empty then generate players and place to store additional message
+        core:sendDebugMessage("Setting up InfoFrame with Additional Info")
         for k,player in pairs(core:getPlayersInGroupForAchievement()) do
             core.InfoFrame_PlayersTable[player] = {1,""}
         end
@@ -186,6 +185,17 @@ function InfoFrame_GetIncompletePlayers()
     return playerStr
 end
 
+function InfoFrame_GetIncompletePlayersWithAdditionalInfo()
+    --Returns a string with all players who are marked as incomplete
+    local playerStr = ""
+    for player,status in pairs(core.InfoFrame_PlayersTable) do
+        if core.InfoFrame_PlayersTable[player][1] == 1 or core.InfoFrame_PlayersTable[player][1] == 3 then
+            playerStr = playerStr .. player .. ", "
+        end
+    end
+    return playerStr
+end
+
 function InfoFrame_SetPlayerComplete(player)
     --Make sure we remove realm info from player before checking name
     if string.find(player, "-") then
@@ -205,6 +215,9 @@ function InfoFrame_SetPlayerComplete(player)
 end
 
 function InfoFrame_SetPlayerCompleteWithMessage(player,additionalInfo)
+    core:sendDebugMessage("Inside SetPlayerCompletedMessage")
+    core:sendDebugMessage(additionalInfo)
+    core:sendDebugMessage(player)
     --Make sure we remove realm info from player before checking name
     if string.find(player, "-") then
         local name, realm = strsplit("-", player)
@@ -215,10 +228,18 @@ function InfoFrame_SetPlayerCompleteWithMessage(player,additionalInfo)
         if core.InfoFrame_PlayersTable[player][1] == 2 then
             core.InfoFrame_PlayersTable[player][1] = 2
             core.InfoFrame_PlayersTable[player][2] = additionalInfo
+
+            core:sendDebugMessage(core.InfoFrame_PlayersTable[player][1])
+            core:sendDebugMessage(core.InfoFrame_PlayersTable[player][2])
+
             return false
         else
             core.InfoFrame_PlayersTable[player][1] = 2
             core.InfoFrame_PlayersTable[player][2] = additionalInfo
+
+            core:sendDebugMessage(core.InfoFrame_PlayersTable[player][1])
+            core:sendDebugMessage(core.InfoFrame_PlayersTable[player][2])
+
             return true
         end
     end
