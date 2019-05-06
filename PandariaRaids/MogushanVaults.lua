@@ -102,7 +102,8 @@ function core._1008:Elegon()
 				if empyrealFocusesDeactivated == 6 then
 					core:getAchievementSuccess()
 				else
-					core:getAchievementFailedWithMessageAfter("(" .. empyrealFocusesDeactivated .. "/" .. ") Empyreal Focuses Deactivated in time")
+					core:getAchievementFailedWithMessageAfter(format(L["Shared_AddKillCounter"], getNPCName(60776)) .. " (" .. empyrealFocusesDeactivated .. "/6)")
+					empyrealFocusesDeactivated = 0
 				end
 			end)
 		else
