@@ -226,7 +226,7 @@ end
 
 local function playerStoppedMoving(...)
     if IsPlayerMoving() == false and UnitIsDead("Player") == false then
-        core:sendDebugMessage(GetTime() .. " Player stopped moving")
+        -- core:sendDebugMessage(GetTime() .. " Player stopped moving")
         playerCurrentlyMoving = false
     end
 end

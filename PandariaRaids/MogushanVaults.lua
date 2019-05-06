@@ -31,6 +31,7 @@ local itemsReversed = 0
 ---- The Spirit Kings
 ------------------------------------------------------
 local playersDancing = 0
+local GettingHotComplete = false
 
 ------------------------------------------------------
 ---- Elegon
@@ -125,7 +126,7 @@ function core._1008:TheSpiritKings()
 	core.IATInfoFrame:SetText2(L["Shared_PlayersTwentyFiveyards"],200)
 
 	--Pillage started
-	if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 118049 then
+	if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 118049 and GettingHotComplete == false then
 		--Reset Players
 		for player,status in pairs(core.InfoFrame_PlayersTable) do
 			core.InfoFrame_PlayersTable[player] = 3
@@ -136,6 +137,7 @@ function core._1008:TheSpiritKings()
 			--Players have 14 seconds to dance while having the pillage debuff
 			if playersDancing == core.maxPlayers then
 				core:getAchievementSuccess()
+				GettingHotComplete = true
 			else
 				core:sendMessageSafe(core:getAchievement() .. " (" .. playersDancing .. "/" .. core.maxPlayers .. ") " .. L["MogushanVaults_PlayersWhoDidNotDance"] .. " " .. InfoFrame_GetIncompletePlayers(),true)
 			end
@@ -183,6 +185,7 @@ function core._1008:ClearVariables()
 	---- The Spirit Kings
 	------------------------------------------------------
 	playersDancing = 0
+	GettingHotComplete = false
 end
 
 function core._1008:InstanceCleanup()

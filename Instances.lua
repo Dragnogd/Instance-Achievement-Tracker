@@ -2641,7 +2641,7 @@ core.Instances = {
                 },
                 boss4 = {
                     name = 687, --The Spirit Kings
-                    bossIDs = {60710},
+                    bossIDs = {},
                     achievement = 6687,
                     players = {},
                     tactics = L["MogushanVaults_TheSpiritKings"],
