@@ -54,43 +54,42 @@ function core._1008:TheStoneGuard()
 
 	--Lets show an InfoFrame which updates when a player hovers over pets in the raid or summons a pet
 	InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
+end
 
-	--Boss has died. Prevent InfoFrame from being shown again for remainder of the raid
-	if core.type == "UNIT_DIED" and core.destID == ("60043" or core.destID == "60051" or core.destID == "59915") then
+function core._1008:FengTheAccursed()
+	if mustLoveDogsActive == true then
 		TheStoneGuardKilled = true
 		core.IATInfoFrame:ToggleOff()
 		infoFrameShown = false   
 		mustLoveDogsActive = false
 	end
-end
 
-function core._1008:FengTheAccursed()
 	if core.type == "SPELL_AURA_APPLIED" then
 		if core.spellId == 116936 and EpicenterReversed == false then
 			EpicenterReversed = true
 			itemsReversed = itemsReversed + 1
 			C_Timer.After(8, function() 
-				core:sendMessage("Epicenter Reversed (" .. itemsReversed .. "/5)")
+				core:sendMessage(GetSpellLink(116936) .. " " .. L["Shared_Completed"] .. " (" .. itemsReversed .. "/5)")
 			end)
 		elseif core.spellId == 118307 and WildfireSparkReversed == false then
 			WildfireSparkReversed = true
 			itemsReversed = itemsReversed + 1
-			core:sendMessage("WildfireSpark Reversed (" .. itemsReversed .. "/5)")			
+			core:sendMessage(GetSpellLink(118307) .. " " .. L["Shared_Completed"] .. " (" .. itemsReversed .. "/5)")			
 		elseif core.spellId == 118194 and ArcaneResonanceReversed == false then
 			ArcaneResonanceReversed = true
 			itemsReversed = itemsReversed + 1
-			core:sendMessage("Arcane Resonance Reversed (" .. itemsReversed .. "/5)")
+			core:sendMessage(GetSpellLink(118194) .. " " .. L["Shared_Completed"] .. " (" .. itemsReversed .. "/5)")
 		elseif core.spellId == 115730 and LightningFistsReversed == false then
 			LightningFistsReversed = true
 			itemsReversed = itemsReversed + 1
-			core:sendMessage("Lightning Fists Reversed (" .. itemsReversed .. "/5)")
+			core:sendMessage(GetSpellLink(115730) .. " " .. L["Shared_Completed"] .. " (" .. itemsReversed .. "/5)")
 		end
 	elseif core.type == "SPELL_CAST_SUCCESS" then
 		if core.spellId == 116938 and ArcaneVelocityReversed == false then
 			ArcaneVelocityReversed = true
 			itemsReversed = itemsReversed + 1
 			C_Timer.After(8, function() 
-				core:sendMessage("Arcane Velocity Reversed (" .. itemsReversed .. "/5)")			
+				core:sendMessage(GetSpellLink(116938) .. " " .. L["Shared_Completed"] .. " (" .. itemsReversed .. "/5)")			
 			end)
 		end
 	end

@@ -170,6 +170,7 @@ local baseLocale = {
     ["Shared_HitBy"] = "hit by",
     ["Shared_PlayersWhoDidNotUse"] = "Players who did not use",
     ["Shared_Fails"] = "Fails",
+    ["Shared_Completed"] = "Completed",
 
     -------------------------------------------------------
     --- Crucible Of Storms
