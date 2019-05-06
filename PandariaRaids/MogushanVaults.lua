@@ -54,6 +54,14 @@ function core._1008:TheStoneGuard()
 
 	--Lets show an InfoFrame which updates when a player hovers over pets in the raid or summons a pet
 	InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
+
+	--Boss has died. Prevent InfoFrame from being shown again for remainder of the raid
+	if core.type == "UNIT_DIED" and core.destID == ("60043" or core.destID == "60051" or core.destID == "59915") then
+		TheStoneGuardKilled = true
+		core.IATInfoFrame:ToggleOff()
+		infoFrameShown = false   
+		mustLoveDogsActive = false
+	end
 end
 
 function core._1008:FengTheAccursed()
