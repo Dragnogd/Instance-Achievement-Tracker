@@ -163,6 +163,7 @@ core.NPCCache = {
     [64479] = 64479, --Gatecrusher
     [58787] = 58787, --Big Bessa
     [62465] = 62465, --Captain Ook
+    [60710] = 60710, --Subetai the Swift
 }
 
 --[] = , --

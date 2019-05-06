@@ -15,6 +15,7 @@ core._1008.Events = CreateFrame("Frame")
 ------------------------------------------------------
 local mustLoveDogsActive = false
 local mustLoveDogsCounter = 0
+local TheStoneGuardKilled = false
 
 ------------------------------------------------------
 ---- Feng The Accursed
@@ -25,6 +26,11 @@ local ArcaneResonanceReversed = false
 local LightningFistsReversed = false
 local ArcaneVelocityReversed = false
 local itemsReversed = 0
+
+------------------------------------------------------
+---- The Spirit Kings
+------------------------------------------------------
+local playersDancing = 0
 
 ------------------------------------------------------
 ---- Elegon
@@ -106,12 +112,48 @@ function core._1008:Elegon()
 	end
 end
 
-function _1008_TheSpiritKings()
+function core._1008:TheSpiritKings()
 	--If boss has cast pillage start timer
 	--If user dances and timer has started add to array and user is not already in the array
 	--If player gets pillaged add to another array
 	--Compare 2 arrays once timer has finished. If they dance at the correct time and got hit by pillaged at the end they executed the move at the correct time
 	--Announce in chat who did not dance in time.
+	
+	InfoFrame_UpdatePlayersOnInfoFrame()
+	InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],playersDancing,core.maxPlayers)
+	core.IATInfoFrame:SetSubHeading2(L["Shared_Notes"])
+	core.IATInfoFrame:SetText2(L["Shared_PlayersTwentyFiveyards"],200)
+
+	--Pillage started
+	if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 118049 then
+		--Reset Players
+		for player,status in pairs(core.InfoFrame_PlayersTable) do
+			core.InfoFrame_PlayersTable[player] = 3
+        end
+		playersDancing = 0
+
+		C_Timer.After(14, function() 
+			--Players have 14 seconds to dance while having the pillage debuff
+			if playersDancing == core.maxPlayers then
+				core:getAchievementSuccess()
+			else
+				core:sendMessageSafe(core:getAchievement() .. " (" .. playersDancing .. "/" .. core.maxPlayers .. ") " .. L["MogushanVaults_PlayersWhoDidNotDance"] .. " " .. InfoFrame_GetIncompletePlayers(),true)
+			end
+		end)
+	end
+
+	--Check for message in the sync queue
+	for k,sender in ipairs(core.syncMessageQueue) do
+		if sender ~= nil then
+			core:sendDebugMessage("Found Message:" .. sender)
+			--Set player to complete on InfoFrame
+			local success = InfoFrame_SetPlayerComplete(sender)
+			if success then
+				playersDancing = playersDancing + 1								
+			end
+			core.syncMessageQueue[k] = nil
+		end
+	end
 end
 
 function core._1008:ClearVariables()
@@ -136,18 +178,25 @@ function core._1008:ClearVariables()
 	------------------------------------------------------
 	playerExecutedStrike = 0
 	timerStarted = false
+
+	------------------------------------------------------
+	---- The Spirit Kings
+	------------------------------------------------------
+	playersDancing = 0
 end
 
 function core._1008:InstanceCleanup()
     core._1008.Events:UnregisterEvent("UPDATE_MOUSEOVER_UNIT")
-    core._1008.Events:UnregisterEvent("ZONE_CHANGED")
+    core._1008.Events:UnregisterEvent("ZONE_CHANGED_INDOORS")
 	core._1008.Events:UnregisterEvent("UNIT_SPELLCAST_SUCCEDDED")
+	core._1008.Events:UnregisterEvent("CHAT_MSG_TEXT_EMOTE")
 
 	------------------------------------------------------
 	---- The Stone Guard
 	------------------------------------------------------
 	mustLoveDogsActive = false
 	mustLoveDogsCounter = 0
+	TheStoneGuardKilled = false
 end
 
 core._1008.Events:SetScript("OnEvent", function(self, event, ...)
@@ -156,8 +205,9 @@ end)
 
 function core._1008:InitialSetup()
     core._1008.Events:RegisterEvent("UPDATE_MOUSEOVER_UNIT")
-	core._1008.Events:RegisterEvent("ZONE_CHANGED")
+	core._1008.Events:RegisterEvent("ZONE_CHANGED_INDOORS")
 	core._1008.Events:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+	core._1008.Events:RegisterEvent("CHAT_MSG_TEXT_EMOTE")
 	
 	if C_Map.GetBestMapForUnit("Player") == 471 then
         core.IATInfoFrame:ToggleOn()
@@ -169,14 +219,19 @@ function core._1008:InitialSetup()
     end
 end
 
-function core._1008.Events:ZONE_CHANGED()
-    if C_Map.GetBestMapForUnit("Player") == 471 then
+function core._1008.Events:ZONE_CHANGED_INDOORS()
+    if C_Map.GetBestMapForUnit("Player") == 471 and TheStoneGuardKilled == false then
         core.IATInfoFrame:ToggleOn()
         core.IATInfoFrame:SetHeading(GetAchievementLink(6823))
 		infoFrameShown = true
 		mustLoveDogsActive = true
 		InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
 		InfoFrame_SetHeaderCounter(L["Shared_PlayersWithPet"],mustLoveDogsCounter,core.groupSize)
+	elseif C_Map.GetBestMapForUnit("Player") == 472 then
+		TheStoneGuardKilled = true
+		core.IATInfoFrame:ToggleOff()
+		infoFrameShown = false   
+		mustLoveDogsActive = false 
     else
         core.IATInfoFrame:ToggleOff()
 		infoFrameShown = false   
@@ -340,4 +395,58 @@ function core._1008:WillOfTheEmperor()
 			end			
 		end
 	end
+end
+
+function core._1008.Events:CHAT_MSG_TEXT_EMOTE(self, message, sender, lineID, senderGUID)
+    if core.Instances[core.expansion][core.instanceType][core.instance]["boss4"].enabled == true then
+        --Lets get the target they danced with
+        if UnitIsPlayer(sender) then
+            if sender == UnitName("Player") then
+                if string.match(message, L["MogushanVaults_DanceSelf"]) then
+                    core:sendDebugMessage("Detected Dance Self")
+                    if string.match(message, getNPCName(60710)) then
+                        core:sendDebugMessage("Detected Subetai The Swift Self")
+                        --They have danced with the correct npc. Check if they have the correct buff
+                        for i=1,40 do
+                            local _, _, _, _, _, _, _, _, _, spellId = UnitDebuff(sender, i)
+                            if spellId == 118048 then
+                                core:sendDebugMessage("Found player who danced with Subetai The Swift")
+                                core:sendDebugMessage(sender)
+								core:sendDebugMessage(spellId)
+								--Set player to complete on InfoFrame
+								local success = InfoFrame_SetPlayerComplete(sender)
+								if success then
+									playersDancing = playersDancing + 1								
+								end
+
+								--Send message to other addon users
+								C_ChatInfo.SendAddonMessage("Whizzey", "syncMessage" .. "-" .. sender, "RAID")
+                            end
+                        end
+                    end
+                end
+            else
+                if string.match(message, L["MogushanVaults_DanceOther"]) then
+                    core:sendDebugMessage("Detected Praise Other")
+                    if string.match(message, getNPCName(60710)) then
+                        core:sendDebugMessage("Detected Subetai The Swift in other")
+                        --They have danced with the correct npc. Check if they have the correct buff
+                        for i=1,40 do
+                            local _, _, _, _, _, _, _, _, _, spellId = UnitDebuff(sender, i)
+                            if spellId == 118048 then
+                                core:sendDebugMessage("Found player who danced with Subetai The Swift")
+                                core:sendDebugMessage(sender)
+								core:sendDebugMessage(spellId)
+								--Set player to complete on InfoFrame
+								local success = InfoFrame_SetPlayerComplete(sender)
+								if success then
+									playersDancing = playersDancing + 1								
+								end
+                            end
+                        end
+                    end
+                end 
+            end
+        end
+    end
 end

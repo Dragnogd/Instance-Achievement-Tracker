@@ -175,22 +175,35 @@ function InfoFrame_GetPlayerFailed(player)
     end
 end
 
-function InfoFrame_SetPlayerComplete(player,additionalInfo)
+function InfoFrame_GetIncompletePlayers()
+    --Returns a string with all players who are marked as incomplete
+    local playerStr = ""
+    for player,status in pairs(core.InfoFrame_PlayersTable) do
+        if core.InfoFrame_PlayersTable[player] == 1 or core.InfoFrame_PlayersTable[player] == 3 then
+            playerStr = playerStr .. player .. ", "
+        end
+    end
+    return playerStr
+end
+
+function InfoFrame_SetPlayerComplete(player)
     --Make sure we remove realm info from player before checking name
     if string.find(player, "-") then
         local name, realm = strsplit("-", player)
         player = name
     end
 
-    if core.InfoFrame_PlayersTable[player] ~= nil and additionalInfo == nil  then
-        core.InfoFrame_PlayersTable[player] = 2
-    else
-        if player ~= nil then
-            --core.InfoFrame_PlayersTable[player].colour = 2
-            --core.InfoFrame_PlayersTable[player].message = additionalInfo
+    if core.InfoFrame_PlayersTable[player] ~= nil then
+        if core.InfoFrame_PlayersTable[player] == 2 then
+            core.InfoFrame_PlayersTable[player] = 2
+            return false
+        else
+            core.InfoFrame_PlayersTable[player] = 2
+            return true
         end
-    end   
+    end
 end
+
 function InfoFrame_SetPlayerCompleteWithMessage(player,additionalInfo)
     --Make sure we remove realm info from player before checking name
     if string.find(player, "-") then

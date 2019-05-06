@@ -166,6 +166,7 @@ local baseLocale = {
     ["Shared_AchievementFailed"] = "Achievement Failed",
     ["Shared_TrackingAchievementFor"] = "Tracking achievement for",
     ["Shared_PlayersWithPet"] = "Players with pet",
+    ["Shared_PlayersTwentyFiveyards"] = "For IAT to track this achievement accurately, players must be within 25 yards of each other when completing the achievement",
 
     -------------------------------------------------------
     --- Crucible Of Storms
@@ -694,6 +695,9 @@ local baseLocale = {
 
     --Chat Output
     ["MogushanVaults_HoverOverPets"] = "Hover over players pets to update the display",
+    ["MogushanVaults_DanceSelf"] = "You dance with",
+    ["MogushanVaults_DanceOther"] = "dances with",
+    ["MogushanVaults_PlayersWhoDidNotDance"] = "Players who did not dance",
     
 
     -------------------------------------------------------

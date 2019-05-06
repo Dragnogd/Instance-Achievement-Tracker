@@ -2641,14 +2641,15 @@ core.Instances = {
                 },
                 boss4 = {
                     name = 687, --The Spirit Kings
-                    bossIDs = {},
+                    bossIDs = {60710},
                     achievement = 6687,
                     players = {},
                     tactics = L["MogushanVaults_TheSpiritKings"],
-                    enabled = false,
-                    track = nil,
+                    enabled = true,
+                    track = function() core._1008:TheSpiritKings() end,
                     partial = false,
                     encounterID = 1436,
+                    displayInfoFrame = true,
                 },
                 boss5 = {
                     name = 726, --Elegon
