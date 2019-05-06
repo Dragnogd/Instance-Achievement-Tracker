@@ -276,6 +276,14 @@ function core._1008.Events:UNIT_SPELLCAST_SUCCEEDED(self, unit, castGUID, spellI
 		local unitFound = false
 		local success = false
 		local failed = false
+		if spellID == 70613 or spellID == 69452 or spellID == 90637 or spellID == 15999 then
+			--Make sure InfoFrame has up-to date list of players
+			for k,player in pairs(core:getPlayersInGroupForAchievement()) do
+				if core.InfoFrame_PlayersTable[player] == nil then
+					core.InfoFrame_PlayersTable[player] = {1,""}
+				end
+			end
+		end
 		if spellID == 70613 then
 			success = InfoFrame_SetPlayerCompleteWithMessage(UnitName(unit), "Perky Pug")
 			unitFound = true
@@ -306,6 +314,13 @@ end
 
 function core._1008.Events:UPDATE_MOUSEOVER_UNIT(self, unit, powerType)
 	if core.Instances[core.expansion][core.instanceType][core.instance]["boss1"].enabled == true and mustLoveDogsActive == true then
+		--Make sure InfoFrame has up-to date list of players
+		for k,player in pairs(core:getPlayersInGroupForAchievement()) do
+			if core.InfoFrame_PlayersTable[player] == nil then
+				core.InfoFrame_PlayersTable[player] = {1,""}
+			end
+        end
+
 		if UnitGUID("mouseover") ~= nil then
 			local unitType, _, _, _, _, destID, spawn_uid_dest = strsplit("-", UnitGUID("mouseover"))
 			local petName = UnitName("mouseover")
