@@ -9,7 +9,7 @@ local UIConfig													--UIConfig is used to make a display asking the user 
 local UICreated = false											--To enable achievement tracking when they enter an instances
 local debugMode = false
 local debugModeChat = false
-local sendDebugMessages = false
+local sendDebugMessages = true
 
 local ptrVersion = "8.1.0"
 
@@ -648,6 +648,13 @@ function createEnableAchievementTrackingUI()
 	UIConfig:SetHeight(UIConfig.content:GetHeight() + UIConfig.btnYes:GetHeight() + UIConfig.title:GetHeight() + 35)
 	UIConfig.btnYes:SetScript("OnClick", enableAchievementTracking);
 	UIConfig.btnNo:SetScript("OnClick", disableAchievementTracking);
+
+	UIConfig:SetMovable(true)
+    UIConfig:EnableMouse(true)
+    UIConfig:SetClampedToScreen(true)
+    UIConfig:RegisterForDrag("LeftButton")
+    UIConfig:SetScript("OnDragStart", UIConfig.StartMoving)
+    UIConfig:SetScript("OnDragStop", UIConfig.StopMovingOrSizing)
 	
 	--Setup the InfoFrame
 	core.IATInfoFrame:SetupInfoFrame()
