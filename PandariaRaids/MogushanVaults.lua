@@ -432,7 +432,7 @@ function core._1008:WillOfTheEmperor()
 		end
 		local playerName = core.sourceName
 		if string.find(core.sourceName, "-") then
-			local name, realm = strsplit("-", player)
+			local name, realm = strsplit("-", core.sourceName)
 			playerName = name
 		end
 		core:sendDebugMessage(playerName)
@@ -443,7 +443,7 @@ function core._1008:WillOfTheEmperor()
 		if timerStarted == false then
 			timerStarted = true
 
-			C_Timer.After(10, function() 
+			C_Timer.After(7, function() 
 				if playerExecutedStrike == core.maxPlayers then
 					--core:sendMessage(core:getAchievement() .. " (" .. playerExecutedStrike .. "/" .. core.maxPlayers .. ") Opportunistic Strikes executed in time")					
 					core:getAchievementSuccess()
