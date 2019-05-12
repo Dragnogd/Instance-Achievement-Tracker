@@ -107,7 +107,7 @@ function core._1009.Events:UNIT_AURA(self, unitID, ...)
 						local _, _, _, _, _, _, _, _, _, spellId = UnitDebuff(unitID, i)
 						if spellId == 125785 then
 							parasiteCounter = parasiteCounter + 1
-							core:sendMessage(UnitName(unitID) .. " has got the Zealous Parasite debuff (" .. parasiteCounter .. "/" .. core.groupSize .. ")")
+							core:sendMessage(UnitName(unitID) .. " " .. L["Shared_HasGained"] .. " " .. GetSpellLink(125785) .. " (" .. parasiteCounter .. "/" .. core.groupSize .. ")")
 							parasitePlayers[spawn_uid_dest] = spawn_uid_dest
 							InfoFrame_SetPlayerComplete(UnitName(unitID))
 						end
@@ -129,7 +129,7 @@ function core._1009.Events:UNIT_AURA(self, unitID, ...)
 			
 						--If achievement had already completed then fail it
 						if core.achievementsCompleted[1] == true then
-							core:getAchievementFailedWithMessageAfter("(Reason: " .. UnitName(unitID) .. " has died) DO NOT KILL BOSS!")
+							core:getAchievementFailedWithMessageAfter("(" .. L["Core_Reason"] .. ": " .. UnitName(unitID) .. " " .. L["Shared_HasDied"] .. ") " .. L["Shared_DoNotKillBoss"])
 							core.achievementsCompleted[1] = false
 						end
 					end
