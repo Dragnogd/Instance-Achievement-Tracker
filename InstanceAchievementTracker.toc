@@ -2,7 +2,7 @@
 ## Notes: An addon for tracking the completion/faliure of instance achievements.
 ## Title:Instance Achievement Tracker
 ## Author: Whizzey
-## Version: 2.42.0
+## Version: 2.43.0
 ## OptionalDeps: LibStub, CallbackHandler-1.0, LibDBIcon-1.0, LibInspect, LibRangeCheck-2.0
 ## SavedVariables: AchievementTrackerOptions, AchievementTrackerDebug
 
@@ -30,6 +30,7 @@ Localization.koKR.lua
 BattleForAzerothRaids\Uldir.lua
 BattleForAzerothRaids\BattleOfDazaralor.lua
 BattleForAzerothRaids\CrucibleOfStorms.lua
+BattleForAzerothRaids\AzsharasEternalPalace.lua
 
 BattleForAzerothDungeons\AtalDazar.lua
 BattleForAzerothDungeons\Freehold.lua

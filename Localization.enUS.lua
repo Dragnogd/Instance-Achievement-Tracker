@@ -171,6 +171,8 @@ local baseLocale = {
     ["Shared_PlayersWhoDidNotUse"] = "Players who did not use",
     ["Shared_Fails"] = "Fails",
     ["Shared_Completed"] = "Completed",
+    ["Shared_DoNotKillBoss"] = "DO NOT KILL BOSS!",
+    ["Shared_HasDied"] = "has died",
 
     -------------------------------------------------------
     --- Crucible Of Storms
@@ -685,6 +687,7 @@ local baseLocale = {
     ["HeartOfFear_GrandEmpressShekzeer"] = "For this achievement you need a way to taunt the boss between 2 targets to manage the %s debuff. 2 players will need to taunt at 4 stacks of the debuff to avoid dying. This will keep happening until the boss reaches 0 energy at which points the adds will spawn. Nuke down the 2 Kor'thik Reavers within 10 seconds of each other and then kill the boss to gain this achievement",
 
     --Chat Output
+    ["HeartOfFear_BraziersLit"] = "Braziers Lit",
 
     -------------------------------------------------------
     --- Mogu'shan Vaults

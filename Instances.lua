@@ -253,6 +253,98 @@ core.Instances = {
                     displayInfoFrame = true,
                 },
             },
+    
+            -- [2164] = { --Azshara's Eternal Palace
+            --     name = ,
+            --     boss1 = {
+            --         name = , --
+            --         bossIDs = {},
+            --         achievement = ,
+            --         players = {},
+            --         tactics = L["AzsharasEternalPalace_"],
+            --         enabled = false,
+            --         track = nil,
+            --         partial = false,
+            --         encounterID = ,
+            --     },
+            --     boss2 = {
+            --         name = , --
+            --         bossIDs = {},
+            --         achievement = ,
+            --         players = {},
+            --         tactics = L["AzsharasEternalPalace_"],
+            --         enabled = false,
+            --         track = nil,
+            --         partial = false,
+            --         encounterID = ,
+            --     },
+            --     boss3 = {
+            --         name = , --
+            --         bossIDs = {},
+            --         achievement = ,
+            --         players = {},
+            --         tactics = L["AzsharasEternalPalace_"],
+            --         enabled = false,
+            --         track = nil,
+            --         partial = false,
+            --         encounterID = ,
+            --     },
+            --     boss4 = {
+            --         name = , --
+            --         bossIDs = {},
+            --         achievement = ,
+            --         players = {},
+            --         tactics = L["AzsharasEternalPalace_"],
+            --         enabled = false,
+            --         track = nil,
+            --         partial = false,
+            --         encounterID = ,
+            --     },
+            --     boss5 = {
+            --         name = , --
+            --         bossIDs = {},
+            --         achievement = ,
+            --         players = {},
+            --         tactics = L["AzsharasEternalPalace_"],
+            --         enabled = false,
+            --         track = nil,
+            --         partial = false,
+            --         encounterID = ,
+            --     },
+            --     boss6 = {
+            --         name = , --
+            --         bossIDs = {},
+            --         achievement = ,
+            --         players = {},
+            --         tactics = L["AzsharasEternalPalace_"],
+            --         enabled = false,
+            --         track = nil,
+            --         partial = false,
+            --         encounterID = ,
+            --     },
+            --     boss7 = {
+            --         name = , --
+            --         bossIDs = {},
+            --         achievement = ,
+            --         players = {},
+            --         tactics = L["AzsharasEternalPalace_"],
+            --         enabled = false,
+            --         track = nil,
+            --         partial = false,
+            --         encounterID = ,
+            --     },
+            --     boss8 = {
+            --         name = , --
+            --         bossIDs = {},
+            --         achievement = ,
+            --         players = {},
+            --         tactics = L["AzsharasEternalPalace_"],
+            --         enabled = false,
+            --         track = nil,
+            --         partial = false,
+            --         encounterID = ,
+            --     },
+            -- },
         },
 
         Dungeons = {
