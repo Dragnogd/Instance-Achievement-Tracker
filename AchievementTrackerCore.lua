@@ -9,7 +9,7 @@ local UIConfig													--UIConfig is used to make a display asking the user 
 local UICreated = false											--To enable achievement tracking when they enter an instances
 local debugMode = false
 local debugModeChat = false
-local sendDebugMessages = true
+local sendDebugMessages = false
 
 local ptrVersion = "8.1.0"
 
@@ -178,6 +178,7 @@ core.achievementDisplayStatus = "show"			--How achievements should be display wi
 local mobMouseoverCache = {}
 local encounterCache = {}
 local announceMissingAchievements = false
+local versionCheckInitiated = false
 
 --------------------------------------
 -- Current Instance Variables
@@ -787,6 +788,19 @@ core.commands = {
 
 	[L["Core_Enable"]] = function()
 		print("Enable/Disable addon")
+	end,
+
+	["version"] = function()
+		if versionCheckInitiated == false then
+			versionCheckInitiated = true
+			C_ChatInfo.SendAddonMessage("Whizzey", "sendVersionIAT", "RAID")
+
+			C_Timer.After(20, function() 
+				versionCheckInitiated = false
+			end)
+		else
+			print("Wait 20 seconds before using this command again")
+		end	
 	end,
 
 	["debug"] = function()
@@ -1831,9 +1845,18 @@ function events:CHAT_MSG_ADDON(self, prefix, message, channel, sender)
 				end
 			end
 		end
-
-		--If we have not set green to the addon that sent the request then do so as this we can assume that since the request was sent, they are running the addon
-
+	elseif string.match(message, "moveIAT") then
+		local sync, playerMoving, nameOfPlayer = strsplit(",", message)
+		core:sendDebugMessage(nameOfPlayer .. " is moving " .. playerMoving)
+	elseif string.match(message, "sendVersionIAT") then
+		--Send Version Check
+		C_ChatInfo.SendAddonMessage("Whizzey", "getVersionIAT," .. UnitName("Player") .. "," .. core.Config.majorVersion .. "," .. core.Config.minorVersion .. "," .. core.Config.revisionVersion , "RAID")
+	elseif string.match(message, "getVersionIAT") then
+		--Get Version Check
+		local sync, player, major, minor, revision = strsplit(",", message)
+		if versionCheckInitiated == true then
+			print(player, major, minor, revision)
+		end
 	elseif string.match(message, "IAT") then
 		local sync, name = strsplit(",", message)
 

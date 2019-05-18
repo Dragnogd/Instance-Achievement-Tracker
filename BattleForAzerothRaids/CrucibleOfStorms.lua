@@ -28,6 +28,9 @@ local playerStoppedMovingTimestamp = nil
 local giftOfNzothActive = false
 local phase1Complete = false
 local phase2Complete = false
+local phaseChangeInProgress = false
+local playerMovingDebug = false
+local bossatthirtyeightannounce = false
 
 function core._2096:TheRestlessCabal()
     --Defeat the Restless Cabal in Crucible of Storms after having at least 10 Void Crashes active simultaneously in Normal Difficulty or higher.
@@ -95,9 +98,9 @@ function core._2096:UunatHarbingerOfTheVoid()
 
     --When boss starts casting Gift of N'Zoth tell players to stop moving
 	if core.type == "SPELL_CAST_START" and (core.spellId == 285638 or core.spellId == 285685 or core.spellId == 285453) then
-		core:sendDebugMessage(1)
-        core:sendDebugMessage("Stop Moving: Gift of N'Zoth")
+        core:sendDebugMessage("Stop Moving: Gift of N'Zoth (SPELL_CAST_START) SAFE TO MOVE")
         giftOfNzothActive = true
+        bossatthirtyeightannounce = false
         if stopMovingAnnounced == false then
             stopMovingAnnounced = true
             core:sendMessage(core:getAchievement() .. " " .. L["CrucibleOfStorms_StopMoving"],true)
@@ -107,7 +110,7 @@ function core._2096:UunatHarbingerOfTheVoid()
 	
 	--When boss has finished casting Gift of N'Zoth players are no longer allowed to move
 	if core.type == "SPELL_CAST_SUCCESS" and (core.spellId == 285638 or core.spellId == 285685 or core.spellId == 285453) then
-		core:sendDebugMessage("Stop Moving: Gift of N'Zoth 2")
+		core:sendDebugMessage("Stop Moving: Gift of N'Zoth (SPELL_CAST_SUCCESS) NOT SAFE TO MOVE")
 		safeToMove = false
 		if playerCurrentlyMoving == true then
 			core:getAchievementFailedPersonalIndependent(UnitName("Player"))
@@ -115,9 +118,9 @@ function core._2096:UunatHarbingerOfTheVoid()
 	end
 
     --When boss is changing phase then player must stop moving
-	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 286310 then
-		core:sendDebugMessage(2)
-        core:sendDebugMessage("Stop Moving: Phase Change")
+    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 286310 then
+        phaseChangeInProgress = true
+        core:sendDebugMessage("Stop Moving: Phase Change (SPELL_AURA_APPLIED) NOT SAFE TO MOVE")
         safeToMove = false
         if stopMovingAnnounced == false then
             stopMovingAnnounced = true
@@ -131,8 +134,9 @@ function core._2096:UunatHarbingerOfTheVoid()
 
     --Boss has finished changing phases so players can move again aslong as Gift of N'zoth is not active
     --We believe that Gift of N'zoth currently takes precedence over phase change but need more data to confirm
-	if core.type == "SPELL_AURA_REMOVED" and core.spellId == 286310 then
-		core:sendDebugMessage(3)		
+    if core.type == "SPELL_AURA_REMOVED" and core.spellId == 286310 then
+        phaseChangeInProgress = false
+		core:sendDebugMessage("START Moving: Phase Change Finished (SPELL_AURA_REMOVED) SAFE TO MOVE")		
         if stopMovingAnnounced == true then
             stopMovingAnnounced = false
             safeToMove = true
@@ -154,9 +158,7 @@ function core._2096:UunatHarbingerOfTheVoid()
 	if UnitName("boss1") ~= nil then
 		if core:getHealthPercent("boss1") <= 71 and phase1Complete == false then
 			phase1Complete = true
-			core:sendDebugMessage(4)
-			core:sendDebugMessage(core:getHealthPercent("boss1"))
-			core:sendDebugMessage("Stop Moving: Boss about to change phase")
+			core:sendDebugMessage("Stop Moving: Boss about to change phase 71% SAFE TO MOVE")
 			if stopMovingAnnounced == false then
 				stopMovingAnnounced = true
 				core:sendMessage(core:getAchievement() .. " " .. L["CrucibleOfStorms_StopMoving"],true)
@@ -164,9 +166,7 @@ function core._2096:UunatHarbingerOfTheVoid()
 			end  
 		elseif core:getHealthPercent("boss1") <= 46 and phase2Complete == false then
 			phase2Complete = true
-			core:sendDebugMessage(4)
-			core:sendDebugMessage(core:getHealthPercent("boss1"))
-			core:sendDebugMessage("Stop Moving: Boss about to change phase")
+			core:sendDebugMessage("Stop Moving: Boss about to change phase 46% SAFE TO MOVE")
 			if stopMovingAnnounced == false then
 				stopMovingAnnounced = true
 				core:sendMessage(core:getAchievement() .. " " .. L["CrucibleOfStorms_StopMoving"],true)
@@ -193,7 +193,10 @@ function core._2096:ClearVariables()
     playerStoppedMovingTimestamp = nil
 	giftOfNzothActive = false
 	phase1Complete = false
-	phase2Complete = false
+    phase2Complete = false
+    phaseChangeInProgress = false
+    playerMovingDebug = false
+    bossatthirtyeightannounce = false
 end
 
 function core._2096:InstanceCleanup()
@@ -206,7 +209,13 @@ end)
 
 local function playerMoving(...)
     if IsPlayerMoving() == true and UnitIsDead("Player") == false then
-        core:sendDebugMessage(GetTime() .. " Player is moving")
+        if playerMovingDebug == false then
+            playerMovingDebug = true
+            local name, realm = UnitName("Player")
+            C_ChatInfo.SendAddonMessage("Whizzey", "moveIAT,true," .. name, "RAID")	
+        end
+
+        -- core:sendDebugMessage(GetTime() .. " Player is moving")
         playerCurrentlyMoving = true
         if safeToMove == false then
             core:getAchievementFailedPersonalIndependent(UnitName("Player"))
@@ -216,7 +225,13 @@ end
 
 local function playerMovingMouse(...)
     if IsPlayerMoving() == true and UnitIsDead("Player") == false and IsMouseButtonDown("LeftButton") then
-        core:sendDebugMessage(GetTime() .. " Player is moving")
+        if playerMovingDebug == false then
+            playerMovingDebug = true
+            local name, realm = UnitName("Player")
+            C_ChatInfo.SendAddonMessage("Whizzey", "moveIAT,true," .. name, "RAID")	
+        end
+    
+        -- core:sendDebugMessage(GetTime() .. " Player is moving")
         playerCurrentlyMoving = true
         if safeToMove == false then
             core:getAchievementFailedPersonalIndependent(UnitName("Player"))
@@ -226,6 +241,11 @@ end
 
 local function playerStoppedMoving(...)
     if IsPlayerMoving() == false and UnitIsDead("Player") == false then
+        if playerMovingDebug == true then
+            playerMovingDebug = false
+            local name, realm = UnitName("Player")
+            C_ChatInfo.SendAddonMessage("Whizzey", "moveIAT,false," .. name, "RAID")	
+        end
         -- core:sendDebugMessage(GetTime() .. " Player stopped moving")
         playerCurrentlyMoving = false
     end
@@ -267,14 +287,18 @@ function core._2096.Events:UNIT_POWER_UPDATE(self, unit, powerType)
             local unitType, _, _, _, _, destID, spawn_uid_dest = strsplit("-", UnitGUID(unit))
             if destID == "145371" then
                 --If power is between 38 and 50 then announce safe to move again and we are not currently changes phases
-                --Limit to 50 as we don't want to fire when boss is at or near 100 energy
-                if UnitPower(unit) >= 38 and giftOfNzothActive == true and stopMovingAnnounced == true then
+                --Player should not move during phase transition even if eye opens (Possible Bug)
+                if UnitPower(unit) >= 38 and giftOfNzothActive == true and stopMovingAnnounced == true and phaseChangeInProgress == false then
                     --If Gift of N'zoth is active wait till boss reaches 38 or more energy then players can move again
+			        core:sendDebugMessage("Boss reached 38 energy. SAFE TO MOVE")
                     stopMovingAnnounced = false
                     safeToMove = true
                     giftOfNzothActive = false
                     core:sendMessage(core:getAchievement() .. " " .. L["CrucibleOfStorms_StartMoving"],true)
                     core.IATInfoFrame:SetText1("|cff59FF00" .. L["CrucibleOfStorms_StartMoving"] .. "|r","GameFontHighlightLarge")
+                elseif UnitPower(unit) >= 38 and giftOfNzothActive == true and stopMovingAnnounced == true and bossatthirtyeightannounce == false then
+                    bossatthirtyeightannounce = true
+                    core:sendDebugMessage("Boss reached 38 energy but we are in phase transition. NOT SAFE TO MOVE")
                 end
             end
         end
