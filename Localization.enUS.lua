@@ -175,6 +175,21 @@ local baseLocale = {
     ["Shared_HasDied"] = "has died",
 
     -------------------------------------------------------
+    --- The Eternal Palace
+    -------------------------------------------------------
+    --Tactics
+    ["AzsharasEternalPalace_AbyssalCommanderSivara"] = "",
+    ["AzsharasEternalPalace_BlackwaterBehemoth"] = "",
+    ["AzsharasEternalPalace_RadianceOfAzshara"] = "",
+    ["AzsharasEternalPalace_LadyAshvane"] = "",
+    ["AzsharasEternalPalace_Orgozoa"] = "",
+    ["AzsharasEternalPalace_TheQueensCourt"] = "",
+    ["AzsharasEternalPalace_ZaquiHarbingerOfNyalotha"] = "",
+    ["AzsharasEternalPalace_QueenAzshara"] = "",
+
+    --Chat Output
+
+    -------------------------------------------------------
     --- Crucible Of Storms
     -------------------------------------------------------
     --Tactics
