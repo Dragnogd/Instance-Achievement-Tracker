@@ -2756,7 +2756,7 @@ core.Instances = {
                 },
                 boss6 = {
                     name = 677, --Will of the Emperor
-                    bossIDs = {60400, 60399},
+                    bossIDs = {},
                     achievement = 6455,
                     players = {},
                     tactics = L["MogushanVaults_WillOfTheEmperor"],

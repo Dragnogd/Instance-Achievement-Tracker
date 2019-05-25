@@ -58,13 +58,6 @@ function core._1008:TheStoneGuard()
 end
 
 function core._1008:FengTheAccursed()
-	if mustLoveDogsActive == true then
-		TheStoneGuardKilled = true
-		core.IATInfoFrame:ToggleOff()
-		infoFrameShown = false   
-		mustLoveDogsActive = false
-	end
-
 	if core.type == "SPELL_AURA_APPLIED" then
 		if core.spellId == 116936 and EpicenterReversed == false then
 			EpicenterReversed = true
@@ -242,6 +235,19 @@ function core._1008:InitialSetup()
     end
 end
 
+function core._1008:TrackAdditional()
+    if core.Instances[core.expansion][core.instanceType][core.instance]["boss1"].enabled == true then
+        if core.type == "UNIT_DIED" and (core.destID == "59915" or core.destID == "60051" or core.destID == "60047" or code.destID == "60043") then
+			if mustLoveDogsActive == true then
+				TheStoneGuardKilled = true
+				core.IATInfoFrame:ToggleOff()
+				infoFrameShown = false   
+				mustLoveDogsActive = false
+			end
+        end
+    end
+end
+
 function core._1008.Events:ZONE_CHANGED_INDOORS()
     if C_Map.GetBestMapForUnit("Player") == 471 and TheStoneGuardKilled == false then
         core.IATInfoFrame:ToggleOn()
@@ -325,6 +331,7 @@ function core._1008.Events:UPDATE_MOUSEOVER_UNIT(self, unit, powerType)
 		if UnitGUID("mouseover") ~= nil then
 			local unitType, _, _, _, _, destID, spawn_uid_dest = strsplit("-", UnitGUID("mouseover"))
 			local petName = UnitName("mouseover")
+			local type, _, _, _, _, _, _ = strsplit("-", UnitGUID("mouseover"))
 			--<<<PETS THAT WORK>>>
 			--Perky Pug: 37865 (CONFIRMED)
 			--Core Hound Pup: 36871 (CONFIRMED)
@@ -337,42 +344,44 @@ function core._1008.Events:UPDATE_MOUSEOVER_UNIT(self, unit, powerType)
 			--Fjord Worg Pup
 
 			--Pets that work
-            if destID == "37865" or destID == "36871" or destID == "48641" or destID == "10259" or destID == "33529" then
-				--Get Owner of the pet from the Game Tooltip
-				local tip = myTooltipFromTemplate or CreateFrame("GAMETOOLTIP", "myTooltipFromTemplate",nil,"GameTooltipTemplate")
-				tip:SetOwner(WorldFrame, "ANCHOR_NONE")
-				tip:SetUnit("mouseover")
-				if tip:NumLines()>0 then
-					local name = myTooltipFromTemplateTextLeft2:GetText()
-					--We have the pet. Find player in group and set to complete
-					for player,status in pairs(core.InfoFrame_PlayersTable) do
-						if string.match(name, player) then
-							local success = InfoFrame_SetPlayerCompleteWithMessage(player, petName)
-							if success then
-								mustLoveDogsCounter = mustLoveDogsCounter + 1
-							end							
+			if type ~= "Pet" then
+				if destID == "37865" or destID == "36871" or destID == "48641" or destID == "10259" or destID == "33529" then
+					--Get Owner of the pet from the Game Tooltip
+					local tip = myTooltipFromTemplate or CreateFrame("GAMETOOLTIP", "myTooltipFromTemplate",nil,"GameTooltipTemplate")
+					tip:SetOwner(WorldFrame, "ANCHOR_NONE")
+					tip:SetUnit("mouseover")
+					if tip:NumLines()>0 then
+						local name = myTooltipFromTemplateTextLeft2:GetText()
+						--We have the pet. Find player in group and set to complete
+						for player,status in pairs(core.InfoFrame_PlayersTable) do
+							if string.match(name, player) then
+								local success = InfoFrame_SetPlayerCompleteWithMessage(player, petName)
+								if success then
+									mustLoveDogsCounter = mustLoveDogsCounter + 1
+								end							
+							end
 						end
+						tip:Hide()
 					end
-					tip:Hide()
+				else
+					--Get Owner of the pet from the Game Tooltip
+					local tip = myTooltipFromTemplate or CreateFrame("GAMETOOLTIP", "myTooltipFromTemplate",nil,"GameTooltipTemplate")
+					tip:SetOwner(WorldFrame, "ANCHOR_NONE")
+					tip:SetUnit("mouseover")
+					if tip:NumLines()>0 then
+						local name = myTooltipFromTemplateTextLeft2:GetText()
+						--We have the pet. Find player in group and set to complete
+						for player,status in pairs(core.InfoFrame_PlayersTable) do
+							if string.match(name, player) then
+								local success = InfoFrame_SetPlayerFailedWithMessage(player, petName)
+								if success then
+									mustLoveDogsCounter = mustLoveDogsCounter - 1
+								end									
+							end
+						end
+						tip:Hide()
+					end				
 				end
-			else
-				--Get Owner of the pet from the Game Tooltip
-				local tip = myTooltipFromTemplate or CreateFrame("GAMETOOLTIP", "myTooltipFromTemplate",nil,"GameTooltipTemplate")
-				tip:SetOwner(WorldFrame, "ANCHOR_NONE")
-				tip:SetUnit("mouseover")
-				if tip:NumLines()>0 then
-					local name = myTooltipFromTemplateTextLeft2:GetText()
-					--We have the pet. Find player in group and set to complete
-					for player,status in pairs(core.InfoFrame_PlayersTable) do
-						if string.match(name, player) then
-							local success = InfoFrame_SetPlayerFailedWithMessage(player, petName)
-							if success then
-								mustLoveDogsCounter = mustLoveDogsCounter - 1
-							end									
-						end
-					end
-					tip:Hide()
-				end				
 			end
 		end
 		InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
