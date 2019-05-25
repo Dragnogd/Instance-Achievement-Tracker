@@ -841,11 +841,15 @@ function Config:CreateGUI()
         --We need to save the original ID aswell so key value pairs
         for instance,v in pairs(core.Instances[i].Raids) do
             local instanceName = Config:getLocalisedInstanceName(core.Instances[i].Raids[instance].name)
-            table.insert(localisedRaidNames, {name = instanceName, id = instance});
+            if instanceName ~= nil then
+                table.insert(localisedRaidNames, {name = instanceName, id = instance});
+            end
         end
         for instance,v in pairs(core.Instances[i].Dungeons) do
             local instanceName = Config:getLocalisedInstanceName(core.Instances[i].Dungeons[instance].name)
-            table.insert(localisedDungeonNames, {name = instanceName, id = instance});
+            if instanceName ~= nil then
+                table.insert(localisedDungeonNames, {name = instanceName, id = instance});
+            end
         end
 
         --Scenarios only happen for MOP expansion. Needs updating each expansion
