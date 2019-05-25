@@ -42,7 +42,8 @@ local energyChargeKilled = false
 ------------------------------------------------------
 ---- Will of The Emperor
 ------------------------------------------------------
-local playerExecutedStrike = 0
+local playerExecutedStrikeJanxi = 0
+local playerExecutedStrikeQinxi = 0
 local playersFailCounter = {}
 local playersStrikeFailCounter = {}
 local timerStarted = false
@@ -189,7 +190,8 @@ function core._1008:ClearVariables()
 	------------------------------------------------------
 	---- Will of The Emperor
 	------------------------------------------------------
-	playerExecutedStrike = 0
+	playerExecutedStrikeJanxi = 0
+	playerExecutedStrikeQinxi = 0
 	playerExecutedStrikeDisplay = 0
 	timerStarted = false
 	inititalFailSetup = false
@@ -420,9 +422,12 @@ function core._1008:WillOfTheEmperor()
 		core:sendMessage(core.destName .. " " .. L["Shared_HitBy"] .. " " .. GetSpellLink(116969) .. " (" .. playersFailCounter[core.destName] .. ")")
 	end
 
+	--Jan-xi: 60400
+	--Qin-xi: 60399
+
 	--Executed opportunistic strike
 	if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 116809 then
-		if playerExecutedStrike == 0 then
+		if playerExecutedStrikeJanxi == 0 and playerExecutedStrikeQinxi == 0 then
 			core:sendDebugMessage("Resetting Players")
 			--Reset Players
 			for player,status in pairs(core.InfoFrame_PlayersTable) do
@@ -439,16 +444,26 @@ function core._1008:WillOfTheEmperor()
 		core:sendDebugMessage(playersStrikeFailCounter[playerName])
 		InfoFrame_SetPlayerCompleteWithMessage(playerName, L["Shared_Fails"] .. ": " .. playersStrikeFailCounter[playerName])
 
-		playerExecutedStrike = playerExecutedStrike + 1
+		if core.destID == "60400" then
+			playerExecutedStrikeJanxi = playerExecutedStrikeJanxi + 1
+		elseif core.destID == "60399" then
+			playerExecutedStrikeQinxi = playerExecutedStrikeQinxi + 1
+		end
+		
 		if timerStarted == false then
 			timerStarted = true
 
 			C_Timer.After(7, function() 
-				if playerExecutedStrike == core.maxPlayers then
+				if playerExecutedStrikeJanxi == core.maxPlayers or playerExecutedStrikeQinxi == core.maxPlayers then
 					--core:sendMessage(core:getAchievement() .. " (" .. playerExecutedStrike .. "/" .. core.maxPlayers .. ") Opportunistic Strikes executed in time")					
 					core:getAchievementSuccess()
 				else
-					core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(116809) .. " " .. L["Core_Counter"] .. " (" .. playerExecutedStrike .. "/" .. core.maxPlayers .. ")")
+					if playerExecutedStrikeJanxi > 0 then
+						core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(116809) .. " " .. L["Core_Counter"] .. " (" .. playerExecutedStrikeJanxi .. "/" .. core.maxPlayers .. ")")					
+					end
+					if playerExecutedStrikeQinxi > 0 then
+						core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(116809) .. " " .. L["Core_Counter"] .. " (" .. playerExecutedStrikeQinxi .. "/" .. core.maxPlayers .. ")")					
+					end
 					core:sendMessageSafe(core:getAchievement() .. " " .. L["Shared_PlayersWhoDidNotUse"] .. " " .. GetSpellLink(116809) .. " " .. InfoFrame_GetIncompletePlayersWithAdditionalInfo(),true)
 				
 					--Increase Fail Counter for players who did not execute in time
@@ -461,12 +476,13 @@ function core._1008:WillOfTheEmperor()
 					end
 				end
 	
-				playerExecutedStrike = 0
-				playerExecutedStrikeDisplay = playerExecutedStrike
+				playerExecutedStrikeDisplay = playerExecutedStrikeJanxi + playerExecutedStrikeQinxi
+				playerExecutedStrikeJanxi = 0
+				playerExecutedStrikeQinxi = 0
 				timerStarted = false
 			end)
 		else
-			if playerExecutedStrike == core.maxPlayers then					
+			if playerExecutedStrikeJanxi == 0 and playerExecutedStrikeQinxi == 0 then					
 				core:getAchievementSuccess()
 			end			
 		end
