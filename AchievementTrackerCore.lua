@@ -9,7 +9,7 @@ local UIConfig													--UIConfig is used to make a display asking the user 
 local UICreated = false											--To enable achievement tracking when they enter an instances
 local debugMode = false
 local debugModeChat = false
-local sendDebugMessages = false
+local sendDebugMessages = true
 
 local ptrVersion = "8.1.0"
 
@@ -2367,10 +2367,10 @@ function core:logMessage(message)
 	end
 	
 	--If table is below maximun amount of entries then insert value. Else make table shrink to correct size
-	if #AchievementTrackerDebug < 50000 then
+	if #AchievementTrackerDebug < 500000 then
 		table.insert(AchievementTrackerDebug, monthDay .. "/" .. month .. "/" .. year .. " " .. hour .. ":" .. minute ..  " " .. message)
 	else
-		while #AchievementTrackerDebug >= 50000 do
+		while #AchievementTrackerDebug >= 500000 do
 			table.remove(AchievementTrackerDebug, 1)
 		end
 		table.insert(AchievementTrackerDebug, monthDay .. "/" .. month .. "/" .. year .. " " .. hour .. ":" .. minute ..  " " .. message)
@@ -2422,8 +2422,10 @@ function core:sendMessage(message, outputToRW, messageType)
 			elseif masterAddon == true and requestToRun == true then
 				--We need to store the messages in a queue while the master addon is being decided
 				if outputToRW == true then
+					core:sendDebugMessage("Inserting into Message Queue: " .. message .. ",true")
 					table.insert(messageQueue, message .. ",true")
 				else
+					core:sendDebugMessage("Inserting into Message Queue: " .. message .. ",false")
 					table.insert(messageQueue, message .. ",false")
 				end
 			else
@@ -2484,17 +2486,20 @@ function core:sendMessage(message, outputToRW, messageType)
 							if #messageQueue > 0 then
 								for k, v in pairs(messageQueue) do
 									local v, outputToRW2 = strsplit(",", v)
+									print("Outputting from Message Queue: " .. v .. outputToRW2)
+									print(core.chatType)
 									if outputToRW2 == "true" and core.chatType == "RAID" and announceToRaidWarning == true and (UnitIsGroupAssistant("Player") or UnitIsGroupLeader("Player")) then
 										--Important message output to raid warning from user request
-										-- print("Outputting to Raid Warning")									
+										print("Outputting to Raid Warning")									
 										SendChatMessage("[IAT] " .. v,"RAID_WARNING",DEFAULT_CHAT_FRAME.editBox.languageID)
 										core:logMessage("[IAT] " .. v)
 									elseif outputToRW2 == "true" and announceToRaidWarning == true then
-										SendChatMessage("[IAT] " .. message,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
-										core:logMessage("[IAT] " .. message)
-										RaidNotice_AddMessage(RaidWarningFrame, "[IAT] " .. message, ChatTypeInfo["RAID_WARNING"])
+										print("Outputting to RaidNotice")
+										SendChatMessage("[IAT] " .. v,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+										core:logMessage("[IAT] " .. v)
+										RaidNotice_AddMessage(RaidWarningFrame, "[IAT] " .. v, ChatTypeInfo["RAID_WARNING"])
 									else
-										-- print("Outputting to normal")								
+										print("Outputting to normal")								
 										SendChatMessage("[IAT] " .. v,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
 										core:logMessage("[IAT] " .. v)
 									end
