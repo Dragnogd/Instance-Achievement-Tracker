@@ -619,7 +619,6 @@ function createEnableAchievementTrackingUI()
 	--Create the frame to ask the user whether they want to enable the addon for the particular instance they are in
 	UIConfig = CreateFrame("Frame", "AchievementTrackerCheck", UIParent, "UIPanelDialogTemplate", "AchievementTemplate")
 	UIConfig:SetSize(200, 200)
-	UIConfig:SetPoint("CENTER")
 
 	--Title
 	UIConfig.title = UIConfig:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
@@ -655,7 +654,19 @@ function createEnableAchievementTrackingUI()
     UIConfig:SetClampedToScreen(true)
     UIConfig:RegisterForDrag("LeftButton")
     UIConfig:SetScript("OnDragStart", UIConfig.StartMoving)
-    UIConfig:SetScript("OnDragStop", UIConfig.StopMovingOrSizing)
+    UIConfig:SetScript("OnDragStop", function(self) 
+        self:StopMovingOrSizing()
+        AchievementTrackerOptions["trackingFrameXPos"] = self:GetLeft()
+        AchievementTrackerOptions["trackingFrameYPos"] = self:GetBottom()
+    end)
+
+    --Info Frame X/Y Posiions
+	if AchievementTrackerOptions["trackingFrameXPos"] ~= nil and AchievementTrackerOptions["trackingFrameYPos"] ~= nil then
+		InfoFrame:ClearAllPoints()
+		InfoFrame:SetPoint("BOTTOMLEFT",AchievementTrackerOptions["trackingFrameXPos"],AchievementTrackerOptions["trackingFrameYPos"])
+	else
+		UIConfig:SetPoint("CENTER")
+	end	
 	
 	--Setup the InfoFrame
 	core.IATInfoFrame:SetupInfoFrame()
