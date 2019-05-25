@@ -49,6 +49,8 @@ local playersStrikeFailCounter = {}
 local timerStarted = false
 local inititalFailSetup = false
 local playerExecutedStrikeDisplay = 0
+local JanXiPlayers = {}
+local QinXiPlayers = {}
 
 function core._1008:TheStoneGuard()
 	--Defeat the Stone Guard in Mogu'shan Vaults on Normal or Heroic difficulty while every member of your raid is accompanied by a canine companion pet.
@@ -188,6 +190,8 @@ function core._1008:ClearVariables()
 	playerExecutedStrikeDisplay = 0
 	timerStarted = false
 	inititalFailSetup = false
+	JanXiPlayers = {}
+	QinXiPlayers = {}
 
 	------------------------------------------------------
 	---- The Spirit Kings
@@ -449,12 +453,14 @@ function core._1008:WillOfTheEmperor()
 		end
 		core:sendDebugMessage(playerName)
 		core:sendDebugMessage(playersStrikeFailCounter[playerName])
-		InfoFrame_SetPlayerCompleteWithMessage(playerName, L["Shared_Fails"] .. ": " .. playersStrikeFailCounter[playerName])
+		-- InfoFrame_SetPlayerCompleteWithMessage(playerName, L["Shared_Fails"] .. ": " .. playersStrikeFailCounter[playerName])
 
 		if core.destID == "60400" then
 			playerExecutedStrikeJanxi = playerExecutedStrikeJanxi + 1
+			table.insert(JanXiPlayers, playerName)
 		elseif core.destID == "60399" then
 			playerExecutedStrikeQinxi = playerExecutedStrikeQinxi + 1
+			table.insert(QinXiPlayers, playerName)
 		end
 		
 		if timerStarted == false then
@@ -465,10 +471,17 @@ function core._1008:WillOfTheEmperor()
 					--core:sendMessage(core:getAchievement() .. " (" .. playerExecutedStrike .. "/" .. core.maxPlayers .. ") Opportunistic Strikes executed in time")					
 					core:getAchievementSuccess()
 				else
-					if playerExecutedStrikeJanxi > 0 then
+					if playerExecutedStrikeJanxi >= playerExecutedStrikeQinxi then
+						for k, v in pairs(JanXiPlayers) do
+							InfoFrame_SetPlayerCompleteWithMessage(v, L["Shared_Fails"] .. ": " .. playersStrikeFailCounter[v])
+						end
+						playerExecutedStrikeDisplay = playerExecutedStrikeJanxi
 						core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(116809) .. " " .. L["Core_Counter"] .. " (" .. playerExecutedStrikeJanxi .. "/" .. core.maxPlayers .. ")")					
-					end
-					if playerExecutedStrikeQinxi > 0 then
+					elseif playerExecutedStrikeQinxi > playerExecutedStrikeJanxi then
+						for k, v in pairs(QinXiPlayers) do
+							InfoFrame_SetPlayerCompleteWithMessage(v, L["Shared_Fails"] .. ": " .. playersStrikeFailCounter[v])
+						end
+						playerExecutedStrikeDisplay = playerExecutedStrikeQinxi
 						core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(116809) .. " " .. L["Core_Counter"] .. " (" .. playerExecutedStrikeQinxi .. "/" .. core.maxPlayers .. ")")					
 					end
 					core:sendMessageSafe(core:getAchievement() .. " " .. L["Shared_PlayersWhoDidNotUse"] .. " " .. GetSpellLink(116809) .. " " .. InfoFrame_GetIncompletePlayersWithAdditionalInfo(),true)
@@ -483,13 +496,24 @@ function core._1008:WillOfTheEmperor()
 					end
 				end
 	
-				playerExecutedStrikeDisplay = playerExecutedStrikeJanxi + playerExecutedStrikeQinxi
 				playerExecutedStrikeJanxi = 0
 				playerExecutedStrikeQinxi = 0
+				JanXiPlayers = {}
+				QinXiPlayers = {}
 				timerStarted = false
 			end)
 		else
-			if playerExecutedStrikeJanxi == 0 and playerExecutedStrikeQinxi == 0 then					
+			if playerExecutedStrikeJanxi == core.maxPlayers then
+				for k, v in pairs(JanXiPlayers) do
+					InfoFrame_SetPlayerCompleteWithMessage(v, L["Shared_Fails"] .. ": " .. playersStrikeFailCounter[v])
+				end
+				playerExecutedStrikeDisplay = playerExecutedStrikeJanxi
+				core:getAchievementSuccess()
+			elseif playerExecutedStrikeQinxi == core.maxPlayers then
+				for k, v in pairs(QinXiPlayers) do
+					InfoFrame_SetPlayerCompleteWithMessage(v, L["Shared_Fails"] .. ": " .. playersStrikeFailCounter[v])
+				end
+				playerExecutedStrikeDisplay = playerExecutedStrikeQinxi
 				core:getAchievementSuccess()
 			end			
 		end
