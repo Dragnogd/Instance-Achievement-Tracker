@@ -2121,7 +2121,8 @@ function core:detectGroupType()
 	end
 
 	--If player is in LFG/LFG then output to instance chat
-	if IsInGroup(LE_PARTY_CATEGORY_INSTANCE) and sendDebugMessage == false then
+	local inInstance, instanceType = IsInInstance()
+	if (IsInGroup(LE_PARTY_CATEGORY_INSTANCE) or instanceType == "pvp") and sendDebugMessage == false then
 		core.chatType = "INSTANCE_CHAT"
 	end
 
