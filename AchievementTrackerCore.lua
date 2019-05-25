@@ -662,8 +662,8 @@ function createEnableAchievementTrackingUI()
 
     --Info Frame X/Y Posiions
 	if AchievementTrackerOptions["trackingFrameXPos"] ~= nil and AchievementTrackerOptions["trackingFrameYPos"] ~= nil then
-		InfoFrame:ClearAllPoints()
-		InfoFrame:SetPoint("BOTTOMLEFT",AchievementTrackerOptions["trackingFrameXPos"],AchievementTrackerOptions["trackingFrameYPos"])
+		UIConfig:ClearAllPoints()
+		UIConfig:SetPoint("BOTTOMLEFT",AchievementTrackerOptions["trackingFrameXPos"],AchievementTrackerOptions["trackingFrameYPos"])
 	else
 		UIConfig:SetPoint("CENTER")
 	end	
