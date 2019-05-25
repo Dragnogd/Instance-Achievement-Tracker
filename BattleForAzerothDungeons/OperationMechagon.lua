@@ -5,7 +5,7 @@ local _, core = ...
 local L = core.L
 
 ------------------------------------------------------
----- Azshara's Eternal Palace
+---- Operation: Mechagon
 ------------------------------------------------------
-core._2097 = {}
-core._2097.Events = CreateFrame("Frame")
+core._2164 = {}
+core._2164.Events = CreateFrame("Frame")

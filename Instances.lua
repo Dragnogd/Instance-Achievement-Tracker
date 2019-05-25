@@ -689,6 +689,65 @@ core.Instances = {
 					partial = false,
                 },
             },
+
+            [2097] = { --Operation: Mechagon
+                name = 1178,
+                boss1 = {
+                    name = 2357, --King Gobbamak
+                    bossIDs = {},
+                    achievement = 13706,
+                    players = {},
+                    tactics = L["OperationMechagon_KingGobbamak"],
+                    enabled = false,
+                    track = nil,
+                    partial = false,
+                    encounterID = 2290,
+                },
+                boss2 = {
+                    name = 2358, --Gunker
+                    bossIDs = {},
+                    achievement = 13698,
+                    players = {},
+                    tactics = L["OperationMechagon_Gunker"],
+                    enabled = false,
+                    track = nil,
+                    partial = false,
+                    encounterID = 2292,
+                },
+                boss3 = {
+                    name = 2336, --Tussle Tonks
+                    bossIDs = {},
+                    achievement = 13723,
+                    players = {},
+                    tactics = L["OperationMechagon_TussleTonks"],
+                    enabled = false,
+                    track = nil,
+                    partial = false,
+                    encounterID = 2257,
+                },
+                boss4 = {
+                    name = 2348, --Machinist's Garden
+                    bossIDs = {},
+                    achievement = 13545,
+                    players = {},
+                    tactics = L["OperationMechagon_MachinistsGarden"],
+                    enabled = false,
+                    track = nil,
+                    partial = false,
+                    encounterID = 2259,
+                },
+                boss5 = {
+                    name = 2331, --King Mechagon
+                    bossIDs = {},
+                    achievement = 13624,
+                    players = {},
+                    tactics = L["OperationMechagon_KingMechagon"],
+                    enabled = false,
+                    track = nil,
+                    partial = false,
+                    encounterID = 2260,
+                },
+            },
         },
     },
 

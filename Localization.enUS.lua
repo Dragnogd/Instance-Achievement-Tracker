@@ -175,6 +175,10 @@ local baseLocale = {
     ["Shared_HasDied"] = "has died",
 
     -------------------------------------------------------
+    --- Battle of Dazar'alor
+    -------------------------------------------------------
+
+    -------------------------------------------------------
     --- The Eternal Palace
     -------------------------------------------------------
     --Tactics
@@ -200,9 +204,6 @@ local baseLocale = {
     ["CrucibleOfStorms_StopMoving"] = "STOP MOVING!",
     ["CrucibleOfStorms_StartMoving"] = "YOU CAN NOW MOVE!",
 
-    -------------------------------------------------------
-    --- Battle of Dazar'alor
-    -------------------------------------------------------
     --Tactics
     ["BattleOfDazaralor_ChampionOfTheLight_Alliance"] = "For this achievement you will need to steal 3 shinies from each of the enemies of the encounter, and bring them to the Mysterious Trashpile. You will have to steal 9 shinies in total: 3 from %s, 3 from %s and 3 from %s\n\n Additionally this achievement requires everyone in the raid to interact with the Mysterious Trashpile to get the %s debuff. During the boss fight players will get transformed into a %s and get an extra action button to use on the enemies to steal one shiny coin.\n\n Once your raid group has handed in the 9 shiny coins (3 from each npc type) you can kill the boss and get the achievement.",
     ["BattleOfDazaralor_ChampionOfTheLight_Horde"] = "For this achievement you will need to steal 3 shinies from each of the enemies of the encounter, and bring them to the Mysterious Trashpile. You will have to steal 9 shinies in total: 3 from %s, 3 from %s and 3 from %s\n\n Additionally this achievement requires everyone in the raid to interact with the Mysterious Trashpile to get the %s debuff. During the boss fight players will get transformed into a %s and get an extra action button to use on the enemies to steal one shiny coin.\n\n Once your raid group has handed in the 9 shiny coins (3 from each npc type) you can kill the boss and get the achievement.",
@@ -236,6 +237,18 @@ local baseLocale = {
     ["Uldir_ZulReborn_Tactics"] = "This achievement is pretty straight forward, no one has to step onto the inner ring of the platform. Here are a few tips for the encounter:\n\n Tanks should pick all the adds, and stack them so that melee dps can cleave them.\n Ranged dps should be on the boss 24/7, and should not switch to the adds unless melee dps can't keep up killing them in time.\n If you have 2 priests in the group, then you should assign them to different positions (left and right outside of the group) so that both sides are covered when adds spawn.\n At 40%% IAT_138967 will knock back everyone, so you should position yourself near a wall so you don't get knocked off the platform.",
     ["Uldir_Mythrax_Tactics"] = "As of November 2018: The achievement now functions as described.\n\n This makes the achievement much more easier, as you just pick up the orbs that you spawned.",
     ["Uldir_GHuun_Tactics"] = "For this achievement you will have to make groups of 3 people to do the %s: 2 dps + 1 healer assisting them.\n\n If you have a smaller group then you should invite a few more people to help out with killing the adds",
+
+    -------------------------------------------------------
+    --- Operation: Mechagon
+    -------------------------------------------------------
+    --Tactics
+    ["OperationMechagon_KingGobbamak"] = "",
+    ["OperationMechagon_Gunker"] = "",
+    ["OperationMechagon_TussleTonks"] = "",
+    ["OperationMechagon_MachinistsGarden"] = "",
+    ["OperationMechagon_KingMechagon"] = "",
+
+    --Chat Output
 
     -------------------------------------------------------
     --- Atal Dazar
