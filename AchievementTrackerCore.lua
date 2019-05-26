@@ -2458,6 +2458,7 @@ function core:sendMessage(message, outputToRW, messageType)
 							C_ChatInfo.SendAddonMessage("Whizzey", "masterAddonPlayer," .. UnitName("Player"), "RAID")
 
 							if message ~= "setup" then
+								core:detectGroupType()
 								if outputToRW == true and core.chatType == "RAID" and announceToRaidWarning == true and (UnitIsGroupAssistant("Player") or UnitIsGroupLeader("Player")) then
 									--Important message output to raid warning from user request
 									--print("Outputting to Raid Warning")
@@ -2466,7 +2467,7 @@ function core:sendMessage(message, outputToRW, messageType)
 								elseif outputToRW == true and announceToRaidWarning == true then
 									SendChatMessage("[IAT] " .. message,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
 									core:logMessage("[IAT] " .. message)
-									--RaidNotice_AddMessage(RaidWarningFrame, "[IAT] " .. message, ChatTypeInfo["RAID_WARNING"])
+									RaidNotice_AddMessage(RaidWarningFrame, "[IAT] " .. message, ChatTypeInfo["RAID_WARNING"])
 								else
 									--print("Outputting normally")
 									SendChatMessage("[IAT] " .. message,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
