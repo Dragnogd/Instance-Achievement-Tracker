@@ -173,7 +173,12 @@ function core._2096:UunatHarbingerOfTheVoid()
 				core.IATInfoFrame:SetText1("|cffFF0000" .. L["CrucibleOfStorms_StopMoving"] .. "|r","GameFontHighlightLarge")
 			end  
 		end
-	end
+    end
+    
+    --If players dies then fail achievement for that player
+    if core.type == "UNIT_DIED" and core.currentDest == "Player" and core.destName ~= nil then
+        core:getAchievementFailedPersonal()
+    end
 end
 
 function core._2096:ClearVariables()
@@ -212,7 +217,7 @@ local function playerMoving(...)
         if playerMovingDebug == false then
             playerMovingDebug = true
             local name, realm = UnitName("Player")
-            C_ChatInfo.SendAddonMessage("Whizzey", "moveIAT,true," .. name, "RAID")	
+            C_ChatInfo.SendAddonMessage("Whizzey", "moveIAT,true," .. name, core.chatType)	
         end
 
         -- core:sendDebugMessage(GetTime() .. " Player is moving")
@@ -228,7 +233,7 @@ local function playerMovingMouse(...)
         if playerMovingDebug == false then
             playerMovingDebug = true
             local name, realm = UnitName("Player")
-            C_ChatInfo.SendAddonMessage("Whizzey", "moveIAT,true," .. name, "RAID")	
+            C_ChatInfo.SendAddonMessage("Whizzey", "moveIAT,true," .. name, core.chatType)	
         end
     
         -- core:sendDebugMessage(GetTime() .. " Player is moving")
@@ -244,7 +249,7 @@ local function playerStoppedMoving(...)
         if playerMovingDebug == true then
             playerMovingDebug = false
             local name, realm = UnitName("Player")
-            C_ChatInfo.SendAddonMessage("Whizzey", "moveIAT,false," .. name, "RAID")	
+            C_ChatInfo.SendAddonMessage("Whizzey", "moveIAT,false," .. name, core.chatType)	
         end
         -- core:sendDebugMessage(GetTime() .. " Player stopped moving")
         playerCurrentlyMoving = false
