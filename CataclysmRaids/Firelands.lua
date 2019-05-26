@@ -143,7 +143,7 @@ core._720.Events:SetScript("OnEvent", function(self, event, ...)
 end)
 
 function core._720.Events:UNIT_POWER_UPDATE(self, unit, powerType)
-	if core.Instances.Cataclysm.Raids[720].boss2.enabled == true then
+	if core.Instances[core.expansion][core.instanceType][core.instance]["boss2"].enabled == true then
 		if powerType == "ALTERNATE" then
 			if UnitPower(unit, ALTERNATE_POWER_INDEX) == 0 then
 				core:getAchievementFailed()
