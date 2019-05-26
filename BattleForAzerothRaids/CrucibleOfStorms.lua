@@ -213,46 +213,52 @@ core._2096.Events:SetScript("OnEvent", function(self, event, ...)
 end)
 
 local function playerMoving(...)
-    if IsPlayerMoving() == true and UnitIsDead("Player") == false then
-        if playerMovingDebug == false then
-            playerMovingDebug = true
-            local name, realm = UnitName("Player")
-            C_ChatInfo.SendAddonMessage("Whizzey", "moveIAT,true," .. name, core.chatType)	
-        end
+    if core.encounterStarted == true then
+        if IsPlayerMoving() == true and UnitIsDead("Player") == false then
+            if playerMovingDebug == false then
+                playerMovingDebug = true
+                local name, realm = UnitName("Player")
+                C_ChatInfo.SendAddonMessage("Whizzey", "moveIAT,true," .. name, core.chatType)	
+            end
 
-        -- core:sendDebugMessage(GetTime() .. " Player is moving")
-        playerCurrentlyMoving = true
-        if safeToMove == false then
-            core:getAchievementFailedPersonalIndependent(UnitName("Player"))
+            -- core:sendDebugMessage(GetTime() .. " Player is moving")
+            playerCurrentlyMoving = true
+            if safeToMove == false then
+                core:getAchievementFailedPersonalIndependent(UnitName("Player"))
+            end
         end
     end
 end
 
 local function playerMovingMouse(...)
-    if IsPlayerMoving() == true and UnitIsDead("Player") == false and IsMouseButtonDown("LeftButton") then
-        if playerMovingDebug == false then
-            playerMovingDebug = true
-            local name, realm = UnitName("Player")
-            C_ChatInfo.SendAddonMessage("Whizzey", "moveIAT,true," .. name, core.chatType)	
-        end
-    
-        -- core:sendDebugMessage(GetTime() .. " Player is moving")
-        playerCurrentlyMoving = true
-        if safeToMove == false then
-            core:getAchievementFailedPersonalIndependent(UnitName("Player"))
+    if core.encounterStarted == true then
+        if IsPlayerMoving() == true and UnitIsDead("Player") == false and IsMouseButtonDown("LeftButton") then
+            if playerMovingDebug == false then
+                playerMovingDebug = true
+                local name, realm = UnitName("Player")
+                C_ChatInfo.SendAddonMessage("Whizzey", "moveIAT,true," .. name, core.chatType)	
+            end
+        
+            -- core:sendDebugMessage(GetTime() .. " Player is moving")
+            playerCurrentlyMoving = true
+            if safeToMove == false then
+                core:getAchievementFailedPersonalIndependent(UnitName("Player"))
+            end
         end
     end
 end
 
 local function playerStoppedMoving(...)
-    if IsPlayerMoving() == false and UnitIsDead("Player") == false then
-        if playerMovingDebug == true then
-            playerMovingDebug = false
-            local name, realm = UnitName("Player")
-            C_ChatInfo.SendAddonMessage("Whizzey", "moveIAT,false," .. name, core.chatType)	
+    if core.encounterStarted == true then
+        if IsPlayerMoving() == false and UnitIsDead("Player") == false then
+            if playerMovingDebug == true then
+                playerMovingDebug = false
+                local name, realm = UnitName("Player")
+                C_ChatInfo.SendAddonMessage("Whizzey", "moveIAT,false," .. name, core.chatType)	
+            end
+            -- core:sendDebugMessage(GetTime() .. " Player stopped moving")
+            playerCurrentlyMoving = false
         end
-        -- core:sendDebugMessage(GetTime() .. " Player stopped moving")
-        playerCurrentlyMoving = false
     end
 end
 
