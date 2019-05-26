@@ -184,7 +184,9 @@ end
 
 function core._720:InstanceCleanup()
     core._720.Events:UnregisterEvent("UNIT_POWER_UPDATE")
-    core._720.Events:UnregisterEvent("UNIT_AURA")
+	core._720.Events:UnregisterEvent("UNIT_AURA")
+	
+	onlyThePenitentFailed = false
 end
 
 function core._720:InitialSetup()
@@ -221,12 +223,12 @@ function core._720.Events:UNIT_AURA(self, unitID)
 	end
 end
 
-function core._720.TrackAdditional()
+function core._720:TrackAdditional()
 	--Only The Pentient
 	if core.Instances[core.expansion][core.instanceType][core.instance]["boss6"].enabled == true then
 		if onlyThePenitentFailed == false then
 			if (core.type == "SPELL_DAMAGE" or core.type == "SPELL_MISSED") and core.spellId == 99705 then
-				core:sendMessage(GetAchievementLink(5799) .. " FAILED! (" .. core.destName .. ")")
+				core:sendMessage(GetAchievementLink(5799) .. " " .. L["Core_Failed"] .. " (" .. core.destName .. ")",true)
 				onlyThePenitentFailed = true
 			end
 		end
