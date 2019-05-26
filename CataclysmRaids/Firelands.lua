@@ -2,6 +2,7 @@
 -- Namespaces
 --------------------------------------
 local _, core = ...
+local L = core.L
 
 ------------------------------------------------------
 ---- _720 Bosses
@@ -23,7 +24,7 @@ local fieryTornadoFailed = false
 local cinderwebDroneList = {}
 
 ------------------------------------------------------
----- Beth'tilac
+---- Baleroc
 ------------------------------------------------------
 local tormentStacks = {}
 
@@ -37,6 +38,16 @@ local onlyThePenitentFailed = false
 ------------------------------------------------------
 local lavaLoggedCounter = 0
 local livingMeteorIds = {}
+
+------------------------------------------------------
+---- Shannox
+------------------------------------------------------
+local placesVisited = 0
+local location1 = false
+local location2 = false
+local location3 = false
+local location4 = false
+local location5 = false
 
 
 function core._720:Alysrazor()
@@ -66,6 +77,41 @@ function core._720:Alysrazor()
 
 end
 
+function core._720:Shannox()
+	--During a single engagement, bring Shannox to each of the following locations in the Firelands before dispatching him:
+	
+	if core:getBlizzardTrackingStatus(5829, 1) and location1 == false then
+		location1 = true
+		placesVisited = placesVisited + 1
+		local location = GetAchievementCriteriaInfo(5829, 1);
+		core:sendMessage(core:getAchievement() .. " " .. location .. " " .. L["Shared_Completed"] .. " (" .. placesVisited .. "/5)")
+	elseif core:getBlizzardTrackingStatus(5829, 2) and location2 == false then
+		location2 = true
+		placesVisited = placesVisited + 1
+		local location = GetAchievementCriteriaInfo(5829, 2);
+		core:sendMessage(core:getAchievement() .. " " .. location .. " " .. L["Shared_Completed"] .. " (" .. placesVisited .. "/5)")
+	elseif core:getBlizzardTrackingStatus(5829, 3) and location3 == false then
+		location3 = true
+		placesVisited = placesVisited + 1
+		local location = GetAchievementCriteriaInfo(5829, 3);
+		core:sendMessage(core:getAchievement() .. " " .. location .. " " .. L["Shared_Completed"] .. " (" .. placesVisited .. "/5)")
+	elseif core:getBlizzardTrackingStatus(5829, 4) and location4 == false then
+		location4 = true
+		placesVisited = placesVisited + 1
+		local location = GetAchievementCriteriaInfo(5829, 4);
+		core:sendMessage(core:getAchievement() .. " " .. location .. " " .. L["Shared_Completed"] .. " (" .. placesVisited .. "/5)")
+	elseif core:getBlizzardTrackingStatus(5829, 5) and location5 == false then
+		location5 = true
+		placesVisited = placesVisited + 1
+		local location = GetAchievementCriteriaInfo(5829, 5);
+		core:sendMessage(core:getAchievement() .. " " .. location .. " " .. L["Shared_Completed"] .. " (" .. placesVisited .. "/5)")
+	end
+
+	if placesVisited == 5 then
+		core:getAchievementSuccess()
+	end
+end 
+
 function core._720:Bethtilac()
 	--Loop through all the unit auras currently active
 	--If mob is Cinderweb Drone and has the aura to say they are ontop of the web add to saveToKillArray
@@ -83,7 +129,7 @@ function core._720:Baleroc()
 			tormentStacks[core.destName] = tormentStacks[core.destName] + 1
 			
 			if tormentStacks[core.destName] == 3 then
-				core:getAchievementFailedWithMessageAfter("by (" .. core.destName .. ")")
+				core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")")
 			end
 		end
 	end
@@ -117,7 +163,7 @@ function core._720:ClearVariables()
 	cinderwebDroneList = {}
 
 	------------------------------------------------------
-	---- Beth'tilac
+	---- Baleroc
 	------------------------------------------------------
 	tormentStacks = {}
 
@@ -126,6 +172,16 @@ function core._720:ClearVariables()
 	------------------------------------------------------
 	lavaLoggedCounter = 0
 	livingMeteorIds = {}
+
+	------------------------------------------------------
+	---- Shannox
+	------------------------------------------------------
+	placesVisited = 0
+	location1 = false
+	location2 = false
+	location3 = false
+	location4 = false
+	location5 = false
 end
 
 function core._720:InstanceCleanup()
