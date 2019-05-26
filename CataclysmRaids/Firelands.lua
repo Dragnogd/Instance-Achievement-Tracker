@@ -53,33 +53,31 @@ local location5 = false
 function core._720:Alysrazor()
 	--Brushfire
 	if core.type == "SPELL_DAMAGE" and core.spellId == 98885 and brushfireFailed == false then
-		core:getAchievementFailedWithMessageBeforeAndAfter(core.spellName .. " part of","by (" .. core.destName .. ")")
+		core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ") (" .. L["Core_Reason"] .. ": " .. core.spellName)
 		brushfireFailed = true
 	end
 
 	--Lava Spew
 	if core.type == "SPELL_DAMAGE" and core.spellId == 99336 and lavaSpewFailed == false then
-		core:getAchievementFailedWithMessageBeforeAndAfter(core.spellName .. " part of","by (" .. core.destName .. ")")
+		core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ") (" .. L["Core_Reason"] .. ": " .. core.spellName)
 		lavaSpewFailed = true	
 	end
 
 	--Increndiary Cloud
 	if core.type == "SPELL_DAMAGE" and core.spellId == 99427 and incendiaryCloudFailed == false then
-		core:getAchievementFailedWithMessageBeforeAndAfter(core.spellName .. " part of","by (" .. core.destName .. ")")
+		core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ") (" .. L["Core_Reason"] .. ": " .. core.spellName)
 		incendiaryCloudFailed = true		
 	end
 
 	--Fiery Tornado
 	if core.type == "SPELL_DAMAGE" and core.spellId == 99816 and fieryTornadoFailed == false then
-		core:getAchievementFailedWithMessageBeforeAndAfter(core.spellName .. " part of","by (" .. core.destName .. ")")
+		core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ") (" .. L["Core_Reason"] .. ": " .. core.spellName)
 		fieryTornadoFailed = true	
 	end
-
 end
 
 function core._720:Shannox()
 	--During a single engagement, bring Shannox to each of the following locations in the Firelands before dispatching him:
-	
 	if core:getBlizzardTrackingStatus(5829, 1) and location1 == false then
 		location1 = true
 		placesVisited = placesVisited + 1
