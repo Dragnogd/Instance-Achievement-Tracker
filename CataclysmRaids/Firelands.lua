@@ -134,14 +134,10 @@ function core._720:Baleroc()
 end
 
 function core._720:Ragnaros()
-	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 101088 and core.destID == "53500" and livingMeteorIds[core.spawn_uid_dest] == nil then
-		lavaLoggedCounter = lavaLoggedCounter + 1
-		livingMeteorIds[core.spawn_uid_dest] = core.spawn_uid_dest
-		core:sendMessage(core:getAchievement() .. " Living Meteors ignited by Lava Wave (" .. lavaLoggedCounter .. "/3")
-		--print(lavaLoggedCounter)
-	end
+	--Defeat Ragnaros while three Living Meteors are ignited by Lava Wave.
 
-	if lavaLoggedCounter == 3 then
+	--Blizzard Tracker has gone white so achievement failed
+	if core:getBlizzardTrackingStatus(5855) == true then
 		core:getAchievementSuccess()
 	end
 end
