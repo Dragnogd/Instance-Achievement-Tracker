@@ -60,6 +60,13 @@ function core._1008:TheStoneGuard()
 end
 
 function core._1008:FengTheAccursed()
+	if mustLoveDogsActive == true then
+		TheStoneGuardKilled = true
+		core.IATInfoFrame:ToggleOff()
+		infoFrameShown = false   
+		mustLoveDogsActive = false
+	end
+	
 	if core.type == "SPELL_AURA_APPLIED" then
 		if core.spellId == 116936 and EpicenterReversed == false then
 			EpicenterReversed = true
