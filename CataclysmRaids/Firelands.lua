@@ -136,7 +136,7 @@ end
 function core._720:Ragnaros()
 	--Defeat Ragnaros while three Living Meteors are ignited by Lava Wave.
 
-	--Blizzard Tracker has gone white so achievement failed
+	--Blizzard Tracker has gone white so achievement completed
 	if core:getBlizzardTrackingStatus(5855) == true then
 		core:getAchievementSuccess()
 	end

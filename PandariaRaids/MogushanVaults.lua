@@ -240,8 +240,9 @@ function core._1008:InitialSetup()
 end
 
 function core._1008:TrackAdditional()
-    if core.Instances[core.expansion][core.instanceType][core.instance]["boss1"].enabled == true then
-        if core.type == "UNIT_DIED" and (core.destID == "59915" or core.destID == "60051" or core.destID == "60047" or code.destID == "60043") then
+	if core.Instances[core.expansion][core.instanceType][core.instance]["boss1"].enabled == true then
+		if core.type == "UNIT_DIED" and (core.destID == "59915" or core.destID == "60051" or core.destID == "60047" or code.destID == "60043") then
+			print("Disabling InfoFrame")
 			TheStoneGuardKilled = true
 			core.IATInfoFrame:ToggleOff()
 			infoFrameShown = false   
