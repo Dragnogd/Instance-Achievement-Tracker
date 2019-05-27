@@ -208,6 +208,8 @@ function Tab_OnClick(self)
             UIConfig.Main2.options23:Show()
             UIConfig.Main2.options24:Show()
             UIConfig.Main2.options25:Show()
+            UIConfig.Main2.options26:Show()
+            UIConfig.Main2.options27:Show()
 
             UIConfig.Main.author:Show()
             UIConfig.Main.verison:Show()
@@ -394,6 +396,11 @@ function Tab_OnClick(self)
             UIConfig.Main2.options24 = Config:CreateCheckBox("TOPLEFT", UIConfig.Main2.options22, "TOPLEFT", 0, -25, "AchievementTracker_DisplayInfoFrame")
             UIConfig.Main2.options24:SetScript("OnClick", ATToggleInfoFrame_OnClick)
             UIConfig.Main2.options25 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options24, "TOPLEFT", 30, -9, L["GUI_DisplayInfoFrame"],"GameFontHighlight")
+
+            --Track missing achievements in Blizzard UI
+            UIConfig.Main2.options26 = Config:CreateCheckBox("TOPLEFT", UIConfig.Main2.options24, "TOPLEFT", 0, -25, "AchievementTracker_TrackAchievementsInBlizzardUI")
+            UIConfig.Main2.options26:SetScript("OnClick", ATToggleTrackAchievementsInBlizzardUI_OnClick)
+            UIConfig.Main2.options27 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options26, "TOPLEFT", 30, -9, L["GUI_TrackAchievementsInBlizzardUI"],"GameFontHighlight")
         end
     else                                --User has selected an expansion tab so hide main menu options
         UIConfig.ScrollFrame:Show()
@@ -438,6 +445,8 @@ function Tab_OnClick(self)
         UIConfig.Main2.options23:Hide()
         UIConfig.Main2.options24:Hide()
         UIConfig.Main2.options25:Hide()
+        UIConfig.Main2.options26:Hide()
+        UIConfig.Main2.options27:Hide()
         
         UIConfig.Main.author:Hide()
         UIConfig.Main.verison:Hide()
@@ -457,6 +466,11 @@ function Tab_OnClick(self)
             UIConfig.achievementsCompleted:Hide()
         end
     end
+end
+
+function ATToggleTrackAchievementsInBlizzardUI_OnClick(self)
+    AchievementTrackerOptions["trackAchievementsInBlizzardUI"] = self:GetChecked()
+    setTrackAchievementsInBlizzardUI(self:GetChecked()) 
 end
 
 function ATToggleInfoFrame_OnClick(self)

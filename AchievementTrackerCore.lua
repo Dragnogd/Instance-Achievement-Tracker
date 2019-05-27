@@ -9,7 +9,7 @@ local UIConfig													--UIConfig is used to make a display asking the user 
 local UICreated = false											--To enable achievement tracking when they enter an instances
 local debugMode = false
 local debugModeChat = false
-local sendDebugMessages = false
+local sendDebugMessages = true
 
 local ptrVersion = "8.1.0"
 
@@ -179,6 +179,8 @@ local mobMouseoverCache = {}
 local encounterCache = {}
 local announceMissingAchievements = false
 local versionCheckInitiated = false
+local trackAchievementsInUI = false				--Track achievements in achievements UI upon entering raid
+local trackAchievementInUiTable = {}
 
 --------------------------------------
 -- Current Instance Variables
@@ -1049,6 +1051,15 @@ function events:ADDON_LOADED(event, name)
 	end
 	_G["AchievementTracker_DisplayInfoFrame"]:SetChecked(AchievementTrackerOptions["displayInfoFrame"])
 
+	--Track achievements in Blizzard UI
+	if AchievementTrackerOptions["trackAchievementsInBlizzardUI"] == nil then
+		AchievementTrackerOptions["trackAchievementsInBlizzardUI"] = false --Disabled by default
+		trackAchievementsInUI = false
+	elseif AchievementTrackerOptions["trackAchievementsInBlizzardUI"] == true then
+		trackAchievementsInUI = true
+	end
+	_G["AchievementTracker_TrackAchievementsInBlizzardUI"]:SetChecked(AchievementTrackerOptions["trackAchievementsInBlizzardUI"])
+
 	SLASH_IAT1 = "/iat";
 	SlashCmdList.IAT = HandleSlashCommands;
 
@@ -1092,6 +1103,14 @@ function events:ADDON_LOADED(event, name)
 
 	--Set whether addon should be enabled or disabled
 	setAddonEnabled(AchievementTrackerOptions["enableAddon"])
+end
+
+function setTrackAchievementsInBlizzardUI(setTrackAchievementsInBlizzardUI)
+	if setTrackAchievementsInBlizzardUI then
+		trackAchievementsInUI = true
+	else
+		trackAchievementsInUI = false					
+	end
 end
 
 function setDisplayInfoFrame(setDisplayInfoFrame)
@@ -1528,6 +1547,12 @@ function events:INSPECT_ACHIEVEMENT_READY(self, GUID)
 							if core:has_value(core.Instances[core.expansion][core.instanceType][core.instance][boss].players, name) == true then
 								foundAchievement = true
 								achievements = achievements .. GetAchievementLink(core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
+
+								--Add to achievement tracking ui if option enabled by user
+								if trackAchievementsInUI == true then
+									AddTrackedAchievement(core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
+									table.insert(trackAchievementInUiTable, core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
+								end
 							end
 						end
 					end
@@ -1591,7 +1616,8 @@ function events:ZONE_CHANGED_NEW_AREA()
 end
 
 function checkAndClearInstanceVariables()
-	if (core.inInstance == false or core.addonEnabled == false) and core.instanceVariablesReset == false then
+	if (core.inInstance == false or core.addonEnabled == false or IsInInstance() == false) and core.instanceVariablesReset == false then
+		core:sendDebugMessage("Clearing Instance Variables")
 		--Update achievement tracking
 		for expansion,_ in pairs(core.Instances) do
 			for instanceType,_ in pairs(core.Instances[expansion]) do
@@ -1661,6 +1687,12 @@ function checkAndClearInstanceVariables()
 		core.scanFinished = false
 		scanAnnounced = false
 		announceMissingAchievements = false
+
+		--Untrack achievements that we tracked
+		for k,v in pairs(trackAchievementInUiTable) do
+			print(v)
+			RemoveTrackedAchievement(v)
+		end
 	end
 end
 
