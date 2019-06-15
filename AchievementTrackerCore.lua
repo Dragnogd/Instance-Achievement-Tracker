@@ -9,7 +9,7 @@ local UIConfig													--UIConfig is used to make a display asking the user 
 local UICreated = false											--To enable achievement tracking when they enter an instances
 local debugMode = false
 local debugModeChat = false
-local sendDebugMessages = true
+local sendDebugMessages = false
 
 local ptrVersion = "8.1.0"
 
@@ -181,6 +181,13 @@ local announceMissingAchievements = false
 local versionCheckInitiated = false
 local trackAchievementsInUI = false				--Track achievements in achievements UI upon entering raid
 local trackAchievementInUiTable = {}
+
+local sendMessageOnTimer_ProcessMessage = false	--Set when we have message in message queue that needs to be output
+local sendMessageOnTimer_Message = nil			--Message in queue to be outputted
+local sendMessageOnTimer_StartTimer = false		--Is set when the loop that outputs a message every n seconds is started
+local sendMessageOnTimer_OnCooldown = false		--Waiting n seconds before outputting more messages
+
+local trackAchievementsUIAutomatic = false		--Whether the Track Achievement UI was generated automatically after entering instance
 
 --------------------------------------
 -- Current Instance Variables
@@ -572,7 +579,8 @@ function getInstanceInfomation()
 					end
 		
 					--Ask the user whether they want to enable Achievement Tracking in the instance. Only do this if there is any achievements to track for the particular instance
-					if foundTracking == true then
+					if foundTracking == true and trackAchievementsUIAutomatic == false then
+						trackAchievementsUIAutomatic = true
 						core:sendDebugMessage("Asking user whether they want to track this instance")
 						if UICreated == false then
 							core:sendDebugMessage("Creating Tracking UI")
@@ -1677,6 +1685,7 @@ function checkAndClearInstanceVariables()
 		core.foundBoss = false
 		core.mobCache = {}
 		core.instanceVariablesReset = true --This is done so we only reset instance variables once, rather than everytime the player changes zone
+		trackAchievementsUIAutomatic = false
 
 		--Reset Achievement Variabless
 		playersToScan = {}
@@ -2696,6 +2705,17 @@ end
 function core:sendMessage2(message)
 
 end
+
+--Output message on a rolling timer
+function core:sendMessageOnTimer(message)
+	--This function outputs a message every 5 seconds
+	sendMessageOnTimer_Message = message
+	sendMessageOnTimer_ProcessMessage = true
+
+	events:SetScript("OnUpdate",events.onUpdate2)
+end
+
+
 
 --Output messages depending on a counter and the specified interval
 function core:sendMessageDelay(message, counter, interval)
