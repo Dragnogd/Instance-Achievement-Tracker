@@ -267,5 +267,8 @@ function core._1205:ClearVariables()
 	------------------------------------------------------
 	---- Oregorger
 	------------------------------------------------------
-	local timer = nil
+	if timer ~= nil then
+		timer:Cancel()
+	end
+	timer = nil
 end
