@@ -10,6 +10,14 @@ local L = core.L
 core._2164 = {}
 core._2164.Events = CreateFrame("Frame")
 
+function core._2164:TussleTonks()
+    --Defeat the Tussle Tonks in Operation: Mechagon after Deuce Mecha-Buffer has been hit with a Piston Smasher on Mythic Difficulty.
+
+    if core.destID == "151654" and core.spellId == 282943 then
+        core:getAchievementSuccess()
+    end
+end 
+
 function core._2164:MachinistsGarden()
     --Defeat the Machinist's Garden in Operation: Mechagon without being struck by "Hidden" Flame Cannon, Self-Trimming Hedges, Discom-BOMB-ulator, or Roaring Flame on Mythic Difficulty.
     --"Hidden" Flame Cannon (285443)
