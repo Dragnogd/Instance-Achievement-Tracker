@@ -15,10 +15,6 @@ core._1208.Events = CreateFrame("Frame")
 local pricelessParaphernaliaCounter = 0
 
 function core._1208:RocketsparkAndBorka()
-    if events:IsEventRegistered("CHAT_MSG_MONSTER_YELL") ~= true then
-        events:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-    end
-
     if pricelessParaphernaliaCounter == 4 then
         core:getAchievementSuccess()
     end
