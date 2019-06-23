@@ -2,12 +2,12 @@ if(GetLocale() ~= 'deDE') then return end
 
 local _, core = ...
 local baseLocale = {
-	["- Announce to chat players who are missing achievements for certain bosses"] = "- Spieler im Chat nennen, bei denen Erfolge für bestimmte Bosse fehlen",
+	["- Announce to chat players who are missing achievements for certain bosses"] = "- Spieler im Chat nennen, bei denen Erfolge für bestimmte Bosse fehlen.",
 	["- Announce to chat tactics for a certain boss"] = "- Taktiken für einen bestimmten Boss im Chat ausgeben",
-	["- Keeps track of achievements which require you to kill so many mobs within a certain time period. It will announce to chat when enough mobs have spawned and whether they were killed in the time period."] = "- Verfolgt Erfolge, die es erfordern eine bestimmte Anzahl Gegner in einer bestimmten Zeit zu töten. Benachrichtigt, sobald genügend Gegner erschienen sind und ob sie innerhalb der Zeitspanne getötet wurden.",
-	["- Scans all players in the group to see which achievements each player is missing for the current instance"] = "- Überprüft alle Gruppen- oder Schlachtzugsmitglieder auf fehlende Erfolge in der aktuellen Instanz",
-	["- Tracks when the criteria of instance achievements has been failed and outputs this to chat"] = "- Verfolgt, wenn die Kriterien für einen Erfolg fehlgeschlagen sind, und gibt dies im Chat aus",
-	["- Tracks when the criteria of instance achievements have been met and output this to chat"] = "- Verfolgt, wenn die Kriterien für einen Erfolg erfüllt sind, und gibt dies im Chat aus",
+	["- Keeps track of achievements which require you to kill so many mobs within a certain time period. It will announce to chat when enough mobs have spawned and whether they were killed in the time period."] = "- Verfolgt Erfolge, die es erfordern eine bestimmte Anzahl Gegner in einer bestimmten Zeit zu töten. Benachrichtigt, sobald genügend Gegner erschienen sind und ob sie innerhalb der Zeitspanne getötet wurden",
+	["- Scans all players in the group to see which achievements each player is missing for the current instance"] = "- Überprüft alle Gruppen- oder Schlachtzugsmitglieder auf fehlende Erfolge in der aktuellen Instanz.",
+	["- Tracks when the criteria of instance achievements has been failed and outputs this to chat"] = "- Verfolgt, wenn die Kriterien für einen Erfolg fehlgeschlagen sind und gibt dies im Chat aus",
+	["- Tracks when the criteria of instance achievements have been met and output this to chat"] = "- Verfolgt, wenn die Kriterien für einen Erfolg erfüllt sind und gibt dies im Chat aus",
 	["(Enter instance to start scanning)"] = "(Instanz betreten, um den Scanvorgang zu starten)",
 	--[[Translation missing --]]
 	--[[ ["AssaultOnVioletHold_Festerface"] = "In order to get the %s to spawn, %s needs to reach 100 energy. His energy decreases when he is near a pool on the floor so the boss will need to be kited away from the pools. Once the %s has spawned kill it then kill the boss to get this achievement.",--]] 
@@ -65,31 +65,37 @@ local baseLocale = {
 	--[[ ["CathedralOfEternalNight_Mephistroth"] = "At the start of the fight pick up the %s. You then need to wait for the boss to reach 100 energy which will begin phase 2. During phase 2 face the shield you picked up at the start of the fight towards the %s. Once 20 %s have been reflected with the shield, you can kill the boss.",--]] 
 	--[[Translation missing --]]
 	--[[ ["CathedralOfEternalNight_ThrashbiteTheScornful"] = "Around the room there are 4 bookcases. To complete this achievement, you need to stand behind each of the bookcases and wait for the boss to cast %s in order to break a bookcase. Once a bookcase is broken, a clickable book appears on the floor. Each member in the group needs to click on this book. Rinse and repeat this for the other 3 bookcases in the boss room making sure you go in a clockwise direction. Once this is done, everyone in the group should have the %s buff and you can kill the boss.\n\n Note: You must have a full 5 man party to complete this achievement.",--]] 
-	["Core_AchievementScanFinished"] = "Scannen der Erfolge abgeschlossen",
-	--[[Translation missing --]]
-	--[[ ["Core_AchievementTrackingEnabledFor"] = "Achievement Tracking Enabled for",--]] 
-	--[[Translation missing --]]
-	--[[ ["Core_CommandEnableTracking"] = "enable/disable IAT achievement tracking",--]] 
-	["Core_Commands"] = "Liste mit Slash-Befehlen",
-	["Core_Counter"] = "Zähler",
-	--[[Translation missing --]]
-	--[[ ["Core_CriteriaMet"] = "Criteria has been met. Boss can now be killed!",--]] 
+	["Core_AchievementScanFinished"] = "Scannen der Erfolge abgeschlossen!",
+	["Core_AchievementTrackingEnabledFor"] = "Erfolgsverfolgung aktiviert für ",
+	["Core_CommandEnableTracking"] = "IAT Erfolgverfolgung aktivieren/deaktivieren",
+	["Core_Commands"] = "Liste mit Slash-Befehlen ",
+	["Core_Counter"] = "Zähler ",
+	["Core_CriteriaMet"] = "Kriterien wurden erfüllt. Boss kann jetzt getötet werden!",
 	["Core_Enable"] = "aktivieren",
-	--[[Translation missing --]]
-	--[[ ["Core_EnableAchievementTracking"] = "Do you want to enable achievement tracking for",--]] 
-	["Core_Failed"] = "FEHLGESCHLAGEN!",
-	["Core_GameFreezeWarning"] = "Das Spiel kann für ein paar Sekunden einfrieren",
-	["Core_help"] = "Hilfe",
-	["Core_ListCommands"] = "Zeigt eine Liste verfügbarer Slash-Befehle",
+	["Core_EnableAchievementTracking"] = "Möchtest du die Erfolgsüberwachung aktivieren für ",
+	["Core_Failed"] = "FEHLGESCHLAGEN!!!",
+	["Core_GameFreezeWarning"] = "Das Spiel kann für ein paar Sekunden einfrieren ",
+	["Core_help"] = "Hilfe ",
+	["Core_ListCommands"] = "Zeigt eine Liste verfügbarer Slash-Befehle ",
 	["Core_No"] = "Nein",
-	["Core_NoTrackingForInstance"] = "IAT kann bei diesem Gefecht keine Erfolge verfolgen",
-	["Core_PersonalAchievement"] = "persönlicher Erfolg",
-	["Core_Reason"] = "Grund",
-	["Core_StartingAchievementScan"] = "Starte Erfolgsscan für",
-	["Core_TrackAchievements"] = "Verfolge Erfolge",
+	["Core_NoTrackingForInstance"] = "IAT kann bei diesem Gefecht keine Erfolge verfolgen.",
+	["Core_PersonalAchievement"] = "persönlicher Erfolg ",
+	["Core_Reason"] = "Grund ",
+	["Core_StartingAchievementScan"] = "Starte Erfolgsscan für ",
+	["Core_TrackAchievements"] = "Verfolge Erfolge ",
 	["Core_Yes"] = "Ja",
 	--[[Translation missing --]]
+	--[[ ["CourtOfStars_Other"] = "The requirements for completing the achievement are as follows:\n\n -Do not let the %s cast %s\n -Disable the 5 beacons before engaging the first boss\n -Make sure you kill all 3 demons separately before pulling %s\n -Guess spy on the first try",--]] 
+	--[[Translation missing --]]
 	--[[ ["CourtOfStars_PatrolCaptainGerdo"] = "To complete this this achievement, you must first clear all the trash in the boss room. While killing the trash make sure that neither the mobs nor players activate the beacons as this will fail the achievement.\n\n Once all the trash is dead, pull the boss then wait for him to cast %s. Once the boss has cast this ability, you will need to click on all 5 beacons around the room. Once all 5 beacons have been disabled, you can kill the boss.",--]] 
+	--[[Translation missing --]]
+	--[[ ["CrucibleOfStorms_StartMoving"] = "YOU CAN NOW MOVE!",--]] 
+	--[[Translation missing --]]
+	--[[ ["CrucibleOfStorms_StopMoving"] = "STOP MOVING!",--]] 
+	--[[Translation missing --]]
+	--[[ ["CrucibleOfStorms_TheRestlessCabal"] = "During the fight, %s will cast %s. This will spawn purple meteors that will bounce around the room until it hits a player. The impact radius and the damage will reduce everytime it bounces (up to a maximum of two times) without being soaked. Simply avoid all %s until you have 10 and then kill the boss.\n\n You only need to have 10 %s active at some point during the fight. It is recommend doing this at the start of the fight.",--]] 
+	--[[Translation missing --]]
+	--[[ ["CrucibleOfStorms_UunatHarbingerOfTheVoid"] = "For this achievement you must not move while %s eye is open. This achievement is personal, and you cannot get it while you are dead.\n\n %s eye opens when Uu'nat casts %s, %s or %s, so stop moving completely when the boss gets close to 100 energy. You must NOT move until %s eye is closed, which happens around 40 energy. The eye is also open during the transitions at around 70%% and 45%%.",--]] 
 	--[[Translation missing --]]
 	--[[ ["DarkheartThicket_Dresaron"] = "After pulling the boss, run through the big egg behind %s to hatch it. Next kill the %ss that spawns then kill the boss.",--]] 
 	--[[Translation missing --]]
@@ -105,49 +111,47 @@ local baseLocale = {
 	--[[ ["Freehold_SkycapNKragg"] = "To summon IAT_138314 you have to place a %s before you pull the boss.",--]] 
 	["GUI_Achievement"] = "Erfolg",
 	["GUI_Achievements"] = "Erfolge",
-	["GUI_AchievementsCompletedForInstance"] = "Alle Erfolge sind abgeschlossen für",
-	["GUI_AchievementsDiscordDescription"] = "Die Taktiken wurden vom Erfolgs Discord Server bereit gestellt, die Mitglieder können sich mit gleichgesinnte Mitglieder und Gruppen für bestimme Erfolge treffen.",
-	["GUI_AchievementsDiscordTitle"] = "Erfolge Discord",
-	["GUI_AnnounceMessagesToRaidWarning"] = "Zeige Nachrichten als Raidwarnung",
-	["GUI_AnnounceTracking"] = "Erfolge die beobachtet werden and die Gruppe ansagen.",
-	["GUI_Author"] = "Autor",
+	["GUI_AchievementsCompletedForInstance"] = "Alle Erfolge sind abgeschlossen für ",
+	["GUI_AchievementsDiscordDescription"] = "Die Taktiken wurden vom Achievements Discord Server bereit gestellt, die Mitglieder können sich mit gleichgesinnte Mitglieder und Gruppen für bestimme Erfolge treffen.",
+	["GUI_AchievementsDiscordTitle"] = "Erfolge Discord ",
+	["GUI_AnnounceMessagesToRaidWarning"] = "Zeige Nachrichten als Raidwarnung ",
+	["GUI_AnnounceTracking"] = "Erfolge die beobachtet werden an die Gruppe ansagen",
+	["GUI_Author"] = "Autor ",
 	["GUI_BattleForAzeroth"] = "Battle for Azeroth",
 	["GUI_Cataclysm"] = "Cataclysm",
 	["GUI_Disabled"] = "Deaktiviert",
-	--[[Translation missing --]]
-	--[[ ["GUI_DisplayInfoFrame"] = "Enable Info Frame",--]] 
+	["GUI_DisplayInfoFrame"] = "Info Rahmen aktivieren",
 	["GUI_EnableAddon"] = "Addon aktivieren",
-	["GUI_EnableAutomaticCombatLogging"] = "Aktiviere automatisch den Kampflog",
+	["GUI_EnableAutomaticCombatLogging"] = "Aktiviere automatisch den Kampflog ",
 	["GUI_Enabled"] = "Aktiviert",
 	["GUI_EnterInstanceToStartScanning"] = "Instanz betreten, um den Scanvorgang zu starten",
-	["GUI_GreyOutCompletedAchievements"] = "Graue abgeschlossene Erfolge aus",
-	["GUI_HideCompletedAchievements"] = "Verstecke abgeschlossene Erfolge",
+	["GUI_GreyOutCompletedAchievements"] = "Graue abgeschlossene Erfolge aus ",
+	["GUI_HideCompletedAchievements"] = "Verstecke abgeschlossene Erfolge ",
 	["GUI_Legion"] = "Legion",
-	["GUI_MinimapDisabled"] = "Minimap Symbol deaktiviert",
-	["GUI_MinimapEnabled"] = "Minimap Symbol aktiviert",
+	["GUI_MinimapDisabled"] = "Minimap Symbol deaktiviert ",
+	["GUI_MinimapEnabled"] = "Minimap Symbol aktiviert ",
 	["GUI_MistsOfPandaria"] = "Mists of Pandaria",
 	["GUI_NoPlayersNeedAchievement"] = "Kein Spieler in der Gruppe, welches den Erfolg benötigt",
-	["GUI_OnlyDisplayMissingAchievements"] = "Zeige nur fehlende Erfolge",
-	["GUI_OnlyTrackMissingAchievements"] = "Verfolge nur fehlende Erfolge",
+	["GUI_OnlyDisplayMissingAchievements"] = "Zeige nur fehlende Erfolge ",
+	["GUI_OnlyTrackMissingAchievements"] = "Verfolge nur fehlende Erfolge ",
 	["GUI_Options"] = "Einstellungen",
 	["GUI_OutputPlayers"] = "Ausgabe Spieler",
 	["GUI_OutputTactics"] = "Ausgabe Taktik",
 	["GUI_Players"] = "Spieler",
 	["GUI_PlayersWhoNeedAchievement"] = "Spieler, welche den Erfolg benötigen",
-	["GUI_PlaySoundOnFailed"] = "Spiele einen Sound wenn ein Erfolg fehlschlägt",
-	["GUI_PlaySoundOnSuccess"] = "Spiel ein Sound wenn der Erfolg abgeschlossen ist",
+	["GUI_PlaySoundOnFailed"] = "Spiele einen Sound, wenn ein Erfolg fehlschlägt",
+	["GUI_PlaySoundOnSuccess"] = "Spiele einen Sound, wenn ein Erfolg abgeschlossen ist",
 	["GUI_ScanInProgress"] = "Scan läuft noch",
-	["GUI_SelectSound"] = "Wähle Sound",
-	--[[Translation missing --]]
-	--[[ ["GUI_Tactic"] = "Tactic",--]] 
-	["GUI_Tactics"] = "Taktik",
+	["GUI_SelectSound"] = "Wähle ein Sound",
+	["GUI_Tactic"] = "Taktik",
+	["GUI_Tactics"] = "Taktiken",
 	["GUI_ToggleMinimap"] = "Zeige Minimap Knopf",
 	["GUI_Track"] = "Verfolgen",
 	["GUI_Tracking"] = "Verfolgung",
 	["GUI_TrackingDisabled"] = "(Erfolgsverfolgung deaktiviert)",
 	["GUI_TrackingNumber"] = "Derzeitige Verfolgung",
 	["Gui_TranslatorNames"] = "gOOvER, Kaspi_1",
-	["GUI_Translators"] = "Übersetzer",
+	["GUI_Translators"] = "Übersetzer ",
 	["GUI_WarlordsOfDraenor"] = "Warlords of Draenor",
 	["GUI_WrathOfTheLichKing"] = "Wrath of the Lich King",
 	--[[Translation missing --]]
@@ -155,8 +159,8 @@ local baseLocale = {
 	--[[Translation missing --]]
 	--[[ ["HallsOfValor_Other2"] = "Note: This achievement requires a minimum of 4 players to complete.\n\n After you defeated both %s and %s the path to the four kings will now be open. Before you take the path, head back to the dining hall and have every player click on a %s on the table to gain the %s buff.\n\n Once you pick up the buff players will have 20 seconds to head up the stairs and throw their %s to one of the four kings (%s, %s, %s and %s). Note: Each player will need to pick a different boss.",--]] 
 	["Instance Achievement Tracker"] = "Instance Achievement Tracker",
-	["Instances_Other"] = "Sonstige",
-	["Instances_TrashAfterThirdBoss"] = "Trash nach dem dritten Boss",
+	["Instances_Other"] = "Sonstige ",
+	["Instances_TrashAfterThirdBoss"] = "Trash nach dem dritten Boss ",
 	--[[Translation missing --]]
 	--[[ ["KingsRest_DazarTheFirstKing"] = "This achievement is obtained at %s, the last boss in the instance. Have two players each stay on top of the stones in front of the two sarcophagi, and the lights will start filling up around the stone. Once they are both lit up, the right sarcophagus will start shaking which means that you can kill the boss.",--]] 
 	--[[Translation missing --]]
@@ -182,47 +186,45 @@ local baseLocale = {
 	--[[ ["SeatOfTheTriumvirate_Saprish"] = "For this achievement you will need to stand on top of the 4 %s around the room so that %s breaks it when he jumps to one of the players. Once all the %s have been broken you can kill %s and get the achievement.",--]] 
 	--[[Translation missing --]]
 	--[[ ["SeatOfTheTriumvirate_ZuraalTheAscended"] = "About forty seconds into the fight the boss will target a random player and cast %s which will knock that player backwards into the void realm.\n\n Now that player will want to fill up their energy bar, attack %s and then use the extra action button %s near him so that both of them will get sent back to the normal realm.\n\n From there you just kill %s, then %s and there's your achievement.",--]] 
-	["Shared_AddKillCounter"] = "%s Kill-Zähler",
+	["Shared_AddKillCounter"] = "%s Kill-Zähler ",
 	["Shared_CompletedBossKill"] = "wird erfüllt wenn der Boss getötet wurde",
-	["Shared_DamageFromAbility"] = "%s Schaden",
-	["Shared_DirectHitFromAbility"] = "%s direkter Schlag",
-	["Shared_DoesNotMeetCritera"] = "erfüllt nicht die Voraussetzungen für",
+	["Shared_DamageFromAbility"] = "%s Schaden ",
+	["Shared_DirectHitFromAbility"] = "%s direkter Schlag ",
+	["Shared_DoesNotMeetCritera"] = "erfüllt nicht die Voraussetzungen für ",
 	["Shared_Eight"] = "8",
 	["Shared_Eighteen"] = "18",
 	["Shared_Eleven"] = "11",
-	["Shared_FailedPersonalAchievement"] = "%s ist gescheitert %s (Grund: %s)(Persönlicher Erfolg)",
+	["Shared_FailedPersonalAchievement"] = "%s ist gescheitert %s (Grund: %s)(Persönlicher Erfolg) ",
 	["Shared_Fifteen"] = "15",
 	["Shared_Five"] = "5",
-	["Shared_Found"] = "gefunden",
+	["Shared_Found"] = "gefunden ",
 	["Shared_Four"] = "4",
 	["Shared_Fourteen"] = "14",
-	["Shared_GotHit"] = "wurde getroffen",
-	["Shared_HasBeenHitWith"] = "wurde getroffen von",
-	["Shared_HasBeenInfectedWith"] = "wurde infiziert mit",
-	["Shared_HasCompleted"] = "hat abgeschlossen",
-	["Shared_HasFailed"] = "ist fehlgeschlagen",
-	["Shared_HasGained"] = "hat gewonnen",
-	["Shared_HasLost"] = "hat verloren",
-	["Shared_HeCanNowBeKileld"] = "Er kann jetzt getötet werden",
-	["Shared_JustKillBoss"] = "Auf Maximallevel kann der Boss einfach getötet werden um den Erfolg zu bekommen",
-	--[[Translation missing --]]
-	--[[ ["Shared_JustKillBossesTogether"] = "At max level, you can simply just kill the bosses at the same time to get this achievement",--]] 
-	["Shared_JustKillBossSingleTarget"] = "Um den Erfolg zu bekommen, kann der Boss einfach mit einer Single-Target Fähigkeit getötet werden",
-	["Shared_KillTheAddNow"] = "Töte %s jetzt",
-	["Shared_MeetsCritera"] = "erfüllt die Voraussetzung für",
+	["Shared_GotHit"] = "wurde getroffen ",
+	["Shared_HasBeenHitWith"] = "wurde getroffen mit ",
+	["Shared_HasBeenInfectedWith"] = "wurde infiziert mit ",
+	["Shared_HasCompleted"] = "hat abgeschlossen ",
+	["Shared_HasFailed"] = "ist fehlgeschlagen ",
+	["Shared_HasGained"] = "hat gewonnen ",
+	["Shared_HasLost"] = "hat verloren ",
+	["Shared_HeCanNowBeKileld"] = "Er kann jetzt getötet werden ",
+	["Shared_JustKillBoss"] = "Bei Maximalstufe kann der Boss einfach getötet werden, um diesen Erfolg zu erzielen",
+	["Shared_JustKillBossesTogether"] = "Bei Maximalstufe kannst du einfach die Bosse gleichzeitig töten, um diesen Erfolg zu erzielen",
+	["Shared_JustKillBossSingleTarget"] = "Bei Maximalstufe kannst du einfach den Boss mit Einzelzielfähigkeiten töten, um diesen Erfolg zu erzielen",
+	["Shared_KillTheAddNow"] = "Töte %s jetzt ",
+	["Shared_MeetsCritera"] = "erfüllt die Voraussetzung für ",
 	["Shared_Nine"] = "9",
 	["Shared_Nineteen"] = "19",
-	["Shared_NotHit"] = "wurden nicht getroffen",
+	["Shared_NotHit"] = "wurden nicht getroffen ",
 	["Shared_One"] = "1",
-	["Shared_PlayersHit"] = "Spieler getroffen:",
-	--[[Translation missing --]]
-	--[[ ["Shared_PlayersWhoNeedAchievement"] = "Players who need achievement",--]] 
-	["Shared_PlayersWhoStillNeedToGetHit"] = "Spieler die noch getroffen werden müssen:",
-	["Shared_PlayersWhoStillNeedToGetResurrected"] = "Die folgenden Spieler müssen wiederbelebt werden um den Erfolg zu erhalten:",
-	["Shared_ReportString"] = "Bitte melde den folgenden string zum IAT Autor",
+	["Shared_PlayersHit"] = "Spieler getroffen: ",
+	["Shared_PlayersWhoNeedAchievement"] = "Spieler die den Erfolg brauchen ",
+	["Shared_PlayersWhoStillNeedToGetHit"] = "Spieler die noch getroffen werden müssen: ",
+	["Shared_PlayersWhoStillNeedToGetResurrected"] = "Die folgenden Spieler müssen wiederbelebt werden um den Erfolg zu erhalten: ",
+	["Shared_ReportString"] = "Bitte melde den folgenden String zum IAT Autor",
 	["Shared_Seven"] = "7",
 	["Shared_Seventeen"] = "17",
-	["Shared_SheCanNowBeKilled"] = "Sie kann jetzt getötet werden",
+	["Shared_SheCanNowBeKilled"] = "Sie kann jetzt getötet werden ",
 	["Shared_Six"] = "6",
 	["Shared_Sixteen"] = "16",
 	["Shared_Ten"] = "10",
@@ -231,7 +233,7 @@ local baseLocale = {
 	["Shared_Twelve"] = "12",
 	["Shared_Twenty"] = "20",
 	["Shared_Two"] = "2",
-	["Shared_WasKilled"] = "wurde getötet",
+	["Shared_WasKilled"] = "wurde getötet ",
 	--[[Translation missing --]]
 	--[[ ["ShrineOfTheStorm_LordStormsong"] = "During the course of the encounter, %s will periodically begin to %s which summons %s that will chase players and attempt to explode upon impact. To obtain this achievement, you must not come into contact with any of the void adds so you will keep kiting them throughout the encounter.",--]] 
 	--[[Translation missing --]]
@@ -300,6 +302,8 @@ local baseLocale = {
 	--[[ ["TolDagor_OverseerKorgus"] = "Shortly after you start the encounter, %s fires %s rounds at each player and applies %s. Every time a player moves its effects get stronger and will eventually cause the player to be stunned for 8 seconds, and you should do this as a group at the start of the encounter since there are no abilities to dodge.",--]] 
 	--[[Translation missing --]]
 	--[[ ["TombOfSargeras_DemonicInquisition"] = "Dps the boss down to around 20%%. Now whenever %s reaches one hundred energy he will cast %s, so everyone in the raid should attack him to get max torment really fast.\n\n Once everyone in the group has max torment you can kill the boss.",--]] 
+	--[[Translation missing --]]
+	--[[ ["TombOfSargeras_FallenAvatar"] = "At max level just kill the boss before he casts %s.",--]] 
 	--[[Translation missing --]]
 	--[[ ["TombOfSargeras_Goroth"] = "For this achievement have your ranged dps and healers stack up together so that %s spawns the %s in a straight line pointed towards him. Once someone is marked by %s they will have to go behind the pillars so that the star collides with the %s and destroys them.\n\n Once 30 %s have been destroyed you can kill the boss.",--]] 
 	--[[Translation missing --]]
