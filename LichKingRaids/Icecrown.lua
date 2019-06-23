@@ -610,7 +610,7 @@ function core._631:LichKing()
         end
 
         if necroticPlagueStack >= 30 then
-            core:getAchievementSuccess()
+            core:getAchievementSuccess(2)
         end
     end	
 end
