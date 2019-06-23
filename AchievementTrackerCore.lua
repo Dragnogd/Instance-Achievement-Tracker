@@ -1699,7 +1699,6 @@ function checkAndClearInstanceVariables()
 
 		--Untrack achievements that we tracked
 		for k,v in pairs(trackAchievementInUiTable) do
-			print(v)
 			RemoveTrackedAchievement(v)
 		end
 	end
