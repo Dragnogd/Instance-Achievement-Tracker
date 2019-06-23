@@ -2,6 +2,7 @@
 -- Namespaces
 --------------------------------------
 local _, core = ...
+local L = core.L
 
 ------------------------------------------------------
 ---- Blackwing Descent Bosses
@@ -44,26 +45,26 @@ local step4Complete = false
 
 function core._669:Magmaw()
 	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 78941 then
-		core:getAchievementFailedWithMessageAfter("by (" .. core.destName .. ")")
+		core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")")
 	end
 end
 
 function core._669:OminitronDefenseSystem()
 	--Arcane Annihilator
 	if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 79710 and arcaneAnnihilatorFailed == false then
-		core:sendMessage(core.spellName .. " part of " .. core:getAchievement() .. " FAILED! by (" .. core.destName .. ")")
+		core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ") (" .. L["Core_Reason"] .. ": " .. core.spellName)
 		arcaneAnnihilatorFailed = true
 	end
 
 	--Static Shock
 	if (core.type == "SPELL_ABSORBED" or core.type == "SPELL_DAMAGE" or core.type == "SPELL_MISSED") and core.spellId == 79912 and staticShockFailed == false then
-		core:sendMessage(core.spellName .. " part of " .. core:getAchievement() .. " FAILED! by (" .. core.destName .. ")")
+		core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ") (" .. L["Core_Reason"] .. ": " .. core.spellName)
 		staticShockFailed = true
 	end
 
 	--Poison Bomb
 	if (core.type == "SPELL_DAMAGE" or core.type == "SPELL_MISSED") and core.spellId == 80092 and poisonBombFailed == false then
-		core:sendMessage(core.spellName .. " part of " .. core:getAchievement() .. " FAILED! by (" .. core.destName .. ")")
+		core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ") (" .. L["Core_Reason"] .. ": " .. core.spellName)
 		poisonBombFailed = true
 	end
 
@@ -80,7 +81,7 @@ function core._669:OminitronDefenseSystem()
 		else
 			if core.destName ~= flameThrowerPlayer then
 				--More than one person has got hit by the flamethrower
-				core:sendMessage(core.spellName .. " part of " .. core:getAchievement() .. " FAILED! by (" .. core.destName .. ")")
+				core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ") (" .. L["Core_Reason"] .. ": " .. core.spellName)
 				flameThrowerFailed = true
 			end
 		end	
@@ -88,7 +89,16 @@ function core._669:OminitronDefenseSystem()
 end
 
 function core._669:Maloriak()
-    if core.destID == "41440" and core.type == "UNIT_DIED" then
+	--Found Aberration
+	if core.sourceID == "41440" and core.achievementsCompleted[1] == false then
+		if aberrationsList[core.spawn_uid] == nil then
+			aberrationsList[core.spawn_uid] = spawn_uid
+			aberrationsCounter = aberrationsCounter + 1            
+		end
+	end
+
+	--Aberration has died
+	if core.type == "UNIT_DIED" and core.destID == "41440" then
         aberrationsList[core.spawn_uid_dest] = nil
         aberrationsCounter = aberrationsCounter - 1
         if timerStarted == false then
@@ -109,13 +119,6 @@ function core._669:Maloriak()
                     timerStarted = false
                 end
             end)
-        end
-    end
-
-    if core.sourceID == "41440" and core.achievementsCompleted[1] == false then
-        if aberrationsList[core.spawn_uid] == nil then
-            aberrationsList[core.spawn_uid] = spawn_uid
-			aberrationsCounter = aberrationsCounter + 1            
         end
     end
 
@@ -253,7 +256,7 @@ function core._669.Events:UNIT_POWER_UPDATE(self, unit, powerType)
     if core.Instances[core.expansion][core.instanceType][core.instance]["boss4"].enabled == true then
 		if powerType == "ALTERNATE" then
 			if UnitPower(unit, ALTERNATE_POWER_INDEX) > 50 then
-				core:getAchievementFailedWithMessageAfter("by (" .. UnitName(unit) .. ")")
+				core:getAchievementFailedWithMessageAfter("(" .. UnitName(unit) .. ")")
 			end
 		end
     end
