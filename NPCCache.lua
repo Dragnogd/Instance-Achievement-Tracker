@@ -169,6 +169,7 @@ core.NPCCache = {
     [146750] = 146750, --N'zoth
     [104251] = 104251, --Duskwatch Sentry
     [104217] = 104217, --Talixae 
+    [95888] = 95888, --Cordana Felsong
 }
 
 --[] = , --
