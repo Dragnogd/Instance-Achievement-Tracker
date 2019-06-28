@@ -1,4 +1,4 @@
-﻿## Interface: 80100
+﻿## Interface: 80200
 ## Notes: An addon for tracking the completion/faliure of instance achievements.
 ## Title:Instance Achievement Tracker
 ## Author: Whizzey
