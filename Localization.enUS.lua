@@ -49,7 +49,7 @@ local baseLocale = {
     ["GUI_BlockDisableAddon"] = "You cannot disable the addon while you are are in combat. Wait till you are out of combat then try again",
     ["GUI_DisplayInfoFrame"] = "Enable Info Frame",
     ["GUI_Tactic"] = "Tactic",
-    ["GUI_TrackAchievementsInBlizzardUI"] = "Track achievements in Blizzard UI",
+    ["GUI_TrackAchievementsInBlizzardUI"] = "Track achievements in Achievements UI",
 
     -------------------------------------------------------
     --- Core
