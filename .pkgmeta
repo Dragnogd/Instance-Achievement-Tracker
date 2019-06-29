@@ -1,18 +1,8 @@
 enable-nolib-creation: no
  
 externals:
-    libs/LibStub:
-        url: svn://svn.wowace.com/wow/libstub/mainline/trunk
-        tag: latest
-    libs/CallbackHandler-1.0:
-        url: svn://svn.wowace.com/wow/callbackhandler/mainline/trunk/CallbackHandler-1.0
-        tag: latest
-    libs/LibDBIcon-1-0:
-        url: svn://svn.wowace.com/wow/libdbicon-1-0/trunk
-        tag: latest
-    libs/LibRangeCheck-2-0:
-        url: svn://svn.wowace.com/wow/librangecheck-2-0/trunk
-        tag: latest
-    libs/LibDataBroker-1-1:
-        url: svn://svn.wowace.com/wow/libdatabroker-1-1
-        tag: latest
+    Libs/LibDBIcon-1.0: https://repos.wowace.com/wow/libdbicon-1-0/trunk/LibDBIcon-1.0
+    Libs/LibStub: https://repos.wowace.com/wow/libstub/mainline/trunk
+    Libs/CallbackHandler-1.0: https://repos.wowace.com/wow/callbackhandler/mainline/trunk/CallbackHandler-1.0
+    Libs/LibRangeCheck-2-0: https://repos.wowace.com/wow/librangecheck-2-0/trunk/LibRangeCheck-2.0
+    Libs/LibDataBroker-1-1: https://repos.wowace.com/wow/libdatabroker-1-1s
