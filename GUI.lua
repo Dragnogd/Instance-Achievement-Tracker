@@ -1651,6 +1651,7 @@ function IATInfoFrame:SetSubHeading1(text)
     end                        
     InfoFrame.subHeading1:SetText(text)
     InfoFrame.subHeading1:SetHeight(InfoFrame.subHeading1:GetStringHeight())
+    InfoFrame.subHeading1:ClearAllPoints()
     InfoFrame.subHeading1:SetPoint("TOPLEFT", InfoFrame.heading, "BOTTOMLEFT", 0, -5)
     
     -- if InfoFrame.subHeading1:GetStringWidth() > InfoFrame:GetWidth()then
