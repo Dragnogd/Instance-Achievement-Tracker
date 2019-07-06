@@ -31,7 +31,7 @@ end
 function core._2097:QueenAzshara()
 	--Defeat Queen Azshara in The Eternal Palace with one player still alive who is currently affected by Essence of Azeroth on Normal difficulty or higher.
 
-	if core.type == "UNIT_DIED" and core.currentDest = "Player" then
+	if core.type == "UNIT_DIED" and core.currentDest == "Player" then
 		--Loop through all players in the group and check if just 1 player is alive
 		local playersAlive = 0
 		local lastPlayerAlive = nil
@@ -53,7 +53,7 @@ function core._2097:QueenAzshara()
 				playersAlive = playersAlive + 1
 				local name = UnitName(unit)
 				lastPlayerAlive = name
-			else
+			end
 		end
 		
 		if playersAlive == 1 then
@@ -61,8 +61,8 @@ function core._2097:QueenAzshara()
                 local _, _, _, _, _, _, _, _, _, spellId = UnitBuff(unit, i)
 				if spellId == 300866 then
 					core:getAchievementSuccess()
-                end
-            end
+				end
+			end
 		end
 	end
 end
