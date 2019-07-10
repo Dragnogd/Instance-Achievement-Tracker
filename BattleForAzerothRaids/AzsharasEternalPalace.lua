@@ -11,6 +11,12 @@ core._2097 = {}
 core._2097.Events = CreateFrame("Frame")
 
 ------------------------------------------------------
+---- Blackwater Behemoth
+------------------------------------------------------
+local collectSampleUID = {}
+local samplesCollected = 0
+
+------------------------------------------------------
 ---- Radiance of Azshara
 ------------------------------------------------------
 local playersCompletedAchievement = 0
@@ -21,6 +27,19 @@ function core._2097:AbyssalCommanderSivara()
     --Blizzard tracking gone red so fail achievement
 	if core:getBlizzardTrackingStatus(13684) == false then
 		core:getAchievementFailed()
+	end
+end
+
+function core._2097:BlackwaterBehemoth()
+	--Defeat the Blackwater Behemoth in The Eternal Palace after collecting 50 samples of sea life from within the Darkest Depths on Normal Difficulty of higher.
+
+	if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 302005 and collectSampleUID[core.spawn_uid_dest] == nil then
+		collectSampleUID[core.spawn_uid_dest] = core.spawn_uid_dest
+		samplesCollected = samplesCollected + 1
+	end
+
+	if samplesCollected >= 50 then
+		core:getAchievementSuccess()
 	end
 end
 
@@ -97,6 +116,12 @@ function core._2097:ClearVariables()
 	---- Radiance of Azshara
 	------------------------------------------------------
 	playersCompletedAchievement = 0
+	
+	------------------------------------------------------
+	---- Blackwater Behemoth
+	------------------------------------------------------
+	collectSampleUID = {}
+	samplesCollected = 0
 end
 
 function core._2097:InstanceCleanup()
