@@ -14,7 +14,7 @@ function core._2097:AbyssalCommanderSivara()
     --Defeat Abyssal Commander Sivara in The Eternal Palace while all three of her lieutenants are alive and engaged in the fight on Normal difficulty or higher.
 
     --Blizzard tracking gone red so fail achievement
-	if core:getBlizzardTrackingStatus(13684) == true then
+	if core:getBlizzardTrackingStatus(13684) == false then
 		core:getAchievementFailed()
 	end
 end
