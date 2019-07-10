@@ -19,6 +19,15 @@ function core._2097:AbyssalCommanderSivara()
 	end
 end
 
+function core._2097:LadyAshvane()
+	--Defeat Lady Ashvane in The Eternal Palace after having each cast of Arcing Azerite pass through her on Normal difficulty or higher.
+
+	--Blizzard tracking gone red so fail achievement
+	if core:getBlizzardTrackingStatus(13629) == false then
+		core:getAchievementFailed()
+	end
+end
+
 function core._2097:Zaqul() 
     --Defeat Za'qul in the Eternal Palace after killing ten Twinklehoof Bovine on Normal difficulty or higher.
 
