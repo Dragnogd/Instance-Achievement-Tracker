@@ -139,15 +139,54 @@ end
 function core._2164.Events:UNIT_AURA(self, unitID)
 	if next(core.currentBosses) ~= nil then
 		if core.currentBosses[1].encounterID == 2305 then
+			--Fun Run
 			for i=1,40 do
 				local _, _, count2, _, _, _, _, _, _, spellId = UnitDebuff(unitID, i)
 				if spellId == 305173 then
-					if spellID2 ~= nil then
-						local name, realm = UnitName(unitID)
-						if name ~= nil then
-							InfoFrame_SetPlayerComplete(name)
-							playersCompletedAchievement = playersCompletedAchievement + 1
-							core:getAchievementSuccessPersonalWithName(1, sender)
+					local name, realm = UnitName(unitID)
+					if name ~= nil then
+						InfoFrame_SetPlayerComplete(name)
+						playersCompletedAchievement = playersCompletedAchievement + 1
+						core:getAchievementSuccessPersonalWithName(1, sender)
+					end
+				end
+			end
+		elseif core.currentBosses[1].encounterID == 2303 then
+			--A Smack of Jellyfish
+			--Incubation Fluid: 298306
+			--Incubating Zoatroid: 305322
+			local incubationFluidFound = false
+			local incubatingZoatroidFound = false
+			local incubationFluidPlayer = ""
+			local incubatingZoatroidPlayer = ""
+			for i=1,40 do
+				local _, _, count2, _, _, _, _, _, _, spellId = UnitDebuff(unitID, i)
+				if spellId == 298306 then
+					--Incubation Fluid
+					local name, realm = UnitName(unitID)
+					if name ~= nil then
+						incubationFluidFound = true
+						incubationFluidPlayer = name
+
+						--Check requirements have been met
+						if incubationFluidFound == true and incubatingZoatroidFound == true then
+							if incubationFluidPlayer == incubatingZoatroidPlayer then
+								core:getAchievementSuccess()
+							end
+						end
+					end
+				elseif spellId == 305322 then
+					--Incubating Zoatroid
+					local name, realm = UnitName(unitID)
+					if name ~= nil then
+						incubatingZoatroidFound = true
+						incubatingZoatroidPlayer = name
+
+						--Check requirements have been met
+						if incubationFluidFound == true and incubatingZoatroidFound == true then
+							if incubationFluidPlayer == incubatingZoatroidPlayer then
+								core:getAchievementSuccess()
+							end
 						end
 					end
 				end
