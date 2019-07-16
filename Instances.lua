@@ -288,6 +288,7 @@ core.Instances = {
                     track = function() core._2164:RadianceOfAzshara() end,
                     partial = false,
                     encounterID = 2305,
+                    displayInfoFrame = true,
                 },
                 boss4 = {
                     name = 2354, --Lady Ashvane

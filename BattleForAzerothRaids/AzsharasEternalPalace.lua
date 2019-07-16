@@ -20,6 +20,7 @@ local samplesCollected = 0
 ---- Radiance of Azshara
 ------------------------------------------------------
 local playersCompletedAchievement = 0
+local playersWithFunRun = {}
 
 function core._2164:AbyssalCommanderSivara()
     --Defeat Abyssal Commander Sivara in The Eternal Palace while all three of her lieutenants are alive and engaged in the fight on Normal difficulty or higher.
@@ -28,6 +29,15 @@ function core._2164:AbyssalCommanderSivara()
 	if core:getBlizzardTrackingStatus(13684) == false then
 		core:getAchievementFailed()
 	end
+
+	InfoFrame_UpdatePlayersOnInfoFramePersonal()
+	InfoFrame_SetHeaderCounter(L["Shared_PlayersWhoNeedAchievement"],playersCompletedAchievement,core.groupSize)
+	
+	if playersCompletedAchievement == core.groupSize then
+		core:getAchievementSuccess()
+	end
+
+	InfoFrame_SetPlayerComplete("Whizzey")
 end
 
 function core._2164:BlackwaterBehemoth()
@@ -116,6 +126,7 @@ function core._2164:ClearVariables()
 	---- Radiance of Azshara
 	------------------------------------------------------
 	playersCompletedAchievement = 0
+	playersWithFunRun = {}
 	
 	------------------------------------------------------
 	---- Blackwater Behemoth
@@ -145,9 +156,13 @@ function core._2164.Events:UNIT_AURA(self, unitID)
 				if spellId == 305173 then
 					local name, realm = UnitName(unitID)
 					if name ~= nil then
-						InfoFrame_SetPlayerComplete(name)
-						playersCompletedAchievement = playersCompletedAchievement + 1
-						core:getAchievementSuccessPersonalWithName(1, sender)
+						if playersWithFunRun[name] == nil then
+							playersWithFunRun[name] = name
+							InfoFrame_SetPlayerComplete(name)
+							playersCompletedAchievement = playersCompletedAchievement + 1
+							core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(305173) .. " " .. L["Core_Counter"] .. " (" .. playersCompletedAchievement .. "/" .. core.groupSize .. ")")
+						end
+						-- core:getAchievementSuccessPersonalWithName(1, sender)
 					end
 				end
 			end
