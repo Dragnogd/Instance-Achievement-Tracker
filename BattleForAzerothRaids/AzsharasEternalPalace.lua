@@ -139,15 +139,13 @@ end
 function core._2164:RadianceOfAzshara()
 	--Defeat Radiance of Azshara in The Eternal Palace after running 6 consecutive complete laps around her arena without falling into the water on Normal difficulty on higher.
 
-	InfoFrame_UpdatePlayersOnInfoFrame()
-	InfoFrame_SetHeaderCounter(L["Shared_PlayersWhoNeedAchievement"],playersCompletedAchievement,core.groupSize)
+	InfoFrame_UpdatePlayersOnInfoFramePersonal()
+	InfoFrame_SetHeaderCounter(L["Shared_PlayersWhoNeedAchievement"],playersCompletedAchievement,#core.currentBosses[1].players)
 	
-	if playersCompletedAchievement == core.groupSize then
+	if playersCompletedAchievement == #core.currentBosses[1].players then
 		core:getAchievementSuccess()
 	end
 end
-
---_2164
 
 function core._2164:TheQueensCourt()
 	--Perform various emotes to earn Queen Azshara's Favor in the Eternal Palace, then defeat The Queen's Court on Normal Difficulty or higher.
