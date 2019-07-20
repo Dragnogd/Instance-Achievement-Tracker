@@ -11,6 +11,13 @@ core._2164 = {}
 core._2164.Events = CreateFrame("Frame")
 
 ------------------------------------------------------
+---- Abyssal Commander Sivara
+------------------------------------------------------
+local garvalTheVanquisherFound = false
+local tideshaperKorvessFound = false
+local gorjeshTheSmasherFound = false
+
+------------------------------------------------------
 ---- Blackwater Behemoth
 ------------------------------------------------------
 local collectSampleUID = {}
@@ -34,7 +41,23 @@ local applausePlayers = {}
 local queenInititalSetup = false
 
 function core._2164:AbyssalCommanderSivara()
-    --Defeat Abyssal Commander Sivara in The Eternal Palace while all three of her lieutenants are alive and engaged in the fight on Normal difficulty or higher.
+	--Defeat Abyssal Commander Sivara in The Eternal Palace while all three of her lieutenants are alive and engaged in the fight on Normal difficulty or higher.
+	
+	if core.type == "SWING_DAMAGE" and core.sourceID == "155277" then
+		gorjeshTheSmasherFound = true
+	end
+
+	if core.type == "SWING_DAMAGE" and core.sourceID == "155275" then
+		tideshaperKorvessFound = true
+	end
+
+	if core.type == "SWING_DAMAGE" and core.sourceID == "155273" then
+		garvalTheVanquisherFound = true
+	end
+
+	if gorjeshTheSmasherFound == true and tideshaperKorvessFound == true and garvalTheVanquisherFound == true then
+		core:getAchievementSuccess()
+	end
 
     --Blizzard tracking gone red so fail achievement
 	if core:getBlizzardTrackingStatus(13684) == false then
