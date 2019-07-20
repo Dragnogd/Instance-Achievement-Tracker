@@ -193,6 +193,21 @@ local baseLocale = {
     ["AzsharasEternalPalace_QueenAzshara"] = "",
 
     --Chat Output
+    ["AzsharasEternalPalace_SaluteSelf"] = "You salute %s with respect.",
+    ["AzsharasEternalPalace_SaluteOther"] = "%s salutes %s with respect.",
+    ["AzsharasEternalPalace_CurtseySelf"] = "You curtsey before %s.",
+    ["AzsharasEternalPalace_CurtseyOther"] = "%s curtsies before %s.",
+    ["AzsharasEternalPalace_GrovelSelf"] = "You grovel before %s like a subservient peon.",
+    ["AzsharasEternalPalace_GrovelOther"] = "%s grovels before %s like a subservient peon.",
+    ["AzsharasEternalPalace_KneelSelfs"] = "You kneel before %s.",
+    ["AzsharasEternalPalace_KneelOther"] = "%s kneels before %s",
+    ["AzsharasEternalPalace_ApplauseSelf"] = "You applaud at %s. Bravo!",
+    ["AzsharasEternalPalace_ApplauseOther"] = "%s applauds at %s. Bravo!",
+    ["AzsharasEternalPalace_Kneel"] = "Kneel",
+    ["AzsharasEternalPalace_Salute"] = "Salute",
+    ["AzsharasEternalPalace_Grovel"] = "Grovel",
+    ["AzsharasEternalPalace_Applause"] = "Applause",
+    ["AzsharasEternalPalace_Curtsey"] = "Curtsey",
 
     -------------------------------------------------------
     --- Crucible Of Storms

@@ -9,7 +9,7 @@ local UIConfig													--UIConfig is used to make a display asking the user 
 local UICreated = false											--To enable achievement tracking when they enter an instances
 local debugMode = false
 local debugModeChat = false
-local sendDebugMessages = false
+local sendDebugMessages = true
 
 local ptrVersion = "8.1.0"
 
@@ -2851,6 +2851,35 @@ function core:getAchievementFailedPersonal(index)
 	end
 end
 
+--Display the failed achievement message for personal achievements
+function core:getAchievementFailedPersonalWithName(index, sender, outputMessage)
+	local value = index
+	if index == nil then
+		value = 1
+	end
+	local playerName = sender
+	if string.find(playerName, "-") then
+		local name, realm = strsplit("-", playerName)
+		playerName = name
+	end
+	if core.playersFailedPersonal[playerName] == nil then
+		--Players has not been hit already
+		--Check if the player actually needs the achievement
+		if core:has_value(core.currentBosses[value].players, playerName) then
+			--Player needs achievement but has failed it
+			if outputMessage == true then
+				core:sendMessage(playerName .. " " .. L["Shared_HasFailed"] .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " (" .. L["Core_PersonalAchievement"] .. ")",true,"failed")
+				
+				--Relay message to addon which has RW permissions if masterAddon does have permissions
+				if relayAddonPlayer ~= nil then
+					C_ChatInfo.SendAddonMessage("Whizzey", "relayMessage," .. relayAddonPlayer .. "," .. playerName .. " " .. L["Shared_HasFailed"] .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " (" .. L["Core_PersonalAchievement"] .. ")", "RAID")
+				end
+			end
+		end
+		core.playersFailedPersonal[playerName] = true
+	end
+end
+
 function core:getAchievementFailedPersonalIndependent(playerName, index)
 	local value = index
 	if index == nil then
@@ -3386,4 +3415,14 @@ function core:getTableLength(T)
 	local count = 0
 	for _ in pairs(T) do count = count + 1 end
 	return count
+end
+
+function core:getNameOnly(originalName)
+	local playerName = originalName
+	if string.find(playerName, "-") then
+		local name, realm = strsplit("-", playerName)
+		return playerName
+	else
+		return playerName
+	end
 end

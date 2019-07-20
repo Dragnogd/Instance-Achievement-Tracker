@@ -84,6 +84,36 @@ function InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
     end
 end
 
+function InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfoPersonal()
+    --This will update list of players on the info frame for personal achievements.
+    --This will only display names of players who still need the achievement
+    --This will also display an additional message
+
+    if next(core.InfoFrame_PlayersTable) == nil then
+        --If table is empty then generate players
+        for k,player in ipairs(core.currentBosses[1].players) do
+            core.InfoFrame_PlayersTable[player] = {1,""}
+        end
+    else
+        --Update Info Frame with values from table
+        local messageStr = ""
+        for player, status in pairs(core.InfoFrame_PlayersTable) do
+            --1 = incomplete, 2 = complete, 3 = failed
+            if status[1] == 1 then
+                --Player has not completed the requirements for the achievement yet
+                messageStr = messageStr .. colourWhite .. player .. " (" .. status[2] .. ")|r\n"
+            elseif status[1] == 2 then
+                --Player has completed the requirements for the achievement
+                messageStr = messageStr .. colourGreen .. player .. " (" .. status[2] .. ")|r\n"
+            elseif status[1] then
+                --Player had completed the requirements for the achievement but has since failed it
+                messageStr = messageStr .. colourRed .. player .. " (" .. status[2] .. ")|r\n"
+            end
+        end
+        core.IATInfoFrame:SetText1(messageStr)
+    end
+end
+
 function InfoFrame_UpdatePlayersOnInfoFramePersonal()
     --This will update list of players on the info frame for personal achievements.
     --This will only display names of players who still need the achievement
@@ -235,6 +265,37 @@ function InfoFrame_SetPlayerCompleteWithMessage(player,additionalInfo)
             return false
         else
             core.InfoFrame_PlayersTable[player][1] = 2
+            core.InfoFrame_PlayersTable[player][2] = additionalInfo
+
+            core:sendDebugMessage(core.InfoFrame_PlayersTable[player][1])
+            core:sendDebugMessage(core.InfoFrame_PlayersTable[player][2])
+
+            return true
+        end
+    end
+end
+
+function InfoFrame_SetPlayerNeutralWithMessage(player,additionalInfo)
+    core:sendDebugMessage("Inside SetPlayerNeutralMessage")
+    core:sendDebugMessage(additionalInfo)
+    core:sendDebugMessage(player)
+    --Make sure we remove realm info from player before checking name
+    if string.find(player, "-") then
+        local name, realm = strsplit("-", player)
+        player = name
+    end
+
+    if core.InfoFrame_PlayersTable[player] ~= nil then
+        if core.InfoFrame_PlayersTable[player][1] == 1 then
+            core.InfoFrame_PlayersTable[player][1] = 1
+            core.InfoFrame_PlayersTable[player][2] = additionalInfo
+
+            core:sendDebugMessage(core.InfoFrame_PlayersTable[player][1])
+            core:sendDebugMessage(core.InfoFrame_PlayersTable[player][2])
+
+            return false
+        else
+            core.InfoFrame_PlayersTable[player][1] = 1
             core.InfoFrame_PlayersTable[player][2] = additionalInfo
 
             core:sendDebugMessage(core.InfoFrame_PlayersTable[player][1])

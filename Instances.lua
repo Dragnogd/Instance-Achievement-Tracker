@@ -318,10 +318,11 @@ core.Instances = {
                     achievement = 13633,
                     players = {},
                     tactics = L["AzsharasEternalPalace_TheQueensCourt"],
-                    enabled = false,
-                    track = nil,
+                    enabled = true,
+                    track = function() core._2164:TheQueensCourt() end,
                     partial = false,
                     encounterID = 2311,
+                    displayInfoFrame = true,
                 },
                 boss7 = {
                     name = 2349, --Za'qui, Harbinger of Ny'alotha
