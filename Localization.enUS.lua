@@ -193,6 +193,7 @@ local baseLocale = {
     ["AzsharasEternalPalace_QueenAzshara"] = "",
 
     --Chat Output
+    ["AzsharasEternalPalace_SamplesCollected"] = "Samples collected",
     ["AzsharasEternalPalace_SaluteSelf"] = "You salute %s with respect.",
     ["AzsharasEternalPalace_SaluteOther"] = "%s salutes %s with respect.",
     ["AzsharasEternalPalace_CurtseySelf"] = "You curtsey before %s.",
