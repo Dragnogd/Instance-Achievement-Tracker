@@ -265,7 +265,7 @@ function core._2164.Events:UNIT_AURA(self, unitID)
 							playersCompletedAchievement = playersCompletedAchievement + 1
 							core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(305173) .. " " .. L["Core_Counter"] .. " (" .. playersCompletedAchievement .. "/" .. core.groupSize .. ")")
 						end
-						-- core:getAchievementSuccessPersonalWithName(1, sender)
+						core:getAchievementSuccessPersonalWithName(1, sender)
 					end
 				end
 			end
