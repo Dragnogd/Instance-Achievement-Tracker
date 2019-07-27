@@ -71,7 +71,7 @@ function core._2164:BlackwaterBehemoth()
 	if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 302005 and collectSampleUID[core.spawn_uid_dest] == nil then
 		collectSampleUID[core.spawn_uid_dest] = core.spawn_uid_dest
 		samplesCollected = samplesCollected + 1
-		core:sendMessage(core:getAchievement() .. " " .. L["AzsharasEternalPalace_SamplesCollected"])
+		core:sendMessage(core:getAchievement() .. samplesCollected .. " " .. L["AzsharasEternalPalace_SamplesCollected"])
 	end
 
 	if samplesCollected >= 50 then
