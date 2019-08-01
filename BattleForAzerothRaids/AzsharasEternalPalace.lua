@@ -142,8 +142,16 @@ function core._2164:RadianceOfAzshara()
 	InfoFrame_UpdatePlayersOnInfoFramePersonal()
 	InfoFrame_SetHeaderCounter(L["Shared_PlayersWhoNeedAchievement"],playersCompletedAchievement,#core.currentBosses[1].players)
 	
+	--Achievement Completed
 	if playersCompletedAchievement == #core.currentBosses[1].players then
 		core:getAchievementSuccess()
+		core.achievementsFailed[1] = false
+	end
+
+	--Achievement Completed but has since failed
+	if playersCompletedAchievement ~= #core.currentBosses[1].players and core.achievementsCompleted[1] == true then
+		core:getAchievementFailed()
+		core.achievementsCompleted[1] = false 
 	end
 end
 
@@ -254,10 +262,12 @@ function core._2164.Events:UNIT_AURA(self, unitID)
 	if next(core.currentBosses) ~= nil then
 		if core.currentBosses[1].encounterID == 2305 then
 			--Fun Run
+			local foundFunRunDebuff = false
+			local name, realm = UnitName(unitID)
 			for i=1,40 do
 				local _, _, count2, _, _, _, _, _, _, spellId = UnitDebuff(unitID, i)
 				if spellId == 305173 then
-					local name, realm = UnitName(unitID)
+					foundFunRunDebuff = true
 					if name ~= nil then
 						if playersWithFunRun[name] == nil then
 							playersWithFunRun[name] = name
@@ -265,7 +275,19 @@ function core._2164.Events:UNIT_AURA(self, unitID)
 							playersCompletedAchievement = playersCompletedAchievement + 1
 							core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(305173) .. " " .. L["Core_Counter"] .. " (" .. playersCompletedAchievement .. "/" .. core.groupSize .. ")")
 						end
-						core:getAchievementSuccessPersonalWithName(1, sender)
+					end
+				end
+			end
+
+			--Check if player has completed the achievement already and if so do they still have the debuff or not
+			if core.InfoFrame_PlayersTable[player] ~= nil and foundFunRunDebuff == false then
+				if core.InfoFrame_PlayersTable[player] == 2 then
+					if playersWithFunRun[name] ~= nil then
+						--Player has lost debuff. Update InfoFrame
+						InfoFrame_SetPlayerFailed(name)
+						playersWithFunRun[name] = nil
+						playersCompletedAchievement = playersCompletedAchievement - 1
+						core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(305173) .. " " .. L["Core_Counter"] .. " (" .. playersCompletedAchievement .. "/" .. core.groupSize .. ")")
 					end
 				end
 			end
