@@ -2037,7 +2037,7 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 			core.extraSpellId, core.extraSpellName, core.extraSchool, core.auraType = select(13, ...)
 		elseif string.match(core.type, "_CAST_FAILED") then
 			core.failedType = select(13, ...)
-		end
+		end	
 	end
 
 	if string.match(core.sourceGUID, "Creature") or string.match(core.destGUID, "Creature") or string.match(core.sourceGUID, "Vehicle") or string.match(core.destGUID, "Vehicle") then

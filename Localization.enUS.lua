@@ -174,6 +174,7 @@ local baseLocale = {
     ["Shared_Completed"] = "Completed",
     ["Shared_DoNotKillBoss"] = "DO NOT KILL BOSS!",
     ["Shared_HasDied"] = "has died",
+    ["Shared_NOW"] = "NOW!",
 
     -------------------------------------------------------
     --- Battle of Dazar'alor

@@ -39,6 +39,11 @@ local grovelPlayers = {}
 local kneelPlayers = {}
 local applausePlayers = {}
 local queenInititalSetup = false
+local saluteAnnounce = false
+local curtseyAnnounce = false
+local grovelAnnounce = false
+local kneelAnnounce = false
+local applauseAnnounce = false
 
 function core._2164:AbyssalCommanderSivara()
 	--Defeat Abyssal Commander Sivara in The Eternal Palace while all three of her lieutenants are alive and engaged in the fight on Normal difficulty or higher.
@@ -158,6 +163,48 @@ end
 function core._2164:TheQueensCourt()
 	--Perform various emotes to earn Queen Azshara's Favor in the Eternal Palace, then defeat The Queen's Court on Normal Difficulty or higher.
 
+	--Announce when players should do each of the emotes
+	--Form Ranks - Salute
+	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 303188 and saluteAnnounce == false then
+		saluteAnnounce = true
+		core:sendMessage(GetSpellLink(303188) .. " /" .. L["AzsharasEternalPalace_Salute"] .. " " .. L["Shared_NOW"])
+		C_Timer.After(20, function() 
+			saluteAnnounce = false
+		end)
+	end
+	--Repeat Performance - Curtsey
+	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 304409 and curtseyAnnounce == false then
+		curtseyAnnounce = true
+		core:sendMessage(GetSpellLink(304409) .. " /" .. L["AzsharasEternalPalace_Curtsey"] .. " " .. L["Shared_NOW"])
+		C_Timer.After(20, function() 
+			curtseyAnnounce = false
+		end)
+	end
+	--Deferred Sentance - Grovel
+	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 304128 and grovelAnnounce == false then
+		grovelAnnounce = true
+		core:sendMessage(GetSpellLink(304128) .. " /" .. L["AzsharasEternalPalace_Grovel"] .. " " .. L["Shared_NOW"])
+		C_Timer.After(20, function() 
+			grovelAnnounce = false
+		end)
+	end
+	--Obey or Suffer - Kneel
+	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 297585 and kneelAnnounce == false then
+		kneelAnnounce = true
+		core:sendMessage(GetSpellLink(297585) .. " /" .. L["AzsharasEternalPalace_Kneel"] .. " " .. L["Shared_NOW"])
+		C_Timer.After(20, function() 
+			kneelAnnounce = false
+		end)
+	end
+	--Stand Alone - Applause
+	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 297656 and applauseAnnounce == false then
+		applauseAnnounce = true
+		core:sendMessage(GetSpellLink(297656) .. " /" .. L["AzsharasEternalPalace_Applause"] .. " " .. L["Shared_NOW"])
+		C_Timer.After(20, function() 
+			applauseAnnounce = false
+		end)
+	end
+
 	InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfoPersonal()
 	InfoFrame_SetHeaderCounter(L["Shared_PlayersWhoNeedAchievement"],playersCompletedAchievement,#core.currentBosses[1].players)
 
@@ -175,7 +222,8 @@ function core._2164:TheQueensCourt()
 	--When players gains Queen Favour debuff mark player as complete
 	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 302029 then
 		InfoFrame_SetPlayerCompleteWithMessage(core.destName, "")
-		core:getAchievementSuccessPersonalWithName(1, core.destName)
+		core:getAchievementSuccessPersonalWithName(1, core.destName, false)
+		playersCompletedAchievement = playersCompletedAchievement + 1
 
 		--Reset failed variable
 		core.playersFailedPersonal[core:getNameOnly(core.destName)] = nil
@@ -196,7 +244,8 @@ function core._2164:TheQueensCourt()
 				curtseyPlayers[core:getNameOnly(name)] = nil
 		
 				--Announce fail and reset complete
-				core:getAchievementFailedPersonalWithName(1, name)
+				core:getAchievementFailedPersonalWithName(1, name, false)
+				playersCompletedAchievement = playersCompletedAchievement - 1
 				core.playersSuccessPersonal[core:getNameOnly(name)] = nil
 			end
 		end)
@@ -214,8 +263,16 @@ function core._2164:TheQueensCourt()
 		InfoFrame_SetPlayerNeutralWithMessage(core.destName, L["AzsharasEternalPalace_Salute"] .. ", " .. L["AzsharasEternalPalace_Curtsey"] .. ", " ..  L["AzsharasEternalPalace_Applause"] .. ", " ..  L["AzsharasEternalPalace_Grovel"] .. ", " .. L["AzsharasEternalPalace_Kneel"])
 	end
 
+	--Achievement Completed
 	if playersCompletedAchievement == #core.currentBosses[1].players then
 		core:getAchievementSuccess()
+		core.achievementsFailed[1] = false
+	end
+
+	--Achievement Completed but has since failed
+	if playersCompletedAchievement ~= #core.currentBosses[1].players and core.achievementsCompleted[1] == true then
+		core:getAchievementFailed()
+		core.achievementsCompleted[1] = false 
 	end
 end
 
@@ -242,6 +299,11 @@ function core._2164:ClearVariables()
 	kneelPlayers = {}
 	applausePlayers = {}
 	queenInititalSetup = false
+	saluteAnnounce = false
+	curtseyAnnounce = false
+	grovelAnnounce = false
+	kneelAnnounce = false
+	applauseAnnounce = false
 end
 
 function core._2164:InstanceCleanup()
