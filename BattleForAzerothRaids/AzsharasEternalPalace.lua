@@ -45,6 +45,12 @@ local grovelAnnounce = false
 local kneelAnnounce = false
 local applauseAnnounce = false
 
+------------------------------------------------------
+---- Orgozoa
+------------------------------------------------------
+local eggFound = false
+local eggFoundPlayer = nil
+
 function core._2164:AbyssalCommanderSivara()
 	--Defeat Abyssal Commander Sivara in The Eternal Palace while all three of her lieutenants are alive and engaged in the fight on Normal difficulty or higher.
 	
@@ -304,6 +310,12 @@ function core._2164:ClearVariables()
 	grovelAnnounce = false
 	kneelAnnounce = false
 	applauseAnnounce = false
+
+	------------------------------------------------------
+	---- Orgozoa
+	------------------------------------------------------
+	eggFound = false
+	eggFoundPlayer = nil
 end
 
 function core._2164:InstanceCleanup()
@@ -361,11 +373,11 @@ function core._2164.Events:UNIT_AURA(self, unitID)
 			local incubatingZoatroidFound = false
 			local incubationFluidPlayer = ""
 			local incubatingZoatroidPlayer = ""
+			local name, realm = UnitName(unitID)
 			for i=1,40 do
 				local _, _, count2, _, _, _, _, _, _, spellId = UnitDebuff(unitID, i)
 				if spellId == 298306 then
 					--Incubation Fluid
-					local name, realm = UnitName(unitID)
 					if name ~= nil then
 						incubationFluidFound = true
 						incubationFluidPlayer = name
@@ -379,10 +391,11 @@ function core._2164.Events:UNIT_AURA(self, unitID)
 					end
 				elseif spellId == 305322 then
 					--Incubating Zoatroid
-					local name, realm = UnitName(unitID)
 					if name ~= nil then
 						incubatingZoatroidFound = true
 						incubatingZoatroidPlayer = name
+						eggFound = true
+						eggFoundPlayer = name
 
 						--Check requirements have been met
 						if incubationFluidFound == true and incubatingZoatroidFound == true then
@@ -392,6 +405,15 @@ function core._2164.Events:UNIT_AURA(self, unitID)
 						end
 					end
 				end
+			end
+
+			--Check if player has dropped the egg or not
+			if eggFound == true and incubatingZoatroidFound == false and eggFoundPlayer == name then
+				C_Timer.After(2, function() 
+					if core.inCombat then
+						core:getAchievementFailed()
+					end
+				end)
 			end
 		end
 	end	
