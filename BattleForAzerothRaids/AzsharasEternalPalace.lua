@@ -260,11 +260,11 @@ function core._2164:TheQueensCourt()
 	--If player dies reset counters
 	if core.type == "UNIT_DIED" and UnitIsPlayer(core.destName) then
 		--Reset tables
-		kneelPlayers[core:getNameOnly(name)] = nil
-		grovelPlayers[core:getNameOnly(name)] = nil
-		applausePlayers[core:getNameOnly(name)] = nil
-		salutePlayers[core:getNameOnly(name)] = nil
-		curtseyPlayers[core:getNameOnly(name)] = nil
+		kneelPlayers[core:getNameOnly(core.destName)] = nil
+		grovelPlayers[core:getNameOnly(core.destName)] = nil
+		applausePlayers[core:getNameOnly(core.destName)] = nil
+		salutePlayers[core:getNameOnly(core.destName)] = nil
+		curtseyPlayers[core:getNameOnly(core.destName)] = nil
 
 		InfoFrame_SetPlayerNeutralWithMessage(core.destName, L["AzsharasEternalPalace_Salute"] .. ", " .. L["AzsharasEternalPalace_Curtsey"] .. ", " ..  L["AzsharasEternalPalace_Applause"] .. ", " ..  L["AzsharasEternalPalace_Grovel"] .. ", " .. L["AzsharasEternalPalace_Kneel"])
 	end
