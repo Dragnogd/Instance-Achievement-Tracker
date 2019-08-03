@@ -347,7 +347,7 @@ function core._2164.Events:UNIT_AURA(self, unitID)
 							playersWithFunRun[name] = name
 							InfoFrame_SetPlayerComplete(name)
 							playersCompletedAchievement = playersCompletedAchievement + 1
-							core:sendMessage(core:getAchievement() .. " " .. name .. " " .. L["Shared_HasCompleted"] .. " " .. GetSpellLink(305173) .. " " .. L["Core_Counter"] .. " (" .. playersCompletedAchievement .. "/" .. core.groupSize .. ")",true)
+							core:sendMessage(core:getAchievement() .. " " .. name .. " " .. L["Shared_HasCompleted"] .. " " .. GetSpellLink(305173) .. " " .. L["Core_Counter"] .. " (" .. playersCompletedAchievement .. "/" .. #core.currentBosses[1].players .. ")",true)
 						end
 					end
 				end
@@ -361,7 +361,7 @@ function core._2164.Events:UNIT_AURA(self, unitID)
 						InfoFrame_SetPlayerFailed(name)
 						playersWithFunRun[name] = nil
 						playersCompletedAchievement = playersCompletedAchievement - 1
-						core:sendMessage(core:getAchievement() .. " " .. name .. " " .. L["Shared_HasFailed"] .. " " .. GetSpellLink(305173) .. " " .. L["Core_Counter"] .. " (" .. playersCompletedAchievement .. "/" .. core.groupSize .. ")",true)
+						core:sendMessage(core:getAchievement() .. " " .. name .. " " .. L["Shared_HasFailed"] .. " " .. GetSpellLink(305173) .. " " .. L["Core_Counter"] .. " (" .. playersCompletedAchievement .. "/" .. #core.currentBosses[1].players .. ")",true)
 					end
 				end
 			end
