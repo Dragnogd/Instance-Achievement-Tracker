@@ -410,8 +410,8 @@ function core._2164.Events:UNIT_AURA(self, unitID)
 			end
 
 			--Check if player has completed the achievement already and if so do they still have the debuff or not
-			if core.InfoFrame_PlayersTable[player] ~= nil and foundFunRunDebuff == false then
-				if core.InfoFrame_PlayersTable[player] == 2 then
+			if core.InfoFrame_PlayersTable[name] ~= nil and foundFunRunDebuff == false then
+				if core.InfoFrame_PlayersTable[name] == 2 then
 					if playersWithFunRun[name] ~= nil then
 						--Player has lost debuff. Update InfoFrame
 						InfoFrame_SetPlayerFailed(name)
