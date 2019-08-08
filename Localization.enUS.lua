@@ -175,6 +175,7 @@ local baseLocale = {
     ["Shared_DoNotKillBoss"] = "DO NOT KILL BOSS!",
     ["Shared_HasDied"] = "has died",
     ["Shared_NOW"] = "NOW!",
+    ["Shared_PlayersRunningAddon2"] = "For IAT to track this achievement accurately, players collecting items need to be running the addon",
 
     -------------------------------------------------------
     --- Battle of Dazar'alor

@@ -22,6 +22,8 @@ local gorjeshTheSmasherFound = false
 ------------------------------------------------------
 local collectSampleUID = {}
 local samplesCollected = 0
+local initialScan = false
+local playersWithTracking = 0
 
 ------------------------------------------------------
 ---- Radiance of Azshara
@@ -79,10 +81,62 @@ end
 function core._2164:BlackwaterBehemoth()
 	--Defeat the Blackwater Behemoth in The Eternal Palace after collecting 50 samples of sea life from within the Darkest Depths on Normal Difficulty of higher.
 
+	InfoFrame_SetHeaderCounter(L["Shared_TrackingStatus"],playersWithTracking,core.groupSize)
+	InfoFrame_UpdatePlayersOnInfoFrame(false)
+	
+	--Request which players are currently tracking this achievement
+	--Sync Message, Major Version, Minor Version, update Infoframe
+	if initialScan == false then
+		core:sendMessage(L["Shared_PlayersRunningAddon2"],true)
+		core.IATInfoFrame:SetText1("|cff59FF00" .. L["Shared_PlayersRunningAddon2"] .. "|r","GameFontHighlightLarge",nil,nil,200)
+		initialScan = true
+		--Set all players to fail initially as we have not determined yet if they have the addon installed
+		for player,status in ipairs(core.InfoFrame_PlayersTable) do
+			InfoFrame_SetPlayerFailed(player)
+		end
+		C_Timer.After(3, function()
+			--Ask all other addons in the group to see if they are running the addon and tracking this achievement
+			C_ChatInfo.SendAddonMessage("Whizzey", "reqIAT,2,38,true", "RAID")		
+
+			--Wait 1 second for a response from other addon in the group
+			C_Timer.After(2, function() 
+				local playersStr = L["Shared_TrackingAchievementFor"] .. ": "
+				for player, status in pairs(core.InfoFrame_PlayersTable) do
+					--For all players that have the addon running, increment the counter by 1
+					core:sendDebugMessage(status) 
+					if status == 2 then
+						playersStr = playersStr .. player .. ", "
+						playersWithTracking = playersWithTracking + 1
+					end
+				end
+				--core:sendMessageSafe(playersStr,true)
+			end)
+		end)
+	end	
+
 	if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 302005 and collectSampleUID[core.spawn_uid_dest] == nil then
 		collectSampleUID[core.spawn_uid_dest] = core.spawn_uid_dest
 		samplesCollected = samplesCollected + 1
 		core:sendMessage(core:getAchievement() .. samplesCollected .. " " .. L["AzsharasEternalPalace_SamplesCollected"])
+		
+		--Send message to other addon users
+		local messageStr = core.type .. "-" .. core.spellId .. "-" .. core.spawn_uid_dest
+		C_ChatInfo.SendAddonMessage("Whizzey", "syncMessage" .. "-" .. messageStr, "RAID")
+	end
+
+	--Check for message in the sync queue
+	for k,message in ipairs(core.syncMessageQueue) do
+		if message ~= nil then
+			core:sendDebugMessage("Found Message:" .. message)
+			local spellType, spellid, spawnUIDDest = strsplit("-", message)
+			if spellType == "SPELL_CAST_SUCCESS" and spellid == "302005" and collectSampleUID[spawnUIDDest] == nil then
+				--Recieved sample from another addon user. Increment counter
+				collectSampleUID[spawnUIDDest] = spawnUIDDest
+				samplesCollected = samplesCollected + 1
+				core:sendMessage(core:getAchievement() .. samplesCollected .. " " .. L["AzsharasEternalPalace_SamplesCollected"])
+			end
+			core.syncMessageQueue[k] = nil
+		end
 	end
 
 	if samplesCollected >= 50 then
@@ -294,6 +348,8 @@ function core._2164:ClearVariables()
 	------------------------------------------------------
 	collectSampleUID = {}
 	samplesCollected = 0
+	initialScan = false
+	playersWithTracking = 0
 
 	------------------------------------------------------
 	---- The Queen's Court
