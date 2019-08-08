@@ -464,12 +464,8 @@ function core._2164.Events:UNIT_AURA(self, unitID)
 			end
 
 			--Check if player has dropped the egg or not
-			if eggFound == true and incubatingZoatroidFound == false and eggFoundPlayer == name then
-				C_Timer.After(2, function() 
-					if core.inCombat then
-						core:getAchievementFailed()
-					end
-				end)
+			if eggFound == true and incubatingZoatroidFound == false and eggFoundPlayer == name and core.inCombat and core:getHealthPercent("boss1") > 2 then
+				core:getAchievementFailed()
 			end
 		end
 	end	
