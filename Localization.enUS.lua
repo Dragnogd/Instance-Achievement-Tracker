@@ -211,6 +211,11 @@ local baseLocale = {
     ["AzsharasEternalPalace_Grovel"] = "Grovel",
     ["AzsharasEternalPalace_Applause"] = "Applause",
     ["AzsharasEternalPalace_Curtsey"] = "Curtsey",
+    ["AzsharasEternalPalace_KneelShort"] = "K",
+    ["AzsharasEternalPalace_SaluteShort"] = "S",
+    ["AzsharasEternalPalace_GrovelShort"] = "G",
+    ["AzsharasEternalPalace_ApplauseShort"] = "A",
+    ["AzsharasEternalPalace_CurtseyShort"] = "C",
 
     -------------------------------------------------------
     --- Crucible Of Storms

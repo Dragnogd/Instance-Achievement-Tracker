@@ -88,7 +88,9 @@ function core._2164:BlackwaterBehemoth()
 	--Sync Message, Major Version, Minor Version, update Infoframe
 	if initialScan == false then
 		core:sendMessage(L["Shared_PlayersRunningAddon2"],true)
-		core.IATInfoFrame:SetText1("|cff59FF00" .. L["Shared_PlayersRunningAddon2"] .. "|r","GameFontHighlightLarge",nil,nil,200)
+		core.IATInfoFrame:SetText1(L["AzsharasEternalPalace_SamplesCollected"] .. " " .. samplesCollected,"GameFontHighlightLarge")
+		core.IATInfoFrame:SetSubHeading2(L["Shared_Notes"])
+		core.IATInfoFrame:SetText2(L["Shared_PlayersRunningAddon2"],200)
 		initialScan = true
 		--Set all players to fail initially as we have not determined yet if they have the addon installed
 		for player,status in ipairs(core.InfoFrame_PlayersTable) do
@@ -567,19 +569,19 @@ function core._2164.Events:CHAT_MSG_TEXT_EMOTE(self, message, sender, lineID, se
 							--Update InfoFrame to show missing emotes
 							local emoteStr = ""
 							if salutePlayers[sender] ~= true then
-								emoteStr = emoteStr ..  L["AzsharasEternalPalace_Salute"] .. ", "
+								emoteStr = emoteStr ..  L["AzsharasEternalPalace_SaluteShort"] .. ", "
 							end
 							if curtseyPlayers[sender] ~= true then
-								emoteStr = emoteStr ..  L["AzsharasEternalPalace_Curtsey"] .. ", "
+								emoteStr = emoteStr ..  L["AzsharasEternalPalace_CurtseyShort"] .. ", "
 							end
 							if applausePlayers[sender] ~= true then
-								emoteStr = emoteStr ..  L["AzsharasEternalPalace_Applause"] .. ", "
+								emoteStr = emoteStr ..  L["AzsharasEternalPalace_ApplauseShort"] .. ", "
 							end
 							if grovelPlayers[sender] ~= true then
-								emoteStr = emoteStr ..  L["AzsharasEternalPalace_Grovel"] .. ", "
+								emoteStr = emoteStr ..  L["AzsharasEternalPalace_GrovelShort"] .. ", "
 							end
 							if kneelPlayers[sender] ~= true then
-								emoteStr = emoteStr ..  L["AzsharasEternalPalace_Kneel"]
+								emoteStr = emoteStr ..  L["AzsharasEternalPalace_KneelShort"]
 							end
 							InfoFrame_SetPlayerNeutralWithMessage(sender,emoteStr)
 
