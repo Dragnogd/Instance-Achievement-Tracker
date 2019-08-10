@@ -194,7 +194,7 @@ function core._2164:QueenAzshara()
 		
 		if playersAlive == 1 then
 			for i=1,40 do
-                local _, _, _, _, _, _, _, _, _, spellId = UnitBuff(unit, i)
+                local _, _, _, _, _, _, _, _, _, spellId = UnitDebuff(unit, i)
 				if spellId == 300866 then
 					core:getAchievementSuccess()
 				end
