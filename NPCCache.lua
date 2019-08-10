@@ -171,6 +171,15 @@ core.NPCCache = {
     [104217] = 104217, --Talixae 
     [95888] = 95888, --Cordana Felsong
     [152910] = 152910, --Queen Azshara
+    [155144] = 155144, --Abyssal Commander Sivara
+    [155273] = 155273, --Garval the Vanquisher
+    [155275] = 155275, --Tideshaper Korvess
+    [155277] = 155277, --Gorjesh the Smasher
+    [155242] = 155242, --Abyssal Clam
+    [155245] = 155245, --Depth Skulker
+    [155243] = 155243, --Scavenging Crab
+    [155247] = 155247, --Ventfeeder Worm
+    [152512] = 152512, --Stormwraith
 }
 
 --[] = , --
