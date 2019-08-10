@@ -277,6 +277,7 @@ core.Instances = {
                     track = function() core._2164:BlackwaterBehemoth() end,
                     partial = false,
                     encounterID = 2289,
+                    displayInfoFrame = true,
                 },
                 boss3 = {
                     name = 2353, --Radiance of Azshara
