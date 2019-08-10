@@ -122,7 +122,7 @@ function core._2164:BlackwaterBehemoth()
 		core:sendMessage(core:getAchievement() .. samplesCollected .. " " .. L["AzsharasEternalPalace_SamplesCollected"])
 		
 		--Send message to other addon users
-		local messageStr = core.type .. "-" .. core.spellId .. "-" .. core.spawn_uid_dest
+		local messageStr = core.type .. "," .. core.spellId .. "," .. core.spawn_uid_dest
 		C_ChatInfo.SendAddonMessage("Whizzey", "syncMessage" .. "-" .. messageStr, "RAID")
 	end
 
@@ -130,7 +130,7 @@ function core._2164:BlackwaterBehemoth()
 	for k,message in ipairs(core.syncMessageQueue) do
 		if message ~= nil then
 			core:sendDebugMessage("Found Message:" .. message)
-			local spellType, spellid, spawnUIDDest = strsplit("-", message)
+			local spellType, spellid, spawnUIDDest = strsplit(",", message)
 			if spellType == "SPELL_CAST_SUCCESS" and spellid == "302005" and collectSampleUID[spawnUIDDest] == nil then
 				--Recieved sample from another addon user. Increment counter
 				collectSampleUID[spawnUIDDest] = spawnUIDDest
@@ -229,7 +229,7 @@ function core._2164:TheQueensCourt()
 	--Form Ranks - Salute
 	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 303188 and saluteAnnounce == false then
 		saluteAnnounce = true
-		core:sendMessage(GetSpellLink(303188) .. " /" .. L["AzsharasEternalPalace_Salute"] .. " " .. L["Shared_NOW"])
+		core:sendMessage(GetSpellLink(303188) .. " /" .. L["AzsharasEternalPalace_Salute"] .. " " .. L["Shared_NOW"], true)
 		C_Timer.After(20, function() 
 			saluteAnnounce = false
 		end)
@@ -237,7 +237,7 @@ function core._2164:TheQueensCourt()
 	--Repeat Performance - Curtsey
 	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 304409 and curtseyAnnounce == false then
 		curtseyAnnounce = true
-		core:sendMessage(GetSpellLink(304409) .. " /" .. L["AzsharasEternalPalace_Curtsey"] .. " " .. L["Shared_NOW"])
+		core:sendMessage(GetSpellLink(304409) .. " /" .. L["AzsharasEternalPalace_Curtsey"] .. " " .. L["Shared_NOW"], true)
 		C_Timer.After(20, function() 
 			curtseyAnnounce = false
 		end)
@@ -245,7 +245,7 @@ function core._2164:TheQueensCourt()
 	--Deferred Sentance - Grovel
 	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 304128 and grovelAnnounce == false then
 		grovelAnnounce = true
-		core:sendMessage(GetSpellLink(304128) .. " /" .. L["AzsharasEternalPalace_Grovel"] .. " " .. L["Shared_NOW"])
+		core:sendMessage(GetSpellLink(304128) .. " /" .. L["AzsharasEternalPalace_Grovel"] .. " " .. L["Shared_NOW"], true)
 		C_Timer.After(20, function() 
 			grovelAnnounce = false
 		end)
@@ -253,7 +253,7 @@ function core._2164:TheQueensCourt()
 	--Obey or Suffer - Kneel
 	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 297585 and kneelAnnounce == false then
 		kneelAnnounce = true
-		core:sendMessage(GetSpellLink(297585) .. " /" .. L["AzsharasEternalPalace_Kneel"] .. " " .. L["Shared_NOW"])
+		core:sendMessage(GetSpellLink(297585) .. " /" .. L["AzsharasEternalPalace_Kneel"] .. " " .. L["Shared_NOW"], true)
 		C_Timer.After(20, function() 
 			kneelAnnounce = false
 		end)
@@ -261,7 +261,7 @@ function core._2164:TheQueensCourt()
 	--Stand Alone - Applause
 	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 297656 and applauseAnnounce == false then
 		applauseAnnounce = true
-		core:sendMessage(GetSpellLink(297656) .. " /" .. L["AzsharasEternalPalace_Applause"] .. " " .. L["Shared_NOW"])
+		core:sendMessage(GetSpellLink(297656) .. " /" .. L["AzsharasEternalPalace_Applause"] .. " " .. L["Shared_NOW"], true)
 		C_Timer.After(20, function() 
 			applauseAnnounce = false
 		end)
@@ -292,25 +292,21 @@ function core._2164:TheQueensCourt()
 	end
 
 	--If player looses Queen Favour Debuff
-	if core.type == "SPELL_AURA_REMOVED" and core.spellId == 302029 then
+	if core.type == "SPELL_AURA_REMOVED" and core.spellId == 302029 and core.inCombat == true then
 		local name = core.destName
-		C_Timer.After(1, function() 
-			if core.inCombat == true then
-				InfoFrame_SetPlayerFailedWithMessage(name, L["AzsharasEternalPalace_Salute"] .. ", " .. L["AzsharasEternalPalace_Curtsey"] .. ", " ..  L["AzsharasEternalPalace_Applause"] .. ", " ..  L["AzsharasEternalPalace_Grovel"] .. ", " .. L["AzsharasEternalPalace_Kneel"])
+		InfoFrame_SetPlayerFailedWithMessage(name, L["AzsharasEternalPalace_SaluteShort"] .. ", " .. L["AzsharasEternalPalace_CurtseyShort"] .. ", " .. L["AzsharasEternalPalace_ApplauseShort"] .. ", " .. L["AzsharasEternalPalace_GrovelShort"] .. ", " .. L["AzsharasEternalPalace_KneelShort"])
 
-				--Reset tables
-				kneelPlayers[core:getNameOnly(name)] = nil
-				grovelPlayers[core:getNameOnly(name)] = nil
-				applausePlayers[core:getNameOnly(name)] = nil
-				salutePlayers[core:getNameOnly(name)] = nil
-				curtseyPlayers[core:getNameOnly(name)] = nil
-		
-				--Announce fail and reset complete
-				core:getAchievementFailedPersonalWithName(1, name, false)
-				playersCompletedAchievement = playersCompletedAchievement - 1
-				core.playersSuccessPersonal[core:getNameOnly(name)] = nil
-			end
-		end)
+		--Reset tables
+		kneelPlayers[core:getNameOnly(name)] = nil
+		grovelPlayers[core:getNameOnly(name)] = nil
+		applausePlayers[core:getNameOnly(name)] = nil
+		salutePlayers[core:getNameOnly(name)] = nil
+		curtseyPlayers[core:getNameOnly(name)] = nil
+
+		--Announce fail and reset complete
+		core:getAchievementFailedPersonalWithName(1, name, false)
+		playersCompletedAchievement = playersCompletedAchievement - 1
+		core.playersSuccessPersonal[core:getNameOnly(name)] = nil
 	end
 
 	--If player dies reset counters
@@ -322,7 +318,19 @@ function core._2164:TheQueensCourt()
 		salutePlayers[core:getNameOnly(core.destName)] = nil
 		curtseyPlayers[core:getNameOnly(core.destName)] = nil
 
-		InfoFrame_SetPlayerNeutralWithMessage(core.destName, L["AzsharasEternalPalace_Salute"] .. ", " .. L["AzsharasEternalPalace_Curtsey"] .. ", " ..  L["AzsharasEternalPalace_Applause"] .. ", " ..  L["AzsharasEternalPalace_Grovel"] .. ", " .. L["AzsharasEternalPalace_Kneel"])
+		InfoFrame_SetPlayerNeutralWithMessage(core.destName, L["AzsharasEternalPalace_SaluteShort"] .. ", " .. L["AzsharasEternalPalace_CurtseyShort"] .. ", " .. L["AzsharasEternalPalace_ApplauseShort"] .. ", " .. L["AzsharasEternalPalace_GrovelShort"] .. ", " .. L["AzsharasEternalPalace_KneelShort"])
+	end
+
+	--Check for message in the sync queue
+	for k,message in ipairs(core.syncMessageQueue) do
+		if message ~= nil then
+			core:sendDebugMessage("Found Message:" .. message)
+			local sender, emoteStr = strsplit(",", message)
+			if sender ~= nil and emoteStr ~= nil and core.playersSuccessPersonal[sender] == nil and core:has_value(core.currentBosses[1].players, sender) then
+				InfoFrame_SetPlayerNeutralWithMessage(sender,emoteStr)
+			end
+			core.syncMessageQueue[k] = nil
+		end
 	end
 
 	--Achievement Completed
@@ -586,7 +594,8 @@ function core._2164.Events:CHAT_MSG_TEXT_EMOTE(self, message, sender, lineID, se
 							InfoFrame_SetPlayerNeutralWithMessage(sender,emoteStr)
 
 							--Send message to other addon users
-							--C_ChatInfo.SendAddonMessage("Whizzey", "syncMessage" .. "-" .. sender, "RAID")
+							local messageStr = sender .. "," .. emoteStr
+							C_ChatInfo.SendAddonMessage("Whizzey", "syncMessage" .. "-" .. messageStr, "RAID")
 						end
 					end
 				end
