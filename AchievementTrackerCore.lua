@@ -3308,7 +3308,11 @@ function core:has_value2(tab, val)
 end
 
 function core:getHealthPercent(boss)
-	return (UnitHealth(boss) / UnitHealthMax(boss)) * 100
+	if UnitExists(boss) then
+		return (UnitHealth(boss) / UnitHealthMax(boss)) * 100
+	else
+		return 0
+	end
 end
 
 function getKeysSortedByValue(tbl, sortFunction)
