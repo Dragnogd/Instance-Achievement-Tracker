@@ -180,6 +180,9 @@ core.NPCCache = {
     [155243] = 155243, --Scavenging Crab
     [155247] = 155247, --Ventfeeder Worm
     [152512] = 152512, --Stormwraith
+    [153941] = 153941, --Zoatroid
+    [155648] = 155648, --Twinklehoof Bovine
+    [155126] = 155126, --Queen Azshara
 }
 
 --[] = , --

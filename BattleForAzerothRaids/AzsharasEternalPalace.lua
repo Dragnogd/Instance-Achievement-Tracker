@@ -323,7 +323,6 @@ end
 
 function core._2164:InstanceCleanup()
     core._2164.Events:UnregisterEvent("UNIT_AURA")
-    core._2164.Events:UnregisterEvent("CHAT_MSG_TEXT_EMOTE")
 end
 
 core._2164.Events:SetScript("OnEvent", function(self, event, ...)
@@ -332,7 +331,6 @@ end)
 
 function core._2164:InitialSetup()
     core._2164.Events:RegisterEvent("UNIT_AURA")
-    core._2164.Events:RegisterEvent("CHAT_MSG_TEXT_EMOTE")
 end
 
 function core._2164.Events:UNIT_AURA(self, unitID)
