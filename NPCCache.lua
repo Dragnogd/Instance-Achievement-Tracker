@@ -183,6 +183,10 @@ core.NPCCache = {
     [153941] = 153941, --Zoatroid
     [155648] = 155648, --Twinklehoof Bovine
     [155126] = 155126, --Queen Azshara
+    [83026] = 83026, --Siegemaster Olugar
+    [84520] = 84520, --Pitwarden Gwarnok
+    [81603] = 81603, --Champion Druna
+    [81305] = 81305, --Flseshrender Nok'gar
 }
 
 --[] = , --

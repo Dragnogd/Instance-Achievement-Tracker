@@ -614,7 +614,7 @@ local baseLocale = {
     --- Iron Docks
     -------------------------------------------------------
     --Tactics
-    ["IronDocks_FleshrenderNokgar"] = "",
+    ["IronDocks_FleshrenderNokgar"] = "To complete this achievement, simply aggro %s, %s and %s then kill %s while keeping the three adds alive. The adds can be found in the trash packs before %s.",
     ["IronDocks_Other"] = "",
 
     --Chat Output
