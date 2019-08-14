@@ -282,7 +282,7 @@ function core._2164:TheQueensCourt()
 	end
 
 	--Achievement Completed but has since failed
-	if playersCompletedAchievement ~= #core.currentBosses[1].players and core.achievementsCompleted[1] == true then
+	if playersCompletedAchievement ~= #core.currentBosses[1].players and core.achievementsCompleted[1] == true and core:getHealthPercent("boss1") > 0 then
 		core:getAchievementFailed()
 		core.achievementsCompleted[1] = false 
 	end
@@ -408,7 +408,7 @@ function core._2164.Events:UNIT_AURA(self, unitID)
 			end
 
 			--Check if player has dropped the egg or not
-			if eggFound == true and incubatingZoatroidFound == false and eggFoundPlayer == name and core.inCombat and core:getHealthPercent("boss1") > 2 then
+			if eggFound == true and incubatingZoatroidFound == false and eggFoundPlayer == name and core.inCombat and core:getHealthPercent("boss1") > 0 then
 				core:getAchievementFailed()
 			end
 		end
