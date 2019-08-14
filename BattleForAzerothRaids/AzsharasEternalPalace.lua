@@ -260,7 +260,7 @@ function core._2164:TheQueensCourt()
 		end)
 	end
 
-	InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfoPersonal()
+	InfoFrame_UpdatePlayersOnInfoFramePersonal()
 	InfoFrame_SetHeaderCounter(L["Shared_PlayersWhoNeedAchievement"],playersCompletedAchievement,#core.currentBosses[1].players)
 
 	--When players gains Queen Favour debuff mark player as complete
