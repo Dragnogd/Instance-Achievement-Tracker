@@ -187,6 +187,9 @@ core.NPCCache = {
     [84520] = 84520, --Pitwarden Gwarnok
     [81603] = 81603, --Champion Druna
     [81305] = 81305, --Flseshrender Nok'gar
+    [34826] = 34826, --Mistress of Pain
+    [34605] = 34605, --Swarm Scarab
+    [34564] = 34564, --Anub'arak
 }
 
 --[] = , --
