@@ -114,6 +114,7 @@ function core._2164:BlackwaterBehemoth()
 		collectSampleUID[core.spawn_uid_dest] = core.spawn_uid_dest
 		samplesCollected = samplesCollected + 1
 		core:sendMessage(core:getAchievement() .. samplesCollected .. " " .. L["AzsharasEternalPalace_SamplesCollected"])
+		core.IATInfoFrame:SetText1(L["AzsharasEternalPalace_SamplesCollected"] .. " " .. samplesCollected,"GameFontHighlightLarge")
 		
 		--Send message to other addon users
 		local messageStr = core.type .. "," .. core.spellId .. "," .. core.spawn_uid_dest
@@ -130,6 +131,7 @@ function core._2164:BlackwaterBehemoth()
 				collectSampleUID[spawnUIDDest] = spawnUIDDest
 				samplesCollected = samplesCollected + 1
 				core:sendMessage(core:getAchievement() .. samplesCollected .. " " .. L["AzsharasEternalPalace_SamplesCollected"])
+				core.IATInfoFrame:SetText1(L["AzsharasEternalPalace_SamplesCollected"] .. " " .. samplesCollected,"GameFontHighlightLarge")
 			end
 			core.syncMessageQueue[k] = nil
 		end
