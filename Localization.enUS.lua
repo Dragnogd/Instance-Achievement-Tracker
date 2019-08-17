@@ -196,16 +196,11 @@ local baseLocale = {
 
     --Chat Output
     ["AzsharasEternalPalace_SamplesCollected"] = "Samples collected",
-    ["AzsharasEternalPalace_SaluteSelf"] = "You salute %s with respect.",
-    ["AzsharasEternalPalace_SaluteOther"] = "%s salutes %s with respect.",
-    ["AzsharasEternalPalace_CurtseySelf"] = "You curtsey before %s.",
-    ["AzsharasEternalPalace_CurtseyOther"] = "%s curtsies before %s.",
-    ["AzsharasEternalPalace_GrovelSelf"] = "You grovel before %s like a subservient peon.",
-    ["AzsharasEternalPalace_GrovelOther"] = "%s grovels before %s like a subservient peon.",
-    ["AzsharasEternalPalace_KneelSelfs"] = "You kneel before %s.",
-    ["AzsharasEternalPalace_KneelOther"] = "%s kneels before %s",
-    ["AzsharasEternalPalace_ApplauseSelf"] = "You applaud at %s. Bravo!",
-    ["AzsharasEternalPalace_ApplauseOther"] = "%s applauds at %s. Bravo!",
+    ["AzsharasEternalPalace_Salute"] = "Salute",
+    ["AzsharasEternalPalace_Curtsey"] = "Curtsey",
+    ["AzsharasEternalPalace_Grovel"] = "Grovel",
+    ["AzsharasEternalPalace_Kneel"] = "Kneel",
+    ["AzsharasEternalPalace_Applause"] = "Applause",
 
     -------------------------------------------------------
     --- Crucible Of Storms
@@ -1169,8 +1164,8 @@ local baseLocale = {
     -------------------------------------------------------
     --Tactics
     ["TrialOfTheCrusader_Icehowl"] = "At 110, you can simply just nuke the boss down. Make sure you don’t kill the Snobolds that fall of Gormok back after killing him.",
-    ["TrialOfTheCrusader_LordJaraxxus"] = "At 110, pull the boss then wait for two Mistresses of Pain to spawn. Once they have spawned, single target down the boss.",
-    ["TrialOfTheCrusader_Anubarak"] = "Pull the boss then wait for 25 Swarm Scarabs to spawn. Once enough adds have spawned. AOE them down. Be careful you don’t kill the boss first.",
+    ["TrialOfTheCrusader_LordJaraxxus"] = "To complete this achievement, pull the boss then wait for two %s to spawn before single targeting down the boss.",
+    ["TrialOfTheCrusader_Anubarak"] = "To complete this achievement, pull the boss then wait for 25 %s to spawn. Once enough adds have spawned, wait for %s to submerge then AOE the adds down. Once the adds are dead you can kill the boss.",
 
     --Chat Output
 
@@ -1280,7 +1275,7 @@ local baseLocale = {
     --- Violet Hold
     -------------------------------------------------------
     --Tactics
-    ["VioletHold_Cyanigosa"] = "For the achievement you must not use any of the red crystal around the room and none of the mobs can reach the entrance.",
+    ["VioletHold_Cyanigosa"] = "To complete this achievement simply kill all the mobs as soon as they spawn from their portals and do not activate any red crystals around the room.",
     ["VioletHold_Other"] = "This achievement will take multiple runs to complete since it’s random which bosses are going to spawn.",
 
     --Chat Output
