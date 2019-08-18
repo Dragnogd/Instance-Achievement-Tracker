@@ -211,7 +211,7 @@ function core._2164:RadianceOfAzshara()
 	end
 
 	--Achievement Completed but has since failed
-	if playersCompletedAchievement ~= #core.currentBosses[1].players and core.achievementsCompleted[1] == true then
+	if playersCompletedAchievement ~= #core.currentBosses[1].players and core.achievementsCompleted[1] == true and core:getHealthPercent("boss1") > 0 then
 		core:getAchievementFailed()
 		core.achievementsCompleted[1] = false 
 	end
@@ -358,7 +358,7 @@ function core._2164.Events:UNIT_AURA(self, unitID)
 			--Check if player has completed the achievement already and if so do they still have the debuff or not
 			if core.InfoFrame_PlayersTable[name] ~= nil and foundFunRunDebuff == false then
 				if core.InfoFrame_PlayersTable[name] == 2 then
-					if playersWithFunRun[name] ~= nil then
+					if playersWithFunRun[name] ~= nil and core:getHealthPercent("boss1") > 0 then
 						--Player has lost debuff. Update InfoFrame
 						InfoFrame_SetPlayerFailed(name)
 						playersWithFunRun[name] = nil
