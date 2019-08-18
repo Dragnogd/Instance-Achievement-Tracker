@@ -2444,7 +2444,7 @@ function core:sendMessage(message, outputToRW, messageType)
 					elseif outputToRW == true and announceToRaidWarning == true then
 						SendChatMessage("[IAT] " .. message,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
 						core:logMessage("[IAT] " .. message)
-						--RaidNotice_AddMessage(RaidWarningFrame, "[IAT] " .. message, ChatTypeInfo["RAID_WARNING"])
+						RaidNotice_AddMessage(RaidWarningFrame, "[IAT] " .. message, ChatTypeInfo["RAID_WARNING"])
 					else
 						--print("Outputting normally")
 						SendChatMessage("[IAT] " .. message,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
