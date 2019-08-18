@@ -9,7 +9,7 @@ local UIConfig													--UIConfig is used to make a display asking the user 
 local UICreated = false											--To enable achievement tracking when they enter an instances
 local debugMode = false
 local debugModeChat = false
-local sendDebugMessages = false
+local sendDebugMessages = true
 
 local ptrVersion = "8.1.0"
 
@@ -122,6 +122,9 @@ function events:onUpdate(sinceLastUpdate)
 		-- do stuff here
 		self.sinceLastUpdate = 0;
 		local combatStatus = getCombatStatus()
+		core:sendDebugMessage("Checking combat status")
+		print(combatStatus)
+		print(core.encounterDetected)
 		if combatStatus == false and core.encounterDetected == false then
 			--Once out of combat and encounter end has fired. Reset the variables
 			core:clearInstanceVariables()
@@ -792,8 +795,14 @@ function getCombatStatus()
 			return true
 		end
 	else
-		--Player is not in a group therefore, they must of left combat so clear variables
-		return false
+		--Player is not in a group. Check if they are in combat though
+		if UnitAffectingCombat("Player") == true then
+			playerInCombat = true
+			return true
+		else
+			playerInCombat = false
+			return false
+		end
 	end
 end
 
