@@ -22,7 +22,7 @@ local ironSludgeKilled = 0
 function core._599:MaidenOfGrief()
     if timerStarted == false then
         timerStarted = true
-        timer = C_Timer.NewTimer(61, function() 
+        timer = C_Timer.NewTimer(60, function() 
             core:getAchievementFailed()
         end)
     end
