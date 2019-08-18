@@ -31,7 +31,7 @@ end
 function core._599:TribunalOfAges()
     core:getAchievementToTrack()
 
-    if core.type == "SWING_DAMAGE" or core.type == "SPELL_DAMAGE" and core.destID == "28070" then
+    if (core.type == "SWING_DAMAGE" or core.type == "SPELL_DAMAGE") and core.destID == "28070" then
         core:getAchievementFailed()
     end
 end
