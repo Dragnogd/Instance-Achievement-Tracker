@@ -127,6 +127,7 @@ function core._2164:BlackwaterBehemoth()
 			core:sendDebugMessage("Found Message:" .. message)
 			local spellType, spellid, spawnUIDDest = strsplit(",", message)
 			if spellType == "SPELL_CAST_SUCCESS" and spellid == "302005" and collectSampleUID[spawnUIDDest] == nil then
+				core:sendDebugMessage("Samples collected in message sync queue")
 				--Recieved sample from another addon user. Increment counter
 				collectSampleUID[spawnUIDDest] = spawnUIDDest
 				samplesCollected = samplesCollected + 1
@@ -224,7 +225,7 @@ function core._2164:TheQueensCourt()
 	--Form Ranks - Salute
 	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 303188 and saluteAnnounce == false then
 		saluteAnnounce = true
-		core:sendMessage(GetSpellLink(303188) .. " /" .. L["AzsharasEternalPalace_Salute"] .. " " .. getNPCName(152910) .. " " .. L["Shared_NOW"], true)
+		core:sendMessage(GetSpellLink(303188) .. " " .. format(L["AzsharasEternalPalace_TargetAndPerformEmote"], getNPCName(152910), L["AzsharasEternalPalace_Salute"]), true)
 		C_Timer.After(20, function() 
 			saluteAnnounce = false
 		end)
@@ -232,7 +233,7 @@ function core._2164:TheQueensCourt()
 	--Repeat Performance - Curtsey
 	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 304409 and curtseyAnnounce == false then
 		curtseyAnnounce = true
-		core:sendMessage(GetSpellLink(304409) .. " /" .. L["AzsharasEternalPalace_Curtsey"] .. " " .. getNPCName(152910) .. " " .. L["Shared_NOW"], true)
+		core:sendMessage(GetSpellLink(304409) .. " " .. format(L["AzsharasEternalPalace_TargetAndPerformEmote"], getNPCName(152910), L["AzsharasEternalPalace_Curtsey"]), true)
 		C_Timer.After(20, function() 
 			curtseyAnnounce = false
 		end)
@@ -240,7 +241,7 @@ function core._2164:TheQueensCourt()
 	--Deferred Sentance - Grovel
 	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 304128 and grovelAnnounce == false then
 		grovelAnnounce = true
-		core:sendMessage(GetSpellLink(304128) .. " /" .. L["AzsharasEternalPalace_Grovel"] .. " " .. getNPCName(152910) .. " " .. L["Shared_NOW"], true)
+		core:sendMessage(GetSpellLink(304128) .. " " .. format(L["AzsharasEternalPalace_TargetAndPerformEmote"], getNPCName(152910), L["AzsharasEternalPalace_Grovel"]), true)
 		C_Timer.After(20, function() 
 			grovelAnnounce = false
 		end)
@@ -248,7 +249,7 @@ function core._2164:TheQueensCourt()
 	--Obey or Suffer - Kneel
 	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 297585 and kneelAnnounce == false then
 		kneelAnnounce = true
-		core:sendMessage(GetSpellLink(297585) .. " /" .. L["AzsharasEternalPalace_Kneel"] .. " " .. getNPCName(152910) .. " " .. L["Shared_NOW"], true)
+		core:sendMessage(GetSpellLink(297585) .. " " .. format(L["AzsharasEternalPalace_TargetAndPerformEmote"], getNPCName(152910), L["AzsharasEternalPalace_Kneel"]), true)
 		C_Timer.After(20, function() 
 			kneelAnnounce = false
 		end)
@@ -256,7 +257,7 @@ function core._2164:TheQueensCourt()
 	--Stand Alone - Applause
 	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 297656 and applauseAnnounce == false then
 		applauseAnnounce = true
-		core:sendMessage(GetSpellLink(297656) .. " /" .. L["AzsharasEternalPalace_Applause"] .. " " .. getNPCName(152910) .. " " .. L["Shared_NOW"], true)
+		core:sendMessage(GetSpellLink(297656) .. " " .. format(L["AzsharasEternalPalace_TargetAndPerformEmote"], getNPCName(152910), L["AzsharasEternalPalace_Applause"]), true)
 		C_Timer.After(20, function() 
 			applauseAnnounce = false
 		end)

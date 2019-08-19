@@ -122,9 +122,6 @@ function events:onUpdate(sinceLastUpdate)
 		-- do stuff here
 		self.sinceLastUpdate = 0;
 		local combatStatus = getCombatStatus()
-		core:sendDebugMessage("Checking combat status")
-		print(combatStatus)
-		print(core.encounterDetected)
 		if combatStatus == false and core.encounterDetected == false then
 			--Once out of combat and encounter end has fired. Reset the variables
 			core:clearInstanceVariables()

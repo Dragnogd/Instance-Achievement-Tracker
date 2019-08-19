@@ -201,6 +201,7 @@ local baseLocale = {
     ["AzsharasEternalPalace_Grovel"] = "Grovel",
     ["AzsharasEternalPalace_Kneel"] = "Kneel",
     ["AzsharasEternalPalace_Applause"] = "Applause",
+    ["AzsharasEternalPalace_TargetAndPerformEmote"] = "Target %s and /%s NOW!",
 
     -------------------------------------------------------
     --- Crucible Of Storms
