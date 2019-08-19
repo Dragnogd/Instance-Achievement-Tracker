@@ -92,7 +92,7 @@ function core._2164:BlackwaterBehemoth()
 		end
 		C_Timer.After(3, function()
 			--Ask all other addons in the group to see if they are running the addon and tracking this achievement
-			C_ChatInfo.SendAddonMessage("Whizzey", "reqIAT,2,38,true", "RAID")		
+			C_ChatInfo.SendAddonMessage("Whizzey", "reqIAT,2,53,true", "RAID")		
 
 			--Wait 1 second for a response from other addon in the group
 			C_Timer.After(2, function() 
