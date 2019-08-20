@@ -159,6 +159,14 @@ function core._2164:Zaqul()
 	if core:getBlizzardTrackingStatus(13716, 1) == true then
 		core:getAchievementSuccess()
 	end
+
+	--Whimsy Realm has worn off. Check if achievement was completed in time or not.
+	if core.type == "SPELL_AURA_REMOVED" and core.spellId == 303266 and core.destName ~= nil then
+		if UnitIsDead(core.destName) == false and core.achievementsCompleted[1] == false then
+			--Player is alive, lost the debuff and achievement is not completed. Mark achievement as failed
+			core:getAchievementFailed()
+		end
+	end
 end
 
 function core._2164:QueenAzshara()
