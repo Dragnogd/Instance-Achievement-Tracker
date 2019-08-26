@@ -152,6 +152,15 @@ function core._2164:LadyAshvane()
 	end
 end
 
+function core._2164:Orgozoa()
+	--Defeat Orgozoa in the Hatchery in The Eternal Palace after incubating a baby Zoatroid on Normal Difficulty or higher.
+
+	--If egg not found by time Massive Incubator is interrupted then achievement must be failed
+	if core.type == "SPELL_INTERRUPT" and core.spellId == 298548 and eggFound == false then
+		core:getAchievementFailed()
+	end
+end
+
 function core._2164:Zaqul() 
     --Defeat Za'qul in the Eternal Palace after killing ten Twinklehoof Bovine on Normal difficulty or higher.
 

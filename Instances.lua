@@ -309,7 +309,7 @@ core.Instances = {
                     players = {},
                     tactics = format(L["AzsharasEternalPalace_Orgozoa"], "IAT_153941", GetSpellLink(298526), GetSpellLink(300308), GetSpellLink(298548), GetSpellLink(305322), GetSpellLink(121536), GetSpellLink(73325), GetSpellLink(298242)),
                     enabled = true,
-                    track = function() end,
+                    track = function() core._2164:Orgozoa() end,
                     partial = false,
                     encounterID = 2303,
                 },
