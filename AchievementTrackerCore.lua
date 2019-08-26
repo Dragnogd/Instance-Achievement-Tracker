@@ -1732,18 +1732,43 @@ function events:CHAT_MSG_ADDON(self, prefix, message, channel, sender)
 		local demotionRequired = false
 
 		if nameRecieved ~= name then
+			local allVariablesRecieved = true
 			if masterAddonRecieved ~= nil then
 				core:sendDebugMessage("------------NEW REQUEST------------")
 				core:sendDebugMessage("Recieved Info From: " .. sender)
-				core:sendDebugMessage("AddonID: " .. addonIDRecieved .. " : " .. tostring(addonID))
-				core:sendDebugMessage("Master Addon: " .. masterAddonRecieved .. " : " .. tostring(masterAddon))
-				core:sendDebugMessage("Player Rank: " .. playerRankRecieved .. " : " .. tostring(playerRank))
-				core:sendDebugMessage("Major Version: " .. majorVersionRecieved .. " : " .. tostring(core.Config.majorVersion))
-				core:sendDebugMessage("Minor Version: " .. minorVersionRecieved .. " : " .. tostring(core.Config.minorVersion))
-				core:sendDebugMessage("Only Track Missing Achievements: " .. onlyTrackMissingAchievementsRecieved .. " : " .. tostring(core.trackingSupressed))
+				if addonIDRecieved ~= nil then
+					core:sendDebugMessage("AddonID: " .. addonIDRecieved .. " : " .. tostring(addonID))
+				else
+					allVariablesRecieved = false
+				end
+				if masterAddonRecieved ~= nil then
+					core:sendDebugMessage("Master Addon: " .. masterAddonRecieved .. " : " .. tostring(masterAddon))
+				else
+					allVariablesRecieved = false
+				end
+				if playerRankRecieved ~= nil then
+					core:sendDebugMessage("Player Rank: " .. playerRankRecieved .. " : " .. tostring(playerRank))
+				else
+					allVariablesRecieved = false
+				end
+				if majorVersionRecieved ~= nil then
+					core:sendDebugMessage("Major Version: " .. majorVersionRecieved .. " : " .. tostring(core.Config.majorVersion))
+				else
+					allVariablesRecieved = false
+				end
+				if minorVersionRecieved ~= nil then
+					core:sendDebugMessage("Minor Version: " .. minorVersionRecieved .. " : " .. tostring(core.Config.minorVersion))
+				else
+					allVariablesRecieved = false
+				end
+				if onlyTrackMissingAchievementsRecieved ~= nil then
+					core:sendDebugMessage("Only Track Missing Achievements: " .. onlyTrackMissingAchievementsRecieved .. " : " .. tostring(core.trackingSupressed))
+				else
+					allVariablesRecieved = false
+				end
 			end
 
-			if masterAddonRecieved == "true" and blockRequirementsCheck == false then
+			if masterAddonRecieved == "true" and blockRequirementsCheck == false and allVariablesRecieved == true then
 
 				core:sendDebugMessage("Make it to tracking")
 
