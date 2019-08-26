@@ -354,7 +354,7 @@ function core._2164.Events:UNIT_AURA(self, unitID)
 				if spellId == 305173 then
 					foundFunRunDebuff = true
 					if name ~= nil then
-						if playersWithFunRun[name] == nil then
+						if playersWithFunRun[name] == nil and core.InfoFrame_PlayersTable[name] ~= nil then
 							playersWithFunRun[name] = name
 							InfoFrame_SetPlayerComplete(name)
 							playersCompletedAchievement = playersCompletedAchievement + 1
@@ -367,7 +367,7 @@ function core._2164.Events:UNIT_AURA(self, unitID)
 			--Check if player has completed the achievement already and if so do they still have the debuff or not
 			if core.InfoFrame_PlayersTable[name] ~= nil and foundFunRunDebuff == false then
 				if core.InfoFrame_PlayersTable[name] == 2 then
-					if playersWithFunRun[name] ~= nil and core:getHealthPercent("boss1") > 0 then
+					if playersWithFunRun[name] ~= nil and core:getHealthPercent("boss1") > 0 and core.InfoFrame_PlayersTable[name] ~= nil then
 						--Player has lost debuff. Update InfoFrame
 						InfoFrame_SetPlayerFailed(name)
 						playersWithFunRun[name] = nil
