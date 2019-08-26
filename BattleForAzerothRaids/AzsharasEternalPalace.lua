@@ -387,20 +387,20 @@ function core._2164.Events:UNIT_AURA(self, unitID)
 			local name, realm = UnitName(unitID)
 			for i=1,40 do
 				local _, _, count2, _, _, _, _, _, _, spellId = UnitDebuff(unitID, i)
-				if spellId == 298306 then
-					--Incubation Fluid
-					if name ~= nil then
-						incubationFluidFound = true
-						incubationFluidPlayer = name
+				-- if spellId == 298306 then
+				-- 	--Incubation Fluid
+				-- 	if name ~= nil then
+				-- 		incubationFluidFound = true
+				-- 		incubationFluidPlayer = name
 
-						--Check requirements have been met
-						if incubationFluidFound == true and incubatingZoatroidFound == true then
-							if incubationFluidPlayer == incubatingZoatroidPlayer then
-								core:getAchievementSuccess()
-							end
-						end
-					end
-				elseif spellId == 305322 then
+				-- 		--Check requirements have been met
+				-- 		if incubationFluidFound == true and incubatingZoatroidFound == true then
+				-- 			if incubationFluidPlayer == incubatingZoatroidPlayer then
+				-- 				core:getAchievementSuccess()
+				-- 			end
+				-- 		end
+				-- 	end
+				if spellId == 305322 then
 					--Incubating Zoatroid
 					if name ~= nil then
 						incubatingZoatroidFound = true
@@ -409,10 +409,8 @@ function core._2164.Events:UNIT_AURA(self, unitID)
 						eggFoundPlayer = name
 
 						--Check requirements have been met
-						if incubationFluidFound == true and incubatingZoatroidFound == true then
-							if incubationFluidPlayer == incubatingZoatroidPlayer then
-								core:getAchievementSuccess()
-							end
+						if incubatingZoatroidFound == true then
+							core:getAchievementSuccess()
 						end
 					end
 				end
