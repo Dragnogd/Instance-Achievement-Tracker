@@ -13,7 +13,7 @@ core._2097.Events = CreateFrame("Frame")
 function core._2097:TussleTonks()
     --Defeat the Tussle Tonks in Operation: Mechagon after Deuce Mecha-Buffer has been hit with a Piston Smasher on Mythic Difficulty.
 
-    if core.destID == "151654" and core.spellId == 282943 then
+    if core.type == "SPELL_DAMAGE" and core.destID == "151654" and core.spellId == 282943 then
         core:getAchievementSuccess()
     end
 end 
