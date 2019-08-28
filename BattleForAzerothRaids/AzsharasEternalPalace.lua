@@ -47,6 +47,11 @@ local applauseAnnounce = false
 local eggFound = false
 local eggFoundPlayer = nil
 
+------------------------------------------------------
+---- Za'qul
+------------------------------------------------------
+local twinklehoofBovineKilled = 0
+
 function core._2164:AbyssalCommanderSivara()
 	--Defeat Abyssal Commander Sivara in The Eternal Palace while all three of her lieutenants are alive and engaged in the fight on Normal difficulty or higher.
 	
@@ -169,13 +174,19 @@ function core._2164:Zaqul()
 		core:getAchievementSuccess()
 	end
 
-	--Whimsy Realm has worn off. Check if achievement was completed in time or not.
-	if core.type == "SPELL_AURA_REMOVED" and core.spellId == 303266 and core.destName ~= nil then
-		if UnitIsDead(core.destName) == false and core.achievementsCompleted[1] == false then
-			--Player is alive, lost the debuff and achievement is not completed. Mark achievement as failed
-			core:getAchievementFailed()
-		end
+	--Twinklehoof Bovine Killed
+	if core.type == "UNIT_DIED" and core.destID == "155648" then
+		twinklehoofBovineKilled = twinklehoofBovineKilled + 1
+		core:sendMessage(core:getAchievement() .. " " getNPCName(155648) .. " " .. L["Shared_Killed"] .. " (" .. twinklehoofBovineKilled .. "/10)")
 	end
+
+	--Whimsy Realm has worn off. Check if achievement was completed in time or not.
+	-- if core.type == "SPELL_AURA_REMOVED" and core.spellId == 303266 and core.destName ~= nil then
+	-- 	if UnitIsDead(core.destName) == false and core.achievementsCompleted[1] == false then
+	-- 		--Player is alive, lost the debuff and achievement is not completed. Mark achievement as failed
+	-- 		core:getAchievementFailed()
+	-- 	end
+	-- end
 end
 
 function core._2164:QueenAzshara()
@@ -338,6 +349,11 @@ function core._2164:ClearVariables()
 	------------------------------------------------------
 	eggFound = false
 	eggFoundPlayer = nil
+
+	------------------------------------------------------
+	---- Za'qul
+	------------------------------------------------------
+	twinklehoofBovineKilled = 0
 end
 
 function core._2164:InstanceCleanup()
