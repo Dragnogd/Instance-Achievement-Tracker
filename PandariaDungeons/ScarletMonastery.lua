@@ -19,6 +19,13 @@ local empoweredZombieTable = {}
 ------------------------------------------------------
 local scarletJudicatorCounter = 0
 
+function core._1004:BrotherKorloff()
+    --Blizzard tracking gone red so green so complete achievement
+	if core:getBlizzardTrackingStatus(6928) == true then
+		core:getAchievementSuccess()
+	end
+end
+
 function core._1004:ThalnosTheSoulrender()
     if core.type == "SPELL_SUMMON" and core.destID == "59930" and empoweredZombieTable[core.spawn_uid_dest] == nil then
         empoweredZombieCounter = empoweredZombieCounter + 1
