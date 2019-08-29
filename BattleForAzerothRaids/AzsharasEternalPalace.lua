@@ -177,7 +177,7 @@ function core._2164:Zaqul()
 	--Twinklehoof Bovine Killed
 	if core.type == "UNIT_DIED" and core.destID == "155648" then
 		twinklehoofBovineKilled = twinklehoofBovineKilled + 1
-		core:sendMessage(core:getAchievement() .. " " getNPCName(155648) .. " " .. L["Shared_Killed"] .. " (" .. twinklehoofBovineKilled .. "/10)")
+		core:sendMessage(core:getAchievement() .. " " .. getNPCName(155648) .. " " .. L["Shared_Killed"] .. " (" .. twinklehoofBovineKilled .. "/10)")
 	end
 
 	--Whimsy Realm has worn off. Check if achievement was completed in time or not.

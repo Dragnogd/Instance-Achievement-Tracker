@@ -28,7 +28,7 @@ function core._1864:TrackAdditional()
                 if maddeningDreamPlayersUID[core.destName] == nil then
                     maddeningDreamCount = maddeningDreamCount + 1
                     maddeningDreamPlayersUID[core.destName] = core.destName
-                    core:sendMessage(core.destName .. L["Shared_HasGained"] .. " " .. GetSpellLink(275690) .. " (" .. maddeningDreamCount .. "/" .. core.groupSize .. ")")
+                    core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. GetSpellLink(275690) .. " (" .. maddeningDreamCount .. "/" .. core.groupSize .. ")")
                 end
             end
     
@@ -37,7 +37,7 @@ function core._1864:TrackAdditional()
                 if maddeningDreamPlayersUID[core.destName] ~= nil then
                     maddeningDreamCount = maddeningDreamCount - 1
                     maddeningDreamPlayersUID[core.destName] = nil
-                    core:sendMessage(core.destName .. L["Shared_HasLost"] .. " " ..  GetSpellLink(275690) .. " (" .. maddeningDreamCount .. "/" .. core.groupSize .. ")")
+                    core:sendMessage(core.destName .. " " .. L["Shared_HasLost"] .. " " ..  GetSpellLink(275690) .. " (" .. maddeningDreamCount .. "/" .. core.groupSize .. ")")
     
                     --If achievement was already completed then fail it
                     if core.achievementsCompleted[1] == true then
