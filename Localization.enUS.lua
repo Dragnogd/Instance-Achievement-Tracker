@@ -176,6 +176,7 @@ local baseLocale = {
     ["Shared_HasDied"] = "has died",
     ["Shared_NOW"] = "NOW!",
     ["Shared_PlayersRunningAddon2"] = "For IAT to track this achievement accurately, players collecting items need to be running the addon",
+    ["Shared_Killed"] = "killed",
 
     -------------------------------------------------------
     --- Battle of Dazar'alor
@@ -254,9 +255,9 @@ local baseLocale = {
     -------------------------------------------------------
     --Tactics
     ["OperationMechagon_KingGobbamak"] = "",
-    ["OperationMechagon_Gunker"] = "",
+    ["OperationMechagon_Gunker"] = "After pulling the boss 5 critters which look like cranes will spawn in the water around the boss. Simply pick them up and bring them over to a %s to cleanse them. After cleansing 5 critters you can kill the boss.",
     ["OperationMechagon_TussleTonks"] = "",
-    ["OperationMechagon_MachinistsGarden"] = "",
+    ["OperationMechagon_MachinistsGarden"] = "Similar to the %s achievement, this is a personal achievement that requires you to dodge most of the damaging mechanics of the boss encounter.",
     ["OperationMechagon_KingMechagon"] = "",
 
     --Chat Output

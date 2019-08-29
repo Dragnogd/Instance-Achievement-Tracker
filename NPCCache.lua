@@ -190,6 +190,7 @@ core.NPCCache = {
     [34826] = 34826, --Mistress of Pain
     [34605] = 34605, --Swarm Scarab
     [34564] = 34564, --Anub'arak
+    [154741] = 154741, --Squirt Bot
 }
 
 --[] = , --
