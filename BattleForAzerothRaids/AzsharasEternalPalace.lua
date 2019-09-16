@@ -294,14 +294,23 @@ function core._2164:TheQueensCourt()
 	InfoFrame_UpdatePlayersOnInfoFramePersonal()
 	InfoFrame_SetHeaderCounter(L["Shared_PlayersWhoNeedAchievement"],playersCompletedAchievement,#core.currentBosses[1].players)
 
+	--Make sure we remove realm info from player before checking name
+	local name = nil
+	if core.destName ~= nil then
+		if string.find(core.destName, "-") then
+			local splitName, splitRealm = strsplit("-", player)
+			name = splitName
+		end
+	end
+
 	--When players gains Queen Favour debuff mark player as complete
-	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 302029 then
+	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 302029 and core.InfoFrame_PlayersTable[name] ~= nil then
 		playersCompletedAchievement = playersCompletedAchievement + 1
 		InfoFrame_SetPlayerComplete(core.destName)
 	end
 
 	--If player looses Queen Favour Debuff
-	if core.type == "SPELL_AURA_REMOVED" and core.spellId == 302029 and core.inCombat == true then
+	if core.type == "SPELL_AURA_REMOVED" and core.spellId == 302029 and core.inCombat == true and core.InfoFrame_PlayersTable[name] ~= nil then
 		playersCompletedAchievement = playersCompletedAchievement - 1
 		InfoFrame_SetPlayerFailed(core.destName)
 	end
@@ -312,11 +321,11 @@ function core._2164:TheQueensCourt()
 		core.achievementsFailed[1] = false
 	end
 
-	--Achievement Completed but has since failed
-	if playersCompletedAchievement ~= #core.currentBosses[1].players and core.achievementsCompleted[1] == true and core:getHealthPercent("boss1") > 0 then
-		core:getAchievementFailed()
-		core.achievementsCompleted[1] = false 
-	end
+	-- --Achievement Completed but has since failed
+	-- if playersCompletedAchievement ~= #core.currentBosses[1].players and core.achievementsCompleted[1] == true and core:getHealthPercent("boss1") > 0 then
+	-- 	core:getAchievementFailed()
+	-- 	core.achievementsCompleted[1] = false 
+	-- end
 end
 
 function core._2164:ClearVariables()
