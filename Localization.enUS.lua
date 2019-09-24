@@ -177,6 +177,7 @@ local baseLocale = {
     ["Shared_NOW"] = "NOW!",
     ["Shared_PlayersRunningAddon2"] = "For IAT to track this achievement accurately, players collecting items need to be running the addon",
     ["Shared_Killed"] = "killed",
+    ["Shared_HasCaught"] ="has caught",
 
     -------------------------------------------------------
     --- Battle of Dazar'alor

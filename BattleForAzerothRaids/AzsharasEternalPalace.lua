@@ -164,6 +164,15 @@ function core._2164:Orgozoa()
 	if core.type == "SPELL_CAST_START" and core.spellId == 298548 and eggFound == false then
 		core:getAchievementFailed()
 	end
+
+	--If egg found by time Massive Incubator spellcast is interrupted then achievement is completed
+	if core.type == "SPELL_INTERRUPT" and core.spellId == 298548 and eggFound == true then
+		C_Timer.After(1, function() 
+			if eggFound == true then
+				core:getAchievementSuccess()
+			end
+		end)
+	end
 end
 
 function core._2164:Zaqul() 
@@ -444,7 +453,9 @@ function core._2164.Events:UNIT_AURA(self, unitID)
 
 						--Check requirements have been met
 						if incubatingZoatroidFound == true then
-							core:getAchievementSuccess()
+							--Announce player has caught the egg
+							core:sendMessage(name .. " " .. L["Shared_HasCaught"] .. " " .. GetSpellLink(305322))
+							-- core:getAchievementSuccess()
 						end
 					end
 				end
