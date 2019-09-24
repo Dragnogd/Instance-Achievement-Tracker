@@ -12,4 +12,6 @@ core.ItemCache = {
     [111821] = 111821, --Blingtron 5000
     [118938] = 118938, --Manastorm's Duplicator
     [140212] = 140212, --Ketchum Tablet
+    [44606] = 44606, --Toy Train Set
+    [45057] = 45057, --Wind-Up Train Wrecker
 }

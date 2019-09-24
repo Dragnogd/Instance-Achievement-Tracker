@@ -191,6 +191,13 @@ core.NPCCache = {
     [34605] = 34605, --Swarm Scarab
     [34564] = 34564, --Anub'arak
     [154741] = 154741, --Squirt Bot
+    [80728] = 80728, --Maggot
+    [78948] = 78948, --Tectus
+    [80551] = 80551, --Shard of Tectus
+    [80557] = 80557, --Mote of Tectus
+    [71803] = 71803, --Flamethrower
+    [81403] = 81403, --BFC9000
+    [78121] = 78121, --Gorian Warmage
 }
 
 --[] = , --
