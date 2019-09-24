@@ -160,8 +160,8 @@ end
 function core._2164:Orgozoa()
 	--Defeat Orgozoa in the Hatchery in The Eternal Palace after incubating a baby Zoatroid on Normal Difficulty or higher.
 
-	--If egg not found by time Massive Incubator is interrupted then achievement must be failed
-	if core.type == "SPELL_INTERRUPT" and core.spellId == 298548 and eggFound == false then
+	--If egg not found by time Massive Incubator spellcast is started then fail achievement
+	if core.type == "SPELL_CAST_START" and core.spellId == 298548 and eggFound == false then
 		core:getAchievementFailed()
 	end
 end
