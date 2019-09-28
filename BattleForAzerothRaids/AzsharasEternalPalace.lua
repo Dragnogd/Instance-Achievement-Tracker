@@ -307,8 +307,10 @@ function core._2164:TheQueensCourt()
 	local name = nil
 	if core.destName ~= nil then
 		if string.find(core.destName, "-") then
-			local splitName, splitRealm = strsplit("-", player)
+			local splitName, splitRealm = strsplit("-", core.destName)
 			name = splitName
+		else
+			name = core.destName
 		end
 	end
 
