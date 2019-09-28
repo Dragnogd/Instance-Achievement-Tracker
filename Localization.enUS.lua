@@ -255,7 +255,7 @@ local baseLocale = {
     --- Operation: Mechagon
     -------------------------------------------------------
     --Tactics
-    ["OperationMechagon_KingGobbamak"] = "",
+    ["OperationMechagon_KingGobbamak"] = "To complete this achievement you must keep the %s behind %s charged at all times throughout the fight. To charge the %s, simply have a player run up to the gear when they have %s (which you get from %s) to charge the gear. The easiest way to do this is to have 2 players alternate charging the %s every 20 seconds.\n\nNote: Make sure that the players saving the %s debuff does not move close to the %s or %s.",
     ["OperationMechagon_Gunker"] = "After pulling the boss 5 critters which look like cranes will spawn in the water around the boss. Simply pick them up and bring them over to a %s to cleanse them. After cleansing 5 critters you can kill the boss.",
     ["OperationMechagon_TussleTonks"] = "",
     ["OperationMechagon_MachinistsGarden"] = "",

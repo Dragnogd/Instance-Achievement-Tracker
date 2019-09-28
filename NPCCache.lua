@@ -198,6 +198,10 @@ core.NPCCache = {
     [71803] = 71803, --Flamethrower
     [81403] = 81403, --BFC9000
     [78121] = 78121, --Gorian Warmage
+    [155595] = 155595, --Sacred Gear
+    [150159] = 150159, --King Gobbamak
+    [153172] = 153172, --Stolen Scrapbot
+    [153245] = 153245, --Stolen Shock Coil
 }
 
 --[] = , --
