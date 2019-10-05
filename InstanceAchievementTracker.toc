@@ -44,6 +44,7 @@ BattleForAzerothDungeons\TheMotherlode.lua
 BattleForAzerothDungeons\TheUnderrot.lua
 BattleForAzerothDungeons\TolDagor.lua
 BattleForAzerothDungeons\WaycrestManor.lua
+BattleForAzerothDungeons\OperationMechagon.lua
 
 LegionRaids\AntorusTheBurningThrone.lua
 LegionRaids\EmeraldNightmare.lua

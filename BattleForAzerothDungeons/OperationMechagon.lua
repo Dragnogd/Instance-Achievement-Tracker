@@ -15,6 +15,11 @@ core._2097.Events = CreateFrame("Frame")
 ------------------------------------------------------
 local helplessCritersSaved = 0
 
+------------------------------------------------------
+---- Machinist's Garden
+------------------------------------------------------
+local playersHit = {}
+
 function core._2097:Gunker()
     --Defeat Gunker in Operation: Mechagon after rescuing 5 Helpless Critters on Mythic Difficulty.
 
@@ -78,4 +83,9 @@ function core._2097:ClearVariables()
     ---- Gunker
     ------------------------------------------------------
     helplessCritersSaved = 0
+
+    ------------------------------------------------------
+    ---- Machinist's Garden
+    ------------------------------------------------------
+    playersHit = {}
 end
