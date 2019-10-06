@@ -56,8 +56,7 @@ local baseLocale = {
 	["Core_AchievementTrackingEnabledFor"] = "Отслеживание достижений включено для",
 	["Core_CommandEnableTracking"] = "включить/отключить отслеживание достижений аддоном IAT",
 	["Core_Commands"] = "Список команд",
-	--[[Translation missing --]]
-	["Core_CompletedAllAchievements"] = "You have completed all achievements for this instance",
+	["Core_CompletedAllAchievements"] = "Вы завершили все достижения для этого подземелья",
 	["Core_Counter"] = "Счетчик",
 	["Core_CriteriaMet"] = "Критерии были выполнены. Босс теперь может быть убит!",
 	["Core_Enable"] = "включить",
@@ -65,8 +64,7 @@ local baseLocale = {
 	["Core_Failed"] = "НЕ УДАЛОСЬ!",
 	["Core_GameFreezeWarning"] = "Это может зафризить вашу игру на несколько секунд",
 	["Core_help"] = "помощь",
-	--[[Translation missing --]]
-	["Core_IncompletedAchievements"] = "Incomplete achievements for this instance",
+	["Core_IncompletedAchievements"] = "Незавершенные достижения для этого подземелья",
 	["Core_ListCommands"] = "показывает список доступных команд",
 	["Core_No"] = "Нет",
 	["Core_NoTrackingForInstance"] = "Аддон IAT не может отслеживать какие-либо достижения для этой битвы",
@@ -137,14 +135,10 @@ local baseLocale = {
 	["GUI_WrathOfTheLichKing"] = "Wrath of the Lich King",
 	["HallsOfValor_Other1"] = "Перейдите в область %s. Очистите всю область от %s за исключением, того которого вы видите, когда телепортируетесь, и любых %s. Как только вы закончите, атакуйте %s и подведите его к 10 %s в области. Когда у %s появится 10 стаков %s, вы можете убить его, чтобы получить достижение.",
 	["HallsOfValor_Other2"] = "Примечание. Для выполнения этого достижения требуется минимум 4 игрока.\n\n После победы над %s и %s путь к четырем королям будет открыт. Прежде чем идти по пути, вернитесь в столовую и попросите каждого игрока нажать на %s на столе, чтобы получить положительный эффект %s.\n\n После того, как вы возьмете бафф, у игроков будет 20 секунд, чтобы пройти коридор и бросить %s одному из четырех королей (%s, %s, %s и %s). Примечание: каждому игроку нужно выбрать своего босса.",
-	--[[Translation missing --]]
-	["Highmaul_Brackenspore"] = "Before pulling the boss have a player pick up the %s (%s). Next pull the boss and damage it to around 40-50%% health so that the %s starts growing from the edges of the room. Once the room is full of %s, have the player with the %s run over the %s while pressing the extra action button repeatedly. Once the player has reached 15 stacks of %s, you can kill the boss.",
-	--[[Translation missing --]]
-	["Highmaul_ImperatorMargok"] = "To complete this achievement, DPS the boss down to 55%% health. At this point the boss will transition and 2 %s will spawn. Keep 1 of them alive and kill the other one.\n\n The %s that is kept alive needs to be moved into the cloud just left of the bosses throne in order to gain the %s buff. The easiest way to move the add to have a deathknight use his %s ability several times.\n\n Once the transition has finished, have the deathknight move the add just to the right of the bosses throne then DPS the boss down to 25%% health to start the second transition.\n\n Once the add has entered the second cloud on the right side of the bosses throne, it will gain the %s buff, at which point you can kill the add then the boss to complete this achievement.\n\n Note: It is also possible to complete this achievement solo without a deathknight. This is done by clicking on the %s which will reveal a red circle underneath him. You will need to stand in or near the edge of this circle then watch his cast bar. Once the %s has finished a cast, start running towards the cloud and the add should start to follow you. Rinse and repeat this until the add has reached each of the clouds.",
-	--[[Translation missing --]]
-	["Highmaul_Tectus"] = "For this achievement, simply kill %s. This will cause the boss to respawn as 2 %s. Again kill the 2 %s and the boss will respawn as 8 %s. Next wait for all 8 %s to stack then AOE them down within 10 seconds of each other to complete this achievement.",
-	--[[Translation missing --]]
-	["Highmaul_TheButcher"] = "Throughout the fight %s will spawn around the room. To complete this achievement, move the boss in front of each %s and wait for the boss to kill it. Once 6 %s have been killed you can kill the boss.\n\n Note: The achievement requires at least 2 players or a player with a pet class due to the stacking %s debuff.",
+	["Highmaul_Brackenspore"] = "Перед тем, как атаковать босса, попросите игрока взять %s (%s). Затем атакуйте босса и нанесите ему около 40-50%% здоровья, чтобы %s начал расти с краев комнаты. Когда комната заполнится %s, пусть игрок с %s пробежит по %s, нажимая кнопку дополнительного действия несколько раз. Как только игрок достиг 15 стаков %s, вы можете убить босса.",
+	["Highmaul_ImperatorMargok"] = "Чтобы выполнить это достижение, вам нужно снизить здоровье босса до 55%%. В этот момент босс перейдет и появится 2 %s. Оставьте одного из них живым и убейте другого.\n\n %s, который остается живым, нужно перенести в облако, оставленное слева от трона босса, чтобы получить бафф %s. Самый простой способ переместить адда, чтобы Рыцарь Смерти, несколько раз использовать на нем способность %s.\n\n После того, как переход закончен, пусть Рыцарь Смерти переместит адда справа от трона босса, а затем снизить здоровье босса до 25%%, чтобы начать второй переход.\n\n Как только адд вошел во второе облако справа от трона босса, он получит бафф %s, после чего вы можете убить адда, а затем босса, чтобы завершите это достижение.\n\n Примечание: также возможно завершить это достижение в одиночку без Рыцаря Смерти. Это можно сделать, нажав на %s, чтобы открыть красный круг под ним. Вам нужно будет стоять на краю этого круга или рядом с ним, а затем наблюдать за его панелью заклинания. Как только %s завершит заклинание, начните бежать к облаку, и адд начнет следовать за вами. Повторите это, пока адд не достигнет каждого из облаков.",
+	["Highmaul_Tectus"] = "Для этого достижения просто убейте %s. Это заставит босса возродиться как 2 %s. Снова убейте 2 %s, и босс возродится как 8 %s. Затем подождите, пока все 8 %s сойдутся в одной точке, затем атакуйте их и убейте в течении 10 секунд, чтобы завершить это достижение.",
+	["Highmaul_TheButcher"] = "На протяжении всего боя %s будет появляться в комнате. Чтобы завершить это достижение, переместите босса перед каждым %s и подождите, пока босс убьет его. После того, как 6 %s будут убиты, вы можете убить босса.\n\n Примечание: для достижения требуется как минимум 2 игрока или игрок с классовым танковским питомцем из-за накопления %s дебаффа.",
 	["Instance Achievement Tracker"] = "Instance Achievement Tracker",
 	["Instances_Other"] = "Общее",
 	["Instances_TrashAfterThirdBoss"] = "Треш после третьего босса",
@@ -158,7 +152,15 @@ local baseLocale = {
 	["NeltharionsLair_Naraxas"] = "Чтобы завершить это достижение, вам нужно будет дождаться, пока босс наберет 6 стаков %s. Это можно сделать следующими способами:\n\n -Танк, будет съеден боссом\n -Оставлять в живых аддов, чтобы босс съел их.\n\n После достижения 6 стаков %s Вы можете убить босса, чтобы получить достижение.",
 	["NeltharionsLair_Other"] = "Сначала вам нужно будет купить %s у %s, которого вы найдете, пройдя по узкому пути справа после входа в подземелье. Затем вам нужно будет бить улиток во всем подземелье с помощью %s. Убедитесь, что вы не убили улиток, прежде чем ударить их с помощью %s.\n\n %s первую улитку вы найдете во время езды в бочке, она будет сидеть на грибе. Вам нужно будет бросить рыбу в нее, чтобы заставить его двигаться. Как только вы поразите ее рыбой, она будет ждать вас на дне водопада.\n\n %s находится в пещере за водопадом, где вы только что нашли %s. Вам нужно, чтобы кто-нибудь заагрил %s, чтобы она отошла от электрического поля, прежде чем ударить ее с помощью %s.\n\n %s ее можно найти перед вторым боссом слева от второго барабана.\n\n %s, %s и %s находятся сразу после 2-го босса, бегают кругами вокруг камня.\n\n %s - сразу после предыдущих 2 улиток. Вам нужно будет войти в воду справа от вас и затем доплыть до пещеры. %s висит на потолке в пещере, поэтому вам нужно будет ударить его один раз, чтобы он упал. После этого вы сможете ударить его %s.",
 	["OperationMechagon_Gunker"] = "После атаки босса в воде вокруг босса появится 5 существ, которые похожи на журавлей. Просто возьмите их и принесите к %s, чтобы очистить их. После очистки 5 существ вы можете убить босса.",
-	["OperationMechagon_MachinistsGarden"] = "Подобно достижению %s, это личное достижение, которое требует от вас уклонения от большей части разрушительных механик при встрече с боссом.",
+	--[[Translation missing --]]
+	--[[ ["OperationMechagon_HertzLocker"] = "To complete this achievement, you must kill every boss in the dungeon on hard mode without any player in the group dying.\n\n The first 3 bosses must be killed while the %s hovers over each of the bosses. The %s causes %s to spawn throughout the fight. They are immune to damage and will follow players until they reach 100 energy and self destruct.\n\n For the %s fight, the %s is replaced with the %s. This adds an additional mechanic called %s which players must stack together to absorb. There is also %s which have a beam ability which needs to be avoided.\n\n For the %s fight you must click on the %s on the ground before pulling the boss. This will add an additional mechanic to the fight called %s which adds a stacking slow debuff to the group.\n\n For the %s fight you must click the small red button before starting the fight. %s will be added to the fight, which at 0 energy will explode and wipe the group. To prevent this from happening, there are 4 panels around the room which activate when %s reaches 35 energy. The panels display a sequence of 4 colours in a random order. After the sequence has finished, 4 players in the group must repeat the sequence by clicking on each of the panels in the same order. If done correctly %s will replenish it's energy back to 100.",--]] 
+	--[[Translation missing --]]
+	--[[ ["OperationMechagon_KeepDpsingAndNobodyExplodes"] = "To complete this achievement, you must kill every boss in the dungeon on hard mode.\n\n The first 3 bosses must be killed while the %s hovers over each of the bosses. The %s causes %s to spawn throughout the fight. They are immune to damage and will follow players until they reach 100 energy and self destruct.\n\n For the %s fight, the %s is replaced with the %s. This adds an additional mechanic called %s which players must stack together to absorb. There is also %s which have a beam ability which needs to be avoided.\n\n For the %s fight you must click on the %s on the ground before pulling the boss. This will add an additional mechanic to the fight called %s which adds a stacking slow debuff to the group.\n\n For the %s fight you must click the small red button before starting the fight. %s will be added to the fight, which at 0 energy will explode and wipe the group. To prevent this from happening, there are 4 panels around the room which activate when %s reaches 35 energy. The panels display a sequence of 4 colours in a random order. After the sequence has finished, 4 players in the group must repeat the sequence by clicking on each of the panels in the same order. If done correctly %s will replenish it's energy back to 100.",--]] 
+	--[[Translation missing --]]
+	--[[ ["OperationMechagon_KingGobbamak"] = "To complete this achievement you must keep the %s behind %s charged at all times throughout the fight. To charge the %s, simply have a player run up to the gear when they have %s (which you get from %s). The easiest way to do this is to have 2 players take turns charging the %s every 15 seconds.\n\nNote: Make sure that the players saving the %s debuff to charge the %s do not move close to the %s or %s.",--]] 
+	-- ["OperationMechagon_MachinistsGarden"] = "Подобно достижению %s это личное достижение, которое требует от вас уклонения от большей части разрушительных механик при встрече с боссом.",
+	--[[Translation missing --]]
+	--[[ ["OperationMechagon_TussleTonks"] = "To complete this achievement, first pull the boss then position %s towards %s who is located to the left of the boss on the arena ledge.\n\n Next wait for %s to hit %s with %s which will cause %s to get knocked off the ledge onto the ground. Once %s is on the ground, drag him to one of the %s, wait for him to get hit then kill the boss to get this achievement.",--]] 
 	["ReturnToKarazhan_OperaHall"] = "Это достижение займет 3 недели, так как игры в театре чередуются с графиком в 3 недели.",
 	["ReturnToKarazhan_ShadeOfMedivh"] = "Это достижение требует 5 игроков для завершения. Всем игрокам в группе нужно будет нажать на книгу, найти ее можно на полу слева после входа в комнату босса. Это даст всем в группе  %s дебафф. Как только все получат дебафф  %s, вы можете убить босса.",
 	["SeatOfTheTriumvirate_Lura"] = "На пути от второго к третьему боссу вы найдете водовороты бездны, которые тянут вас к центру, где вы начнете получать %s каждую секунду. Как только вы получите 10 стаков, дебафф заменяется новым, бесконечным %s. Убийство %s под воздействием %s наградит вас достижением.",
@@ -194,8 +196,7 @@ local baseLocale = {
 	["Shared_MeetsCritera"] = "соответствует критериям для",
 	["Shared_Nine"] = "9",
 	["Shared_Nineteen"] = "19",
-	--[[Translation missing --]]
-	["Shared_Notes"] = "Notes",
+	["Shared_Notes"] = "Примечания",
 	["Shared_NotHit"] = "не получил удар",
 	["Shared_One"] = "1",
 	["Shared_PlayersHit"] = "игроки бьют:",
@@ -212,8 +213,7 @@ local baseLocale = {
 	["Shared_Ten"] = "10",
 	["Shared_Thirteen"] = "13",
 	["Shared_Three"] = "3",
-	--[[Translation missing --]]
-	["Shared_TrackingStatus"] = "Players with addon",
+	["Shared_TrackingStatus"] = "Игроки с аддоном",
 	["Shared_Twelve"] = "12",
 	["Shared_Twenty"] = "20",
 	["Shared_Two"] = "2",
