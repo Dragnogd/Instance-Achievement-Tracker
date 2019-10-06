@@ -202,6 +202,18 @@ core.NPCCache = {
     [150159] = 150159, --King Gobbamak
     [153172] = 153172, --Stolen Scrapbot
     [153245] = 153245, --Stolen Shock Coil
+    [151654] = 151654, --Deuce Mecha-Buffer
+    [145185] = 145185, --Gnomercy 4.U.
+    [153202] = 153202, --Piston Smasher
+    [155056] = 155056, --Robo-Waste
+    [151168] = 151168, --Annihilo-tron 5000
+    [155760] = 155760, --Tank Buster MK2
+    [150295] = 150295, --Tank Buster MK1
+    [152703] = 152703, --Walkie Shockie X1
+    [155645] = 155645, --Walkie Shockie X2
+    [154817] = 154817, --King Mechagon
+    [150190] = 150190, --HK-8 Aerial Oppression Unit
+    [144246] = 144246, --K.U.-J.0
 }
 
 --[] = , --
