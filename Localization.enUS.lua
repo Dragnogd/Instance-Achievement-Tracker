@@ -72,6 +72,7 @@ local baseLocale = {
     ["Core_PersonalAchievement"] = "Personal Achievement",
     ["Core_Reason"] = "Reason",
     ["Core_CriteriaMet"] = "Criteria has been met. Boss can now be killed!",
+    ["Core_CriteriaMetManual"] = "Criteria has been met. Boss can now be killed! Warning: This tracker has used data manually collected by players.",
     ["Core_Counter"] = "Counter",
     ["Core_CombatLogEnabled"] = "Combat Logging enabled",
     ["Core_CombatLogDisabled"] = "Combat Logging disabled",
@@ -177,11 +178,34 @@ local baseLocale = {
     ["Shared_NOW"] = "NOW!",
     ["Shared_PlayersRunningAddon2"] = "For IAT to track this achievement accurately, players collecting items need to be running the addon",
     ["Shared_Killed"] = "killed",
-    ["Shared_HasCaught"] ="has caught",
+    ["Shared_HasCaught"] = "has caught",
+    ["Shared_AutomaticTracking"] = "To track this achievement AUTOMATICALLY, players collecting items need to be running the addon",
+    ["Shared_ManualTracking"] = "To track this achievement MANUALLY players must type how many items they have collected into chat. (+3, -2 etc)",
+    ["Shared_AutomaticCounter"] = "Automatic Counter",
+    ["Shared_ManualCounter"] = "Manual Counter",
 
     -------------------------------------------------------
     --- Battle of Dazar'alor
     -------------------------------------------------------
+
+    -------------------------------------------------------
+    --- Ny’alotha, the Walking City
+    -------------------------------------------------------
+    --Tactics
+    ["Ny’alotha_WrathionTheBlackEmperor"] = "",
+    ["Ny’alotha_Maut"] = "",
+    ["Ny’alotha_TheProphetSkitra"] = "",
+    ["Ny’alotha_DarkInquisitorXanesh"] = "",
+    ["Ny’alotha_TheHivemind"] = "",
+    ["Ny’alotha_ShadharTheInsatiable"] = "",
+    ["Ny’alotha_Drestagath"] = "",
+    ["Ny’alotha_Vexiona"] = "",
+    ["Ny’alotha_RadenTheDespoiled"] = "",
+    ["Ny’alotha_IlgynothCorruptionReborn"] = "",
+    ["Ny’alotha_CarapaceOfNZoth"] = "",
+    ["Ny’alotha_NZothTheCorruptor"] = "",
+    
+    --Chat Output
 
     -------------------------------------------------------
     --- The Eternal Palace
