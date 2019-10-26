@@ -33,6 +33,7 @@ BattleForAzerothRaids\Uldir.lua
 BattleForAzerothRaids\BattleOfDazaralor.lua
 BattleForAzerothRaids\CrucibleOfStorms.lua
 BattleForAzerothRaids\AzsharasEternalPalace.lua
+BattleForAzerothRaids\Nyalotha.lua
 
 BattleForAzerothDungeons\AtalDazar.lua
 BattleForAzerothDungeons\Freehold.lua

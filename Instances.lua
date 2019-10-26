@@ -348,6 +348,142 @@ core.Instances = {
                     encounterID = 2299,
                 },
             },
+
+            [2217] = { --Ny’alotha
+                name = 1180,
+                boss1 = {
+                    name = 2368, --Wrathion, the Black Emperor
+                    bossIDs = {},
+                    achievement = 14019,
+                    players = {},
+                    tactics = L["Ny’alotha_WrathionTheBlackEmperor"],
+                    enabled = true,
+                    track = function() core._2164:WrathionTheBlackEmperor() end,
+                    partial = false,
+                    encounterID = 2329,
+                },
+                boss2 = {
+                    name = 2365, --Maut
+                    bossIDs = {},
+                    achievement = 14008,
+                    players = {},
+                    tactics = L["Ny’alotha_Maut"],
+                    enabled = false,
+                    track = nil,
+                    partial = false,
+                    encounterID = 2327,
+                },
+                boss3 = {
+                    name = 2369, --The Prophet Skitra
+                    bossIDs = {},
+                    achievement = 14037,
+                    players = {},
+                    tactics = L["Ny’alotha_TheProphetSkitra"],
+                    enabled = false,
+                    track = nil,
+                    partial = false,
+                    encounterID = 2334,
+                },
+                boss4 = {
+                    name = 2377, --Dark Inquisitor Xanesh
+                    bossIDs = {},
+                    achievement = 14024,
+                    players = {},
+                    tactics = L["Ny’alotha_DarkInquisitorXanesh"],
+                    enabled = false,
+                    track = nil,
+                    partial = false,
+                    encounterID = 2328,
+                },
+                boss5 = {
+                    name = 2372, --The Hivemind
+                    bossIDs = {},
+                    achievement = 14023,
+                    players = {},
+                    tactics = L["Ny’alotha_TheHivemind"],
+                    enabled = false,
+                    track = nil,
+                    partial = false,
+                    encounterID = 2333,
+                },
+                boss6 = {
+                    name = 2367, --Shad'har the Insatiable
+                    bossIDs = {},
+                    achievement = 13990,
+                    players = {},
+                    tactics = L["Ny’alotha_ShadharTheInsatiable"],
+                    enabled = false,
+                    track = nil,
+                    partial = false,
+                    encounterID = 2335,
+                },
+                boss7 = {
+                    name = 2373, --Drest'agath
+                    bossIDs = {},
+                    achievement = 14026,
+                    players = {},
+                    tactics = L["Ny’alotha_Drestagath"],
+                    enabled = false,
+                    track = nil,
+                    partial = false,
+                    encounterID = 2343,
+                },
+                -- boss8 = {
+                --     name = 2370, --Vexiona
+                --     bossIDs = {},
+                --     achievement = ,
+                --     players = {},
+                --     tactics = L["Ny’alotha_Vexiona"],
+                --     enabled = false,
+                --     track = nil,
+                --     partial = false,
+                --     encounterID = 2336,
+                -- },
+                boss8 = {
+                    name = 2364, --Ra-den the Despoiled
+                    bossIDs = {},
+                    achievement = 13999,
+                    players = {},
+                    tactics = L["Ny’alotha_RadenTheDespoiled"],
+                    enabled = false,
+                    track = nil,
+                    partial = false,
+                    encounterID = 2331,
+                },
+                boss9 = {
+                    name = 2374, --Il'gynoth, Corruption Reborn
+                    bossIDs = {},
+                    achievement = 14038,
+                    players = {},
+                    tactics = L["Ny’alotha_IlgynothCorruptionReborn"],
+                    enabled = false,
+                    track = nil,
+                    partial = false,
+                    encounterID = 2345,
+                },
+                -- boss11 = {
+                --     name = 2366, --Carapace of N'Zoth
+                --     bossIDs = {},
+                --     achievement = ,
+                --     players = {},
+                --     tactics = L["Ny’alotha_CarapaceOfNZoth"],
+                --     enabled = false,
+                --     track = nil,
+                --     partial = false,
+                --     encounterID = 2337,
+                -- },
+                -- boss12 = {
+                --     name = 2375, --N'Zoth, the Corruptor
+                --     bossIDs = {},
+                --     achievement = ,
+                --     players = {},
+                --     tactics = L["Ny’alotha_NZothTheCorruptor"],
+                --     enabled = false,
+                --     track = nil,
+                --     partial = false,
+                --     encounterID = 2344,
+                -- },
+            },
         },
 
         Dungeons = {
@@ -2368,6 +2504,7 @@ core.Instances = {
                     track = function() core._996:ProtectorsOfTheEndless() end,
                     partial = false,
                     encounterID = 1409,
+                    displayInfoFrame = true,
                 },
                 boss2 = {
                     name = 742, --Tsulong
