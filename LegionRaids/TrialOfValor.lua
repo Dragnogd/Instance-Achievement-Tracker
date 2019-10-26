@@ -60,7 +60,7 @@ function core._1648:Helya()
         end
     end
 
-    if core.groupSize == (fetidcount - 1) or core.groupSize == 1 and fetidcount == 0 then
+    if core.groupSize == (fetidcount - 1) or (core.groupSize == 1 and fetidcount == 0) then
         core:getAchievementSuccess()
         core.achievementsFailed[1] = false
     end
