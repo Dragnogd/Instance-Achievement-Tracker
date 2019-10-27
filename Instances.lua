@@ -3332,12 +3332,12 @@ core.Instances = {
                 name = 517,
                 boss1 = {
                     name = 58739,
-                    bossIDs = {},
+                    bossIDs = {58739},
                     achievement = 7257,
                     players = {},
                     tactics = L["ABrewingStorm_DontShakeTheKeg"],
-                    enabled = false,
-                    track = nil,
+                    enabled = true,
+                    track = function() core._1005:BorokhulaTheDestroyer() end,
                     partial = false,
                 },
                 boss2 = {
