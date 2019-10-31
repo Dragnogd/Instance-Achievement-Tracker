@@ -83,14 +83,16 @@ function core._2164:BlackwaterBehemoth()
 
 	InfoFrame_SetHeaderCounter(L["Shared_TrackingStatus"],playersWithTracking,core.groupSize)
 	InfoFrame_UpdatePlayersOnInfoFrame(false)
+	InfoFrame_SetupManualCounter(50)
+
+	core:sendMessage(L["Shared_PlayersRunningAddon2"],true)
+	core.IATInfoFrame:SetText1(L["AzsharasEternalPalace_SamplesCollected"] .. "\n *" .. L["Shared_AutomaticCounter"] .. ": (" .. 0 .. "/50)\n *".. L["Shared_ManualCounter"] .. ": (" .. InfoFrame_GetManualCounterCount() .. "/50)","GameFontHighlightLarge")
+	core.IATInfoFrame:SetSubHeading2(L["Shared_Notes"])
+	core.IATInfoFrame:SetText2(L["Shared_AutomaticTracking"] .. "\n\n" .. L["Shared_ManualTracking"],200)
 	
 	--Request which players are currently tracking this achievement
 	--Sync Message, Major Version, Minor Version, update Infoframe
 	if initialScan == false then
-		core:sendMessage(L["Shared_PlayersRunningAddon2"],true)
-		core.IATInfoFrame:SetText1(L["AzsharasEternalPalace_SamplesCollected"] .. " " .. samplesCollected,"GameFontHighlightLarge")
-		core.IATInfoFrame:SetSubHeading2(L["Shared_Notes"])
-		core.IATInfoFrame:SetText2(L["Shared_PlayersRunningAddon2"],200)
 		initialScan = true
 		--Set all players to fail initially as we have not determined yet if they have the addon installed
 		for player,status in ipairs(core.InfoFrame_PlayersTable) do
@@ -117,10 +119,10 @@ function core._2164:BlackwaterBehemoth()
 	end	
 
 	if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 302005 and collectSampleUID[core.spawn_uid_dest] == nil then
+		core:sendDebugMessage("IN SPELL CAST SUCCESS (SELF)")
 		collectSampleUID[core.spawn_uid_dest] = core.spawn_uid_dest
 		samplesCollected = samplesCollected + 1
 		-- core:sendMessage(core:getAchievement() .. samplesCollected .. "/50 " .. L["AzsharasEternalPalace_SamplesCollected"])
-		core.IATInfoFrame:SetText1(L["AzsharasEternalPalace_SamplesCollected"] .. " " .. samplesCollected .. "/50","GameFontHighlightLarge")
 		
 		--Send message to other addon users
 		local messageStr = core.type .. "," .. core.spellId .. "," .. core.spawn_uid_dest
@@ -133,12 +135,12 @@ function core._2164:BlackwaterBehemoth()
 			core:sendDebugMessage("Found Message:" .. message)
 			local spellType, spellid, spawnUIDDest = strsplit(",", message)
 			if spellType == "SPELL_CAST_SUCCESS" and spellid == "302005" and collectSampleUID[spawnUIDDest] == nil then
+				core:sendDebugMessage("IN SPELL CAST SUCCESS (OTHER)")
 				core:sendDebugMessage("Samples collected in message sync queue")
 				--Recieved sample from another addon user. Increment counter
 				collectSampleUID[spawnUIDDest] = spawnUIDDest
 				samplesCollected = samplesCollected + 1
 				-- core:sendMessage(core:getAchievement() .. samplesCollected .. "/50 " .. L["AzsharasEternalPalace_SamplesCollected"])
-				core.IATInfoFrame:SetText1(L["AzsharasEternalPalace_SamplesCollected"] .. " " .. samplesCollected .. "/50","GameFontHighlightLarge")
 			end
 			core.syncMessageQueue[k] = nil
 		end
@@ -380,6 +382,7 @@ end
 
 function core._2164:InstanceCleanup()
     core._2164.Events:UnregisterEvent("UNIT_AURA")
+    core._2164.Events:UnregisterEvent("UNIT_SPELLCAST_SUCCEEDED")
 end
 
 core._2164.Events:SetScript("OnEvent", function(self, event, ...)
@@ -388,6 +391,7 @@ end)
 
 function core._2164:InitialSetup()
     core._2164.Events:RegisterEvent("UNIT_AURA")
+    core._2164.Events:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
 end
 
 function core._2164.Events:UNIT_AURA(self, unitID)
@@ -474,4 +478,12 @@ function core._2164.Events:UNIT_AURA(self, unitID)
 			end
 		end
 	end	
+end
+
+function core._2164.Events:UNIT_SPELLCAST_SUCCEEDED(self, unitTarget, castGUID, spellID)
+	if spellID == 302005 then
+		core:sendDebugMessage("IN UNIT SPELLCAST SUCEDDED")
+		core:sendDebugMessage(spellID)
+		core:sendDebugMessage(castGUID)
+	end
 end

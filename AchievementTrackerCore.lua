@@ -7,9 +7,9 @@ local L = core.L												--Translation Table
 local events = CreateFrame("Frame")								--All events are registered to this frame
 local UIConfig													--UIConfig is used to make a display asking the user if they would like
 local UICreated = false											--To enable achievement tracking when they enter an instances
-local debugMode = false
-local debugModeChat = false
-local sendDebugMessages = false
+local debugMode = true
+local debugModeChat = true
+local sendDebugMessages = true
 
 local ptrVersion = "8.1.0"
 
@@ -236,6 +236,13 @@ local relayAddonPlayer = nil
 local relayAddonVersion = 0
 local masterAddonPlayer = nil				--The player who is currently the master addon
 local versionRequestSent = false			--When adds send version request, only do this once per fight.
+
+--------------------------------------
+-- InfoFrame Variables
+--------------------------------------
+core.manualCountMaxSize = 0
+core.manualCountCurrentSize = 0
+core.manualCountSetup = false
 
 --Get the current size of the group
 function core:getGroupSize()
@@ -2198,6 +2205,14 @@ function core:detectGroupType()
 		core.chatType = "INSTANCE_CHAT"
 	end
 
+	--Check if we are in a scenerio
+	local inInstance, instanceType = IsInInstance()
+	if instanceType == "scenario" then
+		core.chatType = "INSTANCE_CHAT"
+	end
+
+	core:sendDebugMessage("Setting chat mode to " .. core.chatType)
+
 	--Debug to stop message going out to other people by accident
 	--core.chatType = "OFFICER"
 end
@@ -2376,7 +2391,7 @@ function detectBoss(id)
 	--If an id is found by not in the database then add to cache to prevent the same ID being checked against the database over and over again
 	if core.foundBoss == true then
 		--Display tracking achievement for that boss if it has not been output yet for the fight. Make sure we are in combat as well before calling this function
-		if core.encounterStarted == true then
+		if core.encounterStarted == true or core.difficultyID == 11 or core.difficultyID == 12 then
 			core:getAchievementToTrack()
 		end
 	else
@@ -2993,6 +3008,23 @@ function core:getAchievementSuccess(index)
 	end
 end
 
+--Display the requirements completed message for achievements with manually counting
+function core:getAchievementSuccessManual(index)
+	local value = index
+	if index == nil then
+		value = 1
+	end
+	if core.achievementsCompleted[value] == false then
+		core:sendMessage(GetAchievementLink(core.achievementIDs[value]) .. " " .. L["Core_CriteriaMetManual"],true,"completed")
+		core.achievementsCompleted[value] = true
+
+		--Relay message to addon which has RW permissions if masterAddon does have permissions
+		if relayAddonPlayer ~= nil then
+			C_ChatInfo.SendAddonMessage("Whizzey", "relayMessage," .. relayAddonPlayer .. "," .. GetAchievementLink(core.achievementIDs[value]) .. " " .. L["Core_CriteriaMet"], "RAID")
+		end
+	end
+end
+
 --Display the requirements completed message for achievements with message before
 function core:getAchievementSuccessWithMessageBefore(message, index)
 	local value = index
@@ -3260,6 +3292,11 @@ function core:clearVariables()
 	versionRequestSent = false
 
 	core.groupSizeInInstance = 0
+
+	--Reset InfoFrame variables
+	core.manualCountMaxSize = 0
+	core.manualCountCurrentSize = 0
+	core.manualCountSetup = false
 
 	if infoFrameShown == true then
 		core:sendDebugMessage("Resetting InfoFrame")
