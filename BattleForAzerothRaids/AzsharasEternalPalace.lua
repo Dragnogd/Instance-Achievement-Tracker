@@ -85,7 +85,6 @@ function core._2164:BlackwaterBehemoth()
 	InfoFrame_UpdatePlayersOnInfoFrame(false)
 	InfoFrame_SetupManualCounter(50)
 
-	core:sendMessage(L["Shared_PlayersRunningAddon2"],true)
 	core.IATInfoFrame:SetText1(L["AzsharasEternalPalace_SamplesCollected"] .. "\n *" .. L["Shared_AutomaticCounter"] .. ": (" .. 0 .. "/50)\n *".. L["Shared_ManualCounter"] .. ": (" .. InfoFrame_GetManualCounterCount() .. "/50)","GameFontHighlightLarge")
 	core.IATInfoFrame:SetSubHeading2(L["Shared_Notes"])
 	core.IATInfoFrame:SetText2(L["Shared_AutomaticTracking"] .. "\n\n" .. L["Shared_ManualTracking"],200)
@@ -94,6 +93,8 @@ function core._2164:BlackwaterBehemoth()
 	--Sync Message, Major Version, Minor Version, update Infoframe
 	if initialScan == false then
 		initialScan = true
+		core:sendMessage(L["Shared_AutomaticTracking"],true)
+		core:sendMessage(L["Shared_ManualTracking"],true)
 		--Set all players to fail initially as we have not determined yet if they have the addon installed
 		for player,status in ipairs(core.InfoFrame_PlayersTable) do
 			InfoFrame_SetPlayerFailed(player)

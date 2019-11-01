@@ -4,6 +4,12 @@
 local _, core = ...
 
 local rc = LibStub("LibRangeCheck-2.0")
+core.InfoFrame = {}
+core.InfoFrame.Events = CreateFrame("Frame")
+
+core.InfoFrame.Events:SetScript("OnEvent", function(self, event, ...)
+    return self[event] and self[event](self, event, ...)
+end)
 
 --Info Frame Ideas
 
@@ -320,4 +326,85 @@ end
 
 function InfoFrame_SetHeaderCounter(message,counter,maximum)
     core.IATInfoFrame:SetSubHeading1(message .. " (" .. counter .. "/" .. maximum .. ")")
+end
+
+function InfoFrame_SetupManualCounter(totalCount)
+    if core.manualCountSetup == false then
+        core.manualCountMaxSize = totalCount
+
+        core.InfoFrame.Events:RegisterEvent("CHAT_MSG_RAID")
+        core.InfoFrame.Events:RegisterEvent("CHAT_MSG_PARTY")
+        core.InfoFrame.Events:RegisterEvent("CHAT_MSG_PARTY_LEADER")
+        core.InfoFrame.Events:RegisterEvent("CHAT_MSG_SAY")
+
+        core.manualCountSetup = true
+    end
+end
+
+function InfoFrame_IncrementManualCounter(count)
+    core.manualCountCurrentSize = core.manualCountCurrentSize + count
+    core:sendMessage(core:getAchievement() .. " Manual Counter (" .. core.manualCountCurrentSize .. "/" .. core.manualCountMaxSize .. ")")
+
+    if core.manualCountCurrentSize >= core.manualCountMaxSize then
+        core:getAchievementSuccessManual()
+    end
+end
+
+function InfoFrame_DecrementManualCounter(count)
+    if core.manualCountCurrentSize - count > 0 then
+        core.manualCountCurrentSize = core.manualCountCurrentSize - count
+        core:sendMessage(core:getAchievement() .. " Manual Counter (" .. core.manualCountCurrentSize .. "/" .. core.manualCountMaxSize .. ")")
+    end
+end
+
+function InfoFrame_GetManualCounterCount()
+    return core.manualCountCurrentSize
+end
+
+function core.InfoFrame.Events:CHAT_MSG_RAID(self, text, playerName)
+    if text ~= nil then
+        if not string.find(text, '[IAT]') then
+            if string.match(text, '[+]%d+') then
+                InfoFrame_IncrementManualCounter(string.sub(string.match(text, '[+]%d+'), 2))
+            elseif string.match(text, '[-]%d+') then
+                InfoFrame_DecrementManualCounter(string.sub(string.match(text, '[-]%d+'), 2))
+            end
+        end
+    end
+end
+
+function core.InfoFrame.Events:CHAT_MSG_PARTY(self, text, playerName)
+    if text ~= nil then
+        if not string.find(text, '[IAT]') then
+            if string.match(text, '[+]%d+') then
+                InfoFrame_IncrementManualCounter(string.sub(string.match(text, '[+]%d+'), 2))
+            elseif string.match(text, '[-]%d+') then
+                InfoFrame_DecrementManualCounter(string.sub(string.match(text, '[-]%d+'), 2))
+            end
+        end
+    end
+end
+
+function core.InfoFrame.Events:CHAT_MSG_PARTY_LEADER(self, text, playerName)
+    if text ~= nil then
+        if not string.find(text, '[IAT]') then
+            if string.match(text, '[+]%d+') then
+                InfoFrame_IncrementManualCounter(string.sub(string.match(text, '[+]%d+'), 2))
+            elseif string.match(text, '[-]%d+') then
+                InfoFrame_DecrementManualCounter(string.sub(string.match(text, '[-]%d+'), 2))
+            end
+        end
+    end
+end
+
+function core.InfoFrame.Events:CHAT_MSG_SAY(self, text, playerName)
+    if text ~= nil then
+        if not string.find(text, '[IAT]') then
+            if string.match(text, '[+]%d+') then
+                InfoFrame_IncrementManualCounter(string.sub(string.match(text, '[+]%d+'), 2))
+            elseif string.match(text, '[-]%d+') then
+                InfoFrame_DecrementManualCounter(string.sub(string.match(text, '[-]%d+'), 2))
+            end
+        end
+    end
 end
