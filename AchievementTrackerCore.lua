@@ -3297,6 +3297,18 @@ function core:clearVariables()
 	core.manualCountMaxSize = 0
 	core.manualCountCurrentSize = 0
 	core.manualCountSetup = false
+	if core.InfoFrame.Events:IsEventRegistered("CHAT_MSG_RAID") then
+		core.InfoFrame.Events:UnregisterEvent("CHAT_MSG_RAID")
+	end
+	if core.InfoFrame.Events:IsEventRegistered("CHAT_MSG_PARTY") then
+		core.InfoFrame.Events:UnregisterEvent("CHAT_MSG_PARTY")
+	end
+	if core.InfoFrame.Events:IsEventRegistered("CHAT_MSG_PARTY_LEADER") then
+		core.InfoFrame.Events:UnregisterEvent("CHAT_MSG_PARTY_LEADER")
+	end
+	if core.InfoFrame.Events:IsEventRegistered("CHAT_MSG_SAY") then
+		core.InfoFrame.Events:UnregisterEvent("CHAT_MSG_SAY")
+	end
 
 	if infoFrameShown == true then
 		core:sendDebugMessage("Resetting InfoFrame")

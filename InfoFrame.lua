@@ -351,8 +351,11 @@ function InfoFrame_IncrementManualCounter(count)
 end
 
 function InfoFrame_DecrementManualCounter(count)
-    if core.manualCountCurrentSize - count > 0 then
+    if core.manualCountCurrentSize - count >= 0 then
         core.manualCountCurrentSize = core.manualCountCurrentSize - count
+        core:sendMessage(core:getAchievement() .. " Manual Counter (" .. core.manualCountCurrentSize .. "/" .. core.manualCountMaxSize .. ")")
+    elseif core.manualCountCurrentSize - count < 0 then
+        core.manualCountCurrentSize = 0
         core:sendMessage(core:getAchievement() .. " Manual Counter (" .. core.manualCountCurrentSize .. "/" .. core.manualCountMaxSize .. ")")
     end
 end
