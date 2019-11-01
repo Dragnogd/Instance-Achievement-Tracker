@@ -3604,8 +3604,8 @@ core.Instances = {
                     achievement = 8011,
                     players = {},
                     tactics = L["LionsLanding_NumberFiveIsAlive"],
-                    enabled = false,
-                    track = nil,
+                    enabled = true,
+                    track = function() end,
                     partial = false,
                 },
                 boss2 = {
