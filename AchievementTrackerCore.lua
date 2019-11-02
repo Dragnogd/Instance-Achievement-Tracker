@@ -9,7 +9,7 @@ local UIConfig													--UIConfig is used to make a display asking the user 
 local UICreated = false											--To enable achievement tracking when they enter an instances
 local debugMode = false
 local debugModeChat = false
-local sendDebugMessages = false
+local sendDebugMessages = true
 
 local ptrVersion = "8.1.0"
 
@@ -1572,8 +1572,10 @@ function events:INSPECT_ACHIEVEMENT_READY(self, GUID)
 
 								--Add to achievement tracking ui if option enabled by user
 								if trackAchievementsInUI == true then
-									AddTrackedAchievement(core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
-									table.insert(trackAchievementInUiTable, core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
+									if GetNumTrackedAchievements() < 10 then
+										AddTrackedAchievement(core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)										
+										table.insert(trackAchievementInUiTable, core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)	
+									end
 								end
 							end
 						end
