@@ -7,9 +7,9 @@ local L = core.L												--Translation Table
 local events = CreateFrame("Frame")								--All events are registered to this frame
 local UIConfig													--UIConfig is used to make a display asking the user if they would like
 local UICreated = false											--To enable achievement tracking when they enter an instances
-local debugMode = true
-local debugModeChat = true
-local sendDebugMessages = true
+local debugMode = false
+local debugModeChat = false
+local sendDebugMessages = false
 
 local ptrVersion = "8.1.0"
 
@@ -601,6 +601,24 @@ function getInstanceInfomation()
 					else
 						core:sendDebugMessage("No Achievements to track for this instance")
 					end
+
+					--Switch to correct tab in GUI
+					if core.expansion == 2 then
+						Tab_OnClick(_G["AchievementTrackerTab2"])
+					elseif core.expansion == 3 then
+						Tab_OnClick(_G["AchievementTrackerTab3"])
+					elseif core.expansion == 4 then
+						Tab_OnClick(_G["AchievementTrackerTab4"])
+					elseif core.expansion == 5 then
+						Tab_OnClick(_G["AchievementTrackerTab5"])
+					elseif core.expansion == 6 then
+						Tab_OnClick(_G["AchievementTrackerTab6"])
+					elseif core.expansion == 7 then
+						Tab_OnClick(_G["AchievementTrackerTab7"])
+					end
+
+					--Make sure right instance is selected
+					core.Config:Instance_OnClickAutomatic()
 				else
 					core:sendDebugMessage("Achievements cannot be earned for the following difficulty " .. core.difficultyID)
 				end
@@ -695,21 +713,6 @@ function enableAchievementTracking(self)
 	core.achievementTrackingEnabled = true
 	UIConfig:Hide()
 
-	--Switch to correct tab in GUI
-	if core.expansion == 2 then
-		Tab_OnClick(_G["AchievementTrackerTab2"])
-	elseif core.expansion == 3 then
-		Tab_OnClick(_G["AchievementTrackerTab3"])
-	elseif core.expansion == 4 then
-		Tab_OnClick(_G["AchievementTrackerTab4"])
-	elseif core.expansion == 5 then
-		Tab_OnClick(_G["AchievementTrackerTab5"])
-	elseif core.expansion == 6 then
-		Tab_OnClick(_G["AchievementTrackerTab6"])
-	elseif core.expansion == 7 then
-		Tab_OnClick(_G["AchievementTrackerTab7"])
-	end
-
 	--Register Events
 	events:RegisterEvent("INSPECT_ACHIEVEMENT_READY") 			--Used for scanning players in the group to see which achievements they are missing
 	events:RegisterEvent("GROUP_ROSTER_UPDATE")					--Used to find out when the group size has changed and to therefore initiate an achievement scan of the group
@@ -756,9 +759,6 @@ function enableAchievementTracking(self)
 			end
 		end
 	end
-
-	--Make sure right instance is selected
-	core.Config:Instance_OnClickAutomatic()
 end
 
 --Hide the achievment tracking UI once the player has left the instance
