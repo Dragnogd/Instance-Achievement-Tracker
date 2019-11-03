@@ -214,6 +214,9 @@ core.NPCCache = {
     [154817] = 154817, --King Mechagon
     [150190] = 150190, --HK-8 Aerial Oppression Unit
     [144246] = 144246, --K.U.-J.0
+    [82428] = 82428, --Emberscale Ironflight
+    [76801] = 76801, --Ragewing Whelp
+    [41440] = 41440, --Aberration
 }
 
 --[] = , --
