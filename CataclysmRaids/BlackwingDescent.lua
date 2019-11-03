@@ -52,19 +52,19 @@ end
 function core._669:OminitronDefenseSystem()
 	--Arcane Annihilator
 	if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 79710 and arcaneAnnihilatorFailed == false then
-		core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ") (" .. L["Core_Reason"] .. ": " .. core.spellName)
+		core:getAchievementFailedWithMessageAfter("(" .. L["Core_Reason"] .. ": " .. core.spellName)
 		arcaneAnnihilatorFailed = true
 	end
 
 	--Static Shock
 	if (core.type == "SPELL_ABSORBED" or core.type == "SPELL_DAMAGE" or core.type == "SPELL_MISSED") and core.spellId == 79912 and staticShockFailed == false then
-		core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ") (" .. L["Core_Reason"] .. ": " .. core.spellName)
+		core:getAchievementFailedWithMessageAfter("(" .. L["Core_Reason"] .. ": " .. core.spellName)
 		staticShockFailed = true
 	end
 
 	--Poison Bomb
 	if (core.type == "SPELL_DAMAGE" or core.type == "SPELL_MISSED") and core.spellId == 80092 and poisonBombFailed == false then
-		core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ") (" .. L["Core_Reason"] .. ": " .. core.spellName)
+		core:getAchievementFailedWithMessageAfter("(" .. L["Core_Reason"] .. ": " .. core.spellName)
 		poisonBombFailed = true
 	end
 
@@ -81,7 +81,7 @@ function core._669:OminitronDefenseSystem()
 		else
 			if core.destName ~= flameThrowerPlayer then
 				--More than one person has got hit by the flamethrower
-				core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ") (" .. L["Core_Reason"] .. ": " .. core.spellName)
+				core:getAchievementFailedWithMessageAfter("(" .. L["Core_Reason"] .. ": " .. core.spellName)
 				flameThrowerFailed = true
 			end
 		end	
