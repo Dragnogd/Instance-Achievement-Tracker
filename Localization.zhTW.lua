@@ -9,62 +9,11 @@ local baseLocale = {
 	["- Tracks when the criteria of instance achievements has been failed and outputs this to chat"] = "- 追蹤成就的要求失敗時輸出到聊天視窗",
 	["- Tracks when the criteria of instance achievements have been met and output this to chat"] = "- 追蹤達到成就的要求時輸出到聊天視窗",
 	["(Enter instance to start scanning)"] = "(進入副本開始掃描)",
-	--[[Translation missing --]]
-	--[[ ["AssaultOnVioletHold_Festerface"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["AssaultOnVioletHold_MillificentManastorm"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["Atal_Dazar_Yazma"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["AtalDazar_Other"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["AtalDazar_Priestess_AlunZa"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["BastionOfTwilight_HalfusWyrmbreaker"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["BastionOfTwilight_ValionaAndTheralion"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["BattleOfDazaralor_ChampionOfTheLight"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["BattleOfDazaralor_ChampionOfTheLight_Alliance"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["BattleOfDazaralor_ChampionOfTheLight_Horde"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["BattleOfDazaralor_ConclaveOfTheChosen"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["BattleOfDazaralor_Grong"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["BattleOfDazaralor_Grong_Alliance"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["BattleOfDazaralor_Grong_Horde"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["BattleOfDazaralor_HighTinkerMekkatorque"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["BattleOfDazaralor_JadefireMasters"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["BattleOfDazaralor_JainaProudmoore"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["BattleOfDazaralor_KingRastakhan"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["BattleOfDazaralor_Opulence"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["BattleOfDazaralor_StormwallBlockade"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["BattleOfDazzarlor_BarrelsDestroyed"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["BattleOfDazzarlor_OpulenceRangeWarning"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["BlackrockCaverns_KarshSteelbender"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["BlackRookHold_AmalgamOfSouls"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["BloodmaulSlagMines_Magmolatus"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["CathedralOfEternalNight_Agronox"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["CathedralOfEternalNight_Mephistroth"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["CathedralOfEternalNight_ThrashbiteTheScornful"] = "",--]] 
+	["AzsharasEternalPalace_Applause"] = "喝彩",
+	["AzsharasEternalPalace_Curtsey"] = "屈膝",
+	["AzsharasEternalPalace_Grovel"] = "卑微",
+	["AzsharasEternalPalace_Kneel"] = "下跪",
+	["AzsharasEternalPalace_Salute"] = "敬禮",
 	["Core_AchievementScanFinished"] = "成就掃描完成",
 	["Core_AchievementTrackingEnabledFor"] = "已啟用追蹤成就",
 	["Core_CommandEnableTracking"] = "啟用/停用 IAT 成就追蹤",
@@ -84,31 +33,7 @@ local baseLocale = {
 	["Core_StartingAchievementScan"] = "開始掃描成就",
 	["Core_TrackAchievements"] = "追蹤成就",
 	["Core_Yes"] = "是",
-	--[[Translation missing --]]
-	--[[ ["CourtOfStars_Other"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["CourtOfStars_PatrolCaptainGerdo"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["CrucibleOfStorms_StartMoving"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["CrucibleOfStorms_StopMoving"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["CrucibleOfStorms_TheRestlessCabal"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["CrucibleOfStorms_UunatHarbingerOfTheVoid"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["DarkheartThicket_Dresaron"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["DarkheartThicket_ShadeOfXavius"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["EyeOfAzshara_LadyHatecoil"] = "",--]] 
 	["Features"] = "功能",
-	--[[Translation missing --]]
-	--[[ ["Freehold_HarlanSweete"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["Freehold_RingOfBooty"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["Freehold_SkycapNKragg"] = "",--]] 
 	["GUI_Achievement"] = "成就",
 	["GUI_Achievements"] = "成就",
 	["GUI_AchievementsCompletedForInstance"] = "所有成就都已經完成",
@@ -154,38 +79,10 @@ local baseLocale = {
 	["GUI_Translators"] = "翻譯",
 	["GUI_WarlordsOfDraenor"] = "德拉諾之霸",
 	["GUI_WrathOfTheLichKing"] = "巫妖王之怒",
-	--[[Translation missing --]]
-	--[[ ["HallsOfValor_Other1"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["HallsOfValor_Other2"] = "",--]] 
 	["Instance Achievement Tracker"] = "副本成就追蹤",
 	["Instances_Other"] = "其他",
 	["Instances_TrashAfterThirdBoss"] = "第三個首領之後的垃圾",
-	--[[Translation missing --]]
-	--[[ ["KingsRest_DazarTheFirstKing"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["KingsRest_MchimbaTheEmbalmer"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["KingsRest_Other"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["LostCityOfTheTolVir_Lockmaw"] = "",--]] 
 	["Main"] = "一般",
-	--[[Translation missing --]]
-	--[[ ["MawOfSouls_Other"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["NeltharionsLair_Naraxas"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["NeltharionsLair_Other"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["ReturnToKarazhan_OperaHall"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["ReturnToKarazhan_ShadeOfMedivh"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["SeatOfTheTriumvirate_Lura"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["SeatOfTheTriumvirate_Saprish"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["SeatOfTheTriumvirate_ZuraalTheAscended"] = "",--]] 
 	["Shared_AddKillCounter"] = "%s 擊殺數量",
 	["Shared_CompletedBossKill"] = "擊殺首領後即可完成",
 	["Shared_DamageFromAbility"] = "% 傷害",
@@ -211,6 +108,7 @@ local baseLocale = {
 	["Shared_JustKillBoss"] = "滿等時，只需要直接擊殺首領即可得到這個成就。",
 	["Shared_JustKillBossesTogether"] = "滿等時，只要同時擊殺首領就可獲得這個成就。",
 	["Shared_JustKillBossSingleTarget"] = "滿等時，只需要直接使用單體技能擊殺首領即可得到這個成就。",
+	["Shared_Killed"] = "已擊殺",
 	["Shared_KillTheAddNow"] = "現在擊殺 %s",
 	["Shared_MeetsCritera"] = "達成條件",
 	["Shared_Nine"] = "9",
@@ -218,6 +116,7 @@ local baseLocale = {
 	["Shared_NotHit"] = "沒有擊中",
 	["Shared_One"] = "1",
 	["Shared_PlayersHit"] = "玩家擊中:",
+	["Shared_PlayersRunningAddon2"] = "要讓副本成就追蹤能夠精確的追蹤這個成就，收集物品的玩家必須執行這個插件。",
 	["Shared_PlayersWhoNeedAchievement"] = "需要成就的玩家",
 	["Shared_PlayersWhoStillNeedToGetHit"] = "仍需要擊中的玩家:",
 	["Shared_PlayersWhoStillNeedToGetResurrected"] = "這些玩家需要被復活才能獲得成就:",
@@ -233,127 +132,7 @@ local baseLocale = {
 	["Shared_Twelve"] = "12",
 	["Shared_Twenty"] = "20",
 	["Shared_Two"] = "2",
-	["Shared_WasKilled"] = "已擊殺",
-	--[[Translation missing --]]
-	--[[ ["ShrineOfTheStorm_LordStormsong"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["ShrineOfTheStorm_Other"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["ShrineOfTheStorm_VolZith"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["SiegeOfBoralus_DreadCaptainLockwood"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["SiegeOfBoralus_Other"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["SiegeOfBoralus_ViqGoth"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["TempleOfSethraliss_AvatarOfSethraliss"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["TempleOfSethraliss_Merektha"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["TempleOfSethraliss_Merektha_LootSnake"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["TempleOfSethraliss_Trash"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["TerraceOfEndlessSpring_DefeatedLast"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["The_Motherlode_CoinOperatedCrowdPummeler"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["The_Motherlode_MogulRazdunk"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["TheEmeraldNightmare_Cenarius"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["TheEmeraldNightmare_DragonsOfNightmare"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["TheEmeraldNightmare_EleretheRenferal"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["TheEmeraldNightmare_IllgynothHeartOfCorruption"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["TheEmeraldNightmare_Nythendra"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["TheEmeraldNightmare_Ursoc"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["TheEmeraldNightmare_Xavius"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["TheNighthold_ChronomaticAnomaly"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["TheNighthold_Elisande"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["TheNighthold_Guldan"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["TheNighthold_HighBotanistTelarn"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["TheNighthold_Krosus"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["TheNighthold_Skorpyron"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["TheNighthold_StarAugurEtraeus"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["TheNighthold_Tichondrius"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["TheUnderrot_ElderLeaxa"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["TheUnderrot_SporecallerZancha"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["TheUnderrot_UnboundAbomination"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["TolDagor_KnightCaptainValyri"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["TolDagor_OverseerKorgus"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["TombOfSargeras_DemonicInquisition"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["TombOfSargeras_FallenAvatar"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["TombOfSargeras_Goroth"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["TombOfSargeras_Harjatan"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["TombOfSargeras_MistressSasszine"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["TrialOfValor_Guarm"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["TrialOfValor_Helya"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["TrialOfValor_Odyn"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["Uldir_Fetid_Devourer_Tactics"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["Uldir_GHuun_Tactics"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["Uldir_MOTHER_Tactics"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["Uldir_Mythrax_Tactics"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["Uldir_Taloc_Tactics"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["Uldir_Vectis_Tactics"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["Uldir_ZekVoz_Tactics"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["Uldir_ZulReborn_Tactics"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["Ulduar_AssemblyOfIron1"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["Ulduar_FlameLeviathan1"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["Ulduar_FlameLeviathan2"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["Ulduar_FlameLeviathan3"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["Ulduar_Other1"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["Ulduar_Other2"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["VaultOfTheWardens_AshGolm"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["VaultOfTheWardens_Cordana"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["WaycrestManor_GorakTul"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["WaycrestManor_Other"] = "",--]] 
-	--[[Translation missing --]]
-	--[[ ["WaycrestManor_SoulboundGoliath"] = "",--]]
+	["Shared_WasKilled"] = "已擊殺"
 }
 
 core:RegisterLocale('zhTW', baseLocale)
