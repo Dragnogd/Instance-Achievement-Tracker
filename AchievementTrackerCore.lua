@@ -3312,6 +3312,9 @@ function core:clearVariables()
 		core.InfoFrame.Events:UnregisterEvent("CHAT_MSG_SAY")
 	end
 
+	--Reset Mob Counter
+	core.MobCounter:Reset()
+
 	if infoFrameShown == true then
 		core:sendDebugMessage("Resetting InfoFrame")
 		core.IATInfoFrame:ToggleOff()

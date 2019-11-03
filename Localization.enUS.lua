@@ -87,6 +87,15 @@ local baseLocale = {
 
     -------------------------------------------------------
     --- Instances
+    -------------------------------------------------------
+    ["MobCounter_TimeReamining"] = "Time remaining",
+    ["MobCounter_TimerNotStarted"] = "Timer not started",
+    ["MobCounter_MobsAlive"] = "%s alive",
+    ["MobCounter_MobsKilled"] = "%s killed in time",
+    ["MobCounter_TimerStarted"] = "Timer started %s remaining",
+
+    -------------------------------------------------------
+    --- Instances
     -------------------------------------------------------  
     ["Instances_Other"] = "Other", 
     ["Instances_TrashAfterThirdBoss"] = "Trash after the third boss", --L["Trash after the third boss"]
@@ -183,6 +192,7 @@ local baseLocale = {
     ["Shared_ManualTracking"] = "To track this achievement MANUALLY players must type how many items they have collected into chat. (+3, -2 etc)",
     ["Shared_AutomaticCounter"] = "Automatic Counter",
     ["Shared_ManualCounter"] = "Manual Counter",
+    ["Shared_AddsKilled"] = "Adds killed",
 
     -------------------------------------------------------
     --- Battle of Dazar'alor
@@ -690,8 +700,8 @@ local baseLocale = {
     -------------------------------------------------------
     --Tactics
     ["UpperBlackrockSpire_Other"] = "",
-    ["UpperBlackrockSpire_RagewingTheUntamed"] = "",
-    ["UpperBlackrockSpire_WarlordZaela"] = "",
+    ["UpperBlackrockSpire_RagewingTheUntamed"] = "To complete this achievement, dps the boss to 70%% then wait for the first wave of %s to spawn. Next dps the boss down to 30%% then wait for the second wave of %s to spawn. Once all the adds are together DPS them down before the boss returns to the platform.",
+    ["UpperBlackrockSpire_WarlordZaela"] = "To complete this achievement, bring the boss down to 60%% health then wait for the boss to go into the air. Next kill 5 %s which spawn around the sides of the platform. Once you have killed 5 %s, you can kill the boss.",
 
     --Chat Output
 
