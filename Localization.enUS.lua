@@ -93,6 +93,7 @@ local baseLocale = {
     ["MobCounter_MobsAlive"] = "%s alive",
     ["MobCounter_MobsKilled"] = "%s killed in time",
     ["MobCounter_TimerStarted"] = "Timer started %s remaining",
+    ["MobCounter_TimerNotApplicable"] = "Not applicable",
 
     -------------------------------------------------------
     --- Instances

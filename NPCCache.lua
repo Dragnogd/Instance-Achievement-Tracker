@@ -217,6 +217,7 @@ core.NPCCache = {
     [82428] = 82428, --Emberscale Ironflight
     [76801] = 76801, --Ragewing Whelp
     [41440] = 41440, --Aberration
+    [71979] = 71979, --Kor'kron Warbringer
 }
 
 --[] = , --

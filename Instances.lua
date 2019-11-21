@@ -423,23 +423,23 @@ core.Instances = {
                     achievement = 14026,
                     players = {},
                     tactics = L["Ny’alotha_Drestagath"],
-                    enabled = false,
-                    track = nil,
+                    enabled = true,
+                    track = function() core._2217:DrestAgath() end,
                     partial = false,
                     encounterID = 2343,
                 },
-                -- boss8 = {
-                --     name = 2370, --Vexiona
-                --     bossIDs = {},
-                --     achievement = ,
-                --     players = {},
-                --     tactics = L["Ny’alotha_Vexiona"],
-                --     enabled = false,
-                --     track = nil,
-                --     partial = false,
-                --     encounterID = 2336,
-                -- },
                 boss8 = {
+                    name = 2370, --Vexiona
+                    bossIDs = {},
+                    achievement = 14139,
+                    players = {},
+                    tactics = L["Ny’alotha_Vexiona"],
+                    enabled = true,
+                    track = function() core._2217:Vexiona() end,
+                    partial = false,
+                    encounterID = 2336,
+                },
+                boss9 = {
                     name = 2364, --Ra-den the Despoiled
                     bossIDs = {},
                     achievement = 13999,
@@ -450,7 +450,7 @@ core.Instances = {
                     partial = false,
                     encounterID = 2331,
                 },
-                boss9 = {
+                boss10 = {
                     name = 2374, --Il'gynoth, Corruption Reborn
                     bossIDs = {},
                     achievement = 14038,
@@ -461,28 +461,28 @@ core.Instances = {
                     partial = false,
                     encounterID = 2345,
                 },
-                -- boss11 = {
-                --     name = 2366, --Carapace of N'Zoth
-                --     bossIDs = {},
-                --     achievement = ,
-                --     players = {},
-                --     tactics = L["Ny’alotha_CarapaceOfNZoth"],
-                --     enabled = false,
-                --     track = nil,
-                --     partial = false,
-                --     encounterID = 2337,
-                -- },
-                -- boss12 = {
-                --     name = 2375, --N'Zoth, the Corruptor
-                --     bossIDs = {},
-                --     achievement = ,
-                --     players = {},
-                --     tactics = L["Ny’alotha_NZothTheCorruptor"],
-                --     enabled = false,
-                --     track = nil,
-                --     partial = false,
-                --     encounterID = 2344,
-                -- },
+                boss11 = {
+                    name = 2366, --Carapace of N'Zoth
+                    bossIDs = {},
+                    achievement = 14147,
+                    players = {},
+                    tactics = L["Ny’alotha_CarapaceOfNZoth"],
+                    enabled = true,
+                    track = function() core._2217:CarapaceOfNZoth() end,
+                    partial = false,
+                    encounterID = 2337,
+                },
+                boss12 = {
+                    name = 2375, --N'Zoth, the Corruptor
+                    bossIDs = {},
+                    achievement = 14148,
+                    players = {},
+                    tactics = L["Ny’alotha_NZothTheCorruptor"],
+                    enabled = false,
+                    track = nil,
+                    partial = false,
+                    encounterID = 2344,
+                },
             },
         },
 
@@ -953,7 +953,7 @@ core.Instances = {
                 },
                 boss5 = {
                     name = 1738, --Ill'gynoth, Heart of Corruption
-                    bossIDs = {105906,105721},
+                    bossIDs = {},
                     achievement = 10830,
                     players = {},
                     tactics = format(L["TheEmeraldNightmare_IllgynothHeartOfCorruption"], "IAT_105721", "IAT_105721"),
@@ -2831,6 +2831,7 @@ core.Instances = {
                     track = function() core._1136:GarroshHellscream() end,
                     partial = false,
                     encounterID = 1623,
+                    displayInfoFrame = true,
                 },
             },
 
