@@ -5,6 +5,7 @@ local _, core = ...
 local L = core.L
 
 core.MobCounter = {}
+local events = CreateFrame("Frame")
 
 local MobCounter = core.MobCounter
 
@@ -19,6 +20,29 @@ local fixedTimerStarted = false
 local mobCounterSetup = false
 local currentTick = 0
 local fixedTimer = nil
+local mobTimestamp = nil
+local chatMobsAliveLastMessage = ""
+local timestampTimer = nil
+
+events:SetScript("OnEvent", function(self, event, ...)
+    return self[event] and self[event](self, event, ...) 	--Allow event arguments to be called from seperate functions
+end)
+
+function events:onUpdate(sinceLastUpdate)
+	self.sinceLastUpdate = (self.sinceLastUpdate or 0) + sinceLastUpdate;
+    if (self.sinceLastUpdate >= 3) then -- in seconds
+        if mobTimestamp == nil or fixedTimerStarted == false then
+            local newMessage = format(L["MobCounter_MobsAlive"], getNPCName(tonumber(mobID))) .. " (" .. mobsDetected .. "/" .. mobCriteria .. ")"
+            if chatMobsAliveLastMessage ~= newMessage then
+                if core.achievementsCompleted[1] == false then
+                    core:sendMessage(newMessage)
+                end
+            end
+            chatMobsAliveLastMessage = newMessage
+        end
+        self.sinceLastUpdate = 0
+	end
+end
 
 function MobCounter:Setup(maxMobs, timeWindow, mobIdentifier)
     if mobCounterSetup == false then
@@ -27,9 +51,15 @@ function MobCounter:Setup(maxMobs, timeWindow, mobIdentifier)
         mobCriteria = maxMobs
         mobCriteriaTimeWindow = timeWindow + 1
         C_Timer.After(5, function() 
-            core.IATInfoFrame:SetSubHeading1(L["MobCounter_TimeReamining"] .. ": " .. L["MobCounter_TimerNotStarted"])
+            if mobCriteriaTimeWindow == 1 then
+                core.IATInfoFrame:SetSubHeading1(L["MobCounter_TimeReamining"] .. ": " .. L["MobCounter_TimerNotApplicable"])
+            else
+                core.IATInfoFrame:SetSubHeading1(L["MobCounter_TimeReamining"] .. ": " .. L["MobCounter_TimerNotStarted"])
+            end
             core.IATInfoFrame:SetText1(format(L["MobCounter_MobsAlive"], getNPCName(tonumber(mobID))) .. " (" .. mobsDetected .. "/" .. mobCriteria .. ")\n" .. format(L["MobCounter_MobsKilled"], getNPCName(tonumber(mobID))) .. " (" .. mobsKilled .. "/" .. mobCriteria .. ")","GameFontHighlightLarge")        
         end)
+
+        events:SetScript("OnUpdate",events.onUpdate)
     end
 end
 
@@ -46,6 +76,12 @@ function MobCounter:Reset()
     ticks = 0
     currentTick = 0
     fixedTimer = nil
+    mobTimestamp = nil
+    events:SetScript("OnUpdate",nil)
+    if timestampTimer ~= nil then
+        timestampTimer:Cancel()
+        timestampTimer = nil
+    end
 end
 
 function MobCounter:DetectSpawnedMob()
@@ -61,27 +97,154 @@ function MobCounter:DetectSpawnedMob()
     core.IATInfoFrame:SetText1(format(L["MobCounter_MobsAlive"], getNPCName(tonumber(mobID))) .. " (" .. mobsDetected .. "/" .. mobCriteria .. ")\n" .. format(L["MobCounter_MobsKilled"], getNPCName(tonumber(mobID))) .. " (" .. mobsKilled .. "/" .. mobCriteria .. ")","GameFontHighlightLarge")      
 end
 
-function MobCounter:DetectKilledMob()
+function MobCounter:DetectKilledMob(customType, customSpellID)
     --Detect when a mob has been killed in the combatlog
+    if customType ~= nil and customSpellID ~= nil then
+        --Custom kill detection
+        if core.type == customType and core.spellId == customSpellID and core.destID == mobID and core.overkill > 0 then
+            core:sendDebugMessage("Detected custom detection")
+            --Start Timers
+            if mobsDetected >= mobCriteria then
+                if mobCriteriaTimeWindow == 1 then
+                    core:sendDebugMessage("Starting Timestamp Timer")
+                    MobCounter:StartTimestampTimer()
+                else
+                    core:sendDebugMessage("Starting Fixed Timer")
+                    MobCounter:StartFixedTimer()
+                end
+            end
+
+            --Increment/Decrement Counters
+            if (mobTimestamp ~= nil or fixedTimerStarted == true) and (mobCriteriaTimeWindow > 0 or (mobCriteriaTimeWindow == 0 and core.timestamp == mobTimestamp)) then
+                --Timers have started
+                core:sendDebugMessage("Timer or Timestamp matched. Incrementing killed counter and decrementing alive counter")
+                if core.achievementsCompleted[1] == false then
+                    if mobsKilledUID[core.spawn_uid_dest] == nil then
+                        mobsKilled = mobsKilled + 1
+                        mobsKilledUID[core.spawn_uid_dest] = core.spawn_uid_dest
+                    end
+                end
+            elseif mobCriteriaTimeWindow == 1 and core.timestamp ~= mobTimestamp then
+                --Timestamp has changed. Check completion
+                core:sendDebugMessage("Timestamp does not match. Checking if achievement is complete")
+                if timestampTimer ~= nil then
+                    timestampTimer:Cancel()
+                    timestampTimer = nil
+                end
+                if core.achievementsCompleted[1] == false then
+                    core:sendDebugMessage("Achievement not complete. Resetting counter...")
+                    mobsKilled = 0
+                    mobsKilledUID = {}
+                    mobTimestamp = nil
+
+                    if mobsKilledUID[core.spawn_uid_dest] == nil then
+                        mobsKilled = mobsKilled + 1
+                        mobsKilledUID[core.spawn_uid_dest] = core.spawn_uid_dest
+                    end
+                end
+            end
+        end
+
+        --Update InfoFrame
+        core.IATInfoFrame:SetText1(format(L["MobCounter_MobsAlive"], getNPCName(tonumber(mobID))) .. " (" .. mobsDetected .. "/" .. mobCriteria .. ")\n" .. format(L["MobCounter_MobsKilled"], getNPCName(tonumber(mobID))) .. " (" .. mobsKilled .. "/" .. mobCriteria .. ")","GameFontHighlightLarge")
+    end
+
     if core.type == "UNIT_DIED" and core.destID == mobID then
-        if mobsDetected >= mobCriteria then
-            MobCounter:StartFixedTimer()
+        --Default kill detection
+        core:sendDebugMessage("Detected killed mob by UNIT_DIED event")
+        
+        --Start Timers
+        if customType == nil then
+            if mobsDetected >= mobCriteria then
+                if mobCriteriaTimeWindow == 1 then
+                    core:sendDebugMessage("Starting Timestamp Timer")
+                    MobCounter:StartTimestampTimer()
+                else
+                    core:sendDebugMessage("Starting Fixed Timer")
+                    MobCounter:StartFixedTimer()
+                end
+            end
+        end 
+
+        --Increment/Decrement Counters
+        if (mobTimestamp ~= nil or fixedTimerStarted == true) and (mobCriteriaTimeWindow > 0 or (mobCriteriaTimeWindow == 0 and core.timestamp == mobTimestamp)) then
+            --Timers have started
+            core:sendDebugMessage("Timer or Timestamp matched. Incrementing killed counter and decrementing alive counter")
+            if mobsDetectedUID[core.spawn_uid_dest] ~= nil then
+                mobsDetected = mobsDetected - 1
+            else
+                mobsDetectedUID[core.spawn_uid_dest] = core.spawn_uid_dest
+            end
+
+            if customType == nil then
+                if core.achievementsCompleted[1] == false then
+                    if mobsKilledUID[core.spawn_uid_dest] == nil then
+                        mobsKilled = mobsKilled + 1
+                        mobsKilledUID[core.spawn_uid_dest] = core.spawn_uid_dest
+                    end
+                end
+            end
+        elseif mobCriteriaTimeWindow == 1 and core.timestamp ~= mobTimestamp then
+            --Timestamp has changed. Check completion
+            core:sendDebugMessage("Timestamp does not match. Checking if achievement is complete")
+            if timestampTimer ~= nil then
+                timestampTimer:Cancel()
+                timestampTimer = nil
+            end
+            if customType == nil then
+                if core.achievementsCompleted[1] == false then
+                    core:sendDebugMessage("Achievement not complete. Resetting counter...")
+                    mobsKilled = 0
+                    mobsKilledUID = {}
+                    mobTimestamp = nil
+
+                    if mobsKilledUID[core.spawn_uid_dest] == nil then
+                        mobsKilled = mobsKilled + 1
+                        mobsKilledUID[core.spawn_uid_dest] = core.spawn_uid_dest
+                    end
+                end
+            end
+
+            if mobsDetectedUID[core.spawn_uid_dest] ~= nil then
+                core:sendDebugMessage("Deleted mob from table")
+                mobsDetected = mobsDetected - 1
+            else
+                mobsDetectedUID[core.spawn_uid_dest] = core.spawn_uid_dest
+            end
+        else
+            --Timers have not started
+            core:sendDebugMessage("Detected mob but cannot count yet as required number of mobs have not spawned yet")
+            if mobsDetectedUID[core.spawn_uid_dest] ~= nil then
+                core:sendDebugMessage("Deleted mob from table")
+                mobsDetected = mobsDetected - 1
+            else
+                mobsDetectedUID[core.spawn_uid_dest] = core.spawn_uid_dest
+            end
         end
-        if mobsDetectedUID[core.spawn_uid_dest] ~= nil then
-           mobsDetected = mobsDetected - 1
-           mobsDetectedUID[core.spawn_uid_dest] = nil 
-        end
-        if mobsKilledUID[core.spawn_uid_dest] == nil then
-            mobsKilled = mobsKilled + 1
-            mobsKilledUID[core.spawn_uid_dest] = core.spawn_uid_dest
-        end
-        core.IATInfoFrame:SetText1(format(L["MobCounter_MobsAlive"], getNPCName(tonumber(mobID))) .. " (" .. mobsDetected .. "/" .. mobCriteria .. ")\n" .. format(L["MobCounter_MobsKilled"], getNPCName(tonumber(mobID))) .. " (" .. mobsKilled .. "/" .. mobCriteria .. ")","GameFontHighlightLarge")         
+
+        --Update InfoFrame
+        core.IATInfoFrame:SetText1(format(L["MobCounter_MobsAlive"], getNPCName(tonumber(mobID))) .. " (" .. mobsDetected .. "/" .. mobCriteria .. ")\n" .. format(L["MobCounter_MobsKilled"], getNPCName(tonumber(mobID))) .. " (" .. mobsKilled .. "/" .. mobCriteria .. ")","GameFontHighlightLarge")
+    end
+end
+
+function MobCounter:StartTimestampTimer()
+    --Count of mobs which have same timestamp as the first mob that died
+    if mobTimestamp == nil then
+        mobsKilled = 0
+        mobsKilledUID = {}
+        mobTimestamp = core.timestamp
+        core:sendDebugMessage("Setting Timestamp to: " .. mobTimestamp)
+        C_Timer.After(1, function()
+            core:sendMessage(format(L["MobCounter_MobsKilled"], getNPCName(tonumber(mobID))) .. " (" .. mobsKilled .. "/" .. mobCriteria .. ")")
+            mobTimestamp = nil
+        end)
     end
 end
 
 function MobCounter:StartFixedTimer()
     --Start ticker for killing mobs within a certain time period
     if fixedTimerStarted == false and core.achievementsCompleted[1] == false then
+        core:sendDebugMessage("Fixed timer started")
         core:sendMessage(format(L["MobCounter_TimerStarted"], mobCriteriaTimeWindow - 1))
         fixedTimerStarted = true
         mobsKilled = 0
@@ -92,8 +255,17 @@ function MobCounter:StartFixedTimer()
             if mobsKilled >= mobCriteria then
                 core:getAchievementSuccess()
             elseif currentTick == 1 then
-                core:getAchievementFailed()                
+                core:getAchievementFailed()
+                fixedTimerStarted = false                
             end
         end, mobCriteriaTimeWindow)
+    end
+end
+
+function MobCounter:AdjustCriteria()
+    --Achievement is complete. Check killed counter matches criteria
+    if mobsKilled < mobCriteria then
+        core:sendDebugMessage("Adjusting mobs killed counter to match criteria")
+        mobsKilled = mobCriteria
     end
 end
