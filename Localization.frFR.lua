@@ -6,7 +6,7 @@ local baseLocale = {
     --- GUI
     -------------------------------------------------------
     ["GUI_Achievements"] = "Hauts-faits", --["Achievements"]
-    ["GUI_Tactics"] = "|cffFF4000Tactique|r", --["Tactics"]
+    ["GUI_Tactics"] = "Tactiques", --["Tactics"]
     ["GUI_TrackingNumber"] = "Actuellement suivi", --["Currently Tracking:"]
     ["GUI_Options"] = "Options", --["Options:"] --["Main"]
     ["GUI_EnableAddon"] = "Activer l'Addon", --["Enable Addon"]
@@ -15,73 +15,84 @@ local baseLocale = {
     ["GUI_ToggleMinimap"] = "Afficher l'icone de la MiniMap", --["Show Minimap Button"]
     ["GUI_MinimapEnabled"] = "Icone de la MiniMap Activé", -- "Minimap icon enabled"
     ["GUI_MinimapDisabled"] = "Icone de la MiniMap Désactivé", -- Minimap icon disabled"
-    ["GUI_AnnounceTracking"] = "Annoncer les Hauts-faits pistés au groupe", --L["Announce Achievements Being Tracked To Group"]
-    ["GUI_OnlyTrackMissingAchievements"] = "Ne traquer que les Hauts-faits manquants", --["Only track missing achievements"]
+    ["GUI_AnnounceTracking"] = "Annoncer les hauts-faits pistés au groupe", --L["Announce Achievements Being Tracked To Group"]
+    ["GUI_OnlyTrackMissingAchievements"] = "Ne traquer que les hauts-faits manquants", --["Only track missing achievements"]
     ["GUI_AnnounceMessagesToRaidWarning"] = "Envoyer les annonces sur l'Alerte Raid", --["Announce messages to Raid Warning"]
     -- ["GUI_AchievementsDiscordTitle"] = "Achievements Discord", -- "Achievements Discord"
     ["GUI_AchievementsDiscordDescription"] = "Tactics kindly contributed by the Achievements Discord Server, the community where members can meet like-minded completionists and form groups for a variety of achievements. \n\nTactiques gentiment contribué par le 'Achievements Discord Server', une communauté où les membres peuvent rencontrer des chasseurs de HF aux vues similaires et former des groupes pour une variété de Hauts-Faits.", -- "Tactics kindly contributed by the Achievements Discord Server, the community where members can meet like-minded completionists and form groups for a variety of achievements."
-    ["GUI_PlaySoundOnSuccess"] = "Jouer un son quand un Haut-Fait est accompli", -- "Play a sound when a achievement is completed"
-    ["GUI_PlaySoundOnFailed"] = "Jouer un son quand un Haut-Fait est raté", -- "Play a sound when an achievement fails"
+    ["GUI_PlaySoundOnSuccess"] = "Jouer un son quand un haut-fait est accompli", -- "Play a sound when a achievement is completed"
+    ["GUI_PlaySoundOnFailed"] = "Jouer un son quand un haut-fait est raté", -- "Play a sound when an achievement fails"
     ["GUI_SelectSound"] = "Selectionner un son", -- "Select Sound"
-    ["GUI_TrackingDisabled"] = "Pistage des Hauts-Faits désactivé", --["(Achievement Tracking Disabled)"]
+    ["GUI_TrackingDisabled"] = "Pistage des hauts-faits désactivé", --["(Achievement Tracking Disabled)"]
     ["GUI_EnterInstanceToStartScanning"] = "Entrez dans l'instance pour commencer le scan", --["Enter instance to start scanning"]
-    -- ["GUI_BattleForAzeroth"] = "Battle for Azeroth", --["Battle for Azeroth"]
-    -- ["GUI_Legion"] = "Legion", --["Legion"]
-    -- ["GUI_WarlordsOfDraenor"] = "Warlords of Draenor", --["Warlords of Draenor"]
-    -- ["GUI_MistsOfPandaria"] = "Mists of Pandaria", --["Mists of Pandaria"]
-    -- ["GUI_Cataclysm"] = "Cataclysm", --["Cataclysm"]
-    -- ["GUI_WrathOfTheLichKing"] = "Wrath of the Lich King", --["Wrath of the Lich King"]
+    ["GUI_BattleForAzeroth"] = "Battle for Azeroth", --["Battle for Azeroth"]
+    ["GUI_Legion"] = "Legion", --["Legion"]
+    ["GUI_WarlordsOfDraenor"] = "Warlords of Draenor", --["Warlords of Draenor"]
+    ["GUI_MistsOfPandaria"] = "Mists of Pandaria", --["Mists of Pandaria"]
+    ["GUI_Cataclysm"] = "Cataclysm", --["Cataclysm"]
+    ["GUI_WrathOfTheLichKing"] = "Wrath of the Lich King", --["Wrath of the Lich King"]
     ["GUI_Players"] = "Joueurs", --["Players"]
-    ["GUI_Achievement"] = "Haut-Fait", --["Achievement"]
-    ["GUI_NoPlayersNeedAchievement"] = "Aucun joueur du groupe n'a besoin de ce Haut-Fait", --["No players in the group need this achievement"]
-    ["GUI_PlayersWhoNeedAchievement"] = "Joueurs qui ont besoin du Haut-Fait", --["Players who need Achievement"]
+    ["GUI_Achievement"] = "Haut-fait", --["Achievement"]
+    ["GUI_NoPlayersNeedAchievement"] = "Aucun joueur du groupe n'a besoin de ce haut-fait", --["No players in the group need this achievement"]
+    ["GUI_PlayersWhoNeedAchievement"] = "Joueurs qui ont besoin du haut-fait", --["Players who need Achievement"]
     ["GUI_ScanInProgress"] = "scan toujours en cours", --["scan still in progress"]
     ["GUI_Tracking"] = "Pistage", --["Tracking"]
     ["GUI_Track"] = "Suivi", --["Track"]
     ["GUI_OutputPlayers"] = "Annoncer les joueurs", --["Output Players"]
     ["GUI_OutputTactics"] = "Annoncer la tactique", --Output Tactics
     ["GUI_OnlyDisplayMissingAchievements"] = "Ne montrer que les hauts-faits manquants", -- "Only display missing achievements"
-    ["GUI_GreyOutCompletedAchievements"] = "Griser les Hauts-Faits complétés", -- "Grey out completed achievements"
-    ["GUI_HideCompletedAchievements"] = "Cacher les Hauts-Faits complétés", -- "Hide completed achievements",
-    ["GUI_AchievementsCompletedForInstance"] = "Tous les Hauts-Faits ont étés achevés pour", -- "All achievements have been completed for"
-    ["GUI_EnableAutomaticCombatLogging"] = "Activer automatiquement l'Enregistrement du combat", -- Enable automatic combat logging
+    ["GUI_GreyOutCompletedAchievements"] = "Griser les hauts-faits complétés", -- "Grey out completed achievements"
+    ["GUI_HideCompletedAchievements"] = "Cacher les hauts-faits complétés", -- "Hide completed achievements",
+    ["GUI_AchievementsCompletedForInstance"] = "Tous les hauts-faits ont étés achevés pour", -- "All achievements have been completed for"
+    ["GUI_EnableAutomaticCombatLogging"] = "Activer automatiquement l'Enregistrement des combats", -- Enable automatic combat logging
 	["GUI_Author"] = "Auteur", -- "Author"
     ["GUI_Translators"] = "Traducteur", -- "Translators"
-    ["Gui_TranslatorNames"] = "<Les Frères Talbuk> Feant",
+    ["Gui_TranslatorNames"] = "Feant-KirinTor (EU)",
     ["GUI_BlockDisableAddon"] = "Vous ne pouvez pas désactiver l’addon pendant que vous êtes en combat. Attendez jusqu’à ce que vous soyez hors de combat puis essayez à nouveau", -- "You cannot disable the addon while you are are in combat. Wait till you are out of combat then try again"
-
+    ["GUI_DisplayInfoFrame"] = "Activer la fenêtre d'info", -- "Enable Info Frame",
+    ["GUI_Tactic"] = "|cffFF4000Tactique|r", -- "Tactic",
+    ["GUI_TrackAchievementsInBlizzardUI"] = "Afficher les hauts-faits suivis dans la fenêtre de blizzard", -- "Track achievements in Achievements UI",
     -------------------------------------------------------
     --- Core
     -------------------------------------------------------    
-    ["Core_StartingAchievementScan"] = "Démarrage du scan pour les Hauts-Faits", --["Starting Achievement Scan For"]
+    ["Core_StartingAchievementScan"] = "Démarrage du scan pour les hauts-faits", --["Starting Achievement Scan For"]
     ["Core_GameFreezeWarning"] = "Cela peut geler votre jeu pour quelques secondes", --["This may freeze your game for a few seconds"]
-    ["Core_AchievementScanFinished"] = "Scan des Hauts-Faits achevé", --["Achievement Scanning Finished"]
+    ["Core_AchievementScanFinished"] = "Scan des hauts-faits achevés", --["Achievement Scanning Finished"]
     ["Core_EnableAchievementTracking"] = "Voulez-vous activer le pistage des hauts-faits pour", --["Do you want to enable achievement tracking for"]
-    ["Core_TrackAchievements"] = "Pistage des Hauts-Faits", --["Track Achievements"]
+    ["Core_TrackAchievements"] = "Pistage des hauts-faits", --["Track Achievements"]
     ["Core_Yes"] = "Oui", --["Core_Yes"]
     ["Core_No"] = "Non", --["Core_No"]
-    ["Core_AchievementTrackingEnabledFor"] = "Pistage des Hauts-faits activé pour", --["Achievement Tracking Enabled for"]
+    ["Core_AchievementTrackingEnabledFor"] = "Pistage des hauts-faits activé pour", --["Achievement Tracking Enabled for"]
     ["Core_help"] = "aide", --["help"]
     ["Core_Commands"] = "Liste des commandes 'slash'", --["List of slash commands"]
-    ["Core_ListCommands"] = "Montre une liste des commandes 'slash' disponibles", --["shows a list of avaliable slash commands"]
-    ["Core_CommandEnableTracking"] = "active/désactive le Pistage des Hauts-Faits IAT", --["enable/disable IAT achievement tracking"]
+    ["Core_ListCommands"] = "Affiche une liste des commandes 'slash' disponibles", --["shows a list of avaliable slash commands"]
+    ["Core_CommandEnableTracking"] = "active/désactive le pistage IAT des hauts-faits", --["enable/disable IAT achievement tracking"]
     ["Core_Enable"] = "active", --["enable"]
-    ["Core_NoTrackingForInstance"] = "IAT ne peut pas suivre les Haits-Faits de cette rencontre.", -- "IAT cannot track any achievements for this encounter"
+    ["Core_NoTrackingForInstance"] = "IAT ne peut pas suivre les hauts-faits de cette rencontre.", -- "IAT cannot track any achievements for this encounter"
     ["Core_Failed"] = "RATÉ!", -- "FAILED!"
-    ["Core_PersonalAchievement"] = "Haut-Fait personnel", -- "Personal Achievement"
+    ["Core_PersonalAchievement"] = "Haut-fait personnel", -- "Personal Achievement"
     ["Core_Reason"] = "Raison", -- "Reason"
-    ["Core_CriteriaMet"] = "Les critères ont été remplis. Le Boss peut maintenant être tué!", -- "Criteria has been met. Boss can now be killed!"
+    ["Core_CriteriaMet"] = "Les critères ont été remplis. Le Boss peut maintenant être tué! ATTENTION: Ce tracker a utilisé les données collectées MANUELLEMENT par les joueurs.", -- "Criteria has been met. Boss can now be killed! Warning: This tracker has used data manually collected by players."
     ["Core_Counter"] = "Compteur", -- "Counter",
     ["Core_CombatLogEnabled"] = "Enregistrement du combat activé", -- "Combat Logging enabled"
     ["Core_CombatLogDisabled"] = "Enregistrement du combat désactivé", -- "Combat Logging disabled"
-    -- ["Core_TranscriptorLogEnabled"] = "Transcriptor Log enabled", -- "Transcriptor Log enabled"
-    -- ["Core_TranscriptorLogDisabled"] = "Transcriptor Log disabled", -- "Transcriptor Log disabled"
+    ["Core_TranscriptorLogEnabled"] = "Transcriptor Log enabled", -- "Transcriptor Log enabled" **
+    ["Core_TranscriptorLogDisabled"] = "Transcriptor Log disabled", -- "Transcriptor Log disabled"
     ["Core_Toggle"] = "bascule", -- "toggle"
-    ["Core_CommandToggleTracking"] = "Bascule la fenêtre pour activer ou désactiver le suivi des Hauts-Faits pour l’instance actuelle", -- "Toggles the window to enable or disable achievement tracking for the current instance"
+    ["Core_CommandToggleTracking"] = "Bascule la fenêtre pour activer ou désactiver le suivi des hauts-faits pour l’instance actuelle", -- "Toggles the window to enable or disable achievement tracking for the current instance"
     ["Core_AlreadyEnabled"] = "IAT est déjà activé pour cette instance", -- "IAT is already enabled for this instance"
-    ["Core_EnableAddonFirst"] = "Veuillez d’abord activer IAT dans les options avant d’essayer de basculer le suivi des Hauts-Faits.", -- "Please enable IAT in the options first before trying to toggle achievement tracking"
-    ["Core_CompletedAllAchievements"] = "Vous avez terminé toutes les Hauts-Faits pour cette instance", -- "You have completed all achievements for this instance"
-    ["Core_IncompletedAchievements"] = "Hauts-Faits non-accomplis pour cette instance :", -- "Incomplete achievements for this instance"
+    ["Core_EnableAddonFirst"] = "Veuillez d’abord activer IAT dans les options avant d’essayer d'activer le suivi des hauts-faits.", -- "Please enable IAT in the options first before trying to toggle achievement tracking"
+    ["Core_CompletedAllAchievements"] = "Vous avez terminé tous les hauts-faits de cette instance", -- "You have completed all achievements for this instance"
+    ["Core_IncompletedAchievements"] = "Hauts-faits non-accomplis de cette instance :", -- "Incomplete achievements for this instance"
+
+    -------------------------------------------------------
+    --- Instances
+    -------------------------------------------------------
+    ["MobCounter_TimeReamining"] = "Temps restant", -- "Time remaining"
+    ["MobCounter_TimerNotStarted"] = "Chrono non démarré", -- "Timer not started"
+    ["MobCounter_MobsAlive"] = "%s en vie", -- "%s alive"
+    ["MobCounter_MobsKilled"] = "%s tué dans les temps", -- "%s killed in time"
+    ["MobCounter_TimerStarted"] = "Chrono démarré %s restant", -- "Timer started %s remaining"
 
     -------------------------------------------------------
     --- Instances
@@ -89,7 +100,7 @@ local baseLocale = {
     ["Instances_Other"] = "Autre", 
     ["Instances_TrashAfterThirdBoss"] = "Trash aprés le 3ème boss", --L["Trash after the third boss"]
 
-    ["Features:"] = " Fonctionnalités:",
+    -- ["Features:"] = " Fonctionnalités:",
     -- ["- Tracks when the criteria of instance achievements have been met and output this to chat"] = "- Tracks when the criteria of instance achievements have been met and output this to chat",
     -- ["- Tracks when the criteria of instance achievements has been failed and outputs this to chat"] = "- Tracks when the criteria of instance achievements has been failed and outputs this to chat",
     -- ["- Keeps track of achievements which require you to kill so many mobs within a certain time period. It will announce to chat when enough mobs have spawned and whether they were killed in the time period."] = "- Keeps track of achievements which require you to kill so many mobs within a certain time period. It will announce to chat when enough mobs have spawned and whether they were killed in the time period.",
@@ -103,23 +114,23 @@ local baseLocale = {
 
     --Shared
     ["Shared_HasBeenHitWith"] = "a été touché avec", -- "has been hit with"
-    ["Shared_PlayersWhoStillNeedToGetHit"] = "Joueurs qui ont encore besoin d'être touché:", -- "Players who still need to get hit:"
+    ["Shared_PlayersWhoStillNeedToGetHit"] = "Joueurs qui ont encore besoin d'être touchés:", -- "Players who still need to get hit:"
     ["Shared_PlayersWithBuff"] = "Joueurs avec 'buff'", -- "Players with buff"
-    ["Shared_PlayersWhoStillNeedToGetResurrected"] = "Les joueurs suivants doivent être ressuscités pour recevoir le Haut-Fait :", -- "The following players need to be resurrected in order to receive the achievement:"
+    ["Shared_PlayersWhoStillNeedToGetResurrected"] = "Les joueurs suivants doivent être ressuscités pour recevoir le haut-fait :", -- "The following players need to be resurrected in order to receive the achievement:"
     ["Shared_HasGained"] = "a gagné", -- "has gained"
     ["Shared_HasLost"] = "a perdu", -- "has lost"
     ["Shared_HasFailed"] = "a échoué", -- "has failed"
     ["Shared_HasCompleted"] = "a achevé", -- "has completed"
     ["Shared_Reason"] = "raison:", -----TODO duplicate -- "reason:"
-    ["Shared_PersonalAchievement"] = "Haut-Fait personnel", -----------TODO duplicate -- "Personal Achievement"
+    ["Shared_PersonalAchievement"] = "Haut-fait personnel", -----------TODO duplicate -- "Personal Achievement"
     ["Shared_Timer10"] = "Compte à rebours démarré! Il reste 10 secondes", --TODO insert number of seconds remaining -- "Timer Started!. 10 seconds remaining"
     ["Completed"] = "Achevé", --TODO wrong format -- "Completed"
-    ["Shared_JustKillBoss"] = "Au niveau max, vous pouvez simplement tuer le boss pour obtenir ce Haut-Fait", -- "At max level, you can simply just kill the boss to get this achievement"
-    ["Shared_JustKillBossSingleTarget"] = "Au niveau max, vous pouvez simplement tuer le boss avec des capacités à ciblage unique pour obtenir ce Haut-Fait", -- "At max level, you can simply just kill the boss with single target abilities to get this achievement"
+    ["Shared_JustKillBoss"] = "Au niveau max, vous pouvez simplement tuer le boss pour obtenir ce haut-fait", -- "At max level, you can simply just kill the boss to get this achievement"
+    ["Shared_JustKillBossSingleTarget"] = "Au niveau max, vous pouvez simplement tuer le boss avec des capacités à ciblage unique pour obtenir ce haut-fait", -- "At max level, you can simply just kill the boss with single target abilities to get this achievement"
     ["Shared_GotHit"] = "a été touché", -- "got hit"
     ["Shared_NotHit"] = "n'a pas été touché", -- "did not get hit"
     ["Shared_PlayersHit"] = "Joueurs touchés:", -- "players hit:"
-    ["Shared_CompletedBossKill"] = "sera complété une fois que le boss est tué", -- "will be completed once boss is killed"
+    ["Shared_CompletedBossKill"] = "sera complété une fois le boss tué", -- "will be completed once boss is killed"
     ["Shared_Timer3"] = "Compte à rebours démarré! 3 secondes restantes", --TODO insert number of seconds remaining -- "Timer Started! 3 seconds remaining"
     ["Shared_Countdown20"] = "20 secondes restantes", -- "20 seconds remaining"
     ["Shared_MeetsCritera"] = "répond aux critères de", -- "meets the criteria for"
@@ -128,77 +139,146 @@ local baseLocale = {
     ["Shared_SheCanNowBeKilled"] = "Elle peut maintenant être tuée", -- "She can now be killed"
     ["Shared_HeCanNowBeKileld"] = "Il peut maintenant être tué", -- "He can now be killed"
     ["Shared_KillTheAddNow"] = "Tuer les %s maintenant", -- "Kill the %s now"
-    ["Shared_FailedPersonalAchievement"] = "%s a raté %s (Raison: %s)(Haut-Fait personnel)", -- "%s has failed %s (Reason: %s)(Personal Achievement)"
+    ["Shared_FailedPersonalAchievement"] = "%s a raté %s (Raison: %s)(haut-fait personnel)", -- "%s has failed %s (Reason: %s)(Personal Achievement)"
     ["Shared_DamageFromAbility"] = "%s Dégât", -- %s Damage"
     ["Shared_DirectHitFromAbility"] = "%s Coup Direct", -- "%s Direct Hit"
     ["Shared_AddKillCounter"] = "%s compteur de 'kill'", -- "%s kill counter"
-    -- ["Shared_One"] = "1",
-    -- ["Shared_Two"] = "2",
-    -- ["Shared_Three"] = "3",
-    -- ["Shared_Four"] = "4",
-    -- ["Shared_Five"] = "5",
-    -- ["Shared_Six"] = "6",
-    -- ["Shared_Seven"] = "7",
-    -- ["Shared_Eight"] = "8",
-    -- ["Shared_Nine"] = "9",
-    -- ["Shared_Ten"] = "10",
-    -- ["Shared_Eleven"] = "11",
-    -- ["Shared_Twelve"] = "12",
-    -- ["Shared_Thirteen"] = "13",
-    -- ["Shared_Fourteen"] = "14",
-    -- ["Shared_Fifteen"] = "15",
-    -- ["Shared_Sixteen"] = "16",
-    -- ["Shared_Seventeen"] = "17",
-    -- ["Shared_Eighteen"] = "18",
-    -- ["Shared_Nineteen"] = "19",
-    -- ["Shared_Twenty"] = "20",
+    ["Shared_One"] = "1",
+    ["Shared_Two"] = "2",
+    ["Shared_Three"] = "3",
+    ["Shared_Four"] = "4",
+    ["Shared_Five"] = "5",
+    ["Shared_Six"] = "6",
+    ["Shared_Seven"] = "7",
+    ["Shared_Eight"] = "8",
+    ["Shared_Nine"] = "9",
+    ["Shared_Ten"] = "10",
+    ["Shared_Eleven"] = "11",
+    ["Shared_Twelve"] = "12",
+    ["Shared_Thirteen"] = "13",
+    ["Shared_Fourteen"] = "14",
+    ["Shared_Fifteen"] = "15",
+    ["Shared_Sixteen"] = "16",
+    ["Shared_Seventeen"] = "17",
+    ["Shared_Eighteen"] = "18",
+    ["Shared_Nineteen"] = "19",
+    ["Shared_Twenty"] = "20",
     ["Shared_WasKilled"] = "a été tué", -- "was killed"
     ["Shared_Found"] = "trouvé", -- "found"
-    -- ["Shared_ReportString"] = "Please report the following string to the IAT author", -- "Please report the following string to the IAT author"
-    ["Shared_PlayersWhoNeedAchievement"] = "Joueurs qui ont besoins de ce HF", -- "Players who need achievement"
+    ["Shared_ReportString"] = "Merci de retourner cette séquence de caractères aux auteurs d'IAT", -- "Please report the following string to the IAT author"
+    ["Shared_PlayersWhoNeedAchievement"] = "Joueurs qui ont besoins de ce haut-fait", -- "Players who need achievement"
     ["Shared_HasStolenFrom"] = "a volé de", -- "has stolen from"
     ["Shared_WaitForAnother"] = "Attendre %s pour collecter un autre %s", -- "Wait for %s to collect another %s"
 
---[[     ------------------------------------------------------- BATTLE FOR AZEROTH -------------------------------------------------------
-▄▄▄▄·  ▄▄▄·▄▄▄▄▄▄▄▄▄▄▄▄▌  ▄▄▄ .    ·▄▄▄      ▄▄▄       ▄▄▄· ·▄▄▄▄•▄▄▄ .▄▄▄       ▄▄▄▄▄ ▄ .▄
-▐█ ▀█▪▐█ ▀█•██  •██  ██•  ▀▄.▀·    ▐▄▄·▪     ▀▄ █·    ▐█ ▀█ ▪▀·.█▌▀▄.▀·▀▄ █·▪    •██  ██▪▐█
-▐█▀▀█▄▄█▀▀█ ▐█.▪ ▐█.▪██▪  ▐▀▀▪▄    ██▪  ▄█▀▄ ▐▀▀▄     ▄█▀▀█ ▄█▀▀▀•▐▀▀▪▄▐▀▀▄  ▄█▀▄ ▐█.▪██▀▐█
-██▄▪▐█▐█ ▪▐▌▐█▌· ▐█▌·▐█▌▐▌▐█▄▄▌    ██▌.▐█▌.▐▌▐█•█▌    ▐█ ▪▐▌█▌▪▄█▀▐█▄▄▌▐█•█▌▐█▌.▐▌▐█▌·██▌▐▀
-·▀▀▀▀  ▀  ▀ ▀▀▀  ▀▀▀ .▀▀▀  ▀▀▀     ▀▀▀  ▀█▄▀▪.▀  ▀     ▀  ▀ ·▀▀▀ • ▀▀▀ .▀  ▀ ▀█▄▀▪▀▀▀ ▀▀▀ · 
-]]--                                                                                                                                                                                                               
+    ["Shared_MissingDebuff"] = "Certains joueurs n'ont pas", -- "Some players are missing"
+    ["Shared_JustKillBossesTogether"] = "Au niveau max, vous pouvez simplement tuer les boss en même temps pour obtenir ce haut-fait.", -- "At max level, you can simply just kill the bosses at the same time to get this achievement."
+    ["Shared_TrackingStatus"] = "Joueurs avec l'addon", -- "Players with addon"
+    ["Shared_Notes"] = "Notes", -- "Notes"
+    ["Shared_PlayersRunningAddon"] = "Pour que IAT puisse suivre ce haut-fait avec précision, chaque joueur dans le groupe qui doit avoir l’addon", -- "For IAT to track this achievement accurately, every player is the group needs to be running the addon"
+    ["Shared_AchievementFailed"] = "Haut-fait Raté", -- "Achievement Failed"
+    ["Shared_TrackingAchievementFor"] = "Pistage du/des haut(s)-fait(s) pour", -- "Tracking achievement for"
+    ["Shared_PlayersWithPet"] = "Joueurs avec la mascotte", -- "Players with pet"
+    ["Shared_PlayersTwentyFiveyards"] = "Pour que IAT puisse suivre ce haut-fait avec précision, les joueurs doivent être à moins de 25 mètres l’un de l’autre au moment de son 'achèvement'", -- "For IAT to track this achievement accurately, players must be within 25 yards of each other when completing the achievement"
+    ["Shared_HitBy"] = "touché par", -- "hit by"
+    ["Shared_PlayersWhoDidNotUse"] = "Joueurs qui n'ont pas utilisés", -- "Players who did not use"
+    ["Shared_Fails"] = "Ratés", -- "Fails"
+    ["Shared_Completed"] = "Achevé", -- "Completed"
+    ["Shared_DoNotKillBoss"] = "NE TUEZ PAS LE BOSS!", -- "DO NOT KILL BOSS!"
+    ["Shared_HasDied"] = "est mort", -- "has died"
+    ["Shared_NOW"] = "MAINTENANT!", -- "NOW!"
+    ["Shared_PlayersRunningAddon2"] = "Pour que IAT puisse suivre ce haut-fait avec précision, les joueurs qui collectent des objets doivent avoir l’addon", -- "For IAT to track this achievement accurately, players collecting items need to be running the addon"
+    ["Shared_Killed"] = "tué", -- "killed"
+    ["Shared_HasCaught"] = "a attrapé", -- "has caught"
+    ["Shared_AutomaticTracking"] = "Pour que IAT puisse suivre ce haut-fait AUTOMATIQUEMENT, les joueurs qui collectent des objets doivent avoir l’addon", -- "To track this achievement AUTOMATICALLY, players collecting items need to be running the addon"
+    ["Shared_ManualTracking"] = "Pour que IAT puisse suivre ce haut-fait MANUELLEMENT, les joueurs doivent taper combien d’éléments ils ont recueillis dans le chat. (+3, -2 etc)", -- "To track this achievement MANUALLY players must type how many items they have collected into chat. (+3, -2 etc)"
+    ["Shared_AutomaticCounter"] = "Compteur Automatique", -- "Automatic Counter"
+    ["Shared_ManualCounter"] = "Compteur Manuel", -- "Manual Counter"
+    ["Shared_AddsKilled"] = "Adds tués", -- "Adds killed"
+
+
+-- BATTLE FOR AZEROTH -- -- BATTLE FOR AZEROTH -- -- BATTLE FOR AZEROTH -- -- BATTLE FOR AZEROTH -- -- BATTLE FOR AZEROTH -- -- BATTLE FOR AZEROTH -- -- BATTLE FOR AZEROTH -- -- BATTLE FOR AZEROTH -- -- BATTLE FOR AZEROTH --
+
+
+    -------------------------------------------------------
+    --- Ny’alotha, the Walking City
+    -------------------------------------------------------
+    --Tactics
+    ["Ny’alotha_WrathionTheBlackEmperor"] = "",
+    ["Ny’alotha_Maut"] = "",
+    ["Ny’alotha_TheProphetSkitra"] = "",
+    ["Ny’alotha_DarkInquisitorXanesh"] = "",
+    ["Ny’alotha_TheHivemind"] = "",
+    ["Ny’alotha_ShadharTheInsatiable"] = "",
+    ["Ny’alotha_Drestagath"] = "",
+    ["Ny’alotha_Vexiona"] = "",
+    ["Ny’alotha_RadenTheDespoiled"] = "",
+    ["Ny’alotha_IlgynothCorruptionReborn"] = "",
+    ["Ny’alotha_CarapaceOfNZoth"] = "",
+    ["Ny’alotha_NZothTheCorruptor"] = "",
+    
+    --Chat Output
+
+    -------------------------------------------------------
+    --- The Eternal Palace
+    -------------------------------------------------------
+    --Tactics
+    ["AzsharasEternalPalace_AbyssalCommanderSivara"] = "Les trois lieutenants requis pour ce haut-fait se trouvent dans les 'trashs' avant le %s. Il suffit de tuer tous les 'trashs' du milieu et du côté droit de la pièce. \n\nVous pouvez utiliser quatre tanks, mais si votre troisième tank est bien équipé, il n’est pas nécessaire d’en avoir un quatrième. \n\n%s lance %s. Pour supprimer cet effet, vous pouvez éloigner tous les lieutenants de la bannière ou demander à un dps distance de la détruire. \n\n%s lance %s. Il suffit de s’éloigner pendant la canalisation pour éviter les dégâts. Elle lance également %s et %s qui feront des dégâts mineurs. \n\n%s lance également de temps en temps %s, ce qui guérit un de ses alliés pour 35%% de leur santé maximale. Il n’est pas nécessaire de l'interrompre, assurez-vous simplement que le lieutenant est loin du %s. \n\n%s lance %s qui 'fear' tout le monde à proximité. Le troisième ou quatrième tank doit interrompre ce sort à chaque fois qu’il est lancé.",
+    ["AzsharasEternalPalace_BlackwaterBehemoth"] = "Pour ce haut-fait, vous devrez affecter quelques personnes pour nager dans toute la zone et recueillir des échantillons de vie marine :\n -%s\n -%s\n -%s\n -%s\n\nUne fois que vous avez prélevé 50 échantillons, vous pouvez tuer le boss.\n\nAssurez-vous que les joueurs assignés passent en spécialisation 'tank', car de cette façon ils ne seront pas touchés par %s. Si vous avez des druides dans votre groupe, ils devraient être assignés à recueillir les échantillons car ils nageront plus grâce à leur %s.\n\nNotez que les joueurs assignés doivent tapper le boss au moins une fois, sinon ils pourraient ne pas obtenir la validation du haut-fait.",
+    ["AzsharasEternalPalace_RadianceOfAzshara"] = "Pour ce haut-fait, vous devrez exécuter 6 tours complets consécutifs sans tomber dans l’eau.\n\nAprès trois tours, vous obtiendrez le debuff %s 'A mi-chemin de la ligne d'arrivée !' et après avoir couru trois tours de plus, vous obtiendrez un autre debuff %s 'Course de fond accomplie'.\n\nCe haut-fait est une réalisation personnelle.\n\nAssurez vous de garder tous vos gros CDs de DPS pour la gestion de l'add %s, car si vous le tuez suffisamment vite, vous n’aurez pas à gérer les %s.\n\nEvitez à tout prix d’être touché par une %s puisque le fait de reculer peut supprimer le debuff %s. Les 'tanks' doivent également se méfier du %s et de la façon dont ils se positionnent pour ne pas être projetés dans l’eau.",
+    ["AzsharasEternalPalace_LadyAshvane"] = "Pour ce haut-fait, vous devrez vous assurer que les 3 sorts d'%s traverse Lady Ashvane. Si possible, essayez, en plus, de vous positionner derrière une %s pour la détruire en même temps.\n\nEn difficulté normale ce haut-fait est assez facile à faire et avec suffisamment de dps vous pouvez sauter les %s de la deuxième phase (la deuxième fois que le bouclier est cassé).",
+    ["AzsharasEternalPalace_Orgozoa"] = "Pour ce haut-fait, vous devrez affecter une personne pour attraper l'œuf %s pendant l’intermède en se tenant sur le bord de la plate-forme juste avant la descente. La personne qui attrape l’œuf devra alors l’amener en bas tout en évitant la %s et les %s pendant la descente. La personne qui porte l’œuf ne doit plus utiliser de capacités jusqu'à la fin du combat, sinon elle le laissera tomber.\n\nS’assurer de NE PAS interrompre %s trop tôt, car la personne qui transporte l’œuf sera ralentie de 30%% (%s). Un prêtre peut aider avec %s et %s.",
+    ["AzsharasEternalPalace_TheQueensCourt"] = "Pour obtenir %s vous devrez, pendant le combat, effectuer les bons rituels (émotes) quand un certain décret est actif :\n\n -%s - /salut ou /salute\n -%s - /courbette ou /curtsey\n -%s - /applaudir ou /applause\n -%s - /ramper ou /grovel\n -%s - /genou ou /kneel\n\nCe haut-fait est une réalisation personnelle.\n\nIl est vivement conseillé de préparer, avant la rencontre, une macro pour chaque décret.\nExemple de macro pour le décret En formation :\n/tar Reine Azshara\n/salut\n/targetlasttarget",
+    ["AzsharasEternalPalace_ZaquiHarbingerOfNyalotha"] = "Pour ouvrir un portail vers le niveau secret des vaches, vous devrez activer 6 runes ( les cercles orange au sol ). Pour ce faire,  dans la phase 4, les joueurs devront rester sur chacune d’elles, être affecté par %s, puis se le faire dispel laissant au sol une %s qui va activer la rune sur laquelle elle se trouve.\n\nQuand les 6 runes auront étés activés, un portail s’ouvrira au milieu de la salle. Placez vous proche de ce portail, puis appuyez sur l'extra-bouton qui vous basculera dans le niveau secret des vaches! Vous aurez alors un temps limité pour vachisider 10 %s.",
+    ["AzsharasEternalPalace_QueenAzshara"] = "Pour obtenir ce haut-fait, vous devrez vaincre %s avec un seul joueur en vie et ce joueur devra avoir le 'buff' %s sur lui.\n\nLa fin du combat devrait ressembler à quelque chose comme ceci :\n - Descendre le boss à 500k points de vie.\n - Tout le monde, sauf les 2 tanks et 1 heal, restent dans les sceaux pour accumuler 10 stacks de %s et mourir.\n - Les 3 joueurs restants doivent maintenant descendre le boss à 200k points de vie, puis arrêter tous dps.\n - Utiliser %s jusqu’à ce que l’un des tanks obtienne le buff %s.\n - le tank sans le buff et le healer doivent maintenant rester à leur tour dans les sceaux pour mourir.\n - Une fois que Tank avec le buff est le seul joueur vivant, il peut finir de tuer le boss et obtenir la validation du haut-fait pour l'ensemble du raid.",
+
+    --Chat Output
+    ["AzsharasEternalPalace_SamplesCollected"] = "Echantillons collectés", -- "Samples collected",
+    ["AzsharasEternalPalace_Salute"] = "salut", -- Salute
+    ["AzsharasEternalPalace_Curtsey"] = "courbette", -- Curtsey
+    ["AzsharasEternalPalace_Grovel"] = "ramper", -- Grovel
+    ["AzsharasEternalPalace_Kneel"] = "genou", -- Kneel
+    ["AzsharasEternalPalace_Applause"] = "applaudir", -- Applause
+    ["AzsharasEternalPalace_TargetAndPerformEmote"] = "Visez %s et /%s MAINTENANT!",
 
     -------------------------------------------------------
     --- Crucible Of Storms - Creuset des Tempêtes
     -------------------------------------------------------
     --Tactics
-    -- ["CrucibleOfStorms_TheRestlessCabal"] = "During the fight, Fa'thuul the Feared will spawn Void Crashes in pairs of 2. These are large purple meteors that will bounce around the room until it hits a player. The impact radius will reduce everytime it bounces without being soaked. (this will only occur twice). Simply avoid all crashes until you have 10 and then kill the boss. You only need to have 10 crashes active at some point during the fight. I highly recommend doing it at the start.",
-    ["CrucibleOfStorms_TheRestlessCabal"] = "Pendant le combat, Fa’thuul le craint va faire apparaître des 'Déferlante du Vide' par paire de 2. Ce sont de grands météores violets qui rebondiront autour de la salle jusqu’à ce qu’il frappe un joueur. Le rayon d’impact réduit chaque fois qu’il rebondit sans être touché. (Cela ne se produira que deux fois). Il suffit d’éviter tous les 'crashes' jusqu’à ce que vous en ayez 10, puis tuer le boss.\n\n Vous avez seulement besoin d’avoir 10 'accidents' actifs à un moment donné pendant le combat. Je recommande fortement de le faire au départ.",
-    -- ["CrucibleOfStorms_UunatHarbingerOfTheVoid"] = "For this achievement you must not move while N'Zoth's eye is open. This achievement is personal, and you can also get it while you are dead.\nN'Zoth's eye opens for a few seconds when Uu'nat casts Gift of N'Zoth, so stop moving completely once the boss gets close to 90 energy.\n Just assign a person to call out 'do not move' and 'you can move now'.",
-    ["CrucibleOfStorms_UunatHarbingerOfTheVoid"] = "Pour ce Haut-Fait, vous ne devez pas bouger tant que l’œil de N’zoth est ouvert. Ce Haut-Fait est personnel, et vous pouvez également l’obtenir pendant que vous êtes mort.\n\nL’œil de nn’zoth s’ouvre pendant quelques secondes quand uu’nat lance 'Don de N’Zoth', alors arrêtez de bouger complètement une fois que le boss se rapproche de 90 d’énergie.\n Il suffit d’assigner une personne pour prévenir 'ne pas bouger!' et 'vous pouvez bouger'.",
+    ["CrucibleOfStorms_TheRestlessCabal"] = "Pendant le combat, %s lancera %s. Cela produira des météores violets qui rebondiront dans la pièce jusqu’à ce qu’ils touchent un joueur. Le rayon d’impact et les dommages se réduiront à rebond sans être absorbé (jusqu’à un maximum de deux fois). Évitez simplement toutes les %s jusqu’à ce que vous en ayez 10, puis tuez le boss. \n\nVous n’avez besoin que de 10 %s actives à un moment donné pendant le combat. Il est recommandé de le faire au début du combat.",
+    ["CrucibleOfStorms_UunatHarbingerOfTheVoid"] = "Pour ce haut-fait, vous ne devez PAS bouger tant que l’œil de %s est ouvert. Ce haut-fait est personnel, et vous ne pouvez pas l’obtenir pendant que vous êtes mort. \n\nL’œil de %s s’ouvre lorsque Uu’nat lance %s, %s ou %s, donc arrêtez de bouger complètement lorsque le boss a accumulé près de 100 points d'énergies. Vous ne devez PAS bouger tant que l’œil de %s ne soit pas complètement fermé, ce qui se produit autour de 40 points d'énergies. L’œil est également ouvert pendant les transitions à environ 70%% et 45%%.",
 
     --Chat Output
+    ["CrucibleOfStorms_StopMoving"] = "NE BOUGEZ PLUS!",
+    ["CrucibleOfStorms_StartMoving"] = "VOUS POUVEZ BOUGER!",
+
    -------------------------------------------------------
     --- Battle of Dazar'alor - Bataille de Dazar'alor
     -------------------------------------------------------
-    ["BattleOfDazaralor_ChampionOfTheLight_Alliance"] = "Pour réaliser ce Haut-Fait, vous devrez voler 3 objets à chacun des ennemis de la rencontre et les amener au Tas de déchets mystérieux. Vous devrez voler 9 objets au total: 3 de %s, 3 de %s et 3 de %s.\n\n En outre, ce Haut-Fait requiert que tout le monde dans le raid interagisse avec le Tas de déchets mystérieux pour obtenir le debuff %s. Pendant le combat contre le boss, les joueurs seront transformés en %s et recevront un bouton d’action supplémentaire à utiliser sur les ennemis pour voler un objet.\n\n Une fois que votre groupe de raid aura remis les 9 objets (3 de chaque type de PNJ) ) vous pouvez tuer le boss et obtenir le haut-fait.",
-    ["BattleOfDazaralor_ChampionOfTheLight_Horde"] = "Pour réaliser ce Haut-Fait, vous devrez voler 3 objets à chacun des ennemis de la rencontre et les amener au Tas de déchets mystérieux. Vous devrez voler 9 objets au total: 3 de %s, 3 de %s et 3 de %s \n\n. En outre, ce Haut-Fait requiert que tout le monde dans le raid interagisse avec le Tas de déchets mystérieux pour obtenir le debuff %s. Pendant le combat contre le boss, les joueurs seront transformés en %s et recevront un bouton d’action supplémentaire à utiliser sur les ennemis pour voler un objet.\n\n Une fois que votre groupe de raid aura remis les 9 objets (3 de chaque type de PNJ) ) vous pouvez tuer le boss et obtenir le haut-fait.",
-    ["BattleOfDazaralor_JadefireMasters"] = "Pour cette réalisation, vous devrez récupérer les %s cachés dans l'arène des boss, les protéger des incendis et laisser le moine lancer %s dessus. \n\n Vous devriez récupérer l'œuf après la première série de %s, ainsi vous ne risquez pas de perdre l’œuf en %s. Assurez-vous de le récupérer avant le début de la phase 2, car %s le rompra. \n\n Le moine se transformera en %s à 100 énergies. Après que %s ait atteint le joueur qui tient l'œuf, vous pouvez tuer le boss pour obtenir le haut-fait. \n\n Les emplacements des %s sont différents pour la Horde et l'Alliance.",
-    ["BattleOfDazaralor_Grong_Alliance"] = "Pour ce Haut-Fait, vous devrez transporter et placer 6 barils au sol avant le combat contre %s. Vous pouvez trouver les %s à côté des escaliers avant de monter à la zone du boss.\n\n Placer les %s sur le sol, engager le boss, et s’assurer que les barils soient touchés par %s.\n\n Une fois que les %s sont détruits, le boss gagnera un buff de 20%% des dégâts pour 30 secondes par baril détruit (%s). Une fois que tous les barils sont détruits, tuez le boss et vous obtiendrez le Haut-Fait.",
-    ["BattleOfDazaralor_Grong_Horde"] = "Pour ce Haut-Fait, vous devrez transporter et placer 6 barils au sol avant le combat contre %s. Vous pouvez trouver les %s à côté des escaliers avant de monter à la zone du boss.\n\n Placer les %s sur le sol, engager le boss, et s’assurer que les barils soient touchés par %s.\n\n Une fois que les %s sont détruits, le boss gagnera un buff de 20%% des dégâts pour 30 secondes par baril détruit (%s). Une fois que tous les barils sont détruits, tuez le boss et vous obtiendrez le Haut-Fait.",
-    ["BattleOfDazaralor_Opulence"] = "Pour obtenir ce Haut-Fait, vous devrez d’abord vous assurer qu’au moins un joueur a la mascotte %s.\n\n La réalisation est personnelle et exige que le joueur utilise une commande /praise sur la mascotte %s, sous l’effet d’un %s. La mascotte n’a pas besoin d’être le vôtre. \n\n Pour passer sous les %s, un ou plusieurs joueurs devront ramasser des %s. Ce bijou donnera au joueur une pile de %s alors qu’ils sont seuls. En atteignant 100 piles, ils gagneront l'aura %s pendant 20 secondes, accordant au joueur et à tous les joueurs voisins %s, augmentant le taux critique de 100%%. Le buff prendra environ 100 secondes pour apparaître, et une fois qu’il est actif /praise la mascotte %s pour obtenir le crédit de ce Haut-Fait.",
-    ["BattleOfDazaralor_ConclaveOfTheChosen"] = "Pour obtenir ce Haut-Fait, vous devrez laisser l’un des trois raptors initiaux en vie jusqu’à la fin du combat. Vous pouvez tuer le reste, mais puisque vous ne pouvez pas les CC, vous aurez besoin d'en 'kite' un pour toute la durée du combat.\n\n Un joueur différent sera fixé par le %s toutes les 20 secondes (%s), donc vous devrez vous assurer que le joueur le 'kite' loin du raid pour éviter tout dommage AoE.\n\n Un ou deux DK peuvent être utiles dans ce combat car ils peuvent %s le raptor loin du raid.",
-    ["BattleOfDazaralor_KingRastakhan"] = "Pour faire ce Haut-Fait, vous aurez besoin de garder les 'adds' fantômes vivants jusqu’à la fin du combat. Il suffit de les éloigner du raid pour éviter des dommages inutiles.\n\n Un troisième Tank est idéal pour cette réalisation",
-    ["BattleOfDazaralor_HighTinkerMekkatorque"] = "Pour ce Haut-Fait, vous aurez besoin d’un ingénieur avec %s et %s.\n\n Invoquer les deux Blingotrons avant de commencer le combat et ils vont commencer un duel. Peu de temps après le Boss est engagé, le %s va 'spawn'. C’est facile à tuer, alors tuez le et finissez le combat du boss et vous devriez avoir le HF.\n\n %s a deux capacités :\n %s -capacité AoE de  8 mètres autour du npc, éloignez-vous si vous êtes au CaC.\n %s - Chaîne foudroyante, rester écarté ou interrompre le 'cast'.",
-    ["BattleOfDazaralor_StormwallBlockade"] = "Pour accomplir ce Haut-Fait, vous devrez invoquer des %s pendant le combat du Boss. Vous n’avez pas besoin de battre des %s.\n\n Pour invoquer %s vous devez cliquer sur un ban de poissons à gauche des quais après que le boss a été engagé. Idéalement, vous voulez qu’un seul joueur reste derrière sur les quais pour l’invoquer. Ce joueur devra faire face à quelques mécaniciens pendant 2 minutes.\n\n -Après avoir cliqué sur le ban de poisson, le joueur va commencer à tirer une corde hors de l’eau, et ils vont commencer à se faire tirer hors de l’eau. Marchez dans la direction opposée pour rester sur les quais, mais ne marchez pas trop loin du bord ou la corde se brisera.\n -Peu de temps après, %s va commencer à tomber sur le joueur, qui devra les esquiver pour rester en vie.\n -Après cela, les vagues vont s’écraser sur les quais, et le joueur tirant la corde devra les esquiver.\n\n Ceci se poursuivra jusqu’à la fin de la course de 2 minutes. Le reste du raid doit effectuer le combat du boss comme d’habitude.\n\n Une fois que les %s sont générés, le joueur invoquant, et plus tard le raid, devra faire face à ses deux capacités aux côtés des capacités normales du boss :\n %s - Un cône frontal qui repoussera n’importe qui, les tirant dans l’eau\n %s - Tire tous les joueurs vers %s, tuant instantanément ceux qui deviennent trop proches.\n\n Pour traiter avec %s, vous aurez besoin d’un Voleur uniquement se concentrant sur l’étourdissement chaque fois qu’il lance %s. Si vous n’avez pas de Voleur, alors vous devrez faire une rotation de cc. Le reste du raid devra tuer le boss avant son 'enrage', tout en traitant des %s en plus de la mécanique.",
-    ["BattleOfDazaralor_JainaProudmoore"] = "Pour accomplir ce Haut-Fait, vous aurez d’abord besoin de 3 joueurs pour collecter des monticules de neige pendant la lutte contre %s.\n\n Les monticules de neige ne peuvent être trouvés que lors du premier entracte. Les monticules de neige seront uniformément répartis autour de la zone circulaire de sorte que vous aurez besoin d’au moins 3 joueurs 'rapide' pour commencer à courir dès que la phase commence.\n\n Marchez à travers un monticule de neige et un petit flocon de neige apparaîtra à côté de votre personnage. Une fois que les 3 ont été trouvés, interrompez le boss pour entrer dans la phase suivante. Les joueurs qui ont le flocon de neige doivent empiler près de l’un des barils pour créer les %s.\n\n Utiliser des %s pour retirer les %s du baril à côté des %s, puis attaquer le baril. L’explosion fera fondre les %s, ce qui a permettra d’atteindre les critères de ce HF.",
+    ["BattleOfDazaralor_ChampionOfTheLight_Alliance"] = "Pour réaliser ce haut-fait, vous devrez voler 3 objets à chacun des ennemis de la rencontre et les amener au Tas de déchets mystérieux. Vous devrez voler 9 objets au total: 3 de %s, 3 de %s et 3 de %s.\n\n En outre, ce haut-fait requiert que tout le monde dans le raid interagisse avec le Tas de déchets mystérieux pour obtenir le debuff %s. Pendant le combat contre le boss, les joueurs seront transformés en %s et auront un extra-bouton à utiliser sur les ennemis pour leur voler un objet.\n\n Une fois que votre groupe de raid aura remis les 9 objets (3 de chaque type de PNJ) vous pourrez tuer le boss et obtenir la validation du haut-fait.",
+    ["BattleOfDazaralor_ChampionOfTheLight_Horde"] = "Pour réaliser ce haut-fait, vous devrez voler 3 objets à chacun des ennemis de la rencontre et les amener au Tas de déchets mystérieux. Vous devrez voler 9 objets au total: 3 des %s, 3 des %s et 3 des %s.\n\n En outre, ce haut-fait requiert que tout le monde dans le raid interagisse avec le Tas de déchets mystérieux pour obtenir le debuff %s. Pendant le combat contre le boss, les joueurs seront transformés en %s et auront un extra-bouton à utiliser sur les ennemis pour leur voler un objet.\n\n Une fois que votre groupe de raid aura remis les 9 objets (3 de chaque type de PNJ) vous pourrez tuer le boss et obtenir la validation du haut-fait.",
+    ["BattleOfDazaralor_JadefireMasters"] = "Pour ce haut-fait, vous devrez récupérer l'%s caché dans l'arène des boss, le protéger des incendies et laisser le boss moine lancer %s dessus. \n\n Vous devriez récupérer l'œuf après la première série de %s, ainsi vous ne risquez pas de perdre l’œuf dans une %s. Assurez-vous de le récupérer avant le début de la phase 2, car %s le casserait. \n\n Le moine se transformera en %s à 100 énergies. Après que %s ait atteint le joueur qui porte l'œuf, vous pouvez tuer le boss pour obtenir la validation du haut-fait. \n\n Les emplacements de l'%s sont différents pour la Horde et l'Alliance.",
+    ["BattleOfDazaralor_Grong_Alliance"] = "Pour ce haut-fait, vous devrez transporter et placer au sol 6 barils avant le combat contre %s. Vous pouvez trouver les %s à côté des escaliers avant de monter vers la zone du boss.\n\n Placer les %s sur le sol, engager le boss, et s’assurer que les barils soient touchés par %s.\n\n Une fois que les %s sont détruits, le boss gagnera un buff de bonus aux dégats de 20%% par baril détruit pour 30 secondes (%s). Une fois tous les barils détruits, tuez le boss et vous obtiendrez la validation du haut-fait.",
+    ["BattleOfDazaralor_Grong_Horde"] = "Pour ce haut-fait, vous devrez transporter et placer 6 barils au sol avant le combat contre %s. Vous pouvez trouver les %s à côté des escaliers avant de monter vers la zone du boss.\n\n Placer les %s sur le sol, engager le boss, et s’assurer que les barils soient touchés par %s.\n\n Une fois que les %s sont détruits, le boss gagnera un buff de bonus aux dégats de 20%% par baril détruit pour 30 secondes (%s). Une fois tous les barils détruits, tuez le boss et vous obtiendrez la validation du haut-fait.",
+    ["BattleOfDazaralor_Opulence"] = "Pour obtenir ce haut-fait, vous devrez d’abord vous assurer qu’au moins un joueur possède la mascotte %s.\n\n La validation est personnelle et exige que le joueur utilise la commande /praise ou /louer sur la mascotte %s, sous l’effet d’une %s. La mascotte n’a pas besoin d’être la vôtre. \n\n Pour bénéficier du buff %s, un ou plusieurs joueurs devront ramasser des %s. Ce caillou donnera au joueur qui le possède un stack de %s toutes les secondes, tant qu'il reste éloigné des autres joueurs. En atteignant 100 stack, il gagnera l'aura %s pendant 20 secondes, accordant au joueur et à tous les joueurs voisins %s, augmentant le taux critique de 100%%. Il devra alors se rapprocher des autres joueurs pour qu'ils puissent bénéficier du buff et utiliser la commande /louer sur la mascotte pour valider le haut-fait.",
+    ["BattleOfDazaralor_ConclaveOfTheChosen"] = "Pour obtenir ce haut-fait, vous devrez laisser l’un des trois raptors initiaux en vie jusqu’à la fin du combat. Vous pouvez tuer le reste, mais puisque vous ne pouvez pas les CC, vous aurez besoin d'en 'kite' un pendant toute la durée du combat.\n\n Un joueur différent sera fixé par le %s toutes les 20 secondes (%s), donc vous devrez vous assurer que ce joueur l'emmène loin du raid pour éviter tout dommage AoE.\n\n Un ou deux DK peuvent être utiles dans ce combat car ils peuvent utiliser leur capacité %s sur le raptor afin de l'éloigner du raid.",
+    ["BattleOfDazaralor_KingRastakhan"] = "Pour faire ce haut-fait, vous aurez besoin de garder les 'adds' fantômes vivants jusqu’à la fin du combat. Il suffit de les éloigner du raid pour éviter les dégâts malencontreux.\n\n Un troisième Tank est idéal.",
+    ["BattleOfDazaralor_HighTinkerMekkatorque"] = "Pour ce haut-fait, vous aurez besoin d’un ingénieur avec %s et %s.\n\n Invoquer les deux Blingotrons avant de commencer le combat et ils vont commencer un duel. Engagez le boss et peu de temps après, le %s va apparaitre. Il est facile à tuer, alors détruisez le, Puis, finissez le combat contre le boss et vous devriez avoir la validation du haut-fait.\n\n %s possède deux capacités :\n %s - capacité AoE de  8 mètres autour de lui, donc éloignez-vous si vous êtes au CaC.\n %s - donc restez éloignés les uns des autres, ou, plus simplement, interrompez le sort.",
+    ["BattleOfDazaralor_StormwallBlockade"] = "Pour accomplir ce haut-fait, vous devrez invoquer le %s pendant le combat contre le Boss. Vous n’aurez pas besoin de le tuer (%s).\n\n Pour invoquer le %s, vous devrez cliquer sur un banc de poissons à gauche des quais, après que le boss ai été engagé. Idéalement, un seul joueur restera derrière sur les quais pour l’invoquer. Ce joueur devra faire face à quelques mécaniques spéciales pendant 2 minutes.\n\n - Après avoir cliqué sur le banc de poisson, le joueur va commencer à tirer une corde hors de l’eau, et ils vont commencer à se faire lentement tirer hors de l’eau. Marchez dans la direction opposée pour rester sur les quais, mais ne marchez pas trop loin du bord ou la corde se cassera.\n - Peu de temps après, une %s va commencer à s'avancer vers le joueur qui devra les esquiver pour rester en vie.\n - Après cela, les vagues vont s’écraser sur les quais, et le joueur tirant la corde devra les esquiver.\n\n Cela durera 2 minutes, le temps que le cast du sort du tirage de corde se termine. Le reste du raid doit effectuer le combat du boss comme d’habitude.\n\n Une fois le %s apparu, le joueur invoquant, et plus tard, le raid, devront faire face à ses deux capacités en même temps que les capacités normales du boss :\n %s - Un cône frontal qui repoussera n’importe qui vers l’eau\n %s - Tire tous les joueurs vers %s, tuant instantanément ceux qui sont trop proches.\n\n Pour gérer le %s, vous aurez idéalement un Voleur qui se consacrera à l’étourdir chaque fois qu’il lancera %s. Si vous n’avez pas de Voleur, alors vous devrez faire une rotation de cc. Le reste du raid devra tuer le boss avant son 'enrage', tout en faisant attention à l'%s.",
+    ["BattleOfDazaralor_JainaProudmoore"] = "Pour accomplir ce haut-fait, vous aurez d’abord besoin de 3 joueurs pour collecter des monticules de neige pendant la lutte contre %s.\n\n Les monticules de neige ne peuvent être trouvés que lors du premier entracte. Les monticules de neige seront uniformément répartis autour de la zone circulaire de sorte que vous aurez besoin d’au moins 3 joueurs 'rapide' pour commencer à courir dès que la phase commence.\n\n Marchez à travers un monticule de neige et un petit flocon de neige apparaîtra à côté de votre personnage. Une fois que les 3 ont été trouvés, interrompez le boss pour entrer dans la phase suivante. Les joueurs qui ont le flocon de neige devront se tenir l'un sur l'autre près de l’un des barils pour créer les %s.\n\n Utiliser les %s pour retirer les %s du baril à côté des %s, puis attaquer le baril. L’explosion fera fondre les %s, ce qui a permettra de valider les critères de validation ce haut-fait.",
 
     --Chat Output
-    ["BattleOfDazaralor_PraiseEmote"] = "Vous louez %s", -- "You praise %s"
+    -- ["BattleOfDazaralor_PraiseEmote"] = "Vous louez %s", -- "You praise %s"
     ["BattleOfDazzarlor_BarrelsDestroyed"] = "Barils détruits", -- "barrels destroyed"
-    ["BattleOfDazzarlor_PraiseSelf"] = "Vous prodigez l'éloge sur", -- "You lavish praise upon"
-    ["BattleOfDazzarlor_PraiseOther"] = "prodigue l'éloge", -- "lavishes praise upon"
-    ["BattleOfDazzarlor_PlayersTransformed"] = "Certains joueurs sont actuellement transformés. Ne pas tuer le boss encore", -- "Some players are currently transformed. Do not kill boss yet"
-    ["BattleOfDazzarlor_OpulenceRangeWarning"] = "Avertissement : Pour que IAT suive correctement ce HF, %s doit être dans un rayon de 25 mètres des joueurs 'praising' les %s. Les joueurs avec les %s devraient se tenir ensemble pour rendre cela plus facile", -- "Warning: For IAT to track this achievement correctly, %s must be within 25 yards of players praising the %s. Players with the %s should stand together to make this easier"
+    ["BattleOfDazzarlor_PraiseSelf"] = "Vous faites l’éloge de", -- "You lavish praise upon"
+    ["BattleOfDazzarlor_PraiseOther"] = "fait l’éloge de", -- "lavishes praise upon"
+		-- string.match(message
+		-- 14 InstanceAchievementTracker\AchievementTrackerCore.lua
+		-- 04 InstanceAchievementTracker\BattleForAzerothRaids\BattleOfDazaralor.lua
+		-- 04 InstanceAchievementTracker\CataclysmRaids\DragonSoul.lua
+		-- 03 InstanceAchievementTracker\LichKingDungeons\UtgardePinnacle.lua
+		-- 04 InstanceAchievementTracker\PandariaRaids\MogushanVaults.lua
+    ["BattleOfDazzarlor_PlayersTransformed"] = "Certains joueurs sont actuellement transformés. Ne tuez PAS le boss maintenant!", -- "Some players are currently transformed. Do not kill boss yet"
+    ["BattleOfDazzarlor_OpulenceRangeWarning"] = "Avertissement : Pour que IAT suive correctement ce HF, %s doit être dans un rayon de 25 mètres des joueurs louant les %s. Les joueurs avec les %s devraient se tenir ensemble pour rendre cela plus facile", -- "Warning: For IAT to track this achievement correctly, %s must be within 25 yards of players praising the %s. Players with the %s should stand together to make this easier"
 
     -------------------------------------------------------
     --- Uldir - Uldir
@@ -212,6 +292,19 @@ local baseLocale = {
     ["Uldir_ZulReborn_Tactics"] = "Ce Haut-Fait est assez simple, personne ne doit marcher sur l’anneau intérieur de la plate-forme. Voici quelques conseils pour la rencontre :\n\n les Tanks devronts récupérer tous les adds, et les packs de sorte que les dps de melee puissent cleave.\n Les dps distance devront rester sur le boss tout le temps, et ne devraient pas toucher aux adds à moins que les dps de melee n'arrivent pas à les tuer à temps.\n Si vous avez 2 prêtres dans le groupe, alors vous devriez les affecter à des positions différentes (gauche et droite à l’extérieur du groupe) de sorte que les deux côtés soient couverts quand les adds appraîtront.\n À 40%% IAT_138967 fera tomber tout le monde, alors vous devriez vous placer près d’un mur pour ne pas vous faire éjecter de la plateforme.",
     ["Uldir_Mythrax_Tactics"] = "Vous devez ramasser uniquement les orbes que vous avez fait apparaître. Du à de nombreux bug, il est conseillé de faire ce HF Sans Pet.",
     ["Uldir_GHuun_Tactics"] = "Pour ce Haut-Fait, vous devrez faire des groupes de 3 personnes pour faire les %s : 2 dps + 1 healer pour les aider.\nFonctionne : Transfert du mage, ?\nNE fonctionne PAS : Portail de démo, Transcendence du moine, ?",
+
+    -------------------------------------------------------
+    --- Operation: Mechagon
+    -------------------------------------------------------
+    --Tactics
+    ["OperationMechagon_KingGobbamak"] = "Pour compléter ce haut-fait, vous devez garder l'%s qui se trouve derrière le %s chargé, pendant tout le combat. Pour charger l'%s, il suffit qu'un joueur se précipite sur l'appareil quand le joueur a une %s (que vous obtenez d'un %s). La façon la plus simple de procéder est d’avoir 2 joueurs qui chargent à tour de rôle l'%s toutes les 15 secondes.\n\Note : assurez-vous que les joueurs qui ont la %s destinée à l'%s ne se déplacent pas trop près du %s ou de la %s.",
+    ["OperationMechagon_Gunker"] = "Après avoir engagé le boss, 5 bestioles qui ressemblent à des grues vont apparaître dans l’eau autour du boss. Il suffit de les attraper et de les amener à un %s pour les nettoyer. Après en avoir nettoyés 5, vous pourrez tuer le boss.",
+    ["OperationMechagon_TussleTonks"] = "Pour compléter ce haut-fait, engagez d’abord le boss puis positionnez %s vers %s qui se trouve à gauche du boss sur le rebord de l’arène.\n\n Attendre ensuite que %s touche %s avec %s, ce qui fera tomber %s du rebord. Une fois %s au sol, l'emmener à l’un des %s, attendre qu’il soit touché puis tuer le boss pour valider le haut-fait.",
+    ["OperationMechagon_MachinistsGarden"] = "Ce haut-fait est une réalisation personnelle et vous demande d'esquiver les mécaniques suivantes :\n\n %s, %s, %s, %s, %s",
+    ["OperationMechagon_KeepDpsingAndNobodyExplodes"] = "Pour réaliser ce haut-fait, vous devrez tuer tous les boss du donjon en hard mode.\n\n Les trois premiers boss doivent être tués alors que l'%s plane au-dessus d'eux. L'%s fera apparaître des %s tout au long des combats. Ils sont immunisés contre les dommages ( mais on peut les CC ) et suivront les joueurs jusqu’à ce qu’ils atteignent 100 points d'énergies et s'autodétruisent.\n\n Pour le combat contre %s, l'%s est remplacé par l'%s. Cela ajoute une mécanique supplémentaire appelée %s dont les dégâts devront être partagés par tous les joueurs (rayon de 6 mètres). Il y aura aussi un rayon (%s) qui devra être évité.\n\n Pour le combat contre %s, vous devrez cliquer sur le %s au sol avant d'engager le boss. Cela ajoutera une mécanique supplémentaire au combat appelé %s qui ajoute un debuff de lenteur au groupe.\n\n Pour le combat contre %s, vous devrez cliquer sur le petit bouton rouge avant de commencer le combat. %s se joindra à la fête, qui, à 0 point énergie, explosera et tuera tout le groupe! Pour éviter cela, il y a 4 panneaux autour de la salle qui s’activent lorsque %s atteintra 35 points d'énergies. Les panneaux affichent une séquence de 4 couleurs dans un ordre aléatoire. Une fois la séquence terminée, 4 joueurs du groupe doivent répéter la séquence en cliquant sur chacun des panneaux dans le même ordre. Si elle est effectuée correctement, l’énergie de l'%s sera complètement rétablie.",
+    ["OperationMechagon_HertzLocker"] = "Pour réaliser ce haut-fait, vous devrez tuer tous les boss du donjon en hard mode sans qu'aucun joueur du groupe ne meure.\n\n Les trois premiers boss doivent être tués alors que l'%s plane au-dessus d'eux. L'%s fera apparaître des %s tout au long des combats. Ils sont immunisés contre les dommages ( mais on peut les CC ) et suivront les joueurs jusqu’à ce qu’ils atteignent 100 points d'énergies et s'autodétruisent.\n\n Pour le combat contre %s, l'%s est remplacé par l'%s. Cela ajoute une mécanique supplémentaire appelée %s dont les dégâts devront être partagés par tous les joueurs (rayon de 6 mètres). Il y aura aussi un rayon (%s) qui devra être évité.\n\n Pour le combat contre %s, vous devrez cliquer sur le %s au sol avant d'engager le boss. Cela ajoutera une mécanique supplémentaire au combat appelé %s qui ajoute un debuff de lenteur au groupe.\n\n Pour le combat contre %s, vous devrez cliquer sur le petit bouton rouge avant de commencer le combat. %s se joindra à la fête, qui, à 0 point énergie, explosera et tuera tout le groupe! Pour éviter cela, il y a 4 panneaux autour de la salle qui s’activent lorsque %s atteintra 35 points d'énergies. Les panneaux affichent une séquence de 4 couleurs dans un ordre aléatoire. Une fois la séquence terminée, 4 joueurs du groupe doivent répéter la séquence en cliquant sur chacun des panneaux dans le même ordre. Si elle est effectuée correctement, l’énergie de l'%s sera complètement rétablie.",
+
+    --Chat Output
 
     -------------------------------------------------------
     --- Atal Dazar - Atal Dazar
@@ -230,7 +323,6 @@ local baseLocale = {
     --Tactics
     ["Freehold_SkycapNKragg"] = "Pour invoquer IAT_138314, vous devez placer un %s avant d'engager le Boss.",
     ["Freehold_RingOfBooty"] = "Pour ce Haut-Fait, vous devrez ramasser 3 objets dans l’instance: \n%s apparaît dans le nid du premier boss après sa défaite,\n%s se trouve au sommet d'une plate-forme du quartier du Rhum, et\n%s se trouve près de Trothak<Le cogneur aux requins>, le troisième boss.",
-    -- ["Freehold_RingOfBooty"] = "Pour ce Haut-Fait, vous devrez ramasser 3 objets dans l’instance: \n|cffFFA888%s|r apparaît dans le nid du premier boss après sa défaite, \n|cffFFA888%s|r se trouve au sommet d'une plate-forme du quartier du Rhum, et \n|cffFFA888%s|r se trouve près de Trothak<Le cogneur aux requins> après le troisième boss.",
     ["Freehold_HarlanSweete"] = "%s va cibler un joueur au hasard pour %s, qui devra se positionner près d’un des coffres pour qu’il soit détruit par les explosions.",
 
     -------------------------------------------------------
@@ -266,8 +358,7 @@ local baseLocale = {
     ["TempleOfSethraliss_Trash"] = "Pour ce Haut-Fait, vous devrez CC les %s pendant que vous ramennez les deux yeux plus près. Notez qu’il y a plusieurs %s dans la pièce qui vont tenter de voler votre oeil, il y en a un près de chaque oeil, un entre les yeux et le crâne, et quelques autres au milieu de la pièce. Les capacités telles que %s, %s et %s sont idéales, car vous pouvez CC les adds et les ignorer complètement.",
 
     --Chat Output
-    -- ["TempleOfSethraliss_Merektha_LootSnake"] = "Loot the %s now to complete the achievement", 
-    ["TempleOfSethraliss_Merektha_LootSnake"] = "Ramassez le %s maintenant pour compléter le Haut-Fait", -- %s ?
+    ["TempleOfSethraliss_Merektha_LootSnake"] = "Ramassez le %s maintenant pour compléter le haut-fait", -- %s ?
 
     -------------------------------------------------------
     --- The Motherlode - Le Filon
@@ -299,117 +390,132 @@ local baseLocale = {
     ["WaycrestManor_GorakTul"] = "Pendant la rencontre %s, le boss va périodiquement jeter des %s que vous aurez besoin d’utiliser pour brûler les cadavres des %s, de sorte qu’ils ne pourront pas ressusciter. Une fois que le boss lance %s et invoque le troisième adds, vous devrez tuer les 3 adds, puis rapidement utiliser %s pour brûler les 3 corps en un lancé Avant que le boss ne les ressuscite.",
     ["WaycrestManor_Other"] = "Comme le nom du Haut-Fait l'implique, il s’agit d’un Haut-Fait basé sur des métiers avec lesquels vous pourrez intéragir avec des éléments du décors pour invoquer des mini-boss. Pour pouvoir activer ces éléments, il faudra un minimum de compétences de 75 dans le métier approprié.\n\n (Travail du cuir) %s - La carte pour invoquer ce boss se trouve dans la section pavillon de chasse du Manoir, dans le coin de la salle avec cheminée 'Kraker'??!!.\n (Couture) %s - Le '%s' se trouve dans la salle de banquet, au dernier étage.\n (Herboristerie) %s - Le '%s' se trouve dans la fontaine au milieu de la cour où le %s se trouve.\n (Calligraphie) %s - Le '%s' se trouve dans une étagère au rez-de-chaussée, sur le côté gauche juste avant de descendre à la cave.\n (Cuisine) %s - Le vin se trouve dans la cave, près d’autres fûts de vin.",  
 
---[[    ------------------------------------------------------------- LEGION -------------------------------------------------------------
-▄▄▌  ▄▄▄ . ▄▄ • ▪         ▐ ▄ 
-██•  ▀▄.▀·▐█ ▀ ▪██ ▪     •█▌▐█
-██▪  ▐▀▀▪▄▄█ ▀█▄▐█· ▄█▀▄ ▐█▐▐▌
-▐█▌▐▌▐█▄▄▌▐█▄▪▐█▐█▌▐█▌.▐▌██▐█▌
-.▀▀▀  ▀▀▀ ·▀▀▀▀ ▀▀▀ ▀█▄▀▪▀▀ █▪
-]]--
+
+-- LEGION -- -- LEGION -- -- LEGION -- -- LEGION -- -- LEGION -- -- LEGION -- -- LEGION -- -- LEGION -- -- LEGION -- -- LEGION -- -- LEGION -- -- LEGION -- -- LEGION -- -- LEGION -- -- LEGION -- -- LEGION -- -- LEGION -- 
+
 
     -------------------------------------------------------
     --- The Emerald Nightmare - Le Cauchemar d'émeraude
     -------------------------------------------------------
     --Tactics
-    -- ["TheEmeraldNightmare_Nythendra"] = "During the %s phase, %s will spawn around the edges of the room. Once they spawn players need to click on the bugs to squish them. Once 15 bugs have been squished you can kill the boss. 5 bugs spawn each phase so you will need a minimum of 3 %s phases to complete this achievement.",
-    -- ["TheEmeraldNightmare_Ursoc"] = "Kill the trash to the right hand side just outside the entrance to the cave where the boss is located. Free %s and wait for him to reach the boss. Kill the boss while keeping %s alive to get this achievement.",
-    -- ["TheEmeraldNightmare_DragonsOfNightmare"] = "There are 4 portals around the boss room. Everyone in the group must go into each of the 4 portals and collect 1 mist from each portal which gives them a buff. Once all players in the group have 4 buffs %s %s %s %s you can kill the boss. You will need to leave atleast one player out at the start of the fight to tank the bosses while everyone else is collecting mists.",
-    -- ["TheEmeraldNightmare_EleretheRenferal"] = "For this achievement, there are 7 eggs with a glowing red effect located around the room. To complete this achievement all 7 eggs need to be destroyed by running over them. Some of the eggs can only be reached by using %s or players using effects such as %s, %s or %s. Once all 7 eggs have been destroyed you can kill the boss.\n\n Note: If you cannot see any of the eggs, they will respawn after you have engaged the boss.",
-    -- ["TheEmeraldNightmare_IllgynothHeartOfCorruption"] = "Wait for 20 %s to spawn by killing the tentacles that spawn. Once you have 20 %s alive, everyone in the group will need to stand in front of the eye, then AOE down all the adds together. Once 20 adds have been killed in 10 seconds on top of the eye, you can kill the boss.",
-    -- ["TheEmeraldNightmare_Cenarius"] = "At max level, with enough dps you can kill the boss before any of the %s are cleansed.",
-    -- ["TheEmeraldNightmare_Xavius"] = "To complete this achievement, you will need a Demon Hunter to use his %s ability. Around the outer edges of the boss room, a %s will spawn at 3 points during the fight. The Demon Hunter will need to use his %s ability to find the add and drag it into the centre of the room. The adds spawn at 100-65%%, 65%%-30%% and below 30%%. Once all 3 %s have been killed, you can kill the boss.",
+    ["TheEmeraldNightmare_Nythendra"] = "Au cours de la phase %s, %s ( des bestioles )  vont apparaîtrent autour des bords de la salle et les joueurs devront leur cliquer dessus pour les écraser. Une fois que 15 bestioles auront étés écrasés, vous pouvez tuer le boss. 5 bestioles apparaissent à chaque phase, vous aurez donc besoin d’un minimum de 3 phases de %s pour valider le haut-fait.",
+    ["TheEmeraldNightmare_Ursoc"] = "Tuez les trashs sur le côté droit juste à l’extérieur de l’entrée de la grotte où se trouve le boss. Libérez %s et attendez-le pour atteindre le boss. Tuez le boss tout en gardant les %s en vie pour obtenir la validation du haut-fait.",
+    ["TheEmeraldNightmare_DragonsOfNightmare"] = "Il y a 4 portails autour de la salle du boss. Tout le monde dans le groupe doit aller dans chacun des 4 portails et recueillir 1 petit nuage de chaque portail qui leur donnera un buff. Une fois que tous les joueurs du groupe sont affectés des 4 buffs %s %s %s %s, vous pouvez tuer le boss. Vous aurez besoin de laisser au moins un joueur dehors en début du combat pour tanker le boss tandis que tous les autres recueillent les petits nuages.",
+    ["TheEmeraldNightmare_EleretheRenferal"] = "Pour ce haut-fait, il y a 7 œufs avec un effet rouge lumineux dispersés dans la zone. Pour valider le haut-fait, il vous faudra détruire les 7 œufs en les écrasant. Une partie des œufs ne peut être atteinte qu’en utilisant des %s ou des joueurs utilisant des abilitées telles que %s, %s ou %s. Une fois que les 7 œufs ont été détruits, vous pouvez tuer le boss. Note : Si vous ne pouvez voir aucun des œufs, ils réapparaîtront après que vous aurez engagé le boss. Notez aussi que les joueurs assignés à casser les œufs les plus éloignés doivent tapper le boss au moins une fois, sinon ils pourraient ne pas obtenir la validation du haut-fait.",
+    ["TheEmeraldNightmare_IllgynothHeartOfCorruption"] = "Attendre que 20 %s ( voir un peu plus ) apparaîssent en tuant les tentacules. Une fois que avez mini 20 %s en vie, tout le groupe devra se tenir collé à l’œil, puis les AOE pour tous les tuer en moins de 10 Secondes. Une fois que les 20 adds ont explosés à proximité de l’oeil en 10 secondes, vous pouvez tuer le boss.",
+    ["TheEmeraldNightmare_Cenarius"] = "Au niveau max, avec assez de dps, vous pouvez tuer le boss avant que l’un des %s ne soit purifié",
+    ["TheEmeraldNightmare_Xavius"] = "Pour accomplir ce haut-fait, vous aurez besoin d’un chasseur de démons pour qu'il utilise sa capacité %s. Autour des bords extérieurs de la salle du boss, une %s apparaîtra à 3 points pendant le combat. Le chasseur de démons devra utiliser sa capacité %s pour trouver l’add et l'attirer au centre de la salle. Les adds apparaissent à 100-65%%, 65-30%% et en dessous de 30%%. Une fois que les 3 %s auront été tués, vous pouvez tuer le boss.",
 
     --Chat Output
-    -- ["TheEmeraldNightmare_NightmareIchors"] = "Nightmare Ichors", --Todo
-    -- ["TheEmeraldNightmare_IllgynothComplete"] = "20 Nightmare Ichors have spawned. They can now be killed at the eye", --Todo
-    -- ["TheEmeraldNightmare_NightmareIchorsKilled"] = "Nightmare Ichors Killed:", --Todo
-    -- ["TheEmeraldNightmare_DragonsOfNightmare_PlayersWithBuffs"] = "Players with all 4 buffs", --Todo
-    -- ["TheEmeraldNightmare_Xavius_CreaturesKilled"] = "Creature of Madness Killed", --Todo
-    -- ["TheEmeraldNightmare_Nythendra_BugsSquished"] = "Glow Bugs Squished", --Todo
+    ["TheEmeraldNightmare_NightmareIchors"] = "Ichor cauchemardesque", --Todo
+    ["TheEmeraldNightmare_IllgynothComplete"] = "20 Ichors cauchemardesques sont apaprus. Ils peuvent maintenant être tués à proximité de l’oeil", --Todo
+    ["TheEmeraldNightmare_NightmareIchorsKilled"] = "Ichors cauchemardesques tués:", --Todo
+    ["TheEmeraldNightmare_DragonsOfNightmare_PlayersWithBuffs"] = "Joueurs avec les 4 buffs", --Todo
+    ["TheEmeraldNightmare_Xavius_CreaturesKilled"] = "Créatures démentes tués", --Todo
+    ["TheEmeraldNightmare_Nythendra_BugsSquished"] = "Insectes lumineux écrasés", --Todo
 
     -------------------------------------------------------
     --- Trial of Valor - Le Jugement des Valeureux
     -------------------------------------------------------
     --Tactics
-    -- ["TrialOfValor_Odyn"] = "For this achievement you will need to reach phase 2 by killing %s and %s. Next you will need to wait for the boss to cast %s, at which point the runes on the floor will light up and adds will spawn with the corresponding runes above their heads. You will need to remember the order the runes lite up on the floor and then kill the corresponding adds on the matching runes in that order.\n\n Once the requirements of the achievement have been met you will gain %s which means you can kill the boss.",
-    -- ["TrialOfValor_Guarm"] = "For this achievement, a player will need to pick up %s next to the boss at the start of the fight. This bone will need to be dragged into each of the 3 breaths cast by the boss (%s, %s, %s).\n\n Note: Do not do any of the following while holding the bone or you will drop it.\n Do not cast any spells.\n Do not get hit by %s.\n Dying while holding the bone.\n\n You will need a separate player to soak each of the breaths. Therefore once one player has soaked a breath, they will need to drop the bone so another player can pick it up. Once all 3 breaths have been soaked while holding the chew toy you can kill the boss.",
-    -- ["TrialOfValor_Helya"] = "At max level, this achievement is easier to complete solo. Simply kill the boss without having the %s debuff. This can be done by making sure the %s add is killed before killing the boss.",
+    ["TrialOfValor_Odyn"] = "Pour ce haut-fait, vous devrez atteindre la phase 2 en tuant les %s et %s. Ensuite, vous devrez attendre que le boss lance %s, à ce point les runes sur le sol s’allumeront et des adds apparaîtront avec les runes correspondantes au-dessus de leurs têtes. Vous aurez besoin de vous rappeler l’ordre des runes allumés sur le sol et ensuite tuer les adds correspondants sur les runes correspondantes dans cet ordre.\n\n Une fois que les exigences de validation du haut-fait auront été atteints, vous gagnerez %s, ce qui signifie que vous pouvez tuer le boss.",
+    ["TrialOfValor_Guarm"] = "Pour ce haut-fait, un joueur devra ramasser %s à côté du boss au début du combat. Cet os devra être amené dans chacuns des 3 souffles (%s, %s, %s) du boss. Note : Ne faites aucunes des choses suivantes en tenant l’os ou vous le laisserez tomber.\n - Ne jetez aucun sort.\n - Ne vous faites pas frapper par %s.\n - Mourir en tenant l’os.\n\n Vous aurez besoin d’un joueur différent pour absorber chaque souffle. Par conséquent, une fois qu’un joueur en a encaissé un, il devra laisser tomber l’os pour qu’un autre joueur puisse le ramasser. Une fois que le boss aura soufflé 3 fois sur le 'jouet à mâcher', vous pouvez tuer le boss.",
+    ["TrialOfValor_Helya"] = "Au niveau max, ce haut-fait est plus facile à réaliser en solo. Il suffit de tuer le boss sans avoir le debuff %s. Cela peut être fait en s’assurant que l'add %s soit tué avant de tuer le boss.",
 
     --Chat Output
-    -- ["TrialOfValor_Guarm_Part1"] = "Fiery Phelgm (Orange) part of", --Todo
-    -- ["TrialOfValor_Guarm_Part2"] = "Salty Spittle (Green) part of", --Todo
-    -- ["TrialOfValor_Guarm_Part3"] = "Dark Discharge (Purple) part of", --Todo
+    ["TrialOfValor_Guarm_Part1"] = "Mucus ardent (Orange) partie de", --Todo
+    ["TrialOfValor_Guarm_Part2"] = "Salive caustique (Vert) partie de", --Todo
+    ["TrialOfValor_Guarm_Part3"] = "Décharge sombre (Violet) partie de", --Todo
 
     -------------------------------------------------------
     --- The Nighthold - Palais Sacrenuit
     -------------------------------------------------------
     --Tactics
-    -- ["TheNighthold_Skorpyron"] = "At max level, have your whole group stand in the circle in the middle of the room and kill the boss before he casts %s.",
-    -- ["TheNighthold_ChronomaticAnomaly"] = "This achievement is easier to complete in heroic mode. Random players will get a %s debuff. These players need to stand on the blue circles around the boss room until the %s debuff expires. Once it expires you will see a spotlight appear at the location the %s exploded at. Once at least 8 circles around the room have spotlights, you can kill the boss.",
-    -- ["TheNighthold_SpellbladeAluriel"] = "This achievement requires dragging %s to various locations around the instance.\n\n The Shal’dorei Terrace: Located in the Botanist boss area. This can be completed on the bridge.\n Astromancer’s Rise: The room directly below Star Augar Etraeus.\n The Shattered Walkway: Located in front of Krosus.\n\n This achievement will take 3 lockouts to complete and can be completed in a single day.", --TODO
-    -- ["TheNighthold_StarAugurEtraeus"] = "For this achievement, you will need to drag the %s add in the %s boss room up to %s.\n\n You then need to dps the boss down to 30%% without damaging the add. The add will then transform into a %s at which point you can kill the add and then kill the boss.",
-    -- ["TheNighthold_HighBotanistTelarn"] = "Scattered around the boss area are Mysterious Fruits. To complete this achievement every player needs to eat one of these fruits before pulling the boss and must not die during the encounter. The mysterious fruit will give the player the %s debuff. At max level you can simply nuke down the boss.\n\n Note: You must have at least 10 players minimum to complete this achievement.",
-    -- ["TheNighthold_Krosus"] = "To complete this achievement, you must let 15 %s fall in the water when the bridge breaks. At max level you can simply not soak any of the %s to maximise the amount of %s falling into the water.\n\n Note: The amount of %s that spawn increases with more players in the group.",
-    -- ["TheNighthold_Tichondrius"] = "At max level, you can simply kill the boss before he casts %s.\n\n Note: This achievement is a personal achievement.",
-    -- ["TheNighthold_Elisande"] = "For this achievement you will need to summon a %s pet before pulling the boss.\n\n You then to wait for the %s and %s to spawn, then kill both of the adds on top of one another. Next drag the %s pet into the overlapping bubbles created from the elementals dying. This will spawn allow the %s to be killed. Once the add is dead you can kill the boss.",
-    -- ["TheNighthold_Guldan"] = "During phase 2, group up and wait for %s to spawn. The eyes will %s themselves over time spawning more and more eyes. Once 16 %s have spawned, kill them within 3 seconds of one another then kill the boss.",
+    ["TheNighthold_Skorpyron"] = "Au niveau max, demandez à tout votre groupe de se placer dans le cercle au milieu de la salle et de tuer le boss avant qu’il ne lance des %s.",
+    ["TheNighthold_ChronomaticAnomaly"] = "Ce haut-fait est plus facile à réaliser en mode héroïque. Des joueurs aléatoires obtiendront le debuff %s. Ces joueurs devront se tenir sur les cercles bleus autour de la salle jusqu’à ce que le debuff %s expire. Une fois expiré, vous verrez un 'projecteur' apparaître à l’endroit où les %s ont explosés. Une fois qu’au moins 8 cercles seront allumés, vous pourrez tuer le boss.",
+    ["TheNighthold_SpellbladeAluriel"] = "Ce haut-fait exige que l’on tue %s à divers endroits de la zone.\n\n - la Terrasse Shal'dorei : Situé dans la zone du boss botaniste ( peut être accompli sur le pont ).\n - Pinacle de l’Astromancien : La pièce directement en dessous de Etraeus, l'augure stellaire.\n - Le passage Brisé : Située en face de Krosus.\n\n Ce haut-fait peut-être validé dans les différents modes et pourra donc être complété en une seule journée.",
+    ["TheNighthold_StarAugurEtraeus"] = "Pour ce haut-fait, vous devrez attirer l'add %s de la salle du boss %s, jusqu’à %s.\n\n Vous devez ensuite dps le boss jusqu'à 30%% sans endommager l’add. L’add se transformera alors en un %s, que vous pourrez alors tuer, pour terminer par le boss.",
+    ["TheNighthold_HighBotanistTelarn"] = "Les Fruits Mystérieux sont éparpillés partout dans la zone du boss. Pour accomplir ce haut-fait, chaque joueur doit manger un de ces fruits avant d'engager le boss et ne doit pas mourir pendant la rencontre. Le fruit mystérieux donnera au joueur le debuff %s. Au niveau max, vous pouvez simplement tuer le boss.\n\n Note : Vous devez avoir au moins 10 joueurs minimum Pour accomplir ce haut-fait.",
+    ["TheNighthold_Krosus"] = "Pour compléter ce haut-fait, vous devrez laisser faire tomber 15 %s dans l'eau lorsque le pont se brise. Au niveau max, vous ne ferez tout simplement aucun 'soak' des %s pour maximiser la quantité de %s qui pop.\n\n Note : Le nombre de %s qui apparaissent augmente avec le nombre de joueurs dans le groupe.",
+    ["TheNighthold_Tichondrius"] = "Au niveau maximum, vous pouvez simplement tuer le boss avant qu’il ne lance des %s.\n Note : Ce haut-fait est une réalisation personnelle.",
+    ["TheNighthold_Elisande"] = "Pour ce haut-fait, vous devrez invoquer la mascotte %s avant d'engager le boss.\n\n Vous devez ensuite attendre que %s et %s apparaîssent, puis tuer les deux adds l'un sur l’autre. Ensuite, faites passer le %s pet dans les bulles qui se chevauchent créées à la mort des élémentaires. Cela permettra au %s d’être tué. Une fois que l’add est mort, vous pouvez tuer le boss.",
+    ["TheNighthold_Guldan"] = "Au cours de la phase 2, groupez-vous et attendez que l'%s apparaisse. Les yeux vont se dupliquer (%s) au fil du temps faisant apparaître de plus en plus d’yeux. Une fois que 16 %s sont apparus, tuez-les à 3 secondes d’intervalle, puis tuez le boss.",
 
     --Chat Output
-    -- ["TheNighthold_Skorpyron_NoPlayersHit"] = "No players were hit by Shockwave",
-    -- ["TheNighthold_Trilliax_ToxicSlices1"] = "Toxic slice eaten. You can only eat a maximum of",
-    -- ["TheNighthold_Trilliax_ToxicSlices2"] = "more toxic slices",
-    -- ["TheNighthold_StarAugur_KillAdd"] = "Kill the Well-Traveled Nether Elemental now",
-    -- ["TheNighthold_Spellblade_Location1"] = "'The Shal'dorei Terrace part of'",
-    -- ["TheNighthold_Spellblade_Location2"] = "'Shattered Walkway part of'",
-    -- ["TheNighthold_Spellblade_Location3"] = "'Astomancers Rise part of'",
-    -- ["TheNighthold_Botanist_LostBuff"] = "has LOST the Mysterious Fruit debuff",
-    -- ["TheNighthold_Botanist_GainedBuff"] = "has got the Mysterious Fruit debuff",
-    -- ["TheNighthold_Krosus_AddKilled"] = "killed a Burning Ember",
-    -- ["TheNighthold_Krosus_AddKilledTotal"] = "Burning Embers Killed",
-    -- ["TheNighthold_Guldan_Eyes"] = "Eye of Gul'dan",
-    -- ["TheNighthold_Guldan_EyesTotal"] = "16 Eye of Gul'dan have spawned",
+    ["TheNighthold_Skorpyron_NoPlayersHit"] = "Aucun joueur n’a été touché par Onde de choc",
+    ["TheNighthold_Trilliax_ToxicSlices1"] = "Tranche toxique consommée. Vous ne pouvez manger qu'un maximum de",
+    ["TheNighthold_Trilliax_ToxicSlices2"] = "Plus de Tranches toxiques",
+    ["TheNighthold_StarAugur_KillAdd"] = "Tuez l'Elémentaire du Néant cosmopolite maintenant",
+    ["TheNighthold_Spellblade_Location1"] = "'la Terrasse Shal'dorei' partie de",
+    ["TheNighthold_Spellblade_Location2"] = "'Le passage Brisé' partie de",
+    ["TheNighthold_Spellblade_Location3"] = "'Pinacle de l’Astromancien' partie de",
+    ["TheNighthold_Botanist_LostBuff"] = "a PERDU le debuff du Fruit mystérieux",
+    ["TheNighthold_Botanist_GainedBuff"] = "a le debuff du Fruit mystérieux",
+    ["TheNighthold_Krosus_AddKilled"] = "tué une Braise ardente",
+    ["TheNighthold_Krosus_AddKilledTotal"] = "Braises ardentes tuées",
+    ["TheNighthold_Guldan_Eyes"] = "Oeil de Gul’dan",
+    ["TheNighthold_Guldan_EyesTotal"] = "16 Yeux de Gul’dan sont apparus",
 
     -------------------------------------------------------
     --- Tomb of Sargeras - Tombe de Sargeras
     -------------------------------------------------------
     --Tactics
-    -- ["TombOfSargeras_Goroth"] = "For this achievement have your ranged dps and healers stack up together so that %s spawns the %s in a straight line pointed towards him. Once someone is marked by %s they will have to go behind the pillars so that the star collides with the %s and destroys them.\n\n Once 30 %s have been destroyed you can kill the boss.",
-    -- ["TombOfSargeras_DemonicInquisition"] = "Dps the boss down to around 20%%. Now whenever %s reaches one hundred energy he will cast %s, so everyone in the raid should attack him to get max torment really fast.\n\n Once everyone in the group has max torment you can kill the boss.",
-    -- ["TombOfSargeras_Harjatan"] = "To spawn %s someone in the raid has to use the %s toy.\n\n Use the toy at the start of the fight, focus %s, and after he dies you can kill the boss.",
-    -- ["TombOfSargeras_MistressSasszine"] = "To complete this achievement, you need to feed each of the items below into %s %s during Phase 2 (70%%) of the encounter.\n\n 'Hydra Essence' comes from a player being hit by %s in the outer circle of the %s.\n 'Ink Sauce' comes from a player soaking the %s patch which has to come in contact with the outer circle of the %s.\n 'Player Seasoning' comes from a player dying in the inner circle of %s.\n 'Eel Tartare' comes from the %s being sucked into the outer circle of the %s.\n 'Murloc Fillet' comes from the %s being sucked into the outer circle of the %s.\n\n Note: The %s and the %s need to be around 10%% health before they can be sucked into the %s. The %s only spawns during phase 1 so do not push the boss to phase 2 till at least 1 of those adds have spawned.",
-    -- ["TombOfSargeras_SistersOfTheMoon"] = "On your way to the %s room you'll enter a large room full of trash and to the left you will find an isolated add called %s, which you will have to drag to the boss room.\n\n Bring the boss down to 20%% health and the %s will change its color to blue. Now you can kill the add, then kill the boss and you'll get the achievement.",
-    -- ["TombOfSargeras_TheDesolateHost"] = "At the start of the fight a soul falls down and a player has to catch it by standing in the swirly yellow circle underneath the Engine of Souls.\n After that, every 5 seconds the soul will be launched in a random direction and a player from the opposite realm has to catch it. \n\n You will have to assign two people in each realm because the same person cannot soak two times in a row. The reason you do that is because if one of the players has the 'soul' above their character that means they recently caught it and are unable to do it again until someone else from the same realm catches the soul.\n\n Soak Rotation\n Soaker 1 - Corporeal Realm\n Soaker 1 - Spirit Realm\n Soaker 2 - Corporeal Realm\n Soaker 2 - Spirit Realm\n\nTips\n To make soaking easier, assigned players have to be marked and once they catch the soul they should always move towards a marked position such as the center of the room.\n Soakers should also watch out for the Reanimated Templar as as he will periodically cast %s, a spell that will knock them back if they get hit by the fel waves.\n Everyone affected by %s should move as far away as possible to avoid placing a wedge of shadow goo on the ground where the soul is supposed to be caught.",
-    -- ["TombOfSargeras_MaidenOfVigilance"] = "There are a total of 9 Titanic Anomalies that you have to catch: 5 inside the well and 4 above the platform where you fight the Maiden of Vigilance.\n\n Split the raid into 2 parts as usual and then place a third world marker where assigned players will stack up to cause %s on themselves.\n\n The first Titanic Anomaly is pretty hard to capture since the gravity will pull you down as soon as you get %s. This is where your Demon Hunters, Hunters and Shamans come in handy due to their mid-air displacement abilities and because you don't want to waste too much time with this first orb you should sacrifice one of them.\n\n The next four Titanic Anomalies spawn as soon as the first one is captured and they rotate in a clockwise direction. You will have to go by trial and error until people get used to the timings. Jumping when you have 5 seconds left on the debuff seems to be the best moment to do it since you'll also make it back on the platform after you've captured the orb.\n\n Once you've collected all the orbs inside the well, the last four Titanic Anomalies will spawn above the platform and these ones are much easier to get. Just zoom out your camera and position your back towards the orbs so that you will catch it when you get knocked up into the air.",
-    -- ["TombOfSargeras_FallenAvatar"] = "At max level you can just kill the boss before he cast %s.",
-    -- ["TombOfSargeras_Kiljaeden"] = "Preparation:\n Get as many Death Knights as you possibly can since their %s and %s are necessary for this achievement.\n Make sure every single player in the raid has their minimap zoomed in. As soon as someone finds Illidan during 'Intermission: Deceiver's Veil' that player can ping on the minimap to let others know of his location.\n Due to their insane mobility, Monks and Warriors are extremely helpful and they should talent %s / %s.\n\n Strategy\n Tank Kil'jaeden in a corner of the platform to force the adds to spawn close to each other.\n Assign your Death Knights to grip the Shadowsouls. They should always %s first and then %s.\n Everyone should spread out in a semicircle around Kil'jaeden so that at least 1 person will instantly find Illdan, get the %s buff and then rush towards the Shadowsouls to AoE stun and kill them.",
+    ["TombOfSargeras_Goroth"] = "Pour ce haut-fait, vos dps et vos healers devront se grouper de sorte que %s fasse apparaître les %s en ligne droite pointée vers lui. Une fois que quelqu’un est marqué par %s il devra aller derrière les piliers de sorte que l’étoile entre en collision avec les %s et les détruise.\n\n Une fois que les 30 %s auront été détruites, vous pourrez tuer le boss.",
+    ["TombOfSargeras_DemonicInquisition"] = "Dps le boss jusqu'à environ 10-20%%. Maintenant, chaque fois que %s atteindra 100 points d'énergies, il va lancer %s, donc tout le monde devra l’attaquer à ce moment pour obtenir le maximum de tourment rapidement. Une fois que tout le monde a sa barre de tourment au maximum, vous pourrez tuer le boss.",
+    ["TombOfSargeras_Harjatan"] = "Pour faire apparaître %s, une personne du raid devra utiliser le jouet %s.\n\n Utiliser le jouet au début du combat, focus l'%s, et après sa mort, vous pourrez tuer le boss.",
+    ["TombOfSargeras_MistressSasszine"] = "Pour compléter ce haut-fait, vous devrez alimenter chacun des éléments ci-dessous en %s %s pendant la phase 2 (70 %%).\n\n - 'Essence d’hydre' provient d’un joueur touché par %s dans le cercle extérieur des %s.\n - 'Sauce à l’encre' provient d’un joueur qui 'soak' l'%s qui doit entrer en contact avec le cercle extérieur des %s.\n - 'Personnage-joueur, pour assaisonner le tout' vient d’un joueur mourant dans le cercle intérieur des %s.\n - 'Tartare d’anguille' provient des %s aspirés dans le cercle extérieur des %s.\n - 'Filet de Murloc' provient des %s aspirés dans le cercle extérieur des %s.\n\n Note : Les %s et les %s doivent être aux environs de 10%% de santé avant de pouvoir être aspirés dans les %s. Les %s n'apparaissent que pendant la phase 1, alors ne passez pas le boss à la phase 2 jusqu’à ce qu’au moins un de ces adds soit apparu.",
+    -- ["TombOfSargeras_MistressSasszine"] = "Pour compléter ce Haut-Fait, vous devrez alimenter chacun des éléments ci-dessous en %s %s pendant la phase 2 (70 %%).\n\n '" .. (select(1, GetAchievementCriteriaInfo(11676, 1))) .. "' provient d’un joueur touché par %s dans le cercle extérieur des %s.\n '" .. (select(1, GetAchievementCriteriaInfo(11676, 3))) .. "' provient d’un joueur qui 'soak' l'%s qui doit entrer en contact avec le cercle extérieur des %s.\n '" .. (select(1, GetAchievementCriteriaInfo(11676, 5))) .. "' vient d’un joueur mourant dans le cercle intérieur des %s.\n 'Tartare d’anguille' provient des %s aspirés dans le cercle extérieur des %s.\n '" .. (select(1, GetAchievementCriteriaInfo(11676, 4))) .. "' provient des %s aspirés dans le cercle extérieur des %s.\n\n Note : Les %s et les %s doivent être aux environs de 10%% de santé avant de pouvoir être aspirés dans les %s. Les %s n'apparaissent que pendant la phase 1, alors ne passez pas le boss à la phase 2 jusqu’à ce qu’au moins 1 de ces adds soit apparut.",
+    ["TombOfSargeras_SistersOfTheMoon"] = "Sur le chemin vers la salle de la %s, vous entrerez dans une grande salle pleine de trashs et à gauche vous trouverez un add isolé appelé %s, que vous devrez emmener à la salle du boss.\n\n Mettez le boss à 20%% de vie et l'%s changera sa couleur en bleu. Maintenant vous pouvez tuer l’add, puis tuer le boss et vous obtiendrez la validation du haut-fait.",
+    ["TombOfSargeras_TheDesolateHost"] = "Au début du combat, une âme tombe et un joueur devra l’attraper en se tenant dans le cercle jaune tourbillonnant sous le Moteur des âmes.\n Après cela, toutes les 5 secondes l’âme sera lancée dans une direction aléatoire et un joueur du royaume opposé devra l’attraper.\n\n Vous devrez affecter deux personnes dans chaque royaume parce que la même personne ne peut pas 'soak' deux fois de suite. La raison pour laquelle vous faites cela est parce que si l’un des joueurs a l’âme au-dessus de leur personnage cela signifie qu’ils l’ont récemment attrapé et sont incapables de le faire à nouveau jusqu’à ce que quelqu’un d’autre du même royaume attrape l’âme.\n\n Soak Rotation\n soaker 1 - Monde physique\n soaker 1 - Monde des esprits\n soaker 2 - Monde physique\n soaker 2 - Monde des esprits\n\nAstuce\n Pour rendre les 'soak' plus facile, les joueurs assignés doivent être marqués et une fois qu’ils attrapent l’âme, ils doivent toujours se déplacer vers une position marquée comme le centre de la salle.\n les 'soakers' devront également faire attention au Templier réanimé car il va périodiquement lancer %s, un sort qui les renverseront s’ils sont touchés par les Vagues gangrenées.\n Toute personne affectée par %s doit s’éloigner le plus loin possible pour éviter de laisser une flaque sombre et gluante où l’âme est censée être attrapée.",
+    ["TombOfSargeras_MaidenOfVigilance"] = "Il y a un total de 9 Anomalies Titaniques que vous devrez attraper : 5 à l’intérieur du puits et 4 au-dessus de la plate-forme où vous combattez la Damoiselle de vigilance.\n\n Divisez le raid en 2 parties comme d’habitude et ensuite placez un troisième marqueur où les joueurs assignés se grouperont pour déclencher des %s sur eux-mêmes.\n\n La première Anomalie titanesque est assez difficile à capturer car la gravité va vous tirer vers le bas dès que vous obtenez %s. C’est là que vos Chasseurs de Démons, Chasseurs et Chamans sont utiles en raison de leurs capacités de déplacement en plein air et parce que vous ne voulez pas perdre trop de temps avec cette premiere orbe, et vous devrez sacrifier l’un d’eux.\n\n Les quatres Anomalies titanesques suivantes apparaissent dès que la première est capturée et ils tournent dans le sens horaire. Vous devrez faire des essais et des erreurs jusqu’à ce que les gens s’habituent au 'timing'. Sauter quand il vous reste 5 secondes sur le debuff semble être le meilleur moment pour le faire puisque vous allez également revenir sur la plate-forme après avoir capturé l’orbe.\n\n Une fois que vous avez recueillis toutes les orbes à l’intérieur du puit, les quatre dernières Anomalies titanesques apparaîtront au-dessus de la plate-forme et celles-ci sont beaucoup plus faciles à obtenir. Il suffit de dé-zoomer votre caméra et de vous positionner dos aux orbes de sorte que vous l’attrapiez lorsque vous êtes envoyé dans l’air.",
+    ["TombOfSargeras_FallenAvatar"] = "Au niveau max, vous pouvez juste tuer le boss avant qu’il ne lance %s.",
+    ["TombOfSargeras_Kiljaeden"] = "Préparation :\n Partez avec autant de Chevaliers de la Mort que vous le pouvez puisque leurs %s et %s sont nécessaires pour ce haut-fait.\n Assurez-vous que chaque joueur du raid a son zoom de la minimap au maximum. Dès que quelqu’un trouve Illidan pendant l’'entracte : le voile du trompeur', le joueur peut faire un ping sur la minimap pour informer les autres de son emplacement.\n En raison de leur mobilité, les moines et les guerriers sont extrêmement utiles et ils devraient utiliser leur talent %s / %s.\n\n Stratégie\n Tank Kil’jaeden dans un coin de la plate-forme pour forcer les adds à apparaître près l’un de l’autre.\n Assignez vos Chevaliers de la Mort pour saisir les Ombres. Ils devraient toujours %s d’abord et ensuite %s.\n Tout le monde devrait se disperser dans un demi-cercle autour de Kil’jaeden de sorte qu’au moins 1 personne trouvera instantanément Illdan, obtenir le buff %s puis se précipiter vers les Ombres à AoE stun et les tuer.",
 
     --Chat Output
+	
+	-- ["TombOfSargeras_DemonicInquisition_HasGainedUnbearableTorment"] = "a gagné Tourment insupportable", -- *** ADDED.Z
+	-- ["TombOfSargeras_MistressSasszine_HydraEssencePartOf"] = "'Essence d’hydre' partie de", -- *** ADDED.Z
+	-- ["TombOfSargeras_MistressSasszine_EelTartarePartOf"] = "'Tartare d’anguille' partie de", -- *** ADDED.Z
+	-- ["TombOfSargeras_MistressSasszine_InkSaucePartOf"] = "'Sauce à l’encre' partie de", -- *** ADDED.Z
+	-- ["TombOfSargeras_MistressSasszineMurlocFilletPartOf"] = "'Filet de Murloc' partie de", -- *** ADDED.Z
+	-- ["TombOfSargeras_MistressSasszinePlayerSeasoningPartOf"] = "'Personnage-joueur, pour assaisonner le tout' partie de", -- *** ADDED.Z
+	-- ["TombOfSargeras_MistressSasszineCompleted"] = "complété", -- *** ADDED.Z
+	-- ["TombOfSargeras_SistersOfTheMoon_KillTheWaxingTwilight"] = "Tuez l'Ame crépusculaire maintenant!", -- *** ADDED.Z
 
     -------------------------------------------------------
     --- Antorus the Burning Throne - Antorus, le Trône ardent
     -------------------------------------------------------
     --Tactics
-    -- ["AntorusTheBurningThrone_GarothiWorldbreaker"] = "For this achievement once someone is targeted by %s, that player will have to move near a worm in order to get it killed.\n\n Once you have killed 16 worms, the achievement will turn white and you can kill the boss",
-    -- ["AntorusTheBurningThrone_FelhoundsOfSargeras"] = "During the fight several pools of orange and purple color will spawn throughout the room. The tanks will have to bring each felhound to the pool that matches their own color in order to get a stack of %s. \n\nNote that the %s stacks get removed if the felhounds come close to each other. \n\nOnce both F'harg and Shatug have 5 stacks each you can kill the bosses.",
-    -- ["AntorusTheBurningThrone_AntoranHighCommand"] = "At max level, you can just nuke the boss down without placing any %s",
-    -- ["AntorusTheBurningThrone_PortalKeeperHasabel"] = "To open the Chaotic Rift, one player must be affected by all 3 debuffs from each platform at the same time. Bear in mind that this can only be done in Phase 1, which ends when the boss reaches 90%%, so make sure not to dps the boss at all.\n\nTo make this achievement easier, you can have one player bring the %s (orange debuff) close to the green platform. After that, another player can pick up the %s (purple debuff) from the purple platform, and then go to the green platform to pick up the %s (orange debuff) and the %s (green debuff).\n\nCombining these three debuffs will open a chaotic rift which will pull you constantly towards the back of the room.\n\nOnce the Chaotic Rift is open you can kill the boss",
-    -- ["AntorusTheBurningThrone_Eonar"] = "For this achievement, you will need to collect the 5 orbs of life within Eonar's Sanctuary. This achievement can be obtained only after you defeat the encounter. \n\nThe orbs spawn in a fixed pattern. After collecting the first  Orb of Life, you will then have to collect the rest within a certain amount of time or the orb sequence will reset.\nOrb 1 - Spawns on the platform which is connected to the lower and upper tracks with jump pads. Upon entering the Sanctuary, the platform is straight ahead.\nOrb 2 - Spawns on one of the pillars at the door near the middle path, which is the door you enter the Sanctuary through.\nOrb 3 - Spawns underneath Eonar's Essence platform, which is located to the left upon entering the Sanctuary.\nOrb 4 - Spawns between the two pillars underneath the upper path and is close to the first orb.\nOrb 5 - Spawns on a balcony far forward from the entrance to the Sanctuary, which you can reach by using the Extra Action Button.\n\n Once all 5 orbs are picked up, everyone in the raid group will get credit for it and obtain the achievement.",
-    -- ["AntorusTheBurningThrone_ImonarTheShoulhunter"] = "For this achievement, you have to trigger all the traps on the bridge during the 2 intermissions. Intermission one happens at 66% health and Intermission two happens at 33% health. Once both intermissions are complete you can kill the boss",
-    -- ["AntorusTheBurningThrone_Kingaroth"] = "For this achievement you will want to have your entire raid group stay in melee range of the boss and only detonate the %s that spawn in melee.\n\n Slowly dps the boss down until atleast 9 %s have spawned. Wait for the adds to come to the boss to avoid detonating %s",
-    -- ["AntorusTheBurningThrone_Varimathras"] = "%s is triggered whenever a player is not within 8 yards of another player. Varimathras casts %s every 35 to 40 seconds, which will knock back the first target that he gets in contact with.\n\n The easiest way to complete this achievement at max level is to have your entire raid stack up against the wall with the tanks slightly in front of the group. You can then just kill the boss without anyone in the group moving.",
-    -- ["AntorusTheBurningThrone_CovenOfShivarra"] = "This achievement is pretty straightforward and easy, however how you deal with the adds depends on your RNG:\nIf you get the %s as your first or second torment then you should kill all of them since your healers might struggle keeping everyone alive, and then wait for another wave to spawn.\n\nThe %s can be crowd controlled, so use abilities such as %s, %s or %s\n\nDon't forget to spread out while %s is active and move into a safe spot from the %s",
-    -- ["AntorusTheBurningThrone_Aggramar"] = "For this achievement you will have to transform an Ember of Taeshalach into a Manifestation of Taeshalach. To accomplish that, the Ember has to get hit twice by Aggramar's %s combo.\n\nFirst you will want to let the Ember of Taeshalach move away from the edge of the platform, and then have a  Warlock %s it. In case you don't have any warlocks, you can use %s, %s or other crowd controls, however make sure that everyone stops dps on the boss to avoid any kind of accidental cleave, which might end up breaking the crowd control.\n\nThe %s is %s - %s - %s - %s - %s\n\nNote that you have to transform the Ember of Taeshalach within a single phase or else it will detonate, and because of this you should do it in Stage 2: Champion of Sargeras (80%%-40%%).",
-    -- ["AntorusTheBurningThrone_Argus"] = "For this achievement you will first have to get to Phase 4 of the fight. Once Argus kills the group only have the healers and tanks respawn using the tree. The rest of the group should stay dead and spread around the edges of the room.\n\nNow whenever Argus spawns atleast 6+ Reorigination Modules, wait for them to explode then have the players dead collect the Motes of Titanic Power around the room. You may wish to asssign one person inside the spirit world to make a short countdown so that everyone starts picking up the motes at the exact same time since you only have 5 seconds to complete the achievement. Once this is done, have the remaining players respawn using the tree and kill the boss.",
+    ["AntorusTheBurningThrone_GarothiWorldbreaker"] = "Pour ce haut-fait, le joueur visé par %s devra se déplacer près d’un ver afin de le faire tuer.\n\n Une fois 16 vers tués, le haut-fait deviendra blanc et vous pourrez tuer le boss",
+    ["AntorusTheBurningThrone_FelhoundsOfSargeras"] = "Pendant le combat, plusieurs flaques de couleur orange et violette apparaîtront dans toute la salle. Les tanks devront emmener chaque Gangrechien à la flaque qui correspond à leur propre couleur afin d’obtenir un stack d'%s.\n\nNotez que les stacks d'%s disparaissent si les Gangrechiens se rapprochent les uns des autres.\n Une fois que F’harg et Shatug auront 5 stacks chacun, vous pourrez tuer les boss.",
+    ["AntorusTheBurningThrone_PortalKeeperHasabel"] = "Pour ouvrir la Faille chaotique, un joueur devra être affecté par les 3 debuffs de chaque plateforme en même temps. Gardez à l’esprit que cela ne peut être fait que dans la phase 1, qui se termine lorsque le boss atteint 90%%, alors assurez-vous de ne PAS dps le boss.\n\nPour rendre la tâche plus facile, vous pouvez avoir un joueur emenner les %s (debuff orange) près de la plate-forme verte. Après cela, un autre joueur peut ramasser les %s (debuff violet) de la plate-forme violette, puis aller sur la plate-forme verte pour ramasser les %s (debuff orange) et les %s (debuff vert).\n\nLa combinaison de ces trois debuffs ouvrira une Faille chaotique qui vous attirera constamment vers l’arrière de la salle.\n Une fois la Faille chaotique ouverte vous pourrez tuer le boss.",
+    ["AntorusTheBurningThrone_Eonar"] = "Pour ce haut-fait, vous aurez besoin de recueillir les 5 orbes de la vie dans le Sanctuaire d’Eonar. Ce haut-fait peut être accompli après la rencontre.\n\nLes orbes apparaissent dans l'ordre. Après la collecte de la première Orbe de Vie, vous aurez alors à collecter le reste dans un certain temps ou la séquence sera réinitialisé.\n - Orbe 1 - Apparaît sur la plate-forme qui est reliée aux voies inférieures et supérieures avec des plates-formes de saut. En entrant dans le Sanctuaire, la plate-forme est tout droit.\n - Orbe 2 - Apparaît sur l’un des piliers de la porte près du chemin du milieu, qui est la porte par laquelle vous entrez dans le Sanctuaire.\n - Orbe 3 - Apparaît sous la plate-forme d'Essence d’Eonar, qui est située à gauche de l’entrée du Sanctuaire.\n - Orbe 4 - Apparaît entre les deux piliers sous le sentier supérieur et est proche de la première orbe.\n - Orbe 5 - Apparaît sur un balcon loin de l’entrée du Sanctuaire, que vous pouvez atteindre en utilisant l'extra-bouton.\n\n Une fois les 5 orbes ramassées, tout le monde en obtiendra le crédit et cela validera le haut-fait.",
+    ["AntorusTheBurningThrone_ImonarTheShoulhunter"] = "Pour ce haut-fait, vous devrez déclencher tous les pièges sur le pont pendant les 2 entractes. La première se produit à 66% de vie et la deuxième à 33%. Une fois les deux entractes terminées, vous pourrez tuer le boss.",
+    ["AntorusTheBurningThrone_Kingaroth"] = "Pour ce haut-fait, votre groupe devra rester collé au boss pour que les %s qui apparaissent explosent uniquement à son contact.\n\n Dps lentement le boss jusqu’à ce qu’au moins 9 %s soient apparus. Attendez bien que les adds viennent au boss pour éviter la détonation des %s",
+    ["AntorusTheBurningThrone_Varimathras"] = "%s est déclenché lorsqu’un joueur est éloigné de plus de 8 mètres d’un autre joueur. Varimathras lance des %s toutes les 35 à 40 secondes, ce qui fera reculer la première cible avec laquelle il entre en contact.\n\n La façon la plus simple d’accomplir ce haut-fait au niveau maxamum est de stack votre raid entier contre le mur avec les tanks légèrement en face du groupe. Vous pourrez alors simplement tuer le boss sans que personne dans le groupe ne bouge.",
+    ["AntorusTheBurningThrone_CovenOfShivarra"] = "Ce haut-fait est assez simple et facile, mais la façon dont vous devrez gérer les adds dépendra de votre (mal)chance :\nSi vous obtenez le %s comme votre premier ou deuxième tourment alors vous devriez tous les tuer car vos healers pourraient galérer à garder tout le monde en vie, et attendre qu’une autre vague apparaisse.\n\nLes %s peuvent être CC, donc utilisez des capacités telles que %s, %s ou %s et n’oubliez pas de vous disperser pendant que %s est actif ainsi que d'aller dans un endroit sûr pendant %s",
+    ["AntorusTheBurningThrone_Aggramar"] = "Pour ce haut-fait, vous devrez transformer une Braise de Taeshalach en une Manifestation de Taeshalach. Pour ce faire, la Braise doit être frappé deux fois par la combo d’Aggramar %s.\n\nD’abord, vous devrez laisser la Braise de Taeshalach s’éloigner du bord de la plate-forme, puis avoir un démoniste qui utilise %s sur elle. Dans le cas où vous n’avez pas de démoniste, vous pouvez utiliser %s, %s ou d’autres CC, cependant assurez-vous que tout le monde arrête de dps le boss pour éviter toute sorte d'accident, qui pourrait finir par casser un CC.\n\nLes %s sont %s - %s - %s - %s - %s - %s\n\nNotez que vous devez transformer la Braise de Taeshalach en une seule phase sinon elle va exploser, et pour cette raison vous devriez le faire en phase 2 : Champion de Sargeras (80%%-40%%).",
+    ["AntorusTheBurningThrone_Argus"] = "Pour ce haut-fait, vous devrez d’abord arriver à la phase 4 du combat. Une fois qu’Argus tue le groupe, seuls les healers et les tanks devront ressusciter en utilisant l’arbre. Le reste du groupe doit rester mort et s'éparpiller sur les bords de la salle.\n\n Maintenant, chaque fois qu’Argus fait apparaître au moins 6+ Modules de réorigination, attendre qu’ils explosent pour que les joueurs morts puissent collecter les Particules de puissance titanesque tout autour de la salle. Vous pouvez asssigner une personne à l’intérieur du monde des esprits pour faire un compte à rebours court de sorte que tout le monde commence à ramasser les Particule de puissance au même moment puisque vous avez seulement 5 secondes pour compléter le haut-fait. Une fois que c’est fait, demandez aux joueurs restants d’utiliser l’arbre et de tuer le boss.",
 
     --Chat Output
+	-- ["AntorusTheBurningThrone_FelhoundsOfSargeras_Fharg_FAILED"] = "RATÉ! (F'harg a perdu Imprégnation corruptrice)", -- *** ADDED.Z
+	-- ["AntorusTheBurningThrone_FelhoundsOfSargeras_Shatug_FAILED"] = "RATÉ!(Shatug a perdu Imprégnation corruptrice)", -- *** ADDED.Z
+	-- ["AntorusTheBurningThrone_AntoranHighCommand_FelshieldEmitterPlaced"] = "Felshield Emitter Placed. Vous pouvez seulement placer un maximum de", -- *** ADDED.Z
+	-- ["AntorusTheBurningThrone_AntoranHighCommand_MoreFelshieldEmitters"] = "plus d'Emetteur de gangrebouclier", -- *** ADDED.Z
+	-- ["AntorusTheBurningThrone_Kingaroth_AbsorbedDiabolicBomb"] = "Bombe diabolique absorbée", -- *** ADDED.Z
+	-- ["AntorusTheBurningThrone_KingarothAchievementCanStillBeCompleted"] = "Le Haut-Fait peut toujours être complété en attendant plus de Bombes diaboliques", -- *** ADDED.Z
+	-- ["AntorusTheBurningThrone_Argus_BestAttemptThisPull"] = "Meilleur essai", -- *** ADDED.Z
+	-- ["AntorusTheBurningThrone_Argus_OrbsCollected"] = "Orbes Collectées", -- *** ADDED.Z
+	-- ["AntorusTheBurningThrone_Argus_DiabolicBombGained"] = "Bombe(s) diabolique(s) obtenue(s)", -- *** ADDED.Z
+	-- ["AntorusTheBurningThrone_Argus_UnableToTrackAchievement"] = " Impossible de suivre le haut-fait. L’énergie de Khaz’Goroth doit être de 20 ou moins pour que IAT puisse suivre ce HF", -- *** ADDED.Z
 
     -------------------------------------------------------
     --- Seat of the Triumvirate - Siège du triumvirat
     -------------------------------------------------------
     --Tactics
-    -- ["SeatOfTheTriumvirate_ZuraalTheAscended"] = "About forty seconds into the fight the boss will target a random player and cast %s which will knock that player backwards into the void realm.\n\n Now that player will want to fill up their energy bar, attack %s and then use the extra action button %s near him so that both of them will get sent back to the normal realm.\n\n From there you just kill %s, then %s and there's your achievement.",
-    -- ["SeatOfTheTriumvirate_Saprish"] = "For this achievement you will need to stand on top of the 4 %s around the room so that %s breaks it when he jumps to one of the players. Once all the %s have been broken you can kill %s and get the achievement.",
-    -- ["SeatOfTheTriumvirate_Lura"] = "On your way from the second to the third boss you will find pools of void that pull you towards the center of them where you will get a stack of %s every second. Once you get 10 stacks, the debuff gets replaced by a new one called %s. Killing %s while affected by %s will award the achievement.",
+    ["SeatOfTheTriumvirate_ZuraalTheAscended"] = "Environ quarante secondes après le début du combat, le boss ciblera un joueur au hasard et lui lancera %s ce qui l'enverra dans le royaume du vide.\n\n Alors, ce joueur pourra remplir sa barre d’énergie, attaquer %s pour ensuite utiliser l'extra-bouton %s près de lui afin que les deux soient renvoyés dans le monde normal.\n\n À ce moment, vous tuerez %s en premier, puis %s, ce qui validera votre haut-fait.",
+    ["SeatOfTheTriumvirate_Saprish"] = "Pour ce haut-fait, vous aurez besoin de vous tenir sur les 4 %s autour de la salle de sorte que %s les brise quand il saute sur l’un des joueurs. Une fois toutes les %s cassées, vous pourrez tuer %s et obtenir la validation du haut-fait.",
+    ["SeatOfTheTriumvirate_Lura"] = "Sur le chemin du deuxième au troisième boss, vous trouverez des bassins du vide qui vous attireront vers leur centre où vous y gagnerez un stack de %s à chaque seconde. Une fois que vous obtenez 10 stacks, le debuff est remplacé par un nouveau appelé %s. Tuer %s alors que vous êtes affectés par %s validera le haut-fait.",
 
     --Chat Output
 
@@ -417,8 +523,8 @@ local baseLocale = {
     --- Assault on Violet Hold - Assaut sur le fort Pourpre
     -------------------------------------------------------
     --Tactics
-    -- ["AssaultOnVioletHold_MillificentManastorm"] = "To complete this achievement you will need to use the %s toy while fighting %s",
-    -- ["AssaultOnVioletHold_Festerface"] = "In order to get the %s to spawn, %s needs to reach 100 energy. His energy decreases when he is near a pool on the floor so the boss will need to be kited away from the pools. Once the %s has spawned kill it then kill the boss to get this achievement.",
+    ["AssaultOnVioletHold_MillificentManastorm"] = "Pour compléter ce haut-fait, vous devrez activer le jouet %s tout en combattant %s.",
+    ["AssaultOnVioletHold_Festerface"] = "Pour qu'une %s puisse apparaître, %s doit accumuler 100 points d'énergies. Son énergie diminue quand il est proche d’un bassin donc le boss devra en être éloigné. Une fois qu'une %s est apparue, tuez la, puis tuez le boss pour obtenir la validation du haut-fait.",
 
     --Chat Output
 
@@ -426,16 +532,18 @@ local baseLocale = {
     --- Eye of Azshara - L'Œil d'Azshara
     -------------------------------------------------------
     --Tactics
-    -- ["EyeOfAzshara_LadyHatecoil"] = "When the %s debuff expires or is dispelled you will do a breath in the direction that you are currently facing killing any %s in its path. In order to get the achievement you need to do 1 breath on 11 or more %s. The %s will spawn over time so face yourself away from the adds until 11 or more have spawned.",
+    ["EyeOfAzshara_LadyHatecoil"] = "Lorsque le debuff %s expire ou est dissipé, vous produirez un souffle dans la direction où vous êtes actuellement tourné tuant n’importe quel %s sur sa trajectoire. Pour valider ce haut-fait, vous devrez tuer 11 %s ou plus en un seul souffle. Les %s vont se multiplier au fil du temps mais sont fragiles, donc faites attention à ne pas leur souffler dessus avant qu'il y en ai au moins 11.",
 
     --Chat Output
+	-- ["EyeOfAzshara_LadyHatecoil_KillTheSalseaGlobulesNow"] = "Kill the Salsea Globules with Curse of The Witch Now", -- ** NEW.z things to share(d)
+	-- ["EyeOfAzshara_LadyHatecoil_SaltseaGlobulesKilled"] = "Saltsea Globules killed with Curse of the Witch", -- ** NEW.z
 
     -------------------------------------------------------
     --- Darkheart Thicket - Fourré Sombrecœur
     -------------------------------------------------------
     --Tactics
-    -- ["DarkheartThicket_Dresaron"] = "After pulling the boss, run through the big egg behind %s to hatch it. Next kill the %ss that spawns then kill the boss.",
-    -- ["DarkheartThicket_ShadeOfXavius"] = "DPS the boss down to 15%%-20%% health. Drag the boss through the swirly puddles on the ground until the boss has 10 stacks of %s then kill the boss.",
+    ["DarkheartThicket_Dresaron"] = "Après avoir engagé le boss, courir au travers du gros oeuf derrière %s pour le faire éclore. Ensuite, tuer les %s qui apparaissent puis, tuer le boss.",
+    ["DarkheartThicket_ShadeOfXavius"] = "Descendez le boss jusqu'à 15-20%% PV, puis attirez le au travers des flaques tourbillonnantes sur le sol jusqu’à ce qu'il ai 10 stacks de %s, puis, le tuer.",
 
     --Chat Output
 
@@ -443,8 +551,8 @@ local baseLocale = {
     --- Halls of Valor - Salles des Valeureux
     -------------------------------------------------------
     --Tactics
-    -- ["HallsOfValor_Other1"] = "Make your way over to the %s area. Clear the entire area except for the %s you see when you teleport in and any %s. Once you're done, aggro the %s and kite him over to the 10 %s in the area. Once the %s has 10 stacks of %s you can kill it to get the achievement.",
-    -- ["HallsOfValor_Other2"] = "Note: This achievement requires a minimum of 4 players to complete.\n\n After you defeated both %s and %s the path to the four kings will now be open. Before you take the path, head back to the dining hall and have every player click on a %s on the table to gain the %s buff.\n\n Once you pick up the buff players will have 20 seconds to head up the stairs and throw their %s to one of the four kings (%s, %s, %s and %s). Note: Each player will need to pick a different boss.",
+    ["HallsOfValor_Other1"] = "Faites votre route jusqu’à la zone de %s. Nettoyez la zone SAUF les %s et tous les %s. Une fois fait, aggrotez le %s et attirez-le sur les 10 %s de la zone. Une fois que le %s aura 10 stacks de %s, vous pouvez le tuer pour valider le haut-fait.",
+    ["HallsOfValor_Other2"] = "Note : Ce haut-fait nécessite un minimum de 4 joueurs.\n\n Après avoir vaincu %s et %s le chemin vers les quatre rois sera maintenant ouvert. Avant de prendre ce chemin, retournez dans la salle à manger et demandez à chaque joueur de cliquer sur une %s sur les tables pour gagner le buff %s.\n\n Une fois ce buff obtenu, les joueurs auront 20 secondes pour monter les escaliers et jeter leur %s à l’un des quatre rois (%s, %s, %s et %s). Note : Chaque joueur devra choisir un boss différent.",
 
     --Chat Output
 
@@ -452,8 +560,8 @@ local baseLocale = {
     --- Neltharion's Lair - Repaire de Neltharion
     -------------------------------------------------------
     --Tactics
-    -- ["NeltharionsLair_Other"] = "",
-    -- ["NeltharionsLair_Naraxas"] = "",
+    ["NeltharionsLair_Other"] = "Vous aurez d’abord besoin d’acheter une %s au %s qui se trouve en allant sur le chemin étroit à droite après être entré dans l’instance. Vous aurez ensuite besoin de 'prendre l'empreinte' des escargots tout au long de l’instance à l'aide de la %s. Assurez-vous de ne PAS tuer les escargots avant d'avoir pris leur empreinte avec la %s.\n\n %s se trouve sur un champignon dans la partie de l’instance avec une rivière et des barils. Vous aurez besoin de jeter un poisson vers lui pour le faire bouger. Une fois que vous l’aurez touché avec un poisson, il vous attendra au fond de la cascade.\n\n %s se trouve dans la grotte derrière la cascade où vous venez de trouver %s. Vous aurez besoin de quelqu’un pour taunt %s afin qu’il s’éloigne du champ électrique avant de prendre son empreinte avec la %s.\n\n %s se trouve avant le 2ème boss dans le long chemin vers la 'world-quest des chauve-souris' à l’arrière de la grotte.\n\n %s, %s et %s se trouvent directement après le 2e boss qui tourne en cercle.\n\n %s est juste après les 3 précédents escargots. Vous aurez besoin d’aller dans l’eau sur votre droite pour ensuite nager vers la grotte. %s est accroché au plafond de la grotte et vous aurez besoin de le taper une fois pour qu’il en tombe. Vous serez alors en mesure de prendre son empreinte avec la %s.",
+    ["NeltharionsLair_Naraxas"] = "Pour réaliser ce haut-fait, vous devrez attendre que le boss gagne 6 stacks de %s. Ceci peut être fait de la façon suivante :\n\n - Le tank se fait manger par le boss\n - Laissant les adds vivants leur permettant de se faire manger par le boss.\n\n Une fois que les 6 stacks de %s ont été atteintes, vous pouvez tuer le boss pour valdier le haut-fait.",
 
     --Chat Output
 
@@ -461,8 +569,8 @@ local baseLocale = {
     --- Vault of the Wardens - Caveau des Gardiennes
     -------------------------------------------------------
     --Tactics
-    -- ["VaultOfTheWardens_AshGolm"] = "To complete this achievement everyone in your group needs to soak %s around the room in order to get the %s debuff. Once everyone in the group has the %s debuff you can kill the boss.",
-    -- ["VaultOfTheWardens_Cordana"] = "",
+	["VaultOfTheWardens_AshGolm"] = "Pour accomplir ce haut-fait, tous les membres du groupe doivent soak les %s qui se baladent autour de la salle jusqu'à d’obtenir le debuff %s. Une fois que tout le monde est affecté par %s, vous pourrez tuer le boss.",
+    ["VaultOfTheWardens_Cordana"] = "Pour compléter ce haut-fait, aucun joueur du groupe ne doit être touché par des esprits pendant %s. Pendant cette phase de %s, %s tirera une volée de flèches qui révélera brièvement la position des esprits. Les esprits se déplaceront en rang serré sur la plate-forme, mais avec un trou où les joueurs pourront passer. Il y aura 4 vagues d’esprits à éviter.\n\n Deuxièmement, le joueur portant %s devra la jeter au sol AVANT que %s n’atteigne 40%% de points de vie car c’est à ce moment que commence la première invocation de %s. %s ne peut pas être utilisé pour révéler les esprits car cela ferait échouer le haut-fait.\n\n Une fois que vous avez évité les 4 vagues d'esprits pendant %s et que tous les esprits ont quitté la plate-forme, vous pouvez tuer le boss pour valider le haut-fait.\n\n Note : Pour faciliter les choses, vous pouvez emmener un chasseur de démons qui pourra utiliser sa capacité %s pour révéler la position des esprits.",
     -- ["VaultOfTheWardens_Other"] = "",
 
     --Chat Output
@@ -472,7 +580,7 @@ local baseLocale = {
     -------------------------------------------------------
     --Tactics
     -- ["BlackRookHold_Other"] = "",
-    -- ["BlackRookHold_AmalgamOfSouls"] = "",
+    ["BlackRookHold_AmalgamOfSouls"] = "Descendez les points de vie de l'%s à 50%%. Lorsque l'%s apparaît, vous devrez en CC un pour l’empêcher d’atteindre le boss. Après 1 minute l'%s se transformera en %s. Vous pourrez alors tuer l'%s, puis le boss pour obtenir la validation du haut-fait",
 
     --Chat Output
 
@@ -480,9 +588,9 @@ local baseLocale = {
     --- Maw of Souls - La Gueule des âmes
     -------------------------------------------------------
     --Tactics
-    -- ["MawOfSouls_Ymiron"] = "",
+    ["MawOfSouls_Ymiron"] = "Avant d’arriver au boss, vous devrez garder au moins 1 %s en vie. Pendant la rencontre avec le boss, %s va invoquer un %s. Vous aurez besoin de tourner le %s vers le %s pour que sa capacité %s les tue. Une fois que 6 %s auront été tués avec la %s, vous pourrez tuer le boss",
     -- ["MawOfSouls_Helya"] = "",
-    -- ["MawOfSouls_Other"] = "",
+    ["MawOfSouls_Other"] = "Pour compléter ce haut-fait, vous devrez tuer le deuxième boss dans les 3 minutes et 30 secondes après l’embarquement du navire juste après le premier boss.",
 
     --Chat Output
 
@@ -490,8 +598,8 @@ local baseLocale = {
     --- Court of Stars - Cour des Étoiles
     -------------------------------------------------------
     --Tactics
-    -- ["CourtOfStars_PatrolCaptainGerdo"] = "",
-    -- ["CourtOfStars_Other"] = "For this achievement, it is suggested that you follow the steps below to increase your chances of the conversation procing.\n\n - Kill all 5 Duskwatch Sentries before engaging the first boss\n - Disable all 5 Arcane Beacons before engaging the first boss\n - Guess the Spy on first try\n\n Check out https://www.wowhead.com/achievement=10611/dropping-some-eaves#comments:id=2622946 for more info on this achievement",
+    ["CourtOfStars_PatrolCaptainGerdo"] = "Pour compléter ce haut-fait, vous devrez d’abord nettoyer tous les trashs de la salle du boss. Tout en tuant les trashs assurez-vous que ni les mobs, ni les joueurs activent les balises car cela ferait échouer le haut-fait.\n\n Une fois les trashs nettoyés, engagez le boss puis attendez qu’il lance %s. Une fois que le boss a lancé cette capacité, vous devrez cliquer sur les 5 balises autour de la salle. Une fois que les 5 balises auront été désactivées, vous pourrez tuer le boss.",
+    ["CourtOfStars_Other"] = "Les exigences pour valider ce haut-fait sont les suivantes :\n\n - Ne laissez pas les %s lancer %s\n - Désactivez les 5 balises Avant d’engager le premier boss\n - Assurez-vous de tuer les 3 démons séparément avant d'engager %s\n - Démasquez l'espion au premier essai",
 
     --Chat Output
 
@@ -500,9 +608,8 @@ local baseLocale = {
     -------------------------------------------------------
     --Tactics
     -- ["ReturnToKarazhan_Other1"] = "",
-    -- ["ReturnToKarazhan_OperaHall"] = "",
-    -- ["ReturnToKarazhan_Moroes"] = "",
-    -- ["ReturnToKarazhan_ShadeOfMedivh"] = "",
+    ["ReturnToKarazhan_OperaHall"] = "Ce haut-fait prendra trois semaines pour être réalisé, car les différentes pièces changent selon un calendrier de trois semaines.",
+    ["ReturnToKarazhan_ShadeOfMedivh"] = "Ce haut-fait nécessite 5 joueurs. Tous les joueurs du groupe devront cliquer sur un livre qui se trouve au sol à gauche après être entré dans la salle du boss. Cela donnera à tous les membres du groupe le debuff %s. Une fois que tout le monde a obtenu le debuff %s, vous pourrez tuer le boss.",
     -- ["ReturnToKarazhan_ManaDevourer"] = "",
     -- ["ReturnToKarazhan_Other2"] = "",
 
@@ -512,19 +619,15 @@ local baseLocale = {
     --- Cathedral of Eternal Night - Cathédrale de la Nuit éternelle
     -------------------------------------------------------
     --Tactics
-    -- ["CathedralOfEternalNight_Agronox"] = "For this achievement, you need to stand on top of the 4 Budding Seed pods around the boss room and wait for a Fulminating Lasher to %s onto each of the Budding Seed. Once this is done for each of the 4 seeds you can kill the boss.",
-    -- ["CathedralOfEternalNight_ThrashbiteTheScornful"] = "Around the room there are 4 bookcases. To complete this achievement, you need to stand behind each of the bookcases and wait for the boss to cast %s in order to break a bookcase. Once a bookcase is broken, a clickable book appears on the floor. Each member in the group needs to click on this book. Rinse and repeat this for the other 3 bookcases in the boss room making sure you go in a clockwise direction. Once this is done, everyone in the group should have the %s buff and you can kill the boss.\n\n Note: You must have a full 5 man party to complete this achievement.",
-    -- ["CathedralOfEternalNight_Mephistroth"] = "At the start of the fight pick up the %s. You then need to wait for the boss to reach 100 energy which will begin phase 2. During phase 2 face the shield you picked up at the start of the fight towards the %s. Once 20 %s have been reflected with the shield, you can kill the boss.",
+    ["CathedralOfEternalNight_Agronox"] = "Pour ce haut-fait, vous devez vous tenir au-dessus des 4 gousses de semence qui bourgeonnent autour de la salle du boss et attendre qu'un Fulminating Lasher (flagelant) déclenche %s (explose) sur chacun des Budding Seed (bourgeon). Une fois que cela est fait pour chacune des 4 graines, vous pourrez tuer le boss.",
+    ["CathedralOfEternalNight_ThrashbiteTheScornful"] = "Autour de la salle il y a 4 bibliothèques. Pour réaliser ce haut-fait, vous devez vous tenir derrière chacune des bibliothèques et attendre que le boss lance %s afin de casser une bibliothèque. Une fois qu’une bibliothèque est cassée, un livre cliquable apparaît sur le plancher. Chaque membre du groupe doit cliquer sur ce livre. Recommencez pour les 3 autres bibliothèques de la salle en vous assurant d’aller dans le sens horaire. Une fois cela fait, tout le monde dans le groupe devrait être %s (avoir le buff) et vous pourrez tuer le boss.\n\n Note : Vous devez avoir un groupe complet, 5 personnes, pour pouvoir valider ce haut-fait.",
+    ["CathedralOfEternalNight_Mephistroth"] = "Au début du combat, ramassez l'%s. Vous devez ensuite attendre que le boss atteigne 100 points d'énergies qui fera débuter la phase 2. Pendant la phase 2, positionnez le bouclier que vous avez ramassé en début de rencontre face aux %s. Une fois que 20 %s ont été réfléchis avec le bouclier, vous pourrez tuer le boss.",
 
     --Chat Output
 
---[[    ------------------------------------------------------ WARLORDS OF DRAENOR -------------------------------------------------------
-▄▄▌ ▐ ▄▌ ▄▄▄· ▄▄▄  ▄▄▌        ▄▄▄  ·▄▄▄▄  .▄▄ ·           ·▄▄▄    ·▄▄▄▄  ▄▄▄   ▄▄▄· ▄▄▄ . ▐ ▄       ▄▄▄  
-██· █▌▐█▐█ ▀█ ▀▄ █·██•  ▪     ▀▄ █·██▪ ██ ▐█ ▀.     ▪     ▐▄▄·    ██▪ ██ ▀▄ █·▐█ ▀█ ▀▄.▀·•█▌▐█▪     ▀▄ █·
-██▪▐█▐▐▌▄█▀▀█ ▐▀▀▄ ██▪   ▄█▀▄ ▐▀▀▄ ▐█· ▐█▌▄▀▀▀█▄     ▄█▀▄ ██▪     ▐█· ▐█▌▐▀▀▄ ▄█▀▀█ ▐▀▀▪▄▐█▐▐▌ ▄█▀▄ ▐▀▀▄ 
-▐█▌██▐█▌▐█ ▪▐▌▐█•█▌▐█▌▐▌▐█▌.▐▌▐█•█▌██. ██ ▐█▄▪▐█    ▐█▌.▐▌██▌.    ██. ██ ▐█•█▌▐█ ▪▐▌▐█▄▄▌██▐█▌▐█▌.▐▌▐█•█▌
- ▀▀▀▀ ▀▪ ▀  ▀ .▀  ▀.▀▀▀  ▀█▄▀▪.▀  ▀▀▀▀▀▀•  ▀▀▀▀      ▀█▄▀▪▀▀▀     ▀▀▀▀▀• .▀  ▀ ▀  ▀  ▀▀▀ ▀▀ █▪ ▀█▄▀▪.▀  ▀
-]]--
+
+-- WARLORDS OF DRAENOR -- -- WARLORDS OF DRAENOR -- -- WARLORDS OF DRAENOR -- -- WARLORDS OF DRAENOR -- -- WARLORDS OF DRAENOR -- -- WARLORDS OF DRAENOR -- -- WARLORDS OF DRAENOR -- -- WARLORDS OF DRAENOR -- -- WARLORDS OF DRAENOR -- 
+
 
     -------------------------------------------------------
     --- Highmaul - Cognefort
@@ -559,17 +662,23 @@ local baseLocale = {
     --- Hellfire Citadel - Citadelle des Flammes infernales
     -------------------------------------------------------
     --Tactics
-    -- ["HellfireCitadel_HellfireAssault"] = "At 110, simply nuke down all the mobs/vehicles as quick as possible. Make sure to keep an eye on the Felfire Crushers and Artillery especially",
-    -- ["HellfireCitadel_IronReaver"] = "On the ledges to the left and right of the boss there are untargetable Hellfire Guardians. Bring the boss up against these ledges facing the boss towards the Hellfire Guardians. When the boss casts barrage, this should kill the mobs.",
-    -- ["HellfireCitadel_HellfireHighCouncil"] = "Nuke down all 3 bosses so that they die within 10 seconds of one another",
-    -- ["HellfireCitadel_Gorefiend"] = "During Feasts of Soul phase, players who do not have the Gorefiends Corruption debuff need to die. This can be done by standing in the pool the boss is sitting in. Once dead the players will get teleported into the belly of the boss. They need to kill the Fragment of the crone once inside. Once the fragment of the crone is dead, the soul of the crone will spawn in the boss room which can then be killed by the group.",
-    -- ["HellfireCitadel_ShadowLordIskar"] = "At 110, just simply nuke down the boss without picking up the Eye of Anzu",
-    -- ["HellfireCitadel_SocretharTheEternal"] = "During phase 2. Use the robot to put up a prison at the blue portal. Continue to use the prison at the portal to trap the adds until 20 Haunting Souls are trapped. Once this is done, leave the vehicle and aoe all the adds down. Players can also cc the adds to keep them in place. Do not kill the adds with the robot.",
-    -- ["HellfireCitadel_TyrantVelhari"] = "1 person tank the Ancient Enforcer away from the group. Everyone else nuke the boss down",
-    -- ["HellfireCitadel_Mannoroth"] = "At the start of the fight kill the green & purple summoner. Wait for a player to get curse of the legion debuff before killing the red summoner. Once the curse of the legion debuff runs out or is dispelled, a doom lord will spawn. Get the doom lord down to 5% health. Next dps down Mannoroth to 30% health. Once this is done place the doom lord in front of the boss and wait for it to get killed by Mannoroth Empowered Fel Seeker ability. Once the doom lord has been killed by the boss, you can kill the boss.",
-    -- ["HellfireCitadel_Archimonde"] = "Wait for the Doomfire Spirit to spawn then nuke down boss. The Doomfire Spirit does not need to stay alive",
+    ["HellfireCitadel_HellfireAssault"] = "Au niveau max, il suffit de détruire tous les engins/véhicules aussi rapidement que possible. Assurez-vous de garder un oeil sur les Ecraseur gangrefeu, les Craches-flammes gangrefeu et particulièrement les Artilleries gangefeu qui tirent de loin.",
+    ["HellfireCitadel_IronReaver"] = "Sur les corniches à gauche et à droite du boss, il y a des Gardien des Flammes infernales que l'on ne peux viser. Amenez le boss contre l'un des rebords face aux Gardien des Flammes infernales. L'aoe 'barrage' du boss devrait les tuer, puis, faites pareil de l'autre côté.",
+    ["HellfireCitadel_HellfireHighCouncil"] = "Tuez les 3 boss afin qu’ils meurent dans les 10 secondes l'un de l’autre",
+    -- ["HellfireCitadel_Gorefiend"] = "Pendant la phase Festin d’âmes, les joueurs qui n’ont pas le debuff " .. GetSpellLink(179867) .. " devront mourir. Cela peut être fait en se tenant dans la piscine où le boss est assis. Une fois morts, les joueurs seront téléportés dans le ventre du boss. Ils devront tuer le Fragment de la Mégère une fois à l’intérieur. Une fois que le Fragment de la Mégère est mort, l’âme de la Mégère va apparaître dans la salle de boss qui peut ensuite être tué par le groupe.",
+    ["HellfireCitadel_Gorefiend"] = "Pendant la phase Festin d’âmes, les joueurs qui n’ont pas le debuff 'Corruption de Fielsang' devront mourir. Cela peut être fait en se tenant dans le bassin où le boss se trouve. Une fois morts, les joueurs seront téléportés dans le ventre du boss. Ils devront tuer le Fragment de la Mégère une fois à l’intérieur. Une fois que le Fragment de la Mégère est mort, l’âme de la Mégère va apparaître dans la salle de boss qui peut ensuite être tué par le groupe.",
+    ["HellfireCitadel_ShadowLordIskar"] = "Au niveau Max, il suffit de tuer le boss sans ramasser l’Oeil d’Anzu",
+    ["HellfireCitadel_SocretharTheEternal"] = "Pendant la phase 2, utilisez le robot pour mettre en place une prison au portail bleu. Continuez à utiliser la prison au portail pour piéger les adds jusqu’à ce que 20 Âmes hanteuses soient piégées. Une fois cela fait, laissez le véhicule et Aoe tous les adds. Les joueurs peuvent également CC les adds. Ne pas tuer les adds avec le robot.",
+    ["HellfireCitadel_TyrantVelhari"] = "Un joueur devra tank l’Ancien massacreur loin du groupe pendant que les autres tueront le boss.",
+    ["HellfireCitadel_Mannoroth"] = "Au début du combat, tuez les invocateurs vert et violet. Attendez qu’un joueur soit maudit par la légion avant de tuer l'invocateur rouge. Une fois que le debuff de la malédiction de la légion s’épuise ou est dissipé, un seigneur de malheur va apparaître. Descendez le seigneur de malheur à 5% points de vie. Ensuite, dps Mannoroth à 30% points de vie. Une fois que ce sera fait, placez le seigneur de la mort devant le boss et attendez qu’il soit tué par le pouvoir de Mannoroth Visée gangrenée surpuissante. Une fois le seigneur de la mort achevé par le boss, vous pourrez tuer le boss.",
+    ["HellfireCitadel_Archimonde"] = "Attendre que l’Esprit du feu funeste apparaisse puis tuez le boss. L’Esprit du feu funeste n’a pas besoin de rester en vie.",
 
     --Chat Output
+    -- ["HellfireCitadel_IronReaver_HellfireGuardiansKilled"] = "Gardien des Flammes infernales tué", -- *** ADDED.Z
+	-- ["HellfireCitadel_SocretharTheEternal_HauntingSoul"] = "Âme hanteuse", -- *** ADDED.Z
+	-- ["HellfireCitadel_SocretharTheEternal_20HauntingSoulsHaveSpawned"] = " 20 Âmes hanteuses sont apparus. Elles peuvent maintenant être tuées!", -- *** ADDED.Z
+	-- ["HellfireCitadel_SocretharTheEternal_TimerStarted"] = "Chrono démarré! 10 seconds restantes", -- *** ADDED.Z
+	-- ["HellfireCitadel_SocretharTheEternal_HauntingSoulsKilled"] = "Âmes hanteuses tuées", -- *** ADDED.Z
 
     -------------------------------------------------------
     --- Bloodmaul Slag Mines - Mine de la Masse-Sanglante
@@ -652,17 +761,9 @@ local baseLocale = {
 
     --Chat Output
 
---[[    -------------------------------------------------------- MISTS OF PANDARIA -------------------------------------------------------
-,---.    ,---..-./`)    .-'''-. ,---------.   .-'''-.             ,-----.     ________         .-------.    ____    ,---.   .--. ______        ____    .-------.   .-./`)    ____     
-|    \  /    |\ .-.')  / _     \\          \ / _     \          .'  .-,  '.  |        |        \  _(`)_ \ .'  __ `. |    \  |  ||    _ `''.  .'  __ `. |  _ _   \  \ .-.') .'  __ `.  
-|  ,  \/  ,  |/ `-' \ (`' )/`--' `--.  ,---'(`' )/`--'         / ,-.|  \ _ \ |   .----'        | (_ o._)|/   '  \  \|  ,  \ |  || _ | ) _  \/   '  \  \| ( ' )  |  / `-' \/   '  \  \ 
-|  |\_   /|  | `-'`"`(_ o _).       |   \  (_ o _).           ;  \  '_ /  | :|  _|____         |  (_,_) /|___|  /  ||  |\_ \|  ||( ''_'  ) ||___|  /  ||(_ o _) /   `-'`"`|___|  /  | 
-|  _( )_/ |  | .---.  (_,_). '.     :_ _:   (_,_). '.         |  _`,/ \ _/  ||_( )_   |        |   '-.-'    _.-`   ||  _( )_\  || . (_) `. |   _.-`   || (_,_).' __ .---.    _.-`   | 
-| (_ o _) |  | |   | .---.  \  :    (_I_)  .---.  \  :        : (  '\_/ \   ;(_ o._)__|        |   |     .'   _    || (_ o _)  ||(_    ._) '.'   _    ||  |\ \  |  ||   | .'   _    | 
-|  (_,_)  |  | |   | \    `-'  |   (_(=)_) \    `-'  |         \ `"/  \  ) / |(_,_)            |   |     |  _( )_  ||  (_,_)\  ||  (_.\.' / |  _( )_  ||  | \ `'   /|   | |  _( )_  | 
-|  |      |  | |   |  \       /     (_I_)   \       /           '. \_/``".'  |   |             /   )     \ (_ o _) /|  |    |  ||       .'  \ (_ o _) /|  |  \    / |   | \ (_ o _) / 
-'--'      '--' '---'   `-...-'      '---'    `-...-'              '-----'    '---'             `---'      '.(_,_).' '--'    '--''-----'`     '.(_,_).' ''-'   `'-'  '---'  '.(_,_).'  
-]]--
+
+-- MISTS OF PANDARIA -- -- MISTS OF PANDARIA -- -- MISTS OF PANDARIA -- -- MISTS OF PANDARIA -- -- MISTS OF PANDARIA -- -- MISTS OF PANDARIA -- -- MISTS OF PANDARIA -- -- MISTS OF PANDARIA -- -- MISTS OF PANDARIA -- 
+
 
     -------------------------------------------------------
     --- Terrace of Endless Spring
@@ -826,18 +927,9 @@ local baseLocale = {
 
     --Chat Output
 
---[[    ------------------------------------------------------------ CATACLYSM -----------------------------------------------------------
- ▄████▄   ▄▄▄     ▄▄▄█████▓ ▄▄▄       ▄████▄   ██▓   ▓██   ██▓  ██████  ███▄ ▄███▓
-▒██▀ ▀█  ▒████▄   ▓  ██▒ ▓▒▒████▄    ▒██▀ ▀█  ▓██▒    ▒██  ██▒▒██    ▒ ▓██▒▀█▀ ██▒
-▒▓█    ▄ ▒██  ▀█▄ ▒ ▓██░ ▒░▒██  ▀█▄  ▒▓█    ▄ ▒██░     ▒██ ██░░ ▓██▄   ▓██    ▓██░
-▒▓▓▄ ▄██▒░██▄▄▄▄██░ ▓██▓ ░ ░██▄▄▄▄██ ▒▓▓▄ ▄██▒▒██░     ░ ▐██▓░  ▒   ██▒▒██    ▒██ 
-▒ ▓███▀ ░ ▓█   ▓██▒ ▒██▒ ░  ▓█   ▓██▒▒ ▓███▀ ░░██████▒ ░ ██▒▓░▒██████▒▒▒██▒   ░██▒
-░ ░▒ ▒  ░ ▒▒   ▓▒█░ ▒ ░░    ▒▒   ▓▒█░░ ░▒ ▒  ░░ ▒░▓  ░  ██▒▒▒ ▒ ▒▓▒ ▒ ░░ ▒░   ░  ░
-  ░  ▒     ▒   ▒▒ ░   ░      ▒   ▒▒ ░  ░  ▒   ░ ░ ▒  ░▓██ ░▒░ ░ ░▒  ░ ░░  ░      ░
-░          ░   ▒    ░        ░   ▒   ░          ░ ░   ▒ ▒ ░░  ░  ░  ░  ░      ░   
-░ ░            ░  ░              ░  ░░ ░          ░  ░░ ░           ░         ░   
-░                                    ░                ░ ░                         
-]]--
+
+-- CATACLYSM -- -- CATACLYSM -- -- CATACLYSM -- -- CATACLYSM -- -- CATACLYSM -- -- CATACLYSM -- -- CATACLYSM -- -- CATACLYSM -- -- CATACLYSM -- -- CATACLYSM -- -- CATACLYSM -- -- CATACLYSM -- -- CATACLYSM -- -- CATACLYSM -- 
+
 
     -------------------------------------------------------
     --- Dragon Soul - L'Âme des dragons
@@ -1022,13 +1114,9 @@ local baseLocale = {
 
     --Chat Output
 
---[[    ----------------------------------------------------- WRATH OF THE LICH KING -----------------------------------------------------
-▄▄▌ ▐ ▄▌▄▄▄   ▄▄▄·▄▄▄▄▄ ▄ .▄          ·▄▄▄    ▄▄▄▄▄ ▄ .▄▄▄▄ .    ▄▄▌  ▪   ▄▄·  ▄ .▄    ▄ •▄ ▪   ▐ ▄  ▄▄ • 
-██· █▌▐█▀▄ █·▐█ ▀█•██  ██▪▐█    ▪     ▐▄▄·    •██  ██▪▐█▀▄.▀·    ██•  ██ ▐█ ▌▪██▪▐█    █▌▄▌▪██ •█▌▐█▐█ ▀ ▪
-██▪▐█▐▐▌▐▀▀▄ ▄█▀▀█ ▐█.▪██▀▐█     ▄█▀▄ ██▪      ▐█.▪██▀▐█▐▀▀▪▄    ██▪  ▐█·██ ▄▄██▀▐█    ▐▀▀▄·▐█·▐█▐▐▌▄█ ▀█▄
-▐█▌██▐█▌▐█•█▌▐█ ▪▐▌▐█▌·██▌▐▀    ▐█▌.▐▌██▌.     ▐█▌·██▌▐▀▐█▄▄▌    ▐█▌▐▌▐█▌▐███▌██▌▐▀    ▐█.█▌▐█▌██▐█▌▐█▄▪▐█
- ▀▀▀▀ ▀▪.▀  ▀ ▀  ▀ ▀▀▀ ▀▀▀ ·     ▀█▄▀▪▀▀▀      ▀▀▀ ▀▀▀ · ▀▀▀     .▀▀▀ ▀▀▀·▀▀▀ ▀▀▀ ·    ·▀  ▀▀▀▀▀▀ █▪·▀▀▀▀ 
-]]--
+
+-- WRATH OF THE LICH KING -- -- WRATH OF THE LICH KING -- -- WRATH OF THE LICH KING -- -- WRATH OF THE LICH KING -- -- WRATH OF THE LICH KING -- -- WRATH OF THE LICH KING -- -- WRATH OF THE LICH KING -- -- WRATH OF THE LICH KING -- 
+
 
     -------------------------------------------------------
     --- Obsidian Sanctum - Le sanctum Obsidien
