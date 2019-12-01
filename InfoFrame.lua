@@ -333,6 +333,7 @@ function InfoFrame_SetupManualCounter(totalCount)
         core.manualCountMaxSize = totalCount
 
         core.InfoFrame.Events:RegisterEvent("CHAT_MSG_RAID")
+        core.InfoFrame.Events:RegisterEvent("CHAT_MSG_RAID_LEADER")
         core.InfoFrame.Events:RegisterEvent("CHAT_MSG_PARTY")
         core.InfoFrame.Events:RegisterEvent("CHAT_MSG_PARTY_LEADER")
         core.InfoFrame.Events:RegisterEvent("CHAT_MSG_SAY")
@@ -365,6 +366,18 @@ function InfoFrame_GetManualCounterCount()
 end
 
 function core.InfoFrame.Events:CHAT_MSG_RAID(self, text, playerName)
+    if text ~= nil then
+        if not string.find(text, '[IAT]') then
+            if string.match(text, '[+]%d+') then
+                InfoFrame_IncrementManualCounter(string.sub(string.match(text, '[+]%d+'), 2))
+            elseif string.match(text, '[-]%d+') then
+                InfoFrame_DecrementManualCounter(string.sub(string.match(text, '[-]%d+'), 2))
+            end
+        end
+    end
+end
+
+function core.InfoFrame.Events:CHAT_MSG_RAID_LEADER(self, text, playerName)
     if text ~= nil then
         if not string.find(text, '[IAT]') then
             if string.match(text, '[+]%d+') then
