@@ -15,6 +15,11 @@ core._2217 = {}
 local temperTantrumCounter = 0
 local timerStarted = false
 
+------------------------------------------------------
+---- N'Zoth, the Corruptor
+------------------------------------------------------
+local giftOfNZothCounter = 0
+
 function core._2217:WrathionTheBlackEmperor()
     --Blizzard tracking gone white so achievement completed
 	if core:getBlizzardTrackingStatus(14019) == true then
@@ -56,12 +61,27 @@ function core._2217:CarapaceOfNZoth()
 	end
 end
 
-function core._2164:ClearVariables()
+function core._2217:NZothTheCorruptor()
+	--Defeat N'Zoth, the Corruptor in Ny'alotha, the Waking City while all players have accepted the Gift of N'Zoth on Normal difficulty or higher
+	InfoFrame_UpdatePlayersOnInfoFrame()
+	InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],parasiteCounter,core.groupSize)
+
+	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 313609 then
+		InfoFrame_SetPlayerComplete(UnitName(core.destName))
+	end
+end
+
+function core._2217:ClearVariables()
 	------------------------------------------------------
 	---- Drest'agath
 	------------------------------------------------------
 	temperTantrumCounter = 0
 	timerStarted = false
+
+	------------------------------------------------------
+	---- N'Zoth, the Corruptor
+	------------------------------------------------------
+	giftOfNZothCounter = 0
 end
 
 
