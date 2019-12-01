@@ -629,6 +629,10 @@ function getInstanceInfomation()
 			end
 		elseif IsInInstance() == false and core.inInstance == true then
 			core.inInstance = false
+			if UIConfig ~= nil then
+				core:sendDebugMessage("Hiding Tracking UI")
+				UIConfig:Hide()
+			end
 		end
 	end)
 end
