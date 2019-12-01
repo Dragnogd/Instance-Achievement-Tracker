@@ -2521,15 +2521,18 @@ function core:sendMessage(message, outputToRW, messageType)
 					end
 				end
 			elseif masterAddon == true and requestToRun == true then
-				--We need to store the messages in a queue while the master addon is being decided
-				if outputToRW == true then
-					core:sendDebugMessage("Inserting into Message Queue: " .. message .. ",true")
-					table.insert(messageQueue, message .. ",true")
-				else
-					core:sendDebugMessage("Inserting into Message Queue: " .. message .. ",false")
-					table.insert(messageQueue, message .. ",false")
-				end
+				if message ~= "setup" then
+					--We need to store the messages in a queue while the master addon is being decided
+					if outputToRW == true then
+						core:sendDebugMessage("Inserting into Message Queue: " .. message .. ",true")
+						table.insert(messageQueue, message .. ",true")
+					else
+						core:sendDebugMessage("Inserting into Message Queue: " .. message .. ",false")
+						table.insert(messageQueue, message .. ",false")
+					end
+				end 
 			else
+				--Initate a request to see if this addon should be the master addon
 				if requestToRun == false then
 					requestToRun = true
 
@@ -2641,6 +2644,11 @@ function core:sendMessage(message, outputToRW, messageType)
 						end
 						electionFinished = true
 					end)
+				end
+
+				--We are not the master addon but lets check if there are RW messages that we need to relay
+				if outputToRW == true and relayAddonPlayer ~= nil then
+					C_ChatInfo.SendAddonMessage("Whizzey", "relayMessage," .. relayAddonPlayer .. "," .. message, "RAID")
 				end
 			end
 		elseif debugModeChat == true then
