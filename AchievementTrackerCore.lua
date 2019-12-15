@@ -628,6 +628,7 @@ function getInstanceInfomation()
 				getInstanceInfomation()
 			end
 		elseif IsInInstance() == false and core.inInstance == true then
+			core:sendDebugMessage("6")
 			core.inInstance = false
 			if UIConfig ~= nil then
 				core:sendDebugMessage("Hiding Tracking UI")
@@ -879,6 +880,7 @@ core.commands = {
 	end,
 
 	[L["Core_Toggle"]] = function()
+		trackAchievementsUIAutomatic = false
 		if core.achievementTrackingEnabled == false and core.addonEnabled == true then
 			getInstanceInfomation()
 		elseif core.achievementTrackingEnabled == true and core.addonEnabled == true then
