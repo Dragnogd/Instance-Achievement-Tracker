@@ -416,6 +416,7 @@ core.Instances = {
                     track = nil,
                     partial = false,
                     encounterID = 2335,
+                    displayInfoFrame = true,
                 },
                 boss7 = {
                     name = 2373, --Drest'agath
@@ -482,6 +483,7 @@ core.Instances = {
                     track = nil,
                     partial = false,
                     encounterID = 2344,
+                    displayInfoFrame = true,
                 },
             },
         },
@@ -876,7 +878,7 @@ core.Instances = {
                     encounterID = 2259,
                 },
                 boss5 = {
-                    name = L["Other"], --King Mechagon
+                    name = L["Instances_Other"], --King Mechagon
                     bossIDs = {},
                     achievement = 13624,
                     players = {},
@@ -887,7 +889,7 @@ core.Instances = {
                     encounterID = 2260,
                 },
                 boss6 = {
-                    name = L["Other"], --King Mechagon
+                    name = L["Instances_Other"], --King Mechagon
                     bossIDs = {},
                     achievement = 13789,
                     players = {},

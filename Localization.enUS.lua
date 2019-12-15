@@ -217,6 +217,8 @@ local baseLocale = {
     ["Ny’alotha_NZothTheCorruptor"] = "",
     
     --Chat Output
+    ["Nyalotha_PetSelf"] = "You pet %s",
+    ["Nyalotha_PetOther"] = "%s pets %s",
 
     -------------------------------------------------------
     --- The Eternal Palace
@@ -1277,7 +1279,7 @@ local baseLocale = {
     --- The Nexus
     -------------------------------------------------------
     --Tactics
-    ["TheNexus_Anomalus"] = "Damage the boss down to 45%, be careful you don’t 1 shot the boss. Wait for the add to finish casting the indestructible buff on the boss. Once this has finished you can kill the boss. Make sure you don’t kill the chaotic rift.",
+    ["TheNexus_Anomalus"] = "Damage the boss down to 45%, be careful you don�������t 1 shot the boss. Wait for the add to finish casting the indestructible buff on the boss. Once this has finished you can kill the boss. Make sure you don’t kill the chaotic rift.",
 
     --Chat Output
 
