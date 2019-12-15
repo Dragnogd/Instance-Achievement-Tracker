@@ -9,7 +9,7 @@ local UIConfig													--UIConfig is used to make a display asking the user 
 local UICreated = false											--To enable achievement tracking when they enter an instances
 local debugMode = false
 local debugModeChat = false
-local sendDebugMessages = false
+local sendDebugMessages = true
 
 local ptrVersion = "8.1.0"
 
@@ -1880,6 +1880,11 @@ function events:CHAT_MSG_ADDON(self, prefix, message, channel, sender)
 
 		--Add new message to the message queue
 		table.insert(core.syncMessageQueue, message)
+
+		--Track additional variables for the instance if they are not tied to a boss/encounter
+		if pcall(function() core[core.instanceClear]:ScanMessageSyncQueue() end) == true then
+			core[core.instanceClear]:ScanMessageSyncQueue()
+		end
 	elseif string.match(message, "relay123") then
 		-- core:sendDebugMessage(sender)	
 		--The master addon does not have RW privalleges. If this addon has permission then let the masterAddon know
@@ -3329,6 +3334,7 @@ function core:clearVariables()
 	--Reset Mob Counter
 	core.MobCounter:Reset()
 
+	
 	if infoFrameShown == true then
 		core:sendDebugMessage("Resetting InfoFrame")
 		core.IATInfoFrame:ToggleOff()

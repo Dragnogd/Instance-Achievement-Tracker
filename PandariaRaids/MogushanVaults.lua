@@ -13,9 +13,8 @@ core._1008.Events = CreateFrame("Frame")
 ------------------------------------------------------
 ---- The Stone Guard
 ------------------------------------------------------
-local mustLoveDogsActive = false
 local mustLoveDogsCounter = 0
-local TheStoneGuardKilled = false
+local showStoneGuardInfoFrame = false
 
 ------------------------------------------------------
 ---- Feng The Accursed
@@ -52,21 +51,7 @@ local playerExecutedStrikeDisplay = 0
 local JanXiPlayers = {}
 local QinXiPlayers = {}
 
-function core._1008:TheStoneGuard()
-	--Defeat the Stone Guard in Mogu'shan Vaults on Normal or Heroic difficulty while every member of your raid is accompanied by a canine companion pet.
-
-	--Lets show an InfoFrame which updates when a player hovers over pets in the raid or summons a pet
-	InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
-end
-
 function core._1008:FengTheAccursed()
-	if mustLoveDogsActive == true then
-		TheStoneGuardKilled = true
-		core.IATInfoFrame:ToggleOff()
-		infoFrameShown = false   
-		mustLoveDogsActive = false
-	end
-	
 	if core.type == "SPELL_AURA_APPLIED" then
 		if core.spellId == 116936 and EpicenterReversed == false then
 			EpicenterReversed = true
@@ -210,20 +195,22 @@ end
 function core._1008:InstanceCleanup()
     core._1008.Events:UnregisterEvent("UPDATE_MOUSEOVER_UNIT")
     core._1008.Events:UnregisterEvent("ZONE_CHANGED_INDOORS")
-	core._1008.Events:UnregisterEvent("UNIT_SPELLCAST_SUCCEDDED")
+	core._1008.Events:UnregisterEvent("UNIT_SPELLCAST_SUCCEEDED")
 	core._1008.Events:UnregisterEvent("CHAT_MSG_TEXT_EMOTE")
 
 	------------------------------------------------------
 	---- The Stone Guard
 	------------------------------------------------------
-	mustLoveDogsActive = false
 	mustLoveDogsCounter = 0
-	TheStoneGuardKilled = false
+	showStoneGuardInfoFrame = false
 
 	------------------------------------------------------
 	---- Will of The Emperor
 	------------------------------------------------------
 	playersStrikeFailCounter = {}
+
+	core:sendDebugMessage("Toggle InfoFrame off")
+	core.IATInfoFrame:Reset()
 end
 
 core._1008.Events:SetScript("OnEvent", function(self, event, ...)
@@ -236,50 +223,63 @@ function core._1008:InitialSetup()
 	core._1008.Events:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
 	core._1008.Events:RegisterEvent("CHAT_MSG_TEXT_EMOTE")
 	
-	if C_Map.GetBestMapForUnit("Player") == 471 then
+	if C_Map.GetBestMapForUnit("Player") == 471 and C_EncounterJournal.IsEncounterComplete(679) == false then
+		showStoneGuardInfoFrame = true
         core.IATInfoFrame:ToggleOn()
         core.IATInfoFrame:SetHeading(GetAchievementLink(6823))
-		infoFrameShown = true
-		mustLoveDogsActive = true
 		InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
 		InfoFrame_SetHeaderCounter(L["Shared_PlayersWithPet"],mustLoveDogsCounter,core.groupSize)
+	else
+		showStoneGuardInfoFrame = false
     end
 end
 
-function core._1008:TrackAdditional()
-	if core.Instances[core.expansion][core.instanceType][core.instance]["boss1"].enabled == true then
-		if core.type == "UNIT_DIED" and (core.destID == "59915" or core.destID == "60051" or core.destID == "60047" or code.destID == "60043") then
-			print("Disabling InfoFrame")
-			TheStoneGuardKilled = true
-			core.IATInfoFrame:ToggleOff()
-			infoFrameShown = false   
-			mustLoveDogsActive = false
-        end
-    end
+function core._1008:ScanMessageSyncQueue()
+	core:sendDebugMessage("In ScanMessageSyncQueue")
+	if C_Map.GetBestMapForUnit("Player") == 471 and showStoneGuardInfoFrame == true then
+		--Check for message in the sync queue
+		for k,message in ipairs(core.syncMessageQueue) do
+			if message ~= nil then
+				core:sendDebugMessage("Found Message:" .. message)
+				local player, petName, status = strsplit(",", message)
+				--If someone is found then update InfoFrame
+				core:sendDebugMessage(player)
+				core:sendDebugMessage(petName)
+				if status == "COMPLETE" then
+					local success = InfoFrame_SetPlayerCompleteWithMessage(player, petName)
+					if success then
+						mustLoveDogsCounter = mustLoveDogsCounter + 1
+					end
+				elseif status == "FAILED" then
+					local success = InfoFrame_SetPlayerFailedWithMessage(player, petName)
+					if success then
+						mustLoveDogsCounter = mustLoveDogsCounter - 1
+					end
+				end
+				core.syncMessageQueue[k] = nil
+			end
+		end
+	end
+	InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
 end
 
 function core._1008.Events:ZONE_CHANGED_INDOORS()
-    if C_Map.GetBestMapForUnit("Player") == 471 and TheStoneGuardKilled == false then
+	if C_Map.GetBestMapForUnit("Player") == 471 and C_EncounterJournal.IsEncounterComplete(679) == false then
+		showStoneGuardInfoFrame = true
         core.IATInfoFrame:ToggleOn()
         core.IATInfoFrame:SetHeading(GetAchievementLink(6823))
-		infoFrameShown = true
-		mustLoveDogsActive = true
 		InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
 		InfoFrame_SetHeaderCounter(L["Shared_PlayersWithPet"],mustLoveDogsCounter,core.groupSize)
-	elseif C_Map.GetBestMapForUnit("Player") == 472 or C_Map.GetBestMapForUnit("Player") == 473 then
-		TheStoneGuardKilled = true
-		core.IATInfoFrame:ToggleOff()
-		infoFrameShown = false   
-		mustLoveDogsActive = false 
-    else
-        core.IATInfoFrame:ToggleOff()
-		infoFrameShown = false   
-		mustLoveDogsActive = false 
+	else
+		showStoneGuardInfoFrame = false
+		if core.IATInfoFrame:IsVisible() then
+			core.IATInfoFrame:Reset()
+		end
     end
 end
 
 function core._1008.Events:UNIT_SPELLCAST_SUCCEEDED(self, unit, castGUID, spellID)
-	if core.Instances[core.expansion][core.instanceType][core.instance]["boss1"].enabled == true and mustLoveDogsActive == true then
+	if core.Instances[core.expansion][core.instanceType][core.instance]["boss1"].enabled == true and showStoneGuardInfoFrame == true then
 		--<<<PETS THAT WORK>>>
 		--Perky Pug: 70613 (CONFIRMED)
 		--Core Hound Pup: 69452 (CONFIRMED)
@@ -313,6 +313,15 @@ function core._1008.Events:UNIT_SPELLCAST_SUCCEEDED(self, unit, castGUID, spellI
 		elseif spellID == 15999 then
 			success = InfoFrame_SetPlayerCompleteWithMessage(UnitName(unit), "Worg Pup")
 			unitFound = true
+		else
+			local spell = Spell:CreateFromSpellID(spellID)
+			spell:ContinueOnSpellLoad(function()
+				if string.match(spell:GetSpellDescription(), TOOLTIP_BATTLE_PET) then
+					local name = GetSpellInfo(spellID)
+					failed = InfoFrame_SetPlayerFailedWithMessage(UnitName(unit), "")
+					unitFound = true
+				end
+			end)
 		end
 
 		if unitFound == true then
@@ -330,7 +339,7 @@ function core._1008.Events:UNIT_SPELLCAST_SUCCEEDED(self, unit, castGUID, spellI
 end
 
 function core._1008.Events:UPDATE_MOUSEOVER_UNIT(self, unit, powerType)
-	if core.Instances[core.expansion][core.instanceType][core.instance]["boss1"].enabled == true and mustLoveDogsActive == true then
+	if core.Instances[core.expansion][core.instanceType][core.instance]["boss1"].enabled == true and showStoneGuardInfoFrame == true then
 		--Make sure InfoFrame has up-to date list of players
 		for k,player in pairs(core:getPlayersInGroupForAchievement()) do
 			if core.InfoFrame_PlayersTable[player] == nil then
@@ -354,7 +363,7 @@ function core._1008.Events:UPDATE_MOUSEOVER_UNIT(self, unit, powerType)
 			--Fjord Worg Pup
 
 			--Pets that work
-			if type ~= "Pet" then
+			if type ~= "Pet" and UnitIsBattlePet("mouseover") then
 				if destID == "37865" or destID == "36871" or destID == "48641" or destID == "10259" or destID == "33529" then
 					--Get Owner of the pet from the Game Tooltip
 					local tip = myTooltipFromTemplate or CreateFrame("GAMETOOLTIP", "myTooltipFromTemplate",nil,"GameTooltipTemplate")
@@ -364,11 +373,16 @@ function core._1008.Events:UPDATE_MOUSEOVER_UNIT(self, unit, powerType)
 						local name = myTooltipFromTemplateTextLeft2:GetText()
 						--We have the pet. Find player in group and set to complete
 						for player,status in pairs(core.InfoFrame_PlayersTable) do
-							if string.match(name, player) then
-								local success = InfoFrame_SetPlayerCompleteWithMessage(player, petName)
-								if success then
-									mustLoveDogsCounter = mustLoveDogsCounter + 1
-								end							
+							if name ~= nil and player ~= nil then
+								if string.match(name, player) then
+									local success = InfoFrame_SetPlayerCompleteWithMessage(player, petName)
+									if success then
+										mustLoveDogsCounter = mustLoveDogsCounter + 1
+	
+										--Send message to other addon users
+										C_ChatInfo.SendAddonMessage("Whizzey", "syncMessage" .. "-" .. player .. "," .. petName .. ",COMPLETE", "RAID")
+									end							
+								end
 							end
 						end
 						tip:Hide()
@@ -382,11 +396,16 @@ function core._1008.Events:UPDATE_MOUSEOVER_UNIT(self, unit, powerType)
 						local name = myTooltipFromTemplateTextLeft2:GetText()
 						--We have the pet. Find player in group and set to complete
 						for player,status in pairs(core.InfoFrame_PlayersTable) do
-							if string.match(name, player) then
-								local success = InfoFrame_SetPlayerFailedWithMessage(player, petName)
-								if success then
-									mustLoveDogsCounter = mustLoveDogsCounter - 1
-								end									
+							if name ~= nil and player ~= nil then
+								if string.match(name, player) then
+									local success = InfoFrame_SetPlayerFailedWithMessage(player, petName)
+									if success then
+										mustLoveDogsCounter = mustLoveDogsCounter - 1
+
+										--Send message to other addon users
+										C_ChatInfo.SendAddonMessage("Whizzey", "syncMessage" .. "-" .. player .. "," .. petName .. ",FAILED", "RAID")
+									end									
+								end
 							end
 						end
 						tip:Hide()
