@@ -377,7 +377,7 @@ function core._2070:JainaProudmoore()
     end
 
     --Achievement Completed
-    if core:getBlizzardTrackingStatus(13410, 1) == true then
+    if core:getBlizzardTrackingStatus(13410) == true then
         core:getAchievementSuccess()
     end
 end
