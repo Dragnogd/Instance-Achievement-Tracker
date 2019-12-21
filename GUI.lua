@@ -1757,6 +1757,7 @@ function IATInfoFrame:Reset()
     IATInfoFrame:SetSubHeading2()
     IATInfoFrame:SetText2()
     core.InfoFrame_PlayersTable = {}
+    core:sendDebugMessage("InfoFrame has been reset")
 end
 
 local tip = myTooltipFromTemplate or CreateFrame("GAMETOOLTIP", "myTooltipFromTemplate",nil,"GameTooltipTemplate")
