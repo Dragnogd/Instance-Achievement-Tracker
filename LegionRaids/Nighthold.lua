@@ -165,6 +165,10 @@ function core._1530:HighBotanistTelarn()
     --Detect when boss is killed
     if core.type == "UNIT_DIED" and core.destID == "104528" then
         highBotanistTelarnKilled = true
+        showBotanistInfoFrame = false
+		if core.IATInfoFrame:IsVisible() then
+			core.IATInfoFrame:Reset()
+		end
     end
 
 	if mysteriousFruitCounter == core.groupSize and core.groupSize >= 10 then
