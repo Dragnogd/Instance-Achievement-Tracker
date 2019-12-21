@@ -2140,6 +2140,11 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 				--We have detected a boss fight but have no tracking for it. Lets automatically detect blizzard tracking and if something is found ask the user to report to author
 				core:detectBlizzardTrackingAutomatically()
 			end
+
+			--Detect Automatic Tracking if specified in database
+			if core.currentBosses[i].forceAutomaticDetection == true then
+				core:detectBlizzardTrackingAutomatically()
+			end
 		end
 	else
 		if core.lockDetection == false then
@@ -2185,6 +2190,11 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 					end
 				elseif core.currentBosses[i].enabled == false and core.currentBosses[i].track == nil then
 					--We have detected a boss fight but have no tracking for it. Lets automatically detect blizzard tracking and if something is found ask the user to report to author
+					core:detectBlizzardTrackingAutomatically()
+				end
+
+				--Detect Automatic Tracking if specified in database
+				if core.currentBosses[i].forceAutomaticDetection == true then
 					core:detectBlizzardTrackingAutomatically()
 				end
 			end
