@@ -194,6 +194,8 @@ local baseLocale = {
     ["Shared_AutomaticCounter"] = "Automatic Counter",
     ["Shared_ManualCounter"] = "Manual Counter",
     ["Shared_AddsKilled"] = "Adds killed",
+    ["Shared_PlayersMetCriteria"] = "Players who have met critera",
+    ["Shared_Players25Yards"] = "Players must be within 25 yards of a player running IAT to track this achievement accurately",
 
     -------------------------------------------------------
     --- Battle of Dazar'alor
@@ -217,8 +219,8 @@ local baseLocale = {
     ["Ny’alotha_NZothTheCorruptor"] = "",
     
     --Chat Output
-    ["Nyalotha_PetSelf"] = "You pet %s",
-    ["Nyalotha_PetOther"] = "%s pets %s",
+    ["Nyalotha_PetSelf"] = "You pet",
+    ["Nyalotha_PetOther"] = "pets",
 
     -------------------------------------------------------
     --- The Eternal Palace

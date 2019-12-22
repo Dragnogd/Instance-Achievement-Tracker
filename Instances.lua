@@ -361,6 +361,7 @@ core.Instances = {
                     track = function() core._2164:WrathionTheBlackEmperor() end,
                     partial = false,
                     encounterID = 2329,
+                    forceAutomaticDetection = true,
                 },
                 boss2 = {
                     name = 2365, --Maut
@@ -372,6 +373,7 @@ core.Instances = {
                     track = nil,
                     partial = false,
                     encounterID = 2327,
+                    forceAutomaticDetection = true,
                 },
                 boss3 = {
                     name = 2369, --The Prophet Skitra
@@ -383,6 +385,7 @@ core.Instances = {
                     track = nil,
                     partial = false,
                     encounterID = 2334,
+                    forceAutomaticDetection = true,
                 },
                 boss4 = {
                     name = 2377, --Dark Inquisitor Xanesh
@@ -394,6 +397,7 @@ core.Instances = {
                     track = nil,
                     partial = false,
                     encounterID = 2328,
+                    forceAutomaticDetection = true,
                 },
                 boss5 = {
                     name = 2372, --The Hivemind
@@ -405,6 +409,7 @@ core.Instances = {
                     track = nil,
                     partial = false,
                     encounterID = 2333,
+                    forceAutomaticDetection = true,
                 },
                 boss6 = {
                     name = 2367, --Shad'har the Insatiable
@@ -412,11 +417,12 @@ core.Instances = {
                     achievement = 13990,
                     players = {},
                     tactics = L["Ny’alotha_ShadharTheInsatiable"],
-                    enabled = false,
-                    track = nil,
+                    enabled = true,
+                    track = function() core._2217:ShadharTheInsatiable() end,
                     partial = false,
                     encounterID = 2335,
                     displayInfoFrame = true,
+                    forceAutomaticDetection = true,
                 },
                 boss7 = {
                     name = 2373, --Drest'agath
@@ -428,6 +434,7 @@ core.Instances = {
                     track = function() core._2217:DrestAgath() end,
                     partial = false,
                     encounterID = 2343,
+                    forceAutomaticDetection = true,
                 },
                 boss8 = {
                     name = 2370, --Vexiona
@@ -439,6 +446,7 @@ core.Instances = {
                     track = function() core._2217:Vexiona() end,
                     partial = false,
                     encounterID = 2336,
+                    forceAutomaticDetection = true,
                 },
                 boss9 = {
                     name = 2364, --Ra-den the Despoiled
@@ -450,6 +458,7 @@ core.Instances = {
                     track = nil,
                     partial = false,
                     encounterID = 2331,
+                    forceAutomaticDetection = true,
                 },
                 boss10 = {
                     name = 2374, --Il'gynoth, Corruption Reborn
@@ -461,6 +470,7 @@ core.Instances = {
                     track = nil,
                     partial = false,
                     encounterID = 2345,
+                    forceAutomaticDetection = true,
                 },
                 boss11 = {
                     name = 2366, --Carapace of N'Zoth
@@ -472,6 +482,7 @@ core.Instances = {
                     track = function() core._2217:CarapaceOfNZoth() end,
                     partial = false,
                     encounterID = 2337,
+                    forceAutomaticDetection = true,
                 },
                 boss12 = {
                     name = 2375, --N'Zoth, the Corruptor
@@ -484,6 +495,7 @@ core.Instances = {
                     partial = false,
                     encounterID = 2344,
                     displayInfoFrame = true,
+                    forceAutomaticDetection = true,
                 },
             },
         },

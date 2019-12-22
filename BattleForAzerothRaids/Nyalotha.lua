@@ -22,6 +22,12 @@ local timerStarted = false
 local giftOfNZothCounter = 0
 local giftOfNZothUID = {}
 
+------------------------------------------------------
+---- Shad'har the Insatiable
+------------------------------------------------------
+local playersCompletedAchievement = 0
+local initialScan = false
+
 function core._2217:WrathionTheBlackEmperor()
     --Blizzard tracking gone white so achievement completed
 	if core:getBlizzardTrackingStatus(14019) == true then
@@ -51,7 +57,31 @@ end
 
 function core._2217:ShadharTheInsatiable()
 	--Defeat Shad'har the Insatiable in Ny'alotha, the Waking City after having everyone /pet him on Normal difficulty or higher.
+	InfoFrame_UpdatePlayersOnInfoFrame()
+	InfoFrame_SetHeaderCounter(L["Shared_PlayersMetCriteria"],playersCompletedAchievement,core.groupSize)
+	core.IATInfoFrame:SetSubHeading2(L["Shared_Notes"],"GameFontHighlight")
+	core.IATInfoFrame:SetText2(L["Shared_Players25Yards"],200)
+	
+	if initialScan == false then
+		initialScan = true
+		core:sendMessage(L["Shared_Players25Yards"],true)
+	end
 
+	if playersCompletedAchievement == core.groupSize then
+		core:getAchievementSuccess()
+	end
+
+	--Check for message in the sync queue
+	for k, player in ipairs(core.syncMessageQueue) do
+		if player ~= nil then
+			--If someone is found then update InfoFrame
+			if InfoFrame_GetPlayerComplete(player) == false then
+				InfoFrame_SetPlayerComplete(player)
+				playersCompletedAchievement = playersCompletedAchievement + 1
+			end
+			core.syncMessageQueue[k] = nil
+		end
+	end
 end
 
 function core._2217:Vexiona()
@@ -93,6 +123,12 @@ function core._2217:ClearVariables()
 	------------------------------------------------------
 	giftOfNZothCounter = 0
 	giftOfNZothUID = {}
+
+	------------------------------------------------------
+	---- Shad'har the Insatiable
+	------------------------------------------------------
+	playersCompletedAchievement = 0
+	initialScan = false
 end
 
 function core._2217:InstanceCleanup()
@@ -114,13 +150,12 @@ function core._2217.Events:CHAT_MSG_TEXT_EMOTE(self, message, sender, lineID, se
             if sender == UnitName("Player") then
                 if string.match(message, L["Nyalotha_PetSelf"]) then
                     core:sendDebugMessage("Detected Pet Self")
-                    if string.match(message, getNPCName(2367)) then
+                    if string.match(message, getNPCName(157231)) then
                         core:sendDebugMessage("Detected Shad'har in self")
 						--They have petted the correct npc
 						if InfoFrame_GetPlayerComplete(sender) == false then
 							InfoFrame_SetPlayerComplete(sender)
 							playersCompletedAchievement = playersCompletedAchievement + 1
-							core:sendMessage()
 
 							--Send message to other addon users
 							C_ChatInfo.SendAddonMessage("Whizzey", "syncMessage" .. "-" .. sender, "RAID")
@@ -130,14 +165,13 @@ function core._2217.Events:CHAT_MSG_TEXT_EMOTE(self, message, sender, lineID, se
             else
                 if string.match(message, L["Nyalotha_PetOther"]) then
                     core:sendDebugMessage("Detected Pet Other")
-                    if string.match(message, getNPCName(2367)) then
+                    if string.match(message, getNPCName(157231)) then
                         core:sendDebugMessage("Detected Shad'har in other")
-                        --They have praised the correct npc
+                        --They have petted the correct npc
 						if InfoFrame_GetPlayerComplete(sender) == false then
 							InfoFrame_SetPlayerComplete(sender)
 							playersCompletedAchievement = playersCompletedAchievement + 1
-							core:sendMessage()
-							
+
 							--Send message to other addon users
 							C_ChatInfo.SendAddonMessage("Whizzey", "syncMessage" .. "-" .. sender, "RAID")
 						end

@@ -218,6 +218,7 @@ core.NPCCache = {
     [76801] = 76801, --Ragewing Whelp
     [41440] = 41440, --Aberration
     [71979] = 71979, --Kor'kron Warbringer
+    [157231] = 157231, --Shad'har the Insatiable
 }
 
 --[] = , --
