@@ -3546,3 +3546,159 @@ function core:getNameOnly(originalName)
 		return playerName
 	end
 end
+
+function core:getEmote(message)
+	--Scan emote message and see if it matches any emote currently in the emotes database
+	if message ~= nil then
+		for i,v in ipairs(core.emotes) do
+			if v.relation == 0 then
+				--Locate position of player and target in string
+				local startPlayer, endPlayer = v.emoteString:find("<player>",1,true)
+				local startTarget, endTarget = v.emoteString:find("<target>",1,true)
+				local stringBeforePlayer = nil
+				local stringAfterPlayer = nil
+				local stringAfterTarget = nil
+				if startPlayer > 1 then
+					stringBeforePlayer = v.emoteString:sub(1,startPlayer-1)
+				end
+				if (startTarget-1) > (endPlayer + 1) then
+					stringAfterPlayer = v.emoteString:sub(endPlayer+1, startTarget-1)
+				end
+				if endTarget ~= #v.emoteString then
+					stringAfterTarget = v.emoteString:sub(endTarget+1)
+				end
+
+				--Get the player and target in the acutual string
+				local player = nil
+				local target = nil
+
+				--Player
+				if stringBeforePlayer == nil then
+					local startPositon, endPosition = message:find(stringAfterPlayer,1,true)
+					if startPositon ~= nil and endPosition ~= nil then
+						player = message:sub(1, startPositon-1)
+					end
+				else
+					local startPositon, endPosition = message:find(stringBeforePlayer,1,true)
+					local startPositon2, endPosition2 = message:find(stringAfterPlayer,1,true)
+					if startPositon ~= nil and endPosition ~= nil and startPositon2 ~= nil and endPosition2 ~= nil then
+						player = message:sub(endPosition+1, startPositon2-1)
+					end
+				end
+
+				--Target
+				if stringAfterPlayer == nil then
+					--TODO difficult but unlikely to occur
+				else
+					local startPositon, endPosition = message:find(stringAfterPlayer,1,true)
+					local startPositon2, endPosition2 = message:find(stringAfterTarget,1,true)
+					if startPositon ~= nil and endPosition ~= nil and startPositon2 ~= nil and endPosition2 ~= nil then
+						target = message:sub(endPosition+1, startPositon2-1)
+					end
+				end
+
+				--Trim Whitespace
+				if player ~= nil and target ~= nil then
+					player = player:match("^%s*(.-)%s*$")
+					target = target:match("^%s*(.-)%s*$")
+
+					--Check if our new string matches original message
+					local newEmote = string.gsub(v.emoteString, "<target>", target)
+					newEmote = string.gsub(newEmote, "<player>", player)
+					if newEmote == message and UnitIsPlayer(player) then
+						return v.emote, player, target, v.emoteString, v.relation
+					end
+				end
+			elseif v.relation == 2 then
+				--Locate position of target in string
+				local startTarget, endTarget = v.emoteString:find("<target>",1,true)
+				local stringBeforeTarget = nil
+				local stringAfterTarget = nil
+				if startTarget > 1 then
+					stringBeforeTarget = v.emoteString:sub(1, startTarget-1)
+				end
+				if endTarget ~= #v.emoteString then
+					stringAfterTarget = v.emoteString:sub(endTarget+1)
+				end
+
+				--Get the target in the acutual string
+				local target = nil
+
+				--Target
+				if stringBeforeTarget == nil then
+					local startPositon, endPosition = message:find(stringAfterTarget,1,true)
+					if startPositon ~= nil and endPosition ~= nil then
+						target = message:sub(1, startPositon-1)
+					end
+				else
+					local startPositon, endPosition = message:find(stringBeforeTarget,1,true)
+					local startPositon2, endPosition2 = message:find(stringAfterTarget,1,true)
+					if startPositon ~= nil and endPosition ~= nil and startPositon2 ~= nil and endPosition2 ~= nil then
+						-- print(startPositon,endPosition,startPositon2,endPosition2,startTarget,endTarget,stringBeforeTarget,stringAfterTarget)
+						target = message:sub(endPosition+1, startPositon2-1)
+					end
+				end
+
+				--Trim Whitespace
+				if target ~= nil then
+					target = target:match("^%s*(.-)%s*$")
+					player = UnitName("Player")
+
+					--Check if our new string matches original message
+					local newEmote = string.gsub(v.emoteString, "<target>", target)
+					if newEmote == message then
+						return v.emote, player, target, v.emoteString, v.relation
+					end
+				end
+			end
+		end
+	end
+end
+
+function longestCommonSubstring(s1, s2)
+	local num = {}
+	for i = 0, string.utf8len(s1) - 1 do
+		num[i] = {}
+
+		for j = 0, string.utf8len(s2) - 1 do
+			num[i][j] = 0 -- Fill the values here
+		end
+	end
+	local letter1 = nil
+	local letter2 = nil
+	local len = 0
+	local ans = 0
+	local lastPosition = 0
+	for i=0, string.utf8len(s1) - 1 do
+		--Loop through string1
+		for j=0, string.utf8len(s2) - 1 do
+			--Loop through string2
+			letter1 = s1:utf8sub(i, i)
+			letter2 = s2:utf8sub(j, j)
+			if not (letter1 == letter2) then
+				--if letters in i and j don't match, do nothing
+				num[i][j] = 0
+			else
+				--If letters in i and j match
+				if i == 0 or j == 0 then
+					--We are in first row/column so just set this value to 1
+					num[i][j] = 1
+				else
+					--We are not in the first row or column. Increment by 1
+					num[i][j] = 1 + num[i - 1][j - 1]
+				end
+				if num[i][j] > len then
+					--Set match to current match as bigger than previous match
+					len = num[i][j]
+					ans = num[i][j]
+					lastPosition = i
+				end
+			end
+		end
+	end
+	if lastPosition > 1 then
+		return s1:utf8sub((lastPosition-len)+1,lastPosition), (lastPosition-len)+1, lastPosition
+	else
+		return nil
+	end
+end
