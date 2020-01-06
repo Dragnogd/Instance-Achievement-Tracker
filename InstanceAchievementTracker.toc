@@ -167,4 +167,6 @@ NPCCache.lua
 InfoFrame.lua
 GUI.lua
 MobCounter.lua
+emotes.lua
 AchievementTrackerCore.lua
+Debug.lua

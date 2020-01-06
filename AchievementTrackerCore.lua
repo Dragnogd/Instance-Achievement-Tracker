@@ -9,7 +9,7 @@ local UIConfig													--UIConfig is used to make a display asking the user 
 local UICreated = false											--To enable achievement tracking when they enter an instances
 local debugMode = false
 local debugModeChat = false
-local sendDebugMessages = false
+local sendDebugMessages = true
 
 local ptrVersion = "8.1.0"
 
@@ -3442,7 +3442,15 @@ function getKeysSortedByValue(tbl, sortFunction)
 	end)
   
 	return keys
-  end
+end
+
+function core:tablefind(tab,el)
+    for index, value in pairs(tab) do
+        if value == el then
+            return index
+        end
+    end
+end
 
 --Check if Blizzard Achievement Tracking has completed/failed
 function core:getBlizzardTrackingStatus(achievementID, index)

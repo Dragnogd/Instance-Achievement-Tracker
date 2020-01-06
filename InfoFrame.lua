@@ -224,6 +224,20 @@ function InfoFrame_GetPlayerComplete(player)
     end
 end
 
+function InfoFrame_GetPlayerCompleteWithMessage(player)
+    --Make sure we remove realm info from player before checking name
+    if string.find(player, "-") then
+        local name, realm = strsplit("-", player)
+        player = name
+    end
+    
+    if core.InfoFrame_PlayersTable[player][1] == 2 then
+        return true
+    else
+        return false
+    end
+end
+
 function InfoFrame_GetIncompletePlayers()
     --Returns a string with all players who are marked as incomplete
     local playerStr = ""

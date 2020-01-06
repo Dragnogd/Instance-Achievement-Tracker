@@ -550,7 +550,8 @@ local baseLocale = {
     --- Black Rook Hold
     -------------------------------------------------------
     --Tactics
-    ["BlackRookHold_Other"] = "",
+    ["BlackRookHold_Other"] = "";
+    --["BlackRookHold_Other"] = "To complete this achievement you must find all parts of %s diary. Each time you run the instance one of the six pages will spawn. The location for the pages are as follows.\n\n Torn Page: Found after the %s in the %s room on a table on the southern sidel.\n\n Worn-Edge Page: Found on the ground in %s to the left of the broken staircase.\n\n Dog-Eared Page: Found on a table in %s in the hallway that has the staircase taking you to %s.\n\n Signed Page: Found in %s on a table by three bookshelves.\n\n Ink-Splattered Page: Found in %s in the small room connecting to the stairs leading to %s.\n\n Hastily-Scrated Page: Found in %s on the desk",
     ["BlackRookHold_AmalgamOfSouls"] = "Bring the %s down to 50%% HP. When the %s spawn you will need to CC one of them to prevent it reaching the boss. After 1 minute the %s will transform into a %s. You can then kill the %s then the boss to get this achievement",
 
     --Chat Output

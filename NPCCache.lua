@@ -219,6 +219,12 @@ core.NPCCache = {
     [41440] = 41440, --Aberration
     [71979] = 71979, --Kor'kron Warbringer
     [157231] = 157231, --Shad'har the Insatiable
+    [161573] = 161573, --Disciple of the Prophet
+    [161414] = 161414, --Evolved Specimen
+    [160291] = 160291, --Ashwalker Assassin
+    [154074] = 154074, --Void Orb
+    [98696] = 98696, --Illysanna Ravencrest
+    [98542] = 98542, --Amalgam of Souls
 }
 
 --[] = , --
