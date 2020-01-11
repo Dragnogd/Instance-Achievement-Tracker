@@ -54,9 +54,10 @@ local inititalVexionaSetup = false
 local playersWithThirtyStacks = 0
 
 function core._2217:WrathionTheBlackEmperor()
-	core.MobCounter:Setup(10, 10, "160291")
-	core.MobCounter:DetectSpawnedMob()
-	core.MobCounter:DetectKilledMob()
+	--Defeat Wrathion in Ny'alotha, the Waking City after defeating 10 Crackling Shards within 3 seconds of each other on Normal difficulty or higher.
+	if core:getBlizzardTrackingStatus(14019) == true then
+        core:getAchievementSuccess()
+    end
 end
 
 function core._2217:ProphetSkitra()
@@ -239,9 +240,17 @@ function core._2217:Vexiona()
 end
 
 function core._2217:Maut()
-	if core.type == "UNIT_DIED" and core.destID == "160271" then
-		core:getAchievementSuccess()
-	end
+	--Defeat Maut in Ny'alotha, the Waking City after defeating a Forbidden Manifestation on Normal difficulty or higher.
+	if core:getBlizzardTrackingStatus(14008) == true then
+        core:getAchievementSuccess()
+    end
+end
+
+function core._2217:Raden()
+	--Defeat Ra-den in Ny'alotha, the Waking City after destroying 2 obelisks with Unstable Void on Normal difficulty or higher.
+	if core:getBlizzardTrackingStatus(13999) == true then
+        core:getAchievementSuccess()
+    end
 end
 
 function core._2217:CarapaceOfNZoth()
