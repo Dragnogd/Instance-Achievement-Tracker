@@ -113,7 +113,7 @@ function core._2096:UunatHarbingerOfTheVoid()
 		core:sendDebugMessage("Stop Moving: Gift of N'Zoth (SPELL_CAST_SUCCESS) NOT SAFE TO MOVE")
 		safeToMove = false
 		if playerCurrentlyMoving == true then
-			core:getAchievementFailedPersonalIndependent(UnitName("Player"))
+            core:getAchievementFailedPersonalIndependent(UnitName("Player"))
 		end
 	end
 
@@ -224,6 +224,7 @@ local function playerMoving(...)
             -- core:sendDebugMessage(GetTime() .. " Player is moving")
             playerCurrentlyMoving = true
             if safeToMove == false then
+                core:sendDebugMessage("Set Failed after start moving called")
                 core:getAchievementFailedPersonalIndependent(UnitName("Player"))
             end
         end
@@ -242,6 +243,7 @@ local function playerMovingMouse(...)
             -- core:sendDebugMessage(GetTime() .. " Player is moving")
             playerCurrentlyMoving = true
             if safeToMove == false then
+                core:sendDebugMessage("Set Failed after start moving called mouse")
                 core:getAchievementFailedPersonalIndependent(UnitName("Player"))
             end
         end
@@ -258,6 +260,11 @@ local function playerStoppedMoving(...)
             end
             -- core:sendDebugMessage(GetTime() .. " Player stopped moving")
             playerCurrentlyMoving = false
+
+            if safeToMove == false then
+                core:sendDebugMessage("Set Failed after stop moving called")
+                core:getAchievementFailedPersonalIndependent(UnitName("Player"))
+            end
         end
     end
 end
