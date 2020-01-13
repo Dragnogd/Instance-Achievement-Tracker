@@ -45,6 +45,7 @@ local voidWokenPlayers = {}
 local voidWokenInTimeWindow = false
 local darkCollapseCast = false
 local voidOrbCounter = 0
+local voidWokenPlayerCheck = false
 
 ------------------------------------------------------
 ---- Vexiona
@@ -120,6 +121,7 @@ function core._2217:DarkInquisitorXanesh()
 
 	--Detected if orb was returned within the 3 second time window
 	if #voidWokenPlayers > 0 then
+		voidWokenPlayerCheck = true
 		core:sendDebugMessage("Detected players in voidWokenPlayers table")
 		for index, player in pairs(voidWokenPlayers) do
 			core:sendDebugMessage("Found " .. player .. " at " .. index)
@@ -134,17 +136,24 @@ function core._2217:DarkInquisitorXanesh()
 				end
 			end
 		end
-	elseif #voidWokenPlayers == 0 then
-		--All players have lost the buff. Lets check if orb was placed successfully or not
-		C_Timer.After(3, function() 
-			if darkCollapseCast == false and voidWokenInTimeWindow == true then
-				voidOrbCounter = voidOrbCounter + 1
-				core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(264908) .. " " .. L["Core_Counter"] .. " (" .. voidOrbCounter .. "/3)",true)
-			end
+	end
+	
+	if #voidWokenPlayers == 0 then
+		if voidWokenPlayerCheck == true then
+			core:sendDebugMessage("Checking if orb was returned or not")
+			voidWokenPlayerCheck = false
+			--All players have lost the buff. Lets check if orb was placed successfully or not
+			C_Timer.After(3, function() 
+				if darkCollapseCast == false and voidWokenInTimeWindow == true then
+					core:sendDebugMessage("Orb was returned successfully")
+					voidOrbCounter = voidOrbCounter + 1
+					core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(264908) .. " " .. L["Core_Counter"] .. " (" .. voidOrbCounter .. "/3)",true)
+				end
 
-			darkCollapseCast = false
-			voidWokenInTimeWindow = false
-		end)
+				darkCollapseCast = false
+				voidWokenInTimeWindow = false
+			end)
+		end	
 	end
 end
 
@@ -308,6 +317,15 @@ function core._2217:ClearVariables()
 	playerAnnihilationStacks = {}
 	inititalVexionaSetup = false
 	playersWithThirtyStacks = 0
+
+	------------------------------------------------------
+	---- Dark Inquisitor Xanesh
+	------------------------------------------------------
+	voidWokenPlayers = {}
+	voidWokenInTimeWindow = false
+	darkCollapseCast = false
+	voidOrbCounter = 0
+	voidWokenPlayerCheck = false
 end
 
 function core._2217:InstanceCleanup()
