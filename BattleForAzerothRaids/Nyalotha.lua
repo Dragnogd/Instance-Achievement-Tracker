@@ -280,6 +280,18 @@ function core._2217:NZothTheCorruptor()
 		core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. GetSpellLink(313609) .. " (" .. giftOfNZothCounter .. "/" .. core.groupSize .. ")",true)
 		InfoFrame_SetPlayerComplete(UnitName(core.destName))
 	end
+
+	--If player dies this will fail the achievement
+	if core.type == "UNIT_DIED" and core.destName ~= nil then
+		if UnitIsPlayer(core.destName) then
+			core:getAchievementFailedWithMessageAfter(core.destName)
+		end
+	end
+
+	--Announce success once everyone has had the debuff at some point during the fight
+	if giftOfNZothCounter == core.groupSize then
+		core:getAchievementSuccess()
+	end
 end
 
 function core._2217:ClearVariables()
