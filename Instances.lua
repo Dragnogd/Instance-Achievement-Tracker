@@ -5004,6 +5004,7 @@ core.Instances = {
                     track = function() core._649:Anubarak() end,
                     partial = false,
                     encounterID = 1085,
+                    displayInfoFrame = true,
                 },                     
             },
 
