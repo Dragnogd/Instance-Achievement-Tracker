@@ -225,6 +225,7 @@ core.NPCCache = {
     [154074] = 154074, --Void Orb
     [98696] = 98696, --Illysanna Ravencrest
     [98542] = 98542, --Amalgam of Souls
+    [159514] = 159514, --Il'gynoth, Corruption Reborn
 }
 
 --[] = , --

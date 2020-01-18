@@ -262,6 +262,13 @@ function core._2217:Raden()
     end
 end
 
+function core._2217:IlgynothCorruptionReborn()
+	--Defeat Il'gynoth, Corruption Reborn in Ny'alotha, the Waking City after defeating 10 Bloods of Ny'alotha in under 3 seconds on Normal difficulty or higher.
+	core.MobCounter:Setup(10, 3, "159514")
+	core.MobCounter:DetectSpawnedMob()
+	core.MobCounter:DetectKilledMob()
+end
+
 function core._2217:CarapaceOfNZoth()
 	--Blizzard tracking gone white so achievement completed
 	if core:getBlizzardTrackingStatus(14147, 1) == true then

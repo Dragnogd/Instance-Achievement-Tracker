@@ -467,11 +467,12 @@ core.Instances = {
                     achievement = 14038,
                     players = {},
                     tactics = L["Ny’alotha_IlgynothCorruptionReborn"],
-                    enabled = false,
-                    track = nil,
+                    enabled = true,
+                    track = function() core._2217:IlgynothCorruptionReborn() end,
                     partial = false,
                     encounterID = 2345,
                     forceAutomaticDetection = true,
+                    displayInfoFrame = true,
                 },
                 boss11 = {
                     name = 2366, --Carapace of N'Zoth

@@ -138,7 +138,7 @@ function core._649:TwinValkyr()
 end
 
 function core._649:Anubarak()
-    core.MobCounter:Setup(5, 30, "34605")
+    core.MobCounter:Setup(25, 30, "34605")
 	core.MobCounter:DetectSpawnedMob()
 	core.MobCounter:DetectKilledMob()
 end
