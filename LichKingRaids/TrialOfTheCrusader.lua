@@ -138,32 +138,9 @@ function core._649:TwinValkyr()
 end
 
 function core._649:Anubarak()
-    core:trackMob("34605", "Swarm Scarab", 25, " 25 Swarm Scarabs Spawned. Kill them now", 5, nil, 1)
-
-    if core.mobCounter >= 25 then
-        swarmScarabCounterReached = true
-    end
-
-    if core.type == "UNIT_DIED" and swarmScarabCounterReached == true then
-        swarmScarabKilled = swarmScarabKilled + 1
-        if timerStarted == false then
-            timerStarted = true
-            C_Timer.After(30, function() 
-                if swarmScarabKilled >= 25 then
-                    core:getAchievementSuccess()
-                else
-                    core:sendMessage(core:getAchievement() .. " (" .. swarmScarabKilled .. "/25) Swarm Scarab Killed in time")
-                    timerStarted = false
-                    swarmScarabKilled = 0
-                    swarmScarabCounterReached = false
-                end
-            end)
-        else
-            if swarmScarabKilled >= 25 then
-                core:getAchievementSuccess()
-            end
-        end 
-    end
+    core.MobCounter:Setup(5, 30, "34605")
+	core.MobCounter:DetectSpawnedMob()
+	core.MobCounter:DetectKilledMob()
 end
 
 function core._649:ClearVariables()

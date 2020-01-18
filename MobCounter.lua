@@ -82,6 +82,10 @@ function MobCounter:Reset()
         timestampTimer:Cancel()
         timestampTimer = nil
     end
+    if fixedTimer ~= nil then
+        fixedTimer:Cancel()
+        fixedTimer = nil
+    end
 end
 
 function MobCounter:DetectSpawnedMob()
@@ -249,13 +253,15 @@ function MobCounter:StartFixedTimer()
         fixedTimerStarted = true
         mobsKilled = 0
         mobsKilledUID = {}
+        core.achievementsFailed[1] = false
         fixedTimer = C_Timer.NewTicker(1, function() 
             currentTick = fixedTimer._remainingIterations
             core.IATInfoFrame:SetSubHeading1("Time Remaining: " .. currentTick - 1)
             if mobsKilled >= mobCriteria then
                 core:getAchievementSuccess()
+                fixedTimer:Cancel()
             elseif currentTick == 1 then
-                core:getAchievementFailed()
+                core:getAchievementFailedWithMessageAfter("(" .. mobsKilled .. "/" .. mobCriteria .. ")")
                 fixedTimerStarted = false                
             end
         end, mobCriteriaTimeWindow)
