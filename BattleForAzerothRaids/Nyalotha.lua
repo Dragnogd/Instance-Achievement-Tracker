@@ -127,9 +127,9 @@ function core._2217:DarkInquisitorXanesh()
 			core:sendDebugMessage("Found " .. player .. " at " .. index)
 			for i=1,40 do
 				local _, _, _, _, _, expirationTime, _, _, _, spellId = UnitBuff(player, i)
-				if spellId == 8936 then --312406
+				if spellId == 312406 then --312406
 					core:sendDebugMessage("Detected " .. spellId .. " : " .. expirationTime .. " : " .. (expirationTime - GetTime()))
-					if expirationTime - GetTime() < 3 then
+					if (expirationTime - GetTime() < 3) and (expirationTime - GetTime() > 0) then
 						core:sendDebugMessage("Voidwoken is within time window: " .. expirationTime - GetTime())
 						voidWokenInTimeWindow = true
 					end					
@@ -138,6 +138,7 @@ function core._2217:DarkInquisitorXanesh()
 		end
 	end
 	
+	--Check if orb was successfully placed in time and without a dark collapse
 	if #voidWokenPlayers == 0 then
 		if voidWokenPlayerCheck == true then
 			core:sendDebugMessage("Checking if orb was returned or not")
@@ -281,6 +282,7 @@ function core._2217:NZothTheCorruptor()
 	InfoFrame_UpdatePlayersOnInfoFrame()
 	InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],giftOfNZothCounter,core.groupSize)
 
+	--Player has gained Gift of N'zoth
 	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 313609 and giftOfNZothUID[core.spawn_uid_dest_Player] == nil then
 		giftOfNZothCounter = giftOfNZothCounter + 1
 		giftOfNZothUID[core.spawn_uid_dest_Player] = core.spawn_uid_dest_Player
@@ -291,7 +293,17 @@ function core._2217:NZothTheCorruptor()
 	--If player dies this will fail the achievement
 	if core.type == "UNIT_DIED" and core.destName ~= nil then
 		if UnitIsPlayer(core.destName) then
-			core:getAchievementFailedWithMessageAfter(core.destName)
+			if giftOfNZothUID[core.spawn_uid_dest_Player] ~= nil then
+				giftOfNZothCounter = giftOfNZothCounter - 1
+				giftOfNZothUID[core.spawn_uid_dest_Player] = nil
+				core:sendMessage(core.destName .. " " .. L["Shared_HasFailed"] .. " " .. GetSpellLink(313609) .. " (" .. giftOfNZothCounter .. "/" .. core.groupSize .. ")",true)
+				InfoFrame_SetPlayerFailed(UnitName(core.destName))
+
+				--Announce fail if success has happened and player has since died
+				if core.achievementsCompleted[1] == true then
+					core:getAchievementFailedWithMessageAfter(core.destName)
+				end
+			end
 		end
 	end
 
