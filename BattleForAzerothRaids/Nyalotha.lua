@@ -15,6 +15,7 @@ core._2217.Events = CreateFrame("Frame")
 ------------------------------------------------------
 local temperTantrumCounter = 0
 local timerStarted = false
+local timerDest = nil
 
 ------------------------------------------------------
 ---- N'Zoth, the Corruptor
@@ -75,7 +76,7 @@ end
 
 function core._2217:Hivemind()
 	--Defeat the Hivemind in Ny'alotha, the Waking City after defeating 3 Evolved Specimen on Normal difficulty or higher.
-	if core.type == "UNIT_DIED" and (core.destID == "161414" or core.destID == "161369" or corde.destID == "161413") then
+	if core.type == "UNIT_DIED" and (core.destID == "161414" or core.destID == "161369" or core.destID == "161413" or core.destID == "162676") then
 		evolvedSpecimenKilled = evolvedSpecimenKilled + 1
 		core:sendMessage(core:getAchievement() .. " " .. getNPCName(161414) .. " " .. L["Shared_Killed"] .. " (" .. evolvedSpecimenKilled .. "/3)",true)
 	end 
@@ -162,17 +163,29 @@ function core._2217:DrestAgath()
 	--Defeat Drest'agath after triggering Throes of Agony twice within 60 seconds, on Normal difficulty or higher.
 	if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 308941 then
 		temperTantrumCounter = temperTantrumCounter + 1
+		core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(308941) .. " " .. L["Core_Counter"] .. " (" .. temperTantrumCounter .. "/2)")
 		if timerStarted == false then
+			core:sendDebugMessage("Timer Started")
 			timerStarted = true
-			C_Timer.After(60, function()
+			core.achievementsFailed[1] = false
+			timerDest = C_Timer.NewTimer(60, function()
 				if temperTantrumCounter == 2 then
 					core:getAchievementSuccess()
+				else
+					core:getAchievementFailed()
 				end
+				core:sendDebugMessage("Resetting Timer")
 				timerStarted = false
 			end)
 		else	
 			if temperTantrumCounter == 2 then
 				core:getAchievementSuccess()
+				if timerDest ~= nil then
+					core:sendDebugMessage("Cancelled Drest Timer")
+					timerDest:Cancel()
+					timerStarted = false
+					timerDest = nil
+				end
 			end
 		end	
 	end
@@ -216,6 +229,7 @@ function core._2217:Vexiona()
 		inititalVexionaSetup = true
 		for player,status in pairs(core.InfoFrame_PlayersTable) do
 			if playerAnnihilationStacks[player] == nil then
+				core:sendDebugMessage("Setting up " .. player)
 				playerAnnihilationStacks[player] = 0
 			end
 		end
@@ -232,6 +246,7 @@ function core._2217:Vexiona()
 				player = name
 			end
 			playerAnnihilationStacks[player] = playerAnnihilationStacks[player] + 1
+			core:sendDebugMessage(player .. " : " .. playerAnnihilationStacks[player])
 			if playerAnnihilationStacks[player] >= 30 then
 				if InfoFrame_GetPlayerCompleteWithMessage(player) == false then
 					InfoFrame_SetPlayerCompleteWithMessage(core.destName, playerAnnihilationStacks[player])
@@ -239,6 +254,23 @@ function core._2217:Vexiona()
 				end 
 			else
 				InfoFrame_SetPlayerNeutralWithMessage(core.destName, playerAnnihilationStacks[player])
+			end
+		end
+	end
+
+	--If player dies lets assume this resets the counter for now
+	if core.type == "UNIT_DIED" and core.destName ~= nil then
+		if UnitIsPlayer(core.destName) then
+			local player = core.destName
+			if string.find(player, "-") then
+				local name, realm = strsplit("-", player)
+				player = name
+			end
+			playerAnnihilationStacks[player] = 0
+			if InfoFrame_GetPlayerCompleteWithMessage(player) == true then
+				playersWithThirtyStacks = playersWithThirtyStacks - 1
+				core:sendDebugMessage(player .. " : " .. playerAnnihilationStacks[player])
+				InfoFrame_SetPlayerFailedWithMessage(core.destName, playerAnnihilationStacks[player])
 			end
 		end
 	end
@@ -302,6 +334,7 @@ function core._2217:NZothTheCorruptor()
 				--Announce fail if success has happened and player has since died
 				if core.achievementsCompleted[1] == true then
 					core:getAchievementFailedWithMessageAfter(core.destName)
+					core.achievementsCompleted[1] = false
 				end
 			end
 		end
@@ -310,6 +343,7 @@ function core._2217:NZothTheCorruptor()
 	--Announce success once everyone has had the debuff at some point during the fight
 	if giftOfNZothCounter == core.groupSize then
 		core:getAchievementSuccess()
+		core.achievementsFailed[1] = false
 	end
 end
 
@@ -319,6 +353,12 @@ function core._2217:ClearVariables()
 	------------------------------------------------------
 	temperTantrumCounter = 0
 	timerStarted = false
+	if timerDest ~= nil then
+		core:sendDebugMessage("Cancelled Drest Timer")
+		timerDest:Cancel()
+		timerStarted = false
+		timerDest = nil
+	end
 
 	------------------------------------------------------
 	---- N'Zoth, the Corruptor

@@ -358,10 +358,9 @@ core.Instances = {
                     players = {},
                     tactics = L["Ny’alotha_WrathionTheBlackEmperor"],
                     enabled = true,
-                    track = function() core._2164:WrathionTheBlackEmperor() end,
+                    track = function() core._2217:WrathionTheBlackEmperor() end,
                     partial = false,
                     encounterID = 2329,
-                    displayInfoFrame = true,
                     forceAutomaticDetection = true,
                 },
                 boss2 = {
@@ -447,6 +446,7 @@ core.Instances = {
                     track = function() core._2217:Vexiona() end,
                     partial = false,
                     encounterID = 2336,
+                    displayInfoFrame = true,
                     forceAutomaticDetection = true,
                 },
                 boss9 = {
@@ -471,8 +471,8 @@ core.Instances = {
                     track = function() core._2217:IlgynothCorruptionReborn() end,
                     partial = false,
                     encounterID = 2345,
-                    forceAutomaticDetection = true,
                     displayInfoFrame = true,
+                    forceAutomaticDetection = true,
                 },
                 boss11 = {
                     name = 2366, --Carapace of N'Zoth
