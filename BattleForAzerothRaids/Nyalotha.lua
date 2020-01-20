@@ -125,9 +125,14 @@ function core._2217:DarkInquisitorXanesh()
 		voidWokenPlayerCheck = true
 		core:sendDebugMessage("Detected players in voidWokenPlayers table")
 		for index, player in pairs(voidWokenPlayers) do
+			local player = player
+			if string.find(player, "-") then
+				local name, realm = strsplit("-", player)
+				player = name
+			end
 			core:sendDebugMessage("Found " .. player .. " at " .. index)
 			for i=1,40 do
-				local _, _, _, _, _, expirationTime, _, _, _, spellId = UnitBuff(player, i)
+				local _, _, _, _, _, expirationTime, _, _, _, spellId = UnitDebuff(player, i)
 				if spellId == 312406 then --312406
 					core:sendDebugMessage("Detected " .. spellId .. " : " .. expirationTime .. " : " .. (expirationTime - GetTime()))
 					if (expirationTime - GetTime() < 3) and (expirationTime - GetTime() > 0) then
@@ -145,11 +150,17 @@ function core._2217:DarkInquisitorXanesh()
 			core:sendDebugMessage("Checking if orb was returned or not")
 			voidWokenPlayerCheck = false
 			--All players have lost the buff. Lets check if orb was placed successfully or not
-			C_Timer.After(3, function() 
+			C_Timer.After(5, function() 
 				if darkCollapseCast == false and voidWokenInTimeWindow == true then
 					core:sendDebugMessage("Orb was returned successfully")
 					voidOrbCounter = voidOrbCounter + 1
 					core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(264908) .. " " .. L["Core_Counter"] .. " (" .. voidOrbCounter .. "/3)",true)
+
+					if voidOrbCounter >= 3 then
+						core:getAchievementSuccess()
+					end
+				else
+					core:sendDebugMessage("Orb was not returned successfully")
 				end
 
 				darkCollapseCast = false
@@ -315,10 +326,10 @@ function core._2217:NZothTheCorruptor()
 	InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],giftOfNZothCounter,core.groupSize)
 
 	--Player has gained Gift of N'zoth
-	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 313609 and giftOfNZothUID[core.spawn_uid_dest_Player] == nil then
+	if core.type == "SPELL_AURA_APPLIED" and (core.spellId == 313334 or core.spellId == 313609) and giftOfNZothUID[core.spawn_uid_dest_Player] == nil then
 		giftOfNZothCounter = giftOfNZothCounter + 1
 		giftOfNZothUID[core.spawn_uid_dest_Player] = core.spawn_uid_dest_Player
-		core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. GetSpellLink(313609) .. " (" .. giftOfNZothCounter .. "/" .. core.groupSize .. ")",true)
+		core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. GetSpellLink(313334) .. " (" .. giftOfNZothCounter .. "/" .. core.groupSize .. ")",true)
 		InfoFrame_SetPlayerComplete(UnitName(core.destName))
 	end
 
@@ -328,12 +339,12 @@ function core._2217:NZothTheCorruptor()
 			if giftOfNZothUID[core.spawn_uid_dest_Player] ~= nil then
 				giftOfNZothCounter = giftOfNZothCounter - 1
 				giftOfNZothUID[core.spawn_uid_dest_Player] = nil
-				core:sendMessage(core.destName .. " " .. L["Shared_HasFailed"] .. " " .. GetSpellLink(313609) .. " (" .. giftOfNZothCounter .. "/" .. core.groupSize .. ")",true)
+				core:sendMessage(core.destName .. " " .. L["Shared_HasDied"] .. " (" .. giftOfNZothCounter .. "/" .. core.groupSize .. ")",true)
 				InfoFrame_SetPlayerFailed(UnitName(core.destName))
 
 				--Announce fail if success has happened and player has since died
 				if core.achievementsCompleted[1] == true then
-					core:getAchievementFailedWithMessageAfter(core.destName)
+					core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")")
 					core.achievementsCompleted[1] = false
 				end
 			end
