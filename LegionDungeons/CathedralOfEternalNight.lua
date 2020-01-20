@@ -59,6 +59,13 @@ function core._1677:ThrashbiteTheScornful()
     end
 end
 
+function core._1677:Mephistroth()
+    --Defeat Mephistroth within the Cathedral of Eternal Night after blocking 20 Shadow Blasts with the Aegis of Aggramar on Mythic difficulty.
+	if core:getBlizzardTrackingStatus(11703) == true then
+        core:getAchievementSuccess()
+    end
+end
+
 function core._1677:ClearVariables()
     ------------------------------------------------------
     ---- Thrashbite the Scornful
