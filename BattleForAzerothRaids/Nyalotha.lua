@@ -26,13 +26,15 @@ local giftOfNZothUID = {}
 ------------------------------------------------------
 ---- Shad'har the Insatiable
 ------------------------------------------------------
-local playersCompletedAchievement = 0
 local initialScan = false
+local bittenHandCounter = 0
+local bittenHandUID = {}
 
 ------------------------------------------------------
 ---- Prophet Skitra
 ------------------------------------------------------
 local disciplesKilled = 0
+local disciplesUID = {}
 
 ------------------------------------------------------
 ---- Hivemind
@@ -64,10 +66,13 @@ end
 
 function core._2217:ProphetSkitra()
 	--Defeat the Prophet Skitra in Ny'alotha, the Waking City after defeating three Disciples of the Prophet on Normal difficulty or higher.
-	if core.type == "UNIT_DIED" and (core.destID == "161573" or core.destID == "161935") then
-		disciplesKilled = disciplesKilled + 1
-		core:sendMessage(core:getAchievement() .. " " .. getNPCName(161573) .. " " .. L["Shared_Killed"] .. " (" .. disciplesKilled .. "/3)",true)
-	end 
+	if core.overkill ~= nil then
+		if core.destID == "161935" and core.overkill > 0 and disciplesUID[core.spawn_uid_dest] == nil then
+			disciplesUID[core.spawn_uid_dest] = core.spawn_uid_dest
+			disciplesKilled = disciplesKilled + 1
+			core:sendMessage(core:getAchievement() .. " " .. getNPCName(161573) .. " " .. L["Shared_Killed"] .. " (" .. disciplesKilled .. "/3)",true)
+		end
+	end
 
 	if disciplesKilled >= 3 then
 		core:getAchievementSuccess()
@@ -172,62 +177,29 @@ end
 
 function core._2217:DrestAgath()
 	--Defeat Drest'agath after triggering Throes of Agony twice within 60 seconds, on Normal difficulty or higher.
-	if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 308941 then
-		temperTantrumCounter = temperTantrumCounter + 1
-		core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(308941) .. " " .. L["Core_Counter"] .. " (" .. temperTantrumCounter .. "/2)")
-		if timerStarted == false then
-			core:sendDebugMessage("Timer Started")
-			timerStarted = true
-			core.achievementsFailed[1] = false
-			timerDest = C_Timer.NewTimer(60, function()
-				if temperTantrumCounter == 2 then
-					core:getAchievementSuccess()
-				else
-					core:getAchievementFailed()
-				end
-				core:sendDebugMessage("Resetting Timer")
-				timerStarted = false
-			end)
-		else	
-			if temperTantrumCounter == 2 then
-				core:getAchievementSuccess()
-				if timerDest ~= nil then
-					core:sendDebugMessage("Cancelled Drest Timer")
-					timerDest:Cancel()
-					timerStarted = false
-					timerDest = nil
-				end
-			end
-		end	
-	end
+	if core:getBlizzardTrackingStatus(14026) == true then
+        core:getAchievementSuccess()
+    end
 end
 
 function core._2217:ShadharTheInsatiable()
 	--Defeat Shad'har the Insatiable in Ny'alotha, the Waking City after having everyone /pet him on Normal difficulty or higher.
 	InfoFrame_UpdatePlayersOnInfoFrame()
-	InfoFrame_SetHeaderCounter(L["Shared_PlayersMetCriteria"],playersCompletedAchievement,core.groupSize)
-	core.IATInfoFrame:SetSubHeading2(L["Shared_Notes"],"GameFontHighlight")
-	core.IATInfoFrame:SetText2(L["Shared_Players25Yards"],200)
+	InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],bittenHandCounter,core.groupSize)
 	
-	if initialScan == false then
-		initialScan = true
-		core:sendMessage(L["Shared_Players25Yards"],true)
-	end
-
-	if playersCompletedAchievement == core.groupSize then
-		core:getAchievementSuccess()
-	end
-
-	--Check for message in the sync queue
-	for k, player in ipairs(core.syncMessageQueue) do
-		if player ~= nil then
-			--If someone is found then update InfoFrame
-			if InfoFrame_GetPlayerComplete(player) == false then
-				InfoFrame_SetPlayerComplete(player)
-				playersCompletedAchievement = playersCompletedAchievement + 1
-			end
-			core.syncMessageQueue[k] = nil
+	--Player has gained Bitten Hand
+	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 312590 then
+		if core.destName ~= nil and bittenHandUID[core.spawn_uid_dest_Player] == nil then
+			bittenHandCounter = bittenHandCounter + 1
+			bittenHandUID[core.spawn_uid_dest_Player] = core.spawn_uid_dest_Player
+			core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. GetSpellLink(312590) .. " (" .. bittenHandCounter .. "/" .. core.groupSize .. ")",true)
+			InfoFrame_SetPlayerComplete(core.destName)
 		end
+	end
+
+	--Announce success once everyone has had the debuff at some point during the fight
+	if bittenHandCounter == core.groupSize then
+		core:getAchievementSuccess()
 	end
 end
 
@@ -330,17 +302,18 @@ function core._2217:NZothTheCorruptor()
 		giftOfNZothCounter = giftOfNZothCounter + 1
 		giftOfNZothUID[core.spawn_uid_dest_Player] = core.spawn_uid_dest_Player
 		core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. GetSpellLink(313334) .. " (" .. giftOfNZothCounter .. "/" .. core.groupSize .. ")",true)
-		InfoFrame_SetPlayerComplete(UnitName(core.destName))
+		InfoFrame_SetPlayerComplete(core.destName)
 	end
 
 	--If player dies this will fail the achievement
 	if core.type == "UNIT_DIED" and core.destName ~= nil then
-		if UnitIsPlayer(core.destName) then
+		local name, realm = strsplit("-", core.destName)
+		if UnitIsPlayer(name) then
 			if giftOfNZothUID[core.spawn_uid_dest_Player] ~= nil then
 				giftOfNZothCounter = giftOfNZothCounter - 1
 				giftOfNZothUID[core.spawn_uid_dest_Player] = nil
 				core:sendMessage(core.destName .. " " .. L["Shared_HasDied"] .. " (" .. giftOfNZothCounter .. "/" .. core.groupSize .. ")",true)
-				InfoFrame_SetPlayerFailed(UnitName(core.destName))
+				InfoFrame_SetPlayerFailed(core.destName)
 
 				--Announce fail if success has happened and player has since died
 				if core.achievementsCompleted[1] == true then
@@ -380,13 +353,15 @@ function core._2217:ClearVariables()
 	------------------------------------------------------
 	---- Shad'har the Insatiable
 	------------------------------------------------------
-	playersCompletedAchievement = 0
 	initialScan = false
+	bittenHandCounter = 0
+	bittenHandUID = {}
 
 	------------------------------------------------------
 	---- Prophet Skitra
 	------------------------------------------------------
 	disciplesKilled = 0
+	disciplesUID = {}
 
 	------------------------------------------------------
 	---- Hivemind
@@ -410,32 +385,3 @@ function core._2217:ClearVariables()
 	voidWokenPlayerCheck = false
 end
 
-function core._2217:InstanceCleanup()
-    core._2217.Events:UnregisterEvent("CHAT_MSG_TEXT_EMOTE")
-end
-
-core._2217.Events:SetScript("OnEvent", function(self, event, ...)
-    return self[event] and self[event](self, event, ...)
-end)
-
-function core._2217:InitialSetup()
-    core._2217.Events:RegisterEvent("CHAT_MSG_TEXT_EMOTE")
-end
-
-function core._2217.Events:CHAT_MSG_TEXT_EMOTE(self, message, sender, lineID, senderGUID)
-	if core.Instances[core.expansion][core.instanceType][core.instance]["boss6"].enabled == true then
-		if InfoFrame_GetPlayerComplete(sender) == false then
-			local emote, player, target, emoteString, relation = core:getEmote(message)
-			if emote == "PET" then
-				if target == getNPCName(157231) then
-					--They have petted the correct npc
-					InfoFrame_SetPlayerComplete(player)
-					playersCompletedAchievement = playersCompletedAchievement + 1
-
-					--Send message to other addon users
-					C_ChatInfo.SendAddonMessage("Whizzey", "syncMessage" .. "-" .. player, "RAID")
-				end
-			end
-		end
-	end
-end

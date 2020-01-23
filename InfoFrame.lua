@@ -167,18 +167,21 @@ function InfoFrame_GetRangeCheck(range)
     end
 end
 
-function InfoFrame_SetPlayerFailed(player,additionalInfo)
+function InfoFrame_SetPlayerFailed(player)
     --Make sure we remove realm info from player before checking name
     if string.find(player, "-") then
         local name, realm = strsplit("-", player)
         player = name
     end
 
-    if core.InfoFrame_PlayersTable[player] ~= nil and additionalInfo == nil then
-        core.InfoFrame_PlayersTable[player] = 3
-    else
-        core.InfoFrame_PlayersTable[player].colour = 3
-        core.InfoFrame_PlayersTable[player].message = additionalInfo
+    if core.InfoFrame_PlayersTable[player] ~= nil then
+        if core.InfoFrame_PlayersTable[player] == 3 then
+            core.InfoFrame_PlayersTable[player] = 3
+            return false
+        else
+            core.InfoFrame_PlayersTable[player] = 3
+            return true
+        end
     end
 end
 
