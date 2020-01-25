@@ -219,8 +219,8 @@ local baseLocale = {
     ["Ny’alotha_NZothTheCorruptor"] = "",
     
     --Chat Output
-    ["Nyalotha_PetSelf"] = "You pet",
-    ["Nyalotha_PetOther"] = "pets",
+    ["OrbNotReturnedSuccessfully"] = "Orb not returned successfully",
+    ["OrbNotReturnedTimeLimit"] = "Orb not returned within the time limit",
 
     -------------------------------------------------------
     --- The Eternal Palace

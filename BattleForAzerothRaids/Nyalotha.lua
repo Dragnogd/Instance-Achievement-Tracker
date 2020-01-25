@@ -57,6 +57,13 @@ local playerAnnihilationStacks = {}
 local inititalVexionaSetup = false
 local playersWithThirtyStacks = 0
 
+------------------------------------------------------
+---- Carapace of N'Zoth
+------------------------------------------------------
+local synthesisStacks = 0
+local carapaceTimerStarted = false
+local blockCounter = false
+
 function core._2217:WrathionTheBlackEmperor()
 	--Defeat Wrathion in Ny'alotha, the Waking City after defeating 10 Crackling Shards within 3 seconds of each other on Normal difficulty or higher.
 	if core:getBlizzardTrackingStatus(14019) == true then
@@ -67,7 +74,7 @@ end
 function core._2217:ProphetSkitra()
 	--Defeat the Prophet Skitra in Ny'alotha, the Waking City after defeating three Disciples of the Prophet on Normal difficulty or higher.
 	if core.overkill ~= nil then
-		if core.destID == "161935" and core.overkill > 0 and disciplesUID[core.spawn_uid_dest] == nil then
+		if (core.destID == "161935" or core.destID == "161573") and core.overkill > 0 and disciplesUID[core.spawn_uid_dest] == nil then
 			disciplesUID[core.spawn_uid_dest] = core.spawn_uid_dest
 			disciplesKilled = disciplesKilled + 1
 			core:sendMessage(core:getAchievement() .. " " .. getNPCName(161573) .. " " .. L["Shared_Killed"] .. " (" .. disciplesKilled .. "/3)",true)
@@ -136,14 +143,16 @@ function core._2217:DarkInquisitorXanesh()
 				player = name
 			end
 			core:sendDebugMessage("Found " .. player .. " at " .. index)
-			for i=1,40 do
-				local _, _, _, _, _, expirationTime, _, _, _, spellId = UnitDebuff(player, i)
-				if spellId == 312406 then --312406
-					core:sendDebugMessage("Detected " .. spellId .. " : " .. expirationTime .. " : " .. (expirationTime - GetTime()))
-					if (expirationTime - GetTime() < 3) and (expirationTime - GetTime() > 0) then
-						core:sendDebugMessage("Voidwoken is within time window: " .. expirationTime - GetTime())
-						voidWokenInTimeWindow = true
-					end					
+			if voidWokenInTimeWindow == false then
+				for i=1,40 do
+					local _, _, _, _, _, expirationTime, _, _, _, spellId = UnitDebuff(player, i)
+					if spellId == 312406 then --312406
+						core:sendDebugMessage("Detected " .. spellId .. " : " .. expirationTime .. " : " .. (expirationTime - GetTime()))
+						if (expirationTime - GetTime() < 3) and (expirationTime - GetTime() > 0) then
+							core:sendDebugMessage("Voidwoken is within time window: " .. expirationTime - GetTime())
+							voidWokenInTimeWindow = true
+						end					
+					end
 				end
 			end
 		end
@@ -166,6 +175,14 @@ function core._2217:DarkInquisitorXanesh()
 					end
 				else
 					core:sendDebugMessage("Orb was not returned successfully")
+					if core.achievementsCompleted[1] == false then
+						if darkCollapseCast == true then
+							core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(264908) .. " " .. L["OrbNotReturnedSuccessfully"] .. " (" .. voidOrbCounter .. "/3)",true)
+						end
+						if voidWokenInTimeWindow == false then
+							core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(264908) .. " " .. L["OrbNotReturnedTimeLimit"] .. " (" .. voidOrbCounter .. "/3)",true)
+						end
+					end
 				end
 
 				darkCollapseCast = false
@@ -197,9 +214,25 @@ function core._2217:ShadharTheInsatiable()
 		end
 	end
 
+	if core.type == "SPELL_AURA_REMOVED" and core.spellId == 312590 then
+		if core.destName ~= nil and bittenHandUID[core.spawn_uid_dest_Player] ~= nil then
+			bittenHandCounter = bittenHandCounter - 1
+			bittenHandUID[core.spawn_uid_dest_Player] = nil
+			core:sendMessage(core.destName .. " " .. L["Shared_HasLost"] .. " " .. GetSpellLink(312590) .. " (" .. bittenHandCounter .. "/" .. core.groupSize .. ")",true)
+			InfoFrame_SetPlayerFailed(core.destName)
+		end
+	end
+
 	--Announce success once everyone has had the debuff at some point during the fight
 	if bittenHandCounter == core.groupSize then
 		core:getAchievementSuccess()
+		core.achievementsFailed[1] = false
+	end
+
+	--Announce fail if player looses debuff after criteria has been met
+	if core.achievementsCompleted[1] == true and bittenHandCounter ~= core.groupSize then
+		core:getAchievementFailed()
+		core.achievementsCompleted[1] = false
 	end
 end
 
@@ -220,7 +253,7 @@ function core._2217:Vexiona()
 
 	--Annihilation
 	--306982 (Player), 307403 (Enemy), 310224 (Buff)
-	if (core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_APPLIED_DOSE") and core.spellId == 310224 then
+	if (core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_APPLIED_DOSE") and (core.spellId == 310224 or core.spellId == 306982) then
 		if core.destName ~= nil then
 			--Make sure we remove realm info from player before checking name
 			local player = core.destName
@@ -241,22 +274,22 @@ function core._2217:Vexiona()
 		end
 	end
 
-	--If player dies lets assume this resets the counter for now
-	if core.type == "UNIT_DIED" and core.destName ~= nil then
-		if UnitIsPlayer(core.destName) then
-			local player = core.destName
-			if string.find(player, "-") then
-				local name, realm = strsplit("-", player)
-				player = name
-			end
-			playerAnnihilationStacks[player] = 0
-			if InfoFrame_GetPlayerCompleteWithMessage(player) == true then
-				playersWithThirtyStacks = playersWithThirtyStacks - 1
-				core:sendDebugMessage(player .. " : " .. playerAnnihilationStacks[player])
-				InfoFrame_SetPlayerFailedWithMessage(core.destName, playerAnnihilationStacks[player])
-			end
-		end
-	end
+	-- --If player dies lets assume this resets the counter for now
+	-- if core.type == "UNIT_DIED" and core.destName ~= nil then
+	-- 	if UnitIsPlayer(core.destName) then
+	-- 		local player = core.destName
+	-- 		if string.find(player, "-") then
+	-- 			local name, realm = strsplit("-", player)
+	-- 			player = name
+	-- 		end
+	-- 		playerAnnihilationStacks[player] = 0
+	-- 		if InfoFrame_GetPlayerCompleteWithMessage(player) == true then
+	-- 			playersWithThirtyStacks = playersWithThirtyStacks - 1
+	-- 			core:sendDebugMessage(player .. " : " .. playerAnnihilationStacks[player])
+	-- 			InfoFrame_SetPlayerFailedWithMessage(core.destName, playerAnnihilationStacks[player])
+	-- 		end
+	-- 	end
+	-- end
 
 	--Blizzard tracking gone white so achievement completed
 	if core:getBlizzardTrackingStatus(14139) == true then
@@ -287,8 +320,30 @@ end
 
 function core._2217:CarapaceOfNZoth()
 	--Blizzard tracking gone white so achievement completed
-	if core:getBlizzardTrackingStatus(14147, 1) == true then
-		core:getAchievementSuccess()
+	-- if core:getBlizzardTrackingStatus(14147, 1) == true then
+	-- 	core:getAchievementSuccess()
+	-- end
+
+	--Check for Synthesis stacks on boss. If <16 start 10 second timer.
+	--If achievement not marked as white after >10 seconds then announce fail
+	if core.type == "SPELL_AURA_REMOVED_DOSE" and core.spellId == 307079 and core.amount ~= nil then
+		if blockCounter == false then
+			synthesisStacks = core.amount
+		end
+
+		if carapaceTimerStarted == false then
+			carapaceTimerStarted = true
+			C_Timer.After(10, function() 
+				blockCounter = true
+
+				--Make sure blizzard tracking has time to change
+				C_Timer.After(2, function() 
+					if core.achievementsCompleted[1] == false then
+						core:getAchievementFailedWithMessageAfter("(" .. (16 - tonumber(synthesisStacks)) .. "/16)")
+					end 
+				end)
+			end)
+		end
 	end
 end
 
@@ -383,5 +438,12 @@ function core._2217:ClearVariables()
 	darkCollapseCast = false
 	voidOrbCounter = 0
 	voidWokenPlayerCheck = false
+
+	------------------------------------------------------
+	---- Carapace of N'Zoth
+	------------------------------------------------------
+	synthesisStacks = 0
+	carapaceTimerStarted = false
+	blockCounter = false
 end
 
