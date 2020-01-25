@@ -49,6 +49,7 @@ local voidWokenInTimeWindow = false
 local darkCollapseCast = false
 local voidOrbCounter = 0
 local voidWokenPlayerCheck = false
+local checkInProgress = false
 
 ------------------------------------------------------
 ---- Vexiona
@@ -143,7 +144,8 @@ function core._2217:DarkInquisitorXanesh()
 				player = name
 			end
 			core:sendDebugMessage("Found " .. player .. " at " .. index)
-			if voidWokenInTimeWindow == false then
+			if voidWokenInTimeWindow == false and checkInProgress == false then
+				checkInProgress = true
 				for i=1,40 do
 					local _, _, _, _, _, expirationTime, _, _, _, spellId = UnitDebuff(player, i)
 					if spellId == 312406 then --312406
@@ -154,6 +156,11 @@ function core._2217:DarkInquisitorXanesh()
 						end					
 					end
 				end
+				
+				--Wait 1 second then unlock checking
+				C_Timer.After(1, function() 
+					checkInProgress = false
+				end)
 			end
 		end
 	end
@@ -438,6 +445,7 @@ function core._2217:ClearVariables()
 	darkCollapseCast = false
 	voidOrbCounter = 0
 	voidWokenPlayerCheck = false
+	checkInProgress = false
 
 	------------------------------------------------------
 	---- Carapace of N'Zoth
