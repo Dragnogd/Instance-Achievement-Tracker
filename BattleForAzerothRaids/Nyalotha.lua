@@ -274,6 +274,7 @@ function core._2217:Vexiona()
 				if InfoFrame_GetPlayerCompleteWithMessage(player) == false then
 					InfoFrame_SetPlayerCompleteWithMessage(core.destName, playerAnnihilationStacks[player])
 					playersWithThirtyStacks = playersWithThirtyStacks + 1
+					core:sendMessage(core.destName .. " " .. L["Shared_HasCompleted"] .. " " .. core:getAchievement() .. " (" .. playersWithThirtyStacks .. "/" .. core.groupSize .. ")",true)
 				end 
 			else
 				InfoFrame_SetPlayerNeutralWithMessage(core.destName, playerAnnihilationStacks[player])
