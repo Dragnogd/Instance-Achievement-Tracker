@@ -166,16 +166,6 @@ function core._1136:ShaOfPride()
 	end
 end
 
-function core._1136:Galakras()
-	f:SetScript("OnEvent", function(self, event, unitID)
-		if event == "UNIT_HEALTH" and UnitName(unitID) == "Alliance Vanguard" then
-			if UnitHealth(unitID) == 0 then
-				core:getAchievementFailed()
-			end
-		end
-	end)
-end
-
 function core._1136:GeneralNazgrim()
 	--Gamon Died
 	if core.type == "UNIT_DIED" and core.destID == "72192" then
