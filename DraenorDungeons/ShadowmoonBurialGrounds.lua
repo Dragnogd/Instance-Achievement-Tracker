@@ -41,7 +41,7 @@ function core._1176:Bonemaw()
     --Corpse Skitterlings Sucked up by boss
     if core.type == "SPELL_AURA_REMOVED" and core.spellId == 153804 then
         C_Timer.After(5, function()
-            core:sendMessage(GetAchievementLink(core.currentAchievementID) .. " " .. corpseSkitterlingCounter .. " /25 Corpse Skitterlings inhaled by the boss")
+            core:sendMessage(GetAchievementLink(9025) .. " " .. corpseSkitterlingCounter .. " /25 Corpse Skitterlings inhaled by the boss")
             if corpseSkitterlingCounter >= 25 then
                 core:getAchievementSuccess()
             else
@@ -53,7 +53,7 @@ function core._1176:Bonemaw()
     --25 Corpse Skitterlings collected before boss
     if corpseSkitterlingCounter > 25 and corpseSkitterlingAnnounced == false then
         corpseSkitterlingAnnounced = true
-        core:sendMessage(GetAchievementLink(core.currentAchievementID) .. " 25 Corpse Skitterlings have been engaged. You can now pull boss and wait for Inhale")
+        core:sendMessage(GetAchievementLink(9025) .. " 25 Corpse Skitterlings have been engaged. You can now pull boss and wait for Inhale")
     end
 end
 
