@@ -2100,8 +2100,18 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 
 		if string.match(core.sourceGUID, "Creature") or string.match(core.sourceGUID, "Vehicle") then
 			core.currentSource = "Creature"
+
+			--Set player source to nil
+			core.unitTypeSrcPlayer = nil
+			core.sourceIDPlayer = nil
+			core.spawn_uidPlayer = nil
 		elseif string.match(core.destGUID, "Creature") or string.match(core.destGUID, "Vehicle") then
 			core.currentDest = "Creature"
+
+			--Set player dest to nil
+			core.unitTypePlayer = nil
+			core.destIDPlayer = nil
+			core.spawn_uid_dest_Player = nil
 		end
 	end
 
@@ -2113,8 +2123,18 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 
 		if string.match(core.sourceGUID, "Player") then
 			core.currentSource = "Player"
+
+			--Set creature source to nil
+			core.sourceID = nil
+			core.spawn_uid = nil
+			core.unitTypeSrc = nil
 		elseif string.match(core.destGUID, "Player") then
 			core.currentDest = "Player"
+
+			--Set Creature dest to nil
+			core.destID = nil
+			core.spawn_uid_dest = nil
+			core.unitType = nil
 		end
 	end
 
