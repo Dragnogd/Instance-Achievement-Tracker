@@ -45,7 +45,6 @@ local evolvedSpecimenKilled = 0
 ------------------------------------------------------
 ---- Dark Inquisitor Xanesh
 ------------------------------------------------------
-local darkCollapseCast = false
 local voidOrbCounter = 0
 local voidWokenExpirationTime = nil
 local voidWokenBlock = false
@@ -106,24 +105,16 @@ end
 
 function core._2217:DarkInquisitorXanesh()
 	--Defeat Dark Inquisitor Xanesh in Ny'alotha, the Waking City after safely eliminating a Void Orb with less than 3 seconds remaining on Voidwoken 3 times on Normal difficulty or higher.
-	core:sendDebugMessage("Inside DarkInquisitorXanesh")
-
-	--Dark Collapse happened. Orb not returned successfully
-	if (core.type == "SPELL_DAMAGE" or core.type == "SPELL_ABSORBED" or core.type == "SPELL_MISSED") and core.spellId == 306876 then
-		core:sendDebugMessage("Detected Dark Collapse")
-		darkCollapseCast = true
-	end
 
 	--Players who get Voidwoken Debuff
 	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 312406 then --312406
 		core:sendDebugMessage("Detected Voidwoken Debuff Gained")
 		if core.destName ~= nil then
 			core:sendDebugMessage("Detected Voidwoken Debuff Gained on " .. core.destName)
-
 			--Set the voidwoken debuff expiration time
 			for i=1,40 do
 				local _, _, _, _, _, expirationTime, _, _, _, spellId = UnitBuff(core.destName, i)
-				if spellId == 8936 then --312406 --8936
+				if spellId == 312406 then --312406 --8936
 					if expirationTime > 0 then
 						core:sendDebugMessage("Expiration time is " .. expirationTime)
 						voidWokenExpirationTime = expirationTime			
@@ -131,7 +122,6 @@ function core._2217:DarkInquisitorXanesh()
 				end
 			end
 		end
-		darkCollapseCast = false
 	end
 
 	--Players who loose Voidwoken Debuff
@@ -139,7 +129,6 @@ function core._2217:DarkInquisitorXanesh()
 		core:sendDebugMessage("Detected Voidwoken Debuff Lost")
 		if core.destName ~= nil then
 			core:sendDebugMessage("Detected Voidwoken Debuff Lost on " .. core.destName)
-
 			--Check if the player is alive
 			if UnitIsDead(core.destName) == false then
 				core:sendDebugMessage(core.destName .. " is alive")
@@ -148,26 +137,10 @@ function core._2217:DarkInquisitorXanesh()
 					core:sendDebugMessage("Expiration time is " .. voidWokenExpirationTime)
 					if (voidWokenExpirationTime - GetTime() < 3) and (voidWokenExpirationTime - GetTime() > 0) then
 						core:sendDebugMessage("Expiration time is within limit")
-						--Returned in time window. Wait 5 seconds to see if dark collapse will be cast
-						C_Timer.After(5, function() 
-							if darkCollapseCast == false and voidWokenBlock == false then
-								core:sendDebugMessage("Increment orb counter by 1")
-								voidWokenBlock = true
-								voidOrbCounter = voidOrbCounter + 1
-								core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(264908) .. " " .. L["Core_Counter"] .. " (" .. voidOrbCounter .. "/3)",true)
-							elseif darkCollapseCast == true and voidWokenBlock == false then
-								core:sendDebugMessage("Dark collapse was cast")
-								voidWokenBlock = true
-								core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(264908) .. " " .. L["OrbNotReturnedSuccessfully"] .. " (" .. voidOrbCounter .. "/3)",true)
-							else
-								core:sendDebugMessage("voidWokenBlock Active")
-							end
-						end)
-					else
 						if voidWokenBlock == false then
-							core:sendDebugMessage("Orb not returned within time limit")
 							voidWokenBlock = true
-							core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(264908) .. " " .. L["OrbNotReturnedTimeLimit"] .. " (" .. voidOrbCounter .. "/3)",true)
+							voidOrbCounter = voidOrbCounter + 1
+							core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(264908) .. " " .. L["Core_Counter"] .. " (" .. voidOrbCounter .. "/3)",true)
 						end
 					end
 	
@@ -179,6 +152,10 @@ function core._2217:DarkInquisitorXanesh()
 				end
 			end
 		end
+	end
+
+	if voidOrbCounter >= 3 then
+		core:getAchievementSuccess()
 	end
 end
 
@@ -271,23 +248,6 @@ function core._2217:Vexiona()
 		end
 	end
 
-	-- --If player dies lets assume this resets the counter for now
-	-- if core.type == "UNIT_DIED" and core.destName ~= nil then
-	-- 	if UnitIsPlayer(core.destName) then
-	-- 		local player = core.destName
-	-- 		if string.find(player, "-") then
-	-- 			local name, realm = strsplit("-", player)
-	-- 			player = name
-	-- 		end
-	-- 		playerAnnihilationStacks[player] = 0
-	-- 		if InfoFrame_GetPlayerCompleteWithMessage(player) == true then
-	-- 			playersWithThirtyStacks = playersWithThirtyStacks - 1
-	-- 			core:sendDebugMessage(player .. " : " .. playerAnnihilationStacks[player])
-	-- 			InfoFrame_SetPlayerFailedWithMessage(core.destName, playerAnnihilationStacks[player])
-	-- 		end
-	-- 	end
-	-- end
-
 	--Blizzard tracking gone white so achievement completed
 	if core:getBlizzardTrackingStatus(14139) == true and playersWithThirtyStacks == core.groupSize then
 		core:getAchievementSuccess()
@@ -364,29 +324,9 @@ function core._2217:NZothTheCorruptor()
 		InfoFrame_SetPlayerComplete(core.destName)
 	end
 
-	--If player dies this will fail the achievement
-	if core.type == "UNIT_DIED" and core.destName ~= nil then
-		local name, realm = strsplit("-", core.destName)
-		if UnitIsPlayer(name) then
-			if giftOfNZothUID[core.spawn_uid_dest_Player] ~= nil then
-				giftOfNZothCounter = giftOfNZothCounter - 1
-				giftOfNZothUID[core.spawn_uid_dest_Player] = nil
-				core:sendMessage(core.destName .. " " .. L["Shared_HasDied"] .. " (" .. giftOfNZothCounter .. "/" .. core.groupSize .. ")",true)
-				InfoFrame_SetPlayerFailed(core.destName)
-
-				--Announce fail if success has happened and player has since died
-				if core.achievementsCompleted[1] == true then
-					core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")")
-					core.achievementsCompleted[1] = false
-				end
-			end
-		end
-	end
-
 	--Announce success once everyone has had the debuff at some point during the fight
 	if giftOfNZothCounter == core.groupSize then
 		core:getAchievementSuccess()
-		core.achievementsFailed[1] = false
 	end
 end
 
@@ -438,7 +378,6 @@ function core._2217:ClearVariables()
 	------------------------------------------------------
 	---- Dark Inquisitor Xanesh
 	------------------------------------------------------
-	darkCollapseCast = false
 	voidOrbCounter = 0
 	voidWokenExpirationTime = nil
 	voidWokenBlock = false
