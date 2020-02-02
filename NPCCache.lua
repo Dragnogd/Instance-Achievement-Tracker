@@ -227,6 +227,21 @@ core.NPCCache = {
     [98542] = 98542, --Amalgam of Souls
     [159514] = 159514, --Il'gynoth, Corruption Reborn
     [160271] = 160271, --Forbidden Manifestation
+    [158327] = 158327, --Crackling Shard
+    [156650] = 156650, --Dark Manifestation
+    [156523] = 156523, --Maut
+    [161901] = 161901, --Prophet Skitra
+    [157602] = 157602, --Drest'agath
+    [157354] = 157354, --Vexiona
+    [162719] = 162719, --Void Ascendant
+    [156884] = 156884, --Essence of Vita
+    [159514] = 159514, --Blood of Ny'alotha
+    [157475] = 157475, --Synthesis Growth
+    [158041] = 158041, --N'Zoth the Corruptor
+    [162933] = 162933, --Thought Harvester
+    [161375] = 161375, --Promising Specimen
+    [132609] = 132609, --The Hivemind
+    [156575] = 156575, --Dark Inquisitor Xanesh
 }
 
 --[] = , --

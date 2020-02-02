@@ -205,18 +205,18 @@ local baseLocale = {
     --- Ny’alotha, the Walking City
     -------------------------------------------------------
     --Tactics
-    ["Ny’alotha_WrathionTheBlackEmperor"] = "",
-    ["Ny’alotha_Maut"] = "",
-    ["Ny’alotha_TheProphetSkitra"] = "",
-    ["Ny’alotha_DarkInquisitorXanesh"] = "",
-    ["Ny’alotha_TheHivemind"] = "",
-    ["Ny’alotha_ShadharTheInsatiable"] = "",
-    ["Ny’alotha_Drestagath"] = "",
-    ["Ny’alotha_Vexiona"] = "",
-    ["Ny’alotha_RadenTheDespoiled"] = "",
-    ["Ny’alotha_IlgynothCorruptionReborn"] = "",
-    ["Ny’alotha_CarapaceOfNZoth"] = "",
-    ["Ny’alotha_NZothTheCorruptor"] = "",
+    ["Ny’alotha_WrathionTheBlackEmperor"] = "For this achievement you have to defeat 10 %s within 3 seconds. You can easily do this by having three people get the %s in Phase 2 and then have them walk over the shards at the same time.\n\n Demon Hunters' %s and Monks' %s are excellent spells for this fight, as they can go through multiple shards instantly.",
+    ["Ny’alotha_Maut"] = "For this achievement you have to power up a %s by letting it absorb a mana orb from Phase 2, defeat it and then defeat %s.\n\n To make this achievement much easier, have a third tank get the %s away from the boss and tank it in a %s until Phase 2 starts.\n\n Once the add transforms into a %s, use %s and nuke the add before finishes his %s cast.",
+    ["Ny’alotha_TheProphetSkitra"] = "For this achievement you have to defeat the %s and his two clones after engaging %s.\n\n %s is found at the end of the corridor on the left before you get to %s. Make sure to clear all the trash over there, as well as the trash to the boss room before pulling the %s.\n\n After you start the fight, two clones of the %s will spawn. Use %s, nuke the disciples and then you can finish the boss and get the achievement.",
+    ["Ny’alotha_DarkInquisitorXanesh"] = "For this achievement you have to eliminate a %s three times, each with less than 3 seconds remaining on the %s debuff.\n\n To get the %s debuff, players must soak the %s zones. From there just bounce the %s between two players, get it close to portal and eliminate it when the %s debuff is going to expire within 3 seconds.\n\n Note: Make sure to account for orb travel time, even if you're close to the portal it's still going to take 1 or 2 more seconds for the orb to get eliminated.\n\n Important: If the %s debuff has expired and then the %s went in, that will not count and you'll have to do it again.",
+    ["Ny’alotha_TheHivemind"] = "For this achievement you have to find and pick up three %s and bring them to %s fight.\n\n You will find one specimen near the entrance to Maw of Gor'ma, one in the Ritual Chamber (before %s) and the last one right before %s.\n\n Start the fight and the three specimens will evolve shortly. Use %s, nuke the %s and then you can finish the boss and get the achievement.\n\n Note: Players that pick up the specimens will get a buff: %s. If the buff goes away for whatever reason, the specimens will spawn in their original location.",
+    ["Ny’alotha_ShadharTheInsatiable"] = "For this achievement everyone in the raid has to /pet %s and get the %s debuff.\n\n Note: Every time someone /pets %s, he will get a haste buff and not bite anyone else for 5 seconds. Players will have to /pet during the fight until everyone gets the debuff.",
+    ["Ny’alotha_Drestagath"] = "For this achievement you have to trigger %s twice within 60 seconds.\n\n Strategy: Kill tentacles until %s reaches 80 energy and then wait for the tentacles to respawn. Once 4+ tentacles are up, kill one so %s gets to 100 energy and casts %s.\n\n From there, use %s and kill all the remaining tentacles and the new ones that spawn during the 1 minute timer.",
+    ["Ny’alotha_Vexiona"] = "For this achievement every player in the group has to be hit by %s at least 30 times before defeating %s.\n\n Stack up as a group, have the tank face the %s towards the group, and use raid cooldowns such as %s, %s and %s once the add starts casting %s.\n\n Since you can't reach 30 stacks from a single cast, you will have to do this multiple times. Make sure to rotate between using raid cooldowns and personal cooldowns.",
+    ["Ny’alotha_RadenTheDespoiled"] = "For this achievement players have to destroy 2 obelisks by using the %s that you get from %s. To trigger %s, players must kill the %s.\n\n Note: You will need five players to redirect the %s towards the obelisks by facing their character in their direction.",
+    ["Ny’alotha_IlgynothCorruptionReborn"] = "For this achievement you have to defeat 10 %s in under 3 seconds. The best moment to complete the achievement is either shortly after the first intermission or at the end of the fight when %s are spawning constantly.\n\n Once 10 or more %s are alive group up, use %s, defensive cooldowns for the raid (such as %s and %s) and nuke the adds.",
+    ["Ny’alotha_CarapaceOfNZoth"] = "For this achievement your group will have to split into two groups, bring all the %s to 10%%-15%% hp, and then kill them within 10 seconds.\n\n Note that %s isn't really required for this phase, you can save it for Phase 3. As long as players use cooldowns and essences to destroy the growths, you should have no problem defeating them within 10 seconds.",
+    ["Ny’alotha_NZothTheCorruptor"] = "For this achievement everyone in the group will have to get to 0 %s to get the %s and then defeat %s. This achievement is done in Phase 3 (on Normal or Heroic), at the end of the fight.\n\n Once every player has below 50 %s and the boss is around 15%%-20%% hp, let %s finish his %s cast without anyone soaking it. Everyone will then reach 0 %s, receive the %s and you can use %s to nuke N'Zoth.\n\n Tip: In Phase 3, players with high %s should always soak %s and players with low %s should use one tick of %s to avoid getting the %s early.\n\n Tip: If some players have high %s, they can stay in %s to quickly lose it.",
     
     --Chat Output
     ["OrbNotReturnedSuccessfully"] = "Orb not returned successfully",
