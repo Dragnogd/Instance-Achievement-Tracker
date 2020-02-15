@@ -614,11 +614,11 @@ local baseLocale = {
     --Tactics
     ["BlackrockFoundry_BeastlordDarmac"] = "This achievement will take 3 kills to complete. On each attempt, pull the boss while he is closest to a different beast. It will take several seconds for the boss to mount the beast after pulling. Once he has mounted one of the beasts you can then kill the boss.",
     ["BlackrockFoundry_OperatorThogar"] = "After pulling the boss wait 10 seconds then place a %s and then immediately after the %s on the first set of tracks as you enter the boss room. The achievement will be earned as soon as the train runs over the %s",
-    ["BlackrockFoundry_Kromog"] = "This achievement requires atleast 10 players to complete although more players will make the achievement easier.\n\n After pulling the boss spread out around the room and wait for %s to spawn. After the %s have spawned, each player will need to stand on their own rune and wait to be grabbed by a hand. Next wait for the boss to cast %s then have all players AOE down the hands within 5 seconds of one another.\n\n Note: If you kill the hands before %s has been cast, all players will be thrown into the air which may prevent some players recieving the achievement if they die from the fall and have not tagged the boss.",
+    ["BlackrockFoundry_Kromog"] = "This achievement requires atleast 10 players to complete although more players will make the achievement easier.\n\n After pulling the boss spread out around the room and wait for %s to spawn. After the %s have spawned, each player will need to stand on their own rune and wait to be grabbed by a hand. Next wait for the boss to cast %s then have all players AOE down the hands within 5 seconds of one another.\n\n Note: If you kill the hands before %s has been cast, all players will be thrown into the air which may prevent some players receiving the achievement if they die from the fall and have not tagged the boss.",
     ["BlackrockFoundry_Gruul"] = "",
     ["BlackrockFoundry_Oregorger"] = "",
     ["BlackrockFoundry_BlastFurnace"] = "Completed during phase 2. During phase 2, 4 random players will be targeted by slag elementals. If you have a slag elemental following you, run to one of the primal elementalists which doesn’t have a slag elemental already on. Once there is slag elemental on each primal elementalists you can nuke down the slag elemental then primal elementalists as quick as possible. Getting all 4 primal elementalists down within 10 seconds will reward this achievement.",
-    ["BlackrockFoundry_Blackhand"] = "DPS the boss down to 30% to reach phase 3. Ashes will then start falling from the ceiling. Spread out around the platform and stand underneath the falling ashes until it lands on you. Once the group has collected 20 falling ashes you can nuke boss. The more players you have the easy this achievement is.",
+    ["BlackrockFoundry_Blackhand"] = "To complete this achievement, DPS the boss down to 30%% to reach phase 3. Next players will need to spread out around the boss room and collect %s by standing underneath them as they fall from the ceiling. Once the group has collected 20 %s you can kill the boss.\n\n Note: This achievement is easier to complete in a group due to the boss knocking players off the platform with %s followed by %s.",
 
     --Chat Output
 
@@ -634,7 +634,7 @@ local baseLocale = {
     ["HellfireCitadel_SocretharTheEternal"] = "During phase 2. Use the robot to put up a prison at the blue portal. Continue to use the prison at the portal to trap the adds until 20 Haunting Souls are trapped. Once this is done, leave the vehicle and aoe all the adds down. Players can also cc the adds to keep them in place. Do not kill the adds with the robot.",
     ["HellfireCitadel_TyrantVelhari"] = "1 person tank the Ancient Enforcer away from the group. Everyone else nuke the boss down",
     ["HellfireCitadel_Mannoroth"] = "At the start of the fight kill the green & purple summoner. Wait for a player to get curse of the legion debuff before killing the red summoner. Once the curse of the legion debuff runs out or is dispelled, a doom lord will spawn. Get the doom lord down to 5% health. Next dps down Mannoroth to 30% health. Once this is done place the doom lord in front of the boss and wait for it to get killed by Mannoroth Empowered Fel Seeker ability. Once the doom lord has been killed by the boss, you can kill the boss.",
-    ["HellfireCitadel_Archimonde"] = "Wait for the Doomfire Spirit to spawn then nuke down boss. The Doomfire Spirit does not need to stay alive",
+    ["HellfireCitadel_Archimonde"] = "To complete this achievement, pull the boss then wait for a %s to spawn. Once a %s has spawned you can then kill the boss.\n\n Note: You do not need to keep the %s alive as long as you kill the boss within 120 seconds.",
 
     --Chat Output
 
@@ -678,7 +678,7 @@ local baseLocale = {
     --- Grimrail Depot
     -------------------------------------------------------
     --Tactics
-    ["GrimrailDepot_RocketsparkAndBorka"] = "",
+    ["GrimrailDepot_RocketsparkAndBorka"] = "There are 4 chests (%s) located around the boss room which needs to be shattered to complete this achievement. First pull the boss then wait at each of the chests for %s to cast %s to shatter the chest. Once all 4 chests have been shattered, you can kill the boss.",
     ["GrimrailDepot_NitroggThundertower"] = "",
 
     --Chat Output
@@ -1156,8 +1156,8 @@ local baseLocale = {
     --- End Time
     -------------------------------------------------------
     --Tactics
-    ["EndTime_EchoOfTyrande"] = "At 110, run the gauntlet without any player in healing spec. This way you don’t need to worry about a healer taking any damage.",
-    ["EndTime_EchoOfSylvanas"] = "Pull the boss then wait for the Risen Ghouls to spawn. Once the Risen Ghouls have spawned, kill two of them then kill boss.",
+    ["EndTime_EchoOfTyrande"] = "The easiest way to complete this achievement is to simply run the gauntlet without any players being in healing spec.",
+    ["EndTime_EchoOfSylvanas"] = "To complete this achievement, pull the boss then wait for %s to spawn. Once the %s have spawned, kill at least two of them then kill the boss.",
 
     --Chat Output
 
@@ -1181,7 +1181,7 @@ local baseLocale = {
     --- Obsidian Sanctum
     -------------------------------------------------------
     --Tactics
-    ["ObsidianSanctum_SartharionTheOnyxGuardian"] = "At 110, you can simply just kill Sartharion and ignore all the other bosses to get this achievement.",
+    ["ObsidianSanctum_SartharionTheOnyxGuardian"] = "At max level, you can just kill %s and ignore all the other bosses to get this achievement.",
 
     --Chat Output
 
@@ -1317,7 +1317,7 @@ local baseLocale = {
     --- Violet Hold
     -------------------------------------------------------
     --Tactics
-    ["VioletHold_Cyanigosa"] = "To complete this achievement simply kill all the mobs as soon as they spawn from their portals and do not activate any red crystals around the room.",
+    ["VioletHold_Cyanigosa"] = "At max level, kill all the mobs as soon as they spawn from the portals around the room to prevent them reaching the door. You must also not activate any of the red crystals around the room.",
     ["VioletHold_Other"] = "This achievement will take multiple runs to complete since it’s random which bosses are going to spawn.",
 
     --Chat Output

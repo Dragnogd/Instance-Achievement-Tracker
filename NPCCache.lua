@@ -242,6 +242,11 @@ core.NPCCache = {
     [161375] = 161375, --Promising Specimen
     [132609] = 132609, --The Hivemind
     [156575] = 156575, --Dark Inquisitor Xanesh
+    [54191] = 54191, --Risen Ghoul
+    [81834] = 81834, --Priceless Paraphernalia
+    [77816] = 77816, --Borka the Brute
+    [28860] = 28860, --Sartharion
+    [92208] = 92208, --Doomfire Spirit
 }
 
 --[] = , --
