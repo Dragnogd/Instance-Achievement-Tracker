@@ -113,7 +113,7 @@ function core._2217:DarkInquisitorXanesh()
 			core:sendDebugMessage("Detected Voidwoken Debuff Gained on " .. core.destName)
 			--Set the voidwoken debuff expiration time
 			for i=1,40 do
-				local _, _, _, _, _, expirationTime, _, _, _, spellId = UnitBuff(core.destName, i)
+				local _, _, _, _, _, expirationTime, _, _, _, spellId = UnitDebuff(core.destName, i)
 				if spellId == 312406 then --312406 --8936
 					if expirationTime > 0 then
 						core:sendDebugMessage("Expiration time is " .. expirationTime)
@@ -142,6 +142,8 @@ function core._2217:DarkInquisitorXanesh()
 							voidOrbCounter = voidOrbCounter + 1
 							core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(264908) .. " " .. L["Core_Counter"] .. " (" .. voidOrbCounter .. "/3)",true)
 						end
+					else
+						core:sendDebugMessage("FAILED")
 					end
 	
 					--This stops couter incrementing by 3 each time an orb is returned
@@ -210,11 +212,9 @@ function core._2217:ShadharTheInsatiable()
 end
 
 function core._2217:Vexiona()
-	--Track individually how many times each player has been hit
-	InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
-	InfoFrame_SetHeaderCounter(L["Shared_PlayersMetCriteria"],playersWithThirtyStacks,core.groupSize)
-
 	if inititalVexionaSetup == false then
+		InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
+		InfoFrame_SetHeaderCounter(L["Shared_PlayersMetCriteria"],playersWithThirtyStacks,core.groupSize)
 		inititalVexionaSetup = true
 		for player,status in pairs(core.InfoFrame_PlayersTable) do
 			if playerAnnihilationStacks[player] == nil then
@@ -227,6 +227,8 @@ function core._2217:Vexiona()
 	--Annihilation
 	--306982 (Player), 307403 (Enemy), 310224 (Buff)
 	if (core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_APPLIED_DOSE") and (core.spellId == 310224 or core.spellId == 306982) then
+		--Track individually how many times each player has been hit
+		core:sendDebugMessage("Inside Anhiliation")
 		if core.destName ~= nil then
 			--Make sure we remove realm info from player before checking name
 			local player = core.destName
@@ -234,16 +236,27 @@ function core._2217:Vexiona()
 				local name, realm = strsplit("-", player)
 				player = name
 			end
-			playerAnnihilationStacks[player] = playerAnnihilationStacks[player] + 1
-			core:sendDebugMessage(player .. " : " .. playerAnnihilationStacks[player])
-			if playerAnnihilationStacks[player] >= 30 then
-				if InfoFrame_GetPlayerCompleteWithMessage(player) == false then
-					InfoFrame_SetPlayerCompleteWithMessage(core.destName, playerAnnihilationStacks[player])
-					playersWithThirtyStacks = playersWithThirtyStacks + 1
-					core:sendMessage(core.destName .. " " .. L["Shared_HasCompleted"] .. " " .. core:getAchievement() .. " (" .. playersWithThirtyStacks .. "/" .. core.groupSize .. ")",true)
-				end 
-			else
-				InfoFrame_SetPlayerNeutralWithMessage(core.destName, playerAnnihilationStacks[player])
+			if playerAnnihilationStacks[player] ~= nil then
+				playerAnnihilationStacks[player] = playerAnnihilationStacks[player] + 1
+				core:sendDebugMessage(player .. " : " .. playerAnnihilationStacks[player])
+				if playerAnnihilationStacks[player] >= 30 then
+					if InfoFrame_GetPlayerCompleteWithMessage(player) == false then
+						core:sendDebugMessage("Setting player to complete: " .. player)
+						InfoFrame_SetPlayerCompleteWithMessage(core.destName, playerAnnihilationStacks[player])
+						playersWithThirtyStacks = playersWithThirtyStacks + 1
+						core:sendMessage(core.destName .. " " .. L["Shared_HasCompleted"] .. " " .. core:getAchievement() .. " (" .. playersWithThirtyStacks .. "/" .. core.groupSize .. ")",true)
+					
+						--Update InfoFrame
+						InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
+						InfoFrame_SetHeaderCounter(L["Shared_PlayersMetCriteria"],playersWithThirtyStacks,core.groupSize)
+					end
+				else
+					InfoFrame_SetPlayerNeutralWithMessage(core.destName, playerAnnihilationStacks[player])
+
+					--Update InfoFrame
+					InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
+					InfoFrame_SetHeaderCounter(L["Shared_PlayersMetCriteria"],playersWithThirtyStacks,core.groupSize)
+				end
 			end
 		end
 	end
