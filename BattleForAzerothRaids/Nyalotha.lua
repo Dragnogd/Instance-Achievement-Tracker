@@ -68,7 +68,6 @@ local blockCounter = false
 ------------------------------------------------------
 local forbiddenManifestationSpawned = false
 
-
 function core._2217:WrathionTheBlackEmperor()
 	--Defeat Wrathion in Ny'alotha, the Waking City after defeating 10 Crackling Shards within 3 seconds of each other on Normal difficulty or higher.
 	if core:getBlizzardTrackingStatus(14019) == true then
@@ -297,9 +296,9 @@ end
 
 function core._2217:CarapaceOfNZoth()
 	--Blizzard tracking gone white so achievement completed
-	-- if core:getBlizzardTrackingStatus(14147, 1) == true then
-	-- 	core:getAchievementSuccess()
-	-- end
+	if core:getBlizzardTrackingStatus(14147) == true then
+		core:getAchievementSuccess()
+	end
 
 	--Check for Synthesis stacks on boss. If <16 start 10 second timer.
 	--If achievement not marked as white after >10 seconds then announce fail
