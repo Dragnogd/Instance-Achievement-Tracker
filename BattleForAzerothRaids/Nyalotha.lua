@@ -55,6 +55,8 @@ local voidWokenBlock = false
 local playerAnnihilationStacks = {}
 local inititalVexionaSetup = false
 local playersWithThirtyStacks = 0
+local updateRequired = false
+local lockInfoFrameUpdate = false
 
 ------------------------------------------------------
 ---- Carapace of N'Zoth
@@ -246,15 +248,13 @@ function core._2217:Vexiona()
 						core:sendMessage(core.destName .. " " .. L["Shared_HasCompleted"] .. " " .. core:getAchievement() .. " (" .. playersWithThirtyStacks .. "/" .. core.groupSize .. ")",true)
 					
 						--Update InfoFrame
-						InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
-						InfoFrame_SetHeaderCounter(L["Shared_PlayersMetCriteria"],playersWithThirtyStacks,core.groupSize)
+						updateRequired = true
 					end
 				else
 					InfoFrame_SetPlayerNeutralWithMessage(core.destName, playerAnnihilationStacks[player])
 
 					--Update InfoFrame
-					InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
-					InfoFrame_SetHeaderCounter(L["Shared_PlayersMetCriteria"],playersWithThirtyStacks,core.groupSize)
+					updateRequired = true
 				end
 			end
 		end
@@ -263,6 +263,16 @@ function core._2217:Vexiona()
 	--Blizzard tracking gone white so achievement completed
 	if core:getBlizzardTrackingStatus(14139) == true and playersWithThirtyStacks == core.groupSize then
 		core:getAchievementSuccess()
+	end
+
+	if updateRequired == true and lockInfoFrameUpdate == false then
+		lockInfoFrameUpdate = true
+		InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
+		InfoFrame_SetHeaderCounter(L["Shared_PlayersMetCriteria"],playersWithThirtyStacks,core.groupSize)
+		updateRequired = false
+		C_Timer.After(1, function() 
+			lockInfoFrameUpdate = false
+		end)
 	end
 end
 
@@ -386,6 +396,8 @@ function core._2217:ClearVariables()
 	playerAnnihilationStacks = {}
 	inititalVexionaSetup = false
 	playersWithThirtyStacks = 0
+	updateRequired = false
+	lockInfoFrameUpdate = false
 
 	------------------------------------------------------
 	---- Dark Inquisitor Xanesh
