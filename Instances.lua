@@ -385,7 +385,7 @@ core.Instances = {
                     encounterID = 2334,
                 },
                 boss4 = {
-                    name = w, --Dark Inquisitor Xanesh
+                    name = 2377, --Dark Inquisitor Xanesh
                     bossIDs = {},
                     achievement = 14024,
                     players = {},

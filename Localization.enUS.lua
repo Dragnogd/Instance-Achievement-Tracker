@@ -196,6 +196,7 @@ local baseLocale = {
     ["Shared_AddsKilled"] = "Adds killed",
     ["Shared_PlayersMetCriteria"] = "Players who have met critera",
     ["Shared_Players25Yards"] = "Players must be within 25 yards of a player running IAT to track this achievement accurately",
+    ["TimeBetweenLast"] = "Time between last %s %s seconds"
 
     -------------------------------------------------------
     --- Battle of Dazar'alor

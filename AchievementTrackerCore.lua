@@ -664,7 +664,7 @@ function createEnableAchievementTrackingUI()
 	--Title
 	UIConfig.title = UIConfig:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
 	UIConfig.title:SetPoint("CENTER", AchievementTrackerCheckTitleBG, "CENTER", -5, 0);
-	UIConfig.title:SetText(L["Core_TrackAchievements"] .. "?");
+	UIConfig.title:SetText("IAT V" .. core.Config.majorVersion .. "." .. core.Config.minorVersion .. "." .. core.Config.revisionVersion);
 
 	--Content
 	UIConfig.content = UIConfig:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
@@ -961,7 +961,7 @@ function events:PLAYER_LOGIN()
 		text = "InstanceAchievementTracker",
 		icon = "Interface\\Icons\\ACHIEVEMENT_GUILDPERK_MRPOPULARITY",
 		OnTooltipShow = function(tooltip)
-			tooltip:AddLine("|cff00FF00" .. "Instance Achievement Tracker" .. "|r");
+			tooltip:AddLine("Instance Achievement Tracker");
 		end,
 		OnClick = function(self, button)
 			core.Config.Toggle()
