@@ -13,9 +13,8 @@ core._2217.Events = CreateFrame("Frame")
 ------------------------------------------------------
 ---- Drest'agath
 ------------------------------------------------------
-local temperTantrumCounter = 0
-local timerStarted = false
-local timerDest = nil
+local initialTime = nil
+local secondTime = nil
 
 ------------------------------------------------------
 ---- N'Zoth, the Corruptor
@@ -80,10 +79,14 @@ end
 function core._2217:ProphetSkitra()
 	--Defeat the Prophet Skitra in Ny'alotha, the Waking City after defeating three Disciples of the Prophet on Normal difficulty or higher.
 	if core.overkill ~= nil then
-		if (core.destID == "161935" or core.destID == "161573") and core.overkill > 0 and disciplesUID[core.spawn_uid_dest] == nil then
-			disciplesUID[core.spawn_uid_dest] = core.spawn_uid_dest
-			disciplesKilled = disciplesKilled + 1
-			core:sendMessage(core:getAchievement() .. " " .. getNPCName(161573) .. " " .. L["Shared_Killed"] .. " (" .. disciplesKilled .. "/3)",true)
+		if core.destID == "161935" or core.destID == "161573" then
+			if core.overkill > 0 or core.type == "UNIT_DIED" then
+				if disciplesUID[core.spawn_uid_dest] == nil and core.currentDest == "Creature" then
+					disciplesUID[core.spawn_uid_dest] = core.spawn_uid_dest
+					disciplesKilled = disciplesKilled + 1
+					core:sendMessage(core:getAchievement() .. " " .. getNPCName(161573) .. " " .. L["Shared_Killed"] .. " (" .. disciplesKilled .. "/3)",true)
+				end
+			end
 		end
 	end
 
@@ -166,7 +169,19 @@ function core._2217:DrestAgath()
 	--Defeat Drest'agath after triggering Throes of Agony twice within 60 seconds, on Normal difficulty or higher.
 	if core:getBlizzardTrackingStatus(14026) == true then
         core:getAchievementSuccess()
-    end
+	end
+	
+	if core.achievementsCompleted[1] == false then
+		--Temper Tantrum cast. Set initial timer
+		if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 308941 and initialTime == nil then
+			initialTime = GetTime()
+		elseif core.type == "SPELL_CAST_SUCCESS" and core.spellId == 308941 and initialTime ~= nil then
+			secondTime = GetTime()
+			core:sendMessage(core:getAchievement() .. format(L["TimeBetweenLast"],GetSpellLink(308947),secondTime - initialTime))
+			initialTime = secondTime
+			secondTime = nil
+		end
+	end
 end
 
 function core._2217:ShadharTheInsatiable()
@@ -356,14 +371,8 @@ function core._2217:ClearVariables()
 	------------------------------------------------------
 	---- Drest'agath
 	------------------------------------------------------
-	temperTantrumCounter = 0
-	timerStarted = false
-	if timerDest ~= nil then
-		core:sendDebugMessage("Cancelled Drest Timer")
-		timerDest:Cancel()
-		timerStarted = false
-		timerDest = nil
-	end
+	initialTime = nil
+	secondTime = nil
 
 	------------------------------------------------------
 	---- N'Zoth, the Corruptor
