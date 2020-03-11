@@ -78,14 +78,12 @@ end
 
 function core._2217:ProphetSkitra()
 	--Defeat the Prophet Skitra in Ny'alotha, the Waking City after defeating three Disciples of the Prophet on Normal difficulty or higher.
-	if core.overkill ~= nil then
-		if core.destID == "161935" or core.destID == "161573" then
-			if core.overkill > 0 or core.type == "UNIT_DIED" then
-				if disciplesUID[core.spawn_uid_dest] == nil and core.currentDest == "Creature" then
-					disciplesUID[core.spawn_uid_dest] = core.spawn_uid_dest
-					disciplesKilled = disciplesKilled + 1
-					core:sendMessage(core:getAchievement() .. " " .. getNPCName(161573) .. " " .. L["Shared_Killed"] .. " (" .. disciplesKilled .. "/3)",true)
-				end
+	if core.destID == "161935" or core.destID == "161573" then
+		if core.type == "UNIT_DIED" then
+			if disciplesUID[core.spawn_uid_dest] == nil and core.currentDest == "Creature" then
+				disciplesUID[core.spawn_uid_dest] = core.spawn_uid_dest
+				disciplesKilled = disciplesKilled + 1
+				core:sendMessage(core:getAchievement() .. " " .. getNPCName(161573) .. " " .. L["Shared_Killed"] .. " (" .. disciplesKilled .. "/3)",true)
 			end
 		end
 	end
