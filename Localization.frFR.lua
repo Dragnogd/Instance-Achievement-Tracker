@@ -46,8 +46,8 @@ local baseLocale = {
     ["GUI_AchievementsCompletedForInstance"] = "Tous les hauts-faits ont étés achevés pour", -- "All achievements have been completed for"
     ["GUI_EnableAutomaticCombatLogging"] = "Activer automatiquement l'Enregistrement des combats", -- Enable automatic combat logging
 	["GUI_Author"] = "Auteur", -- "Author"
-    ["GUI_Translators"] = "Traducteur", -- "Translators"
-    ["Gui_TranslatorNames"] = "Feant-KirinTor (EU)",
+    ["GUI_Translators"] = "Traducteurs", -- "Translators"
+    ["Gui_TranslatorNames"] = "(EU) Feant-KirinTor et (EU) Snowayway-Elune",
     ["GUI_BlockDisableAddon"] = "Vous ne pouvez pas désactiver l’addon pendant que vous êtes en combat. Attendez jusqu’à ce que vous soyez hors de combat puis essayez à nouveau", -- "You cannot disable the addon while you are are in combat. Wait till you are out of combat then try again"
     ["GUI_DisplayInfoFrame"] = "Activer la fenêtre d'info", -- "Enable Info Frame",
     ["GUI_Tactic"] = "|cffFF4000Tactique|r", -- "Tactic",
@@ -203,20 +203,22 @@ local baseLocale = {
     --- Ny’alotha, the Walking City
     -------------------------------------------------------
     --Tactics
-    ["Ny’alotha_WrathionTheBlackEmperor"] = "",
-    ["Ny’alotha_Maut"] = "",
-    ["Ny’alotha_TheProphetSkitra"] = "",
-    ["Ny’alotha_DarkInquisitorXanesh"] = "",
-    ["Ny’alotha_TheHivemind"] = "",
-    ["Ny’alotha_ShadharTheInsatiable"] = "",
-    ["Ny’alotha_Drestagath"] = "",
-    ["Ny’alotha_Vexiona"] = "",
-    ["Ny’alotha_RadenTheDespoiled"] = "",
-    ["Ny’alotha_IlgynothCorruptionReborn"] = "",
-    ["Ny’alotha_CarapaceOfNZoth"] = "",
-    ["Ny’alotha_NZothTheCorruptor"] = "",
-    
+    ["Ny’alotha_WrathionTheBlackEmperor"] = "Pour ce haut-fait vous devez éliminer 10 %s en 3 secondes. Vous pouvez facilement le faire en désignant 3 joueurs pour prendre %s en Phase 2 puis en les laissant marcher sur les éclats en même temps.\n\n %s du Chasseur de démon et %s du Moine sont d'excellents sorts pour ce combat, comme ils permettent de faire plusieurs éclats instantanément.",
+    ["Ny’alotha_Maut"] = "Pour ce haut-fait vous devez surcharger une %s en la laissant 'soak' une orbe de mana pendant la Phase 2, la tuer et ensuite vaincre %s.\n\n Pour rendre ce haut-fait plus simple, demandez à un troisième tank de garder %s loin du boss et de la tanker dans une %s jusqu'à que la Phase 2 commence.\n\n Une fois l'add transformé en %s, utilisez %s et atomisez l'add avant la fin de la canalisation de %s.",
+    ["Ny’alotha_TheProphetSkitra"] = "Pour ce haut-fait vous devez vaincre %s et ses deux clones après avoir engagé %s.\n\n %s est trouvable au fond du couloir sur la gauche avant d'aller sur %s. Soyez sûr d'éliminer tous les 'trashs' sur le chemin ainsi que ceux dans la salle du boss avant d'engager %s.\n\n Après le début du combat, deux clones de %s vont apparaître. Utilisez %s et tuez les disciples, vous pouvez ensuite finir le boss et obtenir le haut-fait.",
+    ["Ny’alotha_DarkInquisitorXanesh"] = "Pour ce haut-fait vous devez éliminer un %s trois fois, avec à chaque fois moins de 3 secondes restantes sur le debuff %s .\n\n Pour obtenir le debuff %s, les joueurs doivent absober les zones de %s. De là, faites des passes d'%s entre deux joueurs, approchez le du portail et éliminez le quand le debuff %s va expirer dans les 3 secondes.\n\n Note: Assurez-vous de prendre en compte le temps de déplacement de l'orbe, même si vous êtes proche du portail cela prendra 1 ou 2 secondes en plus à l'orbe pour être éliminé.\n\n Important: Si le debuff %s a expiré et que l'%s est rentré, ça ne comptera pas et vous devrez le refaire une nouvelle fois.",
+    ["Ny’alotha_TheHivemind"] = "Pour ce haut-fait vous devez trouver et ramasser trois %s et les ramener au combat contre %s.\n\n Vous trouverez un spécimen près de l'entrée de la Gueule de Gor'ma (sur la droite), un dans la Chambre du Rituel (avant %s) et le dernier juste avant %s.\n\n Commencez le combat et les trois spécimens vont évoluer peu de temps après. Utilisez %s, atomisez les %s et finissez le boss pour avoir le haut-fait.\n\n Note: Les joueurs qui prennent les spécimens auront le buff: %s. Si le buff disparaît pour une raison quelconque, les spécimens réapparaîtront à leur position originale.",
+    ["Ny’alotha_ShadharTheInsatiable"] = "Pour ce haut-fait tout le monde dans le raid doit /cajoler %s et avoir le debuff %s.\n\n Note: Chaque fois que quelqu'un /cajole %s, il obtiendra un buff de hâte et ne mordra personne d'autre pendant 5 secondes. Les joueurs doivent /cajoler pendant le combat jusqu'à que tous obtiennent le debuff.\n\n Note: Les sorts d'immunité comme le Bouclier Divin du paladin font disparaître le debuff, faites attention.",
+    ["Ny’alotha_Drestagath"] = "Pour ce haut-fait vous devez déclencher %s deux fois en 60 secondes.\n\n Strategie: Tuez les tentacules jusqu'à que %s atteigne 80 d'énergie et attendez que les tentacules réapparaissent. Une fois que 4+ tentacules sont apparus, tuez-en un pour que %s atteigne 100 d'énergie et canalise %s.\n\n De là, utilisez %s et tuez tous les tentacules restants ainsi que les nouveaux qui apparaissent pendant le chrono de 1 minute.",
+    ["Ny’alotha_Vexiona"] = "Pour ce haut-fait tous les joueurs dans le groupe doivent se faire toucher par %s au moins 30 fois avant de vaincre %s.\n\n Soyez rassemblé en un groupe, le tank doit faire en sorte que %s fasse face au groupe, et utilisez les CD defensifs de raid comme %s, %s et %s une fois que l'add commence à canaliser %s.\n\n Comme vous ne pouvez pas atteindre 30 stacks en une seule canalisation, vous devrez faire ceci plusieurs fois. Faites en sorte d'établir une rotation entre les CD defensifs de raid et ceux qui sont personnel.",
+    ["Ny’alotha_RadenTheDespoiled"] = "Pour ce haut-fait les joueurs doivent détruire 2 obelisques en utilisant le %s que vous obtenez grâce à %s. Pour déclencher %s, les joueurs doivent tuer %s.\n\n Note: Vous aurez besoin de cinq joueurs pour diriger le %s vers les obélisques en faisant face avec leur personnage dans la direction des obélisques.",
+    ["Ny’alotha_IlgynothCorruptionReborn"] = "Pour ce haut-fait vous devez vaincre 10 %s en moins de 3 secondes. Le meilleur moment pour completer ce haut-fait est soit peu après la première intermission ou bien à la fin du combat quand les %s apparraissent constamment.\n\n Une fois que 10 ou plus %s sont en vie, groupez vous, utilisez %s, les CD defensifs de raid (tels que %s et %s) et atomisez les adds.",
+    ["Ny’alotha_CarapaceOfNZoth"] = "Pour ce hait-fait votre raid va devoir se séparer en deux, descendez tous les %s à 10%%-15%% hp, et ensuite tuez les en 10 secondes.\n\n Notez que %s n'est pas nécessaire pour cette phase, vous pouvez la garder pour la Phase 3. Tant que les joueurs utilisent leurs CD et essences pour détruire les excroissances, vous ne devriez avoir aucun problème pour les vaincre en 10 secondes.",
+    ["Ny’alotha_NZothTheCorruptor"] = "Pour ce haut-fait tout le monde dans le groupe devra être à 0 %s pour avoir %s et ensuite vaincre %s. Ce haut-fait est réalisé en Phase 3 (en Normal ou Heroïque), à la fin de l'affrontement.\n\n Une fois que tous les joueurs sont sous 50 %s et que le boss est environ à 15%%-20%% hp, laissez %s finir sa canalistaion de %s sans personne pour la 'soak'. Tout le monde atteindra donc 0 %s, recevra le %s et vous pourrez utiliser %s pour annihiler N'Zoth.\n\n Astuce: En Phase 3, les joueurs avec beaucoup de %s devraient toujours 'soak' %s et les joueurs avec peu de %s devraient utiliser un tick de %s pour éviter d'avoir %s trop tôt.\n\n Astuce: Si certains joueurs ont trop de %s, ils peuvent rester dans %s pour la perdre rapidement.",
+
     --Chat Output
+    ["OrbNotReturnedSuccessfully"] = "L'orbe n'a pas été éliminé avec succès",
+    ["OrbNotReturnedTimeLimit"] = "L'orbe n'a pas été éliminé dans le temps imparti",
 
     -------------------------------------------------------
     --- The Eternal Palace
