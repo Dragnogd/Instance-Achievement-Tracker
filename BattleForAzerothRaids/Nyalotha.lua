@@ -244,7 +244,7 @@ function core._2217:Vexiona()
 	--306982 (Player), 307403 (Enemy), 310224 (Buff)
 	if (core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_APPLIED_DOSE") and (core.spellId == 310224 or core.spellId == 306982) then
 		--Track individually how many times each player has been hit
-		core:sendDebugMessage("Inside Anhiliation")
+		--core:sendDebugMessage("Inside Anhiliation")
 		if core.destName ~= nil then
 			--Make sure we remove realm info from player before checking name
 			local player = core.destName
@@ -254,10 +254,10 @@ function core._2217:Vexiona()
 			end
 			if playerAnnihilationStacks[player] ~= nil then
 				playerAnnihilationStacks[player] = playerAnnihilationStacks[player] + 1
-				core:sendDebugMessage(player .. " : " .. playerAnnihilationStacks[player])
-				if playerAnnihilationStacks[player] >= 30 then
+				--core:sendDebugMessage(player .. " : " .. playerAnnihilationStacks[player])
+				if playerAnnihilationStacks[player] == 30 then
 					if InfoFrame_GetPlayerCompleteWithMessage(player) == false then
-						core:sendDebugMessage("Setting player to complete: " .. player)
+						--core:sendDebugMessage("Setting player to complete: " .. player)
 						InfoFrame_SetPlayerCompleteWithMessage(core.destName, playerAnnihilationStacks[player])
 						playersWithThirtyStacks = playersWithThirtyStacks + 1
 						core:sendMessage(core.destName .. " " .. L["Shared_HasCompleted"] .. " " .. core:getAchievement() .. " (" .. playersWithThirtyStacks .. "/" .. core.groupSize .. ")",true)
@@ -265,7 +265,14 @@ function core._2217:Vexiona()
 						--Update InfoFrame
 						updateRequired = true
 					end
-				else
+
+					C_Timer.After(1, function() 
+						if core:getBlizzardTrackingStatus(14139) == true and playersWithThirtyStacks == core.groupSize then
+							--Blizzard tracking gone white so achievement completed
+							core:getAchievementSuccess()
+						end
+					end)
+				elseif playerAnnihilationStacks[player] < 30 then
 					InfoFrame_SetPlayerNeutralWithMessage(core.destName, playerAnnihilationStacks[player])
 
 					--Update InfoFrame
@@ -273,11 +280,6 @@ function core._2217:Vexiona()
 				end
 			end
 		end
-	end
-
-	--Blizzard tracking gone white so achievement completed
-	if core:getBlizzardTrackingStatus(14139) == true and playersWithThirtyStacks == core.groupSize then
-		core:getAchievementSuccess()
 	end
 
 	if updateRequired == true and lockInfoFrameUpdate == false then
