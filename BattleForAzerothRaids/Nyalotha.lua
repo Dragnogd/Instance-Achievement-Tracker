@@ -263,13 +263,6 @@ function core._2217:Vexiona()
 						--Update InfoFrame
 						updateRequired = true
 					end
-
-					C_Timer.After(1, function() 
-						if core:getBlizzardTrackingStatus(14139) == true and playersWithThirtyStacks == core.groupSize then
-							--Blizzard tracking gone white so achievement completed
-							core:getAchievementSuccess()
-						end
-					end)
 				elseif playerAnnihilationStacks[player] < 30 then
 					InfoFrame_SetPlayerNeutralWithMessage(core.destName, playerAnnihilationStacks[player])
 
@@ -287,6 +280,10 @@ function core._2217:Vexiona()
 		updateRequired = false
 		C_Timer.After(1, function() 
 			lockInfoFrameUpdate = false
+			if core:getBlizzardTrackingStatus(14139) == true and playersWithThirtyStacks == core.groupSize then
+				--Blizzard tracking gone white so achievement completed
+				core:getAchievementSuccess()
+			end
 		end)
 	end
 end

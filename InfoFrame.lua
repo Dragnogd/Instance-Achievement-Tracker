@@ -282,9 +282,9 @@ function InfoFrame_SetPlayerComplete(player)
 end
 
 function InfoFrame_SetPlayerCompleteWithMessage(player,additionalInfo)
-    core:sendDebugMessage("Inside SetPlayerCompletedMessage")
-    core:sendDebugMessage(additionalInfo)
-    core:sendDebugMessage(player)
+    --core:sendDebugMessage("Inside SetPlayerCompletedMessage")
+    --core:sendDebugMessage(additionalInfo)
+    --core:sendDebugMessage(player)
     --Make sure we remove realm info from player before checking name
     if string.find(player, "-") then
         local name, realm = strsplit("-", player)
@@ -296,16 +296,16 @@ function InfoFrame_SetPlayerCompleteWithMessage(player,additionalInfo)
             core.InfoFrame_PlayersTable[player][1] = 2
             core.InfoFrame_PlayersTable[player][2] = additionalInfo
 
-            core:sendDebugMessage(core.InfoFrame_PlayersTable[player][1])
-            core:sendDebugMessage(core.InfoFrame_PlayersTable[player][2])
+            --core:sendDebugMessage(core.InfoFrame_PlayersTable[player][1])
+            --core:sendDebugMessage(core.InfoFrame_PlayersTable[player][2])
 
             return false
         else
             core.InfoFrame_PlayersTable[player][1] = 2
             core.InfoFrame_PlayersTable[player][2] = additionalInfo
 
-            core:sendDebugMessage(core.InfoFrame_PlayersTable[player][1])
-            core:sendDebugMessage(core.InfoFrame_PlayersTable[player][2])
+            --core:sendDebugMessage(core.InfoFrame_PlayersTable[player][1])
+            --core:sendDebugMessage(core.InfoFrame_PlayersTable[player][2])
 
             return true
         end
@@ -313,9 +313,9 @@ function InfoFrame_SetPlayerCompleteWithMessage(player,additionalInfo)
 end
 
 function InfoFrame_SetPlayerNeutralWithMessage(player,additionalInfo)
-    core:sendDebugMessage("Inside SetPlayerNeutralMessage")
-    core:sendDebugMessage(additionalInfo)
-    core:sendDebugMessage(player)
+    --core:sendDebugMessage("Inside SetPlayerNeutralMessage")
+    --core:sendDebugMessage(additionalInfo)
+    --core:sendDebugMessage(player)
     --Make sure we remove realm info from player before checking name
     if string.find(player, "-") then
         local name, realm = strsplit("-", player)
@@ -327,16 +327,16 @@ function InfoFrame_SetPlayerNeutralWithMessage(player,additionalInfo)
             core.InfoFrame_PlayersTable[player][1] = 1
             core.InfoFrame_PlayersTable[player][2] = additionalInfo
 
-            core:sendDebugMessage(core.InfoFrame_PlayersTable[player][1])
-            core:sendDebugMessage(core.InfoFrame_PlayersTable[player][2])
+            --core:sendDebugMessage(core.InfoFrame_PlayersTable[player][1])
+            --core:sendDebugMessage(core.InfoFrame_PlayersTable[player][2])
 
             return false
         else
             core.InfoFrame_PlayersTable[player][1] = 1
             core.InfoFrame_PlayersTable[player][2] = additionalInfo
 
-            core:sendDebugMessage(core.InfoFrame_PlayersTable[player][1])
-            core:sendDebugMessage(core.InfoFrame_PlayersTable[player][2])
+            --core:sendDebugMessage(core.InfoFrame_PlayersTable[player][1])
+            --core:sendDebugMessage(core.InfoFrame_PlayersTable[player][2])
 
             return true
         end
