@@ -7,7 +7,7 @@ local L = core.L												--Translation Table
 local events = CreateFrame("Frame")								--All events are registered to this frame
 local UIConfig													--UIConfig is used to make a display asking the user if they would like
 local UICreated = false											--To enable achievement tracking when they enter an instances
-local debugMode = false
+local debugMode = true
 local debugModeChat = false
 local sendDebugMessages = false
 
@@ -2006,6 +2006,50 @@ end
 function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 	core.timestamp, core.type, core.hideCaster, core.sourceGUID, core.sourceName, core.sourceFlags, core.sourceRaidFlags, core.destGUID, core.destName, core.destFlags, core.destRaidFlags = CombatLogGetCurrentEventInfo()
 
+	--Reset variables from previous run
+	core.amount = nil
+	core.overkill = nil
+	core.school = nil
+	core.resisted = nil
+	core.blocked = nil
+	core.absorbed = nil
+	core.critical = nil
+	core.glancing = nil
+	core.crushing = nil
+	core.missType = nil
+	core.isOffHand = nil
+	core.amountMissed = nil
+	core.overhealing = nil
+	core.powerType = nil
+	core.extraAmount = nil
+	core.extraSpellId = nil
+	core.extraSpellName = nil
+	core.extraSchool = nil
+	core.auraType = nil
+	core.failedType = nil
+	core.addDestGUID = nil
+	core.addDestName = nil
+	core.addDestFlags = nil
+	core.addDestRaidFlags = nil
+	core.addSpellId = nil
+	core.addSpellName = nil
+	core.addSpellSchool = nil
+	core.unitTypeSrcPlayer = nil
+	core.sourceIDPlayer = nil
+	core.spawn_uidPlayer = nil
+	core.unitTypePlayer = nil
+	core.destIDPlayer = nil
+	core.spawn_uid_dest_Player = nil
+	core.sourceID = nil
+	core.spawn_uid = nil
+	core.unitTypeSrc = nil
+	core.destID = nil
+	core.spawn_uid_dest = nil
+	core.unitType = nil
+	core.currentUnit = nil
+	core.currentSource = nil
+	core.currentDest = nil
+
 	if string.match(core.type, "RANGE_") or string.match(core.type, "SPELL_") or string.match(core.type, "SPELL_PERIODIC_") or string.match(core.type, "SPELL_BUILDING_") then
 		core.spellId, core.spellName, core.spellSchool = select(12, CombatLogGetCurrentEventInfo())
 
@@ -2100,18 +2144,8 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 
 		if string.match(core.sourceGUID, "Creature") or string.match(core.sourceGUID, "Vehicle") then
 			core.currentSource = "Creature"
-
-			--Set player source to nil
-			core.unitTypeSrcPlayer = nil
-			core.sourceIDPlayer = nil
-			core.spawn_uidPlayer = nil
 		elseif string.match(core.destGUID, "Creature") or string.match(core.destGUID, "Vehicle") then
 			core.currentDest = "Creature"
-
-			--Set player dest to nil
-			core.unitTypePlayer = nil
-			core.destIDPlayer = nil
-			core.spawn_uid_dest_Player = nil
 		end
 	end
 
@@ -2123,18 +2157,8 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 
 		if string.match(core.sourceGUID, "Player") then
 			core.currentSource = "Player"
-
-			--Set creature source to nil
-			core.sourceID = nil
-			core.spawn_uid = nil
-			core.unitTypeSrc = nil
 		elseif string.match(core.destGUID, "Player") then
 			core.currentDest = "Player"
-
-			--Set Creature dest to nil
-			core.destID = nil
-			core.spawn_uid_dest = nil
-			core.unitType = nil
 		end
 	end
 
