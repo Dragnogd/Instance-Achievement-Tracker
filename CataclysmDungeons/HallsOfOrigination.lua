@@ -104,7 +104,7 @@ function core._644:InitialSetup()
     core._644.Events:RegisterEvent("UNIT_EXITING_VEHICLE")
 end
 
-function core._644.Events:UNIT_ENTERING_VEHICLE(self, unitTarget, showVehicleFrame, isControlSeat, vehicleUIIndicatorID, vehicleGUID, mayChooseExit, hasPitch)
+function core._644.Events:UNIT_ENTERING_VEHICLE(self, unitID, showVehicleFrame, isControlSeat, vehicleUIIndicatorID, vehicleGUID, mayChooseExit, hasPitch)
     if core.Instances[core.expansion][core.instanceType][core.instance]["boss2"].enabled == true then
         local unitType, _, _, _, _, sourceID, spawn_uid = strsplit("-", vehicleGUID)
         if sourceID == "39443" then
