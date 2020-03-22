@@ -112,9 +112,6 @@ function core._2096:UunatHarbingerOfTheVoid()
 	if core.type == "SPELL_CAST_SUCCESS" and (core.spellId == 285638 or core.spellId == 285685 or core.spellId == 285453) then
 		core:sendDebugMessage("Stop Moving: Gift of N'Zoth (SPELL_CAST_SUCCESS) NOT SAFE TO MOVE")
 		safeToMove = false
-		if playerCurrentlyMoving == true then
-            core:getAchievementFailedPersonalIndependent(UnitName("Player"))
-		end
 	end
 
     --When boss is changing phase then player must stop moving
@@ -126,9 +123,6 @@ function core._2096:UunatHarbingerOfTheVoid()
             stopMovingAnnounced = true
             core:sendMessage(core:getAchievement() .. " " .. L["CrucibleOfStorms_StopMoving"],true)
 			core.IATInfoFrame:SetText1("|cffFF0000" .. L["CrucibleOfStorms_StopMoving"] .. "|r","GameFontHighlightLarge")
-			if playerCurrentlyMoving == true then
-				core:getAchievementFailedPersonalIndependent(UnitName("Player"))
-			end
         end
     end
 
@@ -174,11 +168,6 @@ function core._2096:UunatHarbingerOfTheVoid()
 			end  
 		end
     end
-    
-    --If players dies then fail achievement for that player
-    if core.type == "UNIT_DIED" and core.currentDest == "Player" and core.destName ~= nil then
-        core:getAchievementFailedPersonal()
-    end
 end
 
 function core._2096:ClearVariables()
@@ -212,90 +201,8 @@ core._2096.Events:SetScript("OnEvent", function(self, event, ...)
     return self[event] and self[event](self, event, ...)
 end)
 
-local function playerMoving(...)
-    if core.encounterStarted == true then
-        if IsPlayerMoving() == true and UnitIsDead("Player") == false then
-            if playerMovingDebug == false then
-                playerMovingDebug = true
-                local name, realm = UnitName("Player")
-                C_ChatInfo.SendAddonMessage("Whizzey", "moveIAT,true," .. name, core.chatType)	
-            end
-
-            -- core:sendDebugMessage(GetTime() .. " Player is moving")
-            playerCurrentlyMoving = true
-            if safeToMove == false then
-                core:sendDebugMessage("Set Failed after start moving called")
-                core:getAchievementFailedPersonalIndependent(UnitName("Player"))
-            end
-        end
-    end
-end
-
-local function playerMovingMouse(...)
-    if core.encounterStarted == true then
-        if IsPlayerMoving() == true and UnitIsDead("Player") == false and IsMouseButtonDown("LeftButton") then
-            if playerMovingDebug == false then
-                playerMovingDebug = true
-                local name, realm = UnitName("Player")
-                C_ChatInfo.SendAddonMessage("Whizzey", "moveIAT,true," .. name, core.chatType)	
-            end
-        
-            -- core:sendDebugMessage(GetTime() .. " Player is moving")
-            playerCurrentlyMoving = true
-            if safeToMove == false then
-                core:sendDebugMessage("Set Failed after start moving called mouse")
-                core:getAchievementFailedPersonalIndependent(UnitName("Player"))
-            end
-        end
-    end
-end
-
-local function playerStoppedMoving(...)
-    if core.encounterStarted == true then
-        if IsPlayerMoving() == false and UnitIsDead("Player") == false then
-            if playerMovingDebug == true then
-                playerMovingDebug = false
-                local name, realm = UnitName("Player")
-                C_ChatInfo.SendAddonMessage("Whizzey", "moveIAT,false," .. name, core.chatType)	
-            end
-            -- core:sendDebugMessage(GetTime() .. " Player stopped moving")
-            playerCurrentlyMoving = false
-
-            if safeToMove == false then
-                core:sendDebugMessage("Set Failed after stop moving called")
-                core:getAchievementFailedPersonalIndependent(UnitName("Player"))
-            end
-        end
-    end
-end
-
 function core._2096:InitialSetup()
     core._2096.Events:RegisterEvent("UNIT_POWER_UPDATE")
-
-    --Player Moving
-    hooksecurefunc("MoveForwardStart", playerMoving)
-    hooksecurefunc("MoveBackwardStart", playerMoving)
-    hooksecurefunc("StrafeLeftStart", playerMoving)
-    hooksecurefunc("StrafeRightStart", playerMoving)
-    hooksecurefunc("JumpOrAscendStart", playerMoving)
-    hooksecurefunc("TurnOrActionStart", playerMovingMouse)
-    hooksecurefunc("ToggleAutoRun", playerMoving)
-    hooksecurefunc("ToggleRun", playerMoving)
-    hooksecurefunc("StartAutoRun", playerMoving)
-    hooksecurefunc("MoveAndSteerStart", playerMoving)
-    hooksecurefunc("CameraOrSelectOrMoveStart",playerMoving)
-
-    --Player Stopped Moving
-    hooksecurefunc("MoveForwardStop", playerStoppedMoving)
-    hooksecurefunc("MoveBackwardStop", playerStoppedMoving)
-    hooksecurefunc("StrafeLeftStop", playerStoppedMoving)
-    hooksecurefunc("StrafeRightStop", playerStoppedMoving)
-    hooksecurefunc("TurnOrActionStop", playerStoppedMoving)
-    hooksecurefunc("ToggleAutoRun", playerStoppedMoving)
-    hooksecurefunc("ToggleRun", playerStoppedMoving)
-    hooksecurefunc("StopAutoRun", playerStoppedMoving)
-    hooksecurefunc("MoveAndSteerStop", playerStoppedMoving)
-    hooksecurefunc("CameraOrSelectOrMoveStop",playerStoppedMoving)
 end
 
 function core._2096.Events:UNIT_POWER_UPDATE(self, unit, powerType)
