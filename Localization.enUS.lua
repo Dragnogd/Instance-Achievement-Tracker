@@ -23,6 +23,7 @@ local baseLocale = {
     ["GUI_SelectSound"] = "Select Sound",
     ["GUI_TrackingDisabled"] = "Achievement Tracking Disabled", --["(Achievement Tracking Disabled)"]
     ["GUI_EnterInstanceToStartScanning"] = "Enter instance to start scanning", --["Enter instance to start scanning"]
+    ["GUI_Shadowlands"] = "Shadowlands",
     ["GUI_BattleForAzeroth"] = "Battle for Azeroth", --["Battle for Azeroth"]
     ["GUI_Legion"] = "Legion", --["Legion"]
     ["GUI_WarlordsOfDraenor"] = "Warlords of Draenor", --["Warlords of Draenor"]

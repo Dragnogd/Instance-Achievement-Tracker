@@ -27,8 +27,17 @@ local L = core.L
 local instances = {}
 
 core.Instances = {
-    --Battle for Azeroth
+    --Shadowlands
     [2] = {
+        Raids = {
+        },
+
+        Dungeons = {
+        },
+    },
+
+    --Battle for Azeroth
+    [3] = {
         Raids = {
             [1861] = { --Uldir
                 name = 1031,
@@ -906,7 +915,7 @@ core.Instances = {
     },
 
     --Legion
-    [3] = {
+    [4] = {
         Raids = {
             [1520] = { --The Emerald Nightmare
                 name = 768,
@@ -1838,7 +1847,7 @@ core.Instances = {
     },
 
     --Warlords of Dranor
-    [4] = {
+    [5] = {
         Raids = {
             [1228] = { --Highmaul
                 name = 477,
@@ -2494,7 +2503,7 @@ core.Instances = {
     },
 
     --Mists of Pandaria
-    [5] = {
+    [6] = {
         Raids = {
             [996] = { --Terrace of Endless Spring
                 name = 320,
@@ -3771,7 +3780,7 @@ core.Instances = {
     },
 
     --Cataclysm
-    [6] = {
+    [7] = {
         Raids = {
             [967] = { --Dragon Soul
                 name = 187,
@@ -4598,7 +4607,7 @@ core.Instances = {
     },
 
     --Wrath of the Lich King
-    [7] = {
+    [8] = {
         Raids = {
             ["615-10"] = { --Obsidian Sanctum 10 Man
                 name = 755,
