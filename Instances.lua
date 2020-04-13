@@ -30,9 +30,36 @@ core.Instances = {
     --Shadowlands
     [2] = {
         Raids = {
+            [2296] = { --Castle Nathria
+                name = 1190,
+            },
         },
 
         Dungeons = {
+            [2291] = { --De Other Side
+                name = 1188,
+            },
+            [2287] = { --Halls of Atonement
+                name = 1185,
+            },
+            [2290] = { --Mists of Tirna Scithe
+                name = 1184,
+            },
+            [2289] = { --Plaguefall
+                name = 1183,
+            },
+            [2284] = { --Sanguine Depths
+                name = 1189,
+            },
+            [2285] = { --Spires of Ascension
+                name = 1186,
+            },
+            [2293] = { --Theater of Pain
+                name = 1187,
+            },
+            [2286] = { --The Necrotic Wake
+                name = 1182,
+            },
         },
     },
 

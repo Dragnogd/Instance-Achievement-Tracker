@@ -29,6 +29,17 @@ Localization.zhCN.lua
 Localization.zhTW.lua
 Localization.koKR.lua
 
+ShadowlandsRaids\CastleNathria.lua
+
+ShadowlandsDungeons\DeOtherSide.lua
+ShadowlandsDungeons\HallsofAtonement.lua
+ShadowlandsDungeons\MistsofTirnaScithe.lua
+ShadowlandsDungeons\Plaguefall.lua
+ShadowlandsDungeons\SanguineDepths.lua
+ShadowlandsDungeons\SpiresofAscension.lua
+ShadowlandsDungeons\TheaterofPain.lua
+ShadowlandsDungeons\TheNecroticWake.lua
+
 BattleForAzerothRaids\Uldir.lua
 BattleForAzerothRaids\BattleOfDazaralor.lua
 BattleForAzerothRaids\CrucibleOfStorms.lua
