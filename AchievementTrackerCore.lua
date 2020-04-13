@@ -539,12 +539,12 @@ function getInstanceInfomation()
 				core:sendDebugMessage("DifficultyID: " .. core.difficultyID)
 				if core.difficultyID == 2 then
 					--WOTLK/Cata/Mop/Wod heroic dungeons
-					if core.expansion == 7 or core.expansion == 6 or core.expansion == 5 or core.expansion == 4 then
+					if core.expansion == 8 or core.expansion == 7 or core.expansion == 6 or core.expansion == 5 then
 						instanceCompatible = true
 					end
 				elseif core.difficultyID == 23 then
-					--Legion/BFA Mythics
-					if core.expansion == 3 or core.expansion == 2 then
+					--Legion/BFA/Shadowlands Mythics
+					if core.expansion == 4 or core.expansion == 3 or core.expansion == 2 then
 						instanceCompatible = true
 					end
 				elseif core.difficultyID == 3 or core.difficultyID == 5 then
@@ -555,7 +555,7 @@ function getInstanceInfomation()
 					instanceCompatible = true
 				elseif core.difficultyID == 11 or core.difficultyID == 12 then
 					--scenerios"
-					if core.expansion == 5 then
+					if core.expansion == 6 then
 						instanceCompatible = true
 					end
 				elseif core.difficultyID == 13 or core.difficultyID == 14 or core.difficultyID == 15 or core.difficultyID == 16 then
@@ -615,6 +615,8 @@ function getInstanceInfomation()
 						Tab_OnClick(_G["AchievementTrackerTab6"])
 					elseif core.expansion == 7 then
 						Tab_OnClick(_G["AchievementTrackerTab7"])
+					elseif core.expansion == 8 then
+						Tab_OnClick(_G["AchievementTrackerTab8"])
 					end
 
 					--Make sure right instance is selected
@@ -1931,7 +1933,7 @@ function events:CHAT_MSG_ADDON(self, prefix, message, channel, sender)
 			core:sendDebugMessage("Im master addon")
 			local sync, messageOutput = strsplit(",", message)
 			core:sendDebugMessage(messageOutput)
-			core:sendMessage(messageOutput,true)
+			--core:sendMessage(messageOutput,true)
 		end
 	elseif string.match(message, "reqIAT") then
 		--We have been asked by another addon if we are tracking this achievement. Lets respond and update InfoFrame
