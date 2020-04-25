@@ -311,7 +311,7 @@ end
 
 function core._2217:IlgynothCorruptionReborn()
 	--Defeat Il'gynoth, Corruption Reborn in Ny'alotha, the Waking City after defeating 10 Bloods of Ny'alotha in under 3 seconds on Normal difficulty or higher.
-	core.MobCounter:Setup(10, 3, "159514")
+	core.MobCounter:Setup(10, 2.9, "159514")
 	core.MobCounter:DetectSpawnedMob()
 	core.MobCounter:DetectKilledMob()
 end
