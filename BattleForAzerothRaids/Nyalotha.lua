@@ -175,7 +175,7 @@ function core._2217:DrestAgath()
 			initialTime = GetTime()
 		elseif core.type == "SPELL_CAST_SUCCESS" and core.spellId == 308941 and initialTime ~= nil then
 			secondTime = GetTime()
-			core:sendMessage(core:getAchievement() .. format(L["TimeBetweenLast"],GetSpellLink(308947),secondTime - initialTime),true)
+			core:sendMessage(core:getAchievement() .. format(L["TimeBetweenLast"],GetSpellLink(308947), core:roundNumber(secondTime - initialTime)),true)
 			initialTime = secondTime
 			secondTime = nil
 		end
