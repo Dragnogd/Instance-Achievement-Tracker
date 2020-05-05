@@ -3756,3 +3756,7 @@ function longestCommonSubstring(s1, s2)
 		return nil
 	end
 end
+
+function core:roundNumber(number)
+	return tonumber(string.format("%.2f", number))
+end
