@@ -1,29 +1,8 @@
--- local i = 1
--- while EJ_GetInstanceByIndex(i, true) do --True for raid, false for dungeons. i = 1 for raids i = 2 for dungeons
---     local instanceId, name = EJ_GetInstanceByIndex(i, true)
---     print("---" .. instanceId, name)
---     EJ_SelectInstance(instanceId)
---     i = i+1
-    
---     local j = 1
---     while EJ_GetEncounterInfoByIndex(j, instanceId) do
---         local name, _, encounterId = EJ_GetEncounterInfoByIndex(j, instanceId)
---         print(encounterId, name)
---         j = j+1
---     end
--- end
-
---NOTES for updating this file for new raids/dungeons
---EncounterID - Get this from boss mods
---
-
 --------------------------------------
--- Namespaces
+-- Namespace
 --------------------------------------
 local _, core = ...
-
 local L = core.L
-
 local instances = {}
 
 core.Instances = {
