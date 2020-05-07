@@ -1358,11 +1358,10 @@ core.Instances = {
                     achievement = 12046,
                     players = {},
                     tactics = format(L["AntorusTheBurningThrone_CovenOfShivarra"], GetSpellLink(250095), GetSpellLink(245910), GetSpellLink(710), GetSpellLink(187650), GetSpellLink(339), GetSpellLink(246763), GetSpellLink(245671)),
-                    enabled = true,
-                    track = function() core._1712:CovenOfShivarra() end,
+                    enabled = false,
+                    track = nil,
                     partial = false,
                     encounterID = 2073,
-                    displayInfoFrame = true,
                 },
                 boss10 = {
                     name = 1984, --Aggramar
