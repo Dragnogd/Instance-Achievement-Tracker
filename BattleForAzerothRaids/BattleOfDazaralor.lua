@@ -434,19 +434,19 @@ function core._2070.Events:CHAT_MSG_TEXT_EMOTE(self, message, sender, lineID, se
         if UnitIsPlayer(sender) then
             if sender == UnitName("Player") then
                 if string.match(message, L["BattleOfDazzarlor_PraiseSelf"]) then
-                    core:sendDebugMessage("Detected Praise Self")
+                    --core:sendDebugMessage("Detected Praise Self")
                     if string.match(message, getNPCName(51090)) then
-                        core:sendDebugMessage("Detected Singing Sunflower Self")
+                        --core:sendDebugMessage("Detected Singing Sunflower Self")
                         --They have praised the correct npc. Check if they have the correct buff
                         for i=1,40 do
                             local _, _, _, _, _, _, _, _, _, spellId = UnitDebuff(sender, i)
                             if spellId == 284802 then
                                 --Check if the player actually needs the achievement since it is personal
-                                core:sendDebugMessage("Found player who hugged singing sunflower")
-                                core:sendDebugMessage(sender)
-                                core:sendDebugMessage(spellId)
+                                --core:sendDebugMessage("Found player who hugged singing sunflower")
+                                --core:sendDebugMessage(sender)
+                                --core:sendDebugMessage(spellId)
                                 if core.playersSuccessPersonal[sender] == nil and core:has_value(core.currentBosses[1].players, sender) then
-                                    core:sendDebugMessage("Setting personal achievement to complete for: " .. sender)
+                                    --core:sendDebugMessage("Setting personal achievement to complete for: " .. sender)
 									InfoFrame_SetPlayerComplete(sender)
 									playersCompletedAchievement = playersCompletedAchievement + 1
 									core:getAchievementSuccessPersonalWithName(1, sender)
@@ -460,19 +460,19 @@ function core._2070.Events:CHAT_MSG_TEXT_EMOTE(self, message, sender, lineID, se
                 end
             else
                 if string.match(message, L["BattleOfDazzarlor_PraiseOther"]) then
-                    core:sendDebugMessage("Detected Praise Other")
+                    --core:sendDebugMessage("Detected Praise Other")
                     if string.match(message, getNPCName(51090)) then
-                        core:sendDebugMessage("Detected Singing Sunflower in other")
+                        --core:sendDebugMessage("Detected Singing Sunflower in other")
                         --They have praised the correct npc. Check if they have the correct buff
                         for i=1,40 do
                             local _, _, _, _, _, _, _, _, _, spellId = UnitDebuff(sender, i)
                             if spellId == 284802 then
                                 --Check if the player actually needs the achievement since it is personal
-                                core:sendDebugMessage("Found player who hugged singing sunflower in other")
-                                core:sendDebugMessage(sender)
-                                core:sendDebugMessage(spellId)                                
+                                --core:sendDebugMessage("Found player who hugged singing sunflower in other")
+                                --core:sendDebugMessage(sender)
+                                --core:sendDebugMessage(spellId)                                
                                 if core.playersSuccessPersonal[sender] == nil and core:has_value(core.currentBosses[1].players, sender) then
-                                    core:sendDebugMessage("Setting personal achievement to complete for: " .. sender)
+                                    --core:sendDebugMessage("Setting personal achievement to complete for: " .. sender)
 									InfoFrame_SetPlayerComplete(sender)
 									playersCompletedAchievement = playersCompletedAchievement + 1
 									core:getAchievementSuccessPersonalWithName(1, sender)
