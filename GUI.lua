@@ -32,8 +32,8 @@ AchievementTrackerOptions = {}
 
 -- Purpose:         Information about the current release. This is mianly used to detect which addon should output messages to chat to avoid spam
 Config.majorVersion = 2						--Addon with a higher major version change have priority over a lower major version
-Config.minorVersion = 76    				--Addon with a minor version change have prioirty over a lower minor version
-Config.revisionVersion = 1					--Addon with a revision change have the same priorty as a lower revision verison
+Config.minorVersion = 77    				--Addon with a minor version change have prioirty over a lower minor version
+Config.revisionVersion = 0					--Addon with a revision change have the same priorty as a lower revision verison
 Config.releaseType = ""                     --Release type (Alpha, Beta, Release)
 
 -- Purpose:         Used to detect which version of the game the user is running. This is used so we can add features for different versions of the game.
