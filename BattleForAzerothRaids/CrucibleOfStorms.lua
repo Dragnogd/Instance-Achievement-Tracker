@@ -57,44 +57,12 @@ function core._2096:UunatHarbingerOfTheVoid()
     -- 4.) If players moved during a period of non movement then announce fail
     -- 5.) If PLAYER_STARTED_MOVING and PLAYER_STOPPED_MOVING happened at same time we can assume this is caused by spellcast rather than player actually moving
 
-	if core:has_value(core.currentBosses[1].players, L["GUI_NoPlayersNeedAchievement"]) == false then
-		InfoFrame_SetHeaderCounter(L["Shared_TrackingStatus"],playersWithTracking,#core.currentBosses[1].players)
-		InfoFrame_UpdatePlayersOnInfoFrame(false)
-		
-	    --Request which players are currently tracking this achievement
-	    --Sync Message, Major Version, Minor Version, update Infoframe
-		if initialScan == false then
-			core.IATInfoFrame:SetText1("|cff59FF00" .. L["CrucibleOfStorms_StartMoving"] .. "|r","GameFontHighlightLarge")
-			core.IATInfoFrame:SetSubHeading2(L["Shared_Notes"])
-            core.IATInfoFrame:SetText2(L["Shared_PlayersRunningAddon"],200)
-			 initialScan = true
-			 --Set all players to fail initially as we have not determined yet if they have the addon installed
-	 		for k,player in ipairs(core.currentBosses[1].players) do
-	 			InfoFrame_SetPlayerFailed(player)
-	 		end
-	 		C_Timer.After(3, function()
-	 			--Ask all other addons in the group to see if they are running the addon and tracking this achievement
-	 			C_ChatInfo.SendAddonMessage("Whizzey", "reqIAT,2,38,true", "RAID")		
-
-				--Wait 1 second for a response from other addon in the group
-				 C_Timer.After(2, function() 
-					local playersStr = L["Shared_TrackingAchievementFor"] .. ": "
-					for player, status in pairs(core.InfoFrame_PlayersTable) do
-						--For all players that have the addon running, increment the counter by 1
-	 					core:sendDebugMessage(status) 
-						 if status == 2 then
-							playersStr = playersStr .. player .. ", "
-	 						playersWithTracking = playersWithTracking + 1
-	 					end
-					 end
-					 core:sendMessageSafe(playersStr,true)
-	 			end)
-	 		end)
-	 	end	
-    else
-	    InfoFrame_SetHeaderCounter(L["Shared_PlayersWhoNeedAchievement"],playersWithTracking,0)
-	    core.IATInfoFrame:SetText1(L["GUI_NoPlayersNeedAchievement"],"GameFontHighlightLarge")
-	end
+    if initialScan == false then
+        C_Timer.After(1, function () 
+            core.IATInfoFrame:SetSubHeading1("|cff59FF00" .. L["CrucibleOfStorms_StartMoving"] .. "|r","GameFontHighlightLarge")
+        end)
+        initialScan = true
+    end	
 
     --When boss starts casting Gift of N'Zoth tell players to stop moving
 	if core.type == "SPELL_CAST_START" and (core.spellId == 285638 or core.spellId == 285685 or core.spellId == 285453) then
@@ -104,7 +72,7 @@ function core._2096:UunatHarbingerOfTheVoid()
         if stopMovingAnnounced == false then
             stopMovingAnnounced = true
             core:sendMessage(core:getAchievement() .. " " .. L["CrucibleOfStorms_StopMoving"],true)
-            core.IATInfoFrame:SetText1("|cffFF0000" .. L["CrucibleOfStorms_StopMoving"] .. "|r","GameFontHighlightLarge")
+            core.IATInfoFrame:SetSubHeading1("|cffFF0000" .. L["CrucibleOfStorms_StopMoving"] .. "|r","GameFontHighlightLarge")
         end
 	end
 	
@@ -122,7 +90,7 @@ function core._2096:UunatHarbingerOfTheVoid()
         if stopMovingAnnounced == false then
             stopMovingAnnounced = true
             core:sendMessage(core:getAchievement() .. " " .. L["CrucibleOfStorms_StopMoving"],true)
-			core.IATInfoFrame:SetText1("|cffFF0000" .. L["CrucibleOfStorms_StopMoving"] .. "|r","GameFontHighlightLarge")
+			core.IATInfoFrame:SetSubHeading1("|cffFF0000" .. L["CrucibleOfStorms_StopMoving"] .. "|r","GameFontHighlightLarge")
         end
     end
 
@@ -135,7 +103,7 @@ function core._2096:UunatHarbingerOfTheVoid()
             stopMovingAnnounced = false
             safeToMove = true
             core:sendMessage(core:getAchievement() .. " " .. L["CrucibleOfStorms_StartMoving"],true)
-            core.IATInfoFrame:SetText1("|cff59FF00" .. L["CrucibleOfStorms_StartMoving"] .. "|r","GameFontHighlightLarge")
+            core.IATInfoFrame:SetSubHeading1("|cff59FF00" .. L["CrucibleOfStorms_StartMoving"] .. "|r","GameFontHighlightLarge")
 
             --If boss transitioned early then set phase transition to true
             if phase1Complete == false then
@@ -156,7 +124,7 @@ function core._2096:UunatHarbingerOfTheVoid()
 			if stopMovingAnnounced == false then
 				stopMovingAnnounced = true
 				core:sendMessage(core:getAchievement() .. " " .. L["CrucibleOfStorms_StopMoving"],true)
-				core.IATInfoFrame:SetText1("|cffFF0000" .. L["CrucibleOfStorms_StopMoving"] .. "|r","GameFontHighlightLarge")
+				core.IATInfoFrame:SetSubHeading1("|cffFF0000" .. L["CrucibleOfStorms_StopMoving"] .. "|r","GameFontHighlightLarge")
 			end  
 		elseif core:getHealthPercent("boss1") <= 46 and phase2Complete == false then
 			phase2Complete = true
@@ -164,7 +132,7 @@ function core._2096:UunatHarbingerOfTheVoid()
 			if stopMovingAnnounced == false then
 				stopMovingAnnounced = true
 				core:sendMessage(core:getAchievement() .. " " .. L["CrucibleOfStorms_StopMoving"],true)
-				core.IATInfoFrame:SetText1("|cffFF0000" .. L["CrucibleOfStorms_StopMoving"] .. "|r","GameFontHighlightLarge")
+				core.IATInfoFrame:SetSubHeading1("|cffFF0000" .. L["CrucibleOfStorms_StopMoving"] .. "|r","GameFontHighlightLarge")
 			end  
 		end
     end
@@ -220,7 +188,7 @@ function core._2096.Events:UNIT_POWER_UPDATE(self, unit, powerType)
                     safeToMove = true
                     giftOfNzothActive = false
                     core:sendMessage(core:getAchievement() .. " " .. L["CrucibleOfStorms_StartMoving"],true)
-                    core.IATInfoFrame:SetText1("|cff59FF00" .. L["CrucibleOfStorms_StartMoving"] .. "|r","GameFontHighlightLarge")
+                    core.IATInfoFrame:SetSubHeading1("|cff59FF00" .. L["CrucibleOfStorms_StartMoving"] .. "|r","GameFontHighlightLarge")
                     if bossatthirtyeightannounce == false and phaseChangeInProgress == true then
                         core:sendDebugMessage("Boss reached 38 energy but we are in phase transition. PROBABLY SAFE TO MOVE")
                         bossatthirtyeightannounce = true
