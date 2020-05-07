@@ -247,6 +247,7 @@ core.NPCCache = {
     [77816] = 77816, --Borka the Brute
     [28860] = 28860, --Sartharion
     [92208] = 92208, --Doomfire Spirit
+    [144596] = 144596, --Chest o' Booty
 }
 
 --[] = , --
