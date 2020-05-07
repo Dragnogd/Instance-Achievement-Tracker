@@ -30,6 +30,10 @@ function core._1754:HarlanSweete()
             core:sendMessage(core:getAchievement() .. " " .. getNPCName(144596) .. " " .. L["Core_Counter"] .. " (" .. chestsDestroyed .. "/3)",true)
         end
     end
+
+    if chestsDestroyed == 3 then
+        core:getAchievementSuccess()
+    end
 end
 
 function core._1754:ClearVariables()
