@@ -1038,6 +1038,7 @@ core.Instances = {
                     enabled = true,
                     track = function() core._1648:Helya() end,
                     partial = false,
+                    displayInfoFrame = true,
                 },
             },
 
