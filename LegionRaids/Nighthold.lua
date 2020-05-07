@@ -321,7 +321,7 @@ function core._1530.Events:UNIT_AURA(self, unitID, ...)
 end
 
 function core._1530:Krosus()
-    InfoFrame_SetHeaderCounter(getNPCName(104262) .. " " .. L["Core_Counter"],burningEmbersKilled,14)
+    InfoFrame_SetHeaderCounter(getNPCName(104262) .. " " .. L["Core_Counter"],burningEmbersKilled,15)
     if core:getBlizzardTrackingStatus(10575) == true then
         core:getAchievementSuccess()
     end
