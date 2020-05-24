@@ -14,4 +14,6 @@ core.ItemCache = {
     [140212] = 140212, --Ketchum Tablet
     [44606] = 44606, --Toy Train Set
     [45057] = 45057, --Wind-Up Train Wrecker
+    [43499] = 43499, --Iron Boot Flask
+    [42780] = 42780, --Relic of Ulduar
 }

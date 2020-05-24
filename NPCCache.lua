@@ -248,6 +248,19 @@ core.NPCCache = {
     [28860] = 28860, --Sartharion
     [92208] = 92208, --Doomfire Spirit
     [144596] = 144596, --Chest o' Booty
+    [62164] = 62164, --Garalon
+    [33118] = 33118, --Ignis the Furnace Master
+    [33121] = 33121, --Iron Construct
+    [30472] = 30472, --Olut Alegut
+    [68905] = 68905, --Lu'lin
+    [68904] = 68904, --Suen
+    [53258] = 53258, --Lord Rhyolith
+    [32930] = 32930, --Kologarn
+    [150995] = 150995, --Mimiron
+    [111941] = 111941, --Hodir
+    [50284] = 50284, --Twilight Zealot
+    [39984] = 39984, --Malignant Trogg
+    [45906] = 45906, --Camel
 }
 
 --[] = , --

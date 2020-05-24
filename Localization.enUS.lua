@@ -634,7 +634,6 @@ local baseLocale = {
     ["HellfireCitadel_Gorefiend"] = "During Feasts of Soul phase, players who do not have the Gorefiends Corruption debuff need to die. This can be done by standing in the pool the boss is sitting in. Once dead the players will get teleported into the belly of the boss. They need to kill the Fragment of the crone once inside. Once the fragment of the crone is dead, the soul of the crone will spawn in the boss room which can then be killed by the group.",
     ["HellfireCitadel_ShadowLordIskar"] = "At 110, just simply nuke down the boss without picking up the Eye of Anzu",
     ["HellfireCitadel_SocretharTheEternal"] = "During phase 2. Use the robot to put up a prison at the blue portal. Continue to use the prison at the portal to trap the adds until 20 Haunting Souls are trapped. Once this is done, leave the vehicle and aoe all the adds down. Players can also cc the adds to keep them in place. Do not kill the adds with the robot.",
-    ["HellfireCitadel_TyrantVelhari"] = "1 person tank the Ancient Enforcer away from the group. Everyone else nuke the boss down",
     ["HellfireCitadel_Mannoroth"] = "At the start of the fight kill the green & purple summoner. Wait for a player to get curse of the legion debuff before killing the red summoner. Once the curse of the legion debuff runs out or is dispelled, a doom lord will spawn. Get the doom lord down to 5% health. Next dps down Mannoroth to 30% health. Once this is done place the doom lord in front of the boss and wait for it to get killed by Mannoroth Empowered Fel Seeker ability. Once the doom lord has been killed by the boss, you can kill the boss.",
     ["HellfireCitadel_Archimonde"] = "To complete this achievement, pull the boss then wait for a %s to spawn. Once a %s has spawned you can then kill the boss.\n\n Note: You do not need to keep the %s alive as long as you kill the boss within 120 seconds.",
 
@@ -735,7 +734,7 @@ local baseLocale = {
     ["ThroneOfThunder_JiKun"] = "The golden egg will fall from the nest in the ceiling to the right of the boss from where you land. To do this achievement 1 player needs to jump down to the nest to the right below the platform 10 seconds after pulling the boss. Once the player is down there they need to kill the adds. This should give them a special action ability which they can use to fly up to the nest in the celling. Once there they need to watch out for the golden egg and click on it as quickly as possible. Once they have caught the egg you need a priest to cast leap of faith on that player back onto the platform. Once the egg is safely on the platform, the player with the egg must avoid all damage otherwise they will drop the egg. Nuke down the boss as soon as the egg is on the platform.",
     ["ThroneOfThunder_DurumuTheForgotten"] = "Throughout the fight there will be 3 flashes of white light somewhere on the platform. To complete this achievement the 3 players that get targeted with the beams need to stand on top of the white fog to reveal one of 3 fog beasts (orange, purple and green). Once all fog beasts have been revealed you can nuke the boss.",
     ["ThroneOfThunder_DarkAnimus"] = "This achievement may take more than 1 run to complete although you can have multiple attempts during the same lockout. If you kill the Dark Ritualists without pulling the boss, you can reset the instance since they are counted as trash mobs. To do this convert the raid to heroic after killing the ritualists. Wait for a prompt to appear on your screen asking you to leave the instance. Once you are out of the instance, change the instance mode back to normal and then reset the instance. This can be done 9 time before you get locked out of the instance.",
-    ["ThroneOfThunder_TwinConsorts"] = "At 110, nuke down Lu’lin first then kill Suen.",
+    ["ThroneOfThunder_TwinConsorts"] = "To complete this achievement, simply kill %s first then %s.",
     ["ThroneOfThunder_LeiShen"] = "This achievement takes 4 kills to complete. Around the corners of the room there are 4 conduits. The boss will teleport to each conduit. Each week pick a different conduit to pull the boss at. Wait for the conduit to reach 3 stacks and overload then nuke the boss down.",
 
     --Chat Output
@@ -761,9 +760,9 @@ local baseLocale = {
     --- 
     -------------------------------------------------------
     --Tactics
-    ["HeartOfFear_ImperialVizierZorlok"] = "The %s bugs spawn at the four pillars around the center of the room. 2 Zealous Parasite spawn at each pillar at a time. Every player needs to click on one of these Zealous Parasite to gain a debuff. Once every player in the group has got the debuff you can kill the boss. All players in the raid need to be alive and have the debuff to gain the achievement.",
-    ["HeartOfFear_BladeLordTayak"] = "There are 4 Braziers in the center of the room and 2 braziers to the far left and far right of the room as you are looking at the boss. Once the boss has reached 20% health you need to click on the braziers in the middle of the room which are lit up to gain the " .. GetSpellLink(128949) .. " buff. You then need to run to one of the brazier on the far right/left to light it up. Once all 4 far braziers are lit up you can kill the boss",
-    ["HeartOfFear_Garalon"] = "At 110 you can single target the boss to gain the achievement. Avoid AOE as this may kill the legs",
+    ["HeartOfFear_ImperialVizierZorlok"] = "To complete this achievement, every player in the group must collect a %s to gain the %s debuff. The %s are located at the 4 pillars around the room (2 at each pillar). To get the debuff, simply click on one of the %s. Once all players in the group have gained the %s debuff you can kill the boss.\n\n Note: Once a %s is clicked on it will despawn but after a minute or so it will respawn again allowing another player in the group to collect the debuff.",
+    ["HeartOfFear_BladeLordTayak"] = "To complete this achievement, dps the boss down to 20%% health. Next, click on one of the lit braziers in the centre of the room to gain The %s buff. At the far sides of the room are 4 unlit braziers. Run to one of the far sides of the room with the %s buff and click on the unlit brazier. This will remove the %s buff and lite up the brazier. Rinse and repeat this for the remaining 3 braziers. Once all 4 braziers have been lit, you can kill the boss.\n\n Note: If you are struggling to run against the wind, you can lite the 2 braziers that are in the direction of the wind, then dps the boss down to 10%% to change the direction of the wind to lite the other side.",
+    ["HeartOfFear_Garalon"] = "To complete this achievement, single target down the boss without killing any of %s legs",
     ["HeartOfFear_AmberShaperUnsok"] = "For this achievement you will need atleast 2 players. Once you pull the boss, kill the Living Amber so that the pools that spawn once these adds are killed are stacked on top of one another. Once you have 8 pools stacked ontop of one another, you can nuke the boss. If a player becomes an Amber Monster then nuke that player down to 20% health to free them",
     ["HeartOfFear_GrandEmpressShekzeer"] = "For this achievement you need a way to taunt the boss between 2 targets to manage the %s debuff. 2 players will need to taunt at 4 stacks of the debuff to avoid dying. This will keep happening until the boss reaches 0 energy at which points the adds will spawn. Nuke down the 2 Kor'thik Reavers within 10 seconds of each other and then kill the boss to gain this achievement",
 
@@ -774,7 +773,7 @@ local baseLocale = {
     --- Mogu'shan Vaults
     -------------------------------------------------------
     --Tactics
-    ["MogushanVaults_TheStoneGuard"] = "For this achievement every player must have a canine companion pet summoned. The following pets definately work with the achievement: %s %s %s",
+    ["MogushanVaults_TheStoneGuard"] = "For this achievement, every player must have a canine companion pet summoned before pulling the boss. The following pets are confirmed to work for this achievement.\n -%s\n -%s\n -%s\n -%s\n -%s",
     ["MogushanVaults_FengTheAccursed"] = "For this achievment you need to reverse the following abilities: %s %s %s %s %s. To reverse these abilities a tank spec'ed player need to pick up the %s which is located to left of the boss. Phase 1: 95%%; Epicenter is cast by boss; Lighting fists has to be reversed on a player who gets stunned by soaking the ability. Phase 2: 66%%; Wildfire Spark is cast on a player. Phase 3: At 33%%; Arcane Velocity is cast by boss; Arcane Resonance is cast on a player. Once all 5 abilities have been reversed you can kill boss. Note: if you do the instance on heroic difficulty the phases may be in a different order",
     ["MogushanVaults_GarajalTheSpiritbinder"] = "",
     ["MogushanVaults_TheSpiritKings"] = "",
@@ -822,7 +821,6 @@ local baseLocale = {
     --- 
     -------------------------------------------------------
     --Tactics
-    ["Scholomance_JandiceBarov"] = "",
     ["Scholomance_Other1"] = "",
     ["Scholomance_Other2"] = "",
     ["Scholomance_Other3"] = "",
@@ -901,14 +899,7 @@ local baseLocale = {
     --- Arena of Annihilation 
     -------------------------------------------------------
     --Tactics
-    ["ArenaOfAnnihilation_BeatTheHeat"] = "",
     ["ArenaOfAnnihilation_InTheEyeOfTheTiger"] = "",
-
-    -------------------------------------------------------
-    --- Assault on Zan'vess
-    -------------------------------------------------------
-    --Tactics
-    ["AssaultOnZanvess_ForTheSwarm"] = "",
 
     -------------------------------------------------------
     --- Battle on the High Seas
@@ -1040,7 +1031,7 @@ local baseLocale = {
     --- Firelands
     -------------------------------------------------------
     --Tactics
-    ["Firelands_LordRhyolith"] = "Single target dps down the right leg. Do not touch the left leg.",
+    ["Firelands_LordRhyolith"] = "To complete this achievement, just dps down %s right foot with single target abilities.",
     ["Firelands_Shannox"] = "",
     ["Firelands_MajordomoStaghelm"] = "",
     ["Firelands_Ragnaros"] = "",
@@ -1052,7 +1043,7 @@ local baseLocale = {
     -------------------------------------------------------
     --Tactics
     ["BlackrockCaverns_RomoggBonecrusher"] = "",
-    ["BlackrockCaverns_Corla"] = "After pulling the boss wait for the three zealots evolve. This is done by not standing in the way of the beams being channelled to the mobs. Once they have all evolved you can nuke the boss.",
+    ["BlackrockCaverns_Corla"] = "To complete this achievement pull the boss then wait for the three %s to evolve. This is done by allowing the %s to reach 100 stacks of %s from the beam being channeled. Once all 3 %s have evolved into %s kill them then kill the boss.",
     ["BlackrockCaverns_KarshSteelbender"] = "Pull the boss into the fire in the middle of the room until he reaches 15 stacks of %s. Once he has 15 stacks of %s you can kill the boss.",
 
     --Chat Output
@@ -1088,7 +1079,7 @@ local baseLocale = {
     --- Grim Batol
     -------------------------------------------------------
     --Tactics
-    ["GrimBatol_GeneralUmbriss"] = "Pull the boss then wait for a Malignant Trogg to spawn. Kill the Malignant Trogg next to the boss. Once the boss has got the Modgud's Malice from the killed add then you can kill the boss.",
+    ["GrimBatol_GeneralUmbriss"] = "To complete this achievement, pull the boss then wait for a %s to spawn. Once the %s has spawned, kill it on top of the boss. The boss should then gain the %s buff from the dead %s, at which point you can kill the boss.",
 
     --Chat Output
     ["GrimBatol_FailedMessage"] = "Achievement can still be completed by waiting for another Malignant Trogg",
@@ -1097,7 +1088,7 @@ local baseLocale = {
     --- Halls of Origination
     -------------------------------------------------------
     --Tactics
-    ["HallsOfOrigination_EarthragerPtah"] = "Mount one of the camels to the left or right of the boss before going up the steps. Once you have mounted a camel, just nuke down the boss.",
+    ["HallsOfOrigination_EarthragerPtah"] = "To complete this achievement, every player in the group must mount one of the %s to the left or right of the boss just before the steps. Once everyone has mounted a %s, just kill the boss without any players dying.",
 
     --Chat Output
     ["HallsOfOrigination_KnockedOffCamel"] = "has been knocked off their camel",
@@ -1231,18 +1222,18 @@ local baseLocale = {
     ["Ulduar_FlameLeviathan2"] = "To complete this achievement, you need to be the passenger in the demolisher. As the passenger hit the %s button, then have the driver face %s and use the %s action. Once atop of %s, there are 2 turrets. Killing one of the turrets will award the achievement",
     ["Ulduar_FlameLeviathan3"] = "To complete this achievement you will need to activate %s hard mode by speaking to %s at the start of the instance. After that you just need to kill the boss without destroying any of the towers leading up to the boss.",
     ["Ulduar_Razorscale"] = "Wait for 25 Dark Rune Guardian Dwarves to spawn then use the harpoons to pull Razorscale down. Once Razorscale is down dps the boss down to below 50% so the boss is permanently grounded. Be careful you don’t one shot the boss. Once the boss is grounded, place the Dark Rune Guardians in front of the boss until they are killed by Razorscale breath ability.",
-    ["Ulduar_IgnisTheFurnaceMaster1"] = "Pull the boss then wait for 2 Iron Constructs to spawn. Place the 2 Iron Constructs in the fire on the ground until they gain 10 stacks of the Heat Buff. Next drag the 2 Iron Constructs into the water so they turn to stone. Finally nuke down the 2 adds within 5 seconds of one another. Once both adds have died you can kill boss.",
-    ["Ulduar_IgnisTheFurnaceMaster2"] = "This achievement requires 2 players or a player with a pet class. The boss will randomly pick players to enter the pot that do not have aggro of the boss. Just pull the boss and wait till everyone gets thrown into the pot.",
+    ["Ulduar_IgnisTheFurnaceMaster1"] = "To complete ths achievement, pull %s then wait for the %s to spawn. Once 2 %s are up, do the following: first, kite them both into the fire left by %s. This will cause them to gain a %s debuff. Once this stacks to 10 each, they gain a new debuff, %s, which last for 20 seconds. Within this 20 seconds, kite them into the water on side of the boss area. They will then get a new debuff, %s. Finally dps down both %s within 5 seconds of each other to get the achievement.",
+    ["Ulduar_IgnisTheFurnaceMaster2"] = "This achievement requires atleast 2 players or a player with a pet class to complete. The boss will randomly pick players throughout the fight who are not tanking the boss to enter the %s. Therefore to complete this achievement, pull the boss then wait till everyone gets thrown into the %s.\n\n Note: If the player tanking the boss also needs the achievement, make sure to tank swap with a player who has already been thrown into the %s to allow them to get the achievement too.",
     ["Ulduar_XTDeconstructor1"] = "",
     ["Ulduar_XTDeconstructor2"] = "Pull the boss and dps down until you reach 75%, 50% or 25% to start the heart phase. Careful you don’t one shot the boss. Once the heart is exposed nuke it down then kill the boss.",
     ["Ulduar_AssemblyOfIron1"] = "To complete this achievement you just need to kill %s last",
-    ["Ulduar_AssemblyOfIron4"] = "At max level, use the Iron Boot Flask toy then nuke down the boss.",
+    ["Ulduar_AssemblyOfIron4"] = "To complete this achievement you must kill the boss while under the effects of the %s. The flask is for sale by %s in Storm Peaks for 10 %s.",
     ["Ulduar_AssemblyOfIron5"] = "After pulling the boss you must interrupt the first cast of Chain Lightning from Stormcaller Brundir before killing him. Once you have interrupted the spell, nuke down Stormcaller Brundir and then kill the other two bosses.",
-    ["Ulduar_Kologarn1"] = "At max level, just single target down the boss without killing the arms.",
-    ["Ulduar_Kologarn2"] = "At max level, single target down the two arms then kill the boss.",
+    ["Ulduar_Kologarn1"] = "At max level, just single target down %s without destroying his arms.",
+    ["Ulduar_Kologarn2"] = "At max level, single target down both arms then kill the boss.",
     ["Ulduar_Kologarn3"] = "After pulling the boss kill the arms until 25 Rubble has spawned. Don’t damage the boss since killing the arms already does a lot of damage to the boss.",
     ["Ulduar_Auriaya2"] = "After pulling the boss wait for the Feral Defender to spawn. Once the Feral Defender has spawned kill him. He will then respawn after a short amount of time. Once the Feral Defender has been killed 9 times you can kill the boss.",
-    ["Ulduar_Hodir1"] = "At 110, free the adds from the ice tombs then nuke down the boss.",
+    ["Ulduar_Hodir1"] = "To complete this achievement, pull %s then free the NPC's from the ice tombs. Once all the NPC's are freed, kill %s before any of the NPC's are killed.",
     ["Ulduar_Hodir2"] = "",
     ["Ulduar_Thorim1"] = "At 110, complete the gauntlet part of the encounter to gain this achievement.",
     ["Ulduar_Thorim2"] = "",
@@ -1252,7 +1243,7 @@ local baseLocale = {
     ["Ulduar_Freya3"] = "Defeat Freya leaving at least two of the following mini bosses alive: Elder Brightleaf, Elder Ironbranch and Elder Stonebark. At 110, just nuke down the boss within killing the mini bosses.",
     ["Ulduar_Freya4"] = "Defeat Freya leaving all three of the following mini bosses alive: Elder Brightleaf, Elder Ironbranch and Elder Stonebark. At 110, just nuke down the boss within killing the mini bosses.",
     ["Ulduar_Mimiron1"] = "",
-    ["Ulduar_Mimiron2"] = "To complete this achievement, press the red button behind the boss before pulling then just kill the boss",
+    ["Ulduar_Mimiron2"] = "Before the fight starts, sneak behind %s and, in the back of the room, there is a big, red 'Do Not Push' button. Push that to activate hard mode. Kill him and you'll get this achievement.",
     ["Ulduar_GeneralVezax"] = "Pull the boss then wait for the Saronite Animus to spawn. Once the Saronite Animus has spawned, kill it then kill the boss. The Saronite Animus takes about 5 minutes to spawn.",
     ["Ulduar_YoggSaron1"] = "After bring Sara down to 0% at the start of phase one, she will turn angry. Use /kiss on her to complete this achievement at this point.",
     ["Ulduar_YoggSaron2"] = "After starting the encounter, run into the clouds around the room to spawn Guardians of Yogg-Saron. Once 9 Guardians of Yogg-Saron have spawned, AOE then down within 12 seconds of one another. You can then kill the boss.",
@@ -1301,7 +1292,6 @@ local baseLocale = {
     --- Azjol Nerub
     -------------------------------------------------------
     --Tactics
-    ["AzjolNerub_KrikthirTheGatewatcher"] = "At 110, just single target the boss down without killing any of the mobs around him.",
     ["AzjolNerub_Hadronox"] = "At 110, just go straight down to the boss ignoring all adds in the way. Nuke the boss down as soon as you reach him. Don’t wait for the boss to come to you.",
 
     --Chat Output
