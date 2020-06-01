@@ -16,4 +16,5 @@ core.ItemCache = {
     [45057] = 45057, --Wind-Up Train Wrecker
     [43499] = 43499, --Iron Boot Flask
     [42780] = 42780, --Relic of Ulduar
+    [80313] = 80313, --Ling-Ting's Favorite Tea
 }

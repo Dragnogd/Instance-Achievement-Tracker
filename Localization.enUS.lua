@@ -51,6 +51,7 @@ local baseLocale = {
     ["GUI_DisplayInfoFrame"] = "Enable Info Frame",
     ["GUI_Tactic"] = "Tactic",
     ["GUI_TrackAchievementsInBlizzardUI"] = "Track achievements in Achievements UI",
+    ["Gui_TacticsNames"] = "Nightswifty, Daugen, Whizzey",
 
     -------------------------------------------------------
     --- Core
@@ -791,10 +792,10 @@ local baseLocale = {
     --- Stormstout Brewery
     -------------------------------------------------------
     --Tactics
-    ["StormstoutBrewery_OokOok"] = "",
+    ["StormstoutBrewery_OokOok"] = "For this achievement, first pull the boss. All throughout the fight, barrels will be rolling around the area. To complete the achievement you must click on 20 of the barrels and roll them into the boss.\n\nNote: The barrels will damage the boss which scales to the players level. Therefore you will need a level 90 character to roll the barrels into the boss, otherwise the boss will die before you reach 20 barrels.",
     ["StormstoutBrewery_Other1"] = "",
     ["StormstoutBrewery_Hoptallus"] = "",
-    ["StormstoutBrewery_Other2"] = "",
+    ["StormstoutBrewery_Other2"] = "When entering the instance, talk to %s on your right and purchase 5 %s. When consuming the tea you will be able to see the %s scattered throughout the instance for 5 minutes. Find all 30 %s by clicking on them to complete this achievement.",
 
     --Chat Output
 
@@ -811,9 +812,9 @@ local baseLocale = {
     --- Scarlet Monastery
     -------------------------------------------------------
     --Tactics
-    ["ScarletMonastery_ThalnosTheSoulrender"] = "",
-    ["ScarletMonastery_BrotherKorloff"] = "",
-    ["ScarletMonastery_HighInquisitorWhitemane"] = "",
+    ["ScarletMonastery_ThalnosTheSoulrender"] = "After pulling the boss %s will spawn an %s every 20 seconds. Wait until you have 3 %s active and then kill the boss without killing the %s.",
+    ["ScarletMonastery_BrotherKorloff"] = "After pulling %s, bring him to the 3 %s on either side of the area. After 20 seconds the boss will perform either %s or %s. Let the boss perform either abilities on the %s to set them on fire then move to the opposite side and repeat. Once all 6 %s are on fire you can kill the boss.",
+    ["ScarletMonastery_HighInquisitorWhitemane"] = "To complete this achievement, start the encounter by defeating %s. After he is defeated %s will come out. Let her cast %s to revive 13 %s. Kill all 13 %s, then kill %s and %s.",
 
     --Chat Output
 
@@ -821,9 +822,9 @@ local baseLocale = {
     --- 
     -------------------------------------------------------
     --Tactics
-    ["Scholomance_Other1"] = "",
-    ["Scholomance_Other2"] = "",
-    ["Scholomance_Other3"] = "",
+    ["Scholomance_Other1"] = "After defeating %s head over to Butcher's Sanctum. At max level you can pull every %s in the room and then kill them one by one until one of the %s has 99 stacks of %s. Upon killing the %s with 99 stacks of %s, you will be awarded this achievement.\n\nNote: At max level you must kill the %s one by one to allow the stacks of %s to multiple onto the remaining mobs.",
+    ["Scholomance_Other2"] = "This achievement requires 5 players to complete. Start by pulling the boss. Every 45 seconds the boss will cast %s on a player causing them to teleport into a room with 10 %s. Wait until the boss casts %s on every player in the group then gather up all 50 %s together. Once all the %s are gathered up, AOE them down away from the boss to complete this achievement.",
+    ["Scholomance_Other3"] = "Make your way over to the The Viewing Room which is the last room before you encounter %s. On a table you will find a %s. After clicking on the vial you will receive an 1 hour buff. Next, kill the following bosses in Pandaria dungeons while under the effect of the %s:\n\n-%s (First boss in %s)\n-%s (Third boss in %s)\n-%s (First boss in %s)\n-%s (First boss in %s)\n-%s (Third boss in %s)\n-%s (Third boss in %s)",
 
     --Chat Output
 
@@ -831,9 +832,9 @@ local baseLocale = {
     --- 
     -------------------------------------------------------
     --Tactics
-    ["TempleOfTheJadeSerpent_WiseMari"] = "",
-    ["TempleOfTheJadeSerpent_ShaOfDoubt1"] = "",
-    ["TempleOfTheJadeSerpent_ShaOfDoubt2"] = "",
+    ["TempleOfTheJadeSerpent_WiseMari"] = "At max level you can simply just one-shot the boss to get this achievement.\n\nNote: Make sure you do not stand in the water surrounding the boss prior to getting the achievement.",
+    ["TempleOfTheJadeSerpent_ShaOfDoubt1"] = "To complete this achievement, engage the boss then wait 25 seconds for the boss to perform %s. When in the %s phase you will see a %s in each corner of the room which you can click on to collect. Once you have collected all 4 %s you can kill the boss to get this achievement.",
+    ["TempleOfTheJadeSerpent_ShaOfDoubt2"] = "After defeating %s you will get a 5 minute debuff called %s. Simply clear the instance with the debuff active to get this achievement.\n\nNote: To make this achievement easier, you can kill %s before %s. This will open a set of doors at the start of the instance, allowing you passage straight to the third boss.",
 
     --Chat Output
 
@@ -841,7 +842,7 @@ local baseLocale = {
     --- Mogu'Shan Palace
     -------------------------------------------------------
     --Tactics
-    ["MoguShanPalace_Gekkan"] = "",
+    ["MoguShanPalace_Gekkan"] = "When entering the Forgotten Passageway after killing the first boss you will see a %s. After it spots you, you have 5 minutes to kill %s and the 4 adds surrounding him in the next chamber.",
     ["MoguShanPalace_XinTheWeaponmaster"] = "",
     ["MoguShanPalace_Other"] = "",
 
@@ -853,7 +854,7 @@ local baseLocale = {
     --Tactics
     ["ShadoPanMonastery_MasterSnowdrift"] = "",
     ["ShadoPanMonastery_ShaOfViolence"] = "",
-    ["ShadoPanMonastery_TaranZhu"] = "",
+    ["ShadoPanMonastery_TaranZhu"] = "To complete this achievement, every player in the group must gain the %s debuff before killing the boss. %s is gained once a players hatred bar reaches 100%%. To gain hatred, simply stand in all the bosses abilities. Once everyone in the group has the %s debuff you can kill the boss.",
 
     --Chat Output
 
@@ -861,8 +862,8 @@ local baseLocale = {
     --- Siege of Niuazao Temple
     -------------------------------------------------------
     --Tactics
-    ["SiegeOfNiuazaoTemple_CommanderVojak"] = "",
-    ["SiegeOfNiuazaoTemple_GeneralPavalak"] = "",
+    ["SiegeOfNiuazaoTemple_CommanderVojak"] = "For this achievement, start the encounter then wait until the %s announces it's moving into position to %s the platform. Once the %s is in range kill it, then finish the encounter to get this achievement.",
+    ["SiegeOfNiuazaoTemple_GeneralPavalak"] = "To complete this achievement, pull the boss and dps him down to 65%% health. Upon reaching 65%% health the boss will cast %s. During this phase, %s will be dropped on the ground around the boss. Click on the %s and throw them at the boss to add a stack of %s. Once the boss has 20 stacks of %s you can kill him to get this achievement.\n\n Note: If you do not reach 20 stacks of %s before the end of the first %s phase, dps the boss down to 35%% where he will do a second round of %s. \n\nThe %s will damage the boss which will scale to the players level. Therefore you will need a level 100 character or lower to throw the bombs into the boss, otherwise the boss will die before you reach 20 stacks of %s.",
     ["SiegeOfNiuazaoTemple_WingLeaderNeronok"] = "",
 
     --Chat Output
@@ -873,7 +874,7 @@ local baseLocale = {
     --Tactics
     ["GateOfTheSettingSun_SaboteurKiptilak"] = "",
     ["GateOfTheSettingSun_Other"] = "",
-    ["GateOfTheSettingSun_Raigonn"] = "",
+    ["GateOfTheSettingSun_Raigonn"] = "At max level you can just kill %s after the first %s add spawns to get this achievement.",
 
     --Chat Output
 
@@ -881,38 +882,36 @@ local baseLocale = {
     --- A Brewing Storm
     -------------------------------------------------------
     --Tactics
-    ["ABrewingStorm_DontShakeTheKeg"] = "",
-    ["ABrewingStorm_PartyOfSix"] = "",
-    ["ABrewingStorm_ThePerfectPour"] = "",
+    ["ABrewingStorm_PartyOfSix"] = "For this achievement, just kill all the enemies in the scenario to prevent the 6 %s from dying.",
+    ["ABrewingStorm_ThePerfectPour"] = "When brewing the Boomer Brew at the start of the scenario, simply avoid the lightning indicated by blue circles on the ground to get this achievement.",
 
     -------------------------------------------------------
     --- A Little Patience
     -------------------------------------------------------
     --Tactics
-    ["ALittlePatience_Bubbletrapped"] = "",
-    ["ALittlePatience_Cannonballer"] = "",
-    ["ALittlePatience_IUsedToLoveThem"] = "",
-    ["ALittlePatience_WeveBeenDancin"] = "",
-    ["ALittlePatience_WhichCameFirst"] = "",
+    ["ALittlePatience_Bubbletrapped"] = "After entering the scenario, talk to %s when he is present and aid the Jinyu defense to get this achievement.",
+    ["ALittlePatience_Cannonballer"] = "After entering the scenario, talk to %s when he is present and aid the Dwarf defense to get this achievement.",
+    ["ALittlePatience_IUsedToLoveThem"] = "After entering the scenario, talk to %s when she is present and aid the Night Elf defense to get this achievement.",
+    ["ALittlePatience_WeveBeenDancin"] = "After entering the scenario, talk to %s when he is present and aid the Pandaren defense to get this achievement.",
+    ["ALittlePatience_WhichCameFirst"] = "After entering the scenario, talk to %s when she is present and aid the Gnomish defense to get this achievement.",
 
     -------------------------------------------------------
     --- Arena of Annihilation 
     -------------------------------------------------------
     --Tactics
-    ["ArenaOfAnnihilation_InTheEyeOfTheTiger"] = "",
+    ["ArenaOfAnnihilation_InTheEyeOfTheTiger"] = "To complete this achievement, just run the scenario multiple times until each of the final bosses spawn.",
 
     -------------------------------------------------------
     --- Battle on the High Seas
     -------------------------------------------------------
     --Tactics
-    ["BattleOnTheHighSeas_KeepThoseBombsAway"] = "",
+    ["BattleOnTheHighSeas_KeepThoseBombsAway"] = "To complete this achievement, simply finish the scenario without getting hit by any cannon fire indicated by red circles on the ground.",
 
     -------------------------------------------------------
     --- Blood in the Snow
     -------------------------------------------------------
     --Tactics
     ["BloodInTheSnow_HeedTheWeed"] = "",
-    ["BloodInTheSnow_HekimasHealHalter"] = "",
 
     -------------------------------------------------------
     --- Brewmoon Festival
@@ -925,17 +924,15 @@ local baseLocale = {
     --- Crypt of Forgotten Kings
     -------------------------------------------------------
     --Tactics
-    ["CryptOfForgottenKings_FancyFootwork"] = "",
     ["CryptOfForgottenKings_FightAngerWithAnger"] = "",
-    ["CryptOfForgottenKings_ItsATrap"] = "",
+    ["CryptOfForgottenKings_ItsATrap"] = "For this achievement all you have to do is step on one of the coloured runes on the floor in the first room of the scenario.",
 
     -------------------------------------------------------
     --- Dagger in the Dark
     -------------------------------------------------------
     --Tactics
-    ["DaggerInTheDark_NoEggLeftBehind"] = "",
-    ["DaggerInTheDark_WateryGrave"] = "",
-    ["DaggerInTheDark_YouMeanThatWasntAVoidZone"] = "",
+    ["DaggerInTheDark_NoEggLeftBehind"] = "For this achievement, first destroy all the %s in the water surrounding the boss, then pull the boss and kill.",
+    ["DaggerInTheDark_WateryGrave"] = "To complete this achievement, pull %s and wait for 3 of his reinforcements to spawn. Once 3 mobs have spawned, kite them in front of the boss and let them get killed by his %s ability. After they have been killed, you can kill the boss to get this achievement.",
 
     -------------------------------------------------------
     --- Dark Heart of Pandaria
@@ -962,22 +959,18 @@ local baseLocale = {
     -------------------------------------------------------
     --Tactics
     ["GreenstoneVillage_PerfectDelivery"] = "",
-    ["GreenstoneVillage_SaveItForLater"] = "",
+    ["GreenstoneVillage_SaveItForLater"] = "To get this achievement you simply have to complete the scenario without using the %s.",
 
     -------------------------------------------------------
     --- Theramore's Fall
     -------------------------------------------------------
     --Tactics
-    ["TheramoresFallAlliance_KiteFight"] = "",
-    ["TheramoresFallAlliance_NoTankYou"] = "",
-    ["TheramoresFallHorde_KiteFight"] = "",
-    ["TheramoresFallHorde_NoTankYou"] = "",
 
     -------------------------------------------------------
     --- Secrets of Ragefire
     -------------------------------------------------------
     --Tactics
-    ["SecretsOfRagefire_TheFewTheProudTheGobSquad"] = "",
+    ["SecretsOfRagefire_TheFewTheProudTheGobSquad"] = "For this achievement you have to simply complete the scenario without any friendly NPC taking damage.",
 
     -------------------------------------------------------
     --- Unga Ingoo
