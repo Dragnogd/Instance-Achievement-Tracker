@@ -214,6 +214,7 @@ function Tab_OnClick(self)
             UIConfig.Main2.options27:Show()
 
             UIConfig.Main.author:Show()
+            UIConfig.Main.tacticsCredit:Show()
             UIConfig.Main.verison:Show()
 
             UIConfig.Main2.content:Show()
@@ -237,10 +238,12 @@ function Tab_OnClick(self)
 
             --Author & Translators
             if (GetLocale() == "enGB" or GetLocale() == "enUS") then
-                UIConfig.Main.author = Config:CreateText2("BOTTOMRIGHT", AchievementTrackerDialogBG, "BOTTOMRIGHT", -5, 5, L["GUI_Author"] .. ": (EU) Whizzey-Doomhammer","GameFontNormal")
-            else
                 UIConfig.Main.author = Config:CreateText2("BOTTOMRIGHT", AchievementTrackerDialogBG, "BOTTOMRIGHT", -5, 20, L["GUI_Author"] .. ": (EU) Whizzey-Doomhammer","GameFontNormal")
-                UIConfig.Main.translators = Config:CreateText2("BOTTOMRIGHT", AchievementTrackerDialogBG, "BOTTOMRIGHT", -5, 5,L["GUI_Translators"] .. ": " .. L["Gui_TranslatorNames"],"GameFontNormal")            
+                UIConfig.Main.tacticsCredit = Config:CreateText2("BOTTOMRIGHT", AchievementTrackerDialogBG, "BOTTOMRIGHT", -5, 5,L["GUI_Tactics"] .. ": " .. L["Gui_TacticsNames"],"GameFontNormal")      
+            else
+                UIConfig.Main.author = Config:CreateText2("BOTTOMRIGHT", AchievementTrackerDialogBG, "BOTTOMRIGHT", -5, 35, L["GUI_Author"] .. ": (EU) Whizzey-Doomhammer","GameFontNormal")
+                UIConfig.Main.translators = Config:CreateText2("BOTTOMRIGHT", AchievementTrackerDialogBG, "BOTTOMRIGHT", -5, 20,L["GUI_Translators"] .. ": " .. L["Gui_TranslatorNames"],"GameFontNormal")
+                UIConfig.Main.tacticsCredit = Config:CreateText2("BOTTOMRIGHT", AchievementTrackerDialogBG, "BOTTOMRIGHT", -5, 5,L["GUI_Tactics"] .. ": " .. L["Gui_TacticsNames"],"GameFontNormal")               
             end
             
             --Version
@@ -452,6 +455,7 @@ function Tab_OnClick(self)
         
         UIConfig.Main.author:Hide()
         UIConfig.Main.verison:Hide()
+        UIConfig.Main.tacticsCredit:Hide()
 
         UIConfig.Main2.content:Hide()
         UIConfig.Main2.content2:Hide()
