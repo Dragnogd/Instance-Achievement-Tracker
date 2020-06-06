@@ -304,6 +304,8 @@ core.NPCCache = {
     [59303] = 59303, --Houndmaster Braun
     [58676] = 58676, --Scarlet Defender
     [156034] = 156034, --Quilen
+    [64556] = 64556, --Captain Ook
+    [61709] = 61709, --Spawn of Anger
 }
 
 --[] = , --

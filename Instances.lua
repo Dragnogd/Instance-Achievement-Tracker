@@ -405,8 +405,8 @@ core.Instances = {
                     achievement = 14024,
                     players = {},
                     tactics = format(L["Ny’alotha_DarkInquisitorXanesh"], GetSpellLink(314202), GetSpellLink(312406), GetSpellLink(312406), GetSpellLink(312336), GetSpellLink(314202), GetSpellLink(312406), GetSpellLink(312406), GetSpellLink(314202)),
-                    enabled = true,
-                    track = function() core._2217:DarkInquisitorXanesh() end,
+                    enabled = false,
+                    track = nil,
                     partial = false,
                     encounterID = 2328,
                 },
@@ -2973,6 +2973,16 @@ core.Instances = {
                     displayInfoFrame = true,
                 },
                 boss5 = {
+                    name = L["Instances_Other"], --And It's Good
+                    bossIDs = {},
+                    achievement = 7933,
+                    players = {},
+                    tactics = L["MogushanVaults_Other"],
+                    enabled = false,
+                    track = nil,
+                    partial = false,
+                },
+                boss6 = {
                     name = 726, --Elegon
                     bossIDs = {60410},
                     achievement = 6686,
@@ -2983,7 +2993,7 @@ core.Instances = {
                     partial = false,
                     encounterID = 1500,
                 },
-                boss6 = {
+                boss7 = {
                     name = 677, --Will of the Emperor
                     bossIDs = {},
                     achievement = 6455,
@@ -3550,7 +3560,7 @@ core.Instances = {
                     bossIDs = {61707},
                     achievement = 8368,
                     players = {},
-                    tactics = L["CryptOfForgottenKings_FightAngerWithAnger"],
+                    tactics = format(L["CryptOfForgottenKings_FightAngerWithAnger"], "IAT_61709", "IAT_61709", GetSpellLink(129025)),
                     enabled = true,
                     track = function() core._1030:AbominationOfAnger2() end,
                     partial = false,
@@ -3762,16 +3772,26 @@ core.Instances = {
                     partial = false,
                 },
                 boss2 = {
+                    name = L["Instances_Other"],
+                    bossIDs = {},
+                    achievement = 7232,
+                    players = {},
+                    tactics = L["UngaIngoo_TheKegRunner"],
+                    enabled = true,
+                    track = nil,
+                    partial = false,
+                },
+                boss3 = {
                     name = 62465,
                     bossIDs = {62465},
                     achievement = 7239,
                     players = {},
-                    tactics = L["UngaIngoo_MonkeyInTheMiddle"],
+                    tactics = format(L["UngaIngoo_MonkeyInTheMiddle"], "IAT_64556"),
                     enabled = true,
                     track = function() core._1048:CaptainOok() end,
                     partial = false,
                 },
-                boss3 = {
+                boss4 = {
                     name = L["Instances_Other"],
                     bossIDs = {},
                     achievement = 7248,

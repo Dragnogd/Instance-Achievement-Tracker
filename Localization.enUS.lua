@@ -780,6 +780,7 @@ local baseLocale = {
     ["MogushanVaults_TheSpiritKings"] = "",
     ["MogushanVaults_Elegon"] = "",
     ["MogushanVaults_WillOfTheEmperor"] = "",
+    ["MogushanVaults_Other"] = "",
 
     --Chat Output
     ["MogushanVaults_HoverOverPets"] = "Hover over players pets to update the display",
@@ -924,7 +925,7 @@ local baseLocale = {
     --- Crypt of Forgotten Kings
     -------------------------------------------------------
     --Tactics
-    ["CryptOfForgottenKings_FightAngerWithAnger"] = "",
+    ["CryptOfForgottenKings_FightAngerWithAnger"] = "During stage 4 of the scenario, gather 20 %s mobs located around the room. Once you have gathered 20 %s, AOE them down to get 20 stacks of %s. Next, kill the boss within 30 seconds to get this achievement.",
     ["CryptOfForgottenKings_ItsATrap"] = "For this achievement all you have to do is step on one of the coloured runes on the floor in the first room of the scenario.",
 
     -------------------------------------------------------
@@ -975,7 +976,8 @@ local baseLocale = {
     --- Unga Ingoo
     -------------------------------------------------------
     --Tactics
-    ["UngaIngoo_MonkeyInTheMiddle"] = "",
+    ["UngaIngoo_MonkeyInTheMiddle"] = "To complete this achievement, wait for %s to dismount from his boat and walk onto the island, then kill him.",
+    ["UngaIngoo_TheKegRunner"] = "",
     ["UngaIngoo_MonkeySeeMonkeyKill"] = "",
     ["UngaIngoo_SpillNoEvil"] = "",
 
