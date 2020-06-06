@@ -296,6 +296,14 @@ core.NPCCache = {
     [56732] = 56732, --Liu Flameheart
     [59153] = 59153, --Rattlegore
     [59368] = 59368, --Krastinovian Carver
+    [61213] = 61213, --Krik'thik Conscript
+    [64471] = 64471, --Tenwu of the Red Smoke
+    [153415] = 153415, --Sha of Violence
+    [65407] = 65407, --Shado-Pan Novice
+    [63342] = 63342, --Sha
+    [59303] = 59303, --Houndmaster Braun
+    [58676] = 58676, --Scarlet Defender
+    [156034] = 156034, --Quilen
 }
 
 --[] = , --

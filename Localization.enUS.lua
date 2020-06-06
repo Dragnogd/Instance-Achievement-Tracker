@@ -631,7 +631,7 @@ local baseLocale = {
     --Tactics
     ["HellfireCitadel_HellfireAssault"] = "At 110, simply nuke down all the mobs/vehicles as quick as possible. Make sure to keep an eye on the Felfire Crushers and Artillery especially",
     ["HellfireCitadel_IronReaver"] = "On the ledges to the left and right of the boss there are untargetable Hellfire Guardians. Bring the boss up against these ledges facing the boss towards the Hellfire Guardians. When the boss casts barrage, this should kill the mobs.",
-    ["HellfireCitadel_HellfireHighCouncil"] = "Nuke down all 3 bosses so that they die within 10 seconds of one another",
+    ["HellfireCitadel_HellfireHighCouncil"] = "For this achievement you simply need to kill all 3 bosses witihin 10 seconds of each other.",
     ["HellfireCitadel_Gorefiend"] = "During Feasts of Soul phase, players who do not have the Gorefiends Corruption debuff need to die. This can be done by standing in the pool the boss is sitting in. Once dead the players will get teleported into the belly of the boss. They need to kill the Fragment of the crone once inside. Once the fragment of the crone is dead, the soul of the crone will spawn in the boss room which can then be killed by the group.",
     ["HellfireCitadel_ShadowLordIskar"] = "At 110, just simply nuke down the boss without picking up the Eye of Anzu",
     ["HellfireCitadel_SocretharTheEternal"] = "During phase 2. Use the robot to put up a prison at the blue portal. Continue to use the prison at the portal to trap the adds until 20 Haunting Souls are trapped. Once this is done, leave the vehicle and aoe all the adds down. Players can also cc the adds to keep them in place. Do not kill the adds with the robot.",
@@ -803,8 +803,8 @@ local baseLocale = {
     --- Scarlet Halls
     -------------------------------------------------------
     --Tactics
-    ["ScarletHalls_HoundmasterBraun"] = "",
-    ["ScarletHalls_ArmsmasterHarlan"] = "",
+    ["ScarletHalls_HoundmasterBraun"] = "To complete this achievement, after entering the instance make your way over to %s without killing any of the hounds along the way. Once you reach %s, kill him with single target abilities.",
+    ["ScarletHalls_ArmsmasterHarlan"] = "To complete this achievement, pull the boss then wait at the top of the stairs next to the entrance. Next, wait until atleast 7 %s have spawned making sure to avoid the bosses %s ability. Once atleast 7 %s have spawned, simply stand in the next %s with the %s, then kill the boss to get the achievement.\n\nNote: By standing at the top of the stairs, this will make it easier to avoid the bosses %s ability as you can simply run in the opposite direction to avoid it.",
 
     --Chat Output
 
@@ -822,7 +822,7 @@ local baseLocale = {
     --- 
     -------------------------------------------------------
     --Tactics
-    ["Scholomance_Other1"] = "After defeating %s head over to Butcher's Sanctum. At max level you can pull every %s in the room and then kill them one by one until one of the %s has 99 stacks of %s. Upon killing the %s with 99 stacks of %s, you will be awarded this achievement.\n\nNote: At max level you must kill the %s one by one to allow the stacks of %s to multiple onto the remaining mobs.",
+    ["Scholomance_Other1"] = "After defeating %s head over to Butcher's Sanctum. At max level you can pull every %s in the room and then kill them one by one until one of the %s has 99 stacks of %s. Upon killing the %s with 99 stacks of %s, you will be awarded this achievement.\n\nNote: At max level you must kill the %s one by one to allow the stacks of %s to multiply onto the remaining mobs.",
     ["Scholomance_Other2"] = "This achievement requires 5 players to complete. Start by pulling the boss. Every 45 seconds the boss will cast %s on a player causing them to teleport into a room with 10 %s. Wait until the boss casts %s on every player in the group then gather up all 50 %s together. Once all the %s are gathered up, AOE them down away from the boss to complete this achievement.",
     ["Scholomance_Other3"] = "Make your way over to the The Viewing Room which is the last room before you encounter %s. On a table you will find a %s. After clicking on the vial you will receive an 1 hour buff. Next, kill the following bosses in Pandaria dungeons while under the effect of the %s:\n\n-%s (First boss in %s)\n-%s (Third boss in %s)\n-%s (First boss in %s)\n-%s (First boss in %s)\n-%s (Third boss in %s)\n-%s (Third boss in %s)",
 
@@ -843,7 +843,7 @@ local baseLocale = {
     -------------------------------------------------------
     --Tactics
     ["MoguShanPalace_Gekkan"] = "When entering the Forgotten Passageway after killing the first boss you will see a %s. After it spots you, you have 5 minutes to kill %s and the 4 adds surrounding him in the next chamber.",
-    ["MoguShanPalace_XinTheWeaponmaster"] = "",
+    ["MoguShanPalace_XinTheWeaponmaster"] = "This achievement is easier to complete with 2 players, although it can be completed solo if your character is able to move fast.\n\n First, pull the boss then dps him down to at least 33%% health. Once the boss reaches at least 33%% health, you will see a red gem in the mouths of the %s heads on the left and right side of the room on the wall. The two required for the achievement are northwest and southeast when looking at the minimap. Click on both gems which light up within 5 seconds of each other to get this achievement.",
     ["MoguShanPalace_Other"] = "",
 
     --Chat Output
@@ -852,8 +852,8 @@ local baseLocale = {
     --- Shado Pan Monastery
     -------------------------------------------------------
     --Tactics
-    ["ShadoPanMonastery_MasterSnowdrift"] = "",
-    ["ShadoPanMonastery_ShaOfViolence"] = "",
+    ["ShadoPanMonastery_MasterSnowdrift"] = "When entering Snowdrift Dojo you will face a series of %s. After defeating a %s you have to perform the /bow emote on them. This can only be done a for a few seconds after you have defeated them. After you have performed /bow on 20 defeated %s you will be awarded this achievement.",
+    ["ShadoPanMonastery_ShaOfViolence"] = "Before engaging the %s head over to the chamber on the left side and click on the prison to free %s from around the room (This will also engage the boss). At the start of the fight make sure to kill all the %s which have been freed then kill the boss to get this achievement.",
     ["ShadoPanMonastery_TaranZhu"] = "To complete this achievement, every player in the group must gain the %s debuff before killing the boss. %s is gained once a players hatred bar reaches 100%%. To gain hatred, simply stand in all the bosses abilities. Once everyone in the group has the %s debuff you can kill the boss.",
 
     --Chat Output
@@ -864,7 +864,7 @@ local baseLocale = {
     --Tactics
     ["SiegeOfNiuazaoTemple_CommanderVojak"] = "For this achievement, start the encounter then wait until the %s announces it's moving into position to %s the platform. Once the %s is in range kill it, then finish the encounter to get this achievement.",
     ["SiegeOfNiuazaoTemple_GeneralPavalak"] = "To complete this achievement, pull the boss and dps him down to 65%% health. Upon reaching 65%% health the boss will cast %s. During this phase, %s will be dropped on the ground around the boss. Click on the %s and throw them at the boss to add a stack of %s. Once the boss has 20 stacks of %s you can kill him to get this achievement.\n\n Note: If you do not reach 20 stacks of %s before the end of the first %s phase, dps the boss down to 35%% where he will do a second round of %s. \n\nThe %s will damage the boss which will scale to the players level. Therefore you will need a level 100 character or lower to throw the bombs into the boss, otherwise the boss will die before you reach 20 stacks of %s.",
-    ["SiegeOfNiuazaoTemple_WingLeaderNeronok"] = "",
+    ["SiegeOfNiuazaoTemple_WingLeaderNeronok"] = "To complete this achievement, pull the boss then dps him down to around 60%% health so that he casts %s. While %s is active, perform a running jump in the direction of the wind to the other side of the broken bridge. Next, speak to %s to receive the %s buff. After receiving the buff, jump back over the bridge then kill the boss to get this achievement.\n\nNote: This achievement is personal, therefore any player who wants to get this achievement will need to get the %s buff.",
 
     --Chat Output
 
@@ -872,8 +872,8 @@ local baseLocale = {
     --- Gate of the Setting Sun
     -------------------------------------------------------
     --Tactics
-    ["GateOfTheSettingSun_SaboteurKiptilak"] = "",
-    ["GateOfTheSettingSun_Other"] = "",
+    ["GateOfTheSettingSun_SaboteurKiptilak"] = "At max level, pull the boss then run behind one of the pillars in the corner of the room and wait. Every 15 seconds you will get the %s debuff on you which will explode any bomb in its path when it expires. Once %s triggers 15 explosions within 15 seconds you will be awarded this achievement.\n\nNote: It may take multiple rounds of %s in order for the bombs to line up in such a way to get this achievement.",
+    ["GateOfTheSettingSun_Other"] = "After defeating %s make your way over to the last boss %s. Instead of jumping down, turn right and kill the 3 %s. Once they are defeated they will give nearby players a stack of %s. After gaining 3 stacks of %s, you will awarded this achievement.",
     ["GateOfTheSettingSun_Raigonn"] = "At max level you can just kill %s after the first %s add spawns to get this achievement.",
 
     --Chat Output
@@ -938,27 +938,26 @@ local baseLocale = {
     --- Dark Heart of Pandaria
     -------------------------------------------------------
     --Tactics
-    ["DarkHeartOfPandaria_AcceleratedArchaeology"] = "",
+    ["DarkHeartOfPandaria_AcceleratedArchaeology"] = "To complete this achievement, during the phase where you have to collect 50 artifacts, simply collect the three artifacts that have yellow beams of light coming from them. Make sure to collect these 3 artifacts first before collecting the other artifacts, otherwise they will despawn if you reach 50 artifacts before collecting all the special ones.\n\nNote: To collect the artifact, simply walk over it.",
 
     -------------------------------------------------------
     --- Lion's Landing
     -------------------------------------------------------
     --Tactics
-    ["LionsLanding_NumberFiveIsAlive"] = "",
+    ["LionsLanding_NumberFiveIsAlive"] = "For this achievement, just play through the scenario as normal, making sure none of the 5 NPC's that you recruit throughout are killed.",
     ["LionsLanding_WasteNotWantNot"] = "",
 
     -------------------------------------------------------
     --- Domination Point
     -------------------------------------------------------
     --Tactics
-    ["DominationPoint_NumberFiveIsAlive"] = "",
     ["DominationPoint_WasteNotWantNot"] = "",
 
     -------------------------------------------------------
     --- Greenstone Village
     -------------------------------------------------------
     --Tactics
-    ["GreenstoneVillage_PerfectDelivery"] = "",
+    ["GreenstoneVillage_PerfectDelivery"] = "During stage 3 of the scenario, clear all the mobs in the village and the surrounding area. Next, locate the 6 stolen kegs and return them to the Greenstone Dojo without taking any damage.",
     ["GreenstoneVillage_SaveItForLater"] = "To get this achievement you simply have to complete the scenario without using the %s.",
 
     -------------------------------------------------------
