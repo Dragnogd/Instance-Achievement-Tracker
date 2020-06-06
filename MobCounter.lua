@@ -273,6 +273,10 @@ function MobCounter:StartFixedTimer()
                 --print("STOP",GetTime() - InititalTime,mobCriteriaTimeWindow,currentTick)
                 --core:sendDebugMessage("STOP TRACKING AT TICK: " .. currentTick .. ". Time Elapsed " .. GetTime() - InititalTime)
                 core:getAchievementFailedWithMessageAfter("(" .. mobsKilled .. "/" .. mobCriteria .. ")")
+            end
+
+            --Unlock timer at final tick
+            if currentTick == 1 then
                 fixedTimerStarted = false                
             end
         end, (mobCriteriaTimeWindow) * 100)
