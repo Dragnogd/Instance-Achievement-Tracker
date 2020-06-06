@@ -279,7 +279,7 @@ function getPlayersInGroup()
 			local currentUnit
 			core:detectGroupType() --Detect the type of group the player is in so we can do the appropriate scanning
 			for i = 1, core.groupSize do
-				if core.chatType == "PARTY" then
+				if core.chatType == "PARTY" or core.chatType == "INSTANCE_CHAT" then
 					if i < core.groupSize then
 						currentUnit = "party" .. i
 					else
@@ -586,8 +586,8 @@ function getInstanceInfomation()
 						end
 					end
 		
-					--Ask the user whether they want to enable Achievement Tracking in the instance. Only do this if there is any achievements to track for the particular instance
-					if foundTracking == true and trackAchievementsUIAutomatic == false then
+					--Ask the user whether they want to enable Achievement Tracking in the instance. Always ask user even if we can't track anything, so that they can see what they are missing too.
+					if trackAchievementsUIAutomatic == false then
 						trackAchievementsUIAutomatic = true
 						core:sendDebugMessage("Asking user whether they want to track this instance")
 						if UICreated == false then
