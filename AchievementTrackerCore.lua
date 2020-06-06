@@ -3555,30 +3555,20 @@ function core:getPlayersInGroupForAchievement()
 	local players = {}
 	local location = nil
 	if core.groupSize > 1 then
-		--Get the current zone of the "Player"
-		for i = 1,core.groupSize do
-			local name, rank, subgroup, level, class, fileName, zone, online, isDead, role, isML, combatRole = GetRaidRosterInfo(i)
-			if UnitName("Player") == name then
-				location = zone
-			end
-		end
-
 		--Scan raid. If players are in same location as "Player" then add them to table
 		for i = 1,core.groupSize do
 			local name, rank, subgroup, level, class, fileName, zone, online, isDead, role, isML, combatRole = GetRaidRosterInfo(i)
 			--print(name,location,zone)
-			if location == zone then
-				if name ~= nil then
-					name2 = ""
-					if string.find(name, "-") then
-						name2, realm = strsplit("-", name)
-					else
-						name2 = name
-					end
-					table.insert(players, name2)
-					core.groupSizeInInstance = core.groupSizeInInstance + 1
+			if name ~= nil then
+				name2 = ""
+				if string.find(name, "-") then
+					name2, realm = strsplit("-", name)
+				else
+					name2 = name
 				end
-			end		
+				table.insert(players, name2)
+				core.groupSizeInInstance = core.groupSizeInInstance + 1
+			end
 		end
     else
         currentUnit = "player"
