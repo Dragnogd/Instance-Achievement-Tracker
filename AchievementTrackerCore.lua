@@ -98,9 +98,23 @@ function events:GET_ITEM_INFO_RECEIVED(self, arg1)
 end
 
 function generateNPCCache()
+	core:sendDebugMessage("Generating NPC Cache...")
+	local count = 1
+	local tempNPC = {}
 	for i,v in pairs(core.NPCCache) do							
-		GetNameFromNpcIDCache(core.NPCCache[v])							
+		--GetNameFromNpcIDCache(core.NPCCache[v])	
+		table.insert(tempNPC, core.NPCCache[v]) 						
 	end	
+
+	generateNPCs = C_Timer.NewTicker(0.01, function() 
+		--core:sendDebugMessage("Fetching: " .. tempNPC[count] .. "(" .. count .. "/" .. #tempNPC .. ")")
+		GetNameFromNpcIDCache(tempNPC[count])
+		count = count + 1
+
+		if generateNPCs._remainingIterations == 1 then
+			core:sendDebugMessage("NPC cache generated")
+		end
+	end, #tempNPC)
 end
 
 function getNPCName(npcID)
