@@ -52,6 +52,7 @@ local baseLocale = {
     ["GUI_Tactic"] = "Tactic",
     ["GUI_TrackAchievementsInBlizzardUI"] = "Track achievements in Achievements UI",
     ["Gui_TacticsNames"] = "Nightswifty, Daugen, Whizzey",
+    ["GUI_TrackCharacterAchievements"] = "Track character achievements (Default: Account)",
 
     -------------------------------------------------------
     --- Core

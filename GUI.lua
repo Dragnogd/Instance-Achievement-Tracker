@@ -212,6 +212,8 @@ function Tab_OnClick(self)
             UIConfig.Main2.options25:Show()
             UIConfig.Main2.options26:Show()
             UIConfig.Main2.options27:Show()
+            UIConfig.Main2.options28:Show()
+            UIConfig.Main2.options29:Show()
 
             UIConfig.Main.author:Show()
             UIConfig.Main.tacticsCredit:Show()
@@ -406,6 +408,11 @@ function Tab_OnClick(self)
             UIConfig.Main2.options26 = Config:CreateCheckBox("TOPLEFT", UIConfig.Main2.options24, "TOPLEFT", 0, -25, "AchievementTracker_TrackAchievementsInBlizzardUI")
             UIConfig.Main2.options26:SetScript("OnClick", ATToggleTrackAchievementsInBlizzardUI_OnClick)
             UIConfig.Main2.options27 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options26, "TOPLEFT", 30, -9, L["GUI_TrackAchievementsInBlizzardUI"],"GameFontHighlight")
+
+            --Track achievements completed by player instead of account
+            UIConfig.Main2.options28 = Config:CreateCheckBox("TOPLEFT", UIConfig.Main2.options2, "TOPLEFT", 363, 0, "AchievementTracker_TrackCharacterAchievements")
+            UIConfig.Main2.options28:SetScript("OnClick", ATToggleTrackCharacterAchievements_OnClick)
+            UIConfig.Main2.options29 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options28, "TOPLEFT", 30, -9, L["GUI_TrackCharacterAchievements"],"GameFontHighlight")
         end
     else                                --User has selected an expansion tab so hide main menu options
         UIConfig.ScrollFrame:Show()
@@ -452,6 +459,8 @@ function Tab_OnClick(self)
         UIConfig.Main2.options25:Hide()
         UIConfig.Main2.options26:Hide()
         UIConfig.Main2.options27:Hide()
+        UIConfig.Main2.options28:Hide()
+        UIConfig.Main2.options29:Hide()
         
         UIConfig.Main.author:Hide()
         UIConfig.Main.verison:Hide()
@@ -472,6 +481,11 @@ function Tab_OnClick(self)
             UIConfig.achievementsCompleted:Hide()
         end
     end
+end
+
+function ATToggleTrackCharacterAchievements_OnClick(self)
+    AchievementTrackerOptions["trackCharacterAchievements"] = self:GetChecked()
+    setTrackCharacterAchievements(self:GetChecked()) 
 end
 
 function ATToggleTrackAchievementsInBlizzardUI_OnClick(self)

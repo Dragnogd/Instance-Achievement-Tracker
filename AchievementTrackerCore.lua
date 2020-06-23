@@ -196,6 +196,7 @@ local announceMissingAchievements = false
 local versionCheckInitiated = false
 local trackAchievementsInUI = false				--Track achievements in achievements UI upon entering raid
 local trackAchievementInUiTable = {}
+local trackCharacterAchievements = false
 
 local sendMessageOnTimer_ProcessMessage = false	--Set when we have message in message queue that needs to be output
 local sendMessageOnTimer_Message = nil			--Message in queue to be outputted
@@ -1140,6 +1141,15 @@ function events:ADDON_LOADED(event, name)
 	end
 	_G["AchievementTracker_TrackAchievementsInBlizzardUI"]:SetChecked(AchievementTrackerOptions["trackAchievementsInBlizzardUI"])
 
+	--Track Character Achievements
+	if AchievementTrackerOptions["trackCharacterAchievements"] == nil then
+		AchievementTrackerOptions["trackCharacterAchievements"] = false --Disabled by default
+		trackCharacterAchievements = false
+	elseif AchievementTrackerOptions["trackCharacterAchievements"] == true then
+		trackCharacterAchievements = true
+	end
+	_G["AchievementTracker_TrackCharacterAchievements"]:SetChecked(AchievementTrackerOptions["trackCharacterAchievements"])
+
 	SLASH_IAT1 = "/iat";
 	SlashCmdList.IAT = HandleSlashCommands;
 
@@ -1147,6 +1157,32 @@ function events:ADDON_LOADED(event, name)
 
 	--Set whether addon should be enabled or disabled
 	setAddonEnabled(AchievementTrackerOptions["enableAddon"])
+end
+
+function setTrackCharacterAchievements(setTrackCharacterAchievements)
+	if setTrackCharacterAchievements then
+		trackCharacterAchievements = true
+	else
+		trackCharacterAchievements = false					
+	end
+
+	if core.achievementTrackingEnabled == true and core.addonEnabled == true then
+		core.inInstance = false
+
+		if UIConfig ~= nil and core.inInstance == false then
+			core:sendDebugMessage("Hiding Tracking UI")
+			UIConfig:Hide()
+		end
+
+		core.achievementTrackingEnabled = false
+
+		--Disable achievement tracking if currently tracking
+		checkAndClearInstanceVariables()	
+
+		ClearGUITabs()
+
+		getInstanceInfomation()
+	end
 end
 
 function setTrackAchievementsInBlizzardUI(setTrackAchievementsInBlizzardUI)
@@ -1521,8 +1557,19 @@ function events:INSPECT_ACHIEVEMENT_READY(self, GUID)
 					for instance,_ in pairs(core.Instances[expansion][instanceType]) do
 						for boss,_ in pairs(core.Instances[expansion][instanceType][instance]) do
 							if boss ~= "name" then
-								--Check if the player has completed the achievement for the current boss
-								local completed, month, day, year = GetAchievementComparisonInfo(core.Instances[expansion][instanceType][instance][boss].achievement)
+								local achievementComplete = false
+								if core.currentComparisonUnit == UnitName("Player") and trackCharacterAchievements == true then
+									local id, name, points, completed, month, day, year, description, flags, icon, rewardText, isGuild, wasEarnedByMe, earnedBy = GetAchievementInfo(core.Instances[expansion][instanceType][instance][boss].achievement)
+									if wasEarnedByMe then
+										achievementComplete = true
+									end
+								else
+									--Check if the player has completed the achievement for the current boss
+									local completed, month, day, year = GetAchievementComparisonInfo(core.Instances[expansion][instanceType][instance][boss].achievement)
+									if completed then
+										achievementComplete = true
+									end
+								end
 
 								--Make sure any text being displayed currently for the achievement is removed.
 								if core.Instances[expansion][instanceType][instance][boss].players[1] == L["GUI_EnterInstanceToStartScanning"] or core.Instances[expansion][instanceType][instance][boss].players[1] == L["GUI_NoPlayersNeedAchievement"] then
@@ -1530,7 +1577,7 @@ function events:INSPECT_ACHIEVEMENT_READY(self, GUID)
 								end
 
 								--If the player has not completed the achievement then add them to the players string to display in the GUI
-								if completed == nil then
+								if achievementComplete == false then
 									local name, _ = UnitName(playersToScan[1])
 									table.insert(core.Instances[expansion][instanceType][instance][boss].players, name)
 								end
