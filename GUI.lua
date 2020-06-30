@@ -1422,6 +1422,8 @@ function Instance_OnClick(self)
     
                 button.achievementID = instanceLocation["boss" .. counter2].achievement
                 button:SetScript("OnEnter", Achievement_OnEnter)
+                button:SetScript("OnLeave", Achievement_OnLeave)
+                button:SetScript("OnHide", Achievement_OnHide)
 
                 button:Show()
                 counter = counter + 1
@@ -1489,12 +1491,22 @@ function ClearGUITabs()
 end
 
 function Achievement_OnEnter(self)
+    AltGameTooltip:Hide()
+end
+
+function Achievement_OnHide(self)
+    AltGameTooltip:Hide()
+end
+
+function Achievement_OnEnter(self)
+    local foundAchievement = false
     if Config.currentTab == 2 then
         for i = 1, #ShadowlandsContentButtons do
             if MouseIsOver(ShadowlandsContentButtons[i]) then
                 AltGameTooltip:SetOwner(UIConfig, "ANCHOR_TOPRIGHT")
                 AltGameTooltip:SetHyperlink(GetAchievementLink(ShadowlandsContentButtons[i].achievementID))
                 AltGameTooltip:Show()
+                foundAchievement = true
             end
         end
     elseif Config.currentTab == 3 then
@@ -1503,6 +1515,7 @@ function Achievement_OnEnter(self)
                 AltGameTooltip:SetOwner(UIConfig, "ANCHOR_TOPRIGHT")
                 AltGameTooltip:SetHyperlink(GetAchievementLink(BattleForAzerothContentButtons[i].achievementID))
                 AltGameTooltip:Show()
+                foundAchievement = true
             end
         end
     elseif Config.currentTab == 4 then
@@ -1511,6 +1524,7 @@ function Achievement_OnEnter(self)
                 AltGameTooltip:SetOwner(UIConfig, "ANCHOR_TOPRIGHT")
                 AltGameTooltip:SetHyperlink(GetAchievementLink(LegionContentButtons[i].achievementID))
                 AltGameTooltip:Show()
+                foundAchievement = true
             end
         end
     elseif Config.currentTab == 5 then
@@ -1519,6 +1533,7 @@ function Achievement_OnEnter(self)
                 AltGameTooltip:SetOwner(UIConfig, "ANCHOR_TOPRIGHT")
                 AltGameTooltip:SetHyperlink(GetAchievementLink(WarlordsOfDraenorContentButtons[i].achievementID))
                 AltGameTooltip:Show()
+                foundAchievement = true
             end
         end
     elseif Config.currentTab == 6 then
@@ -1527,6 +1542,7 @@ function Achievement_OnEnter(self)
                 AltGameTooltip:SetOwner(UIConfig, "ANCHOR_TOPRIGHT")
                 AltGameTooltip:SetHyperlink(GetAchievementLink(MistsOfPandariaContentButtons[i].achievementID))
                 AltGameTooltip:Show()
+                foundAchievement = true
             end
         end
     elseif Config.currentTab == 7 then
@@ -1535,6 +1551,7 @@ function Achievement_OnEnter(self)
                 AltGameTooltip:SetOwner(UIConfig, "ANCHOR_TOPRIGHT")
                 AltGameTooltip:SetHyperlink(GetAchievementLink(CataclysmContentButtons[i].achievementID))
                 AltGameTooltip:Show()
+                foundAchievement = true
             end
         end
     elseif Config.currentTab == 8 then
@@ -1543,9 +1560,14 @@ function Achievement_OnEnter(self)
                 AltGameTooltip:SetOwner(UIConfig, "ANCHOR_TOPRIGHT")
                 AltGameTooltip:SetHyperlink(GetAchievementLink(WrathOfTheLichKingContentButtons[i].achievementID))
                 AltGameTooltip:Show()
+                foundAchievement = true
             end
         end
     end  
+
+    if foundAchievement == false then
+        AltGameTooltip:Hide()
+    end
 end
 
 function Player_OnClick(self)
