@@ -159,7 +159,7 @@ function MobCounter:DetectKilledMob(customType, customSpellID)
         core:sendDebugMessage("Detected killed mob by UNIT_DIED event")
         
         --Start Timers
-        if customType == nil then
+        if customType == nil and core.achievementsCompleted[1] == false then
             if mobsDetected >= mobCriteria then
                 if mobCriteriaTimeWindow == 1 then
                     core:sendDebugMessage("Starting Timestamp Timer")
@@ -182,11 +182,9 @@ function MobCounter:DetectKilledMob(customType, customSpellID)
             end
 
             if customType == nil then
-                if core.achievementsCompleted[1] == false then
-                    if mobsKilledUID[core.spawn_uid_dest] == nil then
-                        mobsKilled = mobsKilled + 1
-                        mobsKilledUID[core.spawn_uid_dest] = core.spawn_uid_dest
-                    end
+                if mobsKilledUID[core.spawn_uid_dest] == nil then
+                    mobsKilled = mobsKilled + 1
+                    mobsKilledUID[core.spawn_uid_dest] = core.spawn_uid_dest
                 end
             end
         elseif mobCriteriaTimeWindow == 1 and core.timestamp ~= mobTimestamp then
@@ -257,27 +255,31 @@ function MobCounter:StartFixedTimer()
         mobsKilledUID = {}
         core.achievementsFailed[1] = false
         local InititalTime = GetTime()
+        local AchievementSuccess = false
         fixedTimer = C_Timer.NewTicker(0.01, function() 
             currentTick = fixedTimer._remainingIterations
-            if mobCriteriaTimeWindow - (GetTime() - InititalTime) >= 0 then
-                --print((GetTime() - InititalTime))
-                core.IATInfoFrame:SetSubHeading1("Time Remaining: " .. core:roundNumber(mobCriteriaTimeWindow - (GetTime() - InititalTime)))
-            else
-                core.IATInfoFrame:SetSubHeading1("Time Remaining: " .. 0)
+            if AchievementSuccess == false then
+                if mobCriteriaTimeWindow - (GetTime() - InititalTime) >= 0 then
+                    --print((GetTime() - InititalTime))
+                    core.IATInfoFrame:SetSubHeading1("Time Remaining: " .. core:roundNumber(mobCriteriaTimeWindow - (GetTime() - InititalTime)))
+                else
+                    core.IATInfoFrame:SetSubHeading1("Time Remaining: " .. 0)
+                end
             end
             --core:sendDebugMessage("TRACKING AT TICK: " .. currentTick .. ". Time Elapsed " .. GetTime() - InititalTime)
             if mobsKilled >= mobCriteria and (GetTime() - InititalTime) < mobCriteriaTimeWindow then
                 core:getAchievementSuccess()
-                fixedTimer:Cancel()
-            elseif ((GetTime() - InititalTime) >= mobCriteriaTimeWindow) or currentTick == 1 then
+                AchievementSuccess = true
+            elseif (((GetTime() - InititalTime) >= mobCriteriaTimeWindow) or currentTick == 1) and AchievementSuccess == false then
                 --print("STOP",GetTime() - InititalTime,mobCriteriaTimeWindow,currentTick)
                 --core:sendDebugMessage("STOP TRACKING AT TICK: " .. currentTick .. ". Time Elapsed " .. GetTime() - InititalTime)
                 core:getAchievementFailedWithMessageAfter("(" .. mobsKilled .. "/" .. mobCriteria .. ")")
             end
 
             --Unlock timer at final tick
-            if currentTick == 1 then
-                fixedTimerStarted = false                
+            if ((GetTime() - InititalTime) >= mobCriteriaTimeWindow) or currentTick == 1 then
+                fixedTimerStarted = false
+                fixedTimer:Cancel()                
             end
         end, (mobCriteriaTimeWindow) * 100)
     end
