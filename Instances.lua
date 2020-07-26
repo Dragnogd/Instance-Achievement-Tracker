@@ -17,27 +17,212 @@ core.Instances = {
         Dungeons = {
             [2291] = { --De Other Side
                 name = 1188,
+                boss1 = {
+                    name = L["Instances_Other"], --Highly Communicable
+                    bossIDs = {},
+                    achievement = 14354,
+                    players = {},
+                    tactics = L["DeOtherSide_HighlyCommunicable"],
+                    enabled = false,
+                    track = nil,
+                    partial = false,
+                    encounterID = {2395,2394,2400,2396},
+                },
             },
             [2287] = { --Halls of Atonement
                 name = 1185,
+                boss1 = {
+                    name = 2413, --Lord Chamberlain
+                    bossIDs = {},
+                    achievement = 14352,
+                    players = {},
+                    tactics = L["HallsOfAtonement_LordChamberlain"],
+                    enabled = false,
+                    track = nil,
+                    partial = false,
+                    encounterID = 2381,
+                },
+                boss2 = {
+                    name = 2387, --Echelon
+                    bossIDs = {},
+                    achievement = 14284,
+                    players = {},
+                    tactics = L["HallsOfAtonement_Echelon"],
+                    enabled = false,
+                    track = nil,
+                    partial = false,
+                    encounterID = 2380,
+                },
             },
             [2290] = { --Mists of Tirna Scithe
                 name = 1184,
+                boss1 = {
+                    name = L["Instances_Other"], --Someone Could Trip on these!
+                    bossIDs = {},
+                    achievement = 14291,
+                    players = {},
+                    tactics = L["MistsOfTirnaScithe_SomeoneCouldTripOnThese"],
+                    enabled = false,
+                    track = nil,
+                    partial = false,
+                },
+                boss1 = {
+                    name = 2402, --General Kaal
+                    bossIDs = {},
+                    achievement = 14289,
+                    players = {},
+                    tactics = L["MistsOfTirnaScithe_GeneralKaal"],
+                    enabled = false,
+                    track = nil,
+                    partial = false,
+                    encounterID = 2392,
+                },
             },
             [2289] = { --Plaguefall
                 name = 1183,
+                boss1 = {
+                    name = L["Instances_Other"], --Multiple Bosses
+                    bossIDs = {},
+                    achievement = 14292,
+                    players = {},
+                    tactics = L["Plaguefall_PartyOfSlime"],
+                    enabled = false,
+                    track = nil,
+                    partial = false,
+                    encounterID = {2384,2385,2382,2386},
+                    displayInfoFrame = true,
+                },
+                boss1 = {
+                    name = 2403, --Doctor Ickus
+                    bossIDs = {},
+                    achievement = 14296,
+                    players = {},
+                    tactics = L["Plaguefall_DoctorIckus"],
+                    enabled = false,
+                    track = nil,
+                    partial = false,
+                    encounterID = 2384,
+                },
+                boss2 = {
+                    name = 2419, --Globgrog
+                    bossIDs = {},
+                    achievement = 14347,
+                    players = {},
+                    tactics = L["Plaguefall_Globgrog"],
+                    enabled = false,
+                    track = nil,
+                    partial = false,
+                    encounterID = 2382,
+                },
             },
             [2284] = { --Sanguine Depths
                 name = 1189,
+                boss1 = {
+                    name = L["Instances_Other"], --Duraka the Unbreakable
+                    bossIDs = {},
+                    achievement = 14290,
+                    players = {},
+                    tactics = L["SanguineDepths_IOnlyHaveEyesForYou"],
+                    enabled = false,
+                    track = nil,
+                    partial = false,
+                },
+                boss2 = {
+                    name = 2415, --Executor Tarvold
+                    bossIDs = {},
+                    achievement = 14286,
+                    players = {},
+                    tactics = L["SanguineDepths_ExecutorTarvold"],
+                    enabled = false,
+                    track = nil,
+                    partial = false,
+                    encounterID = 2361,
+                },
+                boss3 = {
+                    name = 2407, --General Kaal
+                    bossIDs = {},
+                    achievement = 14289,
+                    players = {},
+                    tactics = L["SanguineDepths_GeneralKaal"],
+                    enabled = false,
+                    track = nil,
+                    partial = false,
+                    encounterID = 2363,
+                },
             },
             [2285] = { --Spires of Ascension
                 name = 1186,
+                boss1 = {
+                    name = 2412, --Devos, Paragon of Doubt
+                    bossIDs = {},
+                    achievement = 14323,
+                    players = {},
+                    tactics = L["SpiresOfAscension_DevosParagonOfDoubt1"],
+                    enabled = false,
+                    track = nil,
+                    partial = false,
+                    encounterID = 2359,
+                },
+                boss2 = {
+                    name = 2412, --Devos, Paragon of Doubt
+                    bossIDs = {},
+                    achievement = 14327,
+                    players = {},
+                    tactics = L["SpiresOfAscension_DevosParagonOfDoubt2"],
+                    enabled = false,
+                    track = nil,
+                    partial = false,
+                },
             },
             [2293] = { --Theater of Pain
                 name = 1187,
+                boss1 = {
+                    name = 2397, --Affront of Challengers
+                    bossIDs = {},
+                    achievement = 14297,
+                    players = {},
+                    tactics = L["TheaterOfPain_AffrontOfChallengers"],
+                    enabled = false,
+                    track = nil,
+                    partial = false,
+                    encounterID = 2391,
+                },
             },
             [2286] = { --The Necrotic Wake
                 name = 1182,
+                boss1 = {
+                    name = 2391, --Amarth the Harvester
+                    bossIDs = {},
+                    achievement = 14295,
+                    players = {},
+                    tactics = L["TheNecroticWake_AmarthTheHarvester"],
+                    enabled = false,
+                    track = nil,
+                    partial = false,
+                    encounterID = 2388,
+                },
+                boss2 = {
+                    name = 2396, --Nalthor the Rimebinder
+                    bossIDs = {},
+                    achievement = 14285,
+                    players = {},
+                    tactics = L["TheNecroticWake_NalthorTheRimebinder"],
+                    enabled = true,
+                    track = function() core._2286:NalthorTheRimebinder() end,
+                    partial = false,
+                    encounterID = 2390,
+                },
+                boss3 = {
+                    name = 2392, --Surgeon Stitchflesh
+                    bossIDs = {},
+                    achievement = 14320,
+                    players = {},
+                    tactics = L["TheNecroticWake_SurgeonStitchflesh"],
+                    enabled = false,
+                    track = nil,
+                    partial = false,
+                    encounterID = 2389,
+                },
             },
         },
     },

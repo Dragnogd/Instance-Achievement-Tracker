@@ -202,8 +202,86 @@ local baseLocale = {
     ["TimeBetweenLast"] = "Time between last %s %s seconds",
 
     -------------------------------------------------------
-    --- Battle of Dazar'alor
+    --- Theater of Pain
+    -------------------------------------------------------    
+    --Tactics
+    ["TheaterOfPain_AffrontOfChallengers"] = "",
+
+    --Chat Output
+
     -------------------------------------------------------
+    --- De Other Side
+    -------------------------------------------------------    
+    --Tactics
+    ["DeOtherSide_HighlyCommunicable"] = "",
+
+    --Chat Output
+
+    -------------------------------------------------------
+    --- Sanguine Depths
+    -------------------------------------------------------    
+    --Tactics
+    ["SanguineDepths_IOnlyHaveEyesForYou"] = "",
+    ["SanguineDepths_ExecutorTarvold"] = "",
+    ["SanguineDepths_GeneralKaal"] = "",
+
+    --Chat Output
+
+    -------------------------------------------------------
+    --- Halls of Atonement
+    -------------------------------------------------------    
+    --Tactics
+    ["HallsOfAtonement_LordChamberlain"] = "",
+
+    --Chat Output
+
+    -------------------------------------------------------
+    --- Spires of Ascension
+    -------------------------------------------------------    
+    --Tactics
+    ["SpiresOfAscension_DevosParagonOfDoubt1"] = "",
+    ["SpiresOfAscension_DevosParagonOfDoubt2"] = "",
+
+    --Chat Output
+
+    -------------------------------------------------------
+    --- Halls of Atonement
+    -------------------------------------------------------    
+    --Tactics
+    ["HallsOfAtonement_LordChamberlain"] = "",
+    ["HallsOfAtonement_Echelon"] = "",
+
+    --Chat Output
+
+    -------------------------------------------------------
+    --- Mists of Tirna Scithe
+    -------------------------------------------------------    
+    --Tactics
+    ["MistsOfTirnaScithe_SomeoneCouldTripOnThese"] = "",
+    ["MistsOfTirnaScithe_GeneralKaal"] = "",
+
+    --Chat Output
+
+    -------------------------------------------------------
+    --- Plaguefall
+    -------------------------------------------------------    
+    --Tactics
+    ["Plaguefall_PartyOfSlime"] = "",
+    ["Plaguefall_Doctor Ickus"] = "",
+    ["Plaguefall_Globgrog"] = "",
+
+    --Chat Output
+
+    -------------------------------------------------------
+    --- The Necrotic Wake
+    -------------------------------------------------------
+    --Tactics
+    ["TheNecroticWake_AmarthTheHarvester"] = "",
+    ["TheNecroticWake_NalthorTheRimebinder"] = "",
+    ["TheNecroticWake_SurgeonStitchflesh"] = "",
+
+    --Chat Output
+
 
     -------------------------------------------------------
     --- Ny’alotha, the Walking City
@@ -259,6 +337,10 @@ local baseLocale = {
     --Chat Output
     ["CrucibleOfStorms_StopMoving"] = "STOP MOVING!",
     ["CrucibleOfStorms_StartMoving"] = "YOU CAN NOW MOVE!",
+
+    -------------------------------------------------------
+    --- Battle of Dazar'alor
+    -------------------------------------------------------
 
     --Tactics
     ["BattleOfDazaralor_ChampionOfTheLight_Alliance"] = "For this achievement you will need to steal 3 shinies from each of the enemies of the encounter, and bring them to the Mysterious Trashpile. You will have to steal 9 shinies in total: 3 from %s, 3 from %s and 3 from %s\n\n Additionally this achievement requires everyone in the raid to interact with the Mysterious Trashpile to get the %s debuff. During the boss fight players will get transformed into a %s and get an extra action button to use on the enemies to steal one shiny coin.\n\n Once your raid group has handed in the 9 shiny coins (3 from each npc type) you can kill the boss and get the achievement.",
@@ -630,11 +712,10 @@ local baseLocale = {
     --- Hellfire Citadel
     -------------------------------------------------------
     --Tactics
-    ["HellfireCitadel_HellfireAssault"] = "At 110, simply nuke down all the mobs/vehicles as quick as possible. Make sure to keep an eye on the Felfire Crushers and Artillery especially",
+    ["HellfireCitadel_HellfireAssault"] = "This achievement is easier to complete with two players but can be soloed. To complete this achievement you simply need to finish the encounter without letting any mobs or vechiles damage the cannons below 90%% health.\n\nNote: With two players in the group you can assign one player to defend the cannons while the other player collects the ammunition. If you are soloing the achievement, you will need to be able to move around the room fast in order to defend and collect ammunition at the same time.",
     ["HellfireCitadel_IronReaver"] = "On the ledges to the left and right of the boss there are untargetable Hellfire Guardians. Bring the boss up against these ledges facing the boss towards the Hellfire Guardians. When the boss casts barrage, this should kill the mobs.",
     ["HellfireCitadel_HellfireHighCouncil"] = "For this achievement you simply need to kill all 3 bosses witihin 10 seconds of each other.",
     ["HellfireCitadel_Gorefiend"] = "During Feasts of Soul phase, players who do not have the Gorefiends Corruption debuff need to die. This can be done by standing in the pool the boss is sitting in. Once dead the players will get teleported into the belly of the boss. They need to kill the Fragment of the crone once inside. Once the fragment of the crone is dead, the soul of the crone will spawn in the boss room which can then be killed by the group.",
-    ["HellfireCitadel_ShadowLordIskar"] = "At 110, just simply nuke down the boss without picking up the Eye of Anzu",
     ["HellfireCitadel_SocretharTheEternal"] = "During phase 2. Use the robot to put up a prison at the blue portal. Continue to use the prison at the portal to trap the adds until 20 Haunting Souls are trapped. Once this is done, leave the vehicle and aoe all the adds down. Players can also cc the adds to keep them in place. Do not kill the adds with the robot.",
     ["HellfireCitadel_Mannoroth"] = "At the start of the fight kill the green & purple summoner. Wait for a player to get curse of the legion debuff before killing the red summoner. Once the curse of the legion debuff runs out or is dispelled, a doom lord will spawn. Get the doom lord down to 5% health. Next dps down Mannoroth to 30% health. Once this is done place the doom lord in front of the boss and wait for it to get killed by Mannoroth Empowered Fel Seeker ability. Once the doom lord has been killed by the boss, you can kill the boss.",
     ["HellfireCitadel_Archimonde"] = "To complete this achievement, pull the boss then wait for a %s to spawn. Once a %s has spawned you can then kill the boss.\n\n Note: You do not need to keep the %s alive as long as you kill the boss within 120 seconds.",
