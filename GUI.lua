@@ -23,6 +23,9 @@ local CataclysmContentButtons = {}
 local WrathOfTheLichKingContent
 local WrathOfTheLichKingContentButtons = {}
 
+local Left = nil
+local Top = nil
+
 -- Purpose:                         Stores information about the current status of the GUI
 Config.currentTab = nil             --Stores which tab is currently selected
 Config.currentInstance = nil        --Stores which instance is currently selected
@@ -33,7 +36,7 @@ AchievementTrackerOptions = {}
 -- Purpose:         Information about the current release. This is mianly used to detect which addon should output messages to chat to avoid spam
 Config.majorVersion = 2						--Addon with a higher major version change have priority over a lower major version
 Config.minorVersion = 79    				--Addon with a minor version change have prioirty over a lower minor version
-Config.revisionVersion = 0					--Addon with a revision change have the same priorty as a lower revision verison
+Config.revisionVersion = 1					--Addon with a revision change have the same priorty as a lower revision verison
 Config.releaseType = ""                     --Release type (Alpha, Beta, Release)
 
 -- Purpose:         Used to detect which version of the game the user is running. This is used so we can add features for different versions of the game.
@@ -116,6 +119,12 @@ end
 -- Purpose:         This is used to create a frame which the specified paramters. Returns a checkbutton frame.
 function Config:CreateCheckBox(point, relativeFrame, relativePoint, xOffset, yOffset, checkboxName)
     local chk = CreateFrame("CheckButton", checkboxName, relativeFrame, "UICheckButtonTemplate")    
+	chk:SetPoint(point, relativeFrame, relativePoint, xOffset, yOffset);                            
+	return chk;                                                                                     
+end
+
+function Config:CreateSlider(point, relativeFrame, relativePoint, xOffset, yOffset, sliderName)
+    local chk = CreateFrame("Slider", sliderName, relativeFrame, "OptionsSliderTemplate")    
 	chk:SetPoint(point, relativeFrame, relativePoint, xOffset, yOffset);                            
 	return chk;                                                                                     
 end
@@ -214,6 +223,8 @@ function Tab_OnClick(self)
             UIConfig.Main2.options27:Show()
             UIConfig.Main2.options28:Show()
             UIConfig.Main2.options29:Show()
+            UIConfig.Main2.options30:Show()
+            UIConfig.Main2.options31:Show()
 
             UIConfig.Main.author:Show()
             UIConfig.Main.tacticsCredit:Show()
@@ -413,6 +424,26 @@ function Tab_OnClick(self)
             UIConfig.Main2.options28 = Config:CreateCheckBox("TOPLEFT", UIConfig.Main2.options2, "TOPLEFT", 363, 0, "AchievementTracker_TrackCharacterAchievements")
             UIConfig.Main2.options28:SetScript("OnClick", ATToggleTrackCharacterAchievements_OnClick)
             UIConfig.Main2.options29 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options28, "TOPLEFT", 30, -9, L["GUI_TrackCharacterAchievements"],"GameFontHighlight")
+
+            --Change InfoFrame scale
+            UIConfig.Main2.options30 = Config:CreateCheckBox("TOPLEFT", UIConfig.Main2.options28, "TOPLEFT", 0, -25, "AchievementTracker_ChangeInfoFrameScale")
+            UIConfig.Main2.options30:SetScript("OnClick", ATToggleChangeInfoFrameScale_OnClick)
+            UIConfig.Main2.options31 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options30, "TOPLEFT", 30, -9, L["GUI_ChangeInfoFrameScale"],"GameFontHighlight")
+            UIConfig.Main2.options32 = Config:CreateSlider("TOPLEFT", UIConfig.Main2.options30, "TOPRIGHT", (UIConfig.Main2.options31:GetStringWidth() + 10), 0, "AchievementTracker_ChangeInfoFrameScaleSlider")
+            UIConfig.Main2.options32:SetMinMaxValues(0.5, 1.5)
+            UIConfig.Main2.options32.text = _G["AchievementTracker_ChangeInfoFrameScaleSlider".."Text"]
+            UIConfig.Main2.options32:SetValue(1.0)
+            UIConfig.Main2.options32.textLow = _G["AchievementTracker_ChangeInfoFrameScaleSlider".."Low"]
+            UIConfig.Main2.options32.textLow:SetText("0.5")
+            UIConfig.Main2.options32.textHigh = _G["AchievementTracker_ChangeInfoFrameScaleSlider".."High"]
+            UIConfig.Main2.options32.textHigh:SetText("1.5")
+            UIConfig.Main2.options32:SetScript("OnValueChanged", function(self,event,arg1) 
+                core.IATInfoFrame:ToggleOn()
+                core.IATInfoFrame:SetHeading(GetAchievementLink(14148))
+                core.IATInfoFrame:SetSubHeading1("Players who have met Critiera (1/10)")
+                core.IATInfoFrame:SetText1("Player 1")
+                core.IATInfoFrame:ChangeScale(event)
+            end)
         end
     else                                --User has selected an expansion tab so hide main menu options
         UIConfig.ScrollFrame:Show()
@@ -461,6 +492,8 @@ function Tab_OnClick(self)
         UIConfig.Main2.options27:Hide()
         UIConfig.Main2.options28:Hide()
         UIConfig.Main2.options29:Hide()
+        UIConfig.Main2.options30:Hide()
+        UIConfig.Main2.options31:Hide()
         
         UIConfig.Main.author:Hide()
         UIConfig.Main.verison:Hide()
@@ -481,6 +514,11 @@ function Tab_OnClick(self)
             UIConfig.achievementsCompleted:Hide()
         end
     end
+end
+
+function ATToggleChangeInfoFrameScale_OnClick(self)
+    AchievementTrackerOptions["changeInfoFrameScale"] = self:GetChecked()
+    setChangeInfoFrameScale(self:GetChecked()) 
 end
 
 function ATToggleTrackCharacterAchievements_OnClick(self)
@@ -1704,12 +1742,14 @@ function IATInfoFrame:SetupInfoFrame()
     InfoFrame:SetScript("OnDragStop", function(self) 
         self:StopMovingOrSizing()
         AchievementTrackerOptions["infoFrameXPos"] = self:GetLeft()
-        AchievementTrackerOptions["infoFrameYPos"] = self:GetBottom()
+        AchievementTrackerOptions["infoFrameYPos"] = self:GetTop()
+        AchievementTrackerOptions["infoFrameScale"] = self:GetScale()
+        print(AchievementTrackerOptions["infoFrameXPos"], AchievementTrackerOptions["infoFrameYPos"])
     end)
 
     --Info Frame X/Y Posiions
 	if AchievementTrackerOptions["infoFrameXPos"] ~= nil and AchievementTrackerOptions["infoFrameYPos"] ~= nil then
-		InfoFrame:ClearAllPoints()
+        InfoFrame:ClearAllPoints()
         InfoFrame:SetPoint("BOTTOMLEFT",AchievementTrackerOptions["infoFrameXPos"],AchievementTrackerOptions["infoFrameYPos"])        
 	end
 
@@ -1819,6 +1859,21 @@ function IATInfoFrame:SetText2(text,width)
     
     InfoFrame.setText2:SetJustifyH("LEFT")
     InfoFrame.setText2:SetJustifyV("TOP")
+end
+
+function IATInfoFrame:SetPosition(x,y,scaleFactor)
+    InfoFrame:ClearAllPoints()
+    InfoFrame:SetPoint("TOPLEFT",x/scaleFactor,y*scaleFactor)
+    --print(AchievementTrackerOptions["infoFrameXPos"], AchievementTrackerOptions["infoFrameYPos"])
+end
+
+function IATInfoFrame:ChangeScale(scaleFactor)
+    Left = AchievementTrackerOptions["infoFrameXPos"]
+    Top = AchievementTrackerOptions["infoFrameYPos"]
+
+    InfoFrame:SetScale(scaleFactor)
+    print(Left, Top, scaleFactor)
+    core.IATInfoFrame:SetPosition(Left, Top, scaleFactor)
 end
 
 function IATInfoFrame:ToggleOn()
