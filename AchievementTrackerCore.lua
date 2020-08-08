@@ -9,7 +9,7 @@ local UIConfig													--UIConfig is used to make a display asking the user 
 local UICreated = false											--To enable achievement tracking when they enter an instances
 local debugMode = false
 local debugModeChat = false
-local sendDebugMessages = false
+local sendDebugMessages = true
 
 local ptrVersion = "8.1.0"
 
@@ -197,6 +197,7 @@ local versionCheckInitiated = false
 local trackAchievementsInUI = false				--Track achievements in achievements UI upon entering raid
 local trackAchievementInUiTable = {}
 local trackCharacterAchievements = false
+local changeInfoFrameScale = false
 
 local sendMessageOnTimer_ProcessMessage = false	--Set when we have message in message queue that needs to be output
 local sendMessageOnTimer_Message = nil			--Message in queue to be outputted
@@ -1150,6 +1151,15 @@ function events:ADDON_LOADED(event, name)
 	end
 	_G["AchievementTracker_TrackCharacterAchievements"]:SetChecked(AchievementTrackerOptions["trackCharacterAchievements"])
 
+	--Change InfoFrame Scale
+	if AchievementTrackerOptions["changeInfoFrameScale"] == nil then
+		AchievementTrackerOptions["changeInfoFrameScale"] = false --Disabled by default
+		changeInfoFrameScale = false
+	elseif AchievementTrackerOptions["changeInfoFrameScale"] == true then
+		changeInfoFrameScale = true
+	end
+	_G["AchievementTracker_ChangeInfoFrameScale"]:SetChecked(AchievementTrackerOptions["changeInfoFrameScale"])
+
 	SLASH_IAT1 = "/iat";
 	SlashCmdList.IAT = HandleSlashCommands;
 
@@ -1157,6 +1167,14 @@ function events:ADDON_LOADED(event, name)
 
 	--Set whether addon should be enabled or disabled
 	setAddonEnabled(AchievementTrackerOptions["enableAddon"])
+end
+
+function setChangeInfoFrameScale(setChangeInfoFrameScale)
+	if setChangeInfoFrameScale then
+		changeInfoFrameScale = true
+	else
+		changeInfoFrameScale = false					
+	end
 end
 
 function setTrackCharacterAchievements(setTrackCharacterAchievements)
