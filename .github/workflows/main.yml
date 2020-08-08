@@ -33,5 +33,5 @@ jobs:
         uses: actions/checkout@v2
 
       # once cloned, we just run the GitHub Action for the packager project
-      - name: Instance Achievement Tracker Packager
-        uses: Instance-Achievement-Tracker/packager@master
+      - name: Package and release
+        uses: BigWigsMods/packager@master
