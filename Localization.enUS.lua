@@ -53,6 +53,7 @@ local baseLocale = {
     ["GUI_TrackAchievementsInBlizzardUI"] = "Track achievements in Achievements UI",
     ["Gui_TacticsNames"] = "Nightswifty, Daugen, Whizzey",
     ["GUI_TrackCharacterAchievements"] = "Track character achievements (Default: Account)",
+    ["GUI_ChangeInfoFrameScale"] = "InfoFrame Scale",
 
     -------------------------------------------------------
     --- Core
@@ -197,7 +198,7 @@ local baseLocale = {
     ["Shared_AutomaticCounter"] = "Automatic Counter",
     ["Shared_ManualCounter"] = "Manual Counter",
     ["Shared_AddsKilled"] = "Adds killed",
-    ["Shared_PlayersMetCriteria"] = "Players who have met critera",
+    ["Shared_PlayersMetCriteria"] = "Players who have met criteria",
     ["Shared_Players25Yards"] = "Players must be within 25 yards of a player running IAT to track this achievement accurately",
     ["TimeBetweenLast"] = "Time between last %s %s seconds",
 
@@ -1188,7 +1189,7 @@ local baseLocale = {
     --Tactics
     ["Deadmines_HelixGearbreaker"] = "Pull the boss and wait for him to pick you up and charge down the room. Once he has done this Mine Rats will spawn around the room. After you have killed 20 Mine Rats you can kill the boss. The boss will have to do multiple charges so that enough Mine Rats to spawn.",
     ["Deadmines_AdmiralRipsnarl"] = "Damage Ripsnarl until he enters the vapour phase. Be careful that you don’t one shot the boss. Once he enters the vapour phase, wait until 3 Freezing Vapors cast Coalesce before killing boss.",
-    ["Deadmines_CaptainCookie"] = "At 110, Wait for the boss to enter the pot and attempt to cast Throw Food before killing the boss. If you kill the boss before this has happened, the achievement will not get rewarded.",
+    ["Deadmines_CaptainCookie"] = "At max level, simply wait for %s to enter the pot then kill him to get this achievement.",
 
     --Chat Output
 
@@ -1242,7 +1243,7 @@ local baseLocale = {
     --- Hour of Twilight
     -------------------------------------------------------
     --Tactics
-    ["HourOfTwilight_ArchbishopBenedictus"] = "Get the boss health down to 50%. Be careful that you don’t 1 shot the boss. Once the boss has entered his shadow form, run round the edges of the room and kill 10 Twilight Sparks. Once 10 Twilight Sparks have been killed, you can kill the boss.",
+    ["HourOfTwilight_ArchbishopBenedictus"] = "To complete this achievement, dps the boss down to 50%% health. Once the boss has entered his shadow phase, run around the edges of the room and kill 10 %s. Once 10 %s have been killed, you can kill the boss.",
 
     --Chat Output
 

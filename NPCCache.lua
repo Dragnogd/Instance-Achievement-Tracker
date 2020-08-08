@@ -306,6 +306,8 @@ core.NPCCache = {
     [156034] = 156034, --Quilen
     [64556] = 64556, --Captain Ook
     [61709] = 61709, --Spawn of Anger
+    [47739] = 47739, --"Captain" Cookie
+    [55466] = 55466, --Twilight Spark
 }
 
 --[] = , --
