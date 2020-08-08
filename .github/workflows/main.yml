@@ -1,0 +1,37 @@
+# description of this workflow, can be anything you want
+name: Instance Achievement Tracker Packager
+
+# we need to let GitHub know _when_ we want to release, typically only when we create a new tag.
+# this will target only tags, and not all pushes to the master branch.
+# this part can be heavily customized to your liking, like targeting only tags that match a certain word,
+# other branches or even pullrequests.
+on:
+  push:
+    tags:
+      - 'V2.*'
+
+# a workflow is built up as jobs, and within these jobs are steps
+jobs:
+
+  # "release" here can be anything in one word
+  release:
+
+    # we can run our steps on pretty much anything, but the "ubuntu-latest" image is a safe bet
+    runs-on: ubuntu-latest
+
+    # specify the environment variables used by the packager, matching the secrets from the project on GitHub
+    env:
+      CF_API_KEY: ${{ secrets.CF_API_KEY }}
+      WOWI_API_TOKEN: ${{ secrets.WOWI_API_TOKEN }}
+      GITHUB_OAUTH: ${{ secrets.TOKEN_GITHUB }}
+
+    # "steps" holds a list of all the steps needed to package and release our AddOn
+    steps:
+
+      # we first have to clone the AddOn project, which is simple enough, and is a required step
+      - name: Clone project
+        uses: actions/checkout@v2
+
+      # once cloned, we just run the GitHub Action for the packager project
+      - name: Instance Achievement Tracker Packager
+        uses: Instance-Achievement-Tracker/packager@master
