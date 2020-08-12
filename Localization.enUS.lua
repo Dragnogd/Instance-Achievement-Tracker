@@ -207,6 +207,8 @@ local baseLocale = {
     -------------------------------------------------------    
     --Tactics
     ["TheaterOfPain_AffrontOfChallengers"] = "",
+    ["TheaterOfPain_Gorechop"] = "",
+    ["TheaterOfPain_Mordretha"] = "",
 
     --Chat Output
 
@@ -215,6 +217,8 @@ local baseLocale = {
     -------------------------------------------------------    
     --Tactics
     ["DeOtherSide_HighlyCommunicable"] = "",
+    ["DeOtherSide_TheManastorms"] = "",
+    ["DeOtherSide_DealerXyexa"] = "",
 
     --Chat Output
 
@@ -232,6 +236,8 @@ local baseLocale = {
     --- Halls of Atonement
     -------------------------------------------------------    
     --Tactics
+    ["HallsOfAtonement_Halkias"] = "",
+    ["HallsOfAtonement_Echelon"] = "",
     ["HallsOfAtonement_LordChamberlain"] = "",
 
     --Chat Output
@@ -240,6 +246,7 @@ local baseLocale = {
     --- Spires of Ascension
     -------------------------------------------------------    
     --Tactics
+    ["SpiresOfAscension_Oryphrion"] = "",
     ["SpiresOfAscension_DevosParagonOfDoubt1"] = "",
     ["SpiresOfAscension_DevosParagonOfDoubt2"] = "",
 
@@ -258,8 +265,9 @@ local baseLocale = {
     --- Mists of Tirna Scithe
     -------------------------------------------------------    
     --Tactics
-    ["MistsOfTirnaScithe_SomeoneCouldTripOnThese"] = "",
-    ["MistsOfTirnaScithe_GeneralKaal"] = "",
+    ["MistsOfTirnaScithe_IngraMaloch"] = "",
+    ["MistsOfTirnaScithe_Mistcaller"] = "",
+    ["MistsOfTirnaScithe_Tredova"] = "",
 
     --Chat Output
 
@@ -267,9 +275,9 @@ local baseLocale = {
     --- Plaguefall
     -------------------------------------------------------    
     --Tactics
-    ["Plaguefall_PartyOfSlime"] = "",
-    ["Plaguefall_Doctor Ickus"] = "",
+    ["Plaguefall_RidingWithMySlimes"] = "",
     ["Plaguefall_Globgrog"] = "",
+    ["Plaguefall_DoctorIckus"] = "",
 
     --Chat Output
 

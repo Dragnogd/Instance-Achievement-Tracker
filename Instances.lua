@@ -28,19 +28,41 @@ core.Instances = {
                     partial = false,
                     encounterID = {2395,2394,2400,2396},
                 },
+                boss2 = {
+                    name = 2409, --The Manastorms
+                    bossIDs = {},
+                    achievement = 14374,
+                    players = {},
+                    tactics = L["DeOtherSide_TheManastorms"],
+                    enabled = false,
+                    track = nil,
+                    partial = false,
+                    encounterID = 2394,
+                },
+                boss3 = {
+                    name = 2398, --Dealer Xy'exa
+                    bossIDs = {},
+                    achievement = 14606,
+                    players = {},
+                    tactics = L["DeOtherSide_DealerXyexa"],
+                    enabled = false,
+                    track = nil,
+                    partial = false,
+                    encounterID = 2400,
+                },
             },
             [2287] = { --Halls of Atonement
                 name = 1185,
                 boss1 = {
-                    name = 2413, --Lord Chamberlain
+                    name = 2406, --Halkias
                     bossIDs = {},
-                    achievement = 14352,
+                    achievement = 14567,
                     players = {},
-                    tactics = L["HallsOfAtonement_LordChamberlain"],
+                    tactics = L["HallsOfAtonement_Halkias"],
                     enabled = false,
                     track = nil,
                     partial = false,
-                    encounterID = 2381,
+                    encounterID = 2401,
                 },
                 boss2 = {
                     name = 2387, --Echelon
@@ -53,29 +75,52 @@ core.Instances = {
                     partial = false,
                     encounterID = 2380,
                 },
+                boss3 = {
+                    name = 2413, --Lord Chamberlain
+                    bossIDs = {},
+                    achievement = 14352,
+                    players = {},
+                    tactics = L["HallsOfAtonement_LordChamberlain"],
+                    enabled = false,
+                    track = nil,
+                    partial = false,
+                    encounterID = 2381,
+                },
             },
             [2290] = { --Mists of Tirna Scithe
                 name = 1184,
                 boss1 = {
-                    name = L["Instances_Other"], --Someone Could Trip on these!
+                    name = 2400, --Ingra Maloch
                     bossIDs = {},
-                    achievement = 14291,
+                    achievement = 14503,
                     players = {},
-                    tactics = L["MistsOfTirnaScithe_SomeoneCouldTripOnThese"],
+                    tactics = L["MistsOfTirnaScithe_IngraMaloch"],
                     enabled = false,
                     track = nil,
                     partial = false,
+                    encounterID = 2397,
                 },
-                boss1 = {
-                    name = 2402, --General Kaal
+                boss2 = {
+                    name = 2402, --Mistcaller
                     bossIDs = {},
-                    achievement = 14289,
+                    achievement = 14291,
                     players = {},
-                    tactics = L["MistsOfTirnaScithe_GeneralKaal"],
+                    tactics = L["MistsOfTirnaScithe_Mistcaller"],
                     enabled = false,
                     track = nil,
                     partial = false,
                     encounterID = 2392,
+                },
+                boss3 = {
+                    name = 2405, --Tred'ova
+                    bossIDs = {},
+                    achievement = 14375,
+                    players = {},
+                    tactics = L["MistsOfTirnaScithe_Tredova"],
+                    enabled = false,
+                    track = nil,
+                    partial = false,
+                    encounterID = 2393,
                 },
             },
             [2289] = { --Plaguefall
@@ -85,23 +130,12 @@ core.Instances = {
                     bossIDs = {},
                     achievement = 14292,
                     players = {},
-                    tactics = L["Plaguefall_PartyOfSlime"],
+                    tactics = L["Plaguefall_RidingWithMySlimes"],
                     enabled = false,
                     track = nil,
                     partial = false,
                     encounterID = {2384,2385,2382,2386},
                     displayInfoFrame = true,
-                },
-                boss1 = {
-                    name = 2403, --Doctor Ickus
-                    bossIDs = {},
-                    achievement = 14296,
-                    players = {},
-                    tactics = L["Plaguefall_DoctorIckus"],
-                    enabled = false,
-                    track = nil,
-                    partial = false,
-                    encounterID = 2384,
                 },
                 boss2 = {
                     name = 2419, --Globgrog
@@ -114,6 +148,18 @@ core.Instances = {
                     partial = false,
                     encounterID = 2382,
                 },
+                boss3 = {
+                    name = 2403, --Doctor Ickus
+                    bossIDs = {},
+                    achievement = 14296,
+                    players = {},
+                    tactics = L["Plaguefall_DoctorIckus"],
+                    enabled = false,
+                    track = nil,
+                    partial = false,
+                    encounterID = 2384,
+                },
+
             },
             [2284] = { --Sanguine Depths
                 name = 1189,
@@ -153,6 +199,17 @@ core.Instances = {
             [2285] = { --Spires of Ascension
                 name = 1186,
                 boss1 = {
+                    name = 2414, --Oryphrion
+                    bossIDs = {},
+                    achievement = 14331,
+                    players = {},
+                    tactics = L["SpiresOfAscension_Oryphrion"],
+                    enabled = false,
+                    track = nil,
+                    partial = false,
+                    encounterID = 2358,
+                },
+                boss2 = {
                     name = 2412, --Devos, Paragon of Doubt
                     bossIDs = {},
                     achievement = 14323,
@@ -163,7 +220,7 @@ core.Instances = {
                     partial = false,
                     encounterID = 2359,
                 },
-                boss2 = {
+                boss3 = {
                     name = 2412, --Devos, Paragon of Doubt
                     bossIDs = {},
                     achievement = 14327,
@@ -187,6 +244,28 @@ core.Instances = {
                     partial = false,
                     encounterID = 2391,
                 },
+                boss2 = {
+                    name = 2401, --Gorechop
+                    bossIDs = {},
+                    achievement = 14297,
+                    players = {},
+                    tactics = L["TheaterOfPain_Gorechop"],
+                    enabled = false,
+                    track = nil,
+                    partial = false,
+                    encounterID = 2365,
+                },
+                boss3 = {
+                    name = 2417, --Mordretha
+                    bossIDs = {},
+                    achievement = 14533,
+                    players = {},
+                    tactics = L["TheaterOfPain_Mordretha"],
+                    enabled = false,
+                    track = nil,
+                    partial = false,
+                    encounterID = 2404,
+                },
             },
             [2286] = { --The Necrotic Wake
                 name = 1182,
@@ -202,17 +281,6 @@ core.Instances = {
                     encounterID = 2388,
                 },
                 boss2 = {
-                    name = 2396, --Nalthor the Rimebinder
-                    bossIDs = {},
-                    achievement = 14285,
-                    players = {},
-                    tactics = L["TheNecroticWake_NalthorTheRimebinder"],
-                    enabled = true,
-                    track = function() core._2286:NalthorTheRimebinder() end,
-                    partial = false,
-                    encounterID = 2390,
-                },
-                boss3 = {
                     name = 2392, --Surgeon Stitchflesh
                     bossIDs = {},
                     achievement = 14320,
@@ -222,6 +290,17 @@ core.Instances = {
                     track = nil,
                     partial = false,
                     encounterID = 2389,
+                },
+                boss3 = {
+                    name = 2396, --Nalthor the Rimebinder
+                    bossIDs = {},
+                    achievement = 14285,
+                    players = {},
+                    tactics = L["TheNecroticWake_NalthorTheRimebinder"],
+                    enabled = true,
+                    track = function() core._2286:NalthorTheRimebinder() end,
+                    partial = false,
+                    encounterID = 2390,
                 },
             },
         },
