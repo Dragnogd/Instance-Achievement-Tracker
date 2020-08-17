@@ -159,7 +159,6 @@ core.Instances = {
                     partial = false,
                     encounterID = 2384,
                 },
-
             },
             [2284] = { --Sanguine Depths
                 name = 1189,
