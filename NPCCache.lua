@@ -1,6 +1,3 @@
---------------------------------------
--- Namespaces
---------------------------------------
 local _, core = ...
 
 core.NPCCache = {
@@ -168,7 +165,7 @@ core.NPCCache = {
     [146495] = 146495, --Fa'thuul the Feared
     [146750] = 146750, --N'zoth
     [104251] = 104251, --Duskwatch Sentry
-    [104217] = 104217, --Talixae 
+    [104217] = 104217, --Talixae
     [95888] = 95888, --Cordana Felsong
     [152910] = 152910, --Queen Azshara
     [155144] = 155144, --Abyssal Commander Sivara
