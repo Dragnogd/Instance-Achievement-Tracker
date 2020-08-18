@@ -531,7 +531,7 @@ core.Instances = {
 					displayInfoFrame = true,
 				},
 			},
-	
+
 			[2164] = { --Azshara's Eternal Palace
 				name = 1179,
 				boss1 = {
@@ -1046,7 +1046,7 @@ core.Instances = {
 					track = function() core._1841:UnboundAbomination() end,
 					partial = false,
 					encounterID = 2123,
-				},                
+				},
 			},
 
 			[1771] = { --Tol Dagor
@@ -1188,7 +1188,7 @@ core.Instances = {
 		Raids = {
 			[1520] = { --The Emerald Nightmare
 				name = 768,
-				boss1 = { 
+				boss1 = {
 					name = 1703, --Nythendra
 					bossIDs = {102672},
 					achievement = 10555,
@@ -1376,7 +1376,7 @@ core.Instances = {
 				},
 				boss7 = {
 					name = 1713, --Krosus
-					bossIDs = {101002}, 
+					bossIDs = {101002},
 					achievement = 10575,
 					players = {},
 					tactics = format(L["TheNighthold_Krosus"], "IAT_104262", GetSpellLink(205420), "IAT_104262", "IAT_104262"),
@@ -2312,7 +2312,7 @@ core.Instances = {
 					encounterID = 1704,
 				},
 			},
-			
+
 			[1448] = { --Hellfire Citadel
 				name = 669,
 				boss1 = {
@@ -3303,7 +3303,7 @@ core.Instances = {
 					tactics = L["StormstoutBrewery_Other1"],
 					enabled = nil,
 					partial = false,
-				},                
+				},
 				boss4 = {
 					name = 669, --Hoptallus
 					bossIDs = {59426, 59460, 56718, 59459, 59461, 59551},
@@ -3544,7 +3544,7 @@ core.Instances = {
 					encounterID = 1306,
 				},
 			},
-	
+
 			[1011] = { --Siege of Niuazao Temple
 				name = 324,
 				boss1 = {
@@ -3641,7 +3641,7 @@ core.Instances = {
 					enabled = true,
 					track = function() end,
 					partial = false,
-				}, 
+				},
 				boss3 = {
 					name = 58739,
 					bossIDs = {58739},
@@ -3705,7 +3705,7 @@ core.Instances = {
 					enabled = false,
 					track = nil,
 					partial = false,
-				},                 
+				},
 			},
 
 			[1031] = { --Arena of Annihilation
@@ -3729,7 +3729,7 @@ core.Instances = {
 					enabled = false,
 					track = nil,
 					partial = false,
-				},              
+				},
 			},
 
 			[1050] = { --Assault on Zan'vess
@@ -3743,7 +3743,7 @@ core.Instances = {
 					enabled = true,
 					track = function() core._1050:CommanderTelvrak() end,
 					partial = false,
-				},        
+				},
 			},
 
 			[1099] = { --Battle on the High Seas
@@ -3757,7 +3757,7 @@ core.Instances = {
 					enabled = true,
 					track = function() end,
 					partial = false,
-				},        
+				},
 			},
 
 			[1130] = { --Blood in the Snow
@@ -3780,7 +3780,7 @@ core.Instances = {
 					tactics = L["Shared_JustKillBoss"],
 					enabled = nil,
 					partial = false,
-				},                
+				},
 			},
 
 			[1051] = { --Brewmoon Festival
@@ -3803,7 +3803,7 @@ core.Instances = {
 					tactics = L["BrewmoonFestival_YaungolianBarbecue"],
 					enabled = nil,
 					partial = false,
-				},                
+				},
 			},
 
 			[1030] = { --Crypt of Forgotten Kings
@@ -3817,7 +3817,7 @@ core.Instances = {
 					enabled = true,
 					track = function() core._1030:AbominationOfAnger1() end,
 					partial = false,
-				},         
+				},
 				boss2 = {
 					name = 61707,
 					bossIDs = {61707},
@@ -3827,7 +3827,7 @@ core.Instances = {
 					enabled = true,
 					track = function() core._1030:AbominationOfAnger2() end,
 					partial = false,
-				},    
+				},
 				boss3 = {
 					name = L["Instances_Other"],
 					bossIDs = {},
@@ -3837,7 +3837,7 @@ core.Instances = {
 					enabled = false,
 					track = nil,
 					partial = false,
-				},    
+				},
 			},
 
 			[1095] = { --Dagger in the Dark
@@ -3851,7 +3851,7 @@ core.Instances = {
 					enabled = true,
 					track = function() core._1095:DarkhatchedLizardLord() end,
 					partial = false,
-				}, 
+				},
 				boss2 = {
 					name = 67264,
 					bossIDs = {},
@@ -3871,7 +3871,7 @@ core.Instances = {
 					enabled = true,
 					track = function() end,
 					partial = false,
-				},                
+				},
 			},
 
 			[1144] = { --Dark Heart of Pandaria
@@ -3957,7 +3957,7 @@ core.Instances = {
 					enabled = true,
 					track = function() end,
 					partial = false,
-				},                
+				},
 			},
 
 			[1000] = { --Theramore's Fall (Alliance)
@@ -3971,7 +3971,7 @@ core.Instances = {
 					enabled = true,
 					track = function() core._1000:Gashnul() end,
 					partial = false,
-				},   
+				},
 				boss2 = {
 					name = 64479,
 					bossIDs = {64479},
@@ -3981,7 +3981,7 @@ core.Instances = {
 					enabled = true,
 					track = function() core._1000:Gatecrusher() end,
 					partial = false,
-				},      
+				},
 			},
 
 			[999] = { --Theramore's Fall (Horde)
@@ -3995,7 +3995,7 @@ core.Instances = {
 					enabled = false,
 					track = nil,
 					partial = false,
-				},   
+				},
 				boss2 = {
 					name = 58787,
 					bossIDs = {},
@@ -4005,7 +4005,7 @@ core.Instances = {
 					enabled = false,
 					track = nil,
 					partial = false,
-				},      
+				},
 			},
 
 			[1131] = { --Secrets of Ragefire
@@ -4403,8 +4403,8 @@ core.Instances = {
 					track = function() core._645:RomoggBonecrusher() end,
 					partial = false,
 					encounterID = 1040,
-				}, 
-				boss2 = { 
+				},
+				boss2 = {
 					name = 106, --Corla
 					bossIDs = {39679},
 					achievement = 5282,
@@ -4414,7 +4414,7 @@ core.Instances = {
 					track = function() core._645:Corla() end,
 					partial = false,
 					encounterID = 1038,
-				},  
+				},
 				boss3 = {
 					name = 107, --Karsh Steelbender
 					bossIDs = {39698},
@@ -4425,7 +4425,7 @@ core.Instances = {
 					track = function() core._645:KarshSteelbender() end,
 					partial = false,
 					encounterID = 1039,
-				},  
+				},
 				boss4 = {
 					name = 109, --Ascendant Lord Obsidius
 					bossIDs = {39705},
@@ -4436,7 +4436,7 @@ core.Instances = {
 					track = function() core._645:AscendantLordObsidius() end,
 					partial = false,
 					encounterID = 1036,
-				},                 
+				},
 			},
 
 			[643] = {  --Throne of the Tides
@@ -4462,7 +4462,7 @@ core.Instances = {
 					track = function() core._643:Ozumat() end,
 					partial = false,
 					encounterID = 1047,
-				},                  
+				},
 			},
 
 			[725] = { --The Stonecore
@@ -4477,7 +4477,7 @@ core.Instances = {
 					track = function() core._725:HighPriestessAzil() end,
 					partial = false,
 					encounterID = 1057,
-				},               
+				},
 			},
 
 			[657] = { --The Vortex Pinnacle
@@ -4502,7 +4502,7 @@ core.Instances = {
 					enabled = false,
 					track = nil,
 					partial = false,
-				},                
+				},
 			},
 
 			[670] = { --Grim Batol
@@ -4528,7 +4528,7 @@ core.Instances = {
 					track = function() core._670:Erudax() end,
 					partial = false,
 					encounterID = 1049,
-				},               
+				},
 			},
 
 			[644] = { --Halls of Origination
@@ -4575,7 +4575,7 @@ core.Instances = {
 					track = function() core._644:Rajh() end,
 					partial = false,
 					encounterID = 1078,
-				},           
+				},
 			},
 
 			[755] = { --Lost City of the Tol'Vir
@@ -4590,7 +4590,7 @@ core.Instances = {
 					track = function() core._755:Lockmaw() end,
 					partial = false,
 					encounterID = 1054,
-				},  
+				},
 				boss2 = {
 					name = 119, --High Prophet Barim
 					bossIDs = {43612},
@@ -4601,7 +4601,7 @@ core.Instances = {
 					track = function() core._755:HighProphetBarim() end,
 					partial = false,
 					encounterID = 1053,
-				},  
+				},
 				boss3 = {
 					name = 122, --Siamat
 					bossIDs = {44819},
@@ -4612,7 +4612,7 @@ core.Instances = {
 					track = function() core._755:Siamat() end,
 					partial = false,
 					encounterID = 1055,
-				},           
+				},
 			},
 
 			[36] = { --Deadmines
@@ -4638,7 +4638,7 @@ core.Instances = {
 					track = function() core._36:HelixGearbreaker() end,
 					partial = false,
 					encounterID = 1065,
-				},  
+				},
 				boss3 = {
 					name = 91, --Foe Reaper 5000
 					bossIDs = {},
@@ -4649,7 +4649,7 @@ core.Instances = {
 					track = nil,
 					partial = true,
 					encounterID = 1063,
-				},  
+				},
 				boss4 = {
 					name = 92, --Admiral Ripsnarl
 					bossIDs = {47626},
@@ -4660,7 +4660,7 @@ core.Instances = {
 					track = function() core._36:AdmiralRipsnarl() end,
 					partial = false,
 					encounterID = 1062,
-				},  
+				},
 				boss5 = {
 					name = 93, --'Captain' Cookie
 					bossIDs = {47739},
@@ -4671,7 +4671,7 @@ core.Instances = {
 					track = function() core._36:CaptainCookie() end,
 					partial = false,
 					encounterID = 1060,
-				},  
+				},
 				boss6 = {
 					name = 95, --Vanessa VanCleef
 					bossIDs = {49541},
@@ -4682,7 +4682,7 @@ core.Instances = {
 					track = function() core._36:VanessaVanCleef() end,
 					partial = false,
 					encounterID = 1081,
-				},            
+				},
 			},
 
 			[33] = { --Shadowfang Keep
@@ -4708,7 +4708,7 @@ core.Instances = {
 					track = function() core._33:CommanderSpringvale() end,
 					partial = false,
 					encounterID = 1071,
-				},            
+				},
 				boss3 = {
 					name = 100, --Lord Godfrey
 					bossIDs = {46964},
@@ -4719,7 +4719,7 @@ core.Instances = {
 					track = function() core._33:LordGodfrey() end,
 					partial = false,
 					encounterID = 1072,
-				},   
+				},
 			},
 
 			[859] = { --Zul'Gurub
@@ -4921,7 +4921,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 1090,
-				},  
+				},
 				boss3 = {
 					name = 1616, --Sartharion the Onyx Guardian
 					bossIDs = {},
@@ -4932,7 +4932,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 1090,
-				},  
+				},
 				boss4 = {
 					name = 1616, --Sartharion the Onyx Guardian
 					bossIDs = {},
@@ -4943,7 +4943,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 1090,
-				},  
+				},
 				boss5 = {
 					name = 1616, --Sartharion the Onyx Guardian
 					bossIDs = {},
@@ -4954,7 +4954,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 1090,
-				},                               
+				},
 			},
 
 			["615-25"] = { --Obsidian Sanctum 25 Man
@@ -4980,7 +4980,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 1090,
-				},  
+				},
 				boss3 = {
 					name = 1616, --Sartharion the Onyx Guardian
 					bossIDs = {},
@@ -4991,7 +4991,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 1090,
-				},  
+				},
 				boss4 = {
 					name = 1616, --Sartharion the Onyx Guardian
 					bossIDs = {},
@@ -5002,7 +5002,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 1090,
-				},  
+				},
 				boss5 = {
 					name = 1616, --Sartharion the Onyx Guardian
 					bossIDs = {},
@@ -5013,7 +5013,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 1090,
-				},                               
+				},
 			},
 
 			["616-10"] = { --Eye of Eternity 10 Man
@@ -5039,7 +5039,7 @@ core.Instances = {
 					track = function() core._616:APokeInTheEye() end,
 					partial = false,
 					encounterID = 1094,
-				}, 
+				},
 				boss3 = {
 					name = 1617, --Malygos
 					bossIDs = {28859},
@@ -5050,7 +5050,7 @@ core.Instances = {
 					track = function() core._616:DenyinTheScion() end,
 					partial = false,
 					encounterID = 1094,
-				},                             
+				},
 			},
 
 			["616-25"] = { --Eye of Eternity 25 Man
@@ -5076,7 +5076,7 @@ core.Instances = {
 					track = function() core._616:APokeInTheEye() end,
 					partial = false,
 					encounterID = 1094,
-				}, 
+				},
 				boss3 = {
 					name = 1617, --Malygos
 					bossIDs = {28859},
@@ -5087,7 +5087,7 @@ core.Instances = {
 					track = function() core._616:DenyinTheScion() end,
 					partial = false,
 					encounterID = 1094,
-				},                             
+				},
 			},
 
 			["249-10"] = { --Onyxia's Lair 10 Man
@@ -5124,7 +5124,7 @@ core.Instances = {
 					track = function() core._249:Onyxia1() end,
 					partial = false,
 					encounterID = 1084,
-				},                          
+				},
 			},
 
 			["249-25"] = { --Onyxia's Lair 25 Man
@@ -5142,7 +5142,7 @@ core.Instances = {
 				},
 				boss2 = {
 					name = 1651, --Onyxia
-					bossIDs = {}, 
+					bossIDs = {},
 					achievement = 4406,
 					players = {},
 					tactics = L["OnyxiasLair_Onyxia"],
@@ -5161,7 +5161,7 @@ core.Instances = {
 					track = function() core._249:Onyxia1() end,
 					partial = false,
 					encounterID = 1084,
-				},                          
+				},
 			},
 
 			["649-10"] = { --Trial of the Crusader 10 Man
@@ -5187,7 +5187,7 @@ core.Instances = {
 					track = function() core._649:NotOneButTwoJormungars() end,
 					partial = false,
 					encounterID = 1088,
-				}, 
+				},
 				boss3 = {
 					name = 1619, --Lord Jaraxxus
 					bossIDs = {34780},
@@ -5198,7 +5198,7 @@ core.Instances = {
 					track = function() core._649:ThreeSixtyPainSpike() end,
 					partial = false,
 					encounterID = 1087,
-				}, 
+				},
 				boss4 = {
 					name = 1621, --Faction Champions
 					bossIDs = {34461,34460,34469,34467,34468,34465,34471,34466,34473,34472,34463,34470,34474,34475,34458,34451,34459,34448,34449,34445,34456,34447,34441,34454,34455,34444,34450,34453},
@@ -5209,7 +5209,7 @@ core.Instances = {
 					track = function() core._649:FactionChampions() end,
 					partial = false,
 					encounterID = 1086,
-				}, 
+				},
 				boss5 = {
 					name = 1622, --Twin Val'kyr
 					bossIDs = {34497,34496},
@@ -5220,7 +5220,7 @@ core.Instances = {
 					track = function() core._649:TwinValkyr() end,
 					partial = false,
 					encounterID = 1089,
-				}, 
+				},
 				boss6 = {
 					name = 1623, --Anub'arak
 					bossIDs = {34564},
@@ -5232,7 +5232,7 @@ core.Instances = {
 					partial = false,
 					encounterID = 1085,
 					displayInfoFrame = true,
-				},                     
+				},
 			},
 
 			["649-25"] = { --Trial of the Crusader 25 Man
@@ -5258,7 +5258,7 @@ core.Instances = {
 					track = function() core._649:NotOneButTwoJormungars() end,
 					partial = false,
 					encounterID = 1088,
-				}, 
+				},
 				boss3 = {
 					name = 1619, --Lord Jaraxxus
 					bossIDs = {34780},
@@ -5269,7 +5269,7 @@ core.Instances = {
 					track = function() core._649:ThreeSixtyPainSpike() end,
 					partial = false,
 					encounterID = 1087,
-				}, 
+				},
 				boss4 = {
 					name = 1622, --Twin Val'kyr
 					bossIDs = {34497,34496},
@@ -5280,7 +5280,7 @@ core.Instances = {
 					track = function() core._649:TwinValkyr() end,
 					partial = false,
 					encounterID = 1089,
-				}, 
+				},
 				boss5 = {
 					name = 1623, --Anub'arak
 					bossIDs = {34564},
@@ -5292,7 +5292,7 @@ core.Instances = {
 					partial = false,
 					encounterID = 1085,
 					displayInfoFrame = true,
-				},                     
+				},
 			},
 
 			["624-10"] = { --Vault of Archavon 10 Man
@@ -5307,7 +5307,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 1126,
-				},                   
+				},
 			},
 
 			["624-25"] = { --Vault of Archavon 25 Man
@@ -5322,7 +5322,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 1126,
-				},                   
+				},
 			},
 
 			[603] = { --Ulduar
@@ -5346,7 +5346,7 @@ core.Instances = {
 					enabled = true,
 					track = function() end,
 					partial = false,
-				}, 
+				},
 				boss3 = {
 					name = 1637, --Flame Leviathan
 					bossIDs = {},
@@ -5357,7 +5357,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 1132,
-				}, 
+				},
 				boss4 = {
 					name = 1637, --Flame Leviathan
 					bossIDs = {33113},
@@ -5368,7 +5368,7 @@ core.Instances = {
 					track = function() core._603:FlameLeviathanTakeOutThoseTurrets() end,
 					partial = false,
 					encounterID = 1132,
-				}, 
+				},
 				boss5 = {
 					name = 1637, --Flame Leviathan
 					bossIDs = {33113},
@@ -5379,7 +5379,7 @@ core.Instances = {
 					track = function() core._603:FlameLeviathanShutout() end,
 					partial = false,
 					encounterID = 1132,
-				}, 
+				},
 				boss6 = {
 					name = 1637, --Flame Leviathan
 					bossIDs = {},
@@ -5390,7 +5390,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 1132,
-				}, 
+				},
 				boss7 = {
 					name = 1637, --Flame Leviathan
 					bossIDs = {},
@@ -5401,7 +5401,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 1132,
-				}, 
+				},
 				boss8 = {
 					name = 1637, --Flame Leviathan
 					bossIDs = {},
@@ -5412,7 +5412,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 1132,
-				}, 
+				},
 				boss9 = {
 					name = 1637, --Flame Leviathan
 					bossIDs = {},
@@ -5423,7 +5423,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 1132,
-				}, 
+				},
 				boss10 = {
 					name = 1639, --Razorscale
 					bossIDs = {33186},
@@ -5434,7 +5434,7 @@ core.Instances = {
 					track = function() core._603:RazorscaleAQuickShave() end,
 					partial = false,
 					encounterID = 1139,
-				}, 
+				},
 				boss11 = {
 					name = 1639, --Razorscale
 					bossIDs = {33186},
@@ -5445,7 +5445,7 @@ core.Instances = {
 					track = function() core._603:RazorscaleIronDwarfMediumRare() end,
 					partial = false,
 					encounterID = 1139,
-				}, 
+				},
 				boss12 = {
 					name = 1638, --Ignis the Furnace Master
 					bossIDs = {33118},
@@ -5456,7 +5456,7 @@ core.Instances = {
 					track = function() core._603:IgnisTheFurnaceMasterShattered() end,
 					partial = false,
 					encounterID = 1136,
-				}, 
+				},
 				boss13 = {
 					name = 1638, --Ignis the Furnace Master
 					bossIDs = {},
@@ -5467,7 +5467,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 1136,
-				}, 
+				},
 				boss14 = {
 					name = 1638, --Ignis the Furnace Master
 					bossIDs = {33118},
@@ -5478,7 +5478,7 @@ core.Instances = {
 					track = function() core._603:IgnisTheFurnaceMasterStokinTheFurnace() end,
 					partial = false,
 					encounterID = 1136,
-				}, 
+				},
 				boss15 = {
 					name = 1640, --XT-002 Deconstructor
 					bossIDs = {33293},
@@ -5489,7 +5489,7 @@ core.Instances = {
 					track = function() core._603:XT002DeconstructorNerfEngineering() end,
 					partial = false,
 					encounterID = 1142,
-				}, 
+				},
 				boss16 = {
 					name = 1640, --XT-002 Deconstructor
 					bossIDs = {33293},
@@ -5500,7 +5500,7 @@ core.Instances = {
 					track = function() core._603:XT002DeconstructorNerfScrapbots() end,
 					partial = false,
 					encounterID = 1142,
-				}, 
+				},
 				boss17 = {
 					name = 1640, --XT-002 Deconstructor
 					bossIDs = {33293},
@@ -5511,7 +5511,7 @@ core.Instances = {
 					track = function() core._603:XT002DeconstructorNerfGravityBombs() end,
 					partial = false,
 					encounterID = 1142,
-				}, 
+				},
 				boss18 = {
 					name = 1640, --XT-002 Deconstructor
 					bossIDs = {33293},
@@ -5522,7 +5522,7 @@ core.Instances = {
 					track = function() core._603:XT002DeconstructorMustDeconstructFaster() end,
 					partial = false,
 					encounterID = 1142,
-				}, 
+				},
 				boss19 = {
 					name = 1640, --XT-002 Deconstructor
 					bossIDs = {33293},
@@ -5533,7 +5533,7 @@ core.Instances = {
 					track = function() core._603:XT002DeconstructorHeartbreaker() end,
 					partial = false,
 					encounterID = 1142,
-				}, 
+				},
 				boss20 = {
 					name = 1641, --Assembly of Iron
 					bossIDs = {32867,32927,32857},
@@ -5544,7 +5544,7 @@ core.Instances = {
 					track = function() core._603:AssemblyOfIronIChooseYouRunemasterMolgeim() end,
 					partial = false,
 					encounterID = 1140,
-				}, 
+				},
 				boss21 = {
 					name = 1641, --Assembly of Iron
 					bossIDs = {32867,32927,32857},
@@ -5555,7 +5555,7 @@ core.Instances = {
 					track = function() core._603:AssemblyOfIronIChooseYouStormcallerBrundir() end,
 					partial = false,
 					encounterID = 1140,
-				}, 
+				},
 				boss22 = {
 					name = 1641, --Assembly of Iron
 					bossIDs = {32867,32927,32857},
@@ -5566,7 +5566,7 @@ core.Instances = {
 					track = function() core._603:AssemblyOfIronIChooseYouSteelbreaker() end,
 					partial = false,
 					encounterID = 1140,
-				}, 
+				},
 				boss23 = {
 					name = 1641, --Assembly of Iron
 					bossIDs = {},
@@ -5577,7 +5577,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 1140,
-				}, 
+				},
 				boss24 = {
 					name = 1641, --Assembly of Iron
 					bossIDs = {32867,32927,32857},
@@ -5588,7 +5588,7 @@ core.Instances = {
 					track = function() core._603:AssemblyOfIronCantDoThatWhileStunned() end,
 					partial = false,
 					encounterID = 1140,
-				}, 
+				},
 				boss25 = {
 					name = 1642, --Kologarn
 					bossIDs = {32930,32934,32933},
@@ -5599,7 +5599,7 @@ core.Instances = {
 					track = function() core._603:KologarnWithOpenArms() end,
 					partial = false,
 					encounterID = 1137,
-				}, 
+				},
 				boss26 = {
 					name = 1642, --Kologarn
 					bossIDs = {},
@@ -5610,7 +5610,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 1137,
-				}, 
+				},
 				boss27 = {
 					name = 1642, --Kologarn
 					bossIDs = {32930,32934,32933},
@@ -5621,7 +5621,7 @@ core.Instances = {
 					track = function() core._603:KologarnIfLooksCouldKill() end,
 					partial = false,
 					encounterID = 1137,
-				}, 
+				},
 				boss28 = {
 					name = 1642, --Kologarn
 					bossIDs = {32930,32934,32933},
@@ -5632,7 +5632,7 @@ core.Instances = {
 					track = function() core._603:KologarnRubbleAndRoll() end,
 					partial = false,
 					encounterID = 1137,
-				}, 
+				},
 				boss29 = {
 					name = 1643, --Auriaya
 					bossIDs = {33515, 34014},
@@ -5643,7 +5643,7 @@ core.Instances = {
 					track = function() core._603:AuriayaCrazyCatLady() end,
 					partial = false,
 					encounterID = 1131,
-				}, 
+				},
 				boss30 = {
 					name = 1643, --Auriaya
 					bossIDs = {33515, 34014},
@@ -5654,7 +5654,7 @@ core.Instances = {
 					track = function() core._603:AuriayaNineLives() end,
 					partial = false,
 					encounterID = 1131,
-				}, 
+				},
 				boss31 = {
 					name = 1644, --Hodir
 					bossIDs = {32845},
@@ -5665,7 +5665,7 @@ core.Instances = {
 					track = function() core._603:HodirCheeseTheFreeze() end,
 					partial = false,
 					encounterID = 1135,
-				}, 
+				},
 				boss32 = {
 					name = 1644, --Hodir
 					bossIDs = {32845},
@@ -5676,7 +5676,7 @@ core.Instances = {
 					track = function() core._603:HodirIHaveTheCoolestFriends() end,
 					partial = false,
 					encounterID = 1135,
-				}, 
+				},
 				boss33 = {
 					name = 1644, --Hodir
 					bossIDs = {32845},
@@ -5687,7 +5687,7 @@ core.Instances = {
 					track = function() core._603:HodirGettingColdInHere() end,
 					partial = false,
 					encounterID = 1135,
-				}, 
+				},
 				boss34 = {
 					name = 1644, --Hodir
 					bossIDs = {32845},
@@ -5698,7 +5698,7 @@ core.Instances = {
 					track = function() core._603:HodirICouldSayThatThisCacheWasRare() end,
 					partial = false,
 					encounterID = 1135,
-				}, 
+				},
 				boss35 = {
 					name = 1644, --Hodir
 					bossIDs = {},
@@ -5709,7 +5709,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 1135,
-				}, 
+				},
 				boss36 = {
 					name = 1645, --Thorim
 					bossIDs = {32865},
@@ -5720,7 +5720,7 @@ core.Instances = {
 					track = function() core._603:ThorimDontStandInTheLightning() end,
 					partial = false,
 					encounterID = 1141,
-				}, 
+				},
 				boss37 = {
 					name = 1645, --Thorim
 					bossIDs = {},
@@ -5731,7 +5731,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 1141,
-				}, 
+				},
 				boss38 = {
 					name = 1645, --Thorim
 					bossIDs = {},
@@ -5742,7 +5742,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 1141,
-				}, 
+				},
 				boss39 = {
 					name = 1645, --Thorim
 					bossIDs = {},
@@ -5753,7 +5753,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 1141,
-				}, 
+				},
 				boss40 = {
 					name = 1645, --Thorim
 					bossIDs = {},
@@ -5764,7 +5764,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 1141,
-				}, 
+				},
 				boss41 = {
 					name = "Freya Mini Bosses",
 					bossIDs = {32914, 32913, 32915},
@@ -5774,7 +5774,7 @@ core.Instances = {
 					enabled = true,
 					track = function() core._603:FreyaLumberjacked() end,
 					partial = false,
-				}, 
+				},
 				boss42 = {
 					name = 1646, --Freya
 					bossIDs = {32906, 33430, 33431, 33528, 33527, 33526, 33525, 32914, 32913, 33354, 33355, 32915},
@@ -5785,7 +5785,7 @@ core.Instances = {
 					track = function() core._603:FreyaConSpeedAtory() end,
 					partial = false,
 					encounterID = 1133,
-				}, 
+				},
 				boss43 = {
 					name = 1646, --Freya
 					bossIDs = {32906},
@@ -5796,7 +5796,7 @@ core.Instances = {
 					track = function() core._603:FreyaDeforestation() end,
 					partial = false,
 					encounterID = 1133,
-				}, 
+				},
 				boss44 = {
 					name = 1646, --Freya
 					bossIDs = {32906},
@@ -5807,7 +5807,7 @@ core.Instances = {
 					track = function() core._603:FreyaGettingBackToNature() end,
 					partial = false,
 					encounterID = 1133,
-				}, 
+				},
 				boss45 = {
 					name = 1646, --Freya
 					bossIDs = {},
@@ -5818,7 +5818,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 1133,
-				}, 
+				},
 				boss46 = {
 					name = 1646, --Freya
 					bossIDs = {},
@@ -5829,7 +5829,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 1133,
-				}, 
+				},
 				boss47 = {
 					name = 1646, --Freya
 					bossIDs = {},
@@ -5840,7 +5840,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 1133,
-				}, 
+				},
 				boss48 = {
 					name = 1647, --Mimiron
 					bossIDs = {33350, 33432},
@@ -5851,7 +5851,7 @@ core.Instances = {
 					track = function() core._603:MimironSetUpUsTheBomb() end,
 					partial = false,
 					encounterID = 1138,
-				}, 
+				},
 				boss49 = {
 					name = 1647, --Mimiron
 					bossIDs = {33350, 33432},
@@ -5862,7 +5862,7 @@ core.Instances = {
 					track = function() core._603:MimironNotSoFriendlyFire() end,
 					partial = false,
 					encounterID = 1138,
-				}, 
+				},
 				boss50 = {
 					name = 1647, --Mimiron
 					bossIDs = {33350, 33432},
@@ -5873,7 +5873,7 @@ core.Instances = {
 					track = function() end,
 					partial = false,
 					encounterID = 1138,
-				}, 
+				},
 				boss51 = {
 					name = 1648, --General Vezax
 					bossIDs = {33271},
@@ -5884,7 +5884,7 @@ core.Instances = {
 					track = function() core._603:Shadowdodger() end,
 					partial = false,
 					encounterID = 1134,
-				}, 
+				},
 				boss52 = {
 					name = 1648, --General Vezax
 					bossIDs = {33271},
@@ -5895,7 +5895,7 @@ core.Instances = {
 					track = function() core._603:ILoveTheSmellOfSaroniteInTheMorning() end,
 					partial = false,
 					encounterID = 1134,
-				}, 
+				},
 				boss53 = {
 					name = 1649, --Yogg-Saron
 					bossIDs = {33134},
@@ -5906,7 +5906,7 @@ core.Instances = {
 					track = function() core._603:KissAndMakeUp() end,
 					partial = false,
 					encounterID = 1143,
-				}, 
+				},
 				boss54 = {
 					name = 1649, --Yogg-Saron
 					bossIDs = {},
@@ -5917,7 +5917,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 1143,
-				}, 
+				},
 				boss55 = {
 					name = 1649, --Yogg-Saron
 					bossIDs = {},
@@ -5928,7 +5928,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 1143,
-				}, 
+				},
 				boss56 = {
 					name = 1649, --Yogg-Saron
 					bossIDs = {},
@@ -5939,7 +5939,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 1143,
-				}, 
+				},
 				boss57 = {
 					name = 1649, --Yogg-Saron
 					bossIDs = {},
@@ -5950,7 +5950,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 1143,
-				}, 
+				},
 				boss58 = {
 					name = 1649, --Yogg-Saron
 					bossIDs = {33134},
@@ -5961,7 +5961,7 @@ core.Instances = {
 					track = function() core._603:DriveMeCrazy() end,
 					partial = false,
 					encounterID = 1143,
-				}, 
+				},
 				boss59 = {
 					name = 1649, --Yogg-Saron
 					bossIDs = {33134},
@@ -5972,7 +5972,7 @@ core.Instances = {
 					track = function() core._603:HesNotGettingAnyOlder() end,
 					partial = false,
 					encounterID = 1143,
-				}, 
+				},
 				boss60 = {
 					name = 1649, --Yogg-Saron
 					bossIDs = {33134},
@@ -5983,7 +5983,7 @@ core.Instances = {
 					track = function() core._603:TheyreComingOutOfTheWalls() end,
 					partial = false,
 					encounterID = 1143,
-				}, 
+				},
 				boss61 = {
 					name = 1649, --Yogg-Saron
 					bossIDs = {},
@@ -5994,7 +5994,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 1143,
-				}, 
+				},
 				boss62 = {
 					name = 1650, --Algalon the Observer
 					bossIDs = {},
@@ -6005,7 +6005,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 1130,
-				},                    
+				},
 			},
 
 			["533-10"] = { --Naxxramas 10 Man
@@ -6129,7 +6129,7 @@ core.Instances = {
 					track = function() core._533:KelThuzad() end,
 					partial = false,
 					encounterID = 1114,
-				},                          
+				},
 			},
 
 			["533-25"] = { --Naxxramas 25 Man
@@ -6253,7 +6253,7 @@ core.Instances = {
 					track = function() core._533:KelThuzad() end,
 					partial = false,
 					encounterID = 1114,
-				},                          
+				},
 			},
 
 			["631-10"] = { --Icecrown Citadel 10 Man
@@ -6279,7 +6279,7 @@ core.Instances = {
 					track = function() core._631:LadyDeathwhisper() end,
 					partial = false,
 					encounterID = 1100,
-				},     
+				},
 				boss3 = {
 					name = 1626, --Gunship Battle
 					bossIDs = {37215},
@@ -6290,7 +6290,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 1099,
-				},     
+				},
 				boss4 = {
 					name = 1628, --Deathbringer Saurfang
 					bossIDs = {37813},
@@ -6301,7 +6301,7 @@ core.Instances = {
 					track = function() core._631:DeathbringerSaurfang() end,
 					partial = false,
 					encounterID = 1096,
-				},     
+				},
 				boss5 = {
 					name = 1629, --Festergut
 					bossIDs = {36626},
@@ -6312,7 +6312,7 @@ core.Instances = {
 					track = function() core._631:Festergut() end,
 					partial = false,
 					encounterID = 1097,
-				},     
+				},
 				boss6 = {
 					name = 1630, --Rotface
 					bossIDs = {36627},
@@ -6323,7 +6323,7 @@ core.Instances = {
 					track = function() core._631:Rotface() end,
 					partial = false,
 					encounterID = 1104,
-				},     
+				},
 				boss7 = {
 					name = 1631, --Professor Putricide
 					bossIDs = {36678},
@@ -6334,7 +6334,7 @@ core.Instances = {
 					track = function() core._631:ProfessorPutricide() end,
 					partial = false,
 					encounterID = 1102,
-				},     
+				},
 				boss8 = {
 					name = 1634, --Valithria Dreamwalker
 					bossIDs = {36789},
@@ -6345,7 +6345,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 1098,
-				},     
+				},
 				boss9 = {
 					name = 1635, --Sindragosa
 					bossIDs = {36853},
@@ -6356,7 +6356,7 @@ core.Instances = {
 					track = function() core._631:Sindragosa() end,
 					partial = false,
 					encounterID = 1105,
-				},     
+				},
 				boss10 = {
 					name = 1632, --Blood Prince Council
 					bossIDs = {37970},
@@ -6367,7 +6367,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 1095,
-				},     
+				},
 				boss11 = {
 					name = 1633, --Blood-Queen Lana'thel
 					bossIDs = {37955},
@@ -6378,7 +6378,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 1103,
-				},     
+				},
 				boss12 = {
 					name = 1636, --The Lich King
 					bossIDs = {36597},
@@ -6400,7 +6400,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 1106,
-				},                                
+				},
 			},
 
 			["631-25"] = { --Icecrown Citadel 25 Man
@@ -6426,7 +6426,7 @@ core.Instances = {
 					track = function() core._631:LadyDeathwhisper() end,
 					partial = false,
 					encounterID = 1100,
-				},     
+				},
 				boss3 = {
 					name = 1626, --Gunship Battle
 					bossIDs = {37215},
@@ -6437,7 +6437,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 1099,
-				},     
+				},
 				boss4 = {
 					name = 1628, --Deathbringer Saurfang
 					bossIDs = {37813},
@@ -6448,7 +6448,7 @@ core.Instances = {
 					track = function() core._631:DeathbringerSaurfang() end,
 					partial = false,
 					encounterID = 1096,
-				},     
+				},
 				boss5 = {
 					name = 1629, --Festergut
 					bossIDs = {36626},
@@ -6459,7 +6459,7 @@ core.Instances = {
 					track = function() core._631:Festergut() end,
 					partial = false,
 					encounterID = 1097,
-				},     
+				},
 				boss6 = {
 					name = 1630, --Rotface
 					bossIDs = {36627},
@@ -6470,7 +6470,7 @@ core.Instances = {
 					track = function() core._631:Rotface() end,
 					partial = false,
 					encounterID = 1104,
-				},     
+				},
 				boss7 = {
 					name = 1631, --Professor Putricide
 					bossIDs = {36678},
@@ -6481,7 +6481,7 @@ core.Instances = {
 					track = function() core._631:ProfessorPutricide() end,
 					partial = false,
 					encounterID = 1102,
-				},     
+				},
 				boss8 = {
 					name = 1634, --Valithria Dreamwalker
 					bossIDs = {36789},
@@ -6492,7 +6492,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 1098,
-				},     
+				},
 				boss9 = {
 					name = 1635, --Sindragosa
 					bossIDs = {36853},
@@ -6503,7 +6503,7 @@ core.Instances = {
 					track = function() core._631:Sindragosa() end,
 					partial = false,
 					encounterID = 1105,
-				},     
+				},
 				boss10 = {
 					name = 1632, --Blood Prince Council
 					bossIDs = {37970},
@@ -6514,7 +6514,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 1095,
-				},     
+				},
 				boss11 = {
 					name = 1633, --Blood-Queen Lana'thel
 					bossIDs = {37955},
@@ -6525,7 +6525,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 1103,
-				},     
+				},
 				boss12 = {
 					name = 1636, --The Lich King
 					bossIDs = {36597},
@@ -6547,7 +6547,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 1106,
-				},                               
+				},
 			},
 		},
 
