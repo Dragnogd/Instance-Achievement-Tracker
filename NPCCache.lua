@@ -309,4 +309,13 @@ core.NPCCache = {
 	[28514] =28514, --Nalorakk
 	[29023] =29023, --Jan'alai
 	[28517] =28517, --Halazzi
+	[90018] =90018, --Hellfire Cannon
+	[94808] =94808, --Hellfire Guardian
+	[36330] =36330, --Lord Godfrey
+	[50561] =50561, --Bloodthirsty Ghoul
+	[45268] =45268, --Servant of Siamat
+	[56637] =56637, --Ook-Ook
+	[59458] =59458, --Hopling
+	[56717] =56717, --Hoptallus
+	[60276] =60276, --Hozen Clinger
 }
