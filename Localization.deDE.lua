@@ -1,4 +1,4 @@
-if(GetLocale() ~= 'deDE') then return end
+﻿if(GetLocale() ~= 'deDE') then return end
 
 local _, core = ...
 local baseLocale = {
@@ -17,8 +17,7 @@ local baseLocale = {
 	["ALittlePatience_WeveBeenDancin"] = "Sprich nach dem Betreten des Szenarios mit %s, wenn er anwesend ist und hilf der Pandaren-Verteidigung, um diesen Erfolg zu erzielen.",
 	["ALittlePatience_WhichCameFirst"] = "Sprich nach dem Betreten des Szenarios mit %s, wenn sie anwesend ist und hilf der gnomischen Verteidigung, um diesen Erfolg zu erzielen.",
 	["ArenaOfAnnihilation_InTheEyeOfTheTiger"] = "Um diesen Erfolg zu vervollständigen, führe das Szenario einfach mehrmals aus, bis jeder der letzten Bosse erschienen ist.",
-	["AssaultOnVioletHold_Festerface"] = [=[Um die %s zum vorschein zu bringen, muss %s 100 Energie erreichen.
-Seine Energie nimmt ab, wenn er sich in der Nähe einer Lache auf dem Boden befindet, sodass der Boss von den Lachen ferngehalten werden muss. Sobald die %s erschienen ist, töte Sie und dann den Boss, um diesen Erfolg zu erzielen.]=],
+	["AssaultOnVioletHold_Festerface"] = "Um die %s zum vorschein zu bringen, muss %s 100 Energie erreichen. Seine Energie nimmt ab, wenn er sich in der Nähe einer Lache auf dem Boden befindet, sodass der Boss von den Lachen ferngehalten werden muss. Sobald die %s erschienen ist, töte Sie und dann den Boss, um diesen Erfolg zu erzielen.",
 	["AssaultOnVioletHold_MillificentManastorm"] = "Um diesen Erfolg zu vervollständigen, musst du das Spielzeug %s benutzen, während du %s bekämpfst.",
 	["Atal_Dazar_Yazma"] = "Um die Schattenflammen-Leuchter zu zünden, muss sich jeder in der Gruppe mit Ausnahme des Tanks verteilen und in der Nähe eines Leuchter bleiben, wenn der Boss %s wirkt. Die Leuchter bleiben ca. 25 Sekunden lang beleuchtet. Aber erst, wenn der Boss nur noch 5 bis 10%% Gesundheit hat.",
 	["AtalDazar_Other"] = "Die IAT_122969 im gesamten Dungeon werfen %s auf einen zufälligen Spieler, der ihn 5 Sekunden lang verhext. Am Ende der Dauer wird auch jeder verhext, der sich in der Nähe dieses Spielers befindet.\n\n Vor dem angreifen einer IAT_122969 sollte man den gesamten Trash im Dungeon leeren. Da du dieses Add zu jedem Boss bringen musst und eine Klasse mit einem langen CC haben (wie Mönch mit %s, Jäger mit %s, Magier mit %s), diese sollten das Add so lange unter Kontrolle halten, bis die Bosse sich dem Ende des Kampfes nähern. Wenn du keine Klasse mit CC hast, solltest du dich darauf konzentrieren, die %s-Zauber während des Kampfes zu unterbrechen.",
@@ -75,7 +74,7 @@ Seine Energie nimmt ab, wenn er sich in der Nähe einer Lache auf dem Boden befi
 	["Core_Counter"] = "Zähler ",
 	["Core_CriteriaMet"] = "Kriterien wurden erfüllt. Boss kann jetzt getötet werden!",
 	["Core_Enable"] = "aktivieren",
-	["Core_EnableAchievementTracking"] = "Möchtest du die Erfolgsüberwachung aktivieren für ",
+	["Core_EnableAchievementTracking"] = "Möchtest du die Erfolgsverfolgung aktivieren für ",
 	["Core_Failed"] = "FEHLGESCHLAGEN!!!",
 	["Core_GameFreezeWarning"] = "Das Spiel kann für ein paar Sekunden einfrieren ",
 	["Core_help"] = "Hilfe ",
@@ -86,7 +85,7 @@ Seine Energie nimmt ab, wenn er sich in der Nähe einer Lache auf dem Boden befi
 	["Core_PersonalAchievement"] = "Persönlicher Erfolg",
 	["Core_Reason"] = "Grund ",
 	["Core_StartingAchievementScan"] = "Starte Erfolgsscan für ",
-	["Core_TrackAchievements"] = "Verfolge Erfolge ",
+	["Core_TrackAchievements"] = "Verfolge die Erfolge ",
 	["Core_Yes"] = "Ja",
 	["CourtOfStars_Other"] = "Folgende Voraussetzungen müssen erfüllt sein:\n\n -Lass die %s nicht %s wirken\n -Deaktiviere die 5 Leuchtfeuer, bevor du den ersten Boss angreifst\n -Stelle sicher, dass du alle 3 Dämonen einzeln tötest, bevor du %s angreifst\n -Spion erraten beim ersten Versuch",
 	["CourtOfStars_PatrolCaptainGerdo"] = "Bei diesen Erfolg sollte man zuerst den gesamten Trash im Bossraum räumen. Stelle beim Töten des Trash sicher, dass weder die Mobs noch die Spieler die Leuchtfeuer aktivieren, da dies den Erfolg fehlschlägt.\n\n Wenn der gesamte Trash tot ist, greife den Boss an und warte bis er %s gewirkt hat. Sobald der Boss diese Fähigkeit eingesetzt hat, musst du auf alle 5 Leuchtfeuer im Raum klicken. Sobald alle 5 Leuchtfeuer deaktiviert wurden, kannst du den Boss töten.",
@@ -101,6 +100,7 @@ Seine Energie nimmt ab, wenn er sich in der Nähe einer Lache auf dem Boden befi
 	["DarkHeartOfPandaria_AcceleratedArchaeology"] = "Um diesen Erfolg zu vervollständigen, sammelst du in der Phase, in der du 50 Artefakte sammeln musst, einfach die drei Artefakte, von denen gelbe Lichtstrahlen ausgehen. Stelle sicher, dass du diese 3 Artefakte zuerst sammelst, bevor du die anderen Artefakte sammelst. Andernfalls verschwinden sie, wenn du 50 Artefakte erreicht hast, bevor du alle speziellen Artefakte sammelst.\n\nHinweis: Um das Artefakt zu sammeln, gehe einfach darüber.",
 	["DarkheartThicket_Dresaron"] = "Nachdem du den Boss angegriffen hast, lauf durch das große Ei hinter %s, um es auszubrüten. Töte als nächstes die %ss, die erscheinen und töte dann den Boss.",
 	["DarkheartThicket_ShadeOfXavius"] = "Bring den Boss bis auf 15%% - 20%% Gesundheit und ziehe den Boss durch die wirbelnden Pfützen auf dem Boden bis der Boss 10 Stapel von %s hat und töte ihn dann.",
+	["Deadmines_CaptainCookie"] = "Bei maximaler Stufe musst du nur warten, bis %s erscheint und in den Kessel steigt, dann töte ihn ohne etwas vom Boden zu nehmen, um diesen Erfolg zu erzielen.",
 	["EndTime_EchoOfSylvanas"] = "Um diesen Erfolg abzuschließen, greife den Boss an und warte bis %s erscheinen. Wenn die %s erschienen sind, töte mindestens zwei von ihnen und dann den Boss.",
 	["EndTime_EchoOfTyrande"] = "Der einfachste Weg, um diesen Erfolg zu erreichen, besteht darin, einfach den Weg bis zum Boss zu laufen, ohne dass sich ein Spieler in einer Heilspezifikation befindet.",
 	["EyeOfAzshara_LadyHatecoil"] = "Wenn der %s-Debuff abläuft oder abgebrochen wird, atmet Sie in die Richtung, in der du dich gerade befindest und tötet alle %s auf dem Weg. Um den Erfolg zu erreichen, musst du bei 11 oder mehr %s 1 Atemzug machen. Die %s werden im Laufe der Zeit erscheinen, halte dich also von den Adds fern, bis 11 oder mehr erschienen sind.",
@@ -155,7 +155,8 @@ Seine Energie nimmt ab, wenn er sich in der Nähe einer Lache auf dem Boden befi
 	["GUI_Tactics"] = "Taktiken",
 	["GUI_ToggleMinimap"] = "Zeige Minimap Knopf",
 	["GUI_Track"] = "Verfolgen",
-	["GUI_TrackAchievementsInBlizzardUI"] = "Verfolge Erfolge in der Benutzeroberfläche \"Erfolge\"",
+	["GUI_TrackAchievementsInBlizzardUI"] = "Verfolge die Erfolge in der Benutzeroberfläche \"Erfolge\"",
+	["GUI_TrackCharacterAchievements"] = "Charaktererfolge verfolgen (Standard: Account)",
 	["GUI_Tracking"] = "Verfolgung",
 	["GUI_TrackingDisabled"] = "(Erfolgsverfolgung deaktiviert)",
 	["GUI_TrackingNumber"] = "Derzeitige Verfolgung",
@@ -174,6 +175,7 @@ Seine Energie nimmt ab, wenn er sich in der Nähe einer Lache auf dem Boden befi
 	["Highmaul_ImperatorMargok"] = "Um diesen Erfolg zu vervollständigen, mach Schaden auf den Boss, bis er 55%% Gesundheit hat. An diesem Zeitpunkt wechselt der Boss zum Übergang und 2 %s erscheinen. Halte einen von ihnen am Leben und töte den anderen.\n\n Der %s, der noch am Leben ist, muss in die Wolke gezogen werden links neben dem Thron des Bosses, um den %s-Buff zu erhalten. Der einfachste Weg um das Add zu bewegen, ist ein Todesritter mit seiner %s-Fähigkeit.\n\n Wenn der Übergang abgeschlossen ist, kann der Todesritter das Add nun rechts neben dem Thron des Bosses bewegen, dann wieder Schaden machen auf den Boss und auf 25%% Gesundheit bringen, um den zweiten Übergang zu starten.\n\n Sobald das Add die zweite Wolke auf der rechten Seite beim Thron des Bosses betreten hat, erhält es den %s-Buff. An diesem Punkt kannst du das Add und dann den Boss töten, um diesen Erfolg abzuschließen.\n\n Hinweis: Es ist auch möglich, diesen Erfolg allein ohne Todesritter zu erhalten. Klicke dazu auf %s, um einen roten Kreis unter ihm anzuzeigen. Du musst in oder nahe dem Rand dieses Kreises stehen und auf seine Zauberleiste achten. Sobald der %s einen Zauber beendet hat, renne in Richtung der Wolke und das Add sollte dir folgen. Mach und wiederhole dies, bis das Add jede der Wolken erreicht hat.",
 	["Highmaul_Tectus"] = "Töte für diesen Erfolg einfach %s. Dies bewirkt, dass der Boss mit 2 %s erneut erscheint. Töte erneut die 2 %s und der Boss wird mit 8 %s erscheinen. Warte als nächstes bis alle mit 8 %s erschienen sind, und dann töte alle mit AOE, innerhalb von 10 Sekunden voneinander, um diesen Erfolg zu vervollständigen.",
 	["Highmaul_TheButcher"] = "Während des Kampfes spawnen %s durch den Raum. Um diesen Erfolg zu vervollständigen, stelle den Boss vor jeden %s und warten bis der Boss ihn getötet hat. Sobald 6 %s getötet wurden, kannst du den Boss töten.\n\n Hinweis: Für diesen Erfolg sind mindestens 2 Spieler oder ein Spieler mit einem Begleiter erforderlich, wegen den Stapeln des %s Debuffs.",
+	["HourOfTwilight_ArchbishopBenedictus"] = "Um diesen Erfolg zu vervollständigen, muss der Boss auf 50%% Gesundheit gesenkt werden. Sobald der Boss in seine Schattenphase eingedrungen ist, renne zu den Rändern des Raumes und töte 10 %s. Sobald 10 %s getötet wurden, kannst du den Boss töten.",
 	["Instance Achievement Tracker"] = "Instance Achievement Tracker",
 	["Instances_Other"] = "Sonstige ",
 	["Instances_TrashAfterThirdBoss"] = "Trash nach dem dritten Boss ",
@@ -216,7 +218,7 @@ Seine Energie nimmt ab, wenn er sich in der Nähe einer Lache auf dem Boden befi
 	["OperationMechagon_TussleTonks"] = "Um diesen Erfolg zu vervollständigen, greife zuerst den Boss an und positioniere dann %s in Richtung %s, der sich links vom Boss auf der Arena-Kante befindet.\n\n Als nächstes warte auf %s, bis %s mit %s trifft, wodurch %s von der Kante auf den Boden geschleudert wird. Sobald %s auf dem Boden liegt, ziehe ihn zu einem der %s und warte bis er getroffen wird, dann töte den Boss, um diesen Erfolg zu erzielen.",
 	["ReturnToKarazhan_OperaHall"] = "Dieser Erfolg wird 3 Wochen in Anspruch nehmen, da sich die Theatervorführungen nach einem 3-wöchigen Zeitplan drehen.",
 	["ReturnToKarazhan_ShadeOfMedivh"] = "Für diesen Erfolg sind 5 Spieler erforderlich. Alle Spieler in der Gruppe müssen auf ein Buch klicken, das sich links auf dem Boden befindet, nachdem alle den Bossraum betreten haben. Dies gibt jedem in der Gruppe den Debuff %s. Wenn alle den Debuff %s haben, kannst du den Boss töten.",
-	["ScarletHalls_ArmsmasterHarlan"] = "Um diesen Erfolg zu vervollständigen, greife den Boss an und ziehe ihn oben auf der Treppe neben dem Eingang. Warte als nächstes, bis mindestens 7 %s erschienen sind und vermeide die Fähigkeit %s des Bosses. Sobald mindestens 7 %s erschienen sind, stehe einfach in den nächsten %s mit den %s und töte dann den Boss, um den Erfolg zu erzielen.\n\nHinweis: Wenn du oben auf der Treppe stehst, wird es einfacher sein die Fähigkeit des Bosses zu vermeiden, da du einfach in die entgegengesetzte Richtung laufen kannst.",
+	--["ScarletHalls_ArmsmasterHarlan"] = "Um diesen Erfolg zu vervollständigen, greife den Boss an und ziehe ihn oben auf der Treppe neben dem Eingang. Warte als nächstes, bis mindestens 7 %s erschienen sind und vermeide die Fähigkeit %s des Bosses. Sobald mindestens 7 %s erschienen sind, stehe einfach in den nächsten %s mit den %s und töte dann den Boss, um den Erfolg zu erzielen.\n\nHinweis: Wenn du oben auf der Treppe stehst, wird es einfacher sein die Fähigkeit des Bosses zu vermeiden, da du einfach in die entgegengesetzte Richtung laufen kannst.",
 	["ScarletHalls_HoundmasterBraun"] = "Um diesen Erfolg zu vervollständigen, gehe nach dem Betreten der Instanz zu %s, ohne einen der Hunde auf dem Weg zu töten. Sobald du den %s erreicht hast, töte ihn mit einzelnen Zielfähigkeiten.",
 	["ScarletMonastery_BrotherKorloff"] = "Nachdem du %s angegriffen hast, bringe ihn zu den 3 %s auf beiden Seiten des Bereichs. Nach 20 Sekunden führt der Boss entweder %s oder %s aus. Lasse den Boss beide Fähigkeiten auf den %s ausführen, um sie in Brand zu setzen. Gehe dann auf die andere Seite und wiederhole den Vorgang. Sobald alle 6 %s in Flammen stehen, kannst du den Boss töten.",
 	["ScarletMonastery_HighInquisitorWhitemane"] = "Um diesen Erfolg zu vervollständigen, starte die Begegnung, indem du %s besiegst. Nachdem er besiegt ist, wird %s herauskommen. Lass sie %s wirken, um 13 %s wiederzubeleben. Töte alle 13 %s, dann töte %s und %s.",

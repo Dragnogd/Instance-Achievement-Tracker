@@ -1,4 +1,4 @@
-if(GetLocale() ~= 'zhTW') then return end
+﻿if(GetLocale() ~= 'zhTW') then return end
 
 local _, core = ...
 local baseLocale = {
@@ -76,10 +76,11 @@ local baseLocale = {
 	["GUI_ToggleMinimap"] = "顯示小地圖按鈕",
 	["GUI_Track"] = "追蹤",
 	["GUI_TrackAchievementsInBlizzardUI"] = "追蹤成就介面中的成就",
+	["GUI_TrackCharacterAchievements"] = "追蹤角色成就 (預設: 帳號)",
 	["GUI_Tracking"] = "正在追蹤",
 	["GUI_TrackingDisabled"] = "(成就追蹤已停用)",
 	["GUI_TrackingNumber"] = "目前追蹤",
-	["Gui_TranslatorNames"] = "gaspy10",
+	["Gui_TranslatorNames"] = "彩虹ui",
 	["GUI_Translators"] = "翻譯",
 	["GUI_WarlordsOfDraenor"] = "德拉諾之霸",
 	["GUI_WrathOfTheLichKing"] = "巫妖王之怒",
