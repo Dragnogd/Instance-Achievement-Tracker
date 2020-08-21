@@ -21,17 +21,17 @@ function core._2285:Oryphrion()
     --Defeat Oryphrion after activating and destroying all three Shattered Devastators in the Spires of Ascension on Mythic difficulty.
 
     if core:getBlizzardTrackingStatus(14331, 1) == true and ShatteredDevestator1Complete == false then
-        core:sendMessage(GetAchievementCriteriaInfo(14347,1) .. " " .. L["Shared_Completed"] .. " (" .. ShatteredDevestatorCounter .. "/3)")
+        core:sendMessage(GetAchievementCriteriaInfo(14331,1) .. " " .. L["Shared_Completed"] .. " (" .. ShatteredDevestatorCounter .. "/3)")
         ShatteredDevestator1Complete = true
         ShatteredDevestatorCounter = ShatteredDevestatorCounter + 1
     end
     if core:getBlizzardTrackingStatus(14331, 2) == true and ShatteredDevestator2Complete == false then
-        core:sendMessage(GetAchievementCriteriaInfo(14347,2) .. " " .. L["Shared_Completed"] .. " (" .. ShatteredDevestatorCounter .. "/3)")
+        core:sendMessage(GetAchievementCriteriaInfo(14331,2) .. " " .. L["Shared_Completed"] .. " (" .. ShatteredDevestatorCounter .. "/3)")
         ShatteredDevestator2Complete = true
         ShatteredDevestatorCounter = ShatteredDevestatorCounter + 1
     end
     if core:getBlizzardTrackingStatus(14331, 3) == true and ShatteredDevestator3Complete == false then
-        core:sendMessage(GetAchievementCriteriaInfo(14347,3) .. " " .. L["Shared_Completed"] .. " (" .. ShatteredDevestatorCounter .. "/3)")
+        core:sendMessage(GetAchievementCriteriaInfo(14331,3) .. " " .. L["Shared_Completed"] .. " (" .. ShatteredDevestatorCounter .. "/3)")
         DessertShatteredDevestator3CompleteCompleted = true
         ShatteredDevestatorCounter = ShatteredDevestatorCounter + 1
     end

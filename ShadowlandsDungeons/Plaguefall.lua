@@ -20,17 +20,17 @@ local MealsCompleted = 0
 function core._2289:Globgrog()
     --Defeat Globgrog after feeding him a three course meal in Plaguefall on Mythic difficulty.
 
-    if core:getBlizzardTrackingStatus(10817, 1) == true and AppetizerCompleted == false then
+    if core:getBlizzardTrackingStatus(14347, 1) == true and AppetizerCompleted == false then
         core:sendMessage(GetAchievementCriteriaInfo(14347,1) .. " " .. L["Shared_Completed"] .. " (" .. MealsCompleted .. "/3)")
         AppetizerCompleted = true
         MealsCompleted = MealsCompleted + 1
     end
-    if core:getBlizzardTrackingStatus(10817, 2) == true and EntreeCompleted == false then
+    if core:getBlizzardTrackingStatus(14347, 2) == true and EntreeCompleted == false then
         core:sendMessage(GetAchievementCriteriaInfo(14347,2) .. " " .. L["Shared_Completed"] .. " (" .. MealsCompleted .. "/3)")
         EntreeCompleted = true
         MealsCompleted = MealsCompleted + 1
     end
-    if core:getBlizzardTrackingStatus(10817, 3) == true and DessertCompleted == false then
+    if core:getBlizzardTrackingStatus(14347, 3) == true and DessertCompleted == false then
         core:sendMessage(GetAchievementCriteriaInfo(14347,3) .. " " .. L["Shared_Completed"] .. " (" .. MealsCompleted .. "/3)")
         DessertCompleted = true
         MealsCompleted = MealsCompleted + 1

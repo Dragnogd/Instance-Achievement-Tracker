@@ -9,6 +9,40 @@ local L = core.L
 ------------------------------------------------------
 core._2286 = {}
 
+------------------------------------------------------
+---- Surgeon Stitchflesh
+------------------------------------------------------
+local barrel1Destroyed = false
+local barrel2Destroyed = false
+local barrelCounter = 0
+
+function core._2286:AmarthTheHarvester()
+    --Defeat Amarth the Harvester after he's consumed the corpse of a Grisly Colossus using Final Harvest in the Necrotic Wake on Mythic difficulty.
+
+    if core:getBlizzardTrackingStatus(14295, 1) == true then
+        core:getAchievementSuccess()
+    end
+end
+
+function core._2286:SurgeonStitchflesh()
+    --Defeat Surgeon Stitchflesh after destroying two barrels of spare parts in the Necrotic Wake on Mythic difficulty.
+
+    if core:getBlizzardTrackingStatus(14320, 1) == true and barrel1Destroyed == false then
+        core:sendMessage(GetAchievementCriteriaInfo(14320,1) .. " " .. L["Shared_Completed"] .. " (" .. barrelCounter .. "/3)")
+        barrel1Destroyed = true
+        barrelCounter = barrelCounter + 1
+    end
+    if core:getBlizzardTrackingStatus(14320, 2) == true and barrel2Destroyed == false then
+        core:sendMessage(GetAchievementCriteriaInfo(14320,2) .. " " .. L["Shared_Completed"] .. " (" .. barrelCounter .. "/3)")
+        barrel2Destroyed = true
+        barrelCounter = barrelCounter + 1
+    end
+
+    if core:getBlizzardTrackingStatus(14320, 1) == true and core:getBlizzardTrackingStatus(14320, 2) then
+        core:getAchievementSuccess()
+    end
+end
+
 function core._2286:NalthorTheRimebinder()
     --Defeat Nalthor the Rimebinder in the Necrotic Wake without being struck by Comet Storm, Blizzard, or the secondary effect of Frozen Binds on Mythic difficulty.
 
@@ -20,7 +54,7 @@ function core._2286:NalthorTheRimebinder()
     if (core.type == "SPELL_AURA_APPLIED" and core.spellId == 321956) or (core.type == "SPELL_DAMAGE" and core.spellId == 287294) or (core.type == "SPELL_AURA_APPLIED" and core.spellId == 287295) or (core.type == "SPELL_AURA_APPLIED" and core.spellId == 320788 and core.currentSource == "Player") then
         --If someone gets hit by the ability, check if they need the achievement or not
         if core.destName ~= nil then
-            local name, realm = strsplit("-", core.destName)  
+            local name, realm = strsplit("-", core.destName)
             if UnitIsPlayer(name) then
                 --Detect the reason the player has failed the achievement
                 local reason = ""
