@@ -78,3 +78,12 @@ function core._2286:NalthorTheRimebinder()
         end
     end
 end
+
+function core._2285:ClearVariables()
+    ------------------------------------------------------
+    ---- Surgeon Stitchflesh
+    ------------------------------------------------------
+    barrel1Destroyed = false
+    barrel2Destroyed = false
+    barrelCounter = 0
+end
