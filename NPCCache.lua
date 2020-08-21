@@ -347,4 +347,17 @@ core.NPCCache = {
 	[14507] =14507, --High Priest Venoxis
 	[52148] =52148, --Jin'do the Godbreaker
 	[69212] =69212, --Twisted Spirit
+	[42753] =42753, --Helix Gearbreaker
+	[130437] =130437, --Mine Rat
+	[47297] =47297, --Lumbering Oaf
+	[52442] =52442, --Florawing Hive Queen
+	[52418] =52418, --Lost Offspring of Gahz'ranka
+	[52440] =52440, --Gub
+	[52414] =52414, --Tor-Tun
+	[52422] =52422, --Kaulema the Mover
+	[52405] =52405, --Mor'Lek the Dismantler
+	[52438] =52438, --Mortaxx
+	[52392] =52392, --Gurubashi Master Chef
+	[78736] =78736, --Warlord Zaela
+	[76585] =76585, --Ragewing the Untamed
 }
