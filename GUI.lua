@@ -25,6 +25,7 @@ local WrathOfTheLichKingContentButtons = {}
 
 local Left = nil
 local Top = nil
+local InfoFrameScale = nil
 
 -- Purpose:                         Stores information about the current status of the GUI
 Config.currentTab = nil             --Stores which tab is currently selected
@@ -86,22 +87,28 @@ function Config:Toggle()
     AltGameTooltip:Hide()
 end
 
+function IAT_GlobalToggle()
+    local GUI = UIConfig or Config:CreateGUI()
+    GUI:SetShown(not GUI:IsShown())
+    AltGameTooltip:Hide()
+end
+
 -- Method:          Config:CreateButton()
 -- What it Does:    Create a new frame of type button
 -- Purpose:         This is used to create a frame which the specified paramters. Returns a button frame.
 function Config:CreateButton(point, relativeFrame, relativePoint, yOffset, text, mapID)
-	local btn = CreateFrame("Button", nil, relativeFrame, "GameMenuButtonTemplate");    
-	btn:SetPoint(point, relativeFrame, relativePoint, 0, yOffset);                      
-	btn:SetSize(200, 30);                                                               
-	btn:SetText(text);                                                                  
-	btn:SetNormalFontObject("GameFontNormal");                                          
-    btn:SetHighlightFontObject("GameFontHighlight");                                    
+	local btn = CreateFrame("Button", nil, relativeFrame, "GameMenuButtonTemplate");
+	btn:SetPoint(point, relativeFrame, relativePoint, 0, yOffset);
+	btn:SetSize(200, 30);
+	btn:SetText(text);
+	btn:SetNormalFontObject("GameFontNormal");
+    btn:SetHighlightFontObject("GameFontHighlight");
     if mapID ~= nil then                                                                --If the mapID paramters was passed, set the ID of the button the mapID
         local mapID = tostring(mapID)                                                   --This is used so when the user clicks on the button we can fetch the
         mapID = mapID:gsub('%-', '')                                                    --information relating to that ID from the instances table.
-        btn:SetID(tonumber(mapID))    
+        btn:SetID(tonumber(mapID))
     end
-	return btn;                                                                         
+	return btn;
 end
 
 function Config:CreateButton2(point, relativeFrame, relativePoint, xOffset, yOffset, text)
@@ -118,24 +125,24 @@ end
 -- What it Does:    Create a new frame of type checkbox
 -- Purpose:         This is used to create a frame which the specified paramters. Returns a checkbutton frame.
 function Config:CreateCheckBox(point, relativeFrame, relativePoint, xOffset, yOffset, checkboxName)
-    local chk = CreateFrame("CheckButton", checkboxName, relativeFrame, "UICheckButtonTemplate")    
-	chk:SetPoint(point, relativeFrame, relativePoint, xOffset, yOffset);                            
-	return chk;                                                                                     
+    local chk = CreateFrame("CheckButton", checkboxName, relativeFrame, "UICheckButtonTemplate")
+	chk:SetPoint(point, relativeFrame, relativePoint, xOffset, yOffset);
+	return chk;
 end
 
 function Config:CreateSlider(point, relativeFrame, relativePoint, xOffset, yOffset, sliderName)
-    local chk = CreateFrame("Slider", sliderName, relativeFrame, "OptionsSliderTemplate")    
-	chk:SetPoint(point, relativeFrame, relativePoint, xOffset, yOffset);                            
-	return chk;                                                                                     
+    local chk = CreateFrame("Slider", sliderName, relativeFrame, "OptionsSliderTemplate")
+	chk:SetPoint(point, relativeFrame, relativePoint, xOffset, yOffset);
+	return chk;
 end
 
 -- Method:          Config:CreateText()
 -- What it Does:    Create a new frame of type fontstring
 -- Purpose:         This is used to put text on the GUI
-function Config:CreateText(point, relativeFrame, relativePoint, xOffset, yOffset, textString)       
-    local text = relativeFrame:CreateFontString(nil, relativeFrame, "GameFontHighlightSmall")      
-    text:SetPoint(point, relativeFrame, relativePoint, xOffset, yOffset)                            
-    text:SetText(textString)                                                                        
+function Config:CreateText(point, relativeFrame, relativePoint, xOffset, yOffset, textString)
+    local text = relativeFrame:CreateFontString(nil, relativeFrame, "GameFontHighlightSmall")
+    text:SetPoint(point, relativeFrame, relativePoint, xOffset, yOffset)
+    text:SetText(textString)
     return text
 end
 
@@ -172,17 +179,17 @@ function Tab_OnClick(self)
     --Show the content for the selected instances
     self.content:Show()
     if self.contenta ~= nil then
-        self.contenta:Show()    
+        self.contenta:Show()
     end
 
     if Config.currentTab == 1 then      --User has clicked on the "Main" tab
         UIConfig.ScrollFrame:Hide()
         UIConfig.ScrollFrame2:Hide()
-        
+
         if UIConfig.Main then   --Main tab frames have already been created so just shown them.
             UIConfig.Main:Show()
             UIConfig.Main2:Show()
-            
+
             -- UIConfig.Main2.features:Show()
             -- UIConfig.Main2.features1:Show()
             -- UIConfig.Main2.features2:Show()
@@ -190,8 +197,8 @@ function Tab_OnClick(self)
             -- UIConfig.Main2.features4:Show()
             -- UIConfig.Main2.features5:Show()
             -- UIConfig.Main2.features6:Show()
-            
-            UIConfig.Main2.options:Show() 
+
+            UIConfig.Main2.options:Show()
             UIConfig.Main2.options:Show()
             UIConfig.Main2.options2:Show()
             UIConfig.Main2.options3:Show()
@@ -223,8 +230,6 @@ function Tab_OnClick(self)
             UIConfig.Main2.options27:Show()
             UIConfig.Main2.options28:Show()
             UIConfig.Main2.options29:Show()
-            UIConfig.Main2.options30:Show()
-            UIConfig.Main2.options31:Show()
 
             UIConfig.Main.author:Show()
             UIConfig.Main.tacticsCredit:Show()
@@ -252,18 +257,18 @@ function Tab_OnClick(self)
             --Author & Translators
             if (GetLocale() == "enGB" or GetLocale() == "enUS") then
                 UIConfig.Main.author = Config:CreateText2("BOTTOMRIGHT", AchievementTrackerDialogBG, "BOTTOMRIGHT", -5, 20, L["GUI_Author"] .. ": (EU) Whizzey-Doomhammer","GameFontNormal")
-                UIConfig.Main.tacticsCredit = Config:CreateText2("BOTTOMRIGHT", AchievementTrackerDialogBG, "BOTTOMRIGHT", -5, 5,L["GUI_Tactics"] .. ": " .. L["Gui_TacticsNames"],"GameFontNormal")      
+                UIConfig.Main.tacticsCredit = Config:CreateText2("BOTTOMRIGHT", AchievementTrackerDialogBG, "BOTTOMRIGHT", -5, 5,L["GUI_Tactics"] .. ": " .. L["Gui_TacticsNames"],"GameFontNormal")
             else
                 UIConfig.Main.author = Config:CreateText2("BOTTOMRIGHT", AchievementTrackerDialogBG, "BOTTOMRIGHT", -5, 35, L["GUI_Author"] .. ": (EU) Whizzey-Doomhammer","GameFontNormal")
                 UIConfig.Main.translators = Config:CreateText2("BOTTOMRIGHT", AchievementTrackerDialogBG, "BOTTOMRIGHT", -5, 20,L["GUI_Translators"] .. ": " .. L["Gui_TranslatorNames"],"GameFontNormal")
-                UIConfig.Main.tacticsCredit = Config:CreateText2("BOTTOMRIGHT", AchievementTrackerDialogBG, "BOTTOMRIGHT", -5, 5,L["GUI_Tactics"] .. ": " .. L["Gui_TacticsNames"],"GameFontNormal")               
+                UIConfig.Main.tacticsCredit = Config:CreateText2("BOTTOMRIGHT", AchievementTrackerDialogBG, "BOTTOMRIGHT", -5, 5,L["GUI_Tactics"] .. ": " .. L["Gui_TacticsNames"],"GameFontNormal")
             end
-            
+
             --Version
             UIConfig.Main.verison = Config:CreateText2("BOTTOMLEFT", AchievementTrackerDialogBG, "BOTTOMLEFT", 5, 5, "v" .. Config.majorVersion .. "." .. Config.minorVersion .. "." .. Config.revisionVersion .. Config.releaseType,"GameFontNormal")
-            
+
             --Currently tracking
-            UIConfig.Main2 = Config:CreateText2("TOPLEFT", UIConfig.Main, "TOPLEFT", 0, -45, L["GUI_TrackingNumber"] .. ":","GameFontNormalLarge")            
+            UIConfig.Main2 = Config:CreateText2("TOPLEFT", UIConfig.Main, "TOPLEFT", 0, -45, L["GUI_TrackingNumber"] .. ":","GameFontNormalLarge")
             UIConfig.Main2:SetWidth(300)
             UIConfig.Main2:SetJustifyH("LEFT")
 
@@ -289,24 +294,24 @@ function Tab_OnClick(self)
             end
 
             UIConfig.Main2.content = Config:CreateText2("TOPLEFT", UIConfig.Main2, "TOPLEFT", 0, -20, achievementsTracked .. " " .. L["GUI_Achievements"],"GameFontHighlight")
-            UIConfig.Main2.content2 = Config:CreateText2("TOPLEFT", UIConfig.Main2.content, "TOPLEFT", 0, -15, tacticsTracked .. " " .. L["GUI_Tactics"],"GameFontHighlight") 
-            
+            UIConfig.Main2.content2 = Config:CreateText2("TOPLEFT", UIConfig.Main2.content, "TOPLEFT", 0, -15, tacticsTracked .. " " .. L["GUI_Tactics"],"GameFontHighlight")
+
             -- --Features
-            -- UIConfig.Main2.features = Config:CreateText2("TOPLEFT", UIConfig.Main2.content, "TOPLEFT", 0, -40, L["Features"] .. ":","GameFontNormalLarge")  
-            -- UIConfig.Main2.features:SetWidth(750)    
-            -- UIConfig.Main2.features:SetJustifyH("LEFT")        
-            -- UIConfig.Main2.features1 = Config:CreateText2("TOPLEFT", UIConfig.Main2.features, "TOPLEFT", 0, -20, L["- Tracks when the criteria of instance achievements have been met and output this to chat"],"GameFontHighlight")   
-            -- UIConfig.Main2.features2 = Config:CreateText2("TOPLEFT", UIConfig.Main2.features1, "TOPLEFT", 0, -20, L["- Tracks when the criteria of instance achievements has been failed and outputs this to chat"],"GameFontHighlight")   
-            -- UIConfig.Main2.features3 = Config:CreateText2("TOPLEFT", UIConfig.Main2.features2, "TOPLEFT", 0, -20, L["- Keeps track of achievements which require you to kill so many mobs within a certain time period. It will announce to chat when enough mobs have spawned and whether they were killed in the time period."],"GameFontHighlight")   
-            -- UIConfig.Main2.features4 = Config:CreateText2("TOPLEFT", UIConfig.Main2.features3, "TOPLEFT", 0, -30, L["- Scans all players in the group to see which achievements each player is missing for the current instance"],"GameFontHighlight")   
-            -- UIConfig.Main2.features5 = Config:CreateText2("TOPLEFT", UIConfig.Main2.features4, "TOPLEFT", 0, -20, L["- Announce to chat players who are missing achievements for certain bosses"],"GameFontHighlight")   
-            -- UIConfig.Main2.features6 = Config:CreateText2("TOPLEFT", UIConfig.Main2.features5, "TOPLEFT", 0, -20, L["- Announce to chat tactics for a certain boss"],"GameFontHighlight")   
+            -- UIConfig.Main2.features = Config:CreateText2("TOPLEFT", UIConfig.Main2.content, "TOPLEFT", 0, -40, L["Features"] .. ":","GameFontNormalLarge")
+            -- UIConfig.Main2.features:SetWidth(750)
+            -- UIConfig.Main2.features:SetJustifyH("LEFT")
+            -- UIConfig.Main2.features1 = Config:CreateText2("TOPLEFT", UIConfig.Main2.features, "TOPLEFT", 0, -20, L["- Tracks when the criteria of instance achievements have been met and output this to chat"],"GameFontHighlight")
+            -- UIConfig.Main2.features2 = Config:CreateText2("TOPLEFT", UIConfig.Main2.features1, "TOPLEFT", 0, -20, L["- Tracks when the criteria of instance achievements has been failed and outputs this to chat"],"GameFontHighlight")
+            -- UIConfig.Main2.features3 = Config:CreateText2("TOPLEFT", UIConfig.Main2.features2, "TOPLEFT", 0, -20, L["- Keeps track of achievements which require you to kill so many mobs within a certain time period. It will announce to chat when enough mobs have spawned and whether they were killed in the time period."],"GameFontHighlight")
+            -- UIConfig.Main2.features4 = Config:CreateText2("TOPLEFT", UIConfig.Main2.features3, "TOPLEFT", 0, -30, L["- Scans all players in the group to see which achievements each player is missing for the current instance"],"GameFontHighlight")
+            -- UIConfig.Main2.features5 = Config:CreateText2("TOPLEFT", UIConfig.Main2.features4, "TOPLEFT", 0, -20, L["- Announce to chat players who are missing achievements for certain bosses"],"GameFontHighlight")
+            -- UIConfig.Main2.features6 = Config:CreateText2("TOPLEFT", UIConfig.Main2.features5, "TOPLEFT", 0, -20, L["- Announce to chat tactics for a certain boss"],"GameFontHighlight")
             -- UIConfig.Main2.features3:SetWidth(750)
-            -- UIConfig.Main2.features3:SetJustifyH("LEFT") 
+            -- UIConfig.Main2.features3:SetJustifyH("LEFT")
 
             --Options
             UIConfig.Main2.options = Config:CreateText2("TOPLEFT", UIConfig.Main2.content2, "TOPLEFT", 0, -30, L["GUI_Options"] .. ":","GameFontNormalLarge")
-            UIConfig.Main2.options:SetWidth(750)    
+            UIConfig.Main2.options:SetWidth(750)
             UIConfig.Main2.options:SetJustifyH("LEFT")
 
             --Enable Addon
@@ -317,12 +322,12 @@ function Tab_OnClick(self)
             --Toggle Minimap Icon
             UIConfig.Main2.options4 = Config:CreateCheckBox("TOPLEFT", UIConfig.Main2.options2, "TOPLEFT", 0, -25, "AchievementTracker_ToggleMinimapIcon")
             UIConfig.Main2.options4:SetScript("OnClick", ATToggleMinimapIcon_OnClick)
-            UIConfig.Main2.options5 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options4, "TOPLEFT", 30, -9, L["GUI_ToggleMinimap"],"GameFontHighlight")            
+            UIConfig.Main2.options5 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options4, "TOPLEFT", 30, -9, L["GUI_ToggleMinimap"],"GameFontHighlight")
 
             --Link achievements being tracked for current boss to chat
             UIConfig.Main2.options6 = Config:CreateCheckBox("TOPLEFT", UIConfig.Main2.options4, "TOPLEFT", 0, -25, "AchievementTracker_ToggleAchievementAnnounce")
             UIConfig.Main2.options6:SetScript("OnClick", ATToggleAchievementAnnounce_OnClick)
-            UIConfig.Main2.options7 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options6, "TOPLEFT", 30, -9, L["GUI_AnnounceTracking"],"GameFontHighlight")    
+            UIConfig.Main2.options7 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options6, "TOPLEFT", 30, -9, L["GUI_AnnounceTracking"],"GameFontHighlight")
 
             --Only track achievements in the group that players need.
             --Note this will only track achievements if players need them account wide not character wide
@@ -330,14 +335,14 @@ function Tab_OnClick(self)
             UIConfig.Main2.options8 = Config:CreateCheckBox("TOPLEFT", UIConfig.Main2.options6, "TOPLEFT", 0, -25, "AchievementTracker_ToggleTrackMissingAchievementsOnly")
             UIConfig.Main2.options8:SetScript("OnClick", ATToggleTrackMissingAchievementsOnly_OnClick)
             UIConfig.Main2.options9 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options8, "TOPLEFT", 30, -9, L["GUI_OnlyTrackMissingAchievements"],"GameFontHighlight")
-            
+
             --Announce messages to Raid Warning if player has permission
             UIConfig.Main2.options10 = Config:CreateCheckBox("TOPLEFT", UIConfig.Main2.options8, "TOPLEFT", 0, -25, "AchievementTracker_ToggleAnnounceToRaidWarning")
             UIConfig.Main2.options10:SetScript("OnClick", ATToggleAnnounceToRaidWarning_OnClick)
-            UIConfig.Main2.options11 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options10, "TOPLEFT", 30, -9, L["GUI_AnnounceMessagesToRaidWarning"],"GameFontHighlight")            
+            UIConfig.Main2.options11 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options10, "TOPLEFT", 30, -9, L["GUI_AnnounceMessagesToRaidWarning"],"GameFontHighlight")
 
             --Links to current guides and achievement discord credit for tactics
-            UIConfig.Main2.credits = Config:CreateText2("TOPRIGHT",UIConfig, "TOPRIGHT", -10, -70, L["GUI_AchievementsDiscordTitle"] .. ":","GameFontNormalLarge")            
+            UIConfig.Main2.credits = Config:CreateText2("TOPRIGHT",UIConfig, "TOPRIGHT", -10, -70, L["GUI_AchievementsDiscordTitle"] .. ":","GameFontNormalLarge")
             UIConfig.Main2.credits:SetWidth(400)
             UIConfig.Main2.credits:SetJustifyH("LEFT")
             UIConfig.Main2.credits2 = Config:CreateText2("TOPRIGHT", UIConfig.Main2.credits, "BOTTOMRIGHT", 0, -5, "https://discord.gg/achievements","GameFontNormal")
@@ -346,13 +351,13 @@ function Tab_OnClick(self)
             UIConfig.Main2.credits3 = Config:CreateText2("TOPRIGHT", UIConfig.Main2.credits2, "BOTTOMRIGHT", 0, -5, L["GUI_AchievementsDiscordDescription"],"GameFontHighlight")
             UIConfig.Main2.credits3:SetWidth(400)
             UIConfig.Main2.credits3:SetJustifyH("LEFT")
-            
+
             --Make a sound when an achievement has been completed
             UIConfig.Main2.options12 = Config:CreateCheckBox("TOPLEFT", UIConfig.Main2.options10, "TOPLEFT", 0, -25, "AchievementTracker_ToggleSound")
             UIConfig.Main2.options12:SetScript("OnClick", ATToggleSound_OnClick)
-            UIConfig.Main2.options13 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options12, "TOPLEFT", 30, -9, L["GUI_PlaySoundOnSuccess"],"GameFontHighlight")             
+            UIConfig.Main2.options13 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options12, "TOPLEFT", 30, -9, L["GUI_PlaySoundOnSuccess"],"GameFontHighlight")
 
-            --Dropdown menu to select sound for completed Achievement                 
+            --Dropdown menu to select sound for completed Achievement
             UIConfig.Main2.options15 = MSA_DropDownMenu_Create("AchievementTracker_SelectSoundDropdownCompleted", UIConfig.Main2.options12)
             UIConfig.Main2.options15:SetPoint("TOPLEFT", UIConfig.Main2.options12, "TOPLEFT", UIConfig.Main2.options13:GetStringWidth() + 30, 0)
             MSA_DropDownMenu_SetWidth(UIConfig.Main2.options15, 100)
@@ -375,7 +380,7 @@ function Tab_OnClick(self)
             UIConfig.Main2.options012:SetScript("OnClick", ATToggleSoundFailed_OnClick)
             UIConfig.Main2.options013 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options012, "TOPLEFT", 30, -9, L["GUI_PlaySoundOnFailed"],"GameFontHighlight")
 
-            --Dropdown menu to select sound for failed Achievement                        
+            --Dropdown menu to select sound for failed Achievement
             UIConfig.Main2.options17 = MSA_DropDownMenu_Create("AchievementTracker_SelectSoundDropdownFailed", UIConfig.Main2.options012)
             UIConfig.Main2.options17:SetPoint("TOPLEFT", UIConfig.Main2.options012, "TOPLEFT", UIConfig.Main2.options013:GetStringWidth() + 30, 0)
             MSA_DropDownMenu_SetWidth(UIConfig.Main2.options17, 100)
@@ -396,19 +401,19 @@ function Tab_OnClick(self)
             --Hide completed achievements
             UIConfig.Main2.options18 = Config:CreateCheckBox("TOPLEFT", UIConfig.Main2.options012, "TOPLEFT", 0, -25, "AchievementTracker_HideCompletedAchievements")
             UIConfig.Main2.options18:SetScript("OnClick", ATToggleHideCompletedAchievements_OnClick)
-            UIConfig.Main2.options19 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options18, "TOPLEFT", 30, -9, L["GUI_HideCompletedAchievements"],"GameFontHighlight")               
+            UIConfig.Main2.options19 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options18, "TOPLEFT", 30, -9, L["GUI_HideCompletedAchievements"],"GameFontHighlight")
 
             --Grey out completed achievements
             UIConfig.Main2.options20 = Config:CreateCheckBox("TOPLEFT", UIConfig.Main2.options18, "TOPLEFT", 0, -25, "AchievementTracker_GreyOutCompletedAchievements")
             UIConfig.Main2.options20:SetScript("OnClick", ATToggleGreyOutCompletedAchievements_OnClick)
-            UIConfig.Main2.options21 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options20, "TOPLEFT", 30, -9, L["GUI_GreyOutCompletedAchievements"],"GameFontHighlight") 
+            UIConfig.Main2.options21 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options20, "TOPLEFT", 30, -9, L["GUI_GreyOutCompletedAchievements"],"GameFontHighlight")
             -- UIConfig.Main2.options20:Hide()
             -- UIConfig.Main2.options21:Hide()
 
             --Enable Automatic Combat Logging
             UIConfig.Main2.options22 = Config:CreateCheckBox("TOPLEFT", UIConfig.Main2.options20, "TOPLEFT", 0, -25, "AchievementTracker_EnableAutomaticCombatLogging")
             UIConfig.Main2.options22:SetScript("OnClick", ATToggleAutomaticCombatLogging_OnClick)
-            UIConfig.Main2.options23 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options22, "TOPLEFT", 30, -9, L["GUI_EnableAutomaticCombatLogging"],"GameFontHighlight") 
+            UIConfig.Main2.options23 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options22, "TOPLEFT", 30, -9, L["GUI_EnableAutomaticCombatLogging"],"GameFontHighlight")
 
             --Disable InfoFrame
             UIConfig.Main2.options24 = Config:CreateCheckBox("TOPLEFT", UIConfig.Main2.options22, "TOPLEFT", 0, -25, "AchievementTracker_DisplayInfoFrame")
@@ -424,31 +429,11 @@ function Tab_OnClick(self)
             UIConfig.Main2.options28 = Config:CreateCheckBox("TOPLEFT", UIConfig.Main2.options2, "TOPLEFT", 363, 0, "AchievementTracker_TrackCharacterAchievements")
             UIConfig.Main2.options28:SetScript("OnClick", ATToggleTrackCharacterAchievements_OnClick)
             UIConfig.Main2.options29 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options28, "TOPLEFT", 30, -9, L["GUI_TrackCharacterAchievements"],"GameFontHighlight")
-
-            --Change InfoFrame scale
-            UIConfig.Main2.options30 = Config:CreateCheckBox("TOPLEFT", UIConfig.Main2.options28, "TOPLEFT", 0, -25, "AchievementTracker_ChangeInfoFrameScale")
-            UIConfig.Main2.options30:SetScript("OnClick", ATToggleChangeInfoFrameScale_OnClick)
-            UIConfig.Main2.options31 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options30, "TOPLEFT", 30, -9, L["GUI_ChangeInfoFrameScale"],"GameFontHighlight")
-            UIConfig.Main2.options32 = Config:CreateSlider("TOPLEFT", UIConfig.Main2.options30, "TOPRIGHT", (UIConfig.Main2.options31:GetStringWidth() + 10), 0, "AchievementTracker_ChangeInfoFrameScaleSlider")
-            UIConfig.Main2.options32:SetMinMaxValues(0.5, 1.5)
-            UIConfig.Main2.options32.text = _G["AchievementTracker_ChangeInfoFrameScaleSlider".."Text"]
-            UIConfig.Main2.options32:SetValue(1.0)
-            UIConfig.Main2.options32.textLow = _G["AchievementTracker_ChangeInfoFrameScaleSlider".."Low"]
-            UIConfig.Main2.options32.textLow:SetText("0.5")
-            UIConfig.Main2.options32.textHigh = _G["AchievementTracker_ChangeInfoFrameScaleSlider".."High"]
-            UIConfig.Main2.options32.textHigh:SetText("1.5")
-            UIConfig.Main2.options32:SetScript("OnValueChanged", function(self,event,arg1) 
-                core.IATInfoFrame:ToggleOn()
-                core.IATInfoFrame:SetHeading(GetAchievementLink(14148))
-                core.IATInfoFrame:SetSubHeading1("Players who have met Critiera (1/10)")
-                core.IATInfoFrame:SetText1("Player 1")
-                core.IATInfoFrame:ChangeScale(event)
-            end)
         end
     else                                --User has selected an expansion tab so hide main menu options
         UIConfig.ScrollFrame:Show()
         UIConfig.ScrollFrame2:Show()
-        
+
         UIConfig.Main:Hide()
         UIConfig.Main2:Hide()
 
@@ -459,8 +444,8 @@ function Tab_OnClick(self)
         -- UIConfig.Main2.features4:Hide()
         -- UIConfig.Main2.features5:Hide()
         -- UIConfig.Main2.features6:Hide()
-        
-        UIConfig.Main2.options:Hide() 
+
+        UIConfig.Main2.options:Hide()
         UIConfig.Main2.options:Hide()
         UIConfig.Main2.options2:Hide()
         UIConfig.Main2.options3:Hide()
@@ -492,9 +477,7 @@ function Tab_OnClick(self)
         UIConfig.Main2.options27:Hide()
         UIConfig.Main2.options28:Hide()
         UIConfig.Main2.options29:Hide()
-        UIConfig.Main2.options30:Hide()
-        UIConfig.Main2.options31:Hide()
-        
+
         UIConfig.Main.author:Hide()
         UIConfig.Main.verison:Hide()
         UIConfig.Main.tacticsCredit:Hide()
@@ -516,39 +499,34 @@ function Tab_OnClick(self)
     end
 end
 
-function ATToggleChangeInfoFrameScale_OnClick(self)
-    AchievementTrackerOptions["changeInfoFrameScale"] = self:GetChecked()
-    setChangeInfoFrameScale(self:GetChecked()) 
-end
-
 function ATToggleTrackCharacterAchievements_OnClick(self)
     AchievementTrackerOptions["trackCharacterAchievements"] = self:GetChecked()
-    setTrackCharacterAchievements(self:GetChecked()) 
+    setTrackCharacterAchievements(self:GetChecked())
 end
 
 function ATToggleTrackAchievementsInBlizzardUI_OnClick(self)
     AchievementTrackerOptions["trackAchievementsInBlizzardUI"] = self:GetChecked()
-    setTrackAchievementsInBlizzardUI(self:GetChecked()) 
+    setTrackAchievementsInBlizzardUI(self:GetChecked())
 end
 
 function ATToggleInfoFrame_OnClick(self)
     AchievementTrackerOptions["displayInfoFrame"] = self:GetChecked()
-    setDisplayInfoFrame(self:GetChecked()) 
+    setDisplayInfoFrame(self:GetChecked())
 end
 
 function ATToggleAutomaticCombatLogging_OnClick(self)
     AchievementTrackerOptions["enableAutomaticCombatLogging"] = self:GetChecked()
-    setEnableAutomaticCombatLogging(self:GetChecked()) 
+    setEnableAutomaticCombatLogging(self:GetChecked())
 end
 
 function ATToggleHideCompletedAchievements_OnClick(self)
     AchievementTrackerOptions["hideCompletedAchievements"] = self:GetChecked()
-    setHideCompletedAchievements(self:GetChecked()) 
+    setHideCompletedAchievements(self:GetChecked())
 end
 
 function ATToggleGreyOutCompletedAchievements_OnClick(self)
     AchievementTrackerOptions["greyOutCompletedAchievements"] = self:GetChecked()
-    setGreyOutCompletedAchievements(self:GetChecked()) 
+    setGreyOutCompletedAchievements(self:GetChecked())
 end
 
 function AchievementTracker_SelectSoundCompleted(self, arg1, arg2, checked)
@@ -556,12 +534,12 @@ function AchievementTracker_SelectSoundCompleted(self, arg1, arg2, checked)
         PlaySound(SOUNDKIT.READY_CHECK, "Master") --Success
         AchievementTrackerOptions["completedSound"] = SOUNDKIT.RAID_WARNING
         AchievementTrackerOptions["completedSoundID"] = 1
-        setCompletedSound(SOUNDKIT.READY_CHECK) 
+        setCompletedSound(SOUNDKIT.READY_CHECK)
     elseif arg1 == 2 then
         PlaySound(SOUNDKIT.ALARM_CLOCK_WARNING_2, "Master") --Success
         AchievementTrackerOptions["completedSound"] = SOUNDKIT.RAID_WARNING
         AchievementTrackerOptions["completedSoundID"] = 2
-        setCompletedSound(SOUNDKIT.ALARM_CLOCK_WARNING_2) 
+        setCompletedSound(SOUNDKIT.ALARM_CLOCK_WARNING_2)
     elseif arg1 == 3 then
         PlaySound(SOUNDKIT.ALARM_CLOCK_WARNING_3, "Master") --Success
         AchievementTrackerOptions["completedSound"] = SOUNDKIT.RAID_WARNING
@@ -686,24 +664,24 @@ function AchievementTracker_SelectSoundFailed(self, arg1, arg2, checked)
         PlaySoundFile("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Achievement Failed.ogg", "Master") --Fail
         AchievementTrackerOptions["failedSound"] = "Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Achievement Failed.ogg"
         AchievementTrackerOptions["failedSoundID"] = 11
-        setFailedSound("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Achievement Failed.ogg")        
+        setFailedSound("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Achievement Failed.ogg")
     end
     MSA_DropDownMenu_SetText(arg2, arg1)
 end
 
 function ATToggleSound_OnClick(self)
     AchievementTrackerOptions["toggleSound"] = self:GetChecked()
-    setEnableSound(self:GetChecked()) 
+    setEnableSound(self:GetChecked())
 end
 
 function ATToggleSoundFailed_OnClick(self)
     AchievementTrackerOptions["toggleSoundFailed"] = self:GetChecked()
-    setEnableSoundFailed(self:GetChecked()) 
+    setEnableSoundFailed(self:GetChecked())
 end
 
 function ATToggleAnnounceToRaidWarning_OnClick(self)
     AchievementTrackerOptions["announceToRaidWarning"] = self:GetChecked()
-    setAnnounceToRaidWarning(self:GetChecked()) 
+    setAnnounceToRaidWarning(self:GetChecked())
 end
 
 function ATToggleTrackMissingAchievementsOnly_OnClick(self)
@@ -723,6 +701,9 @@ function ATToggleMinimapIcon_OnClick(self)
     AchievementTrackerOptions["showMinimap"] = self:GetChecked()
     if self:GetChecked() then
         core.ATButton:Show("InstanceAchievementTracker")
+        if core.ATButton:IsRegistered("ExplorationAchievementTracker") then
+            core.ATButton:Hide("ExplorationAchievementTracker")
+        end
     else
         core.ATButton:Hide("InstanceAchievementTracker")
     end
@@ -737,8 +718,8 @@ function enableAddon_OnClick(self)
         setAddonEnabled(self:GetChecked())
     else
         core:printMessage(L["GUI_BlockDisableAddon"])
-        self:SetChecked(true) 
-    end 
+        self:SetChecked(true)
+    end
 end
 
 -- Method:          EnableAchievementScan_OnClick()
@@ -788,11 +769,12 @@ end
 -- Purpose:         This will add all the tabs onto IAT GUI and set the appropriate click events.
 local function SetTabs(frame, numTabs, ...)
 	frame.numTabs = numTabs     --Number of tabs to create. This will need incrementing by 1 each expansion
-	
+
 	local contents = {} --Stores the frames for each of the tabs
 	local frameName = frame:GetName()
-	
-	for i = 1, numTabs do	
+
+    --IAT Expansions Tabs
+	for i = 1, numTabs do
 		local tab = CreateFrame("Button", frameName.."Tab"..i, frame, "CharacterFrameTabButtonTemplate")
 		tab:SetID(i)                                --This is used when clicking on the tab to load the correct frames
 		tab:SetText(select(i, ...))                 --This select the variables arguments passed into the function. Needs updating each expansion
@@ -804,7 +786,7 @@ local function SetTabs(frame, numTabs, ...)
             tab.content = CreateFrame("Frame", nil, UIConfig.ScrollFrame)
             tab.content:SetSize(778, 460)
             tab.content:Hide()
-            
+
             table.insert(contents, tab.content)
 
 			tab:SetPoint("TOPLEFT", UIConfig, "BOTTOMLEFT", 5, 7);
@@ -818,17 +800,42 @@ local function SetTabs(frame, numTabs, ...)
             tab.contenta = CreateFrame("Frame", nil, UIConfig.ScrollFrame2)
             tab.contenta:SetSize(558, 460)
             tab.contenta:Hide()
-            
+
             table.insert(contents, tab.content)
             table.insert(contents, tab.contenta)
 
 			tab:SetPoint("TOPLEFT", _G[frameName.."Tab"..(i - 1)], "TOPRIGHT", -14, 0)
-		end	
-	end
-	
+		end
+    end
+
+    --Tabs for other addons
+    local tab = CreateFrame("Button", "InstanceAchievementTrackerTab", frame, "OptionsFrameTabButtonTemplate")
+    tab:SetID(100)                                 --This is used when clicking on the tab to load the correct frames
+    tab:SetText("Dungeons & Raids")  --This select the variables arguments passed into the function. Needs updating each expansion
+    tab:SetScript("OnClick", IAT_OnClick)       --This will run the Tab_OnClick() function once the user has selected a tab so we can load the correct frames into the GUI
+    tab:SetPoint("TOPLEFT")
+    tab:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 20)
+
+    local tab = CreateFrame("Button", "ExplorationAchievementTrackerTab", _G["InstanceAchievementTrackerTab"], "OptionsFrameTabButtonTemplate")
+    tab:SetID(100)                                 --This is used when clicking on the tab to load the correct frames
+    tab:SetText("Exploration")  --This select the variables arguments passed into the function. Needs updating each expansion
+    tab:SetScript("OnClick", EAT_OnClick)       --This will run the Tab_OnClick() function once the user has selected a tab so we can load the correct frames into the GUI
+    tab:SetPoint("TOPLEFT")
+    tab:SetPoint("TOPLEFT", _G["InstanceAchievementTrackerTab"], "TOPLEFT", 120, 0)
+
 	Tab_OnClick(_G[frameName.."Tab1"]) --Load in the main frame to begin with
-	
+
 	return unpack(contents) --Return the table containing all the frames
+end
+
+function IAT_OnClick()
+    EAT_GlobalToggle()
+    IAT_GlobalToggle()
+end
+
+function EAT_OnClick()
+    EAT_GlobalToggle()
+    IAT_GlobalToggle()
 end
 
 function deepdump( tbl )
@@ -887,10 +894,13 @@ function Config:CreateGUI()
      --Scroll Bar For Content
      UIConfig.ScrollFrame2.ScrollBar:ClearAllPoints()
      UIConfig.ScrollFrame2.ScrollBar:SetPoint("TOPLEFT", UIConfig.ScrollFrame2, "TOPRIGHT", -12, -18)
-     UIConfig.ScrollFrame2.ScrollBar:SetPoint("BOTTOMRIGHT", UIConfig.ScrollFrame2, "BOTTOMRIGHT", -7, 18)    
+     UIConfig.ScrollFrame2.ScrollBar:SetPoint("BOTTOMRIGHT", UIConfig.ScrollFrame2, "BOTTOMRIGHT", -7, 18)
 
     --Tabs
-    content1, ShadowlandsNav, ShadowlandsContent, BattleForAzerothNav, BattleForAzerothContent, LegionNav, LegionContent, WarlordsOfDraenorNav, WarlordsOfDraenorContent, MistsOfPandariaNav, MistsOfPandariaContent, CataclysmNav, CataclysmContent, WrathOfTheLichKingNav, WrathOfTheLichKingContent = SetTabs(UIConfig, 8, L["GUI_Options"], L["GUI_Shadowlands"], L["GUI_BattleForAzeroth"], L["Legion"], L["GUI_WarlordsOfDraenor"], L["GUI_MistsOfPandaria"], L["GUI_Cataclysm"], L["GUI_WrathOfTheLichKing"])    
+    content1, ShadowlandsNav, ShadowlandsContent, BattleForAzerothNav, BattleForAzerothContent, LegionNav, LegionContent, WarlordsOfDraenorNav, WarlordsOfDraenorContent, MistsOfPandariaNav, MistsOfPandariaContent, CataclysmNav, CataclysmContent, WrathOfTheLichKingNav, WrathOfTheLichKingContent = SetTabs(UIConfig, 8, L["GUI_Options"], L["GUI_Shadowlands"], L["GUI_BattleForAzeroth"], L["GUI_Legion"], L["GUI_WarlordsOfDraenor"], L["GUI_MistsOfPandaria"], L["GUI_Cataclysm"], L["GUI_WrathOfTheLichKing"])
+
+    --Tabs (Top)
+    --Addon_InstanceAchievementTracker, Addon_ExplorationAchievementTracker = SetTabs(UIConfig, 8, L["GUI_Options"], L["GUI_Shadowlands"], L["GUI_BattleForAzeroth"], L["Legion"], L["GUI_WarlordsOfDraenor"], L["GUI_MistsOfPandaria"], L["GUI_Cataclysm"], L["GUI_WrathOfTheLichKing"])
 
     --Content (Main)
     content1.title = content1:CreateFontString(nil, "OVERLAY", "GameFontHighlightLarge")
@@ -899,7 +909,7 @@ function Config:CreateGUI()
 
     --Create the navigation buttons for each expansion
     local expansions = 7
-    
+
     for i = 2, 8 do
         --Raids
         local firstRaid = false
@@ -954,10 +964,10 @@ function Config:CreateGUI()
             if firstRaid == false then
                 if i == 2 then
                     ShadowlandsNav[instanceTable.id] = self:CreateButton("TOPLEFT", ShadowlandsNav, "TOPLEFT", 0, instanceTable.name, instanceTable.id);
-                    ShadowlandsNav[instanceTable.id]:SetScript("OnClick", Instance_OnClick); 
+                    ShadowlandsNav[instanceTable.id]:SetScript("OnClick", Instance_OnClick);
                 elseif i == 3 then
                     BattleForAzerothNav[instanceTable.id] = self:CreateButton("TOPLEFT", BattleForAzerothNav, "TOPLEFT", 0, instanceTable.name, instanceTable.id);
-                    BattleForAzerothNav[instanceTable.id]:SetScript("OnClick", Instance_OnClick);                
+                    BattleForAzerothNav[instanceTable.id]:SetScript("OnClick", Instance_OnClick);
                 elseif i == 4 then
                     LegionNav[instanceTable.id] = self:CreateButton("TOPLEFT", LegionNav, "TOPLEFT", 0, instanceTable.name, instanceTable.id);
                     LegionNav[instanceTable.id]:SetScript("OnClick", Instance_OnClick);
@@ -1043,7 +1053,7 @@ function Config:CreateGUI()
                     LegionNav[instanceTable.id]:SetScript("OnClick", Instance_OnClick);
                 elseif i == 5 then
                     WarlordsOfDraenorNav[instanceTable.id] = self:CreateButton("TOPLEFT", WarlordsOfDraenorNav[previousInstance], "TOPLEFT", -32, instanceTable.name, instanceTable.id);
-                    WarlordsOfDraenorNav[instanceTable.id]:SetScript("OnClick", Instance_OnClick);                    
+                    WarlordsOfDraenorNav[instanceTable.id]:SetScript("OnClick", Instance_OnClick);
                 elseif i == 6 then
                     MistsOfPandariaNav[instanceTable.id] = self:CreateButton("TOPLEFT", MistsOfPandariaNav[previousInstance], "TOPLEFT", -32, instanceTable.name, instanceTable.id);
                     MistsOfPandariaNav[instanceTable.id]:SetScript("OnClick", Instance_OnClick);
@@ -1055,7 +1065,7 @@ function Config:CreateGUI()
                     WrathOfTheLichKingNav[instanceTable.id]:SetScript("OnClick", Instance_OnClick);
                 end
                 previousInstance = instanceTable.id
-            end            
+            end
         end
 
         --Scenarios
@@ -1070,7 +1080,7 @@ function Config:CreateGUI()
                 MistsOfPandariaNav[instanceTable.id] = self:CreateButton("TOPLEFT", MistsOfPandariaNav[previousInstance], "TOPLEFT", -32, instanceTable.name, instanceTable.id);
                 MistsOfPandariaNav[instanceTable.id]:SetScript("OnClick", Instance_OnClick);
                 previousInstance = instanceTable.id
-            end            
+            end
         end
     end
 
@@ -1119,7 +1129,7 @@ function Config:CreateGUI()
                     button:SetPoint("TOPLEFT",0,0-(i-1)*buttonHeight)
                 else
                     button:SetPoint("TOPLEFT",WarlordsOfDraenorContentButtons[i-1],"BOTTOMLEFT",0,0)
-                end               
+                end
             elseif j == 6 then
                 MistsOfPandariaContentButtons[i] = CreateFrame("Button",nil,MistsOfPandariaContent)
                 button = MistsOfPandariaContentButtons[i]
@@ -1179,7 +1189,7 @@ function Config:CreateGUI()
             button:Hide()
 
             idCounter = idCounter + 1
-        end   
+        end
     end
 
     local generatedIDCounter = 0
@@ -1199,7 +1209,7 @@ function Config:CreateGUI()
 		end
     end
 
-    
+
 end
 
 -- Method:          Config:Instance_OnClickAutomatic()
@@ -1256,13 +1266,13 @@ function Instance_OnClick(self)
         elseif core.instanceType == "Scenarios" then
             instanceType = "Scenarios"
             instanceLocation = core.Instances[core.expansion].Scenarios[core.instance]
-        end        
+        end
 
         --Set the current tab to the expansion of the current instance
         Config.currentTab = core.expansion
 
         --Set the current instance
-        Config.currentInstance = core.instance     
+        Config.currentInstance = core.instance
     end
 
     local achievementFound = false --This is so we can display "All Achievements completed for this instance" if needed
@@ -1274,9 +1284,9 @@ function Instance_OnClick(self)
     for i = 1, numButtons do
         local button
         if Config.currentTab == 2 then
-            button = ShadowlandsContentButtons[i]  
+            button = ShadowlandsContentButtons[i]
         elseif Config.currentTab == 3 then
-            button = BattleForAzerothContentButtons[i]        
+            button = BattleForAzerothContentButtons[i]
         elseif Config.currentTab == 4 then
             button = LegionContentButtons[i]
         elseif Config.currentTab == 5 then
@@ -1287,9 +1297,9 @@ function Instance_OnClick(self)
             button = CataclysmContentButtons[i]
         elseif Config.currentTab == 8 then
             button = WrathOfTheLichKingContentButtons[i]
-        end  
+        end
         button:Hide()
-    end 
+    end
 
     for bossName,v in pairs(instanceLocation) do
         if bossName ~= "name" then --Don't fetch the name of the instance that has been clicked
@@ -1321,7 +1331,7 @@ function Instance_OnClick(self)
                 if Config.currentTab == 2 then
                     button = ShadowlandsContentButtons[counter]
                 elseif Config.currentTab == 3 then
-                    button = BattleForAzerothContentButtons[counter]               
+                    button = BattleForAzerothContentButtons[counter]
                 elseif Config.currentTab == 4 then
                     button = LegionContentButtons[counter]
                 elseif Config.currentTab == 5 then
@@ -1333,9 +1343,9 @@ function Instance_OnClick(self)
                 elseif Config.currentTab == 8 then
                     button = WrathOfTheLichKingContentButtons[counter]
                 end
-    
+
                 button:Show()
-    
+
                 if counter > 1 then
                     button:ClearAllPoints()
                     if Config.currentTab == 2 then
@@ -1352,13 +1362,13 @@ function Instance_OnClick(self)
                         button:SetPoint("TOPLEFT",CataclysmContentButtons[counter-1],"BOTTOMLEFT",0,30-heightDifference)
                     elseif Config.currentTab == 8 then
                         button:SetPoint("TOPLEFT",WrathOfTheLichKingContentButtons[counter-1],"BOTTOMLEFT",0,30-heightDifference)
-                    end                
+                    end
                 end
                 button.headerText:SetText(Config:getLocalisedEncouterName(instanceLocation["boss" .. counter2].name,instanceType))
                 button.headerText:Show()
                 button.contentText:Hide()
                 button:SetNormalTexture("Interface\\Common\\Dark-GoldFrame-Button")
-    
+
                 button.tactics:Show()
                 button.tactics:SetSize(120, 15)
                 button.tactics:SetScript("OnClick", Tactics_OnClick);
@@ -1376,15 +1386,15 @@ function Instance_OnClick(self)
                     button.enabledText:Hide()
                     button.enabled:Hide()
                 end
-    
+
                 --print(instanceLocation["boss" .. counter2].generatedID)
-    
+
                 --We need to set the ID of the tactics/players/track buttons to the id of the current boss so when clicked we know which boss we need to fetch info for
                 button.tactics:SetID(instanceLocation["boss" .. counter2].generatedID)
                 button.players:SetID(instanceLocation["boss" .. counter2].generatedID)
                 button.enabled:SetID(instanceLocation["boss" .. counter2].generatedID)
-    
-                counter = counter + 1  
+
+                counter = counter + 1
 
                 if playersFound == false and core.achievementDisplayStatus == "grey" then
                     --Grey Out/Hide achievements
@@ -1393,10 +1403,10 @@ function Instance_OnClick(self)
                     --Show/Un-grey achievements
                     button.headerText:SetTextColor(1, 0.854, 0.039)
                 end
-    
-                --Content     
+
+                --Content
                 if Config.currentTab == 2 then
-                    button = ShadowlandsContentButtons[counter]   
+                    button = ShadowlandsContentButtons[counter]
                 elseif Config.currentTab == 3 then
                     button = BattleForAzerothContentButtons[counter]
                 elseif Config.currentTab == 4 then
@@ -1410,7 +1420,7 @@ function Instance_OnClick(self)
                 elseif Config.currentTab == 8 then
                     button = WrathOfTheLichKingContentButtons[counter]
                 end
-    
+
                 local players = L["GUI_Players"] .. ": "
                 for i = 1, #instanceLocation["boss" .. counter2].players do
                     players = players .. instanceLocation["boss" .. counter2].players[i] .. ", "
@@ -1421,7 +1431,7 @@ function Instance_OnClick(self)
                 if type(instanceLocation["boss" .. counter2].tactics) == "table" then
                     if UnitFactionGroup("player") == "Alliance" then
                         tactics = instanceLocation["boss" .. counter2].tactics[1]
-                    else    
+                    else
                         tactics = instanceLocation["boss" .. counter2].tactics[2]
                     end
                 else
@@ -1430,7 +1440,7 @@ function Instance_OnClick(self)
 
                 --Only show players if user has enabled achievement tracking
                 if core.achievementTrackingEnabled == false then
-                    button.contentText:SetText(L["GUI_Achievement"] .. ": " .. GetAchievementLink(instanceLocation["boss" .. counter2].achievement) .. "\n\n" .. L["GUI_Tactic"] .. ": " .. tactics)            
+                    button.contentText:SetText(L["GUI_Achievement"] .. ": " .. GetAchievementLink(instanceLocation["boss" .. counter2].achievement) .. "\n\n" .. L["GUI_Tactic"] .. ": " .. tactics)
                 else
                     button.contentText:SetText(L["GUI_Achievement"] .. ": " .. GetAchievementLink(instanceLocation["boss" .. counter2].achievement) .. "\n\n" .. players .. "\n\n" .. L["GUI_Tactic"] .. ": " .. tactics)
                 end
@@ -1448,16 +1458,16 @@ function Instance_OnClick(self)
                 button:SetNormalTexture(nil)
                 button.contentText:SetWidth(500)
                 button.contentText:SetHeight(500)
-    
+
                 button.contentText:SetWordWrap(true)
                 button.contentText:SetHeight(button.contentText:GetStringHeight())
                 heightDifference = button.contentText:GetStringHeight();
-    
+
                 button.tactics:Hide()
                 button.players:Hide()
                 button.enabled:Hide()
                 button.enabledText:Hide()
-    
+
                 button.achievementID = instanceLocation["boss" .. counter2].achievement
                 button:SetScript("OnEnter", Achievement_OnEnter)
                 button:SetScript("OnLeave", Achievement_OnLeave)
@@ -1490,9 +1500,9 @@ function Instance_OnClick(self)
     for i = counter, numButtons do
         local button
         if Config.currentTab == 2 then
-            button = ShadowlandsContentButtons[i]  
+            button = ShadowlandsContentButtons[i]
         elseif Config.currentTab == 3 then
-            button = BattleForAzerothContentButtons[i]        
+            button = BattleForAzerothContentButtons[i]
         elseif Config.currentTab == 4 then
             button = LegionContentButtons[i]
         elseif Config.currentTab == 5 then
@@ -1503,17 +1513,17 @@ function Instance_OnClick(self)
             button = CataclysmContentButtons[i]
         elseif Config.currentTab == 8 then
             button = WrathOfTheLichKingContentButtons[i]
-        end  
+        end
         button:Hide()
-    end  
+    end
 end
 
 function ClearGUITabs()
     for i = 1, 200 do
         local button
-        button = ShadowlandsContentButtons[i]        
+        button = ShadowlandsContentButtons[i]
         button:Hide()
-        button = BattleForAzerothContentButtons[i]        
+        button = BattleForAzerothContentButtons[i]
         button:Hide()
         button = LegionContentButtons[i]
         button:Hide()
@@ -1601,7 +1611,7 @@ function Achievement_OnEnter(self)
                 foundAchievement = true
             end
         end
-    end  
+    end
 
     if foundAchievement == false then
         AltGameTooltip:Hide()
@@ -1622,10 +1632,10 @@ function Player_OnClick(self)
                                     if core.scanFinished == true then
                                         players = GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " " .. L["GUI_NoPlayersNeedAchievement"]
                                     else
-                                        players = GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " " .. L["GUI_NoPlayersNeedAchievement"] .. " (" .. L["scan still in progress"] .. ")"                        
-                                    end   
+                                        players = GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " " .. L["GUI_NoPlayersNeedAchievement"] .. " (" .. L["scan still in progress"] .. ")"
+                                    end
                                 elseif core.Instances[expansion][instanceType][instance][boss].players[1] == L["GUI_EnterInstanceToStartScanning"] then
-                                    players = GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement)   
+                                    players = GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement)
                                 else
                                     players = GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " " .. L["GUI_PlayersWhoNeedAchievement"] .. ": "
 
@@ -1640,7 +1650,7 @@ function Player_OnClick(self)
                             else
                                 players = GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement)
                             end
-                            
+
                             --Send message to chat
                             core:sendMessageSafe(players)
                         end
@@ -1648,7 +1658,7 @@ function Player_OnClick(self)
                 end
 			end
 		end
-	end                            
+	end
 end
 
 function Tactics_OnClick(self)
@@ -1662,7 +1672,7 @@ function Tactics_OnClick(self)
                             if type(core.Instances[expansion][instanceType][instance][boss].tactics) == "table" then
                                 if UnitFactionGroup("player") == "Alliance" then
                                     core:sendMessageSafe(GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " " .. core.Instances[expansion][instanceType][instance][boss].tactics[1])
-                                else    
+                                else
                                     core:sendMessageSafe(GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " " .. core.Instances[expansion][instanceType][instance][boss].tactics[2])
                                 end
                             else
@@ -1698,7 +1708,7 @@ function Enabled_OnClick(self)
                 end
 			end
 		end
-	end   
+	end
 end
 
 SlashCmdList["EXPANDEXAMPLE"] = ExpandExample_UpdateList
@@ -1733,25 +1743,39 @@ function IATInfoFrame:SetupInfoFrame()
     InfoFrame = CreateFrame("Frame", "AchievementTrackerInfoFrame", UIParent)
     InfoFrame:SetSize(200, 300)
     InfoFrame:SetPoint("BOTTOMLEFT", "UIParent", "BOTTOMLEFT", 420, 500)
-    -- InfoFrame:SetBackdrop(frameBackdrop);
-    InfoFrame:SetMovable(true)
-    InfoFrame:EnableMouse(true)
-    InfoFrame:SetClampedToScreen(true)
-    InfoFrame:RegisterForDrag("LeftButton")
-    InfoFrame:SetScript("OnDragStart", UIConfig.StartMoving)
-    InfoFrame:SetScript("OnDragStop", function(self) 
-        self:StopMovingOrSizing()
-        AchievementTrackerOptions["infoFrameXPos"] = self:GetLeft()
-        AchievementTrackerOptions["infoFrameYPos"] = self:GetTop()
-        AchievementTrackerOptions["infoFrameScale"] = self:GetScale()
-        print(AchievementTrackerOptions["infoFrameXPos"], AchievementTrackerOptions["infoFrameYPos"])
-    end)
 
-    --Info Frame X/Y Posiions
-	if AchievementTrackerOptions["infoFrameXPos"] ~= nil and AchievementTrackerOptions["infoFrameYPos"] ~= nil then
-        InfoFrame:ClearAllPoints()
-        InfoFrame:SetPoint("BOTTOMLEFT",AchievementTrackerOptions["infoFrameXPos"],AchievementTrackerOptions["infoFrameYPos"])        
-	end
+    --Initialise LibWindow
+    local names = {
+        prefix = "InfoFrame",
+    }
+    core.LibWindow.RegisterConfig(InfoFrame, AchievementTrackerOptions, names)
+    core.LibWindow.RestorePosition(InfoFrame)
+    core.LibWindow.MakeDraggable(InfoFrame)
+    core.LibWindow.EnableMouseWheelScaling(InfoFrame)
+
+
+    -- -- InfoFrame:SetBackdrop(frameBackdrop);
+    -- InfoFrame:SetMovable(true)
+    -- InfoFrame:EnableMouse(true)
+    -- InfoFrame:SetClampedToScreen(true)
+    -- InfoFrame:RegisterForDrag("LeftButton")
+    -- InfoFrame:SetScript("OnDragStart", UIConfig.StartMoving)
+    -- InfoFrame:SetScript("OnDragStop", function(self)
+    --     self:StopMovingOrSizing()
+    --     AchievementTrackerOptions["infoFrameXPos"] = self:GetLeft()
+    --     AchievementTrackerOptions["infoFrameYPos"] = self:GetBottom()
+    --     AchievementTrackerOptions["infoFrameScale"] = self:GetScale()
+    -- end)
+
+    -- --Info Frame X/Y Posiions
+	-- if AchievementTrackerOptions["infoFrameXPos"] ~= nil and AchievementTrackerOptions["infoFrameYPos"] ~= nil then
+    --     InfoFrame:ClearAllPoints()
+    --     InfoFrame:SetPoint("BOTTOMLEFT",AchievementTrackerOptions["infoFrameXPos"],AchievementTrackerOptions["infoFrameYPos"])
+
+    --     if AchievementTrackerOptions["infoFrameScale"] ~= nil then
+    --         InfoFrame:SetScale(AchievementTrackerOptions["infoFrameScale"])
+    --     end
+	-- end
 
     InfoFrame:SetShown(false)
 end
@@ -1759,11 +1783,11 @@ end
 function IATInfoFrame:SetHeading(text)
     if InfoFrame.heading == nil then
         InfoFrame.heading = InfoFrame:CreateFontString(nil, "BACKGROUND", "GameFontHighlightLarge")
-    end                        
+    end
     InfoFrame.heading:SetText(text)
     InfoFrame.heading:SetHeight(InfoFrame.heading:GetStringHeight())
     InfoFrame.heading:SetPoint("TOPLEFT", InfoFrame, "TOPLEFT", 5, -5)
-    
+
     -- if InfoFrame.heading:GetStringWidth() > InfoFrame:GetWidth() then
     --     InfoFrame:SetWidth(InfoFrame.heading:GetRight() - InfoFrame.heading:GetLeft() + 23)
     -- end
@@ -1772,12 +1796,12 @@ end
 function IATInfoFrame:SetSubHeading1(text)
     if InfoFrame.subHeading1 == nil then
         InfoFrame.subHeading1 = InfoFrame:CreateFontString(nil, "BACKGROUND", "GameFontHighlightLarge")
-    end                        
+    end
     InfoFrame.subHeading1:SetText(text)
     InfoFrame.subHeading1:SetHeight(InfoFrame.subHeading1:GetStringHeight())
     InfoFrame.subHeading1:ClearAllPoints()
     InfoFrame.subHeading1:SetPoint("TOPLEFT", InfoFrame.heading, "BOTTOMLEFT", 0, -5)
-    
+
     -- if InfoFrame.subHeading1:GetStringWidth() > InfoFrame:GetWidth()then
     --     InfoFrame:SetWidth(InfoFrame.subHeading1:GetRight() - InfoFrame.subHeading1:GetLeft() + 23)
     -- end
@@ -1792,17 +1816,17 @@ function IATInfoFrame:SetText1(text,size,colour,width)
         if size == nil then
             InfoFrame.setText1 = InfoFrame:CreateFontString(nil, "BACKGROUND", "GameFontHighlight")
         else
-            InfoFrame.setText1 = InfoFrame:CreateFontString(nil, "BACKGROUND", size)        
-        end 
-    end     
-    
+            InfoFrame.setText1 = InfoFrame:CreateFontString(nil, "BACKGROUND", size)
+        end
+    end
+
     if width ~= nil then
         InfoFrame.setText1:SetWidth(width)
     end
-    
+
     InfoFrame.setText1:SetText(text)
     InfoFrame.setText1:SetHeight(InfoFrame.setText1:GetStringHeight())
-    InfoFrame.setText1:SetPoint("TOPLEFT", InfoFrame.subHeading1, "BOTTOMLEFT", 0, -5) 
+    InfoFrame.setText1:SetPoint("TOPLEFT", InfoFrame.subHeading1, "BOTTOMLEFT", 0, -5)
 
     -- if InfoFrame.setText1:GetStringWidth() > InfoFrame:GetWidth()then
     --     InfoFrame:SetWidth(InfoFrame.setText1:GetRight() - InfoFrame.setText1:GetLeft() + 23)
@@ -1818,12 +1842,12 @@ end
 
 function IATInfoFrame:SetSubHeading2(text)
     if InfoFrame.setSubHeading2 == nil then
-        InfoFrame.setSubHeading2 = InfoFrame:CreateFontString(nil, "BACKGROUND", "GameFontHighlightLarge")     
-    end                        
+        InfoFrame.setSubHeading2 = InfoFrame:CreateFontString(nil, "BACKGROUND", "GameFontHighlightLarge")
+    end
     InfoFrame.setSubHeading2:SetText(text)
     InfoFrame.setSubHeading2:SetHeight(InfoFrame.setSubHeading2:GetStringHeight())
     InfoFrame.setSubHeading2:SetPoint("TOPLEFT", InfoFrame.setText1, "BOTTOMLEFT", 0, -5)
-    
+
     -- if InfoFrame.setSubHeading2:GetStringWidth() > InfoFrame:GetWidth()then
     --     InfoFrame:SetWidth(InfoFrame.setSubHeading2:GetRight() - InfoFrame.setSubHeading2:GetLeft() + 23)
     -- end
@@ -1839,15 +1863,15 @@ end
 function IATInfoFrame:SetText2(text,width)
     if InfoFrame.setText2 == nil then
         InfoFrame.setText2 = InfoFrame:CreateFontString(nil, "BACKGROUND", "GameFontHighlight")
-    end       
-    
+    end
+
     if width ~= nil then
         InfoFrame.setText2:SetWidth(width)
     end
-    
+
     InfoFrame.setText2:SetText(text)
     InfoFrame.setText2:SetHeight(InfoFrame.setText2:GetStringHeight())
-    InfoFrame.setText2:SetPoint("TOPLEFT", InfoFrame.setSubHeading2, "BOTTOMLEFT", 0, -5)     
+    InfoFrame.setText2:SetPoint("TOPLEFT", InfoFrame.setSubHeading2, "BOTTOMLEFT", 0, -5)
 
     -- if InfoFrame.setText2:GetStringWidth() > InfoFrame:GetWidth() and width == nil then
     --     InfoFrame:SetWidth(InfoFrame.setText2:GetRight() - InfoFrame.setText2:GetLeft() + 23)
@@ -1856,24 +1880,28 @@ function IATInfoFrame:SetText2(text,width)
     -- if InfoFrame.setText2:GetBottom() ~= nil and InfoFrame:GetTop() ~= nil then
     --     InfoFrame:SetHeight(InfoFrame.setText2:GetBottom() - InfoFrame:GetTop() - 10)
     -- end
-    
+
     InfoFrame.setText2:SetJustifyH("LEFT")
-    InfoFrame.setText2:SetJustifyV("TOP")
+    InfoFrame.setText2:SetJustifyV("BOTTOM")
 end
 
 function IATInfoFrame:SetPosition(x,y,scaleFactor)
     InfoFrame:ClearAllPoints()
-    InfoFrame:SetPoint("TOPLEFT",x/scaleFactor,y*scaleFactor)
+    InfoFrame:SetPoint("TOPLEFT",x/scaleFactor,y/scaleFactor)
     --print(AchievementTrackerOptions["infoFrameXPos"], AchievementTrackerOptions["infoFrameYPos"])
 end
 
 function IATInfoFrame:ChangeScale(scaleFactor)
     Left = AchievementTrackerOptions["infoFrameXPos"]
-    Top = AchievementTrackerOptions["infoFrameYPos"]
+    Bottom = AchievementTrackerOptions["infoFrameYPos"]
+    AchievementTrackerOptions["infoFrameScale"] = scaleFactor
+    InfoFrameScale = scaleFactor
 
+    InfoFrame:ClearAllPoints()
     InfoFrame:SetScale(scaleFactor)
-    print(Left, Top, scaleFactor)
-    core.IATInfoFrame:SetPosition(Left, Top, scaleFactor)
+
+    Config.LibWindowInfoFrame:SavePosition()
+    --core.IATInfoFrame:SetPosition(Left, Bottom, scaleFactor)
 end
 
 function IATInfoFrame:ToggleOn()
@@ -1920,7 +1948,7 @@ function GetNameFromNpcIDCache(npcID)
                                     if string.find(core.Instances[expansion][instanceType][instance][boss].tactics[1], ("IAT_" .. npcID)) then
                                         core.Instances[expansion][instanceType][instance][boss].tactics[1] = string.gsub(core.Instances[expansion][instanceType][instance][boss].tactics[1], ("IAT_" .. npcID), name)
                                     end
-                                else    
+                                else
                                     if string.find(core.Instances[expansion][instanceType][instance][boss].tactics[2], ("IAT_" .. npcID)) then
                                         core.Instances[expansion][instanceType][instance][boss].tactics[2] = string.gsub(core.Instances[expansion][instanceType][instance][boss].tactics[2], ("IAT_" .. npcID), name)
                                     end

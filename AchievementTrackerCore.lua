@@ -19,11 +19,11 @@ local ptrVersion = "9.0.1"
 AchievementTrackerOptions = {}									--Saved Variables Tables
 AchievementTrackerDebug = {}
 
-events:RegisterEvent("ADDON_LOADED")							--This is the first event that is called as soon as the addon loaded. Does Initial Setup							
+events:RegisterEvent("ADDON_LOADED")							--This is the first event that is called as soon as the addon loaded. Does Initial Setup
 events:RegisterEvent("GET_ITEM_INFO_RECEIVED")					--Get Item Information after the game has loaded to finish loading tactics
 events:RegisterEvent("PLAYER_LOGIN")							--Fired just before login has finished
 
-function generateItemCache()									--The Item Cache can only be generated once the game has loaded		
+function generateItemCache()									--The Item Cache can only be generated once the game has loaded
 	for i,v in pairs(core.ItemCache) do							--We need to first get information about the item to load into the cache
 		--If item does not return nil then add to tactics now as GET_ITEM_INFO_RECEIVED only fires if items are not in the cache
 		local itemName, itemLink = GetItemInfo(core.ItemCache[v])
@@ -38,7 +38,7 @@ function generateItemCache()									--The Item Cache can only be generated once
 										if string.find(core.Instances[expansion][instanceType][instance][boss].tactics[1], ("IAT_" .. core.ItemCache[v])) then
 											core.Instances[expansion][instanceType][instance][boss].tactics[1] = string.gsub(core.Instances[expansion][instanceType][instance][boss].tactics[1], ("IAT_" .. core.ItemCache[v]), itemLink)
 										end
-									else    
+									else
 										if string.find(core.Instances[expansion][instanceType][instance][boss].tactics[2], ("IAT_" .. core.ItemCache[v])) then
 											core.Instances[expansion][instanceType][instance][boss].tactics[2] = string.gsub(core.Instances[expansion][instanceType][instance][boss].tactics[2], ("IAT_" .. core.ItemCache[v]), itemLink)
 										end
@@ -73,7 +73,7 @@ function events:GET_ITEM_INFO_RECEIVED(self, arg1)
 											core.Instances[expansion][instanceType][instance][boss].tactics[1] = string.gsub(core.Instances[expansion][instanceType][instance][boss].tactics[1], ("IAT_" .. arg1), itemLink)
 										end
 									end
-								else    
+								else
 									if string.find(core.Instances[expansion][instanceType][instance][boss].tactics[2], ("IAT_" .. arg1)) then
 										local itemName, itemLink = GetItemInfo(arg1)
 										if itemLink ~= nil then
@@ -101,12 +101,12 @@ function generateNPCCache()
 	core:sendDebugMessage("Generating NPC Cache...")
 	local count = 1
 	local tempNPC = {}
-	for i,v in pairs(core.NPCCache) do							
-		--GetNameFromNpcIDCache(core.NPCCache[v])	
-		table.insert(tempNPC, core.NPCCache[v]) 						
-	end	
+	for i,v in pairs(core.NPCCache) do
+		--GetNameFromNpcIDCache(core.NPCCache[v])
+		table.insert(tempNPC, core.NPCCache[v])
+	end
 
-	generateNPCs = C_Timer.NewTicker(0.01, function() 
+	generateNPCs = C_Timer.NewTicker(0.01, function()
 		--core:sendDebugMessage("Fetching: " .. tempNPC[count] .. "(" .. count .. "/" .. #tempNPC .. ")")
 		GetNameFromNpcIDCache(tempNPC[count])
 		count = count + 1
@@ -119,10 +119,10 @@ end
 
 function getNPCName(npcID)
 	if not tonumber(core.NPCCache[npcID]) then
-		return core.NPCCache[npcID]	
+		return core.NPCCache[npcID]
 	else
 		GetNameFromNpcIDCache(npcID)
-		return ""	
+		return ""
 	end
 end
 
@@ -241,7 +241,7 @@ core.syncMessageQueue = {}							--Messages sent from sync to other addons. Used
 local enableInfoFrame = true					--Whether or not user has Info Frame enabled or not
 
 --------------------------------------
--- Addon Syncing 
+-- Addon Syncing
 --------------------------------------
 local masterAddon = false					--The master addon for the group. This stop multiple people with the addon outputting identical messages. Reset at the end of every fight
 local playerRank = -1						--The rank of the player is the group. Players with higher rank get priorty over outputting messages unless they have an outdated addon
@@ -397,7 +397,7 @@ function getPlayersInGroup()
 				if foundAchievement == false then
 					core:printMessage(L["Core_CompletedAllAchievements"] .. " " .. achievements)
 				else
-					core:printMessage(L["Core_IncompletedAchievements"])	
+					core:printMessage(L["Core_IncompletedAchievements"])
 				end
 			end
 		end
@@ -422,10 +422,10 @@ function getInstanceAchievements()
 			--Temporarily disable the event while we do our scanning.
 			--To protect against errors by disabling event, pause the scanning if the achievement ui or inspect achievement ui is shown
 			_G["AchievementFrameComparison"]:UnregisterEvent("INSPECT_ACHIEVEMENT_READY");
-			SetAchievementComparisonUnit(playersToScan[1])	
+			SetAchievementComparisonUnit(playersToScan[1])
 		else
 			--Achievement Frame has not been loaded so go ahead and set the comparison unit
-			SetAchievementComparisonUnit(playersToScan[1])	
+			SetAchievementComparisonUnit(playersToScan[1])
 		end
 
 		--Set the id to the current scanCounter so we can determine if the timer is still valid or not. If the scanCounter is higher than the local timer then ignore the output from the timer since it's no longer valid
@@ -486,7 +486,7 @@ end
 --Run when the player initially enters an instance to setup variables such as instanceName, expansion etc so we can track the correct bosses
 function getInstanceInfomation()
 	--Delay the execution of this function to make sure difficultyID information is ready to be fetched from the server
-	C_Timer.After(2, function() 
+	C_Timer.After(2, function()
 		--If the instance is different to the one we last checked then we need to reset varaibles and re-scan
 		if IsInInstance() and core.inInstance == true then
 			local instanceNameSpaces, _, difficultyID, _, maxPlayers, _, _, currentZoneID, _ = GetInstanceInfo()
@@ -497,12 +497,12 @@ function getInstanceInfomation()
 					core:sendDebugMessage("Hiding Tracking UI")
 					UIConfig:Hide()
 				end
-		
+
 				--Disable achievement tracking if currently tracking
-				checkAndClearInstanceVariables()	
+				checkAndClearInstanceVariables()
 			end
 		end
-	
+
 		if IsInInstance() and core.inInstance == false then
 			core:sendDebugMessage("Player has entered instance")
 			local instanceCompatible = false --Check whether player is on correct difficulty to earn achievements
@@ -510,12 +510,12 @@ function getInstanceInfomation()
 
 			if core.difficultyID ~= 0 then
 				core:sendDebugMessage(core.currentZoneID)
-	
+
 				core.instance = core.currentZoneID --Instance name without any puntuation
 				core.instanceClear = "_" .. core.currentZoneID --Instance name with _ to fetch functions for tracking of the particular instance
-		
+
 				core:sendDebugMessage("Offical Instance Name: " .. core.instance .. " " .. core.instanceClear)
-		
+
 				--If the raid is in the lich king expansion then detect whether player is on the 10man or 25man difficulty
 				--This is only needed for raids that have seperate achievements for 10man and 25man. Happens for the majority of WOTLK raids
 				if core.instance == 615 or core.instance == 616 or core.instance == 249 or core.instance == 649 or core.instance == 624 or core.instance == 533 or core.instance == 631 then
@@ -531,7 +531,7 @@ function getInstanceInfomation()
 						core:sendDebugMessage("New Instance Name: " .. core.instance)
 					end
 				end
-		
+
 				--Find the instance in the core.instances table so we can cache the value to be used later
 				for expansion,_ in pairs(core.Instances) do
 					for instanceType,_ in pairs(core.Instances[expansion]) do
@@ -542,7 +542,7 @@ function getInstanceInfomation()
 								core.instance = instance
 								core.inInstance = true
 								core.instanceVariablesReset = false
-		
+
 								core:sendDebugMessage("Expansion: " .. core.expansion)
 								core:sendDebugMessage("Instance Type: " .. core.instanceType)
 								core:sendDebugMessage("Instance: " .. core.instance)
@@ -550,7 +550,7 @@ function getInstanceInfomation()
 						end
 					end
 				end
-		
+
 				--Check whether achievements can be earned for the instance the player has entered
 				core:sendDebugMessage("DifficultyID: " .. core.difficultyID)
 				if core.difficultyID == 2 then
@@ -583,11 +583,11 @@ function getInstanceInfomation()
 					--Timewalking
 					instanceCompatible = true
 				end
-		
+
 				if debugMode == true then
 					instanceCompatible = true
 				end
-		
+
 				if instanceCompatible == true and core.expansion ~= nil then
 					--Check if the instance has any achievements to actually track
 					local foundTracking = false
@@ -601,7 +601,7 @@ function getInstanceInfomation()
 							end
 						end
 					end
-		
+
 					--Ask the user whether they want to enable Achievement Tracking in the instance. Always ask user even if we can't track anything, so that they can see what they are missing too.
 					if trackAchievementsUIAutomatic == false then
 						trackAchievementsUIAutomatic = true
@@ -713,7 +713,7 @@ function createEnableAchievementTrackingUI()
     UIConfig:SetClampedToScreen(true)
     UIConfig:RegisterForDrag("LeftButton")
     UIConfig:SetScript("OnDragStart", UIConfig.StartMoving)
-    UIConfig:SetScript("OnDragStop", function(self) 
+    UIConfig:SetScript("OnDragStop", function(self)
         self:StopMovingOrSizing()
         AchievementTrackerOptions["trackingFrameXPos"] = self:GetLeft()
         AchievementTrackerOptions["trackingFrameYPos"] = self:GetBottom()
@@ -725,8 +725,8 @@ function createEnableAchievementTrackingUI()
 		UIConfig:SetPoint("BOTTOMLEFT",AchievementTrackerOptions["trackingFrameXPos"],AchievementTrackerOptions["trackingFrameYPos"])
 	else
 		UIConfig:SetPoint("CENTER")
-	end	
-	
+	end
+
 	--Setup the InfoFrame
 	core.IATInfoFrame:SetupInfoFrame()
 end
@@ -751,7 +751,7 @@ function enableAchievementTracking(self)
 	if core.enableAchievementScanning == true then
 		getPlayersInGroup()
 	else
-		core:sendDebugMessage("Achievement Scanning Disabled")	
+		core:sendDebugMessage("Achievement Scanning Disabled")
 	end
 
 	--Addon Syncing Priority:
@@ -853,12 +853,12 @@ core.commands = {
 			versionCheckInitiated = true
 			C_ChatInfo.SendAddonMessage("Whizzey", "sendVersionIAT", "RAID")
 
-			C_Timer.After(20, function() 
+			C_Timer.After(20, function()
 				versionCheckInitiated = false
 			end)
 		else
 			print("Wait 20 seconds before using this command again")
-		end	
+		end
 	end,
 
 	["debug"] = function()
@@ -877,19 +877,19 @@ core.commands = {
 				getInstanceInfomation()
 			elseif core.achievementTrackingEnabled == true and core.addonEnabled == true then
 				core.inInstance = false
-	
+
 				if UIConfig ~= nil and core.inInstance == false then
 					core:sendDebugMessage("Hiding Tracking UI")
 					UIConfig:Hide()
 				end
-	
+
 				core.achievementTrackingEnabled = false
-	
+
 				--Disable achievement tracking if currently tracking
-				checkAndClearInstanceVariables()	
-	
+				checkAndClearInstanceVariables()
+
 				ClearGUITabs()
-	
+
 				getInstanceInfomation()
 			elseif core.addonEnabled == false then
 				core:printMessage(L["Core_EnableAddonFirst"])
@@ -912,7 +912,7 @@ core.commands = {
 			core.achievementTrackingEnabled = false
 
 			--Disable achievement tracking if currently tracking
-			checkAndClearInstanceVariables()	
+			checkAndClearInstanceVariables()
 
 			ClearGUITabs()
 
@@ -923,31 +923,31 @@ core.commands = {
 	end,
 };
 
-local function HandleSlashCommands(str)	
-	if (#str == 0) then	
+local function HandleSlashCommands(str)
+	if (#str == 0) then
 		-- User just entered "/iat" with no additional args.
 		core.Config.Toggle()
-		return;		
-	end	
-	
+		return;
+	end
+
 	local args = {};
 	for _, arg in ipairs({ string.split(' ', str) }) do
 		if (#arg > 0) then
 			table.insert(args, arg);
 		end
 	end
-	
+
 	local path = core.commands; -- required for updating found table.
-	
+
 	for id, arg in ipairs(args) do
 		if (#arg > 0) then -- if string length is greater than 0.
-			arg = arg:lower();			
+			arg = arg:lower();
 			if (path[arg]) then
-				if (type(path[arg]) == "function") then				
+				if (type(path[arg]) == "function") then
 					-- all remaining args passed to our function!
-					path[arg](select(id + 1, unpack(args))); 
-					return;					
-				elseif (type(path[arg]) == "table") then				
+					path[arg](select(id + 1, unpack(args)));
+					return;
+				elseif (type(path[arg]) == "table") then
 					path = path[arg]; -- another sub-table found!
 				end
 			else
@@ -973,30 +973,52 @@ function events:PLAYER_LOGIN()
 	-- LDB
 	if not LibStub:GetLibrary("LibDataBroker-1.1", true) then return end
 
-	--Make an LDB object
-	local MiniMapLDB = LibStub:GetLibrary("LibDataBroker-1.1"):NewDataObject("InstanceAchievementTracker", {
-		type = "launcher",
-		text = "InstanceAchievementTracker",
-		icon = "Interface\\Icons\\ACHIEVEMENT_GUILDPERK_MRPOPULARITY",
-		OnTooltipShow = function(tooltip)
-			tooltip:AddLine("Instance Achievement Tracker");
-		end,
-		OnClick = function(self, button)
-			core.Config.Toggle()
-		end,
-	})
+	if not core.ATButton:IsRegistered("ExplorationAchievementTracker") then
+		--Make an LDB object
+		local MiniMapLDB = LibStub:GetLibrary("LibDataBroker-1.1"):NewDataObject("InstanceAchievementTracker", {
+			type = "launcher",
+			text = "InstanceAchievementTracker",
+			icon = "Interface\\Icons\\ACHIEVEMENT_GUILDPERK_MRPOPULARITY",
+			OnTooltipShow = function(tooltip)
+				tooltip:AddLine("Instance Achievement Tracker");
+			end,
+			OnClick = function(self, button)
+				core.Config.Toggle()
+			end,
+		})
 
-	--Register Minimap Icon
-	core.ATButton:Register("InstanceAchievementTracker", MiniMapLDB, AchievementTrackerOptions);
+		--Register Minimap Icon
+		core.ATButton:Register("InstanceAchievementTracker", MiniMapLDB, AchievementTrackerOptions);
 
-	--Show Minimap Icon
-	if AchievementTrackerOptions["showMinimap"] then
-		core:sendDebugMessage("Showing Minimap Icon")
-        core.ATButton:Show("InstanceAchievementTracker")
-	else
-		core:sendDebugMessage("Hiding Minimap Icon")
-		core.ATButton:Hide("InstanceAchievementTracker")		
-    end
+
+		--Show Minimap Icon
+		if AchievementTrackerOptions["showMinimap"] then
+			core:sendDebugMessage("Showing Minimap Icon")
+			core.ATButton:Show("InstanceAchievementTracker")
+		else
+			core:sendDebugMessage("Hiding Minimap Icon")
+			core.ATButton:Hide("InstanceAchievementTracker")
+		end
+	elseif AchievementTrackerOptions["showMinimap"] then
+		--Make an LDB object
+		local MiniMapLDB = LibStub:GetLibrary("LibDataBroker-1.1"):NewDataObject("InstanceAchievementTracker", {
+			type = "launcher",
+			text = "InstanceAchievementTracker",
+			icon = "Interface\\Icons\\ACHIEVEMENT_GUILDPERK_MRPOPULARITY",
+			OnTooltipShow = function(tooltip)
+				tooltip:AddLine("Achievement Tracker");
+				tooltip:AddLine("Exploration Achievement Tracker");
+				tooltip:AddLine("Instance Achievement Tracker");
+			end,
+			OnClick = function(self, button)
+				core.Config.Toggle()
+			end,
+		})
+
+		--Register Minimap Icon
+		core.ATButton:Register("InstanceAchievementTracker", MiniMapLDB, AchievementTrackerOptions);
+		core.ATButton:Hide("ExplorationAchievementTracker")
+	end
 end
 
 function events:ADDON_LOADED(event, name)
@@ -1013,7 +1035,7 @@ function events:ADDON_LOADED(event, name)
 	generateNPCCache()
 
 	--Check if the options have been setup
-	
+
 	--Enable/Disable addon
 	if AchievementTrackerOptions["enableAddon"] == nil then
 		AchievementTrackerOptions["enableAddon"] = true
@@ -1051,7 +1073,7 @@ function events:ADDON_LOADED(event, name)
 		announceToRaidWarning = true
 	end
 	_G["AchievementTracker_ToggleAnnounceToRaidWarning"]:SetChecked(AchievementTrackerOptions["announceToRaidWarning"])
-	
+
 	--Play sound when achievement completed
 	if AchievementTrackerOptions["toggleSound"] == nil then
 		AchievementTrackerOptions["toggleSound"] = false --Do not enable by default
@@ -1089,7 +1111,7 @@ function events:ADDON_LOADED(event, name)
 		--Set the source of the completed sound
 		completedSound = AchievementTrackerOptions["completedSound"]
 	end
-	
+
 	--Sound when achievement is failed
 	if AchievementTrackerOptions["failedSoundID"] ~= nil then
 		MSA_DropDownMenu_SetText(_G["AchievementTracker_SelectSoundDropdownFailed"], AchievementTrackerOptions["failedSoundID"])
@@ -1105,7 +1127,7 @@ function events:ADDON_LOADED(event, name)
 	elseif AchievementTrackerOptions["hideCompletedAchievements"] == true then
 		core.achievementDisplayStatus = "hide"
 	end
-	_G["AchievementTracker_HideCompletedAchievements"]:SetChecked(AchievementTrackerOptions["hideCompletedAchievements"])	
+	_G["AchievementTracker_HideCompletedAchievements"]:SetChecked(AchievementTrackerOptions["hideCompletedAchievements"])
 
 	--Grey out completed achievements
 	if AchievementTrackerOptions["greyOutCompletedAchievements"] == nil then
@@ -1151,37 +1173,23 @@ function events:ADDON_LOADED(event, name)
 	end
 	_G["AchievementTracker_TrackCharacterAchievements"]:SetChecked(AchievementTrackerOptions["trackCharacterAchievements"])
 
-	--Change InfoFrame Scale
-	if AchievementTrackerOptions["changeInfoFrameScale"] == nil then
-		AchievementTrackerOptions["changeInfoFrameScale"] = false --Disabled by default
-		changeInfoFrameScale = false
-	elseif AchievementTrackerOptions["changeInfoFrameScale"] == true then
-		changeInfoFrameScale = true
-	end
-	_G["AchievementTracker_ChangeInfoFrameScale"]:SetChecked(AchievementTrackerOptions["changeInfoFrameScale"])
-
 	SLASH_IAT1 = "/iat";
 	SlashCmdList.IAT = HandleSlashCommands;
 
 	--printMessage("loaded. Version: V" .. core.Config.majorVersion .. "." .. core.Config.minorVersion .. "." .. core.Config.revisionVersion)
 
+	--Load LibWindow
+	core.LibWindow = LibStub("LibWindow-1.1")
+
 	--Set whether addon should be enabled or disabled
 	setAddonEnabled(AchievementTrackerOptions["enableAddon"])
-end
-
-function setChangeInfoFrameScale(setChangeInfoFrameScale)
-	if setChangeInfoFrameScale then
-		changeInfoFrameScale = true
-	else
-		changeInfoFrameScale = false					
-	end
 end
 
 function setTrackCharacterAchievements(setTrackCharacterAchievements)
 	if setTrackCharacterAchievements then
 		trackCharacterAchievements = true
 	else
-		trackCharacterAchievements = false					
+		trackCharacterAchievements = false
 	end
 
 	if core.achievementTrackingEnabled == true and core.addonEnabled == true then
@@ -1195,7 +1203,7 @@ function setTrackCharacterAchievements(setTrackCharacterAchievements)
 		core.achievementTrackingEnabled = false
 
 		--Disable achievement tracking if currently tracking
-		checkAndClearInstanceVariables()	
+		checkAndClearInstanceVariables()
 
 		ClearGUITabs()
 
@@ -1207,7 +1215,7 @@ function setTrackAchievementsInBlizzardUI(setTrackAchievementsInBlizzardUI)
 	if setTrackAchievementsInBlizzardUI then
 		trackAchievementsInUI = true
 	else
-		trackAchievementsInUI = false					
+		trackAchievementsInUI = false
 	end
 end
 
@@ -1215,7 +1223,7 @@ function setDisplayInfoFrame(setDisplayInfoFrame)
 	if setDisplayInfoFrame then
 		enableInfoFrame = true
 	else
-		enableInfoFrame = false					
+		enableInfoFrame = false
 	end
 end
 
@@ -1223,7 +1231,7 @@ function setEnableAutomaticCombatLogging(setEnableAutomaticCombatLogging)
 	if setEnableAutomaticCombatLogging then
 		enableCombatLogging = true
 	else
-		enableCombatLogging = false					
+		enableCombatLogging = false
 	end
 end
 
@@ -1238,7 +1246,7 @@ function setHideCompletedAchievements(setHideCompletedAchievements)
 	if AchievementTrackerOptions["greyOutCompletedAchievements"] == true then
 		AchievementTrackerOptions["greyOutCompletedAchievements"] = false
 		_G["AchievementTracker_GreyOutCompletedAchievements"]:SetChecked(AchievementTrackerOptions["greyOutCompletedAchievements"])
-	end	
+	end
 
 	ClearGUITabs()
 end
@@ -1254,7 +1262,7 @@ function setGreyOutCompletedAchievements(setGreyOutCompletedAchievements)
 	if AchievementTrackerOptions["hideCompletedAchievements"] == true then
 		AchievementTrackerOptions["hideCompletedAchievements"] = false
 		_G["AchievementTracker_HideCompletedAchievements"]:SetChecked(AchievementTrackerOptions["hideCompletedAchievements"])
-	end	
+	end
 
 	ClearGUITabs()
 end
@@ -1283,7 +1291,7 @@ function setEnableSound(setEnableSound)
 			MSA_DropDownMenu_SetText(_G["AchievementTracker_SelectSoundDropdownCompleted"], 13)
 		end
 	else
-		enableSound = false					
+		enableSound = false
 	end
 end
 
@@ -1295,11 +1303,11 @@ function setEnableSoundFailed(setEnableSoundFailed)
 		if failedSound == nil then
 			AchievementTrackerOptions["failedSound"] = "Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Achievement Failed.ogg"
 			AchievementTrackerOptions["failedSoundID"] = 11
-			setFailedSound("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Achievement Failed.ogg")   
-			MSA_DropDownMenu_SetText(_G["AchievementTracker_SelectSoundDropdownFailed"], 11)  
+			setFailedSound("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Achievement Failed.ogg")
+			MSA_DropDownMenu_SetText(_G["AchievementTracker_SelectSoundDropdownFailed"], 11)
 		end
 	else
-		enableSoundFailed = false					
+		enableSoundFailed = false
 	end
 end
 
@@ -1307,7 +1315,7 @@ function setAnnounceToRaidWarning(setAnnounceToRaidWarning)
 	if setAnnounceToRaidWarning then
 		announceToRaidWarning = true
 	else
-		announceToRaidWarning = false					
+		announceToRaidWarning = false
 	end
 end
 
@@ -1318,16 +1326,16 @@ function setAddonEnabled(addonEnabled)
 		events:RegisterEvent("PLAYER_ENTERING_WORLD")				--Used to detect if player is inside an instance when they enter the world
 		events:RegisterEvent("ZONE_CHANGED_NEW_AREA")				--Used to detect if player is inside an instance when they change zone
 		events:RegisterEvent("CHAT_MSG_ADDON")						--Allows the addon to communicate with other addons in the same party/raid
-		
+
 		core:sendDebugMessage("Registering CHAT_MSG_ADDON prefix")
-		C_ChatInfo.RegisterAddonMessagePrefix("Whizzey") 
+		C_ChatInfo.RegisterAddonMessagePrefix("Whizzey")
 
 		--Attempt to fetch instance information in case player has enabled addon while inside of an instance
 		getInstanceInfomation()
 	else
 		core:sendDebugMessage("Disabling Addon")
-		events:UnregisterEvent("PLAYER_ENTERING_WORLD")				
-		events:UnregisterEvent("ZONE_CHANGED_NEW_AREA")				
+		events:UnregisterEvent("PLAYER_ENTERING_WORLD")
+		events:UnregisterEvent("ZONE_CHANGED_NEW_AREA")
 		events:UnregisterEvent("CHAT_MSG_ADDON")
 
 		core.inInstance = false
@@ -1340,7 +1348,7 @@ function setAddonEnabled(addonEnabled)
 		core.achievementTrackingEnabled = false
 
 		--Disable achievement tracking if currently tracking
-		checkAndClearInstanceVariables()	
+		checkAndClearInstanceVariables()
 
 		ClearGUITabs()
 	end
@@ -1350,7 +1358,7 @@ function setOnlyTrackMissingAchievements(setOnlyTrackMissingAchievements)
 	if setOnlyTrackMissingAchievements then
 		core.onlyTrackMissingAchievements = true
 	else
-		core.onlyTrackMissingAchievements = false						
+		core.onlyTrackMissingAchievements = false
 	end
 end
 
@@ -1358,7 +1366,7 @@ function setAchievementScanEnabled(setAchievementScanEnabled)
 	if setAchievementScanEnabled then
 		core.enableAchievementScanning = true
 	else
-		core.enableAchievementScanning = false						
+		core.enableAchievementScanning = false
 	end
 end
 
@@ -1366,7 +1374,7 @@ function setAnnounceTrackedAchievementsToChat(setTrackedAchievements)
 	if setTrackedAchievements then
 		core.announceTrackedAchievementsToChat = true
 	else
-		core.announceTrackedAchievementsToChat = false						
+		core.announceTrackedAchievementsToChat = false
 	end
 end
 
@@ -1452,7 +1460,7 @@ function events:ENCOUNTER_START(self, encounterID, encounterName, difficultyID, 
 		core:sendDebugMessage("Attempting to clear Instance Variables")
 		core:clearInstanceVariables()
 
-		core:sendDebugMessage("Attempting to clear global variables")	
+		core:sendDebugMessage("Attempting to clear global variables")
 		core:clearVariables()
 
 		--This may of been fired before ENCOUNTER_START so set to true again
@@ -1500,7 +1508,7 @@ function events:ENCOUNTER_END()
 	core.encounterDetected = false
 	core:sendDebugMessage("Locking Detection for 3 seconds")
 	core.lockDetection = true
-	C_Timer.After(5, function() 
+	C_Timer.After(5, function()
 		core.lockDetection = false
 		core:sendDebugMessage("Detection unlocked")
 	end)
@@ -1532,9 +1540,9 @@ function events:UPDATE_MOUSEOVER_UNIT()
 								table.insert(encounterCache, core.Instances[core.expansion][core.instanceType][core.instance][boss].name[i])
 							end
 							counter = counter + 1
-						end	
+						end
 					end
-				else	
+				else
 					while EJ_GetCreatureInfo(counter, core.Instances[core.expansion][core.instanceType][core.instance][boss].name) ~= nil do
 						local _, name, _, _, _ = EJ_GetCreatureInfo(counter, core.Instances[core.expansion][core.instanceType][core.instance][boss].name)
 						if currentMouseoverTarget == name and core:has_value(encounterCache, core.Instances[core.expansion][core.instanceType][core.instance][boss].name) == false then
@@ -1549,7 +1557,7 @@ function events:UPDATE_MOUSEOVER_UNIT()
 						counter = counter + 1
 					end
 				end
-				
+
 
 			end
 		end
@@ -1660,8 +1668,8 @@ function events:INSPECT_ACHIEVEMENT_READY(self, GUID)
 								--Add to achievement tracking ui if option enabled by user
 								if trackAchievementsInUI == true then
 									if GetNumTrackedAchievements() < 10 then
-										AddTrackedAchievement(core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)										
-										table.insert(trackAchievementInUiTable, core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)	
+										AddTrackedAchievement(core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
+										table.insert(trackAchievementInUiTable, core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
 									end
 								end
 							end
@@ -1671,8 +1679,8 @@ function events:INSPECT_ACHIEVEMENT_READY(self, GUID)
 					if foundAchievement == false then
 						core:printMessage(L["Core_CompletedAllAchievements"])
 					else
-						core:printMessage(L["Core_IncompletedAchievements"] .. " " .. achievements)	
-					end				
+						core:printMessage(L["Core_IncompletedAchievements"] .. " " .. achievements)
+					end
 				end
 			elseif #playersToScan == 0 and rescanNeeded == true then
 				core:sendDebugMessage("Achievement Scanning Finished but some players still need scanning. Waiting 20 seconds then trying again (" .. #playersScanned .. "/" .. core.groupSize .. ")")
@@ -1742,11 +1750,11 @@ function checkAndClearInstanceVariables()
 			end
 		end
 
-		--Unregister events if set	
+		--Unregister events if set
 		local retOK, ret1 = pcall(function() core[core.instanceClear]:IATInstanceCleanup() end);
 		if (retOK) then
 			core:sendDebugMessage("Cleaning up instance events for " .. core.instanceClear)
-			
+
 			core[core.instanceClear]:IATInstanceCleanup()
 		else
 			core:sendDebugMessage("Function failed, error text: " .. ret1 .. ".")
@@ -1754,7 +1762,7 @@ function checkAndClearInstanceVariables()
 		local retOK, ret1 = pcall(function() core[core.instanceClear]:InstanceCleanup() end);
 		if (retOK) then
 			core:sendDebugMessage("Cleaning up instance events for " .. core.instanceClear)
-			
+
 			core[core.instanceClear]:InstanceCleanup()
 		else
 			core:sendDebugMessage("Function failed, error text: " .. ret1 .. ".")
@@ -1771,10 +1779,10 @@ function checkAndClearInstanceVariables()
 		events:UnregisterEvent("PLAYER_REGEN_ENABLED")
 		events:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 		events:UnregisterEvent("INSPECT_ACHIEVEMENT_READY")
-		events:UnregisterEvent("ENCOUNTER_START")						
+		events:UnregisterEvent("ENCOUNTER_START")
 		events:UnregisterEvent("ENCOUNTER_END")
 		events:UnregisterEvent("UPDATE_MOUSEOVER_UNIT")
-		
+
 		--Reset variables in case user left during middle of encounter. E.g hearthstones out
 		core:clearInstanceVariables()
 		core:clearVariables()
@@ -1895,7 +1903,7 @@ function events:CHAT_MSG_ADDON(self, prefix, message, channel, sender)
 					masterAddon = true
 					demotionRequired = true
 				elseif tonumber(majorVersionRecieved) == core.Config.majorVersion and tonumber(minorVersionRecieved) == core.Config.minorVersion and tonumber(playerRankRecieved) < playerRank then
-					--Other player has same major and minor version but has lower rank than this addon so set this addon to the master addon					
+					--Other player has same major and minor version but has lower rank than this addon so set this addon to the master addon
 					core:sendDebugMessage("3: " .. sender .. " has a lower rank. Setting this addon to master")
 					core:sendDebugMessage("Setting Master Addon 4")
 					masterAddon = true
@@ -1967,13 +1975,13 @@ function events:CHAT_MSG_ADDON(self, prefix, message, channel, sender)
 			core[core.instanceClear]:ScanMessageSyncQueue()
 		end
 	elseif string.match(message, "relay123") then
-		-- core:sendDebugMessage(sender)	
+		-- core:sendDebugMessage(sender)
 		--The master addon does not have RW privalleges. If this addon has permission then let the masterAddon know
 		if playerRank > 0 and core.trackingSupressed == false then
 			--We do have permission. Let the master addon know
 			C_ChatInfo.SendAddonMessage("Whizzey", "relaySend," .. tostring(core.Config.majorVersion) .. "," .. tostring(core.Config.minorVersion), "RAID")
 			-- core:sendDebugMessage("relaySend," .. tostring(core.Config.majorVersion) .. "," .. tostring(core.Config.minorVersion))
-			
+
 		end
 	elseif string.match(message, "relaySend") and masterAddon == true then
 		--The master addon has recieved an addon/addons that have the ability to output to raid warning. Lets ask highest Minor and same Major version to relay message
@@ -1990,7 +1998,7 @@ function events:CHAT_MSG_ADDON(self, prefix, message, channel, sender)
 			--This addon has better version so set to relay addon
 			relayAddonPlayer = name
 			relayAddonVersion = minor
-			core:sendDebugMessage("Setting the following addon to relay addon: " .. relayAddonPlayer .. " with version: " .. relayAddonVersion)		
+			core:sendDebugMessage("Setting the following addon to relay addon: " .. relayAddonPlayer .. " with version: " .. relayAddonVersion)
 		end
 	elseif string.match(message, "relayMessage") then
 		--Relay message if this addon has been asked to relay the message
@@ -2214,7 +2222,7 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 			core.extraSpellId, core.extraSpellName, core.extraSchool, core.auraType = select(13, ...)
 		elseif string.match(core.type, "_CAST_FAILED") then
 			core.failedType = select(13, ...)
-		end	
+		end
 	end
 
 	if string.match(core.sourceGUID, "Creature") or string.match(core.destGUID, "Creature") or string.match(core.sourceGUID, "Vehicle") or string.match(core.destGUID, "Vehicle") then
@@ -2553,7 +2561,7 @@ end
 --Wait a few seconds here before outputting which acheivements to track since the encounter ID can fire after ID has picked up by another source such as GUID
 --This will prevent the wrong achievements being displayed into chat
 function core:getAchievementToTrack()
-	C_Timer.After(2, function() 
+	C_Timer.After(2, function()
 		--print("HERE 1")
 		if core.achievementTrackedMessageShown == false then
 			--print("HERE 2")
@@ -2562,14 +2570,14 @@ function core:getAchievementToTrack()
 				core:sendDebugMessage(L["GUI_Achievement"] .. ": " .. core.currentBosses[i].achievement)
 				if core.currentBosses[i].partial == false and core.currentBosses[i].enabled == true then
 					--core.currentBosses[i].players = L["No players in the group need this achievement"] --DEBUG ONLY
-					
+
 					if core.onlyTrackMissingAchievements == false or (core.onlyTrackMissingAchievements == true and core.currentBosses[i].players ~= L["GUI_NoPlayersNeedAchievement"]) then
 						printMessage(L["GUI_Tracking"] .. ": " .. GetAchievementLink(core.currentBosses[i].achievement))
 					else
 						--User has decided to supress achievement so will get a lower rank in the addon syncing
 						core:sendDebugMessage("User supressing addon tracking")
 						core:sendDebugMessage(core.currentBosses[i].players)
-						core.trackingSupressed = true					
+						core.trackingSupressed = true
 					end
 
 					core:sendMessage("setup") --This is sent at the start of the encounter to elect a leader rather than waiting for the first message to output
@@ -2582,12 +2590,12 @@ function core:getAchievementToTrack()
 						end
 					end
 				end
-	
+
 				--Setup failed and completed achievements tablse
 				table.insert(core.achievementsFailed, false)
 				table.insert(core.achievementsCompleted, false)
 			end
-		end	
+		end
 	end)
 end
 
@@ -2612,7 +2620,7 @@ function core:logMessage(message)
 			year = v
 		end
 	end
-	
+
 	--If table is below maximun amount of entries then insert value. Else make table shrink to correct size
 	if #AchievementTrackerDebug < 500000 then
 		table.insert(AchievementTrackerDebug, monthDay .. "/" .. month .. "/" .. year .. " " .. hour .. ":" .. minute ..  " " .. message)
@@ -2634,7 +2642,7 @@ function core:sendMessage(message, outputToRW, messageType)
 					if outputToRW == true and core.chatType == "RAID" and announceToRaidWarning == true and (UnitIsGroupAssistant("Player") or UnitIsGroupLeader("Player")) then
 						--Important message output to raid warning from user request
 						--print("Outputting to Raid Warning")
-						SendChatMessage("[IAT] " .. message,"RAID_WARNING",DEFAULT_CHAT_FRAME.editBox.languageID)						
+						SendChatMessage("[IAT] " .. message,"RAID_WARNING",DEFAULT_CHAT_FRAME.editBox.languageID)
 						core:logMessage("[IAT] " .. message)
 					elseif outputToRW == true and announceToRaidWarning == true then
 						SendChatMessage("[IAT] " .. message,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
@@ -2663,7 +2671,7 @@ function core:sendMessage(message, outputToRW, messageType)
 						else
 							--print(4)
 							PlaySoundFile(failedSound, "Master")
-						end						
+						end
 					end
 				end
 			elseif masterAddon == true and requestToRun == true then
@@ -2676,7 +2684,7 @@ function core:sendMessage(message, outputToRW, messageType)
 						core:sendDebugMessage("Inserting into Message Queue: " .. message .. ",false")
 						table.insert(messageQueue, message .. ",false")
 					end
-				end 
+				end
 			else
 				--Initate a request to see if this addon should be the master addon
 				if requestToRun == false then
@@ -2729,7 +2737,7 @@ function core:sendMessage(message, outputToRW, messageType)
 									else
 										--print(8)
 										PlaySoundFile(failedSound, "Master")
-									end						
+									end
 								end
 							end
 
@@ -2741,7 +2749,7 @@ function core:sendMessage(message, outputToRW, messageType)
 									-- print(core.chatType)
 									if outputToRW2 == "true" and core.chatType == "RAID" and announceToRaidWarning == true and (UnitIsGroupAssistant("Player") or UnitIsGroupLeader("Player")) then
 										--Important message output to raid warning from user request
-										-- print("Outputting to Raid Warning")									
+										-- print("Outputting to Raid Warning")
 										SendChatMessage("[IAT] " .. v,"RAID_WARNING",DEFAULT_CHAT_FRAME.editBox.languageID)
 										core:logMessage("[IAT] " .. v)
 									elseif outputToRW2 == "true" and announceToRaidWarning == true then
@@ -2750,7 +2758,7 @@ function core:sendMessage(message, outputToRW, messageType)
 										core:logMessage("[IAT] " .. v)
 										RaidNotice_AddMessage(RaidWarningFrame, "[IAT] " .. v, ChatTypeInfo["RAID_WARNING"])
 									else
-										-- print("Outputting to normal")								
+										-- print("Outputting to normal")
 										SendChatMessage("[IAT] " .. v,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
 										core:logMessage("[IAT] " .. v)
 									end
@@ -2772,7 +2780,7 @@ function core:sendMessage(message, outputToRW, messageType)
 										else
 											--print(12)
 											PlaySoundFile(failedSound, "Master")
-										end						
+										end
 									end
 								end
 							end
@@ -3044,7 +3052,7 @@ function core:getAchievementFailedPersonal(index)
 		if core:has_value(core.currentBosses[value].players, playerName) then
 			--Player needs achievement but has failed it
 			core:sendMessage(playerName .. " " .. L["Shared_HasFailed"] .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " (" .. L["Core_PersonalAchievement"] .. ")",true,"failed")
-			
+
 			--Relay message to addon which has RW permissions if masterAddon does have permissions
 			if relayAddonPlayer ~= nil then
 				C_ChatInfo.SendAddonMessage("Whizzey", "relayMessage," .. relayAddonPlayer .. "," .. playerName .. " " .. L["Shared_HasFailed"] .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " (" .. L["Core_PersonalAchievement"] .. ")", "RAID")
@@ -3072,7 +3080,7 @@ function core:getAchievementFailedPersonalWithName(index, sender, outputMessage)
 			--Player needs achievement but has failed it
 			if outputMessage == true then
 				core:sendMessage(playerName .. " " .. L["Shared_HasFailed"] .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " (" .. L["Core_PersonalAchievement"] .. ")",true,"failed")
-				
+
 				--Relay message to addon which has RW permissions if masterAddon does have permissions
 				if relayAddonPlayer ~= nil then
 					C_ChatInfo.SendAddonMessage("Whizzey", "relayMessage," .. relayAddonPlayer .. "," .. playerName .. " " .. L["Shared_HasFailed"] .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " (" .. L["Core_PersonalAchievement"] .. ")", "RAID")
@@ -3096,7 +3104,7 @@ function core:getAchievementFailedPersonalIndependent(playerName, index)
 		--Players has not been hit already
 		--Check if the player actually needs the achievement
 		if core:has_value(core.currentBosses[value].players, playerName) then
-			--Player needs achievement but has failed it			
+			--Player needs achievement but has failed it
 			--Relay message to addon which has RW permissions if masterAddon does have permissions
 			if relayAddonPlayer ~= nil then
 				core:sendDebugMessage("Relaying Addon Player")
@@ -3105,7 +3113,7 @@ function core:getAchievementFailedPersonalIndependent(playerName, index)
 				--Relay to masterAddon
 				core:sendDebugMessage("Master Output Message")
 				C_ChatInfo.SendAddonMessage("Whizzey", "masterOutput," .. playerName .. " " .. L["Shared_HasFailed"] .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " (" .. L["Core_PersonalAchievement"] .. ")", "RAID")
-				
+
 				if IsInGroup() == false then
 					core:sendMessage(playerName .. " " .. L["Shared_HasFailed"] .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " (" .. L["Core_PersonalAchievement"] .. ")")
 				end
@@ -3133,7 +3141,7 @@ function core:getAchievementFailedPersonalWithReason(reason, index)
 		if core:has_value(core.currentBosses[value].players, playerName) then
 			--Player needs achievement but has failed it
 			core:sendMessage(playerName .. " " .. L["Shared_HasFailed"] .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " (" .. L["Core_PersonalAchievement"] .. ")(" .. L["Core_Reason"] .. ": " .. reason .. ")",true,"failed")
-		
+
 			--Relay message to addon which has RW permissions if masterAddon does have permissions
 			if relayAddonPlayer ~= nil then
 				C_ChatInfo.SendAddonMessage("Whizzey", "relayMessage," .. relayAddonPlayer .. "," .. playerName .. " " .. L["Shared_HasFailed"] .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " (" .. L["Core_PersonalAchievement"] .. ")(" .. L["Core_Reason"] .. ": " .. reason .. ")", "RAID")
@@ -3190,7 +3198,7 @@ function core:getAchievementSuccessWithMessageBefore(message, index)
 	if core.achievementsCompleted[value] == false then
 		core:sendMessage(message .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " " .. L["Core_CriteriaMet"],true,"completed")
 		core.achievementsCompleted[value] = true
-		
+
 		--Relay message to addon which has RW permissions if masterAddon does have permissions
 		if relayAddonPlayer ~= nil then
 			C_ChatInfo.SendAddonMessage("Whizzey", "relayMessage," .. relayAddonPlayer .. "," .. message .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " " .. L["Core_CriteriaMet"], "RAID")
@@ -3271,7 +3279,7 @@ function core:getAchievementSuccessPersonal(index, location)
 			if core:has_value(core.currentBosses[value].players, playerName) then
 				--Player needs achievement but has failed it
 				core:sendMessage(playerName .. " " .. L["Shared_HasCompleted"] .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " (" .. L["Core_PersonalAchievement"] .. ")",true,"completed")
-			
+
 				--Relay message to addon which has RW permissions if masterAddon does have permissions
 				if relayAddonPlayer ~= nil then
 					C_ChatInfo.SendAddonMessage("Whizzey", "relayMessage," .. relayAddonPlayer .. "," .. playerName .. " " .. L["Shared_HasCompleted"] .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " (" .. L["Core_PersonalAchievement"] .. ")", "RAID")
@@ -3291,14 +3299,14 @@ function core:getAchievementSuccessPersonal(index, location)
 			if core:has_value(core.currentBosses[value].players, playerName) then
 				--Player needs achievement but has failed it
 				core:sendMessage(playerName .. " " .. L["Shared_HasCompleted"] .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " (" .. L["Core_PersonalAchievement"] .. ")",true,"completed")
-			
+
 				--Relay message to addon which has RW permissions if masterAddon does have permissions
 				if relayAddonPlayer ~= nil then
 					C_ChatInfo.SendAddonMessage("Whizzey", "relayMessage," .. relayAddonPlayer .. "," .. playerName .. " " .. L["Shared_HasCompleted"] .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " (" .. L["Core_PersonalAchievement"] .. ")", "RAID")
 				end
 			end
 			core.playersSuccessPersonal[playerName] = true
-		end	
+		end
 	end
 end
 
@@ -3316,8 +3324,8 @@ function core:getAchievementSuccessPersonalWithName(index, sender, outputMessage
 		if core:has_value(core.currentBosses[value].players, sender) then
 			--Player needed achievements and has met requirements
 			if outputMessage == true then
-				core:sendMessage(sender .. " " .. L["Shared_HasCompleted"] .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " (" .. L["Core_PersonalAchievement"] .. ")",true,"completed")			
-			
+				core:sendMessage(sender .. " " .. L["Shared_HasCompleted"] .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " (" .. L["Core_PersonalAchievement"] .. ")",true,"completed")
+
 				--Relay message to addon which has RW permissions if masterAddon does have permissions
 				if relayAddonPlayer ~= nil then
 					C_ChatInfo.SendAddonMessage("Whizzey", "relayMessage," .. relayAddonPlayer .. "," .. sender .. " " .. L["Shared_HasCompleted"] .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " (" .. L["Core_PersonalAchievement"] .. ")", "RAID")
@@ -3469,7 +3477,7 @@ function core:clearVariables()
 	--Reset Mob Counter
 	core.MobCounter:Reset()
 
-	
+
 	if infoFrameShown == true then
 		core:sendDebugMessage("Resetting InfoFrame")
 		core.IATInfoFrame:ToggleOff()
@@ -3561,11 +3569,11 @@ function getKeysSortedByValue(tbl, sortFunction)
 	for key in pairs(tbl) do
 	  table.insert(keys, key)
 	end
-  
+
 	table.sort(keys, function(a, b)
 	  return sortFunction(tbl[a], tbl[b])
 	end)
-  
+
 	return keys
 end
 
@@ -3602,7 +3610,7 @@ function core:detectBlizzardTrackingAutomatically()
 		if automaticBlizzardTracking == false then
 			--Achievement Succedded
 			core:getAchievementSuccess()
-		
+
 			--Send a message to user asking them to report tracking to user
 			core:printMessage("has detected that " .. core:getAchievement() .. " (" .. core.achievementIDs[1] .. ") can be tracked for success. Please report this to the Instance Achievement Tracker author")
 		elseif automaticBlizzardTracking == true then

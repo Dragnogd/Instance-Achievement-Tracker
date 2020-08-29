@@ -50,7 +50,6 @@ local baseLocale = {
 	["GUI_TrackAchievementsInBlizzardUI"] = "Track achievements in Achievements UI",
 	["Gui_TacticsNames"] = "Nightswifty, Daugen, Whizzey",
 	["GUI_TrackCharacterAchievements"] = "Track character achievements (Default: Account)",
-	["GUI_ChangeInfoFrameScale"] = "InfoFrame Scale",
 	["Core_StartingAchievementScan"] = "Starting achievement scan for",
 	["Core_GameFreezeWarning"] = "This may freeze your game for a few seconds",
 	["Core_AchievementScanFinished"] = "Achievement Scanning Finished",
