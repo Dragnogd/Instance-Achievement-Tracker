@@ -55,7 +55,7 @@ end
 
 function core._1861:FetidDevourer()
     core.IATInfoFrame:SetSubHeading1(GetSpellLink(262277) .. " (" .. playersFetid .. "/" .. core.groupSizeInInstance .. ")")
-    
+
     if setupTable == false then
         setupTable = true
         playersInGroup = core:getPlayersInGroupForAchievement()
@@ -106,7 +106,7 @@ function core._1861:FetidDevourer()
                     immunityName = "Blessing of Spellwarding"
                 elseif spellId == 642 then
                     immunityFound = true
-                    immunityName = "Divine Shield"                                                                                                                   
+                    immunityName = "Divine Shield"
                 end
             end
 
@@ -115,7 +115,7 @@ function core._1861:FetidDevourer()
                 playersFetid = playersFetid + 1
                 playersFetidTable[core.spawn_uid_dest_Player] = core.spawn_uid_dest_Player
 
-                core:sendMessage(core.destName .. L["Shared_HasBeenHitWith"] .. " " .. GetSpellLink(262277) .. " (" .. playersFetid .. "/" .. core.groupSizeInInstance .. ")")
+                core:sendMessage(core.destName .. " " .. L["Shared_HasBeenHitWith"] .. " " .. GetSpellLink(262277) .. " (" .. playersFetid .. "/" .. core.groupSizeInInstance .. ")")
 
                 --Remove player from list of players needing to get hit
                 if core:has_value(playersInGroup, name) then
@@ -147,7 +147,7 @@ function core._1861:FetidDevourer()
 
         -- --All players have got hit by terrible thrash but if they are not alive then they will not get achievement on kill
         -- --We need to check if everyone is alive then announce success. Otherwise list players who need to be ressed before end of fight
-        
+
         -- --Search for dead players
         -- if core.groupSizeInInstance > 1 then
 		-- 	for i = 1, core.groupSizeInInstance do
@@ -161,7 +161,7 @@ function core._1861:FetidDevourer()
 		-- 		elseif core.chatType == "RAID" then
 		-- 			unit = "raid" .. i
         --         end
-                
+
         --         --Check if the player is dead
         --         if UnitIsDead(unit) and UnitIsPlayer(unit) and core:has_value(deadPlayers, name) then
         --             table.insert(deadPlayers, UnitName(unit))
@@ -248,14 +248,14 @@ function core._1861:Ghuun()
                 elseif core.chatType == "RAID" then
                     unit = "raid" .. i
                 end
-                
+
                 if unit ~= nil then
                     local unitType, destID, spawn_uid_dest = strsplit("-",UnitGUID(unit));
                     for i=1,40 do
                         local _, _, _, _, _, _, _, _, _, spellId = UnitDebuff(unit, i)
                         if spellId == 263420 then
                             core:getAchievementFailedWithMessageAfter("(" .. UnitName(unit) .. ")")
-                        end 
+                        end
                     end
                 end
             end
@@ -266,14 +266,14 @@ function core._1861:Ghuun()
                 local _, _, _, _, _, _, _, _, _, spellId = UnitDebuff("Player", i)
                 if spellId == 263420 then
                     core:getAchievementFailedWithMessageAfter("(" .. UnitName("Player") .. ")")
-                    
+
                     --Stop tracker for working for remainder of fight to reduce lag
                     achievementRedForAttempt = true
                 end
             end
         end
     end
-end 
+end
 
 function core._1861:InstanceCleanup()
     fetidDevourerKilled = false
@@ -303,7 +303,7 @@ function core._1861:ClearVariables()
     ---- Mythrax the Unraveler
     ------------------------------------------------------
     lastPlayerToAbsorbOrb = ""
-    
+
     ------------------------------------------------------
     ---- Ghuun
     ------------------------------------------------------
