@@ -2281,8 +2281,10 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 					end
 				end
 			elseif core.currentBosses[i].enabled == false and core.currentBosses[i].track == nil then
-				--We have detected a boss fight but have no tracking for it. Lets automatically detect blizzard tracking and if something is found ask the user to report to author
-				core:detectBlizzardTrackingAutomatically()
+				if core.onlyTrackMissingAchievements == false or (core.onlyTrackMissingAchievements == true and core.currentBosses[i].players ~= L["GUI_NoPlayersNeedAchievement"]) then
+					--We have detected a boss fight but have no tracking for it. Lets automatically detect blizzard tracking and if something is found ask the user to report to author
+					core:detectBlizzardTrackingAutomatically()
+				end
 			end
 
 			--Detect Automatic Tracking if specified in database
@@ -2333,8 +2335,10 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 						core.currentBosses[i].track()
 					end
 				elseif core.currentBosses[i].enabled == false and core.currentBosses[i].track == nil then
-					--We have detected a boss fight but have no tracking for it. Lets automatically detect blizzard tracking and if something is found ask the user to report to author
-					core:detectBlizzardTrackingAutomatically()
+					if core.onlyTrackMissingAchievements == false or (core.onlyTrackMissingAchievements == true and core.currentBosses[i].players ~= L["GUI_NoPlayersNeedAchievement"]) then
+						--We have detected a boss fight but have no tracking for it. Lets automatically detect blizzard tracking and if something is found ask the user to report to author
+						core:detectBlizzardTrackingAutomatically()
+					end
 				end
 
 				--Detect Automatic Tracking if specified in database
