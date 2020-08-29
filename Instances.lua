@@ -11,6 +11,116 @@ core.Instances = {
 		Raids = {
 			[2296] = { --Castle Nathria
 				name = 1190,
+				boss1 = {
+					name = 2393, --Shriekwing
+					bossIDs = {},
+					achievement = 14293,
+					players = {},
+					tactics = L["CastleNathria_Shriekwing"],
+					enabled = true,
+					track = function() core._2296:Shriekwing() end,
+					partial = false,
+					encounterID = 2398,
+				},
+				boss2 = {
+					name = 2429, --Huntsman Altimor
+					bossIDs = {},
+					achievement = 14523,
+					players = {},
+					tactics = L["CastleNathria_HuntsmanAltimor"],
+					enabled = true,
+					track = function() core._2296:HuntsmanAltimor() end,
+					partial = false,
+					encounterID = 2418,
+				},
+				boss3 = {
+					name = 2422, --Sun King's Salvation
+					bossIDs = {},
+					achievement = 14608,
+					players = {},
+					tactics = L["CastleNathria_SunKingsSalvation"],
+					enabled = false,
+					track = nil,
+					partial = 14523,
+					encounterID = 2402,
+				},
+				boss4 = {
+					name = 2418, --Artificer Xy'mox
+					bossIDs = {},
+					achievement = 14617,
+					players = {},
+					tactics = L["CastleNathria_ArtificerXymox"],
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 2405,
+				},
+				boss5 = {
+					name = 2428, --Hungering Destroyer
+					bossIDs = {},
+					achievement = 14376,
+					players = {},
+					tactics = L["CastleNathria_HungeringDestroyer"],
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 2383,
+				},
+				boss6 = {
+					name = 2420, --Lady Inerva Darkvein
+					bossIDs = {},
+					achievement = 14524,
+					players = {},
+					tactics = L["CastleNathria_LadyInervaDarkvein"],
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 2406,
+				},
+				boss7 = {
+					name = 2426, --Council of Blood
+					bossIDs = {},
+					achievement = 14619,
+					players = {},
+					tactics = L["CastleNathria_Council of Blood"],
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 2412,
+				},
+				boss8 = {
+					name = 2394, --Sludgefist
+					bossIDs = {},
+					achievement = 14294,
+					players = {},
+					tactics = L["CastleNathria_Sludgefist"],
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 2399,
+				},
+				boss9 = {
+					name = 2425, --Stone Legion Generals
+					bossIDs = {},
+					achievement = 14525,
+					players = {},
+					tactics = L["CastleNathria_StoneLegionGenerals"],
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 2417,
+				},
+				boss10 = {
+					name = 2424, --Sire Denathrius
+					bossIDs = {},
+					achievement = 14610,
+					players = {},
+					tactics = L["CastleNathria_SireDenathrius"],
+					enabled = true,
+					track = function() core._2296:SireDenathrius() end,
+					partial = false,
+					encounterID = 2407,
+				},
 			},
 		},
 

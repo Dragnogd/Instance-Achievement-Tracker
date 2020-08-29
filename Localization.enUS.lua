@@ -627,5 +627,15 @@ local baseLocale = {
 	["TrialOfTheChampion_EadricThePure"] = "",
 	["TheForgeOfSouls_Bronjahm"] = "",
 	["PitOfSaron_Other"] = "When you run through the tunnel after the 2nd boss, no player in the group can hit by any of the icicles on the floor. The ground is marked where these icicles will fall so just make sure no one is standing in those areas.",
+	["CastleNathria_Shriekwing"] = "",
+	["CastleNathria_HuntsmanAltimor"] = "",
+	["CastleNathria_SunKingsSalvation"] = "",
+	["CastleNathria_ArtificerXymox"] = "",
+	["CastleNathria_HungeringDestroyer"] = "",
+	["CastleNathria_LadyInervaDarkvein"] = "",
+	["CastleNathria_Council of Blood"] = "",
+	["CastleNathria_Sludgefist"] = "",
+	["CastleNathria_StoneLegionGenerals"] = "",
+	["CastleNathria_SireDenathrius"] = "",
 }
 core:RegisterLocale('enUS', baseLocale)
