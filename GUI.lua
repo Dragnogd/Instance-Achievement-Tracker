@@ -829,13 +829,17 @@ local function SetTabs(frame, numTabs, ...)
 end
 
 function IAT_OnClick()
-    EAT_GlobalToggle()
-    IAT_GlobalToggle()
+    -- EAT_GlobalToggle()
+    -- IAT_GlobalToggle()
 end
 
 function EAT_OnClick()
-    EAT_GlobalToggle()
-    IAT_GlobalToggle()
+    --IAT_GlobalToggle()
+    if EAT_GlobalToggle == nil then
+        core:printMessage("Coming Soon :)")
+    else
+        EAT_GlobalToggle()
+    end
 end
 
 function deepdump( tbl )

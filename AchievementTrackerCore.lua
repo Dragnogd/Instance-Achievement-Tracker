@@ -239,6 +239,7 @@ local automaticBlizzardTrackingInitialCheck = false --Initial check for value at
 local enableCombatLogging = false
 core.syncMessageQueue = {}							--Messages sent from sync to other addons. Used when range is too small for one addon to cover.
 local enableInfoFrame = true					--Whether or not user has Info Frame enabled or not
+core.groupSizeRequiresUpdate = false
 
 --------------------------------------
 -- Addon Syncing
@@ -262,13 +263,19 @@ core.manualCountSetup = false
 
 --Get the current size of the group
 function core:getGroupSize()
-	local size = GetNumGroupMembers()
+	if core.encounterStarted == false then
+		local size = GetNumGroupMembers()
 
-	if size == 0 then
-		--If the size is 0 then player is not in a group. However we need to still set it to 1 since 0 players doesn't make sense
-		core.groupSize = 1
+		if size == 0 then
+			--If the size is 0 then player is not in a group. However we need to still set it to 1 since 0 players doesn't make sense
+			core.groupSize = 1
+		else
+			core.groupSize = size
+		end
+		core:sendDebugMessage("Group Size set to: " .. core.groupSize)
 	else
-		core.groupSize = size
+		core:sendDebugMessage("Cannot update group size while fighting boss. Waiting till end of combat")
+		core.groupSizeRequiresUpdate = true
 	end
 end
 
@@ -1512,6 +1519,10 @@ function events:ENCOUNTER_END()
 		core.lockDetection = false
 		core:sendDebugMessage("Detection unlocked")
 	end)
+	if core.groupSizeRequiresUpdate == true then
+		core:getGroupSize()
+		core.groupSizeRequiresUpdate = false
+	end
 end
 
 --Used to display current boss achievement on mouseover and playing that are currently missing the achievment
