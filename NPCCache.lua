@@ -360,4 +360,14 @@ core.NPCCache = {
 	[52392] =52392, --Gurubashi Master Chef
 	[78736] =78736, --Warlord Zaela
 	[76585] =76585, --Ragewing the Untamed
+	[149995] =149995, --High Priestess Azil
+	[42428] =42428, --Devout Follower
+	[33186] =33186, --Razorscale
+	[109674] =109674, --Dark Rune Guardian
+	[36855] =36855, --Lady Deathwhisper
+	[38135] =38135, --Deformed Fanatic
+	[38009] =38009, --Reanimated Fanatic
+	[38010] =38010, --Reanimated Adherent
+	[37890] =37890, --Cult Fanatic
+	[37949] =37949, --Cult Adherent
 }
