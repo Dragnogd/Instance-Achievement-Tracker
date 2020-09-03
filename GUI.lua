@@ -1755,6 +1755,7 @@ function IATInfoFrame:SetupInfoFrame()
     core.LibWindow.RegisterConfig(InfoFrame, AchievementTrackerOptions, names)
     core.LibWindow.RestorePosition(InfoFrame)
     core.LibWindow.MakeDraggable(InfoFrame)
+    InfoFrame:EnableMouse(true)
     core.LibWindow.EnableMouseWheelScaling(InfoFrame)
 
 

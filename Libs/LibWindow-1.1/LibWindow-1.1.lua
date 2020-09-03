@@ -239,7 +239,6 @@ mixins["MakeDraggable"]=true
 function lib.MakeDraggable(frame)
 	assert(lib.windowData[frame])
 	frame:SetMovable(true)
-	frame:EnableMouse(true)
 	frame:SetScript("OnDragStart", onDragStart)
 	frame:SetScript("OnDragStop", onDragStop)
 	frame:RegisterForDrag("LeftButton")
