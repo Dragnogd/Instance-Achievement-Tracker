@@ -17,6 +17,11 @@ local ShatteredDevestator2Complete = false
 local ShatteredDevestator3Complete = false
 local ShatteredDevestatorCounter = 0
 
+------------------------------------------------------
+---- Devos Paragon Of Doubt
+------------------------------------------------------
+local spearCounter = 0
+
 function core._2285:Oryphrion()
     --Defeat Oryphrion after activating and destroying all three Shattered Devastators in the Spires of Ascension on Mythic difficulty.
 
@@ -44,6 +49,11 @@ end
 function core._2285:DevosParagonOfDoubt()
     --Defeat Devos, Paragon of Doubt after hitting her with five Spears of Duty in the Spires of Ascension on Mythic difficulty.
 
+    if core.type == "SPELL_DAMAGE" and core.destID == "162061" and core.spellId == 322958 then
+        spearCounter = spearCounter + 1
+        core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(322958) .. " " .. L["Core_Counter"] .. " (" .. spearCounter .. "/5)",true)
+    end
+
     if core:getBlizzardTrackingStatus(14323, 1) then
         core:getAchievementSuccess()
     end
@@ -65,4 +75,9 @@ function core._2285:ClearVariables()
     ShatteredDevestator2Complete = false
     ShatteredDevestator3Complete = false
     ShatteredDevestatorCounter = 0
+
+    ------------------------------------------------------
+    ---- Devos Paragon Of Doubt
+    ------------------------------------------------------
+    spearCounter = 0
 end
