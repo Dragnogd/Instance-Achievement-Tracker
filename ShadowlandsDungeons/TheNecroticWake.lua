@@ -45,34 +45,40 @@ end
 
 function core._2286:NalthorTheRimebinder()
     --Defeat Nalthor the Rimebinder in the Necrotic Wake without being struck by Comet Storm, Blizzard, or the secondary effect of Frozen Binds on Mythic difficulty.
+    InfoFrame_UpdatePlayersOnInfoFramePersonal()
+    InfoFrame_SetHeaderCounter(L["Shared_PlayersWhoNeedAchievement"],#core.currentBosses[1].players,#core.currentBosses[1].players)
 
-    --Comet Storm: 321956 (DEBUFF)
-    --Blizzard: 287294 (SPELL_DAMAGE)
-        --Chilled: 287295 (DEBUFF)
-    --Frozen Blinds (Secondary Effect): 320788
-
-    if (core.type == "SPELL_AURA_APPLIED" and core.spellId == 321956) or (core.type == "SPELL_DAMAGE" and core.spellId == 287294) or (core.type == "SPELL_AURA_APPLIED" and core.spellId == 287295) or (core.type == "SPELL_AURA_APPLIED" and core.spellId == 320788 and core.currentSource == "Player") then
-        --If someone gets hit by the ability, check if they need the achievement or not
+    --Comet Storm
+    if (core.type == "SPELL_DAMAGE" or core.type == "SPELL_MISSED") and core.spellId == 320784 then
         if core.destName ~= nil then
-            local name, realm = strsplit("-", core.destName)
-            if UnitIsPlayer(name) then
-                --Detect the reason the player has failed the achievement
-                local reason = ""
-                if core.spellId == 321956 then
-                    reason = format(L["Shared_DamageFromAbility"], GetSpellLink(321956))
-                elseif core.spellId == 287294 or core.spellId == 287295 then
-                    reason = format(L["Shared_DamageFromAbility"], GetSpellLink(287294))
-                elseif core.spellId == 320788 then
-                    reason = format(L["Shared_DamageFromAbility"], GetSpellLink(320788))
+            if UnitIsPlayer(core.destName) then
+                if InfoFrame_GetPlayerComplete(core.destName) == true then
+                    InfoFrame_SetPlayerFailed(core.destName)
+                    core:sendMessage(format(L["Shared_FailedPersonalAchievement"], core.destName, GetAchievementLink(core.achievementIDs[1]), format(L["Shared_DamageFromAbility"], GetSpellLink(320784))),true)
                 end
-                if playersHit[core.destName] == nil then
-                    --Players has not been hit already
-                    --Check if the player actually needs the achievement
-                    if core:has_value(core.currentBosses[1].players, core.destName) then
-                        --Player needs achievement but has failed it
-                        core:sendMessage(format(L["Shared_FailedPersonalAchievement"], core.destName, GetAchievementLink(core.achievementIDs[1]), reason),true)
-                    end
-                    playersHit[core.destName] = true
+            end
+        end
+    end
+
+    --Frozen Blinds (Secondary Effect)
+    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 323730 then
+        if core.destName ~= nil then
+            if UnitIsPlayer(core.destName) then
+                if InfoFrame_GetPlayerComplete(core.destName) == true then
+                    InfoFrame_SetPlayerFailed(core.destName)
+                    core:sendMessage(format(L["Shared_FailedPersonalAchievement"], core.destName, GetAchievementLink(core.achievementIDs[1]), format(L["Shared_DamageFromAbility"], GetSpellLink(323730))),true)
+                end
+            end
+        end
+    end
+
+    --Blizzard
+    if (core.type == "SPELL_DAMAGE" or core.type == "SPELL_MISSED") and core.spellId == 287294 then
+        if core.destName ~= nil then
+            if UnitIsPlayer(core.destName) then
+                if InfoFrame_GetPlayerComplete(core.destName) == true then
+                    InfoFrame_SetPlayerFailed(core.destName)
+                    core:sendMessage(format(L["Shared_FailedPersonalAchievement"], core.destName, GetAchievementLink(core.achievementIDs[1]), format(L["Shared_DamageFromAbility"], GetSpellLink(287294))),true)
                 end
             end
         end
