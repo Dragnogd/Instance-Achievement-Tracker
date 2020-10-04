@@ -25,21 +25,26 @@ local playersCompletedAchievement = 0
 local timerStarted = false
 local initialSetup = false
 
+------------------------------------------------------
+---- Doctor Ickus
+------------------------------------------------------
+local volatilePlagueBombsKilled = 0
+
 function core._2289:Globgrog()
     --Defeat Globgrog after feeding him a three course meal in Plaguefall on Mythic difficulty.
 
     if core:getBlizzardTrackingStatus(14347, 1) == true and AppetizerCompleted == false then
-        core:sendMessage(GetAchievementCriteriaInfo(14347,1) .. " " .. L["Shared_Completed"] .. " (" .. MealsCompleted .. "/3)")
+        core:sendMessage(GetAchievementCriteriaInfo(14347,1) .. " " .. L["Shared_Completed"] .. " (" .. MealsCompleted .. "/3)",true)
         AppetizerCompleted = true
         MealsCompleted = MealsCompleted + 1
     end
     if core:getBlizzardTrackingStatus(14347, 2) == true and EntreeCompleted == false then
-        core:sendMessage(GetAchievementCriteriaInfo(14347,2) .. " " .. L["Shared_Completed"] .. " (" .. MealsCompleted .. "/3)")
+        core:sendMessage(GetAchievementCriteriaInfo(14347,2) .. " " .. L["Shared_Completed"] .. " (" .. MealsCompleted .. "/3)",true)
         EntreeCompleted = true
         MealsCompleted = MealsCompleted + 1
     end
     if core:getBlizzardTrackingStatus(14347, 3) == true and DessertCompleted == false then
-        core:sendMessage(GetAchievementCriteriaInfo(14347,3) .. " " .. L["Shared_Completed"] .. " (" .. MealsCompleted .. "/3)")
+        core:sendMessage(GetAchievementCriteriaInfo(14347,3) .. " " .. L["Shared_Completed"] .. " (" .. MealsCompleted .. "/3)",true)
         DessertCompleted = true
         MealsCompleted = MealsCompleted + 1
     end
@@ -51,6 +56,10 @@ end
 
 function core._2289:DoctorIckus()
     --Defeat Doctor Ickus after destroying 2 Volatile Plague Bombs in Plaguefall on Mythic difficulty.
+    if core.type == "UNIT_DIED" and core.destID == "170851" then
+        volatilePlagueBombsKilled = volatilePlagueBombsKilled + 1
+        core:sendMessage(core:getAchievement() .. " " .. getNPCName(170851) .. " " .. L["Core_Counter"] .. " (" .. volatilePlagueBombsKilled .. "/2)",true)
+    end
 
     if core:getBlizzardTrackingStatus(14296, 1) == true then
         core:getAchievementSuccess()
@@ -70,6 +79,7 @@ function core._2289:InstanceCleanup()
     initialSetup = false
     playersCompletedAchievement = 0
     timerStarted = false
+    core.IATInfoFrame:ToggleOff()
 end
 
 function core._2289:InitialSetup()
@@ -144,15 +154,6 @@ function core._2289:TrackAdditional()
             timerStarted = false
             core._2289:TrackAdditional()
         end)
-    elseif timerStarted == false then
-        -- timerStarted = true
-        -- C_Timer.After(10, function()
-        --     InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfoPersonal()
-        --     InfoFrame_SetHeaderCounter(L["Shared_PlayersWhoNeedAchievement"],playersCompletedAchievement,#core.Instances[core.expansion][core.instanceType][core.instance]["boss1"].players)
-        --     timerStarted = false
-        --     print("HERE")
-        --     core._2289:TrackAdditional()
-        -- end)
     end
 end
 
@@ -166,7 +167,7 @@ function core._2289:ClearVariables()
     MealsCompleted = 0
 
     ------------------------------------------------------
-    ---- Riding With My Slimes
+    ---- Doctor Ickus
     ------------------------------------------------------
-    playersCompletedAchievement = 0
+    volatilePlagueBombsKilled = 0
 end
