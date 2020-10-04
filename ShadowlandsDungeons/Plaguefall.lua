@@ -8,7 +8,6 @@ local L = core.L
 ---- Plaguefall
 ------------------------------------------------------
 core._2289 = {}
-core._2289.Events = CreateFrame("Frame")
 
 ------------------------------------------------------
 ---- Globgrog
@@ -70,12 +69,7 @@ function core._2289:InstanceCleanup()
     playersCompletedAchievement = 0
 end
 
-core._2289.Events:SetScript("OnEvent", function(self, event, ...)
-    return self[event] and self[event](self, event, ...)
-end)
-
 function core._2289:InstanceCleanup()
-    core._2289.Events:UnregisterEvent("GROUP_ROSTER_UPDATE")
     initialSetup = false
     playersCompletedAchievement = 0
     timerStarted = false
@@ -84,7 +78,6 @@ end
 
 function core._2289:InitialSetup()
     --Defeat all bosses while affected by Plaguefallen within a single visit in Plaguefall on Mythic difficulty.
-    core._2289.Events:RegisterEvent("GROUP_ROSTER_UPDATE")
     C_Timer.After(5, function()
         table.insert(core.currentBosses, core.Instances[core.expansion][core.instanceType][core.instance]["boss1"])
         table.insert(core.achievementIDs, core.Instances[core.expansion][core.instanceType][core.instance]["boss1"].achievement)
