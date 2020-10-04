@@ -2053,6 +2053,7 @@ function events:CHAT_MSG_ADDON(self, prefix, message, channel, sender)
 		core:sendDebugMessage(nameOfPlayer .. " is moving " .. playerMoving)
 	elseif string.match(message, "sendVersionIAT") then
 		--Send Version Check
+		core:printMessage("Requesting version check from all players")
 		C_ChatInfo.SendAddonMessage("Whizzey", "getVersionIAT," .. UnitName("Player") .. "," .. core.Config.majorVersion .. "," .. core.Config.minorVersion .. "," .. core.Config.revisionVersion , "RAID")
 	elseif string.match(message, "getVersionIAT") then
 		--Get Version Check
@@ -3851,4 +3852,15 @@ end
 
 function core:roundNumber(number)
 	return tonumber(string.format("%.2f", number))
+end
+
+function core:hasDebuff(player,spellId)
+	local found = false
+	for i=1,40 do
+		local _, _, _, _, _, _, _, _, _, spellIdFound = UnitDebuff(player, i)
+		if spellIdFound == spellId then
+			found = true
+		end
+	end
+	return found
 end

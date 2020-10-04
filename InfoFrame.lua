@@ -120,6 +120,22 @@ function InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfoPersonal()
     end
 end
 
+function InfoFrame_RefreshPlayersOnInfoFrameWithAdditionalInfoPersonal(boss)
+    -- for k,player in ipairs(boss["players"]) do
+    --     if core.InfoFrame_PlayersTable[player] == nil then
+    --         core.InfoFrame_PlayersTable[player] = {1,""}
+    --     end
+    -- end
+end
+
+function InfoFrame_RefreshPlayersOnInfoFrame()
+    for k,player in pairs(core:getPlayersInGroupForAchievement()) do
+        if core.InfoFrame_PlayersTable[player] == nil then
+            core.InfoFrame_PlayersTable[player] = 1
+        end
+    end
+end
+
 function InfoFrame_UpdatePlayersOnInfoFramePersonal()
     --This will update list of players on the info frame for personal achievements.
     --This will only display names of players who still need the achievement
@@ -158,7 +174,7 @@ function InfoFrame_GetRangeCheck(range)
             if not maxChecker(player) then
                 --print(player .. " is not in range")
                 if core.InfoFrame_PlayersTable[player] ~= 2 then
-                    core.InfoFrame_PlayersTable[player] = 4            
+                    core.InfoFrame_PlayersTable[player] = 4
                 end
             elseif core.InfoFrame_PlayersTable[player] ~= 2 then
                 core.InfoFrame_PlayersTable[player] = 1
@@ -205,6 +221,16 @@ function InfoFrame_SetPlayerFailedWithMessage(player,additionalInfo)
     end
 end
 
+function InfoFrame_GetPlayerStatusWithMessage(player)
+    --Make sure we remove realm info from player before checking name
+    if string.find(player, "-") then
+        local name, realm = strsplit("-", player)
+        player = name
+    end
+
+    return core.InfoFrame_PlayersTable[player][1]
+end
+
 function InfoFrame_GetPlayerFailed(player)
     if core.InfoFrame_PlayersTable[player] == 3 then
         return true
@@ -219,7 +245,7 @@ function InfoFrame_GetPlayerComplete(player)
         local name, realm = strsplit("-", player)
         player = name
     end
-    
+
     if core.InfoFrame_PlayersTable[player] == 2 then
         return true
     else
@@ -233,7 +259,7 @@ function InfoFrame_GetPlayerCompleteWithMessage(player)
         local name, realm = strsplit("-", player)
         player = name
     end
-    
+
     if core.InfoFrame_PlayersTable[player][1] == 2 then
         return true
     else
@@ -250,6 +276,18 @@ function InfoFrame_GetIncompletePlayers()
         end
     end
     return playerStr
+end
+
+
+function InfoFrame_IsAnyPlayerComplete()
+    --Check whether atleast one player is marked as complete
+    local playerComplete = false
+    for player,status in pairs(core.InfoFrame_PlayersTable) do
+        if core.InfoFrame_PlayersTable[player] == 2 then
+            playerComplete = true
+        end
+    end
+    return playerComplete
 end
 
 function InfoFrame_GetIncompletePlayersWithAdditionalInfo()
@@ -357,6 +395,16 @@ end
 
 function InfoFrame_SetHeaderCounter(message,counter,maximum)
     core.IATInfoFrame:SetSubHeading1(message .. " (" .. counter .. "/" .. maximum .. ")")
+end
+
+function InfoFrame_SetHeaderWithColour(message,colour)
+    if colour == "red" then
+        core.IATInfoFrame:SetSubHeading1(colourRed .. message .. "|r")
+    elseif colour == "green" then
+        core.IATInfoFrame:SetSubHeading1(colourGreen .. message .. "|r")
+    else
+        core.IATInfoFrame:SetSubHeading1(message)
+    end
 end
 
 function InfoFrame_SetupManualCounter(totalCount)
