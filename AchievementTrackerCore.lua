@@ -2000,12 +2000,12 @@ function events:CHAT_MSG_ADDON(self, prefix, message, channel, sender)
 		local sync, major, minor = strsplit(",", message)
 		core:sendDebugMessage("Made it to relaySend")
 		-- print(relayAddonPlayer,core.Config.majorVersion,major,minor,core.Config.minorVersion)
-		if relayAddonPlayer == nil and tonumber(core.Config.majorVersion) >= tonumber(major) and tonumber(minor) >= 35 then
+		if relayAddonPlayer == nil and tonumber(core.Config.majorVersion) >= tonumber(major) then
 			--First addon found so set to relay addon
 			relayAddonPlayer = name
 			relayAddonVersion = minor
 			core:sendDebugMessage("Setting the following addon to relay addon: " .. relayAddonPlayer .. " with version: " .. relayAddonVersion)
-		elseif tonumber(core.Config.majorVersion) >= tonumber(major) and tonumber(minor) > tonumber(relayAddonVersion) and tonumber(minor) >= 35 then
+		elseif tonumber(core.Config.majorVersion) >= tonumber(major) and tonumber(minor) > tonumber(relayAddonVersion) then
 			--This addon has better version so set to relay addon
 			relayAddonPlayer = name
 			relayAddonVersion = minor
