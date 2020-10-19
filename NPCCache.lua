@@ -418,4 +418,7 @@ core.NPCCache = {
 	[55419] =55419, --Captain Varo'then
 	[164363] =164363, --Undying Stonefiend
 	[170851] =170851, --Volatile Plague Bomb
+	[43468] =43468, --Lady Naz'jar
+	[40634] =40634, --Naz'jar Tempest Witch
+	[44530] =44530, --Naz'jar Honor Guard
 }
