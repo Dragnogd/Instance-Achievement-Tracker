@@ -417,6 +417,7 @@ core.Instances = {
 					track = function() core._2286:NalthorTheRimebinder() end,
 					partial = false,
 					encounterID = 2390,
+					displayInfoFrame = true,
 				},
 			},
 		},

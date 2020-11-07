@@ -120,12 +120,42 @@ function InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfoPersonal()
     end
 end
 
+function InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfoPersonalArgs(playerTable)
+    --This will update list of players on the info frame for personal achievements.
+    --This will only display names of players who still need the achievement
+    --This will also display an additional message
+
+    if next(core.InfoFrame_PlayersTable) == nil then
+        --If table is empty then generate players
+        for k,player in ipairs(playerTable.players) do
+            core.InfoFrame_PlayersTable[player] = {1,""}
+        end
+    else
+        --Update Info Frame with values from table
+        local messageStr = ""
+        for player, status in pairs(core.InfoFrame_PlayersTable) do
+            --1 = incomplete, 2 = complete, 3 = failed
+            if status[1] == 1 then
+                --Player has not completed the requirements for the achievement yet
+                messageStr = messageStr .. colourWhite .. player .. " (" .. status[2] .. ")|r\n"
+            elseif status[1] == 2 then
+                --Player has completed the requirements for the achievement
+                messageStr = messageStr .. colourGreen .. player .. " (" .. status[2] .. ")|r\n"
+            elseif status[1] then
+                --Player had completed the requirements for the achievement but has since failed it
+                messageStr = messageStr .. colourRed .. player .. " (" .. status[2] .. ")|r\n"
+            end
+        end
+        core.IATInfoFrame:SetText1(messageStr)
+    end
+end
+
 function InfoFrame_RefreshPlayersOnInfoFrameWithAdditionalInfoPersonal(boss)
-    -- for k,player in ipairs(boss["players"]) do
-    --     if core.InfoFrame_PlayersTable[player] == nil then
-    --         core.InfoFrame_PlayersTable[player] = {1,""}
-    --     end
-    -- end
+    for k,player in ipairs(boss.players) do
+        if core.InfoFrame_PlayersTable[player] == nil then
+            core.InfoFrame_PlayersTable[player] = {1,""}
+        end
+    end
 end
 
 function InfoFrame_RefreshPlayersOnInfoFrame()

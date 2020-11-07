@@ -3340,7 +3340,7 @@ function core:getAchievementSuccessPersonalWithName(index, sender, outputMessage
 		if core:has_value(core.currentBosses[value].players, sender) then
 			--Player needed achievements and has met requirements
 			if outputMessage == true then
-				core:sendMessage(sender .. " " .. L["Shared_HasCompleted"] .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " (" .. L["Core_PersonalAchievement"] .. ")",true,"completed")
+				core:sendMessage(sender .. " " .. L["Shared_HasCompleted"] .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " (" .. L["Core_PersonalAchievement"] .. ")",true)
 
 				--Relay message to addon which has RW permissions if masterAddon does have permissions
 				if relayAddonPlayer ~= nil then
