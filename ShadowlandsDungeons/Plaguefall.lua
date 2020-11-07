@@ -79,11 +79,12 @@ end
 function core._2289:InitialSetup()
     --Defeat all bosses while affected by Plaguefallen within a single visit in Plaguefall on Mythic difficulty.
     C_Timer.After(5, function()
-        table.insert(core.currentBosses, core.Instances[core.expansion][core.instanceType][core.instance]["boss1"])
-        table.insert(core.achievementIDs, core.Instances[core.expansion][core.instanceType][core.instance]["boss1"].achievement)
+        --table.insert(core.currentBosses, core.Instances[core.expansion][core.instanceType][core.instance]["boss1"])
+        --table.insert(core.achievementIDs, core.Instances[core.expansion][core.instanceType][core.instance]["boss1"].achievement)
         core.IATInfoFrame:ToggleOn()
-        InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfoPersonal()
-        InfoFrame_SetHeaderCounter(L["Shared_PlayersWhoNeedAchievement"],playersCompletedAchievement,#core.currentBosses[1].players)
+        InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfoPersonalArgs(core.Instances[core.expansion][core.instanceType][core.instance]["boss1"])
+
+        InfoFrame_SetHeaderCounter(L["Shared_PlayersWhoNeedAchievement"],playersCompletedAchievement,#core.Instances[core.expansion][core.instanceType][core.instance]["boss1"].players)
         core.IATInfoFrame:SetHeading(GetAchievementLink(14292))
         initialSetup = true
         core._2289:TrackAdditional()
@@ -92,22 +93,22 @@ end
 
 function core._2289:TrackAdditional()
     --Defeat all bosses while affected by Plaguefallen within a single visit in Plaguefall on Mythic difficulty.
-    InfoFrame_RefreshPlayersOnInfoFrameWithAdditionalInfoPersonal()
+    InfoFrame_RefreshPlayersOnInfoFrameWithAdditionalInfoPersonal(core.Instances[core.expansion][core.instanceType][core.instance]["boss1"])
     InfoFrame_SetHeaderCounter(L["Shared_PlayersWhoNeedAchievement"],playersCompletedAchievement,#core.Instances[core.expansion][core.instanceType][core.instance]["boss1"].players)
 
     --Concentrated Plague (Applied)
     if core.type == "SPELL_AURA_APPLIED_DOSE" and core.spellId == 330069 and UnitIsPlayer(core.destName) and core:hasDebuff(core.destName, 330092) == false then
         InfoFrame_SetPlayerNeutralWithMessage(core.destName, core.amount)
-        InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfoPersonal()
+        InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfoPersonalArgs(core.Instances[core.expansion][core.instanceType][core.instance]["boss1"])
     elseif core.type == "SPELL_AURA_APPLIED" and core.spellId == 330069 and UnitIsPlayer(core.destName) and core:hasDebuff(core.destName, 330092) == false then
         InfoFrame_SetPlayerNeutralWithMessage(core.destName, 1)
-        InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfoPersonal()
+        InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfoPersonalArgs(core.Instances[core.expansion][core.instanceType][core.instance]["boss1"])
     end
 
     --Concentrated Plague (Removed)
     if core.type == "SPELL_AURA_REMOVED" and core.spellId == 330069 and UnitIsPlayer(core.destName) and core:hasDebuff(core.destName, 330092) == false then
         InfoFrame_SetPlayerFailedWithMessage(core.destName, "")
-        InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfoPersonal()
+        InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfoPersonalArgs(core.Instances[core.expansion][core.instanceType][core.instance]["boss1"])
     end
 
     --Plagufallen (Applied)
@@ -116,7 +117,7 @@ function core._2289:TrackAdditional()
             playersCompletedAchievement = playersCompletedAchievement + 1
         end
         InfoFrame_SetPlayerCompleteWithMessage(core.destName, "")
-        InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfoPersonal()
+        InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfoPersonalArgs(core.Instances[core.expansion][core.instanceType][core.instance]["boss1"])
         InfoFrame_SetHeaderCounter(L["Shared_PlayersWhoNeedAchievement"],playersCompletedAchievement,#core.Instances[core.expansion][core.instanceType][core.instance]["boss1"].players)
     end
 
@@ -126,7 +127,7 @@ function core._2289:TrackAdditional()
             playersCompletedAchievement = playersCompletedAchievement - 1
         end
         InfoFrame_SetPlayerFailedWithMessage(core.destName, "")
-        InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfoPersonal()
+        InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfoPersonalArgs(core.Instances[core.expansion][core.instanceType][core.instance]["boss1"])
         InfoFrame_SetHeaderCounter(L["Shared_PlayersWhoNeedAchievement"],playersCompletedAchievement,#core.Instances[core.expansion][core.instanceType][core.instance]["boss1"].players)
     end
 
@@ -139,7 +140,7 @@ function core._2289:TrackAdditional()
                         local _, _, _, _, _, expirationTime, _, _, _, spellId = UnitDebuff(player, i)
                         if spellId == 330092 then
                             core.InfoFrame_PlayersTable[player] = {2, math.floor(expirationTime - GetTime())}
-                            InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfoPersonal()
+                            InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfoPersonalArgs(core.Instances[core.expansion][core.instanceType][core.instance]["boss1"])
                         end
                     end
                 end
