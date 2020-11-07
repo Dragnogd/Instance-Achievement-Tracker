@@ -25,12 +25,12 @@ local inititalDebuffScan = false
 local eggFound = false
 
 ------------------------------------------------------
----- Grong  
+---- Grong
 ------------------------------------------------------
 local barrelCounter = 0
 
 ------------------------------------------------------
----- Opulence  
+---- Opulence
 ------------------------------------------------------
 local playersCompletedAchievement = 0
 local rangeCheckCooldown = false
@@ -68,7 +68,7 @@ function core._2070:ChampionOfTheLight()
                 elseif core.chatType == "RAID" then
                     unit = "raid" .. i
                 end
-                
+
                 if unit ~= nil then
                     local unitType, destID, spawn_uid_dest = strsplit("-",UnitGUID(unit));
                     local debuffFound = false
@@ -77,12 +77,12 @@ function core._2070:ChampionOfTheLight()
                         if spellId == 288579 then
                             debuffFound = true
                             core:sendDebugMessage(UnitName(unit) .. " has debuff")
-                        end 
+                        end
                     end
                     if debuffFound == false then
                         --Player has not picked up debuff before boss pull so fail achievement
                         core:sendDebugMessage(UnitName(unit) .. " does not have debuff")
-                        C_Timer.After(4, function() 
+                        C_Timer.After(4, function()
                             core:getAchievementFailedWithMessageAfter(L["Shared_MissingDebuff"] .. " " .. GetSpellLink(288579))
                         end)
                     end
@@ -99,7 +99,7 @@ function core._2070:ChampionOfTheLight()
                 end
                 if debuffFound == false then
                     --Player has not picked up debuff before boss pull so fail achievement
-                    C_Timer.After(4, function() 
+                    C_Timer.After(4, function()
                         core:getAchievementFailedWithMessageAfter(L["Shared_MissingDebuff"] .. " " .. GetSpellLink(288579))
                     end)
                 end
@@ -116,7 +116,7 @@ function core._2070:ChampionOfTheLight()
                 --Player was not found. Add new entry
                 --{Timer,npcName}
                 local playerAspect = core.destName
-                aspectTimer = C_Timer.NewTimer(29, function() 
+                aspectTimer = C_Timer.NewTimer(29, function()
                     core:sendDebugMessage(playerAspect)
                     playersWithFavour[playerAspect] = nil
                     core:sendDebugMessage("Stopped timer as player did not return shiny in time: " .. playerAspect)
@@ -146,7 +146,7 @@ function core._2070:ChampionOfTheLight()
                     end
                 end
             end
-        end            
+        end
     end
 
     --Player has lost aspect
@@ -165,25 +165,25 @@ function core._2070:ChampionOfTheLight()
 
                         --Now wait 1 second to make sure player has not died as this does not count
                         local playerName = core.destName
-                        C_Timer.After(1, function() 
+                        C_Timer.After(1, function()
                             if UnitIsDeadOrGhost(playerName) ~= true then
                                 if core.inCombat == true then
                                     --Player is still alive so lets increment the counter
                                     core:sendDebugMessage("The following player was alive so we can increment counter: " .. playerName)
                                     if playersWithFavour[playerName][2] == "145903" or playersWithFavour[playerName][2] == "147896" then
-                                        core:sendDebugMessage("Crusader found")                                
+                                        core:sendDebugMessage("Crusader found")
                                         crusadersCounter = crusadersCounter + 1
-                                        core:sendMessage(core:getAchievement() .. " " .. playerName .. " " .. L["Shared_HasStolenFrom"] .. " " .. getNPCName(tonumber(playersWithFavour[playerName][2])) .. " " .. L["Core_Counter"] .. "(" .. crusadersCounter .. "/3)") 
+                                        core:sendMessage(core:getAchievement() .. " " .. playerName .. " " .. L["Shared_HasStolenFrom"] .. " " .. getNPCName(tonumber(playersWithFavour[playerName][2])) .. " " .. L["Core_Counter"] .. "(" .. crusadersCounter .. "/3)", true)
                                     elseif playersWithFavour[playerName][2] == "147895" or playersWithFavour[playerName][2] == "145898" then
                                         core:sendDebugMessage("Disciple Found")
                                         disciplesCounter = disciplesCounter + 1
-                                        core:sendMessage(core:getAchievement() .. " " .. playerName .. " " .. L["Shared_HasStolenFrom"] .. " " .. getNPCName(tonumber(playersWithFavour[playerName][2])) .. " " .. L["Core_Counter"] .. "(" .. disciplesCounter .. "/3)") 
+                                        core:sendMessage(core:getAchievement() .. " " .. playerName .. " " .. L["Shared_HasStolenFrom"] .. " " .. getNPCName(tonumber(playersWithFavour[playerName][2])) .. " " .. L["Core_Counter"] .. "(" .. disciplesCounter .. "/3)", true)
                                     elseif playersWithFavour[playerName][2] == "144683" or playersWithFavour[playerName][2] == "144680" then
                                         core:sendDebugMessage("Champion found")
                                         championOfTheLightCounter = championOfTheLightCounter + 1
-                                        core:sendMessage(core:getAchievement() .. " " .. playerName .. " " .. L["Shared_HasStolenFrom"] .. " " .. getNPCName(tonumber(playersWithFavour[playerName][2])) .. " " .. L["Core_Counter"] .. "(" .. championOfTheLightCounter .. "/3)") 
+                                        core:sendMessage(core:getAchievement() .. " " .. playerName .. " " .. L["Shared_HasStolenFrom"] .. " " .. getNPCName(tonumber(playersWithFavour[playerName][2])) .. " " .. L["Core_Counter"] .. "(" .. championOfTheLightCounter .. "/3)", true)
                                     end
-                                    
+
                                     --Output completed status overview
                                     local faction1, faction2 = UnitFactionGroup("Player")
                                     if faction1 == "Alliance" then
@@ -201,7 +201,7 @@ function core._2070:ChampionOfTheLight()
                             playersWithFavour[playerName][2] = nil
                             playersWithFavour[playerName] = nil
                         end)
-                    end                    
+                    end
                 end
             end
         end
@@ -215,7 +215,7 @@ end
 
 function core._2070:JadefireMasters()
     --Hatch the cloud serpent egg during the Jadefire Masters encounter in the Battle of Dazar'alor on Normal difficulty or higher.
-    
+
     --Egg has been found
     if core.type == "SPELL_AURA_APPLIED" and core.spellId == 289547 then
         eggFound = true
@@ -224,10 +224,10 @@ function core._2070:JadefireMasters()
     --Player has either dropped or passed the egg to someone else. Wait 5 seconds before failing achievement if not found
     if core.type == "SPELL_AURA_REMOVED" and core.spellId == 289547 then
         eggFound = false
-        C_Timer.After(5, function() 
+        C_Timer.After(5, function()
             if eggFound == false then
                 if core.achievementsCompleted[1] == false then
-                    core:getAchievementFailed()                
+                    core:getAchievementFailed()
                 end
             end
         end)
@@ -241,7 +241,7 @@ function core._2070:JadefireMasters()
             if spellId == 289547 then
                 core:getAchievementSuccess()
             end
-        end        
+        end
     end
 end
 
@@ -251,7 +251,7 @@ function core._2070:Grong()
     if (core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_APPLIED_DOSE") and core.spellId == 289050 then
         core:sendDebugMessage("Incrementing barrel counter")
         barrelCounter = barrelCounter + 1
-        core:sendMessage(core:getAchievement() .. L["BattleOfDazzarlor_BarrelsDestroyed"] .. " (" .. barrelCounter .. "/6)")
+        core:sendMessage(core:getAchievement() .. L["BattleOfDazzarlor_BarrelsDestroyed"] .. " (" .. barrelCounter .. "/6)", true)
     end
 
     if barrelCounter == 6 then
@@ -316,8 +316,8 @@ function core._2070:Opulence()
         -- if rangeCheckCooldown == false then
         --     InfoFrame_GetRangeCheck(25)
         --     rangeCheckCooldown = true
-        --     C_Timer.After(3, function() 
-        --         rangeCheckCooldown = false            
+        --     C_Timer.After(3, function()
+        --         rangeCheckCooldown = false
         --     end)
         -- end
 	else
@@ -333,7 +333,7 @@ function core._2070:Opulence()
 			if core.playersSuccessPersonal[sender] == nil and core:has_value(core.currentBosses[1].players, sender) then
 				InfoFrame_SetPlayerComplete(sender)
 				playersCompletedAchievement = playersCompletedAchievement + 1
-				core:getAchievementSuccessPersonalWithName(1, sender)
+				core:getAchievementSuccessPersonalWithName(1, sender, true)
 			end
 			core.syncMessageQueue[k] = nil
 		end
@@ -350,7 +350,7 @@ function core._2070:JainaProudmoore()
     --Player has collected a snow mound. Output player to chat.
     if core.type == "SPELL_AURA_APPLIED" and (core.spellId == 289408 or core.spellId == 289405) then
         snowCounter = snowCounter + 1
-        core:sendMessage(core:getAchievement() .. " " .. core.destName .. " " .. L["Shared_HasGained"] .. " " .. GetSpellLink(289408) .. " (" .. snowCounter .. "/3)")
+        core:sendMessage(core:getAchievement() .. " " .. core.destName .. " " .. L["Shared_HasGained"] .. " " .. GetSpellLink(289408) .. " (" .. snowCounter .. "/3)", true)
 
         if snowCounter == 3 then
             snowComplete = true
@@ -367,7 +367,7 @@ function core._2070:JainaProudmoore()
         else
             --We had met the requirements but a snow mound has been lost. Lets check if this was because achievement was success or players failed it
             snowCounter = snowCounter - 1
-            C_Timer.After(3, function() 
+            C_Timer.After(3, function()
                 if snowCounter ~= 0 then
                     --This is a fail since snow counter would be 0 if achievement was a success
                     core:getAchievementFailed()
@@ -398,12 +398,12 @@ function core._2070:ClearVariables()
     eggFound = false
 
     ------------------------------------------------------
-    ---- Grong  
+    ---- Grong
     ------------------------------------------------------
     barrelCounter = 0
 
     ------------------------------------------------------
-    ---- Opulence  
+    ---- Opulence
     ------------------------------------------------------
     playersCompletedAchievement = 0
     rangeCheckCooldown = false
@@ -447,9 +447,9 @@ function core._2070.Events:CHAT_MSG_TEXT_EMOTE(self, message, sender, lineID, se
                                 --core:sendDebugMessage(spellId)
                                 if core.playersSuccessPersonal[sender] == nil and core:has_value(core.currentBosses[1].players, sender) then
                                     --core:sendDebugMessage("Setting personal achievement to complete for: " .. sender)
-									InfoFrame_SetPlayerComplete(sender)
+                                    InfoFrame_SetPlayerComplete(sender)
 									playersCompletedAchievement = playersCompletedAchievement + 1
-									core:getAchievementSuccessPersonalWithName(1, sender)
+									core:getAchievementSuccessPersonalWithName(1, sender, true)
 
 									--Send message to other addon users
 									C_ChatInfo.SendAddonMessage("Whizzey", "syncMessage" .. "-" .. sender, "RAID")
@@ -470,20 +470,20 @@ function core._2070.Events:CHAT_MSG_TEXT_EMOTE(self, message, sender, lineID, se
                                 --Check if the player actually needs the achievement since it is personal
                                 --core:sendDebugMessage("Found player who hugged singing sunflower in other")
                                 --core:sendDebugMessage(sender)
-                                --core:sendDebugMessage(spellId)                                
+                                --core:sendDebugMessage(spellId)
                                 if core.playersSuccessPersonal[sender] == nil and core:has_value(core.currentBosses[1].players, sender) then
                                     --core:sendDebugMessage("Setting personal achievement to complete for: " .. sender)
 									InfoFrame_SetPlayerComplete(sender)
 									playersCompletedAchievement = playersCompletedAchievement + 1
-									core:getAchievementSuccessPersonalWithName(1, sender)
-									
+									core:getAchievementSuccessPersonalWithName(1, sender, true)
+
 									--Send message to other addon users
 									C_ChatInfo.SendAddonMessage("Whizzey", "syncMessage" .. "-" .. sender, "RAID")
 								end
                             end
                         end
                     end
-                end 
+                end
             end
         end
     end
