@@ -1,4 +1,4 @@
--- if(GetLocale() ~= 'frFR') then return end
+if(GetLocale() ~= 'frFR') then return end
 
 local _, core = ...
 local baseLocale = {
@@ -1349,4 +1349,4 @@ local baseLocale = {
 
 core:RegisterLocale('frFR', baseLocale)
 
-core:RegisterLocale('enUS', baseLocale)
+-- core:RegisterLocale('enUS', baseLocale)
