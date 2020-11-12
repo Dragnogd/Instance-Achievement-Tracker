@@ -67,7 +67,7 @@ function core._1098:Tortos()
 					core:getAchievementSuccess()
 				else
 					core:sendMessage(core:getAchievement() .. "FAILED! (" .. kickShellCounter .. "/5) Killed in time. This acheivement can be repeated")
-					kickShellCounter = 0						
+					kickShellCounter = 0
 				end
 				timerStarted = false
 			end)
@@ -94,14 +94,14 @@ function core._1098:Megaera()
 		elseif core.type == "UNIT_DIED" and core.destID == "70247" then
 			venmousHeadKilled = true
 		end
-	
+
 		if frozenHeadKilled == true and flamingHeadKilled == true and venmousHeadKilled == true then
 			core:getAchievementFailed()
 		elseif frozenHeadKilled == true and flamingHeadKilled == true then
 			core:getAchievementSuccessWithCustomMessage("'Venomous part of'", "will be completed once encounter is completed")
 		elseif venmousHeadKilled == true and flamingHeadKilled == true then
 			core:getAchievementSuccessWithCustomMessage("'Frozen part of'", "will be completed once encounter is completed")
-		elseif frozenHeadKilled == true and venmousHeadKilled == true then	
+		elseif frozenHeadKilled == true and venmousHeadKilled == true then
 			core:getAchievementSuccessWithCustomMessage("'Flaming part of'", "will be completed once encounter is completed")
 		end
 	end
@@ -112,18 +112,19 @@ function core._1098:JiKun()
 		initalCounterDisplayed = true
 		C_Timer.After(10, function()
 			core:sendMessage("Jump down to the platform now")
-		end)		
+		end)
 	end
 
 	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 139168 and core.achievementsCompleted[1] == false then
-		--Wait 3 seconds to make sure the player has landed on the platform successfully
-		core:sendMessage("CATCH " .. core.destName .. " NOW! ")
-		eggCaught = true
-		C_Timer.After(5, function()
-			if core.achievementsFailed[1] == false then
-				core:getAchievementSuccessWithCustomMessage("", core.destName .. " caught. Boss can now be killed!")
-			end
-		end)
+		core:sendMessage(core.destName .. " " .. L["Shared_HasCaught"] .. " " .. GetSpellLink(139168),true)
+		-- --Wait 3 seconds to make sure the player has landed on the platform successfully
+		-- core:sendMessage("CATCH " .. core.destName .. " NOW! ")
+		-- eggCaught = true
+		-- C_Timer.After(5, function()
+		-- 	if core.achievementsFailed[1] == false then
+		-- 		core:getAchievementSuccessWithCustomMessage("", core.destName .. " caught. Boss can now be killed!")
+		-- 	end
+		-- end)
 	end
 
 	if core.type == "SPELL_AURA_REMOVED" and core.spellId == 139168 then
@@ -153,7 +154,7 @@ function core._1098:DurumuTheForgotten()
 			core:sendMessage("Purple Fog Beast Found! " .. FogBeastCounter .. " Fog Beasts Remaining")
 			PurpleFogBeast = true
 		end
-	end	
+	end
 
 	if FogBeastCounter == 0 then
 		core:getAchievementSuccess()
@@ -176,25 +177,25 @@ function core._1098:IronQon()
 	--Storm Cloud
 	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 137669 and stormCloudFailed == false then
 		core:sendMessage("'Storm Cloud' part of "  .. GetAchievementLink(core.achievementIDs[1]) .. " FAILED! by (" .. core.destName .. ")")
-		stormCloudFailed = true	
+		stormCloudFailed = true
 	end
-	
+
 	--Rushing Winds
 	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 137654 and rushingWindsFailed == false then
 		core:sendMessage("'Rushing Winds' part of "  .. GetAchievementLink(core.achievementIDs[1]) .. " FAILED! by (" .. core.destName .. ")")
-		rushingWindsFailed = true		
+		rushingWindsFailed = true
 	end
 
 	--Frozen Blood
 	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 137664 and frozenBloodFailed == false then
 		core:sendMessage("'Frozen Blood' part of "  .. GetAchievementLink(core.achievementIDs[1]) .. " FAILED! by (" .. core.destName .. ")")
-		frozenBloodFailed = true		
+		frozenBloodFailed = true
 	end
 
 	--Frozen Solid!
 	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 136892 and frozenSolidFailed == false then
 		core:sendMessage("'Frozen Solid!' part of "  .. GetAchievementLink(core.achievementIDs[1]) .. " FAILED! by (" .. core.destName .. ")")
-		frozenSolidFailed = true	
+		frozenSolidFailed = true
 	end
 end
 
@@ -264,12 +265,12 @@ end)
 function core._1098.Events:UNIT_HEALTH(self, UnitID)
 	if core.Instances[core.expansion][core.instanceType][core.instance]["boss11"].enabled == true then
 		if UnitName(UnitID) == "Suen" then
-			if core:getHealthPercent(UnitID) < 30 then		
+			if core:getHealthPercent(UnitID) < 30 then
 				if lulinKilled == false then
 					core:getAchievementFailed()
 				end
-			end	
-		end	
+			end
+		end
 	end
 end
 
