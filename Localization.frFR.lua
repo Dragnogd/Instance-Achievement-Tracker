@@ -1,4 +1,4 @@
-if(GetLocale() ~= 'frFR') then return end
+-- if(GetLocale() ~= 'frFR') then return end
 
 local _, core = ...
 local baseLocale = {
@@ -19,7 +19,7 @@ local baseLocale = {
     ["GUI_OnlyTrackMissingAchievements"] = "Ne traquer que les hauts-faits manquants", --["Only track missing achievements"]
     ["GUI_AnnounceMessagesToRaidWarning"] = "Envoyer les annonces sur l'Alerte Raid", --["Announce messages to Raid Warning"]
     -- ["GUI_AchievementsDiscordTitle"] = "Achievements Discord", -- "Achievements Discord"
-    ["GUI_AchievementsDiscordDescription"] = "Tactics kindly contributed by the Achievements Discord Server, the community where members can meet like-minded completionists and form groups for a variety of achievements. \n\nTactiques gentiment contribué par le 'Achievements Discord Server', une communauté où les membres peuvent rencontrer des chasseurs de HF aux vues similaires et former des groupes pour une variété de Hauts-Faits.", -- "Tactics kindly contributed by the Achievements Discord Server, the community where members can meet like-minded completionists and form groups for a variety of achievements."
+    ["GUI_AchievementsDiscordDescription"] = "Tactiques gentiment contribué par le 'Achievements Discord Server', une communauté où les membres peuvent rencontrer des chasseurs de HF aux vues similaires et former des groupes pour une variété de Hauts-Faits.", -- "Tactics kindly contributed by the Achievements Discord Server, the community where members can meet like-minded completionists and form groups for a variety of achievements."
     ["GUI_PlaySoundOnSuccess"] = "Jouer un son quand un haut-fait est accompli", -- "Play a sound when a achievement is completed"
     ["GUI_PlaySoundOnFailed"] = "Jouer un son quand un haut-fait est raté", -- "Play a sound when an achievement fails"
     ["GUI_SelectSound"] = "Selectionner un son", -- "Select Sound"
@@ -1349,4 +1349,4 @@ local baseLocale = {
 
 core:RegisterLocale('frFR', baseLocale)
 
--- core:RegisterLocale('enUS', baseLocale)
+core:RegisterLocale('enUS', baseLocale)
