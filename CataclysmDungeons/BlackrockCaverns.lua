@@ -21,7 +21,7 @@ local angeredEarthUID = {}
 local evolvedTwilightZealotKilled = 0
 
 function core._645:RomoggBonecrusher()
-    if core.type == "SPELL_DAMAGE" and core.spellId == 75428 and core.overkill > 0 and angeredEarthUID[core.spawn_uid_dest] == nil then
+    if core.type == "SPELL_DAMAGE" and core.destID == "50376" and core.spellId == 75428 and core.overkill > 0 and angeredEarthUID[core.spawn_uid_dest] == nil then
         angeredEarthKilled = angeredEarthKilled + 1
         angeredEarthUID[core.spawn_uid_dest] = core.spawn_uid_dest
         core:sendMessage(GetAchievementLink(core.achievementIDs[1]) .. " " .. format(L["Shared_AddKillCounter"], getNPCName(50376)) .. " (" .. angeredEarthKilled .. "/10)")
