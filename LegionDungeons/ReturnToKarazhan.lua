@@ -29,7 +29,7 @@ function core._1651:ShadeOfMedivh()
 
                 --If achievement had already completed then fail it
                 if core.achievementsCompleted[1] == true then
-                    core:getAchievementFailedWithMessageAfter("(Reason: " .. core.destName .. " has died) DO NOT KILL BOSS!")
+                    core:getAchievementFailed()
                     core.achievementsCompleted[1] = false
                 end
             end
@@ -49,14 +49,14 @@ function core._1651:ShadeOfMedivh()
 			elseif core.chatType == "RAID" then
 				unit = "raid" .. i
 			end
-			
+
 			if unit ~= nil then
                 local unitType, destID, spawn_uid_dest = strsplit("-",UnitGUID(unit));
                 for i=1,40 do
 					local _, _, _, _, _, _, _, _, _, spellId = UnitDebuff(unit, i)
 					if spellId == 232658 and paranoidPlayers[spawn_uid_dest] == nil then
                         paranoidCounter = paranoidCounter + 1
-                        core:sendMessage(UnitName(unit) .. " has got the Paranoid debuff (" .. parasiteCounter .. "/5)")
+                        core:sendMessage(UnitName(unit) .. " " .. L["Shared_HasGained"] .. " " .. GetSpellLink(232658) .. " (" .. paranoidCounter .. "/5)")
                         paranoidPlayers[spawn_uid_dest] = spawn_uid_dest
 					end
 				end
