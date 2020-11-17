@@ -437,4 +437,15 @@ core.NPCCache = {
 	[108682] =108682, --Amber Drake
 	[27657] =27657, --Verdisa
 	[107194] =107194, --Emerald Drake
+	[76283] =76283, --Malefic Defender
+	[75029] =75029, --Soulbinder Nyami
+	[74787] =74787, --Slave Watcher Crushto
+	[88334] =88334, --Croman
+	[74475] =74475, --Magmolatus
+	[86250] =86250, --Kyrak
+	[146016] =146016, --Leeroy Jenkins
+	[86251] =86251, --Commander Tharbek
+	[77927] =77927, --Son of the Beast
+	[86918] =86918, --Uncharged Construct
+	[86928] =86928, --Empowered Construct
 }
