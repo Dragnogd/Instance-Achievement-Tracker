@@ -567,8 +567,13 @@ function getInstanceInfomation()
 					end
 				elseif core.difficultyID == 23 then
 					--Legion/BFA/Shadowlands Mythics
-					if core.expansion == 4 or core.expansion == 3 or core.expansion == 2 then
+					if core.expansion == 5 or core.expansion == 4 or core.expansion == 3 or core.expansion == 2 then
 						instanceCompatible = true
+					end
+
+					--Mythic WoD don't work for most achievements
+					if core.difficultyID == 23 and core.expansion == 5 then
+						core.warnCompatible = true
 					end
 				elseif core.difficultyID == 3 or core.difficultyID == 5 then
 					--legacy10
@@ -788,6 +793,18 @@ function enableAchievementTracking(self)
 				playerRank = rank
 			end
 		end
+	end
+
+	if core.warnCompatible == true then
+		StaticPopupDialogs["IAT_WarnCompatible"] = {
+			text = L["[IAT] Some achievements cannot be earned on Mythic difficulty. It is recommended switching to Heroic difficulty"],
+			button1 = "Ok",
+			timeout = 0,
+			whileDead = true,
+			hideOnEscape = true,
+		}
+		StaticPopup_Show ("IAT_WarnCompatible")
+		core.warnCompatible = false
 	end
 end
 

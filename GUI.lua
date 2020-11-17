@@ -275,6 +275,7 @@ function Tab_OnClick(self)
             --Work out how many achievements and tactics are currently being tracked
             local achievementsTracked = 0
             local tacticsTracked = 0
+            local totalCount = 0
 
             for expansion, _ in pairs(core.Instances) do
                 for instanceType, _ in pairs(core.Instances[expansion]) do
@@ -287,14 +288,15 @@ function Tab_OnClick(self)
                                 if #core.Instances[expansion][instanceType][instance][boss].tactics > 1 then
                                     tacticsTracked = tacticsTracked + 1
                                 end
+                                totalCount = totalCount + 1
                             end
                         end
                     end
                 end
             end
 
-            UIConfig.Main2.content = Config:CreateText2("TOPLEFT", UIConfig.Main2, "TOPLEFT", 0, -20, achievementsTracked .. " " .. L["GUI_Achievements"],"GameFontHighlight")
-            UIConfig.Main2.content2 = Config:CreateText2("TOPLEFT", UIConfig.Main2.content, "TOPLEFT", 0, -15, tacticsTracked .. " " .. L["GUI_Tactics"],"GameFontHighlight")
+            UIConfig.Main2.content = Config:CreateText2("TOPLEFT", UIConfig.Main2, "TOPLEFT", 0, -20, achievementsTracked .. " " .. L["GUI_Achievements"] .. " (" .. tonumber(string.format("%.0f", (achievementsTracked/totalCount)*100)) .. "%)","GameFontHighlight")
+            UIConfig.Main2.content2 = Config:CreateText2("TOPLEFT", UIConfig.Main2.content, "TOPLEFT", 0, -15, tacticsTracked .. " " .. L["GUI_Tactics"] .. " (" .. tonumber(string.format("%.0f", (tacticsTracked/totalCount)*100)) .. "%)","GameFontHighlight")
 
             -- --Features
             -- UIConfig.Main2.features = Config:CreateText2("TOPLEFT", UIConfig.Main2.content, "TOPLEFT", 0, -40, L["Features"] .. ":","GameFontNormalLarge")
