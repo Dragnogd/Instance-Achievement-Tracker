@@ -2,6 +2,7 @@
 -- Namespaces
 --------------------------------------
 local _, core = ...
+local L = core.L
 
 ------------------------------------------------------
 ---- Throne of Thunder Bosses
@@ -111,29 +112,25 @@ function core._1098:JiKun()
 	if initalCounterDisplayed == false then
 		initalCounterDisplayed = true
 		C_Timer.After(10, function()
-			core:sendMessage("Jump down to the platform now")
+			core:sendMessage(L["ThroneOfThunder_CollectFeather"],true)
 		end)
 	end
 
-	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 139168 and core.achievementsCompleted[1] == false then
+	--Egg Caught
+	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 139168 then
 		core:sendMessage(core.destName .. " " .. L["Shared_HasCaught"] .. " " .. GetSpellLink(139168),true)
-		-- --Wait 3 seconds to make sure the player has landed on the platform successfully
-		-- core:sendMessage("CATCH " .. core.destName .. " NOW! ")
-		-- eggCaught = true
-		-- C_Timer.After(5, function()
-		-- 	if core.achievementsFailed[1] == false then
-		-- 		core:getAchievementSuccessWithCustomMessage("", core.destName .. " caught. Boss can now be killed!")
-		-- 	end
-		-- end)
+		eggCaught = true
 	end
 
+	--Egg Lost
 	if core.type == "SPELL_AURA_REMOVED" and core.spellId == 139168 then
 		core:getAchievementFailed()
+		eggCaught = false
 	end
 
 	--If egg has not been caught after 30 seconds then fail achievement
 	C_Timer.After(30, function()
-		if core.achievementsFailed[1] == false and core.achievementsCompleted[1] == false and eggCaught == false then
+		if eggCaught == false then
 			core:getAchievementFailed()
 		end
 	end)
