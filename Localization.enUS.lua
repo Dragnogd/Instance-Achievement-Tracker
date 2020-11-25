@@ -639,5 +639,7 @@ local baseLocale = {
 	["CastleNathria_SireDenathrius"] = "",
 	["Shared_CriteriaHasBeenMet"] = "Criteria has been met",
 	["Shared_CriteriaHasNotBeenMet"] = "Criteria has not been met",
+	["ThroneOfThunder_CollectFeather"] = "Jump to the platform and collect feather now",
+	["TheaterOfPain_ChallengeNow"] = "/challenge %s Now!",
 }
 core:RegisterLocale('enUS', baseLocale)
