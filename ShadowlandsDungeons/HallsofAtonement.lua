@@ -29,33 +29,9 @@ function core._2297:Echelon()
     --Defeat Echelon after shatter 18 or more Undying Stonefiends at one time in the Halls of Atonement on Mythic difficulty.
 
     --Adds turned to stone
-    if core.type == "SPELL_AURA_APPLIED" and core.destID == "164363" and core.spellId == 319724 then
-        if addsTurnedToStone[core.destID] == nil then
-            addsTurnedToStone[core.destID] = core.destID
-            addsTurnedToStoneCounter = addsTurnedToStoneCounter + 1
-            core:sendMessage(core:getAchievement() .. " " .. getNPCName(164363) .. " " .. L["Core_Counter"] .. " (" .. addsTurnedToStoneCounter .. "/18)",true)
-        end
-    end
-
-    --Adds not stone anymore
-    if core.type == "SPELL_AURA_REMOVED" and core.destID == "164363" and core.spellId == 319724 then
-        if addsTurnedToStone[core.destID] ~= nil then
-            addsTurnedToStone[core.destID] = nil
-            addsTurnedToStoneCounter = addsTurnedToStoneCounter - 1
-        end
-    end
-
-    if core.type == "SPELL_INSTAKILL" and core.destID == "164363" and core.spellId == 319965 then
-        addsKilled = addsKilled + 1
-        if timerStarted == false then
-            timerStarted = true
-            C_Timer.After(2, function()
-                core:sendMessage(core:getAchievement() .. " " .. getNPCName(164363) .. " " .. L["Shared_Killed"] .. " (" .. addsKilled .. "/18)",true)
-                addsKilled = 0
-                timerStarted = false
-            end)
-        end
-    end
+	core.MobCounter:Setup(18, 2, "164363")
+	core.MobCounter:DetectSpawnedMobsEchelon()
+	core.MobCounter:DetectKilledMob()
 
     if core:getBlizzardTrackingStatus(14284, 1) == true then
         core:getAchievementSuccess()
