@@ -136,8 +136,7 @@ core.Instances = {
 					enabled = true,
 					track = function() end,
 					partial = false,
-					encounterID = {2395,2394,2400,2396},
-					displayInfoFrame = true,
+					encounterID = {},
 				},
 				boss2 = {
 					name = 2409, --The Manastorms
@@ -186,6 +185,7 @@ core.Instances = {
 					track = function() core._2297:Echelon() end,
 					partial = false,
 					encounterID = 2380,
+					displayInfoFrame = true,
 				},
 				boss3 = {
 					name = 2413, --Lord Chamberlain
@@ -248,8 +248,7 @@ core.Instances = {
 					enabled = true,
 					track = function() end,
 					partial = false,
-					encounterID = {2384,2385,2382,2386},
-					displayInfoFrame = true,
+					encounterID = {},
 				},
 				boss2 = {
 					name = 2419, --Globgrog
@@ -304,10 +303,11 @@ core.Instances = {
 					achievement = 14289,
 					players = {},
 					tactics = L["SanguineDepths_GeneralKaal"],
-					enabled = false,
-					track = nil,
+					enabled = true,
+					track = function() core._2284:GeneralKaal() end,
 					partial = false,
 					encounterID = 2363,
+					displayInfoFrame = true,
 				},
 			},
 
@@ -341,8 +341,8 @@ core.Instances = {
 					achievement = 14327,
 					players = {},
 					tactics = L["SpiresOfAscension_DevosParagonOfDoubt2"],
-					enabled = true,
-					track = function() core._2285:ICanSeeMyHouseFromHere() end,
+					enabled = false,
+					track = nil,
 					partial = false,
 				},
 			},
@@ -355,8 +355,8 @@ core.Instances = {
 					achievement = 14297,
 					players = {},
 					tactics = L["TheaterOfPain_AffrontOfChallengers"],
-					enabled = false,
-					track = nil,
+					enabled = true,
+					track = function() core._2293:AffrontOfChallengers() end,
 					partial = false,
 					encounterID = 2391,
 				},

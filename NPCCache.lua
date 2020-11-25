@@ -448,4 +448,6 @@ core.NPCCache = {
 	[77927] =77927, --Son of the Beast
 	[86918] =86918, --Uncharged Construct
 	[86928] =86928, --Empowered Construct
+	[173675] =173675, --Ghostly Contender
+	[165073] =165073, --Forlorn Captive
 }
