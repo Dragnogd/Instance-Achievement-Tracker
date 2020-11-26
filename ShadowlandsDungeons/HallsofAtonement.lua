@@ -21,9 +21,9 @@ function core._2297:Echelon()
     --Defeat Echelon after shatter 18 or more Undying Stonefiends at one time in the Halls of Atonement on Mythic difficulty.
 
     --Adds turned to stone
-	core.MobCounter:Setup(18, 2, "164363")
-	core.MobCounter:DetectSpawnedMobsEchelon()
-	core.MobCounter:DetectKilledMobEchelon()
+    core.MobCounter:Setup(18, 2, "164363")
+    core.MobCounter:DetectSpawnedMobsEchelon()
+    core.MobCounter:DetectKilledMobEchelon()
 
     if core:getBlizzardTrackingStatus(14284, 1) == true then
         core:getAchievementSuccess()

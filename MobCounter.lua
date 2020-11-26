@@ -103,8 +103,8 @@ end
 
 function MobCounter:DetectSpawnedMobsEchelon()
     if core.type == "SPELL_AURA_APPLIED" and core.destID == "164363" and core.spellId == 319724 then
-        if mobsDetectedUID[core.destID] == nil then
-            mobsDetectedUID[core.destID] = core.destID
+        if mobsDetectedUID[core.spawn_uid_dest] == nil then
+            mobsDetectedUID[core.spawn_uid_dest] = core.spawn_uid_dest
             mobsDetected = mobsDetected + 1
             core.IATInfoFrame:SetText1(format(L["MobCounter_MobsAlive"], getNPCName(tonumber(mobID))) .. " (" .. mobsDetected .. "/" .. mobCriteria .. ")\n" .. format(L["MobCounter_MobsKilled"], getNPCName(tonumber(mobID))) .. " (" .. mobsKilled .. "/" .. mobCriteria .. ")","GameFontHighlightLarge")
         end
@@ -112,8 +112,8 @@ function MobCounter:DetectSpawnedMobsEchelon()
 
     --Adds not stone anymore
     if core.type == "SPELL_AURA_REMOVED" and core.destID == "164363" and core.spellId == 319724 then
-        if mobsDetectedUID[core.destID] ~= nil then
-            mobsDetectedUID[core.destID] = nil
+        if mobsDetectedUID[core.spawn_uid_dest] ~= nil then
+            mobsDetectedUID[core.spawn_uid_dest] = nil
             mobsDetected = mobsDetected - 1
         end
     end
@@ -137,6 +137,10 @@ function MobCounter:DetectKilledMobEchelon()
                 if mobsKilledUID[core.spawn_uid_dest] == nil then
                     mobsKilled = mobsKilled + 1
                     mobsKilledUID[core.spawn_uid_dest] = core.spawn_uid_dest
+                end
+                if mobsDetectedUID[core.spawn_uid_dest] ~= nil then
+                    mobsDetected = mobsDetected - 1
+                    mobsDetectedUID[core.spawn_uid_dest] = nil
                 end
             end
         end
