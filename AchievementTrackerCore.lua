@@ -766,6 +766,21 @@ function enableAchievementTracking(self)
 		core:sendDebugMessage("Achievement Scanning Disabled")
 	end
 
+	--Start the combatlog if applicable
+	if enableCombatLogging == true then
+		core:sendDebugMessage("Enable CombatLog")
+		local isLogging = LoggingCombat()
+		if LoggingCombat() ~= true then
+			LoggingCombat(1)
+			core:printMessage(L["Core_CombatLogEnabled"])
+			RaidNotice_AddMessage(RaidWarningFrame, "[IAT] Combat Log Started", ChatTypeInfo["SYSTEM"])
+		else
+			core:sendDebugMessage("Combatlog already enabled")
+		end
+	else
+		core:sendDebugMessage("Combatlog does not need to be enabled")
+	end
+
 	--Addon Syncing Priority:
 	--1.) Highest Version Number of addon
 	--2.) Raid Leader / Party Leader
@@ -1512,15 +1527,17 @@ function events:ENCOUNTER_START(self, encounterID, encounterName, difficultyID, 
 		if LoggingCombat() ~= true then
 			LoggingCombat(1)
 			core:printMessage(L["Core_CombatLogEnabled"])
+			RaidNotice_AddMessage(RaidWarningFrame, "[IAT] Combat Log Started", ChatTypeInfo["SYSTEM"])
+		else
+			RaidNotice_AddMessage(RaidWarningFrame, "[IAT] Combat Log Running", ChatTypeInfo["SYSTEM"])
 		end
 		if Transcriptor ~= nil then
 			if Transcriptor:IsLogging() == nil then
 				Transcriptor:StartLog(1)
 				core:printMessage(L["Core_TranscriptorLogEnabled"])
+				RaidNotice_AddMessage(RaidWarningFrame, "[IAT] Transcriptor Log Started", ChatTypeInfo["SYSTEM"])
 			end
 		end
-	else
-		core:sendDebugMessage("Disable CombatLogs")
 	end
 end
 
@@ -1839,6 +1856,15 @@ function checkAndClearInstanceVariables()
 		--Untrack achievements that we tracked
 		for k,v in pairs(trackAchievementInUiTable) do
 			RemoveTrackedAchievement(v)
+		end
+
+		--Disable Combatlog if applicable
+		if enableCombatLogging == true then
+			if LoggingCombat() ~= nil then
+				LoggingCombat(false)
+				core:printMessage(L["Core_CombatLogDisabled"])
+				RaidNotice_AddMessage(RaidWarningFrame, "[IAT] Combat Log Disabled", ChatTypeInfo["SYSTEM"])
+			end
 		end
 	end
 end
@@ -3527,14 +3553,15 @@ function core:clearVariables()
 
 	--Check if user has combat logging enabled or not
 	if enableCombatLogging == true then
-		if LoggingCombat() ~= nil then
-			LoggingCombat(false)
-			core:printMessage(L["Core_CombatLogDisabled"])
-		end
+		-- if LoggingCombat() ~= nil then
+		-- 	LoggingCombat(false)
+		-- 	core:printMessage(L["Core_CombatLogDisabled"])
+		-- end
 		if Transcriptor ~= nil then
 			if Transcriptor:IsLogging() == 1 then
 				Transcriptor:StopLog(1)
 				core:printMessage(L["Core_TranscriptorLogDisabled"])
+				RaidNotice_AddMessage(RaidWarningFrame, "[IAT] Transcriptor Log Stopped", ChatTypeInfo["SYSTEM"])
 			end
 		end
 	end
