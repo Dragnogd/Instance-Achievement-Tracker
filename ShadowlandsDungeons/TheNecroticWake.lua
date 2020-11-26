@@ -52,7 +52,7 @@ function core._2286:NalthorTheRimebinder()
     if (core.type == "SPELL_DAMAGE" or core.type == "SPELL_MISSED") and core.spellId == 320784 then
         if core.destName ~= nil then
             if UnitIsPlayer(core.destName) then
-                if InfoFrame_GetPlayerComplete(core.destName) == true then
+                if InfoFrame_GetPlayerFailed(core.destName) == false then
                     InfoFrame_SetPlayerFailed(core.destName)
                     core:sendMessage(format(L["Shared_FailedPersonalAchievement"], core.destName, GetAchievementLink(core.achievementIDs[1]), format(L["Shared_DamageFromAbility"], GetSpellLink(320784))),true)
                 end
@@ -64,7 +64,7 @@ function core._2286:NalthorTheRimebinder()
     if core.type == "SPELL_AURA_APPLIED" and core.spellId == 323730 then
         if core.destName ~= nil then
             if UnitIsPlayer(core.destName) then
-                if InfoFrame_GetPlayerComplete(core.destName) == true then
+                if InfoFrame_GetPlayerFailed(core.destName) == false then
                     InfoFrame_SetPlayerFailed(core.destName)
                     core:sendMessage(format(L["Shared_FailedPersonalAchievement"], core.destName, GetAchievementLink(core.achievementIDs[1]), format(L["Shared_DamageFromAbility"], GetSpellLink(323730))),true)
                 end
@@ -76,7 +76,7 @@ function core._2286:NalthorTheRimebinder()
     if (core.type == "SPELL_DAMAGE" or core.type == "SPELL_MISSED") and core.spellId == 287294 then
         if core.destName ~= nil then
             if UnitIsPlayer(core.destName) then
-                if InfoFrame_GetPlayerComplete(core.destName) == true then
+                if InfoFrame_GetPlayerFailed(core.destName) == false then
                     InfoFrame_SetPlayerFailed(core.destName)
                     core:sendMessage(format(L["Shared_FailedPersonalAchievement"], core.destName, GetAchievementLink(core.achievementIDs[1]), format(L["Shared_DamageFromAbility"], GetSpellLink(287294))),true)
                 end
