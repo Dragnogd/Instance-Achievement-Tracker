@@ -450,4 +450,7 @@ core.NPCCache = {
 	[86928] =86928, --Empowered Construct
 	[173675] =173675, --Ghostly Contender
 	[165073] =165073, --Forlorn Captive
+	[164451] = 164451, --Dessia the Decapitator
+	[164461] = 164461, --Sathel the Accursed
+	[164463] = 164463, --Paceran the Virulent
 }

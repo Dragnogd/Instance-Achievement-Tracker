@@ -418,6 +418,7 @@ core.Instances = {
 					track = function() core._2286:NalthorTheRimebinder() end,
 					partial = false,
 					encounterID = 2390,
+					displayInfoFrame = true,
 				},
 			},
 		},
@@ -2892,16 +2893,28 @@ core.Instances = {
 			[996] = { --Terrace of Endless Spring
 				name = 320,
 				boss1 = {
-					name = 683, --Protectors of the Endless
+					name = 2387, --Echelon
 					bossIDs = {60583, 60586, 60585},
-					achievement = 6717,
+					achievement = 14284,
 					players = {},
-					tactics = L["TerraceOfEndlessSpring_ProtectorsOfTheEndless"],
+					tactics = L["HallsOfAtonement_Echelon"],
 					enabled = true,
-					track = function() core._996:ProtectorsOfTheEndless() end,
+					track = function() core._2297:Echelon() end,
 					partial = false,
-					encounterID = 1409,
+					encounterID = 2380,
+					displayInfoFrame = true,
 				},
+				-- boss1 = {
+				-- 	name = 683, --Protectors of the Endless
+				-- 	bossIDs = {60583, 60586, 60585},
+				-- 	achievement = 6717,
+				-- 	players = {},
+				-- 	tactics = L["TerraceOfEndlessSpring_ProtectorsOfTheEndless"],
+				-- 	enabled = true,
+				-- 	track = function() core._996:ProtectorsOfTheEndless() end,
+				-- 	partial = false,
+				-- 	encounterID = 1409,
+				-- },
 				boss2 = {
 					name = 742, --Tsulong
 					bossIDs = {62442},
