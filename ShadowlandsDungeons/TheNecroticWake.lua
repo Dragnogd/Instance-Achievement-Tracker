@@ -28,14 +28,14 @@ function core._2286:SurgeonStitchflesh()
     --Defeat Surgeon Stitchflesh after destroying two barrels of spare parts in the Necrotic Wake on Mythic difficulty.
 
     if core:getBlizzardTrackingStatus(14320, 1) == true and barrel1Destroyed == false then
-        core:sendMessage(GetAchievementCriteriaInfo(14320,1) .. " " .. L["Shared_Completed"] .. " (" .. barrelCounter .. "/3)")
         barrel1Destroyed = true
         barrelCounter = barrelCounter + 1
+        core:sendMessage(GetAchievementCriteriaInfo(14320,1) .. " " .. L["Shared_Completed"] .. " (" .. barrelCounter .. "/2)")
     end
     if core:getBlizzardTrackingStatus(14320, 2) == true and barrel2Destroyed == false then
-        core:sendMessage(GetAchievementCriteriaInfo(14320,2) .. " " .. L["Shared_Completed"] .. " (" .. barrelCounter .. "/3)")
         barrel2Destroyed = true
         barrelCounter = barrelCounter + 1
+        core:sendMessage(GetAchievementCriteriaInfo(14320,2) .. " " .. L["Shared_Completed"] .. " (" .. barrelCounter .. "/2)")
     end
 
     if core:getBlizzardTrackingStatus(14320, 1) == true and core:getBlizzardTrackingStatus(14320, 2) then
