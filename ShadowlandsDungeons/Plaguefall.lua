@@ -33,19 +33,19 @@ function core._2289:Globgrog()
     --Defeat Globgrog after feeding him a three course meal in Plaguefall on Mythic difficulty.
 
     if core:getBlizzardTrackingStatus(14347, 1) == true and AppetizerCompleted == false then
-        core:sendMessage(GetAchievementCriteriaInfo(14347,1) .. " " .. L["Shared_Completed"] .. " (" .. MealsCompleted .. "/3)",true)
         AppetizerCompleted = true
         MealsCompleted = MealsCompleted + 1
+        core:sendMessage(GetAchievementCriteriaInfo(14347,1) .. " " .. L["Shared_Completed"] .. " (" .. MealsCompleted .. "/3)",true)
     end
     if core:getBlizzardTrackingStatus(14347, 2) == true and EntreeCompleted == false then
-        core:sendMessage(GetAchievementCriteriaInfo(14347,2) .. " " .. L["Shared_Completed"] .. " (" .. MealsCompleted .. "/3)",true)
         EntreeCompleted = true
         MealsCompleted = MealsCompleted + 1
+        core:sendMessage(GetAchievementCriteriaInfo(14347,2) .. " " .. L["Shared_Completed"] .. " (" .. MealsCompleted .. "/3)",true)
     end
     if core:getBlizzardTrackingStatus(14347, 3) == true and DessertCompleted == false then
-        core:sendMessage(GetAchievementCriteriaInfo(14347,3) .. " " .. L["Shared_Completed"] .. " (" .. MealsCompleted .. "/3)",true)
         DessertCompleted = true
         MealsCompleted = MealsCompleted + 1
+        core:sendMessage(GetAchievementCriteriaInfo(14347,3) .. " " .. L["Shared_Completed"] .. " (" .. MealsCompleted .. "/3)",true)
     end
 
     if core:getBlizzardTrackingStatus(14347, 1) == true and core:getBlizzardTrackingStatus(14347, 2) == true and core:getBlizzardTrackingStatus(14347, 3) == true then
@@ -134,19 +134,25 @@ function core._2289:TrackAdditional()
     if timerStarted == false and playersCompletedAchievement > 0 then
         timerStarted = true
         C_Timer.After(1, function()
-            for k,player in ipairs(core.Instances[core.expansion][core.instanceType][core.instance]["boss1"].players) do
-                if InfoFrame_GetPlayerStatusWithMessage(player) == 2 then
-                    for i=1,40 do
-                        local _, _, _, _, _, expirationTime, _, _, _, spellId = UnitDebuff(player, i)
-                        if spellId == 330092 then
-                            core.InfoFrame_PlayersTable[player] = {2, math.floor(expirationTime - GetTime())}
-                            InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfoPersonalArgs(core.Instances[core.expansion][core.instanceType][core.instance]["boss1"])
+            if core.Instances[core.expansion][core.instanceType][core.instance]["boss1"].players ~= nil then
+                for k,player in ipairs(core.Instances[core.expansion][core.instanceType][core.instance]["boss1"].players) do
+                    if InfoFrame_GetPlayerStatusWithMessage(player) == 2 then
+                        for i=1,40 do
+                            local _, _, _, _, _, expirationTime, _, _, _, spellId = UnitDebuff(player, i)
+                            if spellId == 330092 then
+                                core.InfoFrame_PlayersTable[player] = {2, math.floor(expirationTime - GetTime())}
+                                InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfoPersonalArgs(core.Instances[core.expansion][core.instanceType][core.instance]["boss1"])
+                            end
                         end
                     end
                 end
+
             end
             timerStarted = false
-            core._2289:TrackAdditional()
+
+            if core.Instances[core.expansion][core.instanceType][core.instance]["boss1"].players ~= nil then
+                core._2289:TrackAdditional()
+            end
         end)
     end
 end
