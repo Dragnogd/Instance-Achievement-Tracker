@@ -28,7 +28,7 @@ function core._2284:ExecutorTarvold()
 
     if core.type == "UNIT_DIED" and core.destID == "165073" then
         forlornCaptivesKilled = forlornCaptivesKilled + 1
-        core:sendMessage(core:getAchievement() .. " " .. getNPCName(165073) .. " " .. L["Shared_Killed"] .. " (" .. ghostlyContenderCounter .. "/8)",true)
+        core:sendMessage(core:getAchievement() .. " " .. getNPCName(165073) .. " " .. L["Shared_Killed"] .. " (" .. forlornCaptivesKilled .. "/8)",true)
     end
 
     if core:getBlizzardTrackingStatus(14286, 1) == true then
