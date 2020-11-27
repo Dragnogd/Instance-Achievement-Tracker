@@ -33,8 +33,9 @@ end
 function core._2293:Mordretha()
     --Defeat Mordretha, the Endless Empress, after performing a /challenge and defeating 2 Ghostly Contenders in the Theater of Pain on Mythic difficulty.
 
-    if core:getHealthPercent("boss1") <= 50 then
+    if core:getHealthPercent("boss1") <= 50 and announceChallenge == false then
         core:sendMessage(format(L["TheaterOfPain_ChallengeNow"], getNPCName(173675)),true)
+        announceChallenge = true
     end
 
     if core.type == "UNIT_DIED" and (core.destID == "173675" or core.destID == "173667") then
