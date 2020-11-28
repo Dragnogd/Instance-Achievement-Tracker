@@ -26,19 +26,19 @@ function core._2285:Oryphrion()
     --Defeat Oryphrion after activating and destroying all three Shattered Devastators in the Spires of Ascension on Mythic difficulty.
 
     if core:getBlizzardTrackingStatus(14331, 1) == true and ShatteredDevestator1Complete == false then
-        core:sendMessage(GetAchievementCriteriaInfo(14331,1) .. " " .. L["Shared_Completed"] .. " (" .. ShatteredDevestatorCounter .. "/3)")
         ShatteredDevestator1Complete = true
         ShatteredDevestatorCounter = ShatteredDevestatorCounter + 1
+        core:sendMessage(GetAchievementCriteriaInfo(14331,1) .. " " .. L["Shared_Completed"] .. " (" .. ShatteredDevestatorCounter .. "/3)")
     end
     if core:getBlizzardTrackingStatus(14331, 2) == true and ShatteredDevestator2Complete == false then
-        core:sendMessage(GetAchievementCriteriaInfo(14331,2) .. " " .. L["Shared_Completed"] .. " (" .. ShatteredDevestatorCounter .. "/3)")
         ShatteredDevestator2Complete = true
         ShatteredDevestatorCounter = ShatteredDevestatorCounter + 1
+        core:sendMessage(GetAchievementCriteriaInfo(14331,2) .. " " .. L["Shared_Completed"] .. " (" .. ShatteredDevestatorCounter .. "/3)")
     end
     if core:getBlizzardTrackingStatus(14331, 3) == true and ShatteredDevestator3Complete == false then
-        core:sendMessage(GetAchievementCriteriaInfo(14331,3) .. " " .. L["Shared_Completed"] .. " (" .. ShatteredDevestatorCounter .. "/3)")
-        DessertShatteredDevestator3CompleteCompleted = true
+        ShatteredDevestator3Complete = true
         ShatteredDevestatorCounter = ShatteredDevestatorCounter + 1
+        core:sendMessage(GetAchievementCriteriaInfo(14331,3) .. " " .. L["Shared_Completed"] .. " (" .. ShatteredDevestatorCounter .. "/3)")
     end
 
     if core:getBlizzardTrackingStatus(14331, 1) == true and core:getBlizzardTrackingStatus(14331, 2) == true and core:getBlizzardTrackingStatus(14331, 3) == true then
@@ -49,9 +49,9 @@ end
 function core._2285:DevosParagonOfDoubt()
     --Defeat Devos, Paragon of Doubt after hitting her with five Spears of Duty in the Spires of Ascension on Mythic difficulty.
 
-    if core.type == "SPELL_DAMAGE" and core.destID == "162061" and core.spellId == 322958 then
+    if (core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_APPLIED_DOSE") and core.destID == "162061" and core.spellId == 334643 then
         spearCounter = spearCounter + 1
-        core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(322958) .. " " .. L["Core_Counter"] .. " (" .. spearCounter .. "/5)",true)
+        core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(334643) .. " " .. L["Core_Counter"] .. " (" .. spearCounter .. "/5)",true)
     end
 
     if core:getBlizzardTrackingStatus(14323, 1) then
