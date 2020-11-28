@@ -40,7 +40,7 @@ end
 function core._2284:GeneralKaal()
     --Defeat General Kaal while affected by Slammed! in the Sanguine Depths on Mythic difficulty.
     --Player gained Slammed!
-    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 774 then --330055
+    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 330055 then
         if core:has_value(core.Instances[core.expansion][core.instanceType][core.instance]["boss3"].players, core.destName) == true then
             if slammedUID[core.destName] == nil then
                 slammedCount = slammedCount + 1
@@ -66,7 +66,7 @@ function core._2284:TrackAdditional()
     end
 
     --Player gained Shadow Ball
-    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 8936 then --330004
+    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 330004 then
         core:sendDebugMessage("Player has gained Shadow Ball")
 
         if initialSetup == false then
@@ -94,7 +94,7 @@ function core._2284:TrackAdditional()
     end
 
     --Player looses Shadow Ball
-    if core.type == "SPELL_AURA_REMOVED" and core.spellId == 8936 then --330004
+    if core.type == "SPELL_AURA_REMOVED" and core.spellId == 330004 then
         core:sendDebugMessage("Player has lost Shadow Ball")
         if core:has_value(core.Instances[core.expansion][core.instanceType][core.instance]["boss3"].players, core.destName) == true then
             if shadowBallUID[core.destName] ~= nil then
