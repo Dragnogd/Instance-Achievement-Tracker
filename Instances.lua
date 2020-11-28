@@ -307,7 +307,6 @@ core.Instances = {
 					track = function() core._2284:GeneralKaal() end,
 					partial = false,
 					encounterID = 2363,
-					displayInfoFrame = true,
 				},
 			},
 

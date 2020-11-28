@@ -166,6 +166,14 @@ function InfoFrame_RefreshPlayersOnInfoFrame()
     end
 end
 
+function InfoFrame_RefreshPlayersOnInfoFrameTable()
+    for player,status in pairs(core:getPlayersInGroupForAchievement()) do
+        if core.InfoFrame_PlayersTable[player] == nil then
+            core.InfoFrame_PlayersTable[status][1] = 1
+        end
+    end
+end
+
 function InfoFrame_UpdatePlayersOnInfoFramePersonal()
     --This will update list of players on the info frame for personal achievements.
     --This will only display names of players who still need the achievement
@@ -313,7 +321,7 @@ function InfoFrame_IsAnyPlayerComplete()
     --Check whether atleast one player is marked as complete
     local playerComplete = false
     for player,status in pairs(core.InfoFrame_PlayersTable) do
-        if core.InfoFrame_PlayersTable[player] == 2 then
+        if core.InfoFrame_PlayersTable[player][1] == 2 then
             playerComplete = true
         end
     end

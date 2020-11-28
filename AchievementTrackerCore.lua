@@ -598,6 +598,14 @@ function getInstanceInfomation()
 
 				if debugMode == true then
 					instanceCompatible = true
+
+					--Set instance we want to debug
+					-- core.instanceNameSpaces = "De Other Side"
+					-- core.instanceName = "DeOtherSide"
+					-- core.instance = 2291
+					-- core.instanceClear = "_2291"
+					-- core.expansion = 2
+					-- core.instanceType = "Dungeons"
 				end
 
 				if instanceCompatible == true and core.expansion ~= nil then
