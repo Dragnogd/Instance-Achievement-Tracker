@@ -73,67 +73,70 @@ function core._2289:InstanceCleanup()
     initialSetup = false
     playersCompletedAchievement = 0
     timerStarted = false
+    updatePerformed = false
     core.IATInfoFrame:ToggleOff()
-end
-
-function core._2289:InitialSetup()
-    --Defeat all bosses while affected by Plaguefallen within a single visit in Plaguefall on Mythic difficulty.
-    C_Timer.After(5, function()
-        --table.insert(core.currentBosses, core.Instances[core.expansion][core.instanceType][core.instance]["boss1"])
-        --table.insert(core.achievementIDs, core.Instances[core.expansion][core.instanceType][core.instance]["boss1"].achievement)
-        core.IATInfoFrame:ToggleOn()
-        InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfoPersonalArgs(core.Instances[core.expansion][core.instanceType][core.instance]["boss1"])
-
-        InfoFrame_SetHeaderCounter(L["Shared_PlayersWhoNeedAchievement"],playersCompletedAchievement,#core.Instances[core.expansion][core.instanceType][core.instance]["boss1"].players)
-        core.IATInfoFrame:SetHeading(GetAchievementLink(14292))
-        initialSetup = true
-        core._2289:TrackAdditional()
-    end)
 end
 
 function core._2289:TrackAdditional()
     --Defeat all bosses while affected by Plaguefallen within a single visit in Plaguefall on Mythic difficulty.
-    InfoFrame_RefreshPlayersOnInfoFrameWithAdditionalInfoPersonal(core.Instances[core.expansion][core.instanceType][core.instance]["boss1"])
+    --InfoFrame_RefreshPlayersOnInfoFrameWithAdditionalInfoPersonal(core.Instances[core.expansion][core.instanceType][core.instance]["boss1"])
     InfoFrame_SetHeaderCounter(L["Shared_PlayersWhoNeedAchievement"],playersCompletedAchievement,#core.Instances[core.expansion][core.instanceType][core.instance]["boss1"].players)
 
-    --Concentrated Plague (Applied)
-    if core.type == "SPELL_AURA_APPLIED_DOSE" and core.spellId == 330069 and UnitIsPlayer(core.destName) and core:hasDebuff(core.destName, 330092) == false then
-        InfoFrame_SetPlayerNeutralWithMessage(core.destName, core.amount)
-        InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfoPersonalArgs(core.Instances[core.expansion][core.instanceType][core.instance]["boss1"])
-    elseif core.type == "SPELL_AURA_APPLIED" and core.spellId == 330069 and UnitIsPlayer(core.destName) and core:hasDebuff(core.destName, 330092) == false then
-        InfoFrame_SetPlayerNeutralWithMessage(core.destName, 1)
-        InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfoPersonalArgs(core.Instances[core.expansion][core.instanceType][core.instance]["boss1"])
-    end
+    if core.destName ~= nil then
+        local name, realm = UnitName(core.destName)
 
-    --Concentrated Plague (Removed)
-    if core.type == "SPELL_AURA_REMOVED" and core.spellId == 330069 and UnitIsPlayer(core.destName) and core:hasDebuff(core.destName, 330092) == false then
-        InfoFrame_SetPlayerFailedWithMessage(core.destName, "")
-        InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfoPersonalArgs(core.Instances[core.expansion][core.instanceType][core.instance]["boss1"])
-    end
+        if core:has_value(core.Instances[core.expansion][core.instanceType][core.instance]["boss1"].players, name) == true then
+            --Concentrated Plague (Applied)
+            if core.type == "SPELL_AURA_APPLIED_DOSE" and core.spellId == 330069 and UnitIsPlayer(core.destName) and core:hasDebuff(core.destName, 330092) == false then
+                InfoFrame_SetPlayerNeutralWithMessage(core.destName, core.amount)
+                InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfoPersonalArgs(core.Instances[core.expansion][core.instanceType][core.instance]["boss1"])
+            elseif core.type == "SPELL_AURA_APPLIED" and core.spellId == 330069 and UnitIsPlayer(core.destName) and core:hasDebuff(core.destName, 330092) == false then
+                if initialSetup == false then
+                    core:sendDebugMessage("Initial Setup for Plaguefallen")
+                    core.IATInfoFrame:SetHeading(GetAchievementLink(14292))
+                    InfoFrame_SetHeaderCounter(L["Shared_PlayersWhoNeedAchievement"],playersCompletedAchievement,#core.Instances[core.expansion][core.instanceType][core.instance]["boss1"].players)
+                    InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfoPersonalArgs(core.Instances[core.expansion][core.instanceType][core.instance]["boss1"])
+                    core.IATInfoFrame:ToggleOn()
+                    initialSetup = true
+                    core.infoFrameShown = true
+                end
 
-    --Plagufallen (Applied)
-    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 330092 and UnitIsPlayer(core.destName) then
-        if InfoFrame_GetPlayerStatusWithMessage(core.destName) ~= 2 then
-            playersCompletedAchievement = playersCompletedAchievement + 1
+                InfoFrame_SetPlayerNeutralWithMessage(core.destName, 1)
+                InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfoPersonalArgs(core.Instances[core.expansion][core.instanceType][core.instance]["boss1"])
+            end
+
+            --Concentrated Plague (Removed)
+            if core.type == "SPELL_AURA_REMOVED" and core.spellId == 330069 and UnitIsPlayer(core.destName) and core:hasDebuff(core.destName, 330092) == false then
+                InfoFrame_SetPlayerFailedWithMessage(core.destName, "")
+                InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfoPersonalArgs(core.Instances[core.expansion][core.instanceType][core.instance]["boss1"])
+            end
+
+            --Plagufallen (Applied)
+            if core.type == "SPELL_AURA_APPLIED" and core.spellId == 330092 and UnitIsPlayer(core.destName) then
+                if InfoFrame_GetPlayerStatusWithMessage(core.destName) ~= 2 then
+                    playersCompletedAchievement = playersCompletedAchievement + 1
+                end
+                InfoFrame_SetPlayerCompleteWithMessage(core.destName, "")
+                InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfoPersonalArgs(core.Instances[core.expansion][core.instanceType][core.instance]["boss1"])
+                InfoFrame_SetHeaderCounter(L["Shared_PlayersWhoNeedAchievement"],playersCompletedAchievement,#core.Instances[core.expansion][core.instanceType][core.instance]["boss1"].players)
+            end
+
+            --Plagufallen (Removed)
+            if core.type == "SPELL_AURA_REMOVED" and core.spellId == 330092 and UnitIsPlayer(core.destName) then
+                if InfoFrame_GetPlayerStatusWithMessage(core.destName) ~= 3 then
+                    playersCompletedAchievement = playersCompletedAchievement - 1
+                end
+                InfoFrame_SetPlayerFailedWithMessage(core.destName, "")
+                InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfoPersonalArgs(core.Instances[core.expansion][core.instanceType][core.instance]["boss1"])
+                InfoFrame_SetHeaderCounter(L["Shared_PlayersWhoNeedAchievement"],playersCompletedAchievement,#core.Instances[core.expansion][core.instanceType][core.instance]["boss1"].players)
+            end
         end
-        InfoFrame_SetPlayerCompleteWithMessage(core.destName, "")
-        InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfoPersonalArgs(core.Instances[core.expansion][core.instanceType][core.instance]["boss1"])
-        InfoFrame_SetHeaderCounter(L["Shared_PlayersWhoNeedAchievement"],playersCompletedAchievement,#core.Instances[core.expansion][core.instanceType][core.instance]["boss1"].players)
     end
 
-    --Plagufallen (Removed)
-    if core.type == "SPELL_AURA_REMOVED" and core.spellId == 330092 and UnitIsPlayer(core.destName) then
-        if InfoFrame_GetPlayerStatusWithMessage(core.destName) ~= 3 then
-            playersCompletedAchievement = playersCompletedAchievement - 1
-        end
-        InfoFrame_SetPlayerFailedWithMessage(core.destName, "")
-        InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfoPersonalArgs(core.Instances[core.expansion][core.instanceType][core.instance]["boss1"])
-        InfoFrame_SetHeaderCounter(L["Shared_PlayersWhoNeedAchievement"],playersCompletedAchievement,#core.Instances[core.expansion][core.instanceType][core.instance]["boss1"].players)
-    end
-
-    if timerStarted == false and playersCompletedAchievement > 0 then
+    if initialSetup == true and timerStarted == false and playersCompletedAchievement > 0 then
         timerStarted = true
         C_Timer.After(1, function()
+            local updatePerformed = false
             if core.Instances[core.expansion][core.instanceType][core.instance]["boss1"].players ~= nil then
                 for k,player in ipairs(core.Instances[core.expansion][core.instanceType][core.instance]["boss1"].players) do
                     if InfoFrame_GetPlayerStatusWithMessage(player) == 2 then
@@ -142,6 +145,7 @@ function core._2289:TrackAdditional()
                             if spellId == 330092 then
                                 core.InfoFrame_PlayersTable[player] = {2, math.floor(expirationTime - GetTime())}
                                 InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfoPersonalArgs(core.Instances[core.expansion][core.instanceType][core.instance]["boss1"])
+                                updatePerformed = true
                             end
                         end
                     end
@@ -150,7 +154,7 @@ function core._2289:TrackAdditional()
             end
             timerStarted = false
 
-            if core.Instances[core.expansion][core.instanceType][core.instance]["boss1"].players ~= nil then
+            if core.Instances ~= nil and updatePerformed == true  then
                 core._2289:TrackAdditional()
             end
         end)
