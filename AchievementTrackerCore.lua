@@ -233,7 +233,7 @@ core.announceTrackedAchievementsToChat = false	--Whether or not the user has cho
 core.lockDetection = false						--Once an encounter has finished. Stop the encounter being detected again straight away
 core.onlyTrackMissingAchievements = false		--Whether or not the user has chosen to only track missing achievements or not
 core.trackingSupressed = false					--Whether or not tracking is being supressed for the current fight
-local infoFrameShown = false
+core.infoFrameShown = false
 local automaticBlizzardTracking = true			--By Default blizzard trackers are almost always white (true)
 local automaticBlizzardTrackingInitialCheck = false --Initial check for value at start of each encounter
 local enableCombatLogging = false
@@ -600,10 +600,10 @@ function getInstanceInfomation()
 					instanceCompatible = true
 
 					--Set instance we want to debug
-					-- core.instanceNameSpaces = "De Other Side"
-					-- core.instanceName = "DeOtherSide"
-					-- core.instance = 2291
-					-- core.instanceClear = "_2291"
+					-- core.instanceNameSpaces = "Sanguine Depths"
+					-- core.instanceName = "SanguineDepths"
+					-- core.instance = 2284
+					-- core.instanceClear = "_2284"
 					-- core.expansion = 2
 					-- core.instanceType = "Dungeons"
 				end
@@ -781,7 +781,7 @@ function enableAchievementTracking(self)
 		if LoggingCombat() ~= true then
 			LoggingCombat(1)
 			core:printMessage(L["Core_CombatLogEnabled"])
-			RaidNotice_AddMessage(RaidWarningFrame, "[IAT] Combat Log Started", ChatTypeInfo["SYSTEM"])
+			--RaidNotice_AddMessage(RaidWarningFrame, "[IAT] Combat Log Started", ChatTypeInfo["SYSTEM"])
 		else
 			core:sendDebugMessage("Combatlog already enabled")
 		end
@@ -1535,15 +1535,15 @@ function events:ENCOUNTER_START(self, encounterID, encounterName, difficultyID, 
 		if LoggingCombat() ~= true then
 			LoggingCombat(1)
 			core:printMessage(L["Core_CombatLogEnabled"])
-			RaidNotice_AddMessage(RaidWarningFrame, "[IAT] Combat Log Started", ChatTypeInfo["SYSTEM"])
+			--RaidNotice_AddMessage(RaidWarningFrame, "[IAT] Combat Log Started", ChatTypeInfo["SYSTEM"])
 		else
-			RaidNotice_AddMessage(RaidWarningFrame, "[IAT] Combat Log Running", ChatTypeInfo["SYSTEM"])
+			--RaidNotice_AddMessage(RaidWarningFrame, "[IAT] Combat Log Running", ChatTypeInfo["SYSTEM"])
 		end
 		if Transcriptor ~= nil then
 			if Transcriptor:IsLogging() == nil then
 				Transcriptor:StartLog(1)
 				core:printMessage(L["Core_TranscriptorLogEnabled"])
-				RaidNotice_AddMessage(RaidWarningFrame, "[IAT] Transcriptor Log Started", ChatTypeInfo["SYSTEM"])
+				--RaidNotice_AddMessage(RaidWarningFrame, "[IAT] Transcriptor Log Started", ChatTypeInfo["SYSTEM"])
 			end
 		end
 	end
@@ -1871,7 +1871,7 @@ function checkAndClearInstanceVariables()
 			if LoggingCombat() ~= nil then
 				LoggingCombat(false)
 				core:printMessage(L["Core_CombatLogDisabled"])
-				RaidNotice_AddMessage(RaidWarningFrame, "[IAT] Combat Log Disabled", ChatTypeInfo["SYSTEM"])
+				--RaidNotice_AddMessage(RaidWarningFrame, "[IAT] Combat Log Disabled", ChatTypeInfo["SYSTEM"])
 			end
 		end
 	end
@@ -2323,12 +2323,12 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 					core.currentBosses[i].track()
 
 					--If boss has an info frame then display it
-					if core.currentBosses[i].displayInfoFrame == true and infoFrameShown == false then
+					if core.currentBosses[i].displayInfoFrame == true and core.infoFrameShown == false then
 						if enableInfoFrame == true then
 							core:sendDebugMessage("Showing InfoFrame")
 							core.IATInfoFrame:ToggleOn()
 							core.IATInfoFrame:SetHeading(GetAchievementLink(core.currentBosses[i].achievement))
-							infoFrameShown = true
+							core.infoFrameShown = true
 						end
 					end
 				end
@@ -2343,6 +2343,11 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 			if core.currentBosses[i].forceAutomaticDetection == true then
 				core:detectBlizzardTrackingAutomatically()
 			end
+		end
+
+		--Track additional variables for the instance if they are not tied to a boss/encounter
+		if pcall(function() core[core.instanceClear]:TrackAdditional() end) == true then
+			core[core.instanceClear]:TrackAdditional()
 		end
 	else
 		if core.lockDetection == false then
@@ -3545,7 +3550,7 @@ function core:clearVariables()
 	core.MobCounter:Reset()
 
 
-	if infoFrameShown == true then
+	if core.infoFrameShown == true then
 		core:sendDebugMessage("Resetting InfoFrame")
 		core.IATInfoFrame:ToggleOff()
 		core.IATInfoFrame:SetHeading()
@@ -3553,7 +3558,7 @@ function core:clearVariables()
 		core.IATInfoFrame:SetText1()
 		core.IATInfoFrame:SetSubHeading2()
 		core.IATInfoFrame:SetText2()
-		infoFrameShown = false
+		core.infoFrameShown = false
 		core.InfoFrame_PlayersTable = {}
 	else
 		core:sendDebugMessage("InfoFrame does not need to be reset")

@@ -2,6 +2,7 @@
 -- Namespaces
 --------------------------------------
 local _, core = ...
+local L = core.L
 
 local rc = LibStub("LibRangeCheck-2.0")
 core.InfoFrame = {}
@@ -128,7 +129,9 @@ function InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfoPersonalArgs(player
     if next(core.InfoFrame_PlayersTable) == nil then
         --If table is empty then generate players
         for k,player in ipairs(playerTable.players) do
-            core.InfoFrame_PlayersTable[player] = {1,""}
+            if player ~= L["GUI_NoPlayersNeedAchievement"] then
+                core.InfoFrame_PlayersTable[player] = {1,""}
+            end
         end
     else
         --Update Info Frame with values from table
