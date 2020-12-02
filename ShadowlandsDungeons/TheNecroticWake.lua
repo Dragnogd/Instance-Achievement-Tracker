@@ -48,44 +48,49 @@ function core._2286:NalthorTheRimebinder()
     InfoFrame_UpdatePlayersOnInfoFramePersonal()
     InfoFrame_SetHeaderCounter(L["Shared_PlayersWhoNeedAchievement"],#core.currentBosses[1].players,#core.currentBosses[1].players)
 
-    --Comet Storm
-    if (core.type == "SPELL_DAMAGE" or core.type == "SPELL_MISSED") and core.spellId == 320784 then
-        if core.destName ~= nil then
-            if UnitIsPlayer(core.destName) then
-                if InfoFrame_GetPlayerFailed(core.destName) == false then
-                    InfoFrame_SetPlayerFailed(core.destName)
-                    core:sendMessage(format(L["Shared_FailedPersonalAchievement"], core.destName, GetAchievementLink(core.achievementIDs[1]), format(L["Shared_DamageFromAbility"], GetSpellLink(320784))),true)
+    if core.destName ~= nil then
+        local name, realm = UnitName(core.destName)
+        if core:has_value(core.Instances[core.expansion][core.instanceType][core.instance]["boss3"].players, name) == true then
+            --Comet Storm
+            if (core.type == "SPELL_DAMAGE" or core.type == "SPELL_MISSED") and core.spellId == 320784 then
+                if core.destName ~= nil then
+                    if UnitIsPlayer(core.destName) then
+                        if InfoFrame_GetPlayerFailed(core.destName) == false then
+                            InfoFrame_SetPlayerFailed(core.destName)
+                            core:sendMessage(format(L["Shared_FailedPersonalAchievement"], core.destName, GetAchievementLink(core.achievementIDs[1]), format(L["Shared_DamageFromAbility"], GetSpellLink(320784))),true)
+                        end
+                    end
                 end
             end
-        end
-    end
 
-    --Frozen Blinds (Secondary Effect)
-    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 323730 then
-        if core.destName ~= nil then
-            if UnitIsPlayer(core.destName) then
-                if InfoFrame_GetPlayerFailed(core.destName) == false then
-                    InfoFrame_SetPlayerFailed(core.destName)
-                    core:sendMessage(format(L["Shared_FailedPersonalAchievement"], core.destName, GetAchievementLink(core.achievementIDs[1]), format(L["Shared_DamageFromAbility"], GetSpellLink(323730))),true)
+            --Frozen Blinds (Secondary Effect)
+            if core.type == "SPELL_AURA_APPLIED" and core.spellId == 323730 then
+                if core.destName ~= nil then
+                    if UnitIsPlayer(core.destName) then
+                        if InfoFrame_GetPlayerFailed(core.destName) == false then
+                            InfoFrame_SetPlayerFailed(core.destName)
+                            core:sendMessage(format(L["Shared_FailedPersonalAchievement"], core.destName, GetAchievementLink(core.achievementIDs[1]), format(L["Shared_DamageFromAbility"], GetSpellLink(323730))),true)
+                        end
+                    end
                 end
             end
-        end
-    end
 
-    --Blizzard
-    if (core.type == "SPELL_DAMAGE" or core.type == "SPELL_MISSED") and core.spellId == 287294 then
-        if core.destName ~= nil then
-            if UnitIsPlayer(core.destName) then
-                if InfoFrame_GetPlayerFailed(core.destName) == false then
-                    InfoFrame_SetPlayerFailed(core.destName)
-                    core:sendMessage(format(L["Shared_FailedPersonalAchievement"], core.destName, GetAchievementLink(core.achievementIDs[1]), format(L["Shared_DamageFromAbility"], GetSpellLink(287294))),true)
+            --Blizzard
+            if (core.type == "SPELL_DAMAGE" or core.type == "SPELL_MISSED") and core.spellId == 287294 then
+                if core.destName ~= nil then
+                    if UnitIsPlayer(core.destName) then
+                        if InfoFrame_GetPlayerFailed(core.destName) == false then
+                            InfoFrame_SetPlayerFailed(core.destName)
+                            core:sendMessage(format(L["Shared_FailedPersonalAchievement"], core.destName, GetAchievementLink(core.achievementIDs[1]), format(L["Shared_DamageFromAbility"], GetSpellLink(287294))),true)
+                        end
+                    end
                 end
             end
         end
     end
 end
 
-function core._2285:ClearVariables()
+function core._2286:ClearVariables()
     ------------------------------------------------------
     ---- Surgeon Stitchflesh
     ------------------------------------------------------
