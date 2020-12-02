@@ -234,6 +234,7 @@ core.lockDetection = false						--Once an encounter has finished. Stop the encou
 core.onlyTrackMissingAchievements = false		--Whether or not the user has chosen to only track missing achievements or not
 core.trackingSupressed = false					--Whether or not tracking is being supressed for the current fight
 core.infoFrameShown = false
+core.infoFrameLock = false
 local automaticBlizzardTracking = true			--By Default blizzard trackers are almost always white (true)
 local automaticBlizzardTrackingInitialCheck = false --Initial check for value at start of each encounter
 local enableCombatLogging = false
@@ -600,10 +601,10 @@ function getInstanceInfomation()
 					instanceCompatible = true
 
 					--Set instance we want to debug
-					-- core.instanceNameSpaces = "Sanguine Depths"
-					-- core.instanceName = "SanguineDepths"
-					-- core.instance = 2284
-					-- core.instanceClear = "_2284"
+					-- core.instanceNameSpaces = "The Necrotic Wake"
+					-- core.instanceName = "TheNecroticWake"
+					-- core.instance = 2286
+					-- core.instanceClear = "_2286"
 					-- core.expansion = 2
 					-- core.instanceType = "Dungeons"
 				end
@@ -1873,6 +1874,22 @@ function checkAndClearInstanceVariables()
 				core:printMessage(L["Core_CombatLogDisabled"])
 				--RaidNotice_AddMessage(RaidWarningFrame, "[IAT] Combat Log Disabled", ChatTypeInfo["SYSTEM"])
 			end
+		end
+
+		--Cleanup InfoFrame
+		if core.infoFrameShown == true then
+			core:sendDebugMessage("Resetting InfoFrame")
+			core.IATInfoFrame:ToggleOff()
+			core.IATInfoFrame:SetHeading()
+			core.IATInfoFrame:SetSubHeading1()
+			core.IATInfoFrame:SetText1()
+			core.IATInfoFrame:SetSubHeading2()
+			core.IATInfoFrame:SetText2()
+			core.infoFrameShown = false
+			core.InfoFrame_PlayersTable = {}
+			core.infoFrameLock = false
+		else
+			core:sendDebugMessage("InfoFrame was not active")
 		end
 	end
 end
@@ -3550,7 +3567,7 @@ function core:clearVariables()
 	core.MobCounter:Reset()
 
 
-	if core.infoFrameShown == true then
+	if core.infoFrameShown == true and core.infoFrameLock == false then
 		core:sendDebugMessage("Resetting InfoFrame")
 		core.IATInfoFrame:ToggleOff()
 		core.IATInfoFrame:SetHeading()
@@ -3560,6 +3577,8 @@ function core:clearVariables()
 		core.IATInfoFrame:SetText2()
 		core.infoFrameShown = false
 		core.InfoFrame_PlayersTable = {}
+	elseif core.infoFrameLock == true then
+		core:sendDebugMessage("InfoFrame is in locked state")
 	else
 		core:sendDebugMessage("InfoFrame does not need to be reset")
 	end
