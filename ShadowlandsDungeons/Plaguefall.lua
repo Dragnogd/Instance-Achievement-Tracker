@@ -99,6 +99,7 @@ function core._2289:TrackAdditional()
                     core.IATInfoFrame:ToggleOn()
                     initialSetup = true
                     core.infoFrameShown = true
+                    core.infoFrameLock = true
                 end
 
                 InfoFrame_SetPlayerNeutralWithMessage(core.destName, 1)
