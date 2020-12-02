@@ -71,7 +71,6 @@ function core._2291:HighlyCommunicable()
 end
 
 function core._2291:TrackAdditional()
-
     if core.type == "SPELL_AURA_APPLIED" and core.spellId == 322746 and core.destName ~= nil then --322746
         if UnitIsPlayer(core.destName) then
             if initialSetup == false then
@@ -82,6 +81,7 @@ function core._2291:TrackAdditional()
                 core.IATInfoFrame:ToggleOn()
                 initialSetup = true
                 core.infoFrameShown = true
+                core.infoFrameLock = true
             end
 
             local name, realm = UnitName(core.destName)
