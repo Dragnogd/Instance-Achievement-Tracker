@@ -81,6 +81,7 @@ function core._2284:TrackAdditional()
     if core.type == "UNIT_DIED" and core.destID == "165318" then
         generalKaalKilled = true
         core:sendDebugMessage("General Kaal Killed")
+        core.infoFrameLock = false
     end
 
     if core.destName ~= nil then
@@ -98,6 +99,7 @@ function core._2284:TrackAdditional()
                 core.IATInfoFrame:ToggleOn()
                 initialSetup = true
                 core.infoFrameShown = true
+                core.infoFrameLock = true
             end
 
             if core:has_value(core.Instances[core.expansion][core.instanceType][core.instance]["boss3"].players, name) == true then
