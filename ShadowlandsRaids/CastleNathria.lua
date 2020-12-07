@@ -36,22 +36,62 @@ function core._2296:HuntsmanAltimor()
     --Defeat Huntsman Altimor after walking Margore, Bargast, and Hecutis to the corners of The Kennels in Castle Nathria on Normal difficulty or higher.
 
     if core:getBlizzardTrackingStatus(14523, 1) == true and MargoreCompleted == false then
-        core:sendMessage(GetAchievementCriteriaInfo(14523,1) .. " " .. L["Shared_Completed"] .. " (" .. KennelsCompleted .. "/3)")
         MargoreCompleted = true
         KennelsCompleted = KennelsCompleted + 1
+        core:sendMessage(GetAchievementCriteriaInfo(14523,1) .. " " .. L["Shared_Completed"] .. " (" .. KennelsCompleted .. "/3)")
     end
     if core:getBlizzardTrackingStatus(14523, 2) == true and HecutisCompleted == false then
-        core:sendMessage(GetAchievementCriteriaInfo(14523,2) .. " " .. L["Shared_Completed"] .. " (" .. KennelsCompleted .. "/3)")
         HecutisCompleted = true
         KennelsCompleted = KennelsCompleted + 1
+        core:sendMessage(GetAchievementCriteriaInfo(14523,2) .. " " .. L["Shared_Completed"] .. " (" .. KennelsCompleted .. "/3)")
     end
     if core:getBlizzardTrackingStatus(14523, 3) == true and BargastCompleted == false then
-        core:sendMessage(GetAchievementCriteriaInfo(14523,3) .. " " .. L["Shared_Completed"] .. " (" .. KennelsCompleted .. "/3)")
         BargastCompleted = true
         KennelsCompleted = KennelsCompleted + 1
+        core:sendMessage(GetAchievementCriteriaInfo(14523,3) .. " " .. L["Shared_Completed"] .. " (" .. KennelsCompleted .. "/3)")
     end
 
     if core:getBlizzardTrackingStatus(14523, 1) == true and core:getBlizzardTrackingStatus(14523, 2) == true and core:getBlizzardTrackingStatus(14523, 3) == true then
+        core:getAchievementSuccess()
+    end
+end
+
+function core._2296:Kaelthas()
+    --Redeem Kael'thas after lighting all four of the room's braziers in Castle Nathria on Normal difficulty or higher.
+
+    if core:getBlizzardTrackingStatus(14608, 1) == true then
+        core:getAchievementSuccess()
+    end
+end
+
+function core._2296:HungeringDestroyer()
+    --Defeat the Hungering Destroyer after draining all of the large anima canisters with Volatile Ejection in Castle Nathria on Normal difficulty or higher.
+
+    if core:getBlizzardTrackingStatus(14376, 1) == true then
+        core:getAchievementSuccess()
+    end
+end
+
+function core._2296:LadyInervaDarkvein()
+    --Defeat Lady Inerva Darkvein after defeating the Dark Animus in Castle Nathria on Normal difficulty or higher.
+
+    if core:getBlizzardTrackingStatus(14524, 1) == true then
+        core:getAchievementSuccess()
+    end
+end
+
+function core._2296:Sludgefist()
+    --Defeat Sludgefist after he collides with pillars in Dirtflap's preferred order in Castle Nathria on Normal difficulty or higher.
+
+    if core:getBlizzardTrackingStatus(14294, 1) == true then
+        core:getAchievementSuccess()
+    end
+end
+
+function core._2296:StoneLegionGenerals()
+    --Defeat the Stone Legion Generals while all players are carrying a Bouquet of Blooming Sanguine Roses in Castle Nathria on Normal difficulty or higher.
+
+    if core:getBlizzardTrackingStatus(14525, 1) == true then
         core:getAchievementSuccess()
     end
 end
