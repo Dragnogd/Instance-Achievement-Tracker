@@ -629,7 +629,7 @@ local baseLocale = {
 	["PitOfSaron_Other"] = "To complete this achievement, you must run through the tunnel before %s without getting hit by any icicles falling from the ceiling. The icicles are marked by blue circles on the ground.",
 	["CastleNathria_Shriekwing"] = "",
 	["CastleNathria_HuntsmanAltimor"] = "",
-	["CastleNathria_SunKingsSalvation"] = "",
+	["CastleNathria_Kaelthas"] = "",
 	["CastleNathria_ArtificerXymox"] = "",
 	["CastleNathria_HungeringDestroyer"] = "",
 	["CastleNathria_LadyInervaDarkvein"] = "",
@@ -641,5 +641,6 @@ local baseLocale = {
 	["Shared_CriteriaHasNotBeenMet"] = "Criteria has not been met",
 	["ThroneOfThunder_CollectFeather"] = "Jump to the platform and collect feather now",
 	["TheaterOfPain_ChallengeNow"] = "/challenge %s Now!",
+	["CastleNathria_SunKingsSalvation"] = "",
 }
 core:RegisterLocale('enUS', baseLocale)
