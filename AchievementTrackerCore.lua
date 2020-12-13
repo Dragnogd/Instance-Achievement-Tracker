@@ -821,7 +821,7 @@ function enableAchievementTracking(self)
 
 	if core.warnCompatible == true then
 		StaticPopupDialogs["IAT_WarnCompatible"] = {
-			text = L["[IAT] Some achievements cannot be earned on Mythic difficulty. It is recommended switching to Heroic difficulty"],
+			text = L["GUI_DifficultyWarning"],
 			button1 = "Ok",
 			timeout = 0,
 			whileDead = true,
