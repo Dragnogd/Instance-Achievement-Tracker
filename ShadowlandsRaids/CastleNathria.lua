@@ -24,6 +24,22 @@ local HecutisCompleted = false
 local BargastCompleted = false
 local KennelsCompleted = 0
 
+------------------------------------------------------
+---- Artificer Xy'mox
+------------------------------------------------------
+local MaldraxxusReturned = false
+local ArdenwealdReturned = false
+local MawReturned = false
+local AnimaReturned = 0
+
+------------------------------------------------------
+---- Stone Legion Generals
+------------------------------------------------------
+local BloomingFlowersCounter = 0
+local initialStoneLegionSetup = false
+local playersWiltedRoseStacks = {}
+local playersBloomingRose = {}
+
 function core._2296:Shriekwing()
     --Defeat Shriekwing after she kills six Sneaky Servitors in Castle Nathria on Normal difficulty or higher.
 
@@ -64,6 +80,30 @@ function core._2296:Kaelthas()
     end
 end
 
+function core._2296:ArtificerXymox()
+    --Defeat Artificer Xy'mox after returning loose Maldraxxus, Ardenweald, and Maw Anima to their display cases in Castle Nathria on Normal difficulty or higher.
+
+    if core:getBlizzardTrackingStatus(14617, 1) == true and MaldraxxusReturned == false then
+        MaldraxxusReturned = true
+        AnimaReturned = AnimaReturned + 1
+        core:sendMessage(GetAchievementCriteriaInfo(14617,1) .. " " .. L["Shared_Completed"] .. " (" .. AnimaReturned .. "/3)")
+    end
+    if core:getBlizzardTrackingStatus(14617, 2) == true and MawReturned == false then
+        MawReturned = true
+        AnimaReturned = AnimaReturned + 1
+        core:sendMessage(GetAchievementCriteriaInfo(14617,2) .. " " .. L["Shared_Completed"] .. " (" .. AnimaReturned .. "/3)")
+    end
+    if core:getBlizzardTrackingStatus(14617, 3) == true and ArdenwealdReturned == false then
+        ArdenwealdReturned = true
+        AnimaReturned = AnimaReturned + 1
+        core:sendMessage(GetAchievementCriteriaInfo(14617,3) .. " " .. L["Shared_Completed"] .. " (" .. AnimaReturned .. "/3)")
+    end
+
+    if core:getBlizzardTrackingStatus(14617, 1) == true and core:getBlizzardTrackingStatus(14617, 2) == true and core:getBlizzardTrackingStatus(14617, 3) == true then
+        core:getAchievementSuccess()
+    end
+end
+
 function core._2296:HungeringDestroyer()
     --Defeat the Hungering Destroyer after draining all of the large anima canisters with Volatile Ejection in Castle Nathria on Normal difficulty or higher.
 
@@ -80,6 +120,14 @@ function core._2296:LadyInervaDarkvein()
     end
 end
 
+function core._2296:CouncilOfBlood()
+    --Defeat the Council of Blood after throwing four bottles of wine in Castle Nathria on Normal difficulty or higher.
+
+    if core:getBlizzardTrackingStatus(14619, 1) == true then
+        core:getAchievementSuccess()
+    end
+end
+
 function core._2296:Sludgefist()
     --Defeat Sludgefist after he collides with pillars in Dirtflap's preferred order in Castle Nathria on Normal difficulty or higher.
 
@@ -90,6 +138,53 @@ end
 
 function core._2296:StoneLegionGenerals()
     --Defeat the Stone Legion Generals while all players are carrying a Bouquet of Blooming Sanguine Roses in Castle Nathria on Normal difficulty or higher.
+    InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
+    InfoFrame_SetHeaderCounter(L["Shared_PlayersMetCriteria"],BloomingFlowersCounter,core.groupSize)
+
+    if initialStoneLegionSetup == false then
+		for player,status in pairs(core.InfoFrame_PlayersTable) do
+			if playersWiltedRoseStacks[player] == nil then
+				playersWiltedRoseStacks[player] = 0
+			end
+		end
+        initialStoneLegionSetup = true
+    end
+
+    --Wilting Sanguine Rose (Gained)
+    if (core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_APPLIED_DOSE") and core.spellId == 339565 then
+		if core.destName ~= nil then
+			local player = core.destName
+			if string.find(player, "-") then
+				local name, realm = strsplit("-", player)
+				player = name
+			end
+			if playersWiltedRoseStacks[player] ~= nil then
+				playersWiltedRoseStacks[player] = playersWiltedRoseStacks[player] + 1
+                InfoFrame_SetPlayerNeutralWithMessage(core.destName, playersWiltedRoseStacks[player])
+			end
+		end
+    end
+
+    --Wilting Sanguine Rose (Lost)
+    if core.type == "SPELL_AURA_REMOVED" and core.spellId == 339565 then
+        if core.destName ~= nil then
+            C_Timer.After(1, function()
+                if playersBloomingRose[core.destName] == nil then
+                    core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")")
+                end
+            end)
+        end
+    end
+
+    --Blooming Roses
+    if core.type == "SPELL_AURA_APLLIED" and core.spellId == 339574 then
+        if core.destName ~= nil then
+            InfoFrame_SetPlayerCompleteWithMessage(core.destName, "")
+            BloomingFlowersCounter = BloomingFlowersCounter + 1
+            playersBloomingRose[core.destName] = core.destName
+            core:sendMessage(core.destName .. " " .. L["Shared_HasCompleted"] .. " " .. core:getAchievement() .. " (" .. BloomingFlowersCounter .. "/" .. core.groupSize .. ")",true)
+        end
+    end
 
     if core:getBlizzardTrackingStatus(14525, 1) == true then
         core:getAchievementSuccess()
@@ -162,4 +257,20 @@ function core._2296:ClearVariables()
     HecutisCompleted = false
     BargastCompleted = false
     KennelsCompleted = 0
+
+    ------------------------------------------------------
+    ---- Artificer Xy'mox
+    ------------------------------------------------------
+    MaldraxxusReturned = false
+    ArdenwealdReturned = false
+    MawReturned = false
+    AnimaReturned = 0
+
+    ------------------------------------------------------
+    ---- Stone Legion Generals
+    ------------------------------------------------------
+    BloomingFlowersCounter = 0
+    initialStoneLegionSetup = false
+    playersWiltedRoseStacks = {}
+    playersBloomingRose = {}
 end
