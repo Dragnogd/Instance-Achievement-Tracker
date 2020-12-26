@@ -1359,9 +1359,20 @@ function Config:CreateGUI()
             button.headerText:SetPoint("LEFT",12,0)
 
             -- the text for the content
-            button.contentText = button:CreateFontString(nil,"ARTWORK","GameFontHighlight")
+            -- button.contentText = button:CreateFontString(nil,"ARTWORK","GameFontHighlight")
+            button.contentText = CreateFrame("SimpleHTML")
+            button.contentText:SetScript("OnHyperlinkEnter", function(self, linkData, link, button)
+                AltGameTooltip:SetOwner(UIConfig, "ANCHOR_TOPRIGHT")
+                AltGameTooltip:SetHyperlink(linkData)
+                AltGameTooltip:Show()
+            end)
+            button.contentText:SetScript("OnHyperlinkLeave", function(self, linkData, link, button)
+                AltGameTooltip:Hide()
+            end)
+            button.contentText:SetParent(button)
             button.contentText:SetPoint("TOPLEFT",16,0)
             button.contentText:SetJustifyH("LEFT")
+            --button.contentText:SetIndentedWordWrap(true)
 
             --Tactics
             button.tactics = Config:CreateButton2("TOPRIGHT", button, "TOPRIGHT", -1, -7, L["GUI_OutputTactics"])
@@ -1630,11 +1641,16 @@ function Instance_OnClick(self)
                     tactics = instanceLocation["boss" .. counter2].tactics
                 end
 
+                tactics = tactics:gsub("%\n", "<br />")
+
                 --Only show players if user has enabled achievement tracking
+                button.contentText:SetWidth(500)
+                button.contentText:SetFont('Fonts\\FRIZQT__.TTF', 12);
+                local achievementLink = GetAchievementLink(instanceLocation["boss" .. counter2].achievement)
                 if core.achievementTrackingEnabled == false then
-                    button.contentText:SetText(L["GUI_Achievement"] .. ": " .. GetAchievementLink(instanceLocation["boss" .. counter2].achievement) .. "\n\n" .. L["GUI_Tactic"] .. ": " .. tactics)
+                    button.contentText:SetText("<html><body><p>" .. L["GUI_Achievement"] .. ": ".. achievementLink .. "<br /><br />" .. L["GUI_Tactic"] .. ": " .. tactics .. "</p></body></html>")
                 else
-                    button.contentText:SetText(L["GUI_Achievement"] .. ": " .. GetAchievementLink(instanceLocation["boss" .. counter2].achievement) .. "\n\n" .. players .. "\n\n" .. L["GUI_Tactic"] .. ": " .. tactics)
+                    button.contentText:SetText("<html><body><p>" .. L["GUI_Achievement"] .. ": " .. achievementLink .. "<br /><br />" .. players .. "<br /><br />" .. L["GUI_Tactic"] .. ": " .. tactics .. "</p></body></html>")
                 end
 
                 if playersFound == false and core.achievementDisplayStatus == "grey" then
@@ -1648,12 +1664,8 @@ function Instance_OnClick(self)
                 button.contentText:Show()
                 button.headerText:Hide()
                 button:SetNormalTexture(nil)
-                button.contentText:SetWidth(500)
-                button.contentText:SetHeight(500)
-
-                button.contentText:SetWordWrap(true)
-                button.contentText:SetHeight(button.contentText:GetStringHeight())
-                heightDifference = button.contentText:GetStringHeight();
+                button.contentText:SetHeight(button.contentText:GetContentHeight())
+                button:SetHeight(button.contentText:GetContentHeight())
 
                 button.tactics:Hide()
                 button.players:Hide()
