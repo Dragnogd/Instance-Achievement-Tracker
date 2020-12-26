@@ -98,6 +98,9 @@ function events:GET_ITEM_INFO_RECEIVED(self, arg1)
 end
 
 function generateNPCCache()
+	core:sendDebugMessage("Attempting to load from local NPC Cache")
+	GetNameFromLocalNpcIDCache()
+
 	core:sendDebugMessage("Generating NPC Cache...")
 	local count = 1
 	local tempNPC = {}

@@ -35,6 +35,9 @@ Config.currentInstance = nil        --Stores which instance is currently selecte
 -- Purpose:         Stores information about the current options in the GUI
 AchievementTrackerOptions = {}
 
+-- Purpose:         Stores NPC names
+AchievementTrackerNPCCache = {}
+
 -- Purpose:         Information about the current release. This is mianly used to detect which addon should output messages to chat to avoid spam
 Config.majorVersion = 3						--Addon with a higher major version change have priority over a lower major version
 Config.minorVersion = 11    				--Addon with a minor version change have prioirty over a lower minor version
@@ -2168,7 +2171,10 @@ function GetNameFromNpcIDCache(npcID)
 					end
 				end
 			end
-		end
+        end
+
+        --Add NPC to NPCCache
+        AchievementTrackerNPCCache[npcID] = name
     else
         C_Timer.After(0.1, function()
             if tip:NumLines()>0 then
@@ -2188,9 +2194,46 @@ function GetNameFromNpcIDCache(npcID)
                         end
                     end
                 end
+
+                --Add NPC to NPCCache
+                AchievementTrackerNPCCache[npcID] = name
             else
                 GetNameFromNpcIDCache(npcID)
             end
         end)
+    end
+end
+
+function GetNameFromLocalNpcIDCache()
+    --Attempt to fetch NPC name from local cache if it exists
+    if AchievementTrackerNPCCache ~= nil then
+        for npcID,name in pairs(AchievementTrackerNPCCache) do
+            --core:sendDebugMessage("Located: " .. name)
+            for expansion, _ in pairs(core.Instances) do
+                for instanceType, _ in pairs(core.Instances[expansion]) do
+                    for instance, _ in pairs(core.Instances[expansion][instanceType]) do
+                        for boss, _ in pairs(core.Instances[expansion][instanceType][instance]) do
+                            if boss ~= "name" then
+                                if type(core.Instances[expansion][instanceType][instance][boss].tactics) == "table" then
+                                    if UnitFactionGroup("player") == "Alliance" then
+                                        if string.find(core.Instances[expansion][instanceType][instance][boss].tactics[1], ("IAT_" .. npcID)) then
+                                            core.Instances[expansion][instanceType][instance][boss].tactics[1] = string.gsub(core.Instances[expansion][instanceType][instance][boss].tactics[1], ("IAT_" .. npcID), name)
+                                        end
+                                    else
+                                        if string.find(core.Instances[expansion][instanceType][instance][boss].tactics[2], ("IAT_" .. npcID)) then
+                                            core.Instances[expansion][instanceType][instance][boss].tactics[2] = string.gsub(core.Instances[expansion][instanceType][instance][boss].tactics[2], ("IAT_" .. npcID), name)
+                                        end
+                                    end
+                                else
+                                    if string.find(core.Instances[expansion][instanceType][instance][boss].tactics, ("IAT_" .. npcID)) then
+                                        core.Instances[expansion][instanceType][instance][boss].tactics = string.gsub(core.Instances[expansion][instanceType][instance][boss].tactics, ("IAT_" .. npcID), name)
+                                    end
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+        end
     end
 end
