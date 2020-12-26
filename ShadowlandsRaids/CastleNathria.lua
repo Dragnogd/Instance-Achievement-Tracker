@@ -31,11 +31,16 @@ local MaldraxxusReturned = false
 local ArdenwealdReturned = false
 local MawReturned = false
 local AnimaReturned = 0
+local ArdenwealdAnimaFound = false
+local MawAnimaFound = false
+local MaldraxxusAnimaFound = false
 
 ------------------------------------------------------
 ---- Stone Legion Generals
 ------------------------------------------------------
 local BloomingFlowersCounter = 0
+local WiltingFlowersCounter = 0
+local WiltingFlowersUID = {}
 local initialStoneLegionSetup = false
 local playersWiltedRoseStacks = {}
 local playersBloomingRose = {}
@@ -54,17 +59,17 @@ function core._2296:HuntsmanAltimor()
     if core:getBlizzardTrackingStatus(14523, 1) == true and MargoreCompleted == false then
         MargoreCompleted = true
         KennelsCompleted = KennelsCompleted + 1
-        core:sendMessage(GetAchievementCriteriaInfo(14523,1) .. " " .. L["Shared_Completed"] .. " (" .. KennelsCompleted .. "/3)")
+        core:sendMessage(GetAchievementCriteriaInfo(14523,1) .. " " .. L["Shared_Completed"] .. " (" .. KennelsCompleted .. "/3)",true)
     end
     if core:getBlizzardTrackingStatus(14523, 2) == true and HecutisCompleted == false then
         HecutisCompleted = true
         KennelsCompleted = KennelsCompleted + 1
-        core:sendMessage(GetAchievementCriteriaInfo(14523,2) .. " " .. L["Shared_Completed"] .. " (" .. KennelsCompleted .. "/3)")
+        core:sendMessage(GetAchievementCriteriaInfo(14523,2) .. " " .. L["Shared_Completed"] .. " (" .. KennelsCompleted .. "/3)",true)
     end
     if core:getBlizzardTrackingStatus(14523, 3) == true and BargastCompleted == false then
         BargastCompleted = true
         KennelsCompleted = KennelsCompleted + 1
-        core:sendMessage(GetAchievementCriteriaInfo(14523,3) .. " " .. L["Shared_Completed"] .. " (" .. KennelsCompleted .. "/3)")
+        core:sendMessage(GetAchievementCriteriaInfo(14523,3) .. " " .. L["Shared_Completed"] .. " (" .. KennelsCompleted .. "/3)",true)
     end
 
     if core:getBlizzardTrackingStatus(14523, 1) == true and core:getBlizzardTrackingStatus(14523, 2) == true and core:getBlizzardTrackingStatus(14523, 3) == true then
@@ -83,20 +88,22 @@ end
 function core._2296:ArtificerXymox()
     --Defeat Artificer Xy'mox after returning loose Maldraxxus, Ardenweald, and Maw Anima to their display cases in Castle Nathria on Normal difficulty or higher.
 
+    --Check if all 3 Anima have been found prior to pull
+
     if core:getBlizzardTrackingStatus(14617, 1) == true and MaldraxxusReturned == false then
         MaldraxxusReturned = true
         AnimaReturned = AnimaReturned + 1
-        core:sendMessage(GetAchievementCriteriaInfo(14617,1) .. " " .. L["Shared_Completed"] .. " (" .. AnimaReturned .. "/3)")
+        core:sendMessage(GetAchievementCriteriaInfo(14617,1) .. " " .. L["Shared_Completed"] .. " (" .. AnimaReturned .. "/3)",true)
     end
     if core:getBlizzardTrackingStatus(14617, 2) == true and MawReturned == false then
         MawReturned = true
         AnimaReturned = AnimaReturned + 1
-        core:sendMessage(GetAchievementCriteriaInfo(14617,2) .. " " .. L["Shared_Completed"] .. " (" .. AnimaReturned .. "/3)")
+        core:sendMessage(GetAchievementCriteriaInfo(14617,2) .. " " .. L["Shared_Completed"] .. " (" .. AnimaReturned .. "/3)",true)
     end
     if core:getBlizzardTrackingStatus(14617, 3) == true and ArdenwealdReturned == false then
         ArdenwealdReturned = true
         AnimaReturned = AnimaReturned + 1
-        core:sendMessage(GetAchievementCriteriaInfo(14617,3) .. " " .. L["Shared_Completed"] .. " (" .. AnimaReturned .. "/3)")
+        core:sendMessage(GetAchievementCriteriaInfo(14617,3) .. " " .. L["Shared_Completed"] .. " (" .. AnimaReturned .. "/3)",true)
     end
 
     if core:getBlizzardTrackingStatus(14617, 1) == true and core:getBlizzardTrackingStatus(14617, 2) == true and core:getBlizzardTrackingStatus(14617, 3) == true then
@@ -142,47 +149,93 @@ function core._2296:StoneLegionGenerals()
     InfoFrame_SetHeaderCounter(L["Shared_PlayersMetCriteria"],BloomingFlowersCounter,core.groupSize)
 
     if initialStoneLegionSetup == false then
+        initialStoneLegionSetup = true
+        local playersWithoutBuff = ""
+        local playersFailed = false
 		for player,status in pairs(core.InfoFrame_PlayersTable) do
 			if playersWiltedRoseStacks[player] == nil then
-				playersWiltedRoseStacks[player] = 0
-			end
-		end
-        initialStoneLegionSetup = true
+
+
+                --Check if player has the Wilted Rose Buff
+                local buffFound = false
+                for i=1,40 do
+                    local _, _, count2, _, _, _, _, _, _, spellId = UnitBuff(player, i)
+                    if spellId == 774 then
+                        buffFound = true
+                    end
+                end
+                if buffFound == true then
+                    InfoFrame_SetPlayerNeutralWithMessage(player, "1")
+                    playersWiltedRoseStacks[player] = 1
+                else
+                    InfoFrame_SetPlayerFailedWithMessage(player, "")
+                    playersWiltedRoseStacks[player] = 0
+                    playersWithoutBuff = playersWithoutBuff .. player .. ", "
+                    playersFailed = true
+                end
+            end
+        end
+
+        if playersFailed == true then
+            core:sendDebugMessage("FAILED")
+            C_Timer.After(6, function()
+                core:getAchievementFailed()
+                core:sendMessageSafe(playersWithoutBuff,nil,true)
+            end)
+        end
     end
 
-    --Wilting Sanguine Rose (Gained)
-    if (core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_APPLIED_DOSE") and core.spellId == 339565 then
-		if core.destName ~= nil then
+    --Wilting Sanguine Rose (Gained Stack)
+    if (core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_APPLIED_DOSE") and core.spellId == 774 then --339565
+        if core.destName ~= nil then
 			local player = core.destName
 			if string.find(player, "-") then
 				local name, realm = strsplit("-", player)
-				player = name
-			end
-			if playersWiltedRoseStacks[player] ~= nil then
-				playersWiltedRoseStacks[player] = playersWiltedRoseStacks[player] + 1
-                InfoFrame_SetPlayerNeutralWithMessage(core.destName, playersWiltedRoseStacks[player])
+                player = name
+            end
+            if playersWiltedRoseStacks[player] ~= nil then
+                playersWiltedRoseStacks[player] = playersWiltedRoseStacks[player] + 1
+                print(player, playersWiltedRoseStacks[player])
+                InfoFrame_SetPlayerNeutralWithMessage(player, playersWiltedRoseStacks[player])
 			end
 		end
     end
 
     --Wilting Sanguine Rose (Lost)
-    if core.type == "SPELL_AURA_REMOVED" and core.spellId == 339565 then
+    if core.type == "SPELL_AURA_REMOVED" and core.spellId == 774 then --339565
+        local playerTmp = core.destName
         if core.destName ~= nil then
-            C_Timer.After(1, function()
-                if playersBloomingRose[core.destName] == nil then
-                    core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")")
+            C_Timer.After(2, function()
+                if playersBloomingRose[playerTmp] == nil then
+                    core:getAchievementFailedWithMessageAfter("(" .. playerTmp .. ")")
+                    InfoFrame_SetPlayerFailedWithMessage(playerTmp, "")
                 end
             end)
         end
     end
 
-    --Blooming Roses
-    if core.type == "SPELL_AURA_APLLIED" and core.spellId == 339574 then
+    --Blooming Roses (Gained)
+    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 8936 then --339574
         if core.destName ~= nil then
+            if playersBloomingRose[core.destName] == nil then
+                BloomingFlowersCounter = BloomingFlowersCounter + 1
+                playersBloomingRose[core.destName] = core.destName
+                core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. GetSpellLink(339574) .. " (" .. BloomingFlowersCounter .. "/" .. core.groupSize .. ")",true)
+            end
             InfoFrame_SetPlayerCompleteWithMessage(core.destName, "")
-            BloomingFlowersCounter = BloomingFlowersCounter + 1
-            playersBloomingRose[core.destName] = core.destName
-            core:sendMessage(core.destName .. " " .. L["Shared_HasCompleted"] .. " " .. core:getAchievement() .. " (" .. BloomingFlowersCounter .. "/" .. core.groupSize .. ")",true)
+        end
+    end
+
+    --Blooming Roses (Lost)
+    if core.type == "SPELL_AURA_REMOVED" and core.spellId == 8936 then --339574
+        if core.destName ~= nil then
+            if playersBloomingRose[core.destName] ~= nil then
+                InfoFrame_SetPlayerFailedWithMessage(core.destName, "")
+                core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")")
+                BloomingFlowersCounter = BloomingFlowersCounter - 1
+                playersBloomingRose[core.destName] = nil
+                core:sendMessage(core.destName .. " " .. L["Shared_HasLost"] .. " " .. GetSpellLink(339574) .. " (" .. BloomingFlowersCounter .. "/" .. core.groupSize .. ")",true)
+            end
         end
     end
 
@@ -201,15 +254,14 @@ function core._2296:SireDenathrius()
 		initialSetup = true
 		for player,status in pairs(core.InfoFrame_PlayersTable) do
             burdernOfSinStackPlayers[player] = 4
-            InfoFrame_SetPlayerFailedWithMessage(name, burdernOfSinStackPlayers[name])
-            burdernOfSinsCounter = burdenOfSinCounter + 1
+            InfoFrame_SetPlayerFailedWithMessage(player, burdernOfSinStackPlayers[player])
 		end
     end
 
     --Player has lost a stack of Burden of Sin
     if (core.type == "SPELL_AURA_REMOVED_DOSE" or core.type == "SPELL_AURA_REMOVED") and core.spellId == 326699 then
         if core.destName ~= nil then
-            local name = destName
+            local name = core.destName
             if string.find(name, "-") then
                 name = strsplit("-", name)
             end
@@ -239,6 +291,71 @@ function core._2296:SireDenathrius()
                 core:getAchievementFailed()
             end
         end)
+    end
+end
+
+function core._2296:TrackAdditional()
+    --Stone Legion Generals Wilting Sanguine Rose (Gained)
+    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 774 then --339565
+        print("HERE")
+        core.IATInfoFrame:ToggleOn()
+        core.IATInfoFrame:SetHeading(GetAchievementLink(14525))
+        InfoFrame_SetHeaderCounter(L["Shared_PlayersMetCriteria"],WiltingFlowersCounter,core.groupSize)
+        InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
+        if core.destName ~= nil then
+            if WiltingFlowersUID[core.spawn_uid_dest_Player] == nil then
+                local player = core.destName
+                if string.find(player, "-") then
+                    local name, realm = strsplit("-", player)
+                    player = name
+                end
+                WiltingFlowersUID[core.spawn_uid_dest_Player] = core.spawn_uid_dest_Player
+                WiltingFlowersCounter = WiltingFlowersCounter + 1
+                if initialStoneLegionSetup == false then
+                    InfoFrame_SetPlayerCompleteWithMessage(player, "")
+                    core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. GetSpellLink(339565) .. " (" .. WiltingFlowersCounter .. "/" .. core.groupSize .. ")",true)
+                end
+            end
+        end
+        InfoFrame_SetHeaderCounter(L["Shared_PlayersMetCriteria"],WiltingFlowersCounter,core.groupSize)
+        InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
+    end
+
+    if core.type == "SPELL_AURA_REMOVED" and core.spellId == 774 then --339565
+        if core.destName ~= nil then
+            if WiltingFlowersUID[core.spawn_uid_dest_Player] ~= nil then
+                local player = core.destName
+                if string.find(player, "-") then
+                    local name, realm = strsplit("-", player)
+                    player = name
+                end
+                WiltingFlowersUID[core.spawn_uid_dest_Player] = nil
+                WiltingFlowersCounter = WiltingFlowersCounter - 1
+                if initialStoneLegionSetup == false then
+                    InfoFrame_SetPlayerFailedWithMessage(player, "")
+                    core:sendMessage(core.destName .. " " .. L["Shared_HasLost"] .. " " .. GetSpellLink(339565) .. " (" .. WiltingFlowersCounter .. "/" .. core.groupSize .. ")",true)
+                end
+            end
+        end
+        InfoFrame_SetHeaderCounter(L["Shared_PlayersMetCriteria"],WiltingFlowersCounter,core.groupSize)
+        InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
+    end
+
+    --Player has picked up Anima Attunement
+
+    --Ardenweald Anima
+    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 341186 then
+        core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. GetSpellLink(341186),true)
+    end
+
+    --Maw Anima
+    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 341253 then
+        core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. GetSpellLink(341253),true)
+    end
+
+    --Maldraxxus Anima
+    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 341135 then
+        core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. GetSpellLink(341135),true)
     end
 end
 
