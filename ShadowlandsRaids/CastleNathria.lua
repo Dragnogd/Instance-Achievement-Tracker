@@ -8,6 +8,7 @@ local L = core.L
 ---- Castle Nathria
 ------------------------------------------------------
 core._2296 = {}
+core._2296.Events = CreateFrame("Frame")
 
 ------------------------------------------------------
 ---- Sire Denathrius
@@ -34,6 +35,11 @@ local AnimaReturned = 0
 local ArdenwealdAnimaFound = false
 local MawAnimaFound = false
 local MaldraxxusAnimaFound = false
+local ArdenwealdAnimaLostTimestamp = nil
+local MawAnimaLostTimestamp = nil
+local MaldraxxusAnimaLostTimestamp = nil
+local CurrentAnima = nil
+local initialArtificerSetup = false
 
 ------------------------------------------------------
 ---- Stone Legion Generals
@@ -94,26 +100,122 @@ end
 function core._2296:ArtificerXymox()
     --Defeat Artificer Xy'mox after returning loose Maldraxxus, Ardenweald, and Maw Anima to their display cases in Castle Nathria on Normal difficulty or higher.
 
-    --Check if all 3 Anima have been found prior to pull
+    --Check if all 3 Anima have been found at start of fight
+    if initialArtificerSetup == false then
+        initialArtificerSetup = true
+        for k,player in pairs(core:getPlayersInGroupForAchievement()) do
+            for i=1,40 do
+                local _, _, count2, _, _, _, _, _, _, spellId = UnitDebuff(player, i)
+                if name ~= nil then
+                    if spellId == 341186 then
+                        --Anima of Ardenweald
+                        ArdenwealdAnimaFound = player
+                    elseif spellId == 341135 then
+                        --Anima of Maldraxxus
+                        MaldraxxusAnimaFound = player
+                    elseif spellId == 341253 then
+                        --Anima of the Maw
+                        MawAnimaFound = player
+                    end
+                end
+            end
+        end
 
+        if ArdenwealdAnimaFound == false or MaldraxxusAnimaFound == false or MawAnimaFound == false then
+            core:getAchievementFailed()
+        end
+    end
+
+    --Achievement Requirements Met
     if core:getBlizzardTrackingStatus(14617, 1) == true and MaldraxxusReturned == false then
         MaldraxxusReturned = true
         AnimaReturned = AnimaReturned + 1
         core:sendMessage(GetAchievementCriteriaInfo(14617,1) .. " " .. L["Shared_Completed"] .. " (" .. AnimaReturned .. "/3)",true)
+        CurrentAnima = nil
     end
     if core:getBlizzardTrackingStatus(14617, 2) == true and MawReturned == false then
         MawReturned = true
         AnimaReturned = AnimaReturned + 1
         core:sendMessage(GetAchievementCriteriaInfo(14617,2) .. " " .. L["Shared_Completed"] .. " (" .. AnimaReturned .. "/3)",true)
+        CurrentAnima = nil
     end
     if core:getBlizzardTrackingStatus(14617, 3) == true and ArdenwealdReturned == false then
         ArdenwealdReturned = true
         AnimaReturned = AnimaReturned + 1
         core:sendMessage(GetAchievementCriteriaInfo(14617,3) .. " " .. L["Shared_Completed"] .. " (" .. AnimaReturned .. "/3)",true)
+        CurrentAnima = nil
     end
 
     if core:getBlizzardTrackingStatus(14617, 1) == true and core:getBlizzardTrackingStatus(14617, 2) == true and core:getBlizzardTrackingStatus(14617, 3) == true then
         core:getAchievementSuccess()
+    end
+
+    --Anima Attunement Lost
+    if core.type == "SPELL_AURA_REMOVED" and core.spellId == 341186 then
+        ArdenwealdAnimaLostTimestamp = core.timestamp
+    elseif core.type == "SPELL_AURA_REMOVED" and core.spellId == 341135 then
+        MaldraxxusAnimaLostTimestamp = core.timestamp
+    elseif core.type == "SPELL_AURA_REMOVED" and core.spellId == 341253 then
+        MawAnimaLostTimestamp = core.timestamp
+    end
+
+    if core.type == "UNIT_DIED" and core.destName ~= nil then
+        if UnitIsPlayer(core.destName) then
+            local player = core.destName
+            if string.find(player, "-") then
+				local name, realm = strsplit("-", player)
+                player = name
+            end
+
+            --Anima Attunement Lost
+            if player == ArdenwealdAnimaFound then
+                if ArdenwealdAnimaLostTimestamp == core.timestamp then
+                    core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")")
+                end
+            elseif player == MaldraxxusAnimaFound then
+                if MaldraxxusAnimaLostTimestamp == core.timestamp then
+                    core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")")
+                end
+            elseif player == MawAnimaFound then
+                if MawAnimaLostTimestamp == core.timestamp then
+                    core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")")
+                end
+            end
+
+            --Overwhelming Anima Lost
+            if CurrentAnima ~= nil then
+                local animaFoundOrCompleted = false
+                for k,player2 in pairs(core:getPlayersInGroupForAchievement()) do
+                    local debuffFound = false
+                    for i=1,40 do
+                        local _, _, count2, _, _, _, _, _, _, spellId = UnitDebuff(player2, i)
+                        if CurrentAnima == "Ardenweald" then
+                            --Ardenweald Anima
+                            if spellId == 341209 or core:getBlizzardTrackingStatus(14617, 3) == true then
+                                animaFoundOrCompleted = true
+                            end
+                        elseif CurrentAnima == "Maldraxxus" then
+                            --Maldraxxus Anima
+                            if spellId == 341142 or core:getBlizzardTrackingStatus(14617, 1) == true then
+                                animaFoundOrCompleted = true
+                            end
+                        elseif CurrentAnima == "Maw" then
+                            --Maw Anima
+                            if spellId == 341262 or core:getBlizzardTrackingStatus(14617, 2) == true then
+                                animaFoundOrCompleted = true
+                            end
+                        elseif CurrentAnima == nil then
+                            --No one is currently holding the Overwhelming Anima
+                            animaFoundOrCompleted = true
+                        end
+                    end
+                end
+
+                if animaFoundOrCompleted == false then
+                    core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")")
+                end
+            end
+        end
     end
 end
 
@@ -378,7 +480,6 @@ function core._2296:TrackAdditional()
     end
 
     --Player has picked up Anima Attunement
-
     --Ardenweald Anima
     if core.type == "SPELL_AURA_APPLIED" and core.spellId == 341186 then
         core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. GetSpellLink(341186),true)
@@ -418,6 +519,14 @@ function core._2296:ClearVariables()
     ArdenwealdReturned = false
     MawReturned = false
     AnimaReturned = 0
+    ArdenwealdAnimaFound = false
+    MawAnimaFound = false
+    MaldraxxusAnimaFound = false
+    ArdenwealdAnimaLostTimestamp = nil
+    MawAnimaLostTimestamp = nil
+    MaldraxxusAnimaLostTimestamp = nil
+    CurrentAnima = nil
+    initialArtificerSetup = false
 
     ------------------------------------------------------
     ---- Stone Legion Generals
@@ -432,4 +541,38 @@ function core._2296:ClearVariables()
     ------------------------------------------------------
     announceDarkAnimus = false
     darkAnimusTimer:Cancel()
+end
+
+function core._2296:InstanceCleanup()
+    core._2296.Events:UnregisterEvent("UNIT_AURA")
+end
+
+core._2296.Events:SetScript("OnEvent", function(self, event, ...)
+    return self[event] and self[event](self, event, ...)
+end)
+
+function core._2296:InitialSetup()
+    core._2296.Events:RegisterEvent("UNIT_AURA")
+end
+
+function core._2296.Events:UNIT_AURA(self, unitID)
+    local name, realm = UnitName(unitID)
+    for i=1,40 do
+        local _, _, count2, _, _, _, _, _, _, spellId = UnitDebuff(unitID, i)
+        if name ~= nil then
+            if spellId == 341209 then
+                --Anima of Ardenweald
+                core:sendMessage(name .. L["Shared_HasGained"] .. " " .. GetSpellLink(341209),true)
+                CurrentAnima = "Ardenweald"
+            elseif spellId == 341142 then
+                --Anima of Maldraxxus
+                core:sendMessage(name .. L["Shared_HasGained"] .. " " .. GetSpellLink(341142),true)
+                CurrentAnima = "Maldraxxus"
+            elseif spellId == 341262 then
+                --Anima of the Maw
+                core:sendMessage(name .. L["Shared_HasGained"] .. " " .. GetSpellLink(341262),true)
+                CurrentAnima = "Maw"
+            end
+        end
+    end
 end
