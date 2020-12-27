@@ -606,12 +606,12 @@ function getInstanceInfomation()
 					instanceCompatible = true
 
 					--Set instance we want to debug
-					-- core.instanceNameSpaces = "The Necrotic Wake"
-					-- core.instanceName = "TheNecroticWake"
-					-- core.instance = 2286
-					-- core.instanceClear = "_2286"
+					-- core.instanceNameSpaces = "Castle Nathria"
+					-- core.instanceName = "CastleNathria"
+					-- core.instance = 2296
+					-- core.instanceClear = "_2296"
 					-- core.expansion = 2
-					-- core.instanceType = "Dungeons"
+					-- core.instanceType = "Raids"
 				end
 
 				if instanceCompatible == true and core.expansion ~= nil then
@@ -2981,7 +2981,7 @@ function core:sendMessage(message, outputToRW, messageType)
 	--The master addon check will be reset after every boss fight so we don't have to worry about players out of range/offline players etc
 end
 
-function core:sendMessageSafe(message, requireMasterAddon)
+function core:sendMessageSafe(message, requireMasterAddon, outputToRW)
 	message = message:gsub("[\r\n]+","") --Remove newlines before ouputting to chat
 	local openBracketOpen = false
 	local tmpMessageStr = ""
@@ -3056,11 +3056,13 @@ function core:sendMessageSafe(message, requireMasterAddon)
 
 	--Print the chat
 	for i in ipairs(tmpMessageArr) do
-		if debugMode == false then
+		if debugModeChat == false then
 			-- print("Printing Safe Message")
 			--Check if we just want the master addon to output or anyone can output this message
 			if requireMasterAddon == true then
 				core:sendMessage(tmpMessageArr[i])
+			elseif outputToRW == true then
+				core:sendMessage(tmpMessageArr[i],true)
 			else
 				-- print("Attempting to send... with length " .. strlen("[IAT] " .. tmpMessageArr[i]))
 				-- print(tmpMessageArr[i])
