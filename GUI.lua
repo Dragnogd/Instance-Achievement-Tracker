@@ -40,7 +40,7 @@ AchievementTrackerNPCCache = {}
 
 -- Purpose:         Information about the current release. This is mianly used to detect which addon should output messages to chat to avoid spam
 Config.majorVersion = 3						--Addon with a higher major version change have priority over a lower major version
-Config.minorVersion = 11    				--Addon with a minor version change have prioirty over a lower minor version
+Config.minorVersion = 12    				--Addon with a minor version change have prioirty over a lower minor version
 Config.revisionVersion = 0					--Addon with a revision change have the same priorty as a lower revision verison
 Config.releaseType = ""                     --Release type (Alpha, Beta, Release)
 
@@ -669,6 +669,7 @@ end
 function ATToggleShowInfoFrameTestFrame_OnClick(self)
     if InfoFrameTestBarsActive == false then
         InfoFrameTestBarsActive = true
+        core.IATInfoFrame:SetupInfoFrame()
         core.IATInfoFrame:ToggleOn()
         core.IATInfoFrame:SetHeading(GetAchievementLink(14148))
         core.IATInfoFrame:SetSubHeading1(L["Shared_PlayersMetCriteria"] .. " (0/10)")
