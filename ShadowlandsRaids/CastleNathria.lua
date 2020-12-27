@@ -45,6 +45,12 @@ local initialStoneLegionSetup = false
 local playersWiltedRoseStacks = {}
 local playersBloomingRose = {}
 
+------------------------------------------------------
+---- LadyInervaDarkvein
+------------------------------------------------------
+local darkAnimusTimer = nil
+local announceDarkAnimus = false
+
 function core._2296:Shriekwing()
     --Defeat Shriekwing after she kills six Sneaky Servitors in Castle Nathria on Normal difficulty or higher.
 
@@ -122,6 +128,37 @@ end
 function core._2296:LadyInervaDarkvein()
     --Defeat Lady Inerva Darkvein after defeating the Dark Animus in Castle Nathria on Normal difficulty or higher.
 
+    if initialStoneLegionSetup == false then
+        initialStoneLegionSetup = true
+        core.sourceID = "173430"
+    end
+
+    --Announce when Dark Animus is spawning
+    if core.type == "SPELL_AURA_APPLIED" and core.destID == "69820" and core.spellId == 339276 then
+        local darkAnimusCounter = 240
+        darkAnimusTimer = C_Timer.NewTicker(1, function()
+            if darkAnimusCounter == 240 then
+                core:sendMessage(format(L["Shared_MobSpawningInXMinutes"], getNPCName(173430), "4"),true)
+            elseif darkAnimusCounter == 180 then
+                core:sendMessage(format(L["Shared_MobSpawningInXMinutes"], getNPCName(173430), "3"),true)
+            elseif darkAnimusCounter == 120 then
+                core:sendMessage(format(L["Shared_MobSpawningInXMinutes"], getNPCName(173430), "2"),true)
+            elseif darkAnimusCounter == 60 then
+                core:sendMessage(format(L["Shared_MobSpawningInXMinutes"], getNPCName(173430), "1"),true)
+            elseif darkAnimusCounter < 11 then
+                core:sendMessage(format(L["Shared_MobSpawningInXSeconds"], getNPCName(173430), darkAnimusCounter),true)
+            end
+            core:sendDebugMessage(darkAnimusCounter)
+            darkAnimusCounter = darkAnimusCounter - 1
+        end, 240)
+    end
+
+    --Announce when Dark Animus has spawned
+    if (core.sourceID == "173430" or core.destID == "173430") and announceDarkAnimus == false then
+        announceDarkAnimus = true
+        core:sendMessage(format(L["Shared_KillTheAddNow"], getNPCName(173430)),true)
+    end
+
     if core:getBlizzardTrackingStatus(14524, 1) == true then
         core:getAchievementSuccess()
     end
@@ -155,12 +192,11 @@ function core._2296:StoneLegionGenerals()
 		for player,status in pairs(core.InfoFrame_PlayersTable) do
 			if playersWiltedRoseStacks[player] == nil then
 
-
                 --Check if player has the Wilted Rose Buff
                 local buffFound = false
                 for i=1,40 do
                     local _, _, count2, _, _, _, _, _, _, spellId = UnitBuff(player, i)
-                    if spellId == 774 then
+                    if spellId == 339565 then
                         buffFound = true
                     end
                 end
@@ -186,7 +222,7 @@ function core._2296:StoneLegionGenerals()
     end
 
     --Wilting Sanguine Rose (Gained Stack)
-    if (core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_APPLIED_DOSE") and core.spellId == 774 then --339565
+    if (core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_APPLIED_DOSE") and core.spellId == 339565 then --339565
         if core.destName ~= nil then
 			local player = core.destName
 			if string.find(player, "-") then
@@ -202,7 +238,7 @@ function core._2296:StoneLegionGenerals()
     end
 
     --Wilting Sanguine Rose (Lost)
-    if core.type == "SPELL_AURA_REMOVED" and core.spellId == 774 then --339565
+    if core.type == "SPELL_AURA_REMOVED" and core.spellId == 339565 then --339565
         local playerTmp = core.destName
         if core.destName ~= nil then
             C_Timer.After(2, function()
@@ -215,7 +251,7 @@ function core._2296:StoneLegionGenerals()
     end
 
     --Blooming Roses (Gained)
-    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 8936 then --339574
+    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 339574 then --339574
         if core.destName ~= nil then
             if playersBloomingRose[core.destName] == nil then
                 BloomingFlowersCounter = BloomingFlowersCounter + 1
@@ -227,7 +263,7 @@ function core._2296:StoneLegionGenerals()
     end
 
     --Blooming Roses (Lost)
-    if core.type == "SPELL_AURA_REMOVED" and core.spellId == 8936 then --339574
+    if core.type == "SPELL_AURA_REMOVED" and core.spellId == 339574 then --339574
         if core.destName ~= nil then
             if playersBloomingRose[core.destName] ~= nil then
                 InfoFrame_SetPlayerFailedWithMessage(core.destName, "")
@@ -296,7 +332,7 @@ end
 
 function core._2296:TrackAdditional()
     --Stone Legion Generals Wilting Sanguine Rose (Gained)
-    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 774 then --339565
+    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 339565 then --339565
         print("HERE")
         core.IATInfoFrame:ToggleOn()
         core.IATInfoFrame:SetHeading(GetAchievementLink(14525))
@@ -321,7 +357,7 @@ function core._2296:TrackAdditional()
         InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
     end
 
-    if core.type == "SPELL_AURA_REMOVED" and core.spellId == 774 then --339565
+    if core.type == "SPELL_AURA_REMOVED" and core.spellId == 339565 then --339565
         if core.destName ~= nil then
             if WiltingFlowersUID[core.spawn_uid_dest_Player] ~= nil then
                 local player = core.destName
@@ -390,4 +426,10 @@ function core._2296:ClearVariables()
     initialStoneLegionSetup = false
     playersWiltedRoseStacks = {}
     playersBloomingRose = {}
+
+    ------------------------------------------------------
+    ---- LadyInervaDarkvein
+    ------------------------------------------------------
+    announceDarkAnimus = false
+    darkAnimusTimer:Cancel()
 end
