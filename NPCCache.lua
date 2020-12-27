@@ -477,4 +477,16 @@ core.NPCCache = {
 	[67571] =67571, --Millhouse Manastorm
 	[164450] =164450, --Dealer Xy'exa
 	[162317] =162317, --Gorechop
+	[164218] =164218, --Lord Chamberlain
+	[165737] =165737, --Sinstone Statue
+	[171456] =171456, --Shattered Devastator
+	[175422] =175422, --Coalesced Anima
+	[167169] =167169, --Devos
+	[69756] =69756, --Anima Orb
+	[172386] =172386, --Anima Conduit
+	[117072] =117072, --Mordrethal
+	[169617] =169617, --Duraka the Unbreakable
+	[156987] =156987, --General Kaal
+	[36535] =36535, --Corrupted Soul Fragment
+	[173430] =173430, --Dark Animus
 }
