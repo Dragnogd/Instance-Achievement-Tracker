@@ -105,18 +105,16 @@ function core._2296:ArtificerXymox()
         initialArtificerSetup = true
         for k,player in pairs(core:getPlayersInGroupForAchievement()) do
             for i=1,40 do
-                local _, _, count2, _, _, _, _, _, _, spellId = UnitDebuff(player, i)
-                if name ~= nil then
-                    if spellId == 341186 then
-                        --Anima of Ardenweald
-                        ArdenwealdAnimaFound = player
-                    elseif spellId == 341135 then
-                        --Anima of Maldraxxus
-                        MaldraxxusAnimaFound = player
-                    elseif spellId == 341253 then
-                        --Anima of the Maw
-                        MawAnimaFound = player
-                    end
+                local _, _, count2, _, _, _, _, _, _, spellId = UnitBuff(player, i)
+                if spellId == 341186 then
+                    --Anima of Ardenweald
+                    ArdenwealdAnimaFound = player
+                elseif spellId == 341135 then
+                    --Anima of Maldraxxus
+                    MaldraxxusAnimaFound = player
+                elseif spellId == 341253 then
+                    --Anima of the Maw
+                    MawAnimaFound = player
                 end
             end
         end
@@ -186,7 +184,6 @@ function core._2296:ArtificerXymox()
             if CurrentAnima ~= nil then
                 local animaFoundOrCompleted = false
                 for k,player2 in pairs(core:getPlayersInGroupForAchievement()) do
-                    local debuffFound = false
                     for i=1,40 do
                         local _, _, count2, _, _, _, _, _, _, spellId = UnitDebuff(player2, i)
                         if CurrentAnima == "Ardenweald" then
@@ -204,15 +201,12 @@ function core._2296:ArtificerXymox()
                             if spellId == 341262 or core:getBlizzardTrackingStatus(14617, 2) == true then
                                 animaFoundOrCompleted = true
                             end
-                        elseif CurrentAnima == nil then
-                            --No one is currently holding the Overwhelming Anima
-                            animaFoundOrCompleted = true
                         end
                     end
                 end
 
                 if animaFoundOrCompleted == false then
-                    core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")")
+                    core:getAchievementFailed()
                 end
             end
         end
@@ -229,11 +223,6 @@ end
 
 function core._2296:LadyInervaDarkvein()
     --Defeat Lady Inerva Darkvein after defeating the Dark Animus in Castle Nathria on Normal difficulty or higher.
-
-    if initialStoneLegionSetup == false then
-        initialStoneLegionSetup = true
-        core.sourceID = "173430"
-    end
 
     --Announce when Dark Animus is spawning
     if core.type == "SPELL_AURA_APPLIED" and core.destID == "69820" and core.spellId == 339276 then
@@ -333,7 +322,6 @@ function core._2296:StoneLegionGenerals()
             end
             if playersWiltedRoseStacks[player] ~= nil then
                 playersWiltedRoseStacks[player] = playersWiltedRoseStacks[player] + 1
-                print(player, playersWiltedRoseStacks[player])
                 InfoFrame_SetPlayerNeutralWithMessage(player, playersWiltedRoseStacks[player])
 			end
 		end
@@ -341,9 +329,9 @@ function core._2296:StoneLegionGenerals()
 
     --Wilting Sanguine Rose (Lost)
     if core.type == "SPELL_AURA_REMOVED" and core.spellId == 339565 then --339565
-        local playerTmp = core.destName
         if core.destName ~= nil then
-            C_Timer.After(2, function()
+            local playerTmp = core.destName
+            C_Timer.After(1, function()
                 if playersBloomingRose[playerTmp] == nil then
                     core:getAchievementFailedWithMessageAfter("(" .. playerTmp .. ")")
                     InfoFrame_SetPlayerFailedWithMessage(playerTmp, "")
@@ -406,6 +394,8 @@ function core._2296:SireDenathrius()
             burdernOfSinStackPlayers[name] = burdernOfSinStackPlayers[name] - 1
             if burdernOfSinStackPlayers[name] == 0 then
                 InfoFrame_SetPlayerCompleteWithMessage(name, burdernOfSinStackPlayers[name])
+                burdenOfSinCounter = burdenOfSinCounter + 1
+                core:sendMessage(core.destName .. " " .. L["Shared_HasCompleted"] .. " " .. core:getAchievement() .. " (" .. burdenOfSinCounter .. "/" .. core.groupSize .. ")",true)
             else
                 InfoFrame_SetPlayerFailedWithMessage(name, burdernOfSinStackPlayers[name])
             end
@@ -435,7 +425,6 @@ end
 function core._2296:TrackAdditional()
     --Stone Legion Generals Wilting Sanguine Rose (Gained)
     if core.type == "SPELL_AURA_APPLIED" and core.spellId == 339565 then --339565
-        print("HERE")
         core.IATInfoFrame:ToggleOn()
         core.IATInfoFrame:SetHeading(GetAchievementLink(14525))
         InfoFrame_SetHeaderCounter(L["Shared_PlayersMetCriteria"],WiltingFlowersCounter,core.groupSize)
@@ -472,11 +461,11 @@ function core._2296:TrackAdditional()
                 if initialStoneLegionSetup == false then
                     InfoFrame_SetPlayerFailedWithMessage(player, "")
                     core:sendMessage(core.destName .. " " .. L["Shared_HasLost"] .. " " .. GetSpellLink(339565) .. " (" .. WiltingFlowersCounter .. "/" .. core.groupSize .. ")",true)
+                    InfoFrame_SetHeaderCounter(L["Shared_PlayersMetCriteria"],WiltingFlowersCounter,core.groupSize)
+                    InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
                 end
             end
         end
-        InfoFrame_SetHeaderCounter(L["Shared_PlayersMetCriteria"],WiltingFlowersCounter,core.groupSize)
-        InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
     end
 
     --Player has picked up Anima Attunement
