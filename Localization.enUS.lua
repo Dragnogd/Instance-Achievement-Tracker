@@ -663,5 +663,8 @@ local baseLocale = {
 	["GUI_ToggleInfoFrameTestFrameDescription"] = "Show or hide the InfoFrame to setup positioning and scale",
 	["Shared_MobSpawningInXMinutes"] = "%s spawning in %s minutes",
 	["Shared_MobSpawningInXSeconds"] = "%s spawning in %s seconds",
+	["GUI_SelectLocalisation"] = "Select localisation",
+	["GUI_SelectLocalisationDescription"] = "Select which language the addon should display in (requires reload)",
+	["GUI_Automatic"] = "Automatic",
 }
 core:RegisterLocale('enUS', baseLocale)

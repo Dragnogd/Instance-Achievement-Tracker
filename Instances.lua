@@ -41,7 +41,7 @@ core.Instances = {
 					tactics = L["CastleNathria_SunKingsSalvation"],
 					enabled = true,
 					track = function() core._2296:Kaelthas() end,
-					partial = 14523,
+					partial = false,
 					encounterID = 2402,
 				},
 				boss4 = {
