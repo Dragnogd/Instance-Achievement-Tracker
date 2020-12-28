@@ -239,6 +239,9 @@ function Tab_OnClick(self)
             UIConfig.Main2.options32:Show()
             UIConfig.Main2.options33:Show()
             UIConfig.Main2.options34:Show()
+            -- UIConfig.Main2.options35:Show()
+            -- UIConfig.Main2.options36:Show()
+            -- UIConfig.Main2.options37:Show()
 
             UIConfig.Main.author:Show()
             UIConfig.Main.tacticsCredit:Show()
@@ -582,6 +585,7 @@ function Tab_OnClick(self)
 
             --Show/Hide InfoFrame
             UIConfig.Main2.options34 = Config:CreateButton2("TOPLEFT", UIConfig.Main2.options32, "TOPLEFT", 0, -35, L["GUI_ToggleInfoFrameTestFrame"])
+            UIConfig.Main2.options34:SetWidth(UIConfig.Main2.options34:GetTextWidth() + 10)
             UIConfig.Main2.options34:SetScript("OnClick", ATToggleShowInfoFrameTestFrame_OnClick)
             UIConfig.Main2.options34:SetScript("OnEnter", function(self)
                 AltGameTooltip:SetOwner(self, "ANCHOR_TOPRIGHT")
@@ -591,6 +595,39 @@ function Tab_OnClick(self)
             UIConfig.Main2.options34:SetScript("OnLeave", function(self)
                 AltGameTooltip:Hide()
             end)
+
+            -- --Make a sound whxen an achievement has been failed
+            -- UIConfig.Main2.options35 = Config:CreateCheckBox("TOPLEFT", UIConfig.Main2.options34, "TOPLEFT", 0, -25, "AchievementTracker_ToggleLocalisation")
+            -- UIConfig.Main2.options35:SetScript("OnClick", ATToggleSoundFailed_OnClick)
+            -- UIConfig.Main2.options36 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options35, "TOPLEFT", 30, -9, L["GUI_SelectLocalisation"],"GameFontHighlight")
+            -- UIConfig.Main2.options35:SetScript("OnEnter", function(self)
+            --     AltGameTooltip:SetOwner(self, "ANCHOR_TOPRIGHT")
+            --     AltGameTooltip:SetText(L["GUI_SelectLocalisationDescription"],1.0,0.82,0.0,1,true)
+            --     AltGameTooltip:Show()
+            -- end)
+            -- UIConfig.Main2.options35:SetScript("OnLeave", function(self)
+            --     AltGameTooltip:Hide()
+            -- end)
+
+            -- --Dropdown menu to select sound for failed Achievement
+            -- UIConfig.Main2.options37 = MSA_DropDownMenu_Create("AchievementTracker_SelectLocalisationDropdown", UIConfig.Main2.options35)
+            -- UIConfig.Main2.options37:SetPoint("TOPLEFT", UIConfig.Main2.options35, "TOPLEFT", UIConfig.Main2.options36:GetStringWidth() + 30, 0)
+            -- MSA_DropDownMenu_SetWidth(UIConfig.Main2.options37, 100)
+            -- MSA_DropDownMenu_SetText(UIConfig.Main2.options37, L["GUI_Automatic"])
+            -- MSA_DropDownMenu_Initialize(UIConfig.Main2.options37, function(self, level, menuList)
+            --     local info = MSA_DropDownMenu_CreateInfo()
+            --     info.func = AchievementTracker_SelectLocalisation
+            --     local languages = {L["GUI_Automatic"],_G["ENGB"],_G["DEDE"],_G["ESES"],_G["RURU"],_G["FRFR"],_G["ZHCN"],_G["ZHTW"]}
+            --     for i=1,#languages do
+            --         info.text = languages[i]
+            --         info.menuList = i
+            --         info.value = i
+            --         info.arg1 = languages[i]
+            --         info.arg2 = UIConfig.Main2.options37
+            --         info.arg3 = i
+            --         MSA_DropDownMenu_AddButton(info)
+            --     end
+            -- end)
         end
     else                                --User has selected an expansion tab so hide main menu options
         UIConfig.ScrollFrame:Show()
@@ -644,6 +681,9 @@ function Tab_OnClick(self)
         UIConfig.Main2.options32:Hide()
         UIConfig.Main2.options33:Hide()
         UIConfig.Main2.options34:Hide()
+        -- UIConfig.Main2.options35:Hide()
+        -- UIConfig.Main2.options36:Hide()
+        -- UIConfig.Main2.options37:Hide()
 
         UIConfig.Main.author:Hide()
         UIConfig.Main.verison:Hide()
@@ -665,6 +705,12 @@ function Tab_OnClick(self)
         end
     end
 end
+
+-- function AchievementTracker_SelectLocalisation(self, arg1, arg2, arg3, checked)
+--     AchievementTrackerOptions["localisationOption"] = arg1
+--     AchievementTrackerOptions["localisationOptionIndex"] = arg3
+--     MSA_DropDownMenu_SetText(arg2, arg3)
+-- end
 
 function ATToggleShowInfoFrameTestFrame_OnClick(self)
     if InfoFrameTestBarsActive == false then
@@ -1649,7 +1695,17 @@ function Instance_OnClick(self)
 
                 --Only show players if user has enabled achievement tracking
                 button.contentText:SetWidth(500)
-                button.contentText:SetFont('Fonts\\FRIZQT__.TTF', 12);
+                if (GetLocale() == 'koKR') then
+                    button.contentText:SetFont("Fonts\\2002.TTF", 12);
+                elseif (GetLocale() == 'zhCN') then
+                    button.contentText:SetFont("Fonts\\ARKai_T.ttf", 16);
+                elseif (GetLocale() == 'zhTW') then
+                    button.contentText:SetFont("Fonts\\blei00d.TTF", 16);
+                elseif (GetLocale() == 'ruRU') then
+                    button.contentText:SetFont("Fonts\\FRIZQT___CYR.TTF", 12);
+                else
+                    button.contentText:SetFont("Fonts\\FRIZQT__.TTF", 12);
+                end
                 local achievementLink = GetAchievementLink(instanceLocation["boss" .. counter2].achievement)
                 if core.achievementTrackingEnabled == false then
                     button.contentText:SetText("<html><body><p>" .. L["GUI_Achievement"] .. ": ".. achievementLink .. "<br /><br />" .. L["GUI_Tactic"] .. ": " .. tactics .. "</p></body></html>")
