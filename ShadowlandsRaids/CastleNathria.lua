@@ -40,6 +40,9 @@ local MawAnimaLostTimestamp = nil
 local MaldraxxusAnimaLostTimestamp = nil
 local CurrentAnima = nil
 local initialArtificerSetup = false
+local overwhelingAnimaCollected1 = false
+local overwhelingAnimaCollected2 = false
+local overwhelingAnimaCollected3 = false
 
 ------------------------------------------------------
 ---- Stone Legion Generals
@@ -50,6 +53,9 @@ local WiltingFlowersUID = {}
 local initialStoneLegionSetup = false
 local playersWiltedRoseStacks = {}
 local playersBloomingRose = {}
+local stoneTimerStarted = false
+local stoneTimeRemaining = nil
+local stoneTimer = nil
 
 ------------------------------------------------------
 ---- LadyInervaDarkvein
@@ -312,6 +318,60 @@ function core._2296:StoneLegionGenerals()
         end
     end
 
+    --Countdown timer
+    if stoneTimerStarted == false then
+        stoneTimerStarted = true
+        for player,status in pairs(core.InfoFrame_PlayersTable) do
+            for i=1,40 do
+                local _, _, _, _, _, expirationTime, _, _, _, spellId = UnitBuff(player, i)
+                if spellId == 339565 then
+                    local timeRemianing = math.floor(expirationTime - GetTime())
+                    if stoneTimeRemaining == nil then
+                        stoneTimeRemaining = timeRemianing
+                    elseif timeRemianing < stoneTimeRemaining then
+                        stoneTimeRemaining = timeRemianing
+                    end
+                end
+            end
+        end
+
+        if stoneTimeRemaining ~= nil then
+            stoneTimer = C_Timer.NewTicker(1, function()
+                if stoneTimeRemaining == 600 or stoneTimeRemaining == 540 or stoneTimeRemaining == 480 or stoneTimeRemaining == 420 or stoneTimeRemaining == 360 or stoneTimeRemaining == 300 or stoneTimeRemaining == 240 or stoneTimeRemaining == 180 or stoneTimeRemaining == 120 or stoneTimeRemaining == 60 then
+                    local buffFound = false
+                    for player,status in pairs(core.InfoFrame_PlayersTable) do
+                        for i=1,40 do
+                            local _, _, _, _, _, expirationTime, _, _, _, spellId = UnitBuff(player, i)
+                            if spellId == 339565 then
+                                buffFound = true
+                            end
+                        end
+                    end
+
+                    if buffFound == true then
+                        core:sendMessage(L["MobCounter_TimeReamining"] .. stoneTimeRemaining .. " minutes",true)
+                    end
+                elseif stoneTimeRemaining < 11 then
+                    local buffFound = false
+                    for player,status in pairs(core.InfoFrame_PlayersTable) do
+                        for i=1,40 do
+                            local _, _, _, _, _, expirationTime, _, _, _, spellId = UnitBuff(player, i)
+                            if spellId == 339565 then
+                                buffFound = true
+                            end
+                        end
+                    end
+
+                    if buffFound == true then
+                        core:sendMessage(L["MobCounter_TimeReamining"] .. stoneTimeRemaining .. " seconds",true)
+                    end
+                end
+                core:sendDebugMessage(stoneTimeRemaining)
+                stoneTimeRemaining = stoneTimeRemaining - 1
+            end, stoneTimeRemaining)
+        end
+    end
+
     --Wilting Sanguine Rose (Gained Stack)
     if (core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_APPLIED_DOSE") and core.spellId == 339565 then --339565
         if core.destName ~= nil then
@@ -440,7 +500,23 @@ function core._2296:TrackAdditional()
                 WiltingFlowersCounter = WiltingFlowersCounter + 1
                 if initialStoneLegionSetup == false then
                     InfoFrame_SetPlayerCompleteWithMessage(player, "")
-                    core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. GetSpellLink(339565) .. " (" .. WiltingFlowersCounter .. "/" .. core.groupSize .. ")",true)
+                    core:sendDebugMessage("InfoFrame set green for wilted Rose: " .. player)
+                    --core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. GetSpellLink(339565) .. " (" .. WiltingFlowersCounter .. "/" .. core.groupSize .. ")",true)
+
+                    --Check all other players in group for Wilted Roses buff
+                    for player2,status in pairs(core.InfoFrame_PlayersTable) do
+                        --Check if player has the Wilted Rose Buff
+                        local buffFound = false
+                        for i=1,40 do
+                            local _, _, count2, _, _, _, _, _, _, spellId = UnitBuff(player2, i)
+                            if spellId == 339565 then
+                                buffFound = true
+                            end
+                        end
+                        if buffFound == true then
+                            InfoFrame_SetPlayerCompleteWithMessage(player2, "")
+                        end
+                    end
                 end
             end
         end
@@ -460,7 +536,8 @@ function core._2296:TrackAdditional()
                 WiltingFlowersCounter = WiltingFlowersCounter - 1
                 if initialStoneLegionSetup == false then
                     InfoFrame_SetPlayerFailedWithMessage(player, "")
-                    core:sendMessage(core.destName .. " " .. L["Shared_HasLost"] .. " " .. GetSpellLink(339565) .. " (" .. WiltingFlowersCounter .. "/" .. core.groupSize .. ")",true)
+                    core:sendDebugMessage("InfoFrame set red for wilted Rose: " .. player)
+                    --core:sendMessage(core.destName .. " " .. L["Shared_HasLost"] .. " " .. GetSpellLink(339565) .. " (" .. WiltingFlowersCounter .. "/" .. core.groupSize .. ")",true)
                     InfoFrame_SetHeaderCounter(L["Shared_PlayersMetCriteria"],WiltingFlowersCounter,core.groupSize)
                     InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
                 end
@@ -470,17 +547,20 @@ function core._2296:TrackAdditional()
 
     --Player has picked up Anima Attunement
     --Ardenweald Anima
-    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 341186 then
+    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 341186 and overwhelingAnimaCollected1 == false then
+        overwhelingAnimaCollected1 = true
         core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. GetSpellLink(341186),true)
     end
 
     --Maw Anima
-    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 341253 then
+    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 341253 and overwhelingAnimaCollected2 == false then
+        overwhelingAnimaCollected2 = true
         core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. GetSpellLink(341253),true)
     end
 
     --Maldraxxus Anima
-    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 341135 then
+    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 341135 and overwhelingAnimaCollected3 == false then
+        overwhelingAnimaCollected3 = true
         core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. GetSpellLink(341135),true)
     end
 end
@@ -516,6 +596,9 @@ function core._2296:ClearVariables()
     MaldraxxusAnimaLostTimestamp = nil
     CurrentAnima = nil
     initialArtificerSetup = false
+    overwhelingAnimaCollected1 = false
+    overwhelingAnimaCollected2 = false
+    overwhelingAnimaCollected3 = false
 
     ------------------------------------------------------
     ---- Stone Legion Generals
@@ -524,12 +607,19 @@ function core._2296:ClearVariables()
     initialStoneLegionSetup = false
     playersWiltedRoseStacks = {}
     playersBloomingRose = {}
+    stoneTimerStarted = false
+    stoneTimeRemaining = nil
+    if stoneTimer ~= nil then
+        stoneTimer:Cancel()
+    end
 
     ------------------------------------------------------
     ---- LadyInervaDarkvein
     ------------------------------------------------------
     announceDarkAnimus = false
-    darkAnimusTimer:Cancel()
+    if darkAnimusTimer ~= nil then
+        darkAnimusTimer:Cancel()
+    end
 end
 
 function core._2296:InstanceCleanup()
