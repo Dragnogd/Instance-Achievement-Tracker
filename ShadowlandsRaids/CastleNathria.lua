@@ -54,7 +54,7 @@ local initialStoneLegionSetup = false
 local playersWiltedRoseStacks = {}
 local playersBloomingRose = {}
 local stoneTimerStarted = false
-local stoneTimeRemaining = nil
+local stoneTimeRemaining = 600
 local stoneTimer = nil
 
 ------------------------------------------------------
@@ -62,6 +62,11 @@ local stoneTimer = nil
 ------------------------------------------------------
 local darkAnimusTimer = nil
 local announceDarkAnimus = false
+
+------------------------------------------------------
+---- Council of Blood
+------------------------------------------------------
+local councilOfBloodTimer = nil
 
 function core._2296:Shriekwing()
     --Defeat Shriekwing after she kills six Sneaky Servitors in Castle Nathria on Normal difficulty or higher.
@@ -263,6 +268,20 @@ end
 
 function core._2296:CouncilOfBlood()
     --Defeat the Council of Blood after throwing four bottles of wine in Castle Nathria on Normal difficulty or higher.
+    --Announce when Belligerent Waiters spawn
+    if core:getBlizzardTrackingStatus(14619, 1) == false and councilOfBloodTimer == nil then
+        local councilOfBloodTick = 0
+        councilOfBloodTimer = C_Timer.NewTicker(1, function()
+            if councilOfBloodTick == 60 then
+                if core:getBlizzardTrackingStatus(14619, 1) == false then
+                    core:sendMessage(format(L["Shared_HasSpawned"], getNPCName(175474)),true)
+                end
+                councilOfBloodTick = 0
+            end
+            core:sendDebugMessage(councilOfBloodTick)
+            councilOfBloodTick = councilOfBloodTick + 1
+        end, 600)
+    end
 
     if core:getBlizzardTrackingStatus(14619, 1) == true then
         core:getAchievementSuccess()
@@ -280,7 +299,7 @@ end
 function core._2296:StoneLegionGenerals()
     --Defeat the Stone Legion Generals while all players are carrying a Bouquet of Blooming Sanguine Roses in Castle Nathria on Normal difficulty or higher.
     InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
-    InfoFrame_SetHeaderCounter(L["Shared_PlayersMetCriteria"],BloomingFlowersCounter,core.groupSize)
+    InfoFrame_SetHeaderCounterWithAdditionalMessage(L["Shared_PlayersMetCriteria"],BloomingFlowersCounter,core.groupSize,L["MobCounter_TimeReamining"] .. ": " .. stoneTimeRemaining)
 
     if initialStoneLegionSetup == false then
         initialStoneLegionSetup = true
@@ -315,60 +334,6 @@ function core._2296:StoneLegionGenerals()
                 core:getAchievementFailed()
                 core:sendMessageSafe(playersWithoutBuff,nil,true)
             end)
-        end
-    end
-
-    --Countdown timer
-    if stoneTimerStarted == false then
-        stoneTimerStarted = true
-        for player,status in pairs(core.InfoFrame_PlayersTable) do
-            for i=1,40 do
-                local _, _, _, _, _, expirationTime, _, _, _, spellId = UnitBuff(player, i)
-                if spellId == 339565 then
-                    local timeRemianing = math.floor(expirationTime - GetTime())
-                    if stoneTimeRemaining == nil then
-                        stoneTimeRemaining = timeRemianing
-                    elseif timeRemianing < stoneTimeRemaining then
-                        stoneTimeRemaining = timeRemianing
-                    end
-                end
-            end
-        end
-
-        if stoneTimeRemaining ~= nil then
-            stoneTimer = C_Timer.NewTicker(1, function()
-                if stoneTimeRemaining == 600 or stoneTimeRemaining == 540 or stoneTimeRemaining == 480 or stoneTimeRemaining == 420 or stoneTimeRemaining == 360 or stoneTimeRemaining == 300 or stoneTimeRemaining == 240 or stoneTimeRemaining == 180 or stoneTimeRemaining == 120 or stoneTimeRemaining == 60 then
-                    local buffFound = false
-                    for player,status in pairs(core.InfoFrame_PlayersTable) do
-                        for i=1,40 do
-                            local _, _, _, _, _, expirationTime, _, _, _, spellId = UnitBuff(player, i)
-                            if spellId == 339565 then
-                                buffFound = true
-                            end
-                        end
-                    end
-
-                    if buffFound == true then
-                        core:sendMessage(L["MobCounter_TimeReamining"] .. stoneTimeRemaining .. " minutes",true)
-                    end
-                elseif stoneTimeRemaining < 11 then
-                    local buffFound = false
-                    for player,status in pairs(core.InfoFrame_PlayersTable) do
-                        for i=1,40 do
-                            local _, _, _, _, _, expirationTime, _, _, _, spellId = UnitBuff(player, i)
-                            if spellId == 339565 then
-                                buffFound = true
-                            end
-                        end
-                    end
-
-                    if buffFound == true then
-                        core:sendMessage(L["MobCounter_TimeReamining"] .. stoneTimeRemaining .. " seconds",true)
-                    end
-                end
-                core:sendDebugMessage(stoneTimeRemaining)
-                stoneTimeRemaining = stoneTimeRemaining - 1
-            end, stoneTimeRemaining)
         end
     end
 
@@ -487,7 +452,7 @@ function core._2296:TrackAdditional()
     if core.type == "SPELL_AURA_APPLIED" and core.spellId == 339565 then --339565
         core.IATInfoFrame:ToggleOn()
         core.IATInfoFrame:SetHeading(GetAchievementLink(14525))
-        InfoFrame_SetHeaderCounter(L["Shared_PlayersMetCriteria"],WiltingFlowersCounter,core.groupSize)
+        InfoFrame_SetHeaderCounterWithAdditionalMessage(L["Shared_PlayersMetCriteria"],WiltingFlowersCounter,core.groupSize,L["MobCounter_TimeReamining"] .. ": " .. stoneTimeRemaining)
         InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
         if core.destName ~= nil then
             if WiltingFlowersUID[core.spawn_uid_dest_Player] == nil then
@@ -518,9 +483,20 @@ function core._2296:TrackAdditional()
                         end
                     end
                 end
+
+                --Start Timer when first person picks up the Wilted Flower
+                if WiltingFlowersCounter == 1 then
+                    if stoneTimerStarted == false then
+                        stoneTimerStarted = true
+                        stoneTimer = C_Timer.NewTicker(1, function()
+                            core:sendDebugMessage(stoneTimeRemaining)
+                            stoneTimeRemaining = stoneTimeRemaining - 1
+                        end, 600)
+                    end
+                end
             end
         end
-        InfoFrame_SetHeaderCounter(L["Shared_PlayersMetCriteria"],WiltingFlowersCounter,core.groupSize)
+        InfoFrame_SetHeaderCounterWithAdditionalMessage(L["Shared_PlayersMetCriteria"],WiltingFlowersCounter,core.groupSize,L["MobCounter_TimeReamining"] .. ": " .. stoneTimeRemaining)
         InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
     end
 
@@ -540,6 +516,14 @@ function core._2296:TrackAdditional()
                     --core:sendMessage(core.destName .. " " .. L["Shared_HasLost"] .. " " .. GetSpellLink(339565) .. " (" .. WiltingFlowersCounter .. "/" .. core.groupSize .. ")",true)
                     InfoFrame_SetHeaderCounter(L["Shared_PlayersMetCriteria"],WiltingFlowersCounter,core.groupSize)
                     InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
+                end
+
+                if WiltingFlowersCounter == 0 then
+                    if stoneTimer ~= nil then
+                        stoneTimer:Cancel()
+                    end
+                    stoneTimerStarted = false
+                    stoneTimeRemaining = 600
                 end
             end
         end
@@ -608,7 +592,7 @@ function core._2296:ClearVariables()
     playersWiltedRoseStacks = {}
     playersBloomingRose = {}
     stoneTimerStarted = false
-    stoneTimeRemaining = nil
+    stoneTimeRemaining = 600
     if stoneTimer ~= nil then
         stoneTimer:Cancel()
     end
@@ -620,6 +604,14 @@ function core._2296:ClearVariables()
     if darkAnimusTimer ~= nil then
         darkAnimusTimer:Cancel()
     end
+
+    ------------------------------------------------------
+    ---- Council of Blood
+    ------------------------------------------------------
+    if councilOfBloodTimer ~= nil then
+        councilOfBloodTimer:Cancel()
+    end
+    councilOfBloodTimer = nil
 end
 
 function core._2296:InstanceCleanup()
