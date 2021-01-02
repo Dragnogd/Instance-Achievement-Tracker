@@ -28,6 +28,11 @@ local Top = nil
 local InfoFrameScale = nil
 local InfoFrameTestBarsActive = false
 
+--API
+local IAT_InstanceLocation = nil
+local IAT_InstanceType = nil
+local IAT_CurrentTab = nil
+
 -- Purpose:                         Stores information about the current status of the GUI
 Config.currentTab = nil             --Stores which tab is currently selected
 Config.currentInstance = nil        --Stores which instance is currently selected
@@ -88,6 +93,13 @@ end
 function Config:Toggle()
     local GUI = UIConfig or Config:CreateGUI()
     GUI:SetShown(not GUI:IsShown())
+    AltGameTooltip:Hide()
+end
+
+function Config:ToggleOn()
+    --Toggle on only
+    local GUI = UIConfig or Config:CreateGUI()
+    GUI:SetShown(true)
     AltGameTooltip:Hide()
 end
 
@@ -1472,6 +1484,10 @@ function Config:Instance_OnClickAutomatic()
     Instance_OnClick(nil)
 end
 
+function Config:Instance_OnClickAPI()
+    Instance_OnClick("API")
+end
+
 -- Method:          Config:Instance_OnClick()
 -- What it Does:    Updates frame text for current instance clicked
 -- Purpose:         This is used when clicking on an instance to update the contents with current instance
@@ -1507,6 +1523,37 @@ function Instance_OnClick(self)
         elseif core.Instances[Config.currentTab].Scenarios[InstanceID] ~= nil then
             instanceLocation = core.Instances[Config.currentTab].Scenarios[InstanceID]
             instanceType = "Scenarios"
+        end
+    elseif self == "API" then
+        --Button needs updating for current instance. Automatically clicked by addon
+        if IAT_InstanceType == "Raids" then
+            instanceLocation = core.Instances[IAT_CurrentTab].Raids[IAT_InstanceLocation]
+            instanceType = "Raids"
+        elseif IAT_InstanceType == "Dungeons" then
+            instanceLocation = core.Instances[IAT_CurrentTab].Dungeons[IAT_InstanceLocation]
+            instanceType = "Dungeons"
+        elseif IAT_InstanceType == "Scenarios" then
+            instanceLocation = core.Instances[IAT_CurrentTab].Scenarios[IAT_InstanceLocation]
+            instanceType = "Scenarios"
+        end
+
+        --Set the current tab to the expansion of the current instance
+        Config.currentTab = IAT_CurrentTab
+
+        if Config.currentTab == 2 then
+            Tab_OnClick(_G["AchievementTrackerTab2"])
+        elseif Config.currentTab == 3 then
+            Tab_OnClick(_G["AchievementTrackerTab3"])
+        elseif Config.currentTab == 4 then
+            Tab_OnClick(_G["AchievementTrackerTab4"])
+        elseif Config.currentTab == 5 then
+            Tab_OnClick(_G["AchievementTrackerTab5"])
+        elseif Config.currentTab == 6 then
+            Tab_OnClick(_G["AchievementTrackerTab6"])
+        elseif Config.currentTab == 7 then
+            Tab_OnClick(_G["AchievementTrackerTab7"])
+        elseif Config.currentTab == 8 then
+            Tab_OnClick(_G["AchievementTrackerTab8"])
         end
     else
         --Button needs updating for current instance. Automatically clicked by addon
@@ -2293,4 +2340,28 @@ function GetNameFromLocalNpcIDCache()
             end
         end
     end
+end
+
+--API
+function IAT_DisplayAchievement(achievementID)
+    --Open IAT Gui and display the specific achievement
+    for expansion, _ in pairs(core.Instances) do
+        for instanceType, _ in pairs(core.Instances[expansion]) do
+            for instance, _ in pairs(core.Instances[expansion][instanceType]) do
+                for boss, _ in pairs(core.Instances[expansion][instanceType][instance]) do
+                    if boss ~= "name" then
+                        if core.Instances[expansion][instanceType][instance][boss].achievement == achievementID then
+                            --Display the relevant page in the GUI
+                            IAT_InstanceType = instanceType
+                            IAT_InstanceLocation = instance
+                            IAT_CurrentTab = expansion
+
+                            Config:Instance_OnClickAPI("API")
+                        end
+                    end
+                end
+            end
+        end
+    end
+    Config:ToggleOn()
 end
