@@ -491,6 +491,11 @@ function core._2296:TrackAdditional()
                         stoneTimer = C_Timer.NewTicker(1, function()
                             core:sendDebugMessage(stoneTimeRemaining)
                             stoneTimeRemaining = stoneTimeRemaining - 1
+                            if initialStoneLegionSetup == false then
+                                InfoFrame_SetHeaderCounterWithAdditionalMessage(L["Shared_PlayersMetCriteria"],WiltingFlowersCounter,core.groupSize,L["MobCounter_TimeReamining"] .. ": " .. stoneTimeRemaining)
+                            elseif initialStoneLegionSetup == true then
+                                InfoFrame_SetHeaderCounterWithAdditionalMessage(L["Shared_PlayersMetCriteria"],BloomingFlowersCounter,core.groupSize,L["MobCounter_TimeReamining"] .. ": " .. stoneTimeRemaining)
+                            end
                         end, 600)
                     end
                 end
@@ -514,7 +519,7 @@ function core._2296:TrackAdditional()
                     InfoFrame_SetPlayerFailedWithMessage(player, "")
                     core:sendDebugMessage("InfoFrame set red for wilted Rose: " .. player)
                     --core:sendMessage(core.destName .. " " .. L["Shared_HasLost"] .. " " .. GetSpellLink(339565) .. " (" .. WiltingFlowersCounter .. "/" .. core.groupSize .. ")",true)
-                    InfoFrame_SetHeaderCounter(L["Shared_PlayersMetCriteria"],WiltingFlowersCounter,core.groupSize)
+                    InfoFrame_SetHeaderCounterWithAdditionalMessage(L["Shared_PlayersMetCriteria"],WiltingFlowersCounter,core.groupSize,L["MobCounter_TimeReamining"] .. ": " .. stoneTimeRemaining)
                     InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
                 end
 
