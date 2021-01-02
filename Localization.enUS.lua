@@ -666,5 +666,6 @@ local baseLocale = {
 	["GUI_SelectLocalisation"] = "Select localisation",
 	["GUI_SelectLocalisationDescription"] = "Select which language the addon should display in (requires reload)",
 	["GUI_Automatic"] = "Automatic",
+	["Shared_HasSpawned"] = "%s has spawned"
 }
 core:RegisterLocale('enUS', baseLocale)

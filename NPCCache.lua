@@ -489,4 +489,5 @@ core.NPCCache = {
 	[156987] =156987, --General Kaal
 	[36535] =36535, --Corrupted Soul Fragment
 	[173430] =173430, --Dark Animus
+	[175474] =175474, --Belligerent Waiter
 }

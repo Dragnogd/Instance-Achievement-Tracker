@@ -438,6 +438,10 @@ function InfoFrame_SetHeaderCounter(message,counter,maximum)
     core.IATInfoFrame:SetSubHeading1(message .. " (" .. counter .. "/" .. maximum .. ")")
 end
 
+function InfoFrame_SetHeaderCounterWithAdditionalMessage(message,counter,maximum, message2)
+    core.IATInfoFrame:SetSubHeading1(message .. " (" .. counter .. "/" .. maximum .. ")\n" .. message2)
+end
+
 function InfoFrame_SetHeaderWithColour(message,colour)
     if colour == "red" then
         core.IATInfoFrame:SetSubHeading1(colourRed .. message .. "|r")
