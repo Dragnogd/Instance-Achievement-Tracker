@@ -237,9 +237,9 @@ function core._2296:LadyInervaDarkvein()
 
     --Announce when Dark Animus is spawning
     if core.type == "SPELL_AURA_APPLIED" and core.destID == "69820" and core.spellId == 339276 then
-        local darkAnimusCounter = 240
+        local darkAnimusCounter = 236
         darkAnimusTimer = C_Timer.NewTicker(1, function()
-            if darkAnimusCounter == 240 then
+            if darkAnimusCounter == 236 then
                 core:sendMessage(format(L["Shared_MobSpawningInXMinutes"], getNPCName(173430), "4"),true)
             elseif darkAnimusCounter == 180 then
                 core:sendMessage(format(L["Shared_MobSpawningInXMinutes"], getNPCName(173430), "3"),true)
@@ -252,7 +252,7 @@ function core._2296:LadyInervaDarkvein()
             end
             core:sendDebugMessage(darkAnimusCounter)
             darkAnimusCounter = darkAnimusCounter - 1
-        end, 240)
+        end, 236)
     end
 
     --Announce when Dark Animus has spawned
