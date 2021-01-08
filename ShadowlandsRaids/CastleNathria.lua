@@ -458,7 +458,7 @@ function core._2296:TrackAdditional()
         InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
         if core.destName ~= nil then
             local player, realm = UnitName(core.destName)
-            local _, _, player_UID = UnitGUID(core.destName)
+            local _, _, player_UID = strsplit("-", UnitGUID(core.destName))
             if WiltingFlowersUID[player_UID] == nil then
                 WiltingFlowersUID[player_UID] = player_UID
                 WiltingFlowersCounter = WiltingFlowersCounter + 1
@@ -471,7 +471,7 @@ function core._2296:TrackAdditional()
                     for player2,status in pairs(core.InfoFrame_PlayersTable) do
                         --Check if player has the Wilted Rose Buff
                         local buffFound = false
-                        local _, _, player_UID2 = UnitGUID(player2)
+                        local _, _, player_UID2 = strsplit("-", UnitGUID(core.destName))
                         for i=1,40 do
                             local _, _, count2, _, _, _, _, _, _, spellId = UnitBuff(player2, i)
                             if spellId == 339565 then
