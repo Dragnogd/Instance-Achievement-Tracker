@@ -271,10 +271,12 @@ function core._2296:CouncilOfBlood()
     --Announce when Belligerent Waiters spawn
     if core:getBlizzardTrackingStatus(14619, 1) == false and councilOfBloodTimer == nil then
         local councilOfBloodTick = 0
+        local belligerentWaiterCounter = 0
         councilOfBloodTimer = C_Timer.NewTicker(1, function()
             if councilOfBloodTick == 60 then
                 if core:getBlizzardTrackingStatus(14619, 1) == false then
-                    core:sendMessage(format(L["Shared_HasSpawned"], getNPCName(175474)),true)
+                    belligerentWaiterCounter = belligerentWaiterCounter + 1
+                    core:sendMessage(format(L["Shared_HasSpawned"], getNPCName(175474), belligerentWaiterCounter),true)
                 end
                 councilOfBloodTick = 0
             end
@@ -455,23 +457,21 @@ function core._2296:TrackAdditional()
         InfoFrame_SetHeaderCounterWithAdditionalMessage(L["Shared_PlayersMetCriteria"],WiltingFlowersCounter,core.groupSize,L["MobCounter_TimeReamining"] .. ": " .. stoneTimeRemaining)
         InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
         if core.destName ~= nil then
-            if WiltingFlowersUID[core.spawn_uid_dest_Player] == nil then
-                local player = core.destName
-                if string.find(player, "-") then
-                    local name, realm = strsplit("-", player)
-                    player = name
-                end
-                WiltingFlowersUID[core.spawn_uid_dest_Player] = core.spawn_uid_dest_Player
+            local player, realm = UnitName(core.destName)
+            local _, _, player_UID = UnitGUID(core.destName)
+            if WiltingFlowersUID[player_UID] == nil then
+                WiltingFlowersUID[player_UID] = player_UID
                 WiltingFlowersCounter = WiltingFlowersCounter + 1
                 if initialStoneLegionSetup == false then
                     InfoFrame_SetPlayerCompleteWithMessage(player, "")
-                    core:sendDebugMessage("InfoFrame set green for wilted Rose: " .. player)
+                    core:sendDebugMessage("InfoFrame set green for wilted Rose (Combat Log): " .. player)
                     --core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. GetSpellLink(339565) .. " (" .. WiltingFlowersCounter .. "/" .. core.groupSize .. ")",true)
 
                     --Check all other players in group for Wilted Roses buff
                     for player2,status in pairs(core.InfoFrame_PlayersTable) do
                         --Check if player has the Wilted Rose Buff
                         local buffFound = false
+                        local _, _, player_UID2 = UnitGUID(player2)
                         for i=1,40 do
                             local _, _, count2, _, _, _, _, _, _, spellId = UnitBuff(player2, i)
                             if spellId == 339565 then
@@ -480,20 +480,44 @@ function core._2296:TrackAdditional()
                         end
                         if buffFound == true then
                             InfoFrame_SetPlayerCompleteWithMessage(player2, "")
+                            if WiltingFlowersUID[player_UID2] == nil then
+                                WiltingFlowersUID[player_UID2] = player_UID2
+                                WiltingFlowersCounter = WiltingFlowersCounter + 1
+                                core:sendDebugMessage("InfoFrame set green for wilted Rose (Unit Scanning): " .. player)
+                            end
+                        else
+                            InfoFrame_SetPlayerFailedWithMessage(player2, "")
+                            if WiltingFlowersUID[player_UID2] ~= nil then
+                                WiltingFlowersUID[player_UID2] = nil
+                                WiltingFlowersCounter = WiltingFlowersCounter - 1
+                                core:sendDebugMessage("InfoFrame set failed for wilted Rose (Unit Scanning): " .. player)
+                            end
                         end
+                    end
+
+                    if WiltingFlowersCounter == 0 then
+                        if stoneTimer ~= nil then
+                            stoneTimer:Cancel()
+                            core:sendDebugMessage("Cancelling timer in SPELL_AURA_APPLIED")
+                        end
+                        stoneTimerStarted = false
+                        stoneTimeRemaining = 600
                     end
                 end
 
                 --Start Timer when first person picks up the Wilted Flower
                 if WiltingFlowersCounter == 1 then
                     if stoneTimerStarted == false then
+                        core:sendDebugMessage("Starting Timer in SPELL_AURA_APPLIED")
                         stoneTimerStarted = true
                         stoneTimer = C_Timer.NewTicker(1, function()
                             core:sendDebugMessage(stoneTimeRemaining)
                             stoneTimeRemaining = stoneTimeRemaining - 1
                             if initialStoneLegionSetup == false then
+                                core:sendDebugMessage("StoneLegionSetup is false")
                                 InfoFrame_SetHeaderCounterWithAdditionalMessage(L["Shared_PlayersMetCriteria"],WiltingFlowersCounter,core.groupSize,L["MobCounter_TimeReamining"] .. ": " .. stoneTimeRemaining)
                             elseif initialStoneLegionSetup == true then
+                                core:sendDebugMessage("StoneLegionSetup is true")
                                 InfoFrame_SetHeaderCounterWithAdditionalMessage(L["Shared_PlayersMetCriteria"],BloomingFlowersCounter,core.groupSize,L["MobCounter_TimeReamining"] .. ": " .. stoneTimeRemaining)
                             end
                         end, 600)
@@ -507,17 +531,14 @@ function core._2296:TrackAdditional()
 
     if core.type == "SPELL_AURA_REMOVED" and core.spellId == 339565 then --339565
         if core.destName ~= nil then
-            if WiltingFlowersUID[core.spawn_uid_dest_Player] ~= nil then
-                local player = core.destName
-                if string.find(player, "-") then
-                    local name, realm = strsplit("-", player)
-                    player = name
-                end
-                WiltingFlowersUID[core.spawn_uid_dest_Player] = nil
+            local player, realm = UnitName(core.destName)
+            local _, _, player_UID = UnitGUID(core.destName)
+            if WiltingFlowersUID[player_UID] ~= nil then
+                WiltingFlowersUID[player_UID] = nil
                 WiltingFlowersCounter = WiltingFlowersCounter - 1
                 if initialStoneLegionSetup == false then
                     InfoFrame_SetPlayerFailedWithMessage(player, "")
-                    core:sendDebugMessage("InfoFrame set red for wilted Rose: " .. player)
+                    core:sendDebugMessage("InfoFrame set red for wilted Rose: (Combat Log)" .. player)
                     --core:sendMessage(core.destName .. " " .. L["Shared_HasLost"] .. " " .. GetSpellLink(339565) .. " (" .. WiltingFlowersCounter .. "/" .. core.groupSize .. ")",true)
                     InfoFrame_SetHeaderCounterWithAdditionalMessage(L["Shared_PlayersMetCriteria"],WiltingFlowersCounter,core.groupSize,L["MobCounter_TimeReamining"] .. ": " .. stoneTimeRemaining)
                     InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
@@ -525,6 +546,7 @@ function core._2296:TrackAdditional()
 
                 if WiltingFlowersCounter == 0 then
                     if stoneTimer ~= nil then
+                        core:sendDebugMessage("Timer cancelled (SPELL_AURA_REMOVED)")
                         stoneTimer:Cancel()
                     end
                     stoneTimerStarted = false
