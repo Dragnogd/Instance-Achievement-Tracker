@@ -56,6 +56,8 @@ local playersBloomingRose = {}
 local stoneTimerStarted = false
 local stoneTimeRemaining = 600
 local stoneTimer = nil
+local stoneLegionGeneralKaaelKilled = false
+local stoneLegionGeneralGeneralGrashaalKilled = false
 
 ------------------------------------------------------
 ---- LadyInervaDarkvein
@@ -303,6 +305,12 @@ function core._2296:StoneLegionGenerals()
     InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
     InfoFrame_SetHeaderCounterWithAdditionalMessage(L["Shared_PlayersMetCriteria"],BloomingFlowersCounter,core.groupSize,L["MobCounter_TimeReamining"] .. ": " .. stoneTimeRemaining)
 
+    if core.type == "UNIT_DIED" and core.destID == "168113" then
+        stoneLegionGeneralGeneralGrashaalKilled = true
+    elseif core.type == "UNIT_DIED" and core.destID == "168112" then
+        stoneLegionGeneralKaaelKilled = true
+    end
+
     if initialStoneLegionSetup == false then
         initialStoneLegionSetup = true
         local playersWithoutBuff = ""
@@ -384,10 +392,13 @@ function core._2296:StoneLegionGenerals()
         if core.destName ~= nil then
             if playersBloomingRose[core.destName] ~= nil then
                 InfoFrame_SetPlayerFailedWithMessage(core.destName, "")
-                core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")")
+                if stoneLegionGeneralKaaelKilled == false and stoneLegionGeneralGeneralGrashaalKilled == false then
+                    core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")")
+                end
                 BloomingFlowersCounter = BloomingFlowersCounter - 1
                 playersBloomingRose[core.destName] = nil
-                core:sendMessage(core.destName .. " " .. L["Shared_HasLost"] .. " " .. GetSpellLink(339574) .. " (" .. BloomingFlowersCounter .. "/" .. core.groupSize .. ")",true)
+                core:sendDebugMessage(core.destName .. " " .. L["Shared_HasLost"] .. " " .. GetSpellLink(339574) .. " (" .. BloomingFlowersCounter .. "/" .. core.groupSize .. ")")
+                --core:sendMessage(core.destName .. " " .. L["Shared_HasLost"] .. " " .. GetSpellLink(339574) .. " (" .. BloomingFlowersCounter .. "/" .. core.groupSize .. ")",true)
             end
         end
     end
@@ -471,7 +482,7 @@ function core._2296:TrackAdditional()
                     for player2,status in pairs(core.InfoFrame_PlayersTable) do
                         --Check if player has the Wilted Rose Buff
                         local buffFound = false
-                        local _, _, player_UID2 = strsplit("-", UnitGUID(core.destName))
+                        local _, _, player_UID2 = strsplit("-", UnitGUID(player2))
                         for i=1,40 do
                             local _, _, count2, _, _, _, _, _, _, spellId = UnitBuff(player2, i)
                             if spellId == 339565 then
@@ -643,6 +654,8 @@ end
 
 function core._2296:InstanceCleanup()
     core._2296.Events:UnregisterEvent("UNIT_AURA")
+    stoneLegionGeneralKaaelKilled = false
+    stoneLegionGeneralGeneralGrashaalKilled = false
 end
 
 core._2296.Events:SetScript("OnEvent", function(self, event, ...)
