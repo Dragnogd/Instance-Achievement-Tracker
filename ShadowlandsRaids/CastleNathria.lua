@@ -634,6 +634,8 @@ function core._2296:ClearVariables()
     if stoneTimer ~= nil then
         stoneTimer:Cancel()
     end
+    WiltingFlowersUID = {}
+    WiltingFlowersCounter = 0
 
     ------------------------------------------------------
     ---- LadyInervaDarkvein
