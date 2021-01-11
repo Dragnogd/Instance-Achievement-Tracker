@@ -502,7 +502,10 @@ function core._2296:TrackAdditional()
                 core:sendDebugMessage("Cancelling timer in SPELL_AURA_APPLIED")
             end
             stoneTimerStarted = false
-            stoneTimeRemaining = 596
+
+            if initialStoneLegionSetup == false then
+                stoneTimeRemaining = 596
+            end
         end
 
         --Start Timer when first person picks up Wilted Rose
@@ -598,6 +601,11 @@ function core._2296:ClearVariables()
     initialStoneLegionSetup = false
     WiltingFlowersUID = {}
     WiltingFlowersCounter = 0
+
+    if (stoneLegionGeneralGeneralGrashaalKilled == false and stoneLegionGeneralKaaelKilled == true) or (stoneLegionGeneralKaaelKilled == false and stoneLegionGeneralGeneralGrashaalKilled == true) then
+        stoneLegionGeneralGeneralGrashaalKilled = false
+        stoneLegionGeneralKaaelKilled = false
+    end
 
     ------------------------------------------------------
     ---- LadyInervaDarkvein
