@@ -58,6 +58,8 @@ local stoneTimeRemaining = 596
 local stoneTimer = nil
 local stoneLegionGeneralKaaelKilled = false
 local stoneLegionGeneralGeneralGrashaalKilled = false
+local playersWithSerratedTear = {}
+local playersWithWickedLacertations= {}
 
 ------------------------------------------------------
 ---- LadyInervaDarkvein
@@ -357,7 +359,7 @@ function core._2296:StoneLegionGenerals()
             end
             if playersWiltedRoseStacks[player] ~= nil then
                 playersWiltedRoseStacks[player] = playersWiltedRoseStacks[player] + 1
-                InfoFrame_SetPlayerNeutralWithMessage(player, playersWiltedRoseStacks[player])
+                InfoFrame_SetPlayerInProgressWithMessage(player, playersWiltedRoseStacks[player])
 			end
 		end
     end
@@ -399,6 +401,74 @@ function core._2296:StoneLegionGenerals()
                 playersBloomingRose[core.destName] = nil
                 core:sendDebugMessage(core.destName .. " " .. L["Shared_HasLost"] .. " " .. GetSpellLink(339574) .. " (" .. BloomingFlowersCounter .. "/" .. core.groupSize .. ")")
                 --core:sendMessage(core.destName .. " " .. L["Shared_HasLost"] .. " " .. GetSpellLink(339574) .. " (" .. BloomingFlowersCounter .. "/" .. core.groupSize .. ")",true)
+            end
+        end
+    end
+
+    --Player gains Serrated Tear
+    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 343881 then
+        if core.destName ~= nil then
+            if playersWithSerratedTear[core.destName] == nil then
+                playersWithSerratedTear[core.destName] = core.destName
+                local player = core.destName
+                if InfoFrame_GetPlayerStatusWithMessage(core.destName) == 1 then
+                    if string.find(player, "-") then
+                    local name, realm = strsplit("-", player)
+                        player = name
+                    end
+                    InfoFrame_SetPlayerInProgressWithMessage(player, playersWiltedRoseStacks[player])
+                end
+            end
+        end
+    end
+
+    --Player looses Serrated Tear
+    if core.type == "SPELL_AURA_REMOVED" and core.spellId == 343881 then
+        if core.destName ~= nil then
+            if playersWithSerratedTear[core.destName] ~= nil then
+                playersWithSerratedTear[core.destName] = nil
+                if InfoFrame_GetPlayerStatusWithMessage(core.destName) == 4 and playersWithWickedLacertations[core.destName] == nil then
+                    local player = core.destName
+                    if string.find(player, "-") then
+                        local name, realm = strsplit("-", player)
+                        player = name
+                    end
+                    InfoFrame_SetPlayerNeutralWithMessage(player, playersWiltedRoseStacks[player])
+                end
+            end
+        end
+    end
+
+    --Player gains Wicked Laceration
+    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 333913 then
+        if core.destName ~= nil then
+            if playersWithWickedLacertations[core.destName] == nil then
+                playersWithWickedLacertations[core.destName] = core.destName
+                local player = core.destName
+                if InfoFrame_GetPlayerStatusWithMessage(core.destName) == 1 then
+                    if string.find(player, "-") then
+                    local name, realm = strsplit("-", player)
+                        player = name
+                    end
+                    InfoFrame_SetPlayerInProgressWithMessage(player, playersWiltedRoseStacks[player])
+                end
+            end
+        end
+    end
+
+    --Player looses Wicked Laceration
+    if core.type == "SPELL_AURA_REMOVED" and core.spellId == 333913 then
+        if core.destName ~= nil then
+            if playersWithWickedLacertations[core.destName] ~= nil then
+                playersWithWickedLacertations[core.destName] = nil
+                if InfoFrame_GetPlayerStatusWithMessage(core.destName) == 4 and playersWithSerratedTear[core.destName] == nil then
+                    local player = core.destName
+                    if string.find(player, "-") then
+                        local name, realm = strsplit("-", player)
+                        player = name
+                    end
+                    InfoFrame_SetPlayerNeutralWithMessage(player, playersWiltedRoseStacks[player])
+                end
             end
         end
     end
@@ -601,6 +671,8 @@ function core._2296:ClearVariables()
     initialStoneLegionSetup = false
     WiltingFlowersUID = {}
     WiltingFlowersCounter = 0
+    playersWithSerratedTear = {}
+    playersWithWickedLacertations = {}
 
     if (stoneLegionGeneralGeneralGrashaalKilled == false and stoneLegionGeneralKaaelKilled == true) or (stoneLegionGeneralKaaelKilled == false and stoneLegionGeneralGeneralGrashaalKilled == true) then
         stoneLegionGeneralGeneralGrashaalKilled = false

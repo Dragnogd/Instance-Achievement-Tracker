@@ -82,6 +82,9 @@ function InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
             elseif status[1] == 2 then
                 --Player has completed the requirements for the achievement
                 messageStr = messageStr .. colourGreen .. player .. " (" .. status[2] .. ")|r\n"
+            elseif status[1] == 4 then
+                --Player requirements are currently in progress
+                messageStr = messageStr .. colourOrange .. player .. " (" .. status[2] .. ")|r\n"
             elseif status[1] then
                 --Player had completed the requirements for the achievement but has since failed it
                 messageStr = messageStr .. colourRed .. player .. " (" .. status[2] .. ")|r\n"
@@ -105,7 +108,7 @@ function InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfoPersonal()
         --Update Info Frame with values from table
         local messageStr = ""
         for player, status in pairs(core.InfoFrame_PlayersTable) do
-            --1 = incomplete, 2 = complete, 3 = failed
+            --1 = incomplete, 2 = complete, 3 = failed 4 = In Progress
             if status[1] == 1 then
                 --Player has not completed the requirements for the achievement yet
                 messageStr = messageStr .. colourWhite .. player .. " (" .. status[2] .. ")|r\n"
@@ -416,6 +419,28 @@ function InfoFrame_SetPlayerNeutralWithMessage(player,additionalInfo)
 
             --core:sendDebugMessage(core.InfoFrame_PlayersTable[player][1])
             --core:sendDebugMessage(core.InfoFrame_PlayersTable[player][2])
+
+            return true
+        end
+    end
+end
+
+function InfoFrame_SetPlayerInProgressWithMessage(player,additionalInfo)
+    --Make sure we remove realm info from player before checking name
+    if string.find(player, "-") then
+        local name, realm = strsplit("-", player)
+        player = name
+    end
+
+    if core.InfoFrame_PlayersTable[player] ~= nil then
+        if core.InfoFrame_PlayersTable[player][1] == 4 then
+            core.InfoFrame_PlayersTable[player][1] = 4
+            core.InfoFrame_PlayersTable[player][2] = additionalInfo
+
+            return false
+        else
+            core.InfoFrame_PlayersTable[player][1] = 4
+            core.InfoFrame_PlayersTable[player][2] = additionalInfo
 
             return true
         end
