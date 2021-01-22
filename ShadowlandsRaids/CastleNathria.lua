@@ -375,13 +375,15 @@ function core._2296:StoneLegionGenerals()
         if wiltedTimers[player_UID2] ~= nil then
             wiltedTimers[player_UID2]:Cancel()
             wiltedTimers[player_UID2] = nil
+            wiltedMasterTimer = 600
+            wiltedMasterPlayer = ""
         end
         if wiltedTimers[player_UID2] == nil then
             local player = core.destName
             local playerUID = player_UID2
             wiltedTimers[player_UID2] = C_Timer.NewTicker(1, function()
-                if wiltedTimers[playerUID]._remainingIterations < wiltedMasterTimer then
-                    wiltedMasterTimer = wiltedTimers[playerUID]._remainingIterations
+                if (wiltedTimers[playerUID]._remainingIterations - 1) < wiltedMasterTimer then
+                    wiltedMasterTimer = wiltedTimers[playerUID]._remainingIterations - 1
                     wiltedMasterPlayer = player
                 end
             end, 600)
@@ -399,6 +401,14 @@ function core._2296:StoneLegionGenerals()
                 end
             end)
         end
+
+        local _, _, player_UID2 = strsplit("-", UnitGUID(core.destName))
+        if wiltedTimers[player_UID2] ~= nil then
+            wiltedTimers[player_UID2]:Cancel()
+            wiltedTimers[player_UID2] = nil
+            wiltedMasterTimer = 600
+            wiltedMasterPlayer = ""
+        end
     end
 
     --Blooming Roses (Gained)
@@ -415,7 +425,7 @@ function core._2296:StoneLegionGenerals()
         if bloomingTimerStarted == false then
             bloomingTimerStarted = true
             local playerlocal = core.destName
-            bloomingTimerStarted = C_Timer.NewTicker(1, function()
+            bloomingTimer = C_Timer.NewTicker(1, function()
                 bloomngTimerRemaining = bloomngTimerRemaining - 1
                 if bloomngTimerRemaining < wiltedMasterTimer then
                     wiltedMasterPlayer = playerlocal
@@ -595,9 +605,10 @@ function core._2296:TrackAdditional()
                     if wiltedTimers[player_UID2] == nil then
                         local player = player2
                         local playerUID = player_UID2
+                        core:sendDebugMessage("Starting Wilted Timer for " .. player)
                         wiltedTimers[player_UID2] = C_Timer.NewTicker(1, function()
-                            if wiltedTimers[playerUID]._remainingIterations < wiltedMasterTimer then
-                                wiltedMasterTimer = wiltedTimers[playerUID]._remainingIterations
+                            if (wiltedTimers[playerUID]._remainingIterations - 1) < wiltedMasterTimer then
+                                wiltedMasterTimer = wiltedTimers[playerUID]._remainingIterations - 1
                                 wiltedMasterPlayer = player
                                 if initialStoneLegionSetup == false then
                                     InfoFrame_SetHeaderCounterWithAdditionalMessage(L["Shared_PlayersMetCriteria"],WiltingFlowersCounter,core.groupSize,L["MobCounter_TimeReamining"] .. ": " .. wiltedMasterTimer .. " (" .. wiltedMasterPlayer .. ")")
@@ -617,8 +628,11 @@ function core._2296:TrackAdditional()
                 end
 
                 if wiltedTimers[player_UID2] ~= nil then
+                    core:sendDebugMessage("Cancelling Wilted Timer for " .. player2)
                     wiltedTimers[player_UID2]:Cancel()
                     wiltedTimers[player_UID2] = nil
+                    wiltedMasterTimer = 600
+                    wiltedMasterPlayer = ""
                 end
             end
         end
@@ -692,7 +706,8 @@ function core._2296:ClearVariables()
     if initialStoneLegionSetup == true then
         for index,value in pairs(wiltedTimers) do
             if value ~= nil then
-                value:Cancel()
+                core:sendDebugMessage("Cancelling timer for " .. index)
+                wiltedTimers[index]:Cancel()
             end
         end
         wiltedTimers = {}
@@ -712,6 +727,7 @@ function core._2296:ClearVariables()
     end
 
     if bloomingTimer ~= nil then
+        core:sendDebugMessage("Cancelling BloomingTimer")
         bloomingTimer:Cancel()
         bloomingTimer = nil
     end
