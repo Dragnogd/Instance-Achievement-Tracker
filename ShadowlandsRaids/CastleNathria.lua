@@ -53,13 +53,20 @@ local WiltingFlowersUID = {}
 local initialStoneLegionSetup = false
 local playersWiltedRoseStacks = {}
 local playersBloomingRose = {}
-local stoneTimerStarted = false
-local stoneTimeRemaining = 596
-local stoneTimer = nil
 local stoneLegionGeneralKaaelKilled = false
 local stoneLegionGeneralGeneralGrashaalKilled = false
 local playersWithSerratedTear = {}
 local playersWithWickedLacertations= {}
+
+--Timer for Blooming Roses
+local bloomingTimerStarted = false
+local bloomngTimerRemaining = 600
+local bloomingTimer = nil
+
+--Timers for Wilted Roses
+local wiltedTimers = {}
+local wiltedMasterTimer = 600
+local wiltedMasterPlayer = ""
 
 ------------------------------------------------------
 ---- LadyInervaDarkvein
@@ -305,7 +312,7 @@ end
 function core._2296:StoneLegionGenerals()
     --Defeat the Stone Legion Generals while all players are carrying a Bouquet of Blooming Sanguine Roses in Castle Nathria on Normal difficulty or higher.
     InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
-    InfoFrame_SetHeaderCounterWithAdditionalMessage(L["Shared_PlayersMetCriteria"],BloomingFlowersCounter,core.groupSize,L["MobCounter_TimeReamining"] .. ": " .. stoneTimeRemaining)
+    InfoFrame_SetHeaderCounterWithAdditionalMessage(L["Shared_PlayersMetCriteria"],BloomingFlowersCounter,core.groupSize,L["MobCounter_TimeReamining"] .. ": " .. wiltedMasterTimer .. " (" .. wiltedMasterPlayer .. ")")
 
     if core.type == "UNIT_DIED" and core.destID == "168113" then
         stoneLegionGeneralGeneralGrashaalKilled = true
@@ -361,7 +368,24 @@ function core._2296:StoneLegionGenerals()
                 playersWiltedRoseStacks[player] = playersWiltedRoseStacks[player] + 1
                 InfoFrame_SetPlayerInProgressWithMessage(player, playersWiltedRoseStacks[player])
 			end
-		end
+        end
+
+        --Reset Wilted Timer to 10 minutes for the player
+        local _, _, player_UID2 = strsplit("-", UnitGUID(core.destName))
+        if wiltedTimers[player_UID2] ~= nil then
+            wiltedTimers[player_UID2]:Cancel()
+            wiltedTimers[player_UID2] = nil
+        end
+        if wiltedTimers[player_UID2] == nil then
+            local player = core.destName
+            local playerUID = player_UID2
+            wiltedTimers[player_UID2] = C_Timer.NewTicker(1, function()
+                if wiltedTimers[playerUID]._remainingIterations < wiltedMasterTimer then
+                    wiltedMasterTimer = wiltedTimers[playerUID]._remainingIterations
+                    wiltedMasterPlayer = player
+                end
+            end, 600)
+        end
     end
 
     --Wilting Sanguine Rose (Lost)
@@ -386,6 +410,18 @@ function core._2296:StoneLegionGenerals()
                 core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. GetSpellLink(339574) .. " (" .. BloomingFlowersCounter .. "/" .. core.groupSize .. ")",true)
             end
             InfoFrame_SetPlayerCompleteWithMessage(core.destName, "")
+        end
+
+        if bloomingTimerStarted == false then
+            bloomingTimerStarted = true
+            local playerlocal = core.destName
+            bloomingTimerStarted = C_Timer.NewTicker(1, function()
+                bloomngTimerRemaining = bloomngTimerRemaining - 1
+                if bloomngTimerRemaining < wiltedMasterTimer then
+                    wiltedMasterPlayer = playerlocal
+                    wiltedMasterTimer = bloomngTimerRemaining
+                end
+            end, 600)
         end
     end
 
@@ -535,7 +571,7 @@ function core._2296:TrackAdditional()
     if (core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_REMOVED") and core.spellId == 339565 and initialStoneLegionSetup == false then --339565
         core.IATInfoFrame:ToggleOn()
         core.IATInfoFrame:SetHeading(GetAchievementLink(14525))
-        InfoFrame_SetHeaderCounterWithAdditionalMessage(L["Shared_PlayersMetCriteria"],WiltingFlowersCounter,core.groupSize,L["MobCounter_TimeReamining"] .. ": " .. stoneTimeRemaining)
+        InfoFrame_SetHeaderCounterWithAdditionalMessage(L["Shared_PlayersMetCriteria"],WiltingFlowersCounter,core.groupSize,L["MobCounter_TimeReamining"] .. ": " .. wiltedMasterTimer .. " (" .. wiltedMasterPlayer .. ")")
         InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
 
         --Check all players in group for Wiltered Rose Buff
@@ -554,6 +590,23 @@ function core._2296:TrackAdditional()
                     WiltingFlowersUID[player_UID2] = player_UID2
                     WiltingFlowersCounter = WiltingFlowersCounter + 1
                     core:sendDebugMessage("InfoFrame set green for wilted Rose (Unit Scanning): " .. player2)
+
+                    --Started 10 minute timer for player
+                    if wiltedTimers[player_UID2] == nil then
+                        local player = player2
+                        local playerUID = player_UID2
+                        wiltedTimers[player_UID2] = C_Timer.NewTicker(1, function()
+                            if wiltedTimers[playerUID]._remainingIterations < wiltedMasterTimer then
+                                wiltedMasterTimer = wiltedTimers[playerUID]._remainingIterations
+                                wiltedMasterPlayer = player
+                                if initialStoneLegionSetup == false then
+                                    InfoFrame_SetHeaderCounterWithAdditionalMessage(L["Shared_PlayersMetCriteria"],WiltingFlowersCounter,core.groupSize,L["MobCounter_TimeReamining"] .. ": " .. wiltedMasterTimer .. " (" .. wiltedMasterPlayer .. ")")
+                                elseif initialStoneLegionSetup == true then
+                                    InfoFrame_SetHeaderCounterWithAdditionalMessage(L["Shared_PlayersMetCriteria"],BloomingFlowersCounter,core.groupSize,L["MobCounter_TimeReamining"] .. ": " .. wiltedMasterTimer .. " (" .. wiltedMasterPlayer .. ")")
+                                end
+                            end
+                        end, 600)
+                    end
                 end
             else
                 InfoFrame_SetPlayerFailedWithMessage(player2, "")
@@ -562,43 +615,16 @@ function core._2296:TrackAdditional()
                     WiltingFlowersCounter = WiltingFlowersCounter - 1
                     core:sendDebugMessage("InfoFrame set failed for wilted Rose (Unit Scanning): " .. player2)
                 end
-            end
-        end
 
-        --Cancel timer if Wilted Roses counter is 0
-        if WiltingFlowersCounter == 0 then
-            if stoneTimer ~= nil then
-                stoneTimer:Cancel()
-                core:sendDebugMessage("Cancelling timer in SPELL_AURA_APPLIED")
-            end
-            stoneTimerStarted = false
-
-            if initialStoneLegionSetup == false then
-                stoneTimeRemaining = 596
-            end
-        end
-
-        --Start Timer when first person picks up Wilted Rose
-        if WiltingFlowersCounter == 1 then
-            if stoneTimerStarted == false then
-                core:sendDebugMessage("Starting Timer in SPELL_AURA_APPLIED")
-                stoneTimerStarted = true
-                stoneTimer = C_Timer.NewTicker(1, function()
-                    core:sendDebugMessage(stoneTimeRemaining)
-                    stoneTimeRemaining = stoneTimeRemaining - 1
-                    if initialStoneLegionSetup == false then
-                        core:sendDebugMessage("StoneLegionSetup is false")
-                        InfoFrame_SetHeaderCounterWithAdditionalMessage(L["Shared_PlayersMetCriteria"],WiltingFlowersCounter,core.groupSize,L["MobCounter_TimeReamining"] .. ": " .. stoneTimeRemaining)
-                    elseif initialStoneLegionSetup == true then
-                        core:sendDebugMessage("StoneLegionSetup is true")
-                        InfoFrame_SetHeaderCounterWithAdditionalMessage(L["Shared_PlayersMetCriteria"],BloomingFlowersCounter,core.groupSize,L["MobCounter_TimeReamining"] .. ": " .. stoneTimeRemaining)
-                    end
-                end, 596)
+                if wiltedTimers[player_UID2] ~= nil then
+                    wiltedTimers[player_UID2]:Cancel()
+                    wiltedTimers[player_UID2] = nil
+                end
             end
         end
 
         --Update with any changes
-        InfoFrame_SetHeaderCounterWithAdditionalMessage(L["Shared_PlayersMetCriteria"],WiltingFlowersCounter,core.groupSize,L["MobCounter_TimeReamining"] .. ": " .. stoneTimeRemaining)
+        InfoFrame_SetHeaderCounterWithAdditionalMessage(L["Shared_PlayersMetCriteria"],WiltingFlowersCounter,core.groupSize,L["MobCounter_TimeReamining"] .. ": " .. wiltedMasterTimer .. " (" .. wiltedMasterPlayer .. ")")
         InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
     end
 
@@ -663,11 +689,17 @@ function core._2296:ClearVariables()
     BloomingFlowersCounter = 0
     playersWiltedRoseStacks = {}
     playersBloomingRose = {}
-    stoneTimerStarted = false
-    stoneTimeRemaining = 596
-    if stoneTimer ~= nil and initialStoneLegionSetup == true then
-        stoneTimer:Cancel()
+    if initialStoneLegionSetup == true then
+        for index,value in pairs(wiltedTimers) do
+            if value ~= nil then
+                value:Cancel()
+            end
+        end
+        wiltedTimers = {}
     end
+    wiltedMasterTimer = 600
+    wiltedMasterPlayer = ""
+
     initialStoneLegionSetup = false
     WiltingFlowersUID = {}
     WiltingFlowersCounter = 0
@@ -678,6 +710,13 @@ function core._2296:ClearVariables()
         stoneLegionGeneralGeneralGrashaalKilled = false
         stoneLegionGeneralKaaelKilled = false
     end
+
+    if bloomingTimer ~= nil then
+        bloomingTimer:Cancel()
+        bloomingTimer = nil
+    end
+    bloomngTimerRemaining = 600
+    bloomingTimerStarted = false
 
     ------------------------------------------------------
     ---- LadyInervaDarkvein
