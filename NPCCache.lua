@@ -507,4 +507,5 @@ core.NPCCache = {
 	[171146] =171146, --Belligerent Waiter
 	[174073] =174073, --Dirtflap
 	[174733] =174733, --Sludgefist
+	[173685] =173685, --Sire Denathrius
 }
