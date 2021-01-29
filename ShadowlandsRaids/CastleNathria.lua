@@ -312,7 +312,7 @@ end
 
 function core._2296:StoneLegionGenerals()
     --Defeat the Stone Legion Generals while all players are carrying a Bouquet of Blooming Sanguine Roses in Castle Nathria on Normal difficulty or higher.
-    InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
+    InfoFrame_UpdatePlayersOnInfoFrame()
     InfoFrame_SetHeaderCounterWithAdditionalMessage(L["Shared_PlayersMetCriteria"],BloomingFlowersCounter,core.groupSize,L["CastleNathria_OrbTimer"] .. ": " .. wiltedMasterTimer .. " (" .. wiltedMasterPlayer .. ")\n" .. L["CastleNathria_KillTimer"] .. ": " .. bloomingMasterTimer)
 
     if core.type == "UNIT_DIED" and core.destID == "168113" then
@@ -325,7 +325,7 @@ function core._2296:StoneLegionGenerals()
         initialStoneLegionSetup = true
         local playersWithoutBuff = ""
         local playersFailed = false
-		for player,status in pairs(core.InfoFrame_PlayersTable) do
+		for k,player in pairs(core.InfoFrame_PlayersTable) do
 			if playersWiltedRoseStacks[player] == nil then
 
                 --Check if player has the Wilted Rose Buff
@@ -337,10 +337,10 @@ function core._2296:StoneLegionGenerals()
                     end
                 end
                 if buffFound == true then
-                    InfoFrame_SetPlayerNeutralWithMessage(player, "1")
+                    InfoFrame_SetPlayerNeutral(player)
                     playersWiltedRoseStacks[player] = 1
                 else
-                    InfoFrame_SetPlayerFailedWithMessage(player, "")
+                    InfoFrame_SetPlayerFailed(player)
                     playersWiltedRoseStacks[player] = 0
                     playersWithoutBuff = playersWithoutBuff .. player .. ", "
                     playersFailed = true
@@ -357,40 +357,6 @@ function core._2296:StoneLegionGenerals()
         end
     end
 
-    --Wilting Sanguine Rose (Gained Stack)
-    if (core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_APPLIED_DOSE") and core.spellId == 339565 then --339565
-        if core.destName ~= nil then
-			local player = core.destName
-			if string.find(player, "-") then
-				local name, realm = strsplit("-", player)
-                player = name
-            end
-            if playersWiltedRoseStacks[player] ~= nil then
-                playersWiltedRoseStacks[player] = playersWiltedRoseStacks[player] + 1
-                InfoFrame_SetPlayerInProgressWithMessage(player, playersWiltedRoseStacks[player])
-			end
-        end
-
-        --Reset Wilted Timer to 10 minutes for the player
-        local _, _, player_UID2 = strsplit("-", UnitGUID(core.destName))
-        if wiltedTimers[player_UID2] ~= nil then
-            wiltedTimers[player_UID2]:Cancel()
-            wiltedTimers[player_UID2] = nil
-            wiltedMasterTimer = 600
-            wiltedMasterPlayer = ""
-        end
-        if wiltedTimers[player_UID2] == nil then
-            local player = core.destName
-            local playerUID = player_UID2
-            wiltedTimers[player_UID2] = C_Timer.NewTicker(1, function()
-                if (wiltedTimers[playerUID]._remainingIterations - 1) < wiltedMasterTimer then
-                    wiltedMasterTimer = wiltedTimers[playerUID]._remainingIterations - 1
-                    wiltedMasterPlayer = player
-                end
-            end, 600)
-        end
-    end
-
     --Wilting Sanguine Rose (Lost)
     if core.type == "SPELL_AURA_REMOVED" and core.spellId == 339565 then --339565
         if core.destName ~= nil then
@@ -398,7 +364,7 @@ function core._2296:StoneLegionGenerals()
             C_Timer.After(1, function()
                 if playersBloomingRose[playerTmp] == nil then
                     core:getAchievementFailedWithMessageAfter("(" .. playerTmp .. ")")
-                    InfoFrame_SetPlayerFailedWithMessage(playerTmp, "")
+                    InfoFrame_SetPlayerFailed(playerTmp)
                 end
             end)
         end
@@ -420,7 +386,7 @@ function core._2296:StoneLegionGenerals()
                 playersBloomingRose[core.destName] = core.destName
                 core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. GetSpellLink(339574) .. " (" .. BloomingFlowersCounter .. "/" .. core.groupSize .. ")",true)
             end
-            InfoFrame_SetPlayerCompleteWithMessage(core.destName, "")
+            InfoFrame_SetPlayerComplete(core.destName)
         end
 
         if bloomingTimerStarted == false then
@@ -439,7 +405,7 @@ function core._2296:StoneLegionGenerals()
     if core.type == "SPELL_AURA_REMOVED" and core.spellId == 339574 then --339574
         if core.destName ~= nil then
             if playersBloomingRose[core.destName] ~= nil then
-                InfoFrame_SetPlayerFailedWithMessage(core.destName, "")
+                InfoFrame_SetPlayerFailed(core.destName)
                 if stoneLegionGeneralKaaelKilled == false and stoneLegionGeneralGeneralGrashaalKilled == false then
                     core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")")
                 end
@@ -447,74 +413,6 @@ function core._2296:StoneLegionGenerals()
                 playersBloomingRose[core.destName] = nil
                 core:sendDebugMessage(core.destName .. " " .. L["Shared_HasLost"] .. " " .. GetSpellLink(339574) .. " (" .. BloomingFlowersCounter .. "/" .. core.groupSize .. ")")
                 --core:sendMessage(core.destName .. " " .. L["Shared_HasLost"] .. " " .. GetSpellLink(339574) .. " (" .. BloomingFlowersCounter .. "/" .. core.groupSize .. ")",true)
-            end
-        end
-    end
-
-    --Player gains Anima Infection
-    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 339885 then
-        if core.destName ~= nil then
-            if playersWithAnimaInfection[core.destName] == nil then
-                playersWithAnimaInfection[core.destName] = core.destName
-                local player = core.destName
-                if InfoFrame_GetPlayerStatusWithMessage(core.destName) == 1 then
-                    if string.find(player, "-") then
-                    local name, realm = strsplit("-", player)
-                        player = name
-                    end
-                    InfoFrame_SetPlayerInProgressWithMessage(player, playersWiltedRoseStacks[player])
-                end
-            end
-        end
-    end
-
-    --Player looses Anima Infection
-    if core.type == "SPELL_AURA_REMOVED" and core.spellId == 339885 then
-        if core.destName ~= nil then
-            if playersWithAnimaInfection[core.destName] ~= nil then
-                playersWithAnimaInfection[core.destName] = nil
-                if InfoFrame_GetPlayerStatusWithMessage(core.destName) == 4 and playersWithAnimaInfusion[core.destName] == nil then
-                    local player = core.destName
-                    if string.find(player, "-") then
-                        local name, realm = strsplit("-", player)
-                        player = name
-                    end
-                    InfoFrame_SetPlayerNeutralWithMessage(player, playersWiltedRoseStacks[player])
-                end
-            end
-        end
-    end
-
-    --Player gains Anima Infusion
-    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 346706 then
-        if core.destName ~= nil then
-            if playersWithAnimaInfusion[core.destName] == nil then
-                playersWithAnimaInfusion[core.destName] = core.destName
-                local player = core.destName
-                if InfoFrame_GetPlayerStatusWithMessage(core.destName) == 1 then
-                    if string.find(player, "-") then
-                    local name, realm = strsplit("-", player)
-                        player = name
-                    end
-                    InfoFrame_SetPlayerInProgressWithMessage(player, playersWiltedRoseStacks[player])
-                end
-            end
-        end
-    end
-
-    --Player looses Anima Infusion
-    if core.type == "SPELL_AURA_REMOVED" and core.spellId == 346706 then
-        if core.destName ~= nil then
-            if playersWithAnimaInfusion[core.destName] ~= nil then
-                playersWithAnimaInfusion[core.destName] = nil
-                if InfoFrame_GetPlayerStatusWithMessage(core.destName) == 4 and playersWithAnimaInfection[core.destName] == nil then
-                    local player = core.destName
-                    if string.find(player, "-") then
-                        local name, realm = strsplit("-", player)
-                        player = name
-                    end
-                    InfoFrame_SetPlayerNeutralWithMessage(player, playersWiltedRoseStacks[player])
-                end
             end
         end
     end
@@ -582,10 +480,10 @@ function core._2296:TrackAdditional()
         core.IATInfoFrame:ToggleOn()
         core.IATInfoFrame:SetHeading(GetAchievementLink(14525))
         InfoFrame_SetHeaderCounterWithAdditionalMessage(L["Shared_PlayersMetCriteria"],WiltingFlowersCounter,core.groupSize,L["CastleNathria_OrbTimer"] .. ": " .. wiltedMasterTimer .. " (" .. wiltedMasterPlayer .. ")\n" .. L["CastleNathria_KillTimer"] .. ": " .. bloomingMasterTimer)
-        InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
+        InfoFrame_UpdatePlayersOnInfoFrame()
 
         --Check all players in group for Wiltered Rose Buff
-        for player2,status in pairs(core.InfoFrame_PlayersTable) do
+        for k,player2 in pairs(core.InfoFrame_PlayersTable) do
             local buffFound = false
             local _, _, player_UID2 = strsplit("-", UnitGUID(player2))
             for i=1,40 do
@@ -595,7 +493,7 @@ function core._2296:TrackAdditional()
                 end
             end
             if buffFound == true then
-                InfoFrame_SetPlayerCompleteWithMessage(player2, "")
+                InfoFrame_SetPlayerComplete(player2)
                 if WiltingFlowersUID[player_UID2] == nil then
                     WiltingFlowersUID[player_UID2] = player_UID2
                     WiltingFlowersCounter = WiltingFlowersCounter + 1
@@ -620,7 +518,7 @@ function core._2296:TrackAdditional()
                     end
                 end
             else
-                InfoFrame_SetPlayerFailedWithMessage(player2, "")
+                InfoFrame_SetPlayerFailed(player2)
                 if WiltingFlowersUID[player_UID2] ~= nil then
                     WiltingFlowersUID[player_UID2] = nil
                     WiltingFlowersCounter = WiltingFlowersCounter - 1
@@ -639,7 +537,7 @@ function core._2296:TrackAdditional()
 
         --Update with any changes
         InfoFrame_SetHeaderCounterWithAdditionalMessage(L["Shared_PlayersMetCriteria"],WiltingFlowersCounter,core.groupSize,L["CastleNathria_OrbTimer"] .. ": " .. wiltedMasterTimer .. " (" .. wiltedMasterPlayer .. ")\n" .. L["CastleNathria_KillTimer"] .. ": " .. bloomingMasterTimer)
-        InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
+        InfoFrame_UpdatePlayersOnInfoFrame()
     end
 
     --Player has picked up Anima Attunement
