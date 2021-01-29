@@ -325,7 +325,7 @@ function core._2296:StoneLegionGenerals()
         initialStoneLegionSetup = true
         local playersWithoutBuff = ""
         local playersFailed = false
-		for k,player in pairs(core.InfoFrame_PlayersTable) do
+		for player,status in pairs(core.InfoFrame_PlayersTable) do
 			if playersWiltedRoseStacks[player] == nil then
 
                 --Check if player has the Wilted Rose Buff
@@ -402,7 +402,7 @@ function core._2296:StoneLegionGenerals()
     end
 
     --Blooming Roses (Lost)
-    if core.type == "SPELL_AURA_REMOVED" and core.spellId == 339574 then --339574
+    if core.type == "SPELL_AURA_REMOVED" and core.spellId == 339574 and core:getBlizzardTrackingStatus(14525, 1) == false then --339574
         if core.destName ~= nil then
             if playersBloomingRose[core.destName] ~= nil then
                 InfoFrame_SetPlayerFailed(core.destName)
@@ -483,7 +483,7 @@ function core._2296:TrackAdditional()
         InfoFrame_UpdatePlayersOnInfoFrame()
 
         --Check all players in group for Wiltered Rose Buff
-        for k,player2 in pairs(core.InfoFrame_PlayersTable) do
+        for player2, status in pairs(core.InfoFrame_PlayersTable) do
             local buffFound = false
             local _, _, player_UID2 = strsplit("-", UnitGUID(player2))
             for i=1,40 do

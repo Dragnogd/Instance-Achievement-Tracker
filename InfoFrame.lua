@@ -363,6 +363,24 @@ function InfoFrame_SetPlayerComplete(player)
     end
 end
 
+function InfoFrame_SetPlayerNeutral(player)
+    --Make sure we remove realm info from player before checking name
+    if string.find(player, "-") then
+        local name, realm = strsplit("-", player)
+        player = name
+    end
+
+    if core.InfoFrame_PlayersTable[player] ~= nil then
+        if core.InfoFrame_PlayersTable[player] == 1 then
+            core.InfoFrame_PlayersTable[player] = 1
+            return false
+        else
+            core.InfoFrame_PlayersTable[player] = 1
+            return true
+        end
+    end
+end
+
 function InfoFrame_SetPlayerCompleteWithMessage(player,additionalInfo)
     --core:sendDebugMessage("Inside SetPlayerCompletedMessage")
     --core:sendDebugMessage(additionalInfo)
