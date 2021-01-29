@@ -55,8 +55,8 @@ local playersWiltedRoseStacks = {}
 local playersBloomingRose = {}
 local stoneLegionGeneralKaaelKilled = false
 local stoneLegionGeneralGeneralGrashaalKilled = false
-local playersWithSerratedTear = {}
-local playersWithWickedLacertations= {}
+local playersWithAnimaInfection = {}
+local playersWithAnimaInfusion= {}
 
 --Timer for Blooming Roses
 local bloomingTimerStarted = false
@@ -67,6 +67,7 @@ local bloomingTimer = nil
 local wiltedTimers = {}
 local wiltedMasterTimer = 600
 local wiltedMasterPlayer = ""
+local bloomingMasterTimer = 600
 
 ------------------------------------------------------
 ---- LadyInervaDarkvein
@@ -312,7 +313,7 @@ end
 function core._2296:StoneLegionGenerals()
     --Defeat the Stone Legion Generals while all players are carrying a Bouquet of Blooming Sanguine Roses in Castle Nathria on Normal difficulty or higher.
     InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
-    InfoFrame_SetHeaderCounterWithAdditionalMessage(L["Shared_PlayersMetCriteria"],BloomingFlowersCounter,core.groupSize,L["MobCounter_TimeReamining"] .. ": " .. wiltedMasterTimer .. " (" .. wiltedMasterPlayer .. ")")
+    InfoFrame_SetHeaderCounterWithAdditionalMessage(L["Shared_PlayersMetCriteria"],BloomingFlowersCounter,core.groupSize,L["CastleNathria_OrbTimer"] .. ": " .. wiltedMasterTimer .. " (" .. wiltedMasterPlayer .. ")\n" .. L["CastleNathria_KillTimer"] .. ": " .. bloomingMasterTimer)
 
     if core.type == "UNIT_DIED" and core.destID == "168113" then
         stoneLegionGeneralGeneralGrashaalKilled = true
@@ -427,9 +428,8 @@ function core._2296:StoneLegionGenerals()
             local playerlocal = core.destName
             bloomingTimer = C_Timer.NewTicker(1, function()
                 bloomngTimerRemaining = bloomngTimerRemaining - 1
-                if bloomngTimerRemaining < wiltedMasterTimer then
-                    wiltedMasterPlayer = playerlocal
-                    wiltedMasterTimer = bloomngTimerRemaining
+                if bloomngTimerRemaining < bloomingMasterTimer then
+                    bloomingMasterTimer = bloomngTimerRemaining
                 end
             end, 600)
         end
@@ -451,11 +451,11 @@ function core._2296:StoneLegionGenerals()
         end
     end
 
-    --Player gains Serrated Tear
-    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 343881 then
+    --Player gains Anima Infection
+    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 339885 then
         if core.destName ~= nil then
-            if playersWithSerratedTear[core.destName] == nil then
-                playersWithSerratedTear[core.destName] = core.destName
+            if playersWithAnimaInfection[core.destName] == nil then
+                playersWithAnimaInfection[core.destName] = core.destName
                 local player = core.destName
                 if InfoFrame_GetPlayerStatusWithMessage(core.destName) == 1 then
                     if string.find(player, "-") then
@@ -468,12 +468,12 @@ function core._2296:StoneLegionGenerals()
         end
     end
 
-    --Player looses Serrated Tear
-    if core.type == "SPELL_AURA_REMOVED" and core.spellId == 343881 then
+    --Player looses Anima Infection
+    if core.type == "SPELL_AURA_REMOVED" and core.spellId == 339885 then
         if core.destName ~= nil then
-            if playersWithSerratedTear[core.destName] ~= nil then
-                playersWithSerratedTear[core.destName] = nil
-                if InfoFrame_GetPlayerStatusWithMessage(core.destName) == 4 and playersWithWickedLacertations[core.destName] == nil then
+            if playersWithAnimaInfection[core.destName] ~= nil then
+                playersWithAnimaInfection[core.destName] = nil
+                if InfoFrame_GetPlayerStatusWithMessage(core.destName) == 4 and playersWithAnimaInfusion[core.destName] == nil then
                     local player = core.destName
                     if string.find(player, "-") then
                         local name, realm = strsplit("-", player)
@@ -485,11 +485,11 @@ function core._2296:StoneLegionGenerals()
         end
     end
 
-    --Player gains Wicked Laceration
-    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 333913 then
+    --Player gains Anima Infusion
+    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 346706 then
         if core.destName ~= nil then
-            if playersWithWickedLacertations[core.destName] == nil then
-                playersWithWickedLacertations[core.destName] = core.destName
+            if playersWithAnimaInfusion[core.destName] == nil then
+                playersWithAnimaInfusion[core.destName] = core.destName
                 local player = core.destName
                 if InfoFrame_GetPlayerStatusWithMessage(core.destName) == 1 then
                     if string.find(player, "-") then
@@ -502,12 +502,12 @@ function core._2296:StoneLegionGenerals()
         end
     end
 
-    --Player looses Wicked Laceration
-    if core.type == "SPELL_AURA_REMOVED" and core.spellId == 333913 then
+    --Player looses Anima Infusion
+    if core.type == "SPELL_AURA_REMOVED" and core.spellId == 346706 then
         if core.destName ~= nil then
-            if playersWithWickedLacertations[core.destName] ~= nil then
-                playersWithWickedLacertations[core.destName] = nil
-                if InfoFrame_GetPlayerStatusWithMessage(core.destName) == 4 and playersWithSerratedTear[core.destName] == nil then
+            if playersWithAnimaInfusion[core.destName] ~= nil then
+                playersWithAnimaInfusion[core.destName] = nil
+                if InfoFrame_GetPlayerStatusWithMessage(core.destName) == 4 and playersWithAnimaInfection[core.destName] == nil then
                     local player = core.destName
                     if string.find(player, "-") then
                         local name, realm = strsplit("-", player)
@@ -581,7 +581,7 @@ function core._2296:TrackAdditional()
     if (core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_REMOVED") and core.spellId == 339565 and initialStoneLegionSetup == false then --339565
         core.IATInfoFrame:ToggleOn()
         core.IATInfoFrame:SetHeading(GetAchievementLink(14525))
-        InfoFrame_SetHeaderCounterWithAdditionalMessage(L["Shared_PlayersMetCriteria"],WiltingFlowersCounter,core.groupSize,L["MobCounter_TimeReamining"] .. ": " .. wiltedMasterTimer .. " (" .. wiltedMasterPlayer .. ")")
+        InfoFrame_SetHeaderCounterWithAdditionalMessage(L["Shared_PlayersMetCriteria"],WiltingFlowersCounter,core.groupSize,L["CastleNathria_OrbTimer"] .. ": " .. wiltedMasterTimer .. " (" .. wiltedMasterPlayer .. ")\n" .. L["CastleNathria_KillTimer"] .. ": " .. bloomingMasterTimer)
         InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
 
         --Check all players in group for Wiltered Rose Buff
@@ -611,9 +611,9 @@ function core._2296:TrackAdditional()
                                 wiltedMasterTimer = wiltedTimers[playerUID]._remainingIterations - 1
                                 wiltedMasterPlayer = player
                                 if initialStoneLegionSetup == false then
-                                    InfoFrame_SetHeaderCounterWithAdditionalMessage(L["Shared_PlayersMetCriteria"],WiltingFlowersCounter,core.groupSize,L["MobCounter_TimeReamining"] .. ": " .. wiltedMasterTimer .. " (" .. wiltedMasterPlayer .. ")")
+                                    InfoFrame_SetHeaderCounterWithAdditionalMessage(L["Shared_PlayersMetCriteria"],WiltingFlowersCounter,core.groupSize,L["CastleNathria_OrbTimer"] .. ": " .. wiltedMasterTimer .. " (" .. wiltedMasterPlayer .. ")\n" .. L["CastleNathria_KillTimer"] .. ": " .. bloomingMasterTimer)
                                 elseif initialStoneLegionSetup == true then
-                                    InfoFrame_SetHeaderCounterWithAdditionalMessage(L["Shared_PlayersMetCriteria"],BloomingFlowersCounter,core.groupSize,L["MobCounter_TimeReamining"] .. ": " .. wiltedMasterTimer .. " (" .. wiltedMasterPlayer .. ")")
+                                    InfoFrame_SetHeaderCounterWithAdditionalMessage(L["Shared_PlayersMetCriteria"],BloomingFlowersCounter,core.groupSize,L["CastleNathria_OrbTimer"] .. ": " .. wiltedMasterTimer .. " (" .. wiltedMasterPlayer .. ")\n" .. L["CastleNathria_KillTimer"] .. ": " .. bloomingMasterTimer)
                                 end
                             end
                         end, 600)
@@ -638,7 +638,7 @@ function core._2296:TrackAdditional()
         end
 
         --Update with any changes
-        InfoFrame_SetHeaderCounterWithAdditionalMessage(L["Shared_PlayersMetCriteria"],WiltingFlowersCounter,core.groupSize,L["MobCounter_TimeReamining"] .. ": " .. wiltedMasterTimer .. " (" .. wiltedMasterPlayer .. ")")
+        InfoFrame_SetHeaderCounterWithAdditionalMessage(L["Shared_PlayersMetCriteria"],WiltingFlowersCounter,core.groupSize,L["CastleNathria_OrbTimer"] .. ": " .. wiltedMasterTimer .. " (" .. wiltedMasterPlayer .. ")\n" .. L["CastleNathria_KillTimer"] .. ": " .. bloomingMasterTimer)
         InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
     end
 
@@ -713,13 +713,14 @@ function core._2296:ClearVariables()
         wiltedTimers = {}
     end
     wiltedMasterTimer = 600
+    bloomingMasterTimer = 600
     wiltedMasterPlayer = ""
 
     initialStoneLegionSetup = false
     WiltingFlowersUID = {}
     WiltingFlowersCounter = 0
-    playersWithSerratedTear = {}
-    playersWithWickedLacertations = {}
+    playersWithAnimaInfection = {}
+    playersWithAnimaInfusion = {}
 
     if (stoneLegionGeneralGeneralGrashaalKilled == false and stoneLegionGeneralKaaelKilled == true) or (stoneLegionGeneralKaaelKilled == false and stoneLegionGeneralGeneralGrashaalKilled == true) then
         stoneLegionGeneralGeneralGrashaalKilled = false

@@ -667,5 +667,7 @@ local baseLocale = {
 	["GUI_SelectLocalisationDescription"] = "Select which language the addon should display in (requires reload)",
 	["GUI_Automatic"] = "Automatic",
 	["Shared_HasSpawned"] = "%s (%s) has spawned",
+	["CastleNathria_OrbTimer"] = "Remaining time to get orbs",
+	["CastleNathria_KillTimer"] = "Remaining time to kill",
 }
 core:RegisterLocale('enUS', baseLocale)
