@@ -1739,6 +1739,7 @@ function Instance_OnClick(self)
                 end
 
                 tactics = tactics:gsub("%\n", "<br />")
+                local tacticsStr = tactics == '' and '' or L["GUI_Tactic"] .. ": " .. tactics
 
                 --Only show players if user has enabled achievement tracking
                 button.contentText:SetWidth(500)
@@ -1755,9 +1756,9 @@ function Instance_OnClick(self)
                 end
                 local achievementLink = GetAchievementLink(instanceLocation["boss" .. counter2].achievement)
                 if core.achievementTrackingEnabled == false then
-                    button.contentText:SetText("<html><body><p>" .. L["GUI_Achievement"] .. ": ".. achievementLink .. "<br /><br />" .. L["GUI_Tactic"] .. ": " .. tactics .. "</p></body></html>")
+		            button.contentText:SetText("<html><body><p>" .. L["GUI_Achievement"] .. ": " .. achievementLink .. "<br /><br />" .. tacticsStr .. "</p></body></html>")
                 else
-                    button.contentText:SetText("<html><body><p>" .. L["GUI_Achievement"] .. ": " .. achievementLink .. "<br /><br />" .. players .. "<br /><br />" .. L["GUI_Tactic"] .. ": " .. tactics .. "</p></body></html>")
+                    button.contentText:SetText("<html><body><p>" .. L["GUI_Achievement"] .. ": " .. achievementLink .. "<br /><br />" .. players .. "<br /><br />" .. tacticsStr .. "</p></body></html>")
                 end
 
                 if playersFound == false and core.achievementDisplayStatus == "grey" then
