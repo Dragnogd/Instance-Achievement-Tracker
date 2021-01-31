@@ -2344,7 +2344,7 @@ function GetNameFromLocalNpcIDCache()
 end
 
 --API
-function IAT_DisplayAchievement(achievementID)
+function IAT_DisplayAchievement(achievementID, requireTactics)
     --Open IAT Gui and display the specific achievement
     for expansion, _ in pairs(core.Instances) do
         for instanceType, _ in pairs(core.Instances[expansion]) do
@@ -2352,12 +2352,23 @@ function IAT_DisplayAchievement(achievementID)
                 for boss, _ in pairs(core.Instances[expansion][instanceType][instance]) do
                     if boss ~= "name" then
                         if core.Instances[expansion][instanceType][instance][boss].achievement == achievementID then
-                            --Display the relevant page in the GUI
-                            IAT_InstanceType = instanceType
-                            IAT_InstanceLocation = instance
-                            IAT_CurrentTab = expansion
+                            local outputTactics = true
+                            if requireTactics == true then
+                                if string.len(core.Instances[expansion][instanceType][instance][boss].tactics) == 0 then
+                                    outputTactics = false
+                                end
+                            end
 
-                            Config:Instance_OnClickAPI("API")
+                            if outputTactics == true then
+                                --Display the relevant page in the GUI
+                                IAT_InstanceType = instanceType
+                                IAT_InstanceLocation = instance
+                                IAT_CurrentTab = expansion
+
+                                Config:Instance_OnClickAPI("API")
+                            else
+                                return false
+                            end
                         end
                     end
                 end
