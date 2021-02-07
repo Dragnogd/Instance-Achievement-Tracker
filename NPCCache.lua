@@ -508,4 +508,5 @@ core.NPCCache = {
 	[174073] =174073, --Dirtflap
 	[174733] =174733, --Sludgefist
 	[173685] =173685, --Sire Denathrius
+	[147430] =147430, --Virmen
 }
