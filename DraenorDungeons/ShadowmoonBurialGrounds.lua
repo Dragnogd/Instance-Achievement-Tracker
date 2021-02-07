@@ -21,6 +21,12 @@ local corpseSkitterlingAnnounced = false
 local ritualOfBonesCounter = 0
 local timerStarted = false
 
+function core._1176:SadanaBloodfury()
+	if core:getBlizzardTrackingStatus(9018) == true then
+		core:getAchievementSuccess()
+	end
+end
+
 function core._1176:Bonemaw()
     --Corpse Skitterlings Alive
     if (core.type == "SWING_DAMAGE" or core.type == "SWING_MISSED") and core.sourceID == "77006" then
