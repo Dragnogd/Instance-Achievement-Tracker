@@ -2,6 +2,7 @@
 -- Namespaces
 --------------------------------------
 local _, core = ...
+local L = core.L
 
 ------------------------------------------------------
 ---- Stormstout Brewery Bosses
@@ -35,6 +36,9 @@ end
 
 
 function core._961:Hoptallus()
+	core.IATInfoFrame:ToggleOn()
+	core.IATInfoFrame:SetHeading(GetAchievementLink(6420))
+
 	--Detect amount of virmen currently on target
 	if (core.type == "SWING_DAMAGE" or core.type == "SWING_MISSED") and (core.sourceID == "59426" or core.sourceID == "59460" or core.sourceID == "56718" or core.sourceID == "59459" or core.sourceID == "59461" or core.sourceID == "59551") and (core.spawn_uid ~= nil) then
 		if virmenTable[core.spawn_uid] == nil then
@@ -42,7 +46,7 @@ function core._961:Hoptallus()
 			virmenCounter = virmenCounter + 1
 			--Only display every 5 to reduce spam
 			if virmenCounter - math.floor(virmenCounter/10)*10 == 0 then
-				SendChatMessage("[WIP] Virmen Counter (" .. virmenCounter .. "/100)",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+				core:sendMessage(getNPCName(tonumber("147430")) .. " " .. L["Core_Counter"] .. " (" .. virmenCounter .. "/100)")
 			end
 		end
 	end
@@ -58,15 +62,21 @@ function core._961:Hoptallus()
 		end
 
 		-- if startCountingVirmen == true then
-		-- 	SendChatMessage("[WIP] Virmen Killed (" .. virmenKilled .. "/100)",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
 		-- 	virmenKilled = virmenKilled + 1
 		-- end
 	end
 
 	--Detect when user can kill virmen with hammer
-	if virmenCounter >= 100 and core.achievementCompleted == false then
+	if virmenKilled >= 100 and core.achievementCompleted == false then
 		core:getAchievementSuccess()
 	end
+
+	if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 111666 then
+		
+	end
+
+	core.IATInfoFrame:SetSubHeading1(L["MobCounter_TimeReamining"] .. ": " .. L["MobCounter_TimerNotApplicable"])
+	core.IATInfoFrame:SetText1(format(L["MobCounter_MobsAlive"], getNPCName(tonumber("147430"))) .. " (" .. virmenCounter .. "/100)","GameFontHighlightLarge")
 
 	-- --Detect how many virmen player has killed with hammer
 	-- if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 111666 and hammerUsedAmount < 3 then
@@ -76,16 +86,15 @@ function core._961:Hoptallus()
 	-- 	C_Timer.After(0.5, function()
 	-- 		startCountingVirmen = false
 	-- 		if hammerUsedAmount == 3 and virmenKilled >= 100 then
-	-- 			SendChatMessage("[WIP] Virmen Killed with hammer (" .. virmenKilled .. "/100)",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+	-- 			core:sendMessage(getNPCName(tonumber("147430")) .. " " .. L["Shared_Killed"] .. "(" .. virmenKilled .. "/100)")
 	-- 		elseif hammerUsedAmount == 3 and virmenKilled < 100 then
-	-- 			SendChatMessage("[WIP] Virmen Killed with hammer (" .. virmenKilled .. "/100)",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+	-- 			core:sendMessage(getNPCName(tonumber("147430")) .. " " .. L["Shared_Killed"] .. "(" .. virmenKilled .. "/100)")
 	-- 			hammerUsedAmount = 0
 	-- 			virmenKilled = 0
 	-- 		end
 	-- 	end)
 	-- end
 end
-
 
 function core._961:ClearVariables()
 	------------------------------------------------------
