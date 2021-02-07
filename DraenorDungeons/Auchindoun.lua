@@ -8,5 +8,11 @@ local _, core = ...
 ------------------------------------------------------
 core._1182 = {}
 
+function core._1182:SoulbinderNyami()
+	if core:getBlizzardTrackingStatus(9023) == true then
+		core:getAchievementSuccess()
+	end
+end
+
 function core._1182:ClearVariables()
 end
