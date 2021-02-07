@@ -1343,9 +1343,10 @@ function Config:CreateGUI()
     local numButtons = 200 --Total number of button we need for any instance. We can hide excess button for raids/dungeons with less bosses
     local idCounter = 0
     for j = 2, 8 do
+        local globalCounter = 1
         for i = 1, numButtons do
             if j == 2 then
-                ShadowlandsContentButtons[i] = CreateFrame("Button",nil,ShadowlandsContent)
+                ShadowlandsContentButtons[i] = CreateFrame("Button","IAT_Achievement_"..j.."_"..globalCounter,ShadowlandsContent)
                 button = ShadowlandsContentButtons[i]
                 button:SetSize(ShadowlandsContent:GetWidth()-18,buttonHeight)
                 button:SetID(idCounter)
@@ -1355,7 +1356,7 @@ function Config:CreateGUI()
                     button:SetPoint("TOPLEFT",ShadowlandsContentButtons[i-1],"BOTTOMLEFT",0,0)
                 end
             elseif j == 3 then
-                BattleForAzerothContentButtons[i] = CreateFrame("Button",nil,BattleForAzerothContent)
+                BattleForAzerothContentButtons[i] = CreateFrame("Button","IAT_Achievement_"..j.."_"..globalCounter,BattleForAzerothContent)
                 button = BattleForAzerothContentButtons[i]
                 button:SetSize(BattleForAzerothContent:GetWidth()-18,buttonHeight)
                 button:SetID(idCounter)
@@ -1365,7 +1366,7 @@ function Config:CreateGUI()
                     button:SetPoint("TOPLEFT",BattleForAzerothContentButtons[i-1],"BOTTOMLEFT",0,0)
                 end
             elseif j == 4 then
-                LegionContentButtons[i] = CreateFrame("Button",nil,LegionContent)
+                LegionContentButtons[i] = CreateFrame("Button","IAT_Achievement_"..j.."_"..globalCounter,LegionContent)
                 button = LegionContentButtons[i]
                 button:SetSize(LegionContent:GetWidth()-18,buttonHeight)
                 button:SetID(idCounter)
@@ -1375,7 +1376,7 @@ function Config:CreateGUI()
                     button:SetPoint("TOPLEFT",LegionContentButtons[i-1],"BOTTOMLEFT",0,0)
                 end
             elseif j == 5 then
-                WarlordsOfDraenorContentButtons[i] = CreateFrame("Button",nil,WarlordsOfDraenorContent)
+                WarlordsOfDraenorContentButtons[i] = CreateFrame("Button","IAT_Achievement_"..j.."_"..globalCounter,WarlordsOfDraenorContent)
                 button = WarlordsOfDraenorContentButtons[i]
                 button:SetSize(WarlordsOfDraenorContent:GetWidth()-18,buttonHeight)
                 button:SetID(idCounter)
@@ -1385,7 +1386,7 @@ function Config:CreateGUI()
                     button:SetPoint("TOPLEFT",WarlordsOfDraenorContentButtons[i-1],"BOTTOMLEFT",0,0)
                 end
             elseif j == 6 then
-                MistsOfPandariaContentButtons[i] = CreateFrame("Button",nil,MistsOfPandariaContent)
+                MistsOfPandariaContentButtons[i] = CreateFrame("Button","IAT_Achievement_"..j.."_"..globalCounter,MistsOfPandariaContent)
                 button = MistsOfPandariaContentButtons[i]
                 button:SetSize(MistsOfPandariaContent:GetWidth()-18,buttonHeight)
                 button:SetID(idCounter)
@@ -1395,7 +1396,7 @@ function Config:CreateGUI()
                     button:SetPoint("TOPLEFT",MistsOfPandariaContentButtons[i-1],"BOTTOMLEFT",0,0)
                 end
             elseif j == 7 then
-                CataclysmContentButtons[i] = CreateFrame("Button",nil,CataclysmContent)
+                CataclysmContentButtons[i] = CreateFrame("Button","IAT_Achievement_"..j.."_"..globalCounter,CataclysmContent)
                 button = CataclysmContentButtons[i]
                 button:SetSize(CataclysmContent:GetWidth()-18,buttonHeight)
                 button:SetID(idCounter)
@@ -1405,7 +1406,7 @@ function Config:CreateGUI()
                     button:SetPoint("TOPLEFT",CataclysmContentButtons[i-1],"BOTTOMLEFT",0,0)
                 end
             elseif j == 8 then
-                WrathOfTheLichKingContentButtons[i] = CreateFrame("Button",nil,WrathOfTheLichKingContent)
+                WrathOfTheLichKingContentButtons[i] = CreateFrame("Button","IAT_Achievement_"..j.."_"..globalCounter,WrathOfTheLichKingContent)
                 button = WrathOfTheLichKingContentButtons[i]
                 button:SetSize(WrathOfTheLichKingContent:GetWidth()-18,buttonHeight)
                 button:SetID(idCounter)
@@ -1415,6 +1416,8 @@ function Config:CreateGUI()
                     button:SetPoint("TOPLEFT",WrathOfTheLichKingContentButtons[i-1],"BOTTOMLEFT",0,0)
                 end
             end
+
+            globalCounter = globalCounter + 1
 
             -- the text for the header
             button.headerText = button:CreateFontString(nil,"ARTWORK","GameFontNormalLarge")
@@ -1665,6 +1668,7 @@ function Instance_OnClick(self)
                     end
                 end
                 button.headerText:SetText(Config:getLocalisedEncouterName(instanceLocation["boss" .. counter2].name,instanceType))
+                button.contentText:SetID(instanceLocation["boss" .. counter2].achievement)
                 button.headerText:Show()
                 button.contentText:Hide()
                 button:SetNormalTexture("Interface\\Common\\Dark-GoldFrame-Button")
@@ -2344,36 +2348,88 @@ function GetNameFromLocalNpcIDCache()
 end
 
 --API
-function IAT_DisplayAchievement(achievementID, requireTactics)
-    --Open IAT Gui and display the specific achievement
+local lastAchievementID, lastExpansion, lastInstanceType, lastInstance;
+function IAT_HasAchievement(achievementID)
+	lastAchievementID, lastExpansion, lastInstanceType, lastInstance = achievementID, nil, nil, nil
+
+    -- Check if IAT has the achievement
     for expansion, _ in pairs(core.Instances) do
         for instanceType, _ in pairs(core.Instances[expansion]) do
             for instance, _ in pairs(core.Instances[expansion][instanceType]) do
                 for boss, _ in pairs(core.Instances[expansion][instanceType][instance]) do
                     if boss ~= "name" then
                         if core.Instances[expansion][instanceType][instance][boss].achievement == achievementID then
-                            local outputTactics = true
-                            if requireTactics == true then
-                                if string.len(core.Instances[expansion][instanceType][instance][boss].tactics) == 0 then
-                                    outputTactics = false
-                                end
-                            end
-
-                            if outputTactics == true then
-                                --Display the relevant page in the GUI
-                                IAT_InstanceType = instanceType
-                                IAT_InstanceLocation = instance
-                                IAT_CurrentTab = expansion
-
-                                Config:Instance_OnClickAPI("API")
-                            else
-                                return false
-                            end
+							-- Achievement found
+							lastExpansion, lastInstanceType, lastInstance = expansion, instanceType, instance
+							return true
                         end
                     end
                 end
             end
         end
     end
-    Config:ToggleOn()
+	-- No achievement with this ID
+
+	return false
+end
+
+function IAT_DisplayAchievement(achievementID)
+    -- Open IAT Gui and display the specific achievement
+
+	-- Check here if IAT_HasAchievement has already been called for the same achievement ID
+	local valid = lastAchievementID == achievementID;
+    if valid then
+		valid = IAT_HasAchievement(achievementID)
+	end
+	-- If valid and none of the other 3 are nil, show the tactics
+    if valid and lastExpansion and lastInstanceType and lastInstance then
+		IAT_InstanceType = lastInstanceType
+		IAT_InstanceLocation = lastInstance
+		IAT_CurrentTab = lastExpansion
+
+		Config:Instance_OnClickAPI("API")
+
+        Config:ToggleOn()
+
+        --Scroll to the correct position
+        -- C_Timer.After(1, function()
+        --     local _, maxVal =  UIConfig.ScrollFrame2.ScrollBar:GetMinMaxValues(); -- minVal = 0
+        --     --local size = UIConfig.ScrollFrame2:GetTop() - UIConfig.ScrollFrame2:GetBottom(); -- This way you know the total height of your tactics scroll frame
+        --     --Find Correct Frame
+        --     --print("IAT_Achievement_" .. lastExpansion .. "_1")
+
+        --     local newHeight = 0
+        --     local headersInUse = 0
+        --     -- print(maxVal,size,bossLocation, newHeight)
+        --     for i=1,200 do
+        --         local frameName = "IAT_Achievement_" .. lastExpansion .. "_" .. i
+        --         if _G[frameName].achievementID == achievementID then
+        --             --frameName = "IAT_Achievement_" .. (i - 1)
+        --             print("IAT_Achievement_" .. lastExpansion .. headersInUse)
+        --             local size = _G["IAT_Achievement_" .. lastExpansion .. "_1"].headerText:GetTop() - _G["IAT_Achievement_" .. lastExpansion .. "_" .. headersInUse]:GetBottom()
+        --             local headerFrame = _G[frameName].headerText
+        --             local bossLocation = headerFrame:GetTop(); -- this way you know where the boss is inside the container
+        --             -- Now, based on size, maxVal and bossLocation, you might be able to calculate where to set the scrollBar value to show boss on top
+        --             --local newHeight = size / newHeight * maxVal;
+        --             local scaleFactor = newHeight / size * maxVal
+        --             scaleFactor = min(scaleFactor, maxVal);
+        --             UIConfig.ScrollFrame2.ScrollBar:SetValue(math.abs(scaleFactor));
+        --             -- print(maxVal,size,bossLocation, scaleFactor)
+        --             -- print("Scrollbar MaxValue: " .. maxVal)
+        --             -- print("ScrollFrame Size: " .. size)
+        --             -- print("Location of boss in Frame: " .. bossLocation)
+        --             -- print("New Height: " .. newHeight)
+        --             -- print("Scale Factor: " .. scaleFactor)
+        --             -- print(UIConfig.ScrollFrame2:GetHeight())
+        --         else
+        --             headersInUse = headersInUse + 1
+        --             if (i % 2 == 0) then
+        --                 newHeight = newHeight + _G[frameName].contentText:GetContentHeight()
+        --             else
+        --                 newHeight = newHeight + _G[frameName].headerText:GetStringHeight()
+        --             end
+        --         end
+        --     end
+        -- end)
+	end
 end
