@@ -2377,7 +2377,7 @@ function IAT_DisplayAchievement(achievementID)
     -- Open IAT Gui and display the specific achievement
 
 	-- Check here if IAT_HasAchievement has already been called for the same achievement ID
-	local valid = lastAchievementID == achievementID;
+	local valid = lastAchievementID ~= achievementID;
     if valid then
 		valid = IAT_HasAchievement(achievementID)
 	end
