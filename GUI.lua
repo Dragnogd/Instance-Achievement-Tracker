@@ -1759,6 +1759,7 @@ function Instance_OnClick(self)
                     button.contentText:SetFont("Fonts\\FRIZQT__.TTF", 12);
                 end
                 local achievementLink = GetAchievementLink(instanceLocation["boss" .. counter2].achievement)
+		achievementLink = achievementLink:gsub("&", "&amp;"); -- & in the achievement name would resolve the html syntax wrong
                 if core.achievementTrackingEnabled == false then
 		            button.contentText:SetText("<html><body><p>" .. L["GUI_Achievement"] .. ": " .. achievementLink .. "<br /><br />" .. tacticsStr .. "</p></body></html>")
                 else
