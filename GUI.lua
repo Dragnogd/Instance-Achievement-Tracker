@@ -2360,9 +2360,9 @@ function IAT_HasAchievement(achievementID)
                 for boss, _ in pairs(core.Instances[expansion][instanceType][instance]) do
                     if boss ~= "name" then
                         if core.Instances[expansion][instanceType][instance][boss].achievement == achievementID then
-							-- Achievement found
-							lastExpansion, lastInstanceType, lastInstance = expansion, instanceType, instance
-							return true
+                            -- Achievement found
+                            lastExpansion, lastInstanceType, lastInstance = expansion, instanceType, instance
+                            return true
                         end
                     end
                 end
@@ -2378,17 +2378,17 @@ function IAT_DisplayAchievement(achievementID)
     -- Open IAT Gui and display the specific achievement
 
 	-- Check here if IAT_HasAchievement has already been called for the same achievement ID
-	local valid = lastAchievementID ~= achievementID;
-    if valid then
-		valid = IAT_HasAchievement(achievementID)
-	end
+    local valid = lastAchievementID == achievementID;
+    if not valid then
+        valid = IAT_HasAchievement(achievementID)
+    end
 	-- If valid and none of the other 3 are nil, show the tactics
     if valid and lastExpansion and lastInstanceType and lastInstance then
-		IAT_InstanceType = lastInstanceType
-		IAT_InstanceLocation = lastInstance
-		IAT_CurrentTab = lastExpansion
+        IAT_InstanceType = lastInstanceType
+        IAT_InstanceLocation = lastInstance
+        IAT_CurrentTab = lastExpansion
 
-		Config:Instance_OnClickAPI("API")
+        Config:Instance_OnClickAPI("API")
 
         Config:ToggleOn()
 
