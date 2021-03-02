@@ -16,6 +16,7 @@ core._2296.Events = CreateFrame("Frame")
 local burdenOfSinCounter = 0
 local initialSetup = false
 local burdernOfSinStackPlayers = {}
+local MarchOfThePenitentCast = false
 
 ------------------------------------------------------
 ---- Huntsman Altimor
@@ -437,7 +438,7 @@ function core._2296:SireDenathrius()
     end
 
     --Player has lost a stack of Burden of Sin
-    if (core.type == "SPELL_AURA_REMOVED_DOSE" or core.type == "SPELL_AURA_REMOVED") and core.spellId == 326699 then
+    if (core.type == "SPELL_AURA_REMOVED_DOSE" or core.type == "SPELL_AURA_REMOVED") and core.spellId == 326699 and MarchOfThePenitentCast == false then
         if core.destName ~= nil then
             local name = core.destName
             if string.find(name, "-") then
@@ -457,6 +458,7 @@ function core._2296:SireDenathrius()
     --March of the Penitent cast
     if core.type == "SPELL_CAST_START" and core.spellId == 328117 then
         --Check if all players are at 0 stacks of Burden of Sin
+        MarchOfThePenitentCast = true
         local AchievementFailed = false
         for player,stacks in pairs(burdernOfSinStackPlayers) do
             if stacks > 0 then
@@ -567,6 +569,7 @@ function core._2296:ClearVariables()
     burdenOfSinCounter = 0
     initialSetup = false
     burdernOfSinStackPlayers = {}
+    MarchOfThePenitentCast = false
 
     ------------------------------------------------------
     ---- Huntsman Altimor
