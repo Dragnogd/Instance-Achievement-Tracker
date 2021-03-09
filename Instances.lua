@@ -1501,7 +1501,6 @@ core.Instances = {
 					track = function() core._1530:Krosus() end,
 					partial = false,
 					encounterID = 1842,
-					displayInfoFrame = true,
 				},
 				boss8 = {
 					name = 1762, --Tichondrius
