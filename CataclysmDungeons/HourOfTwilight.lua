@@ -16,7 +16,7 @@ local twilightSparksCounter = 0
 function core._940:ArchbishopBenedictus()
     if (core.type == "SPELL_DAMAGE" or core.type == "RANGE_DAMAGE" or core.type == "SPELL_PERIODIC_DAMAGE") and core.destID == "55466" and core.overkill > 0 then
         twilightSparksCounter = twilightSparksCounter + 1
-    elseif core.type == "SWING_DAMAGE" and core.destID == "55466" and core.swingOverkill > 0 then
+    elseif core.type == "SWING_DAMAGE" and core.destID == "55466" and core.overkill > 0 then
         twilightSparksCounter = twilightSparksCounter + 1
     end
 
