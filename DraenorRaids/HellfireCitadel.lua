@@ -49,7 +49,7 @@ function core._1448:IronReaver()
 	end
 
 	if hellfireGuardianKilled == 10 then
-		core:getAchievementSuccess()		
+		core:getAchievementSuccess()
 	end
 end
 
@@ -61,7 +61,7 @@ function core._1448:HellfireHighCouncil()
 			timerStarted = true
 			C_Timer.After(10, function()
 				if unitsKilled ~= 3 and core.inCombat == true then
-					core:getAchievementFailedWithMessageAfter("(" .. unitsKilled .. "/3) Killed in time")						
+					core:getAchievementFailedWithMessageAfter("(" .. unitsKilled .. "/3) Killed in time")
 				end
 			end)
 		end
@@ -77,7 +77,7 @@ end
 
 function core._1448:Gorefiend()
 	if core.type == "UNIT_DIED" and core.destID == "93145" then
-		core:getAchievementSuccess()			
+		core:getAchievementSuccess()
 	end
 end
 
@@ -92,9 +92,9 @@ function core._1448:ShadowLordIskar()
 		firstPickup = true
 		C_Timer.After(5, function()
 			if eyeOfAnzuPlayer == core.destName then
-				core:getAchievementFailedWithMessageAfter("by " .. core.destName)			
+				core:getAchievementFailedWithMessageAfter("by " .. core.destName)
 			end
-		end)				
+		end)
 	end
 
 	if firstPickup == false then
@@ -118,7 +118,7 @@ function core._1448:ShadowLordIskar()
 						firstPickup = true
 						C_Timer.After(5, function()
 							if eyeOfAnzuPlayer == core.destName then
-								core:getAchievementFailedWithMessageAfter("by " .. core.destName)			
+								core:getAchievementFailedWithMessageAfter("by " .. core.destName)
 							end
 						end)
 					end
@@ -132,22 +132,22 @@ function core._1448:ShadowLordIskar()
 					firstPickup = true
 					C_Timer.After(5, function()
 						if eyeOfAnzuPlayer == core.destName then
-							core:getAchievementFailedWithMessageAfter("by " .. core.destName)		
+							core:getAchievementFailedWithMessageAfter("by " .. core.destName)
 						end
-					end)	
+					end)
 				end
-			end		
+			end
 		end
 	end
 end
 
 function core._1448:FelLordZakuun()
-	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 179428 then	
+	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 179428 then
 		C_Timer.After(6, function()
 			if core.inCombat == true then
 				core:getAchievementFailedWithMessageAfter("by " .. core.destName)
 			end
-		end)		
+		end)
 	end
 end
 
@@ -179,13 +179,13 @@ function core._1448:SocretharTheEternal()
 	if core.mobCounter >= 20 and hauntingSoulsTrackKills == false then
         hauntingSoulsTrackKills = true
 	end
-	
+
 	if core.type == "UNIT_DIED" and core.destID == "91938" and hauntingSoulsTrackKills == true then
         hauntingSoulsKilled = hauntingSoulsKilled + 1
         if timerStarted == false then
             timerStarted = true
             core:sendMessage(core:getAchievement() .. " Timer Started!. 10 seconds remaining")
-            C_Timer.After(10, function() 
+            C_Timer.After(10, function()
                 if hauntingSoulsKilled >= 20 then
                     core:getAchievementSuccess()
                 else
@@ -198,14 +198,14 @@ function core._1448:SocretharTheEternal()
         else
             if hauntingSoulsKilled >= 20 then
                 core:getAchievementSuccess()
-            end            
+            end
         end
     end
 end
 
 function core._1448:TyrantVelhari()
 	if core.type == "UNIT_DIED" and core.destID == "90270" then
-		core:getAchievementFailed()	
+		core:getAchievementFailed()
 	end
 end
 
@@ -214,7 +214,7 @@ function core._1448:Mannoroth()
 
 	--Achievement Successfull
 	if core.type == "SPELL_DAMAGE" and (core.spellId == 182076 or core.spellId == 182077 or core.spellId == 182040) and core.destID == "91241" and core.overkill > 0 then
-		core:getAchievementSuccess()			
+		core:getAchievementSuccess()
 	end
 
 	-- --Achievement Failed
@@ -251,7 +251,7 @@ function core._1448:Archimonde()
 					core:sendMessage(core:getAchievement() .. " FAILED!. Wait for another Doomfire to spawn before taking boss below 40% health")
 				else
 					core:getAchievementFailed()
-				end 
+				end
 			end)
 		end
 	end
@@ -277,7 +277,7 @@ function core._1448:ClearVariables()
 	---- Hellfire High Council
 	------------------------------------------------------
 	timerStarted = false
-	unitsKilled = 0	
+	unitsKilled = 0
 
 	------------------------------------------------------
 	---- Shadow-Lord Iskar
@@ -321,11 +321,13 @@ end)
 
 function core._1448.Events:UNIT_HEALTH(self, unitID)
 	if core.Instances[core.expansion][core.instanceType][core.instance]["boss1"].enabled == true then
-		local unitType, _, _, _, _, destID, spawn_uid_dest = strsplit("-", UnitGUID(unitID));
-		if destID == "90018" then
-			--If health is less than 90% then fail the achievement
-			if core:getHealthPercent(unitID) < 90 then
-				core:getAchievementFailed()			
+		if UnitGUID(unitID) ~= nil then
+			local unitType, _, _, _, _, destID, spawn_uid_dest = strsplit("-", UnitGUID(unitID));
+			if destID == "90018" then
+				--If health is less than 90% then fail the achievement
+				if core:getHealthPercent(unitID) < 90 then
+					core:getAchievementFailed()
+				end
 			end
 		end
 	end
@@ -333,6 +335,6 @@ end
 
 function core._1448.Events:CHAT_MSG_MONSTER_YELL(self, message, sender)
 	if message == "GHHAAAaaa!!!" then
-		core:getAchievementFailed()				
+		core:getAchievementFailed()
 	end
 end
