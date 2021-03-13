@@ -34,7 +34,7 @@ end
 
 function core._1009:Garalon()
 	if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 122786 then
-		core:getAchievementFailed()		
+		core:getAchievementFailed()
 	end
 end
 
@@ -50,8 +50,8 @@ function core._1009:GrandEmpressShekzeer()
 					else
 						core:sendMessage(GetAchievementLink(core.currentAchievementID) .. " FAILED! (" .. reaversKilled .. "/2) reavers killed in time.")
 						reaversKilled = 0
-						timerStarted = false					
-					end		
+						timerStarted = false
+					end
 				end
 			end)
 		else
@@ -83,7 +83,7 @@ function core._1009:ClearVariables()
 end
 
 function core._1009:IATInstanceCleanup()
-    core._1520.Events:UnregisterEvent("UNIT_AURA")
+    core._1009.Events:UnregisterEvent("UNIT_AURA")
 end
 
 function core._1009:InitialSetup()
@@ -100,7 +100,7 @@ function core._1009.Events:UNIT_AURA(self, unitID, ...)
 			if UnitIsPlayer(unitID) ~= nil then
 				local name, realm = UnitName(unitID)
 				local unitTypePlayer, destIDPlayer, spawn_uid_dest = strsplit("-", UnitGUID(unitID))
-	
+
 				if parasitePlayers[spawn_uid_dest] == nil then
 					--Check to see if player has gained debuff
 					for i=1,40 do
@@ -125,8 +125,8 @@ function core._1009.Events:UNIT_AURA(self, unitID, ...)
 						--Player has lost debuff
 						parasiteCounter = parasiteCounter - 1
 						parasitePlayers[spawn_uid_dest] = nil
-						InfoFrame_SetPlayerFailed(UnitName(unitID))	
-			
+						InfoFrame_SetPlayerFailed(UnitName(unitID))
+
 						--If achievement had already completed then fail it
 						if core.achievementsCompleted[1] == true then
 							core:getAchievementFailedWithMessageAfter("(" .. L["Core_Reason"] .. ": " .. UnitName(unitID) .. " " .. L["Shared_HasDied"] .. ") " .. L["Shared_DoNotKillBoss"])
