@@ -240,19 +240,21 @@ function core._1448:Archimonde()
 		end
 	end
 
-	if core.destID == "92208" and core.overkill > 0 then
-		--Cancel the timer if has already started
-		if timerStarted == false then
-			timerStarted = true
-			core:sendMessage(core:getAchievement() .. " Timer Started 120 seconds to kill boss. (Timer will restart if another Doomfire spawns)")
-			timer = C_Timer.NewTimer(120, function()
-				--If boss health is above 40% then wait for another Doomfire to spawn
-				if core:getHealthPercent("boss1") > 40 then
-					core:sendMessage(core:getAchievement() .. " FAILED!. Wait for another Doomfire to spawn before taking boss below 40% health")
-				else
-					core:getAchievementFailed()
-				end
-			end)
+	if core.overkill ~= nil then
+		if core.destID == "92208" and core.overkill > 0 then
+			--Cancel the timer if has already started
+			if timerStarted == false then
+				timerStarted = true
+				core:sendMessage(core:getAchievement() .. " Timer Started 120 seconds to kill boss. (Timer will restart if another Doomfire spawns)")
+				timer = C_Timer.NewTimer(120, function()
+					--If boss health is above 40% then wait for another Doomfire to spawn
+					if core:getHealthPercent("boss1") > 40 then
+						core:sendMessage(core:getAchievement() .. " FAILED!. Wait for another Doomfire to spawn before taking boss below 40% health")
+					else
+						core:getAchievementFailed()
+					end
+				end)
+			end
 		end
 	end
 
