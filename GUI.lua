@@ -1759,11 +1759,22 @@ function Instance_OnClick(self)
                     button.contentText:SetFont("Fonts\\FRIZQT__.TTF", 12);
                 end
                 local achievementLink = GetAchievementLink(instanceLocation["boss" .. counter2].achievement)
-		achievementLink = achievementLink:gsub("&", "&amp;"); -- & in the achievement name would resolve the html syntax wrong
+		        achievementLink = achievementLink:gsub("&", "&amp;"); -- & in the achievement name would resolve the html syntax wrong
                 if core.achievementTrackingEnabled == false then
-		            button.contentText:SetText("<html><body><p>" .. L["GUI_Achievement"] .. ": " .. achievementLink .. "<br /><br />" .. tacticsStr .. "</p></body></html>")
+                    if instanceLocation["boss" .. counter2].image ~= nil then
+                        local imageTable = instanceLocation["boss" .. counter2].image
+                        button.contentText:SetText("<html><body><p>" .. L["GUI_Achievement"] .. ": " .. achievementLink .. "<br /><br />" .. tacticsStr .. "</p><img src='Interface\\AddOns\\InstanceAchievementTracker\\Images\\" .. imageTable[1] .. "' width='" .. imageTable[2] .. "' height='" .. imageTable[3] .. "' align='center'/></body></html>")
+                    else
+                        button.contentText:SetText("<html><body><p>" .. L["GUI_Achievement"] .. ": " .. achievementLink .. "<br /><br />" .. tacticsStr .. "</p></body></html>")
+                    end
                 else
-                    button.contentText:SetText("<html><body><p>" .. L["GUI_Achievement"] .. ": " .. achievementLink .. "<br /><br />" .. players .. "<br /><br />" .. tacticsStr .. "</p></body></html>")
+                    if instanceLocation["boss" .. counter2].image ~= nil then
+                        local imageTable = instanceLocation["boss" .. counter2].image
+                        button.contentText:SetText("<html><body><p>" .. L["GUI_Achievement"] .. ": " .. achievementLink .. "<br /><br />" .. players .. "<br /><br />" .. tacticsStr .. "</p><img src='Interface\\AddOns\\InstanceAchievementTracker\\Images\\" .. imageTable[1] .. "' width='" .. imageTable[2] .. "' height='" .. imageTable[3] .. "' align='center'/></body></html>")
+                    else
+                        button.contentText:SetText("<html><body><p>" .. L["GUI_Achievement"] .. ": " .. achievementLink .. "<br /><br />" .. players .. "<br /><br />" .. tacticsStr .. "</p></body></html>")
+                    end
+
                 end
 
                 if playersFound == false and core.achievementDisplayStatus == "grey" then
