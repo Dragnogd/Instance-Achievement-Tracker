@@ -404,7 +404,7 @@ local baseLocale = {
 	["IronDocks_Other"] = "After defeating %s, make your way over to the large open area where the %s are located. Next, enter the %s which is next to the wall. Every 8 minutes the four %s will line up with each other, at which point launch the %s to kill all four %s at once.\n\n Alternatively, you can pull the four %s prior to entering the %s, then firing the %s once all the mobs are in front of you. However this method does not always award the achievement reliably.",
 	["Auchindoun_SoulbinderNyami"] = "To complete this achievement, pull the boss then wait for 12 of more %s to spawn. Once enough mobs have spawned wait for %s to teleport away then AOE all the %s down. After you have killed 12 %s within 3 seconds you can kill the boss to get this achievement.",
 	["Auchindoun_Terongor"] = "This achievement requires 2 players to complete. Engage %s and wait for him to put the %s debuff on one player in the group. This debuff bounces to another player within 5 yards every time it expires. After one player has the %s debuff, kill %s then make your way over to %s while staying within 5 yards of each other. When all players have reached %s and with the debuff still present in the group, kill him to get this achievement. \n\n Note: Be sure to enter the teleporters at the same time to avoid loosing the debuff.",
-	["Skyreach_Rukhran"] = "",
+	["Skyreach_Rukhran"] = "At max level, the easiest way to complete this achievement is to simply stand in front of the boss and pull. After pulling multiple %s will start spawning over several minutes. The %s will apply a %s debuff to to the player while its moving towards them. Once it reaches the player it will explode (%s), and any %s already dead near the %s which exploded, will be ressurected. Simply wait for three %s to get ressurected at the same time as one another, then kill the boss to get this achievement.\n\nNote you can track when the achievement is complete, either by waiting for IAT to announce success, or by checking when three %s debuffs appear at the same time on the player (just having three %s debuffs is not enough, they must appear on the player at the same time as each other).",
 	["Skyreach_HighSageViryx"] = "To complete this achievement, engage the boss then stand on the edge of the platform on the far right (just above the platform below) and wait for the boss to perform %s. When the boss casts %s, jump down to the platform below and let the beam hit the %s  turning it into a %s. Kill the %s and you will be awarded this achievement.\n\n Note: It is recommended to jump backwards otherwise you may miss the platform below.  ",
 	["GrimrailDepot_RocketsparkAndBorka"] = "There are 4 chests (%s) located around the boss room which needs to be shattered to complete this achievement. First pull the boss then wait at each of the chests for %s to cast %s to shatter the chest. Once all 4 chests have been shattered, you can kill the boss.",
 	["GrimrailDepot_NitroggThundertower"] = "This achievement requires a class with a knockback ability such as Druids %s, Shamans %s or Monks %s. Engage the boss and dps him down to 60%% health. After the boss has transitioned into his cannon phase, adds will start to appear. Bring the adds to the edge of the train and use a knockback ability to knock the adds off the edge. After you have knocked 20 adds of the train you can kill the boss to get this achievement.   ",
@@ -450,7 +450,7 @@ local baseLocale = {
 	["MogushanVaults_TheSpiritKings"] = "",
 	["MogushanVaults_Elegon"] = "To complete this achievement, dps the boss down to 85%% health then let %s go into his %s phase. During this phase 6 %s will spawn. Let the %s move into the pillars on the outside of the platform and active. Once every pillar has been activated you have to destroy them all within 10 seconds of each other to get this achievement. ",
 	["MogushanVaults_WillOfTheEmperor"] = "",
-	["MogushanVaults_Other"] = "",
+	["MogushanVaults_Other"] = "This is a personal achievement. Before activating %s, you will need to keep a %s alive from the trash pack. Pull the %s to the console in the middle of the room and face your character towards the opening of the disc hanging above the pit %s appears in. Simply wait until the %s performs %s so you get launched into the discs and get this achievement.",
 	["MogushanVaults_HoverOverPets"] = "Hover over players pets to update the display",
 	["MogushanVaults_DanceSelf"] = "You dance with",
 	["MogushanVaults_DanceOther"] = "dances with",
@@ -669,5 +669,6 @@ local baseLocale = {
 	["Shared_HasSpawned"] = "%s (%s) has spawned",
 	["CastleNathria_OrbTimer"] = "Remaining time to get orbs",
 	["CastleNathria_KillTimer"] = "Remaining time to kill",
+	["Shared_RessPlayer"] = "Player must be resurrected or they will not get this achievement!"
 }
 core:RegisterLocale('enUS', baseLocale)
