@@ -58,6 +58,9 @@ local stoneLegionGeneralKaaelKilled = false
 local stoneLegionGeneralGeneralGrashaalKilled = false
 local playersWithAnimaInfection = {}
 local playersWithAnimaInfusion= {}
+local playerFailedAchievement = false
+local checkForDeadPlayers = false
+local deadPlayerTimer = false
 
 --Timer for Blooming Roses
 local bloomingTimerStarted = false
@@ -364,8 +367,9 @@ function core._2296:StoneLegionGenerals()
             local playerTmp = core.destName
             C_Timer.After(1, function()
                 if playersBloomingRose[playerTmp] == nil then
-                    core:getAchievementFailedWithMessageAfter("(" .. playerTmp .. ")")
+                    core:getAchievementFailed()
                     InfoFrame_SetPlayerFailed(playerTmp)
+                    playerFailedAchievement = true
                 end
             end)
         end
@@ -380,7 +384,7 @@ function core._2296:StoneLegionGenerals()
     end
 
     --Blooming Roses (Gained)
-    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 339574 then --339574
+    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 339574 and playerFailedAchievement == false then --339574
         if core.destName ~= nil then
             if playersBloomingRose[core.destName] == nil then
                 BloomingFlowersCounter = BloomingFlowersCounter + 1
@@ -415,6 +419,59 @@ function core._2296:StoneLegionGenerals()
                 core:sendDebugMessage(core.destName .. " " .. L["Shared_HasLost"] .. " " .. GetSpellLink(339574) .. " (" .. BloomingFlowersCounter .. "/" .. core.groupSize .. ")")
                 --core:sendMessage(core.destName .. " " .. L["Shared_HasLost"] .. " " .. GetSpellLink(339574) .. " (" .. BloomingFlowersCounter .. "/" .. core.groupSize .. ")",true)
             end
+        end
+    end
+
+    --Player has died after achievement completed. They must be ressed to get achievement
+    if core.type == "UNIT_DIED" and core:getBlizzardTrackingStatus(14525, 1) == true and core.destName ~= nil then
+        --Announce specific player has failed and update the InfoFrame
+        if UnitIsPlayer(core.destName) then
+            core:getAchievementFailedPersonalWithCustomMessage(nil, core.destName, L["Shared_RessPlayer"])
+            InfoFrame_SetPlayerFailed(core.destName)
+            checkForDeadPlayers = true
+
+            --Set Personal back to false
+            local playerName = core.destName
+            if string.find(playerName, "-") then
+                local name, realm = strsplit("-", playerName)
+                playerName = name
+            end
+            if core.playersSuccessPersonal[playerName] ~= nil then
+                core.playersSuccessPersonal[playerName] = nil
+            end
+        end
+    end
+
+    if checkForDeadPlayers == true and deadPlayerTimer == false then
+        deadPlayerTimer = true
+        local foundDeadPlayers = false
+		for player,status in pairs(core.InfoFrame_PlayersTable) do
+            if UnitIsDead(player) == false then
+                InfoFrame_SetPlayerComplete(player)
+
+                --Set Personal back to false
+                local playerName = player
+                if string.find(playerName, "-") then
+                    local name, realm = strsplit("-", playerName)
+                    playerName = name
+                end
+                core:getAchievementSuccessPersonalWithMessage(nil, playerName, "")
+
+                if core.playersFailedPersonal[playerName] ~= nil then
+                    core.playersFailedPersonal[playerName] = nil
+                end
+            elseif UnitIsDead(player) == true then
+                foundDeadPlayers = true
+            end
+        end
+
+        if foundDeadPlayers == true then
+            C_Timer.After(1, function()
+                deadPlayerTimer = false
+            end)
+        else
+            checkForDeadPlayers = false
+            deadPlayerTimer = false
         end
     end
 
@@ -622,6 +679,9 @@ function core._2296:ClearVariables()
     WiltingFlowersCounter = 0
     playersWithAnimaInfection = {}
     playersWithAnimaInfusion = {}
+    playerFailedAchievement = false
+    checkForDeadPlayers = false
+    deadPlayerTimer = false
 
     if (stoneLegionGeneralGeneralGrashaalKilled == false and stoneLegionGeneralKaaelKilled == true) or (stoneLegionGeneralKaaelKilled == false and stoneLegionGeneralGeneralGrashaalKilled == true) then
         stoneLegionGeneralGeneralGrashaalKilled = false

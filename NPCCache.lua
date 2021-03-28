@@ -556,4 +556,6 @@ core.NPCCache = {
 	[87451] =87451, --Fleshrender Nok'gar
 	[77153] =77153, --Iron Star
 	[83775] =83775, --Ogron Laborer
+	[76227] =76227, --Solar Flare
+	[64061] =64061, --Mogu'shan Warden
 }

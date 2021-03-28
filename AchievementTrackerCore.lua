@@ -3253,6 +3253,30 @@ function core:getAchievementFailedPersonalWithName(index, sender, outputMessage)
 	end
 end
 
+function core:getAchievementFailedPersonalWithCustomMessage(index, sender, message)
+	local value = index
+	if index == nil then
+		value = 1
+	end
+	local playerName = sender
+	if string.find(playerName, "-") then
+		local name, realm = strsplit("-", playerName)
+		playerName = name
+	end
+	if core.playersFailedPersonal[playerName] == nil then
+		--Players has not been hit already
+		--Check if the player actually needs the achievement
+		--Player needs achievement but has failed it
+		core:sendMessage(playerName .. " " .. L["Shared_HasFailed"] .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " (" .. message .. ")",true,"failed")
+
+		--Relay message to addon which has RW permissions if masterAddon does have permissions
+		if relayAddonPlayer ~= nil then
+			C_ChatInfo.SendAddonMessage("Whizzey", "relayMessage," .. relayAddonPlayer .. "," .. playerName .. " " .. L["Shared_HasFailed"] .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " (" .. L["Core_PersonalAchievement"] .. ")", "RAID")
+		end
+		core.playersFailedPersonal[playerName] = true
+	end
+end
+
 function core:getAchievementFailedPersonalIndependent(playerName, index)
 	local value = index
 	if index == nil then
@@ -3493,6 +3517,27 @@ function core:getAchievementSuccessPersonalWithName(index, sender, outputMessage
 					C_ChatInfo.SendAddonMessage("Whizzey", "relayMessage," .. relayAddonPlayer .. "," .. sender .. " " .. L["Shared_HasCompleted"] .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " (" .. L["Core_PersonalAchievement"] .. ")", "RAID")
 				end
 			end
+		end
+		core.playersSuccessPersonal[sender] = true
+	end
+end
+
+function core:getAchievementSuccessPersonalWithMessage(index, sender, message)
+	local value = index
+	if index == nil then
+		value = 1
+	end
+	if string.find(sender, "-") then
+		local name, realm = strsplit("-", sender)
+		sender = name
+	end
+	if core.playersSuccessPersonal[sender] == nil then
+		--Player needed achievements and has met requirements
+		core:sendMessage(sender .. " " .. L["Shared_HasCompleted"] .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " (" .. message .. ")",true)
+
+		--Relay message to addon which has RW permissions if masterAddon does have permissions
+		if relayAddonPlayer ~= nil then
+			C_ChatInfo.SendAddonMessage("Whizzey", "relayMessage," .. relayAddonPlayer .. "," .. sender .. " " .. L["Shared_HasCompleted"] .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " (" .. L["Core_PersonalAchievement"] .. ")", "RAID")
 		end
 		core.playersSuccessPersonal[sender] = true
 	end
