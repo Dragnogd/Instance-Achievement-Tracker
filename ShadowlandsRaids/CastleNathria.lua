@@ -263,8 +263,8 @@ function core._2296:LadyInervaDarkvein()
                 core:sendMessage(format(L["Shared_MobSpawningInXMinutes"], getNPCName(173430), "2"),true)
             elseif darkAnimusCounter == 60 then
                 core:sendMessage(format(L["Shared_MobSpawningInXMinutes"], getNPCName(173430), "1"),true)
-            elseif darkAnimusCounter < 11 then
-                core:sendMessage(format(L["Shared_MobSpawningInXSeconds"], getNPCName(173430), darkAnimusCounter),true)
+            elseif darkAnimusCounter == 10 then
+                core:sendMessage(format(L["Shared_MobSpawningInXSeconds"], getNPCName(173430), "10"),true)
             end
             core:sendDebugMessage(darkAnimusCounter)
             darkAnimusCounter = darkAnimusCounter - 1
@@ -367,7 +367,7 @@ function core._2296:StoneLegionGenerals()
             local playerTmp = core.destName
             C_Timer.After(1, function()
                 if playersBloomingRose[playerTmp] == nil then
-                    core:getAchievementFailed()
+                    core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")")
                     InfoFrame_SetPlayerFailed(playerTmp)
                     playerFailedAchievement = true
                 end
@@ -413,65 +413,13 @@ function core._2296:StoneLegionGenerals()
                 InfoFrame_SetPlayerFailed(core.destName)
                 if stoneLegionGeneralKaaelKilled == false and stoneLegionGeneralGeneralGrashaalKilled == false then
                     core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")")
+                    playerFailedAchievement = true
                 end
                 BloomingFlowersCounter = BloomingFlowersCounter - 1
                 playersBloomingRose[core.destName] = nil
                 core:sendDebugMessage(core.destName .. " " .. L["Shared_HasLost"] .. " " .. GetSpellLink(339574) .. " (" .. BloomingFlowersCounter .. "/" .. core.groupSize .. ")")
                 --core:sendMessage(core.destName .. " " .. L["Shared_HasLost"] .. " " .. GetSpellLink(339574) .. " (" .. BloomingFlowersCounter .. "/" .. core.groupSize .. ")",true)
             end
-        end
-    end
-
-    --Player has died after achievement completed. They must be ressed to get achievement
-    if core.type == "UNIT_DIED" and core:getBlizzardTrackingStatus(14525, 1) == true and core.destName ~= nil then
-        --Announce specific player has failed and update the InfoFrame
-        if UnitIsPlayer(core.destName) then
-            core:getAchievementFailedPersonalWithCustomMessage(nil, core.destName, L["Shared_RessPlayer"])
-            InfoFrame_SetPlayerFailed(core.destName)
-            checkForDeadPlayers = true
-
-            --Set Personal back to false
-            local playerName = core.destName
-            if string.find(playerName, "-") then
-                local name, realm = strsplit("-", playerName)
-                playerName = name
-            end
-            if core.playersSuccessPersonal[playerName] ~= nil then
-                core.playersSuccessPersonal[playerName] = nil
-            end
-        end
-    end
-
-    if checkForDeadPlayers == true and deadPlayerTimer == false then
-        deadPlayerTimer = true
-        local foundDeadPlayers = false
-		for player,status in pairs(core.InfoFrame_PlayersTable) do
-            if UnitIsDead(player) == false then
-                InfoFrame_SetPlayerComplete(player)
-
-                --Set Personal back to false
-                local playerName = player
-                if string.find(playerName, "-") then
-                    local name, realm = strsplit("-", playerName)
-                    playerName = name
-                end
-                core:getAchievementSuccessPersonalWithMessage(nil, playerName, "")
-
-                if core.playersFailedPersonal[playerName] ~= nil then
-                    core.playersFailedPersonal[playerName] = nil
-                end
-            elseif UnitIsDead(player) == true then
-                foundDeadPlayers = true
-            end
-        end
-
-        if foundDeadPlayers == true then
-            C_Timer.After(1, function()
-                deadPlayerTimer = false
-            end)
-        else
-            checkForDeadPlayers = false
-            deadPlayerTimer = false
         end
     end
 
