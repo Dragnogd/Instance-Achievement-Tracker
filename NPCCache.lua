@@ -558,4 +558,6 @@ core.NPCCache = {
 	[83775] =83775, --Ogron Laborer
 	[76227] =76227, --Solar Flare
 	[64061] =64061, --Mogu'shan Warden
+	[63591] =63591, --Kor'thik Reaver
+	[154638] =154638, --Grand Empress Shek'zara
 }

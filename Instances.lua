@@ -1,5 +1,5 @@
 --------------------------------------
--- Namespace
+-- Last Auto Generated: 04/04/2021 10:47:14
 --------------------------------------
 local _, core = ...
 local L = core.L
@@ -2902,7 +2902,6 @@ core.Instances = {
 					track = function() core._996:ProtectorsOfTheEndless() end,
 					partial = false,
 					encounterID = 1409,
-					displayInfoFrame = true,
 				},
 				boss2 = {
 					name = 742, --Tsulong
@@ -3298,7 +3297,7 @@ core.Instances = {
 					bossIDs = {62837},
 					achievement = 6922,
 					players = {},
-					tactics = format(L["HeartOfFear_GrandEmpressShekzeer"], GetSpellLink(123707)),
+					tactics = format(L["HeartOfFear_GrandEmpressShekzeer"], "IAT_154638", "IAT_63591"),
 					enabled = true,
 					track = function() core._1009:GrandEmpressShekzeer() end,
 					partial = false,
