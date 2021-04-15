@@ -1,5 +1,5 @@
 --------------------------------------
--- Last Auto Generated: 04/04/2021 10:47:14
+-- Last Auto Generated: 09/04/2021 19:10:47
 --------------------------------------
 local _, core = ...
 local L = core.L
@@ -87,6 +87,7 @@ core.Instances = {
 					track = function() core._2296:CouncilOfBlood() end,
 					partial = false,
 					encounterID = 2412,
+					image = {"CouncilOfBlood","256","256"},
 				},
 				boss8 = {
 					name = 2394, --Sludgefist
@@ -1699,6 +1700,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 2075,
+					image = {"Eonar","512","256"},
 				},
 				boss6 = {
 					name = 2009, --Imonar the Soulhunter
