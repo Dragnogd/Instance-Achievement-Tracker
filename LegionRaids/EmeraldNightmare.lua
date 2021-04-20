@@ -62,7 +62,7 @@ function core._1520:Ilgynoth()
         if timerStarted == false then
             timerStarted = true
             core:sendMessage(core:getAchievement() .. " " .. L["Shared_Timer10"])
-            C_Timer.After(10, function() 
+            C_Timer.After(10, function()
                 if nightmareKilled >= 20 then
                     core:getAchievementSuccess()
                 else
@@ -75,7 +75,7 @@ function core._1520:Ilgynoth()
         else
             if nightmareKilled >= 20 then
                 core:getAchievementSuccess()
-            end            
+            end
         end
     end
 end
@@ -92,7 +92,7 @@ function core._1520:Xavius()
             if creatureOfMadnessUID[core.spawn_uid_dest] == nil then
                 creatureOfMadnessUID[core.spawn_uid_dest] = core.spawn_uid_dest
                 creatureOfMadnessKilled = creatureOfMadnessKilled + 1
-                core:sendMessage(core:getAchievement() .. " " .. L["TheEmeraldNightmare_Xavius_CreaturesKilled"] .. " (" .. creatureOfMadnessKilled .. "/3)")
+                core:sendMessage(core:getAchievement() .. " " .. L["TheEmeraldNightmare_Xavius_CreaturesKilled"] .. " (" .. creatureOfMadnessKilled .. "/3)",true)
             end
         end
     end
@@ -187,21 +187,21 @@ function core._1520.Events:UNIT_AURA(self, unitID, ...)
                     end
                     if buff1Found == true and buff2Found == true and buff3Found == true and buff4Found == true and playersUID[spawn_uid_dest] == nil then
                         playersBuffCounter = playersBuffCounter + 1
-                        core:sendMessage(core:getAchievement() .. " " .. UnitName(unitID) .. " has all 4 buffs (" .. playersBuffCounter .. "/" .. core.groupSize .. ")")
+                        core:sendMessage(core:getAchievement() .. " " .. UnitName(unitID) .. " has all 4 buffs (" .. playersBuffCounter .. "/" .. core.groupSize .. ")",true)
                         playersUID[spawn_uid_dest] = spawn_uid_dest
                         InfoFrame_SetPlayerComplete(UnitName(unitID))
                     end
                 end
             end
         end
-    
+
         if playersBuffCounter == core.groupSize then
             core:getAchievementSuccess()
         end
     elseif core.encounterStarted == true then
         if timerStarted == false then
             timerStarted = true
-            C_Timer.After(5, function() 
+            C_Timer.After(5, function()
                 initialWait = true
             end)
         end
