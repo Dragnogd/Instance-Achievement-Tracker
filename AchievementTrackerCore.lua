@@ -2862,13 +2862,12 @@ function core:sendMessage(message, outputToRW, messageType)
 						SendChatMessage("[IAT] " .. message,"RAID_WARNING",DEFAULT_CHAT_FRAME.editBox.languageID)
 						core:logMessage("[IAT] " .. message)
 					elseif outputToRW == true and announceToRaidWarning == true then
-						SendChatMessage("[IAT] " .. message,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
 						core:logMessage("[IAT] " .. message)
-
 						if outputToRW == true and relayAddonPlayer ~= nil then
 							C_ChatInfo.SendAddonMessage("Whizzey", "relayMessage," .. relayAddonPlayer .. "," .. message, "RAID")
 						else
 							RaidNotice_AddMessage(RaidWarningFrame, "[IAT] " .. message, ChatTypeInfo["RAID_WARNING"])
+							SendChatMessage("[IAT] " .. message,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
 						end
 					else
 						--print("Outputting normally")
