@@ -283,10 +283,10 @@ function core._1530.Events:UNIT_AURA(self, unitID, ...)
                                     mysteriousFruitPlayers[UnitName(unitID)] = nil
                                     mysteriousFruitCounter = mysteriousFruitCounter - 1
                                     if core.groupSize >= 10 then
-                                        core:sendMessage(UnitName(unitID) .. " " .. L["TheNighthold_Botanist_LostBuff"] .. " (" .. mysteriousFruitCounter .. "/" .. core.groupSize .. ")")
+                                        core:sendMessage(UnitName(unitID) .. " " .. L["TheNighthold_Botanist_LostBuff"] .. " (" .. mysteriousFruitCounter .. "/" .. core.groupSize .. ")",true)
                                         InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],mysteriousFruitCounter,core.groupSize)
                                     else
-                                        core:sendMessage(UnitName(unitID) .. " " .. L["TheNighthold_Botanist_LostBuff"] .. " (" .. mysteriousFruitCounter .. "/10)")
+                                        core:sendMessage(UnitName(unitID) .. " " .. L["TheNighthold_Botanist_LostBuff"] .. " (" .. mysteriousFruitCounter .. "/10)",true)
                                         InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],mysteriousFruitCounter,10)
                                     end
                                 end
@@ -302,11 +302,11 @@ function core._1530.Events:UNIT_AURA(self, unitID, ...)
                             mysteriousFruitPlayers[UnitName(unitID)] = UnitName(unitID)
                             mysteriousFruitCounter = mysteriousFruitCounter + 1
                             if core.groupSize >= 10 then
-                                core:sendMessage(UnitName(unitID) .. " " .. L["TheNighthold_Botanist_GainedBuff"] .. " (" .. mysteriousFruitCounter .. "/" .. core.groupSize .. ")")
+                                core:sendMessage(UnitName(unitID) .. " " .. L["TheNighthold_Botanist_GainedBuff"] .. " (" .. mysteriousFruitCounter .. "/" .. core.groupSize .. ")",true)
                                 InfoFrame_SetPlayerComplete(UnitName(unitID))
                                 InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],mysteriousFruitCounter,core.groupSize)
                             else
-                                core:sendMessage(UnitName(unitID) .. " " .. L["TheNighthold_Botanist_GainedBuff"] .. " (" .. mysteriousFruitCounter .. "/10)")
+                                core:sendMessage(UnitName(unitID) .. " " .. L["TheNighthold_Botanist_GainedBuff"] .. " (" .. mysteriousFruitCounter .. "/10)",true)
                                 InfoFrame_SetPlayerComplete(UnitName(unitID))
                                 InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],mysteriousFruitCounter,10)
                             end
