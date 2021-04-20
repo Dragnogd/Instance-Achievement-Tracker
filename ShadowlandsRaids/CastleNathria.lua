@@ -327,6 +327,7 @@ function core._2296:StoneLegionGenerals()
 
     if initialStoneLegionSetup == false then
         initialStoneLegionSetup = true
+        playerFailedAchievement = false
         local playersWithoutBuff = ""
         local playersFailed = false
 		for player,status in pairs(core.InfoFrame_PlayersTable) do
@@ -367,7 +368,7 @@ function core._2296:StoneLegionGenerals()
             local playerTmp = core.destName
             C_Timer.After(1, function()
                 if playersBloomingRose[playerTmp] == nil then
-                    core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")")
+                    core:getAchievementFailedWithMessageAfter("(" .. playerTmp .. ")")
                     InfoFrame_SetPlayerFailed(playerTmp)
                     playerFailedAchievement = true
                 end
@@ -384,7 +385,7 @@ function core._2296:StoneLegionGenerals()
     end
 
     --Blooming Roses (Gained)
-    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 339574 and playerFailedAchievement == false then --339574
+    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 339574 then --339574
         if core.destName ~= nil then
             if playersBloomingRose[core.destName] == nil then
                 BloomingFlowersCounter = BloomingFlowersCounter + 1
