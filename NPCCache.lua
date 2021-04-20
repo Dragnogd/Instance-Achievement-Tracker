@@ -560,4 +560,14 @@ core.NPCCache = {
 	[64061] =64061, --Mogu'shan Warden
 	[63591] =63591, --Kor'thik Reaver
 	[154638] =154638, --Grand Empress Shek'zara
+	[60709] =60709, --Qiang the Merciless
+	[61427] =61427, --Subetai the Swift
+	[15363] =15363, --Spirit Totem
+	[64526] =64526, --Ancient Mogu Artifact
+	[71529] =71529, --Thok the Bloodthirsty
+	[73195] =73195, --Kor'kron Jailer
+	[99646] =99646, --Gastropod
+	[71466] =71466, --Iron Juggernaut
+	[148201] =148201, --Crawler Mine
+	[72889] =72889, --Superheated Crawler Mine
 }

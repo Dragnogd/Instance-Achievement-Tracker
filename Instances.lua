@@ -1,5 +1,5 @@
 --------------------------------------
--- Last Auto Generated: 09/04/2021 19:10:47
+-- Last Auto Generated: 20/04/2021 17:53:48
 --------------------------------------
 local _, core = ...
 local L = core.L
@@ -3139,7 +3139,7 @@ core.Instances = {
 					bossIDs = {71466},
 					achievement = 8520,
 					players = {},
-					tactics = format(L["SiegeOfOrgrimmar_IronJuggernaut"], GetSpellLink(144918)),
+					tactics = format(L["SiegeOfOrgrimmar_IronJuggernaut"], "IAT_71466", GetSpellLink(144918), "IAT_148201", "IAT_148201", GetSpellLink(144918), "IAT_72889", "IAT_72889"),
 					enabled = true,
 					track = function() end,
 					partial = false,
@@ -3194,7 +3194,7 @@ core.Instances = {
 					bossIDs = {}, --71529,
 					achievement = 8527,
 					players = {},
-					tactics = L["SiegeOfOrgrimmar_ThokTheBloodthirsty"],
+					tactics = format(L["SiegeOfOrgrimmar_ThokTheBloodthirsty"], "IAT_71529", "IAT_73195", "IAT_99646", "IAT_99646", "IAT_99646", "IAT_99646", "IAT_73195"),
 					enabled = false,
 					track = nil,
 					partial = false,
@@ -3336,7 +3336,7 @@ core.Instances = {
 					bossIDs = {},
 					achievement = 7056,
 					players = {},
-					tactics = L["MogushanVaults_GarajalTheSpiritbinder"],
+					tactics = format(L["MogushanVaults_GarajalTheSpiritbinder"], "IAT_15363", "IAT_15363", "IAT_64526"),
 					enabled = false,
 					track = nil,
 					partial = false,
@@ -3347,7 +3347,7 @@ core.Instances = {
 					bossIDs = {},
 					achievement = 6687,
 					players = {},
-					tactics = L["MogushanVaults_TheSpiritKings"],
+					tactics = format(L["MogushanVaults_TheSpiritKings"], "IAT_60709", "IAT_61427", "IAT_61427", GetSpellLink(118122), "IAT_61427", GetSpellLink(118047), GetSpellLink(118047), GetSpellLink(118047)),
 					enabled = true,
 					track = function() core._1008:TheSpiritKings() end,
 					partial = false,
