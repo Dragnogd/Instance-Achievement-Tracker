@@ -1276,15 +1276,6 @@ function events:ADDON_LOADED(event, name)
 
 	--Set whether addon should be enabled or disabled
 	setAddonEnabled(AchievementTrackerOptions["enableAddon"])
-
-	--If table is below maximun amount of entries then insert value. Else make table shrink to correct size
-	if #AchievementTrackerDebug > 100000 then
-		core:sendDebugMessage("Performing Logfile cleanup " .. #AchievementTrackerDebug .. " lines detected")
-		while #AchievementTrackerDebug >= 100000 do
-			table.remove(AchievementTrackerDebug, 1)
-		end
-		core:sendDebugMessage("Logfile cleanup completed" .. #AchievementTrackerDebug .. " lines detected")
-	end
 end
 
 function setChangeMinimapIcon(setChangeMinimapIcon)
@@ -1849,6 +1840,29 @@ end
 --This is done so we know which achievements we need to be tracking and so we know which achievements to scan the players in the group for
 function events:PLAYER_ENTERING_WORLD()
 	getInstanceInfomation()
+
+	--Optimise SavedVariables file to save space
+	C_Timer.After(60, function()
+		if #AchievementTrackerDebug > 50000 then
+			local n = math.abs(50000 - #AchievementTrackerDebug)
+
+			for i = 1, n do
+				AchievementTrackerDebug[i] = nil
+			end
+
+			local j = 0
+			for i = 1, n do
+				if AchievementTrackerDebug[i] ~= nil then
+					j = j + 1
+					AchievementTrackerDebug[j] = AchievementTrackerDebug[i]
+				end
+			end
+
+			for i=j+1,n do
+				AchievementTrackerDebug[i] = nil
+			end
+		end
+	end)
 end
 
 --Fired when the player enters a new zone.
