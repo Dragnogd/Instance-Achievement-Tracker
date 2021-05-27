@@ -1176,12 +1176,19 @@ function Config:CreateGUI()
         local localisedDungeonNames = {}
         local localisedScenarioNames = {}
 
-        --Lets get all localised names of the instances and place in a table, this can then be sorted alphabetically before we create the buttons
-        --We need to save the original ID aswell so key value pairs
+        --Lets get all localized names of the instances and place in a table, this can then be sorted alphabetically before we create the buttons
+        --We need to save the original ID as well so key value pairs
         for instance,v in pairs(core.Instances[i].Raids) do
             local instanceName = Config:getLocalisedInstanceName(core.Instances[i].Raids[instance].name)
             if instanceName ~= nil then
-                table.insert(localisedRaidNames, {name = instanceName, id = instance});
+                local instanceSuffix = tostring(instance):sub(-3)
+                if instanceSuffix == "-10" then
+                    table.insert(localisedRaidNames, {name = instanceName .. " (10 man)", id = instance});
+                elseif instanceSuffix == "-25" then
+                    table.insert(localisedRaidNames, {name = instanceName .. " (25 man)", id = instance});
+                else
+                    table.insert(localisedRaidNames, {name = instanceName , id = instance});
+				end
             end
         end
         for instance,v in pairs(core.Instances[i].Dungeons) do
