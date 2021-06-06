@@ -45,7 +45,7 @@ local achievementRedForAttempt = false
 function core._1861:Taloc()
     if core.type == "SPELL_AURA_REMOVED" and core.spellId == 280461 and orbCounter < 4 then
         orbCounter = orbCounter + 1
-        core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(280461) .. " " .. L["Core_Counter"] .. " (" .. orbCounter .. "/4)")
+        core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(280461) .. " " .. L["Core_Counter"] .. " (" .. orbCounter .. "/4)",true)
     end
 
     if orbCounter == 4 then
@@ -54,23 +54,8 @@ function core._1861:Taloc()
 end
 
 function core._1861:FetidDevourer()
-    core.IATInfoFrame:SetSubHeading1(GetSpellLink(262277) .. " (" .. playersFetid .. "/" .. core.groupSizeInInstance .. ")")
-
-    if setupTable == false then
-        setupTable = true
-        playersInGroup = core:getPlayersInGroupForAchievement()
-        getListOfPlayers = true
-
-        local messageStr = nil
-        for k, v in pairs(playersInGroup) do
-			if messageStr ~= nil then
-				messageStr = messageStr .. "\n" .. v
-			else
-				messageStr = v
-			end
-        end
-		core.IATInfoFrame:SetText1(messageStr)
-    end
+	InfoFrame_UpdatePlayersOnInfoFrame()
+	InfoFrame_SetHeaderCounter(L["Shared_PlayersHit"],playersFetid,core.groupSize)
 
     --Player has been hit by terrible thrash
     if core.type == "SPELL_DAMAGE" and core.spellId == 262277 and core.destName ~= nil then
@@ -115,73 +100,14 @@ function core._1861:FetidDevourer()
                 playersFetid = playersFetid + 1
                 playersFetidTable[core.spawn_uid_dest_Player] = core.spawn_uid_dest_Player
 
-                core:sendMessage(core.destName .. " " .. L["Shared_HasBeenHitWith"] .. " " .. GetSpellLink(262277) .. " (" .. playersFetid .. "/" .. core.groupSizeInInstance .. ")")
-
-                --Remove player from list of players needing to get hit
-                if core:has_value(playersInGroup, name) then
-                    table.remove(playersInGroup, core:getTableIndexByValue(playersInGroup, name))
-                    --core:sendDebugMessage("Removing " .. name)
-
-                    --Rebuild list of players that still need to get hit
-                    local messageStr = L["Shared_PlayersWhoStillNeedToGetHit"]
-                    for k, v in pairs(playersInGroup) do
-                        messageStr = messageStr .. ", " .. v
-                    end
-                    core:sendMessageSafe(messageStr, true)
-                    local messageStr2 = nil
-                    for k, v in pairs(playersInGroup) do
-                        if messageStr2 ~= nil then
-                            messageStr2 = messageStr2 .. "\n" .. v
-                        else
-                            messageStr2 = v
-                        end
-                    end
-                    core.IATInfoFrame:SetText1(messageStr2)
-                end
+                core:sendMessage(core.destName .. " " .. L["Shared_HasBeenHitWith"] .. " " .. GetSpellLink(262277) .. " (" .. playersFetid .. "/" .. core.groupSizeInInstance .. ")",true)
+                InfoFrame_SetPlayerComplete(core.destName)
             end
         end
     end
 
     if playersFetid == core.groupSizeInInstance then
         core:getAchievementSuccess()
-
-        -- --All players have got hit by terrible thrash but if they are not alive then they will not get achievement on kill
-        -- --We need to check if everyone is alive then announce success. Otherwise list players who need to be ressed before end of fight
-
-        -- --Search for dead players
-        -- if core.groupSizeInInstance > 1 then
-		-- 	for i = 1, core.groupSizeInInstance do
-		-- 		local unit = nil
-		-- 		if core.chatType == "PARTY" then
-		-- 			if i < core.groupSizeInInstance then
-		-- 				unit = "party" .. i
-		-- 			else
-		-- 				unit = "player"
-		-- 			end
-		-- 		elseif core.chatType == "RAID" then
-		-- 			unit = "raid" .. i
-        --         end
-
-        --         --Check if the player is dead
-        --         if UnitIsDead(unit) and UnitIsPlayer(unit) and core:has_value(deadPlayers, name) then
-        --             table.insert(deadPlayers, UnitName(unit))
-        --             deadPlayerFound = true
-        --         end
-		-- 	end
-		-- else
-        --     --Check if requirements are met else output dead players
-        --     if deadPlayerFound == true and deadPlayersAnnounced = false then
-        --         deadPlayersAnnounced = true
-        --         --build list of players that still need to be ressed
-        --         local messageStr = L["Shared_PlayersWhoStillNeedToGetResurrected"]
-        --         for k, v in pairs(playersInGroup) do
-        --             messageStr = messageStr .. ", " .. v
-        --         end
-        --         core:sendMessageSafe(messageStr)
-        --     elseif deadPlayerFound == false
-        --         core:getAchievementSuccess()
-        --     end
-        -- end
     end
 end
 
@@ -192,7 +118,7 @@ function core._1861:Vectis()
 
     --If warmother casts blood ritual then she has been infected
     if core.type == "SPELL_CAST_START" and core.spellId == 277813 and core.sourceID == "142148" and warmotherInfected == false then
-        core:sendMessage(getNPCName(142148) .. " " .. L["Shared_HasBeenInfectedWith"] .. GetSpellLink(266948) .. ". " .. L["Shared_SheCanNowBeKilled"])
+        core:sendMessage(getNPCName(142148) .. " " .. L["Shared_HasBeenInfectedWith"] .. GetSpellLink(266948) .. ". " .. L["Shared_SheCanNowBeKilled"],true)
         warmotherInfected = true
     end
 
