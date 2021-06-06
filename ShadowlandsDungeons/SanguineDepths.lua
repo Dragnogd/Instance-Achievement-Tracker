@@ -132,7 +132,7 @@ function core._2284:TrackAdditional()
                     C_Timer.After(10, function()
                         --Player lost Shadow Ball but did not gain Slammed! so fail achievement
                         core:sendDebugMessage("Checking " .. playerCheck)
-                        if slammedUID[playerCheck] == nil and generalKaalKilled == false and core:getHealthPercent("boss1") > 51 then
+                        if slammedUID[playerCheck] == nil and generalKaalKilled == false and core:getHealthPercent("boss1") > 53 then
                             core:sendDebugMessage("No Slammed detected")
                             core:sendMessage(playerCheck .. " " .. L["Shared_HasFailed"] .. " " .. GetAchievementLink(14289) .. " (" .. L["Core_PersonalAchievement"] .. ")",true,"failed")
                             InfoFrame_SetPlayerFailedWithMessage(playerCheck, "")
