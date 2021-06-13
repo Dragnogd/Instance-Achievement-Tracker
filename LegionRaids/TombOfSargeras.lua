@@ -34,6 +34,12 @@ local inkCompleted = false
 ------------------------------------------------------
 local partsCompleted = 0
 
+------------------------------------------------------
+---- Desolate Host
+------------------------------------------------------
+local desolateHostDead = false
+local engineOfSoulsDead = false
+
 function core._1676:Goroth()
     if core:getBlizzardTrackingStatus(11724) == true then
         core:getAchievementSuccess()
@@ -43,7 +49,7 @@ end
 function core._1676:DemonicInquisition()
     InfoFrame_UpdatePlayersOnInfoFrame()
     InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],playersTorment,core.groupSize)
-    
+
     if core.type == "UNIT_DIED" and (core.destID == "116689" or core.destID == "116691") then
         demonicInquisitionKilled = true
     end
@@ -141,8 +147,8 @@ function core._1676:SistersOfTheMoon()
     for i = 1, 5 do
         if UnitGUID("boss" .. i) ~= nil then
             local unitType, _, _, _, _, destID, spawn_uid_dest = strsplit("-", UnitGUID("boss" .. i))
-            if (destID == "118523" or destID == "118374" or destID == "118518") and core:getHealthPercent("boss" .. i) <= 20 and healthPercentageReached == false and waxingTwilightSoulFound == true then
-                core:sendMessage(core:getAchievement() .. " Kill the Waxing Twilight Soul now!")
+            if (destID == "118523" or destID == "118374" or destID == "118518") and core:getHealthPercent("boss" .. i) <= 20 and core:getHealthPercent("boss" .. i) > 0 and healthPercentageReached == false and waxingTwilightSoulFound == true then
+                core:sendMessage(format(L["Shared_KillTheAddNow"], getNPCName(121498)),true)
                 healthPercentageReached = true
             end
         end
@@ -166,7 +172,15 @@ function core._1676:Kiljaeden()
 end
 
 function core._1676:DesolateHost()
-    if core:getBlizzardTrackingStatus(11674) == false then
+    if core.type == "UNIT_DIED" and core.destID == "119072" then
+        desolateHostDead = true
+    end
+
+    if core.type == "UNIT_DIED" and core.destID == "118460" then
+        engineOfSoulsDead = true
+    end
+
+    if core:getBlizzardTrackingStatus(11674) == false and (desolateHostDead == false or engineOfSoulsDead == false) then
         core:getAchievementFailed()
     end
 end
@@ -193,5 +207,11 @@ function core._1676:ClearVariables()
     ------------------------------------------------------
     playersTormentTable = {}
     playersTorment = 0
+
+    ------------------------------------------------------
+    ---- Desolate Host
+    ------------------------------------------------------
+    desolateHostDead = false
+    engineOfSoulsDead = false
 end
 
