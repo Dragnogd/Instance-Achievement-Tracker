@@ -2225,6 +2225,7 @@ function events:CHAT_MSG_ADDON(self, prefix, message, channel, sender)
 				-- print(player ..  " : " .. UnitName("player"))
 				if player == UnitName("player") then
 					core:sendDebugMessage("Relay message outputting message...")
+					message = message:gsub('IATCOMMA', ',')
 					SendChatMessage("[IAT] " .. message,"RAID_WARNING",DEFAULT_CHAT_FRAME.editBox.languageID)
 				end
 			elseif string.match(message, "masterAddonPlayer") then
@@ -2878,6 +2879,7 @@ function core:sendMessage(message, outputToRW, messageType)
 					elseif outputToRW == true and announceToRaidWarning == true then
 						core:logMessage("[IAT] " .. message)
 						if outputToRW == true and relayAddonPlayer ~= nil then
+							message = message:gsub(',', 'IATCOMMA')
 							C_ChatInfo.SendAddonMessage("Whizzey", "relayMessage," .. relayAddonPlayer .. "," .. message, "RAID")
 						else
 							RaidNotice_AddMessage(RaidWarningFrame, "[IAT] " .. message, ChatTypeInfo["RAID_WARNING"])
@@ -2919,9 +2921,11 @@ function core:sendMessage(message, outputToRW, messageType)
 					--We need to store the messages in a queue while the master addon is being decided
 					if outputToRW == true then
 						core:sendDebugMessage("Inserting into Message Queue: " .. message .. ",true")
+						message = message:gsub(',', 'IATCOMMA')
 						table.insert(messageQueue, message .. ",true")
 					else
 						core:sendDebugMessage("Inserting into Message Queue: " .. message .. ",false")
+						message = message:gsub(',', 'IATCOMMA')
 						table.insert(messageQueue, message .. ",false")
 					end
 				end
@@ -2993,6 +2997,7 @@ function core:sendMessage(message, outputToRW, messageType)
 							if #messageQueue > 0 then
 								for k, v in pairs(messageQueue) do
 									local v, outputToRW2 = strsplit(",", v)
+									v = v:gsub('IATCOMMA', ',')
 									-- print("Outputting from Message Queue: " .. v .. outputToRW2)
 									-- print(core.chatType)
 									if outputToRW2 == "true" and core.chatType == "RAID" and announceToRaidWarning == true and (UnitIsGroupAssistant("Player") or UnitIsGroupLeader("Player")) then
