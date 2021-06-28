@@ -50,8 +50,7 @@ Config.revisionVersion = 0					--Addon with a revision change have the same prio
 Config.releaseType = ""                     --Release type (Alpha, Beta, Release)
 
 -- Purpose:         Used to detect which version of the game the user is running. This is used so we can add features for different versions of the game.
-local _, _, _, tocVersionloc = GetBuildInfo()
-core.tocVersion = tocVersionloc
+core.gameVersion, core.gameBuild, core.gameDate, core.tocVersion = GetBuildInfo()
 
 ------------------------------------------------------
 ---- Localisation
@@ -62,7 +61,11 @@ function Config:getLocalisedInstanceName(instanceID)
 end
 
 function Config:getLocalisedScenarioName(dungeonID)
-    return GetDungeonInfo(dungeonID)
+    if core.gameVersion == "9.1.0" then
+        return C_LFGInfo.GetDungeonInfo(dungeonID).name
+    else
+        return GetDungeonInfo(dungeonID)
+    end
 end
 
 function Config:getLocalisedEncouterName(encounterID,instanceType)
