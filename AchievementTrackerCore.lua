@@ -2691,9 +2691,7 @@ function detectBossByEncounterID(id)
 			core:printMessage(L["Core_NoTrackingForInstance"])
 
 			--Announce to chat if enabled
-			if core.announceTrackedAchievementsToChat == true then
-				core:sendMessage(L["Core_NoTrackingForInstance"])
-			end
+			core:sendMessage(L["Core_NoTrackingForInstance"],true)
 		end
 	end
 
