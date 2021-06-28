@@ -32,6 +32,7 @@ Localization.zhTW.lua
 Localization.koKR.lua
 
 ShadowlandsRaids\CastleNathria.lua
+ShadowlandsRaids\SanctumOfDomination.lua
 
 ShadowlandsDungeons\DeOtherSide.lua
 ShadowlandsDungeons\HallsofAtonement.lua
@@ -41,6 +42,7 @@ ShadowlandsDungeons\SanguineDepths.lua
 ShadowlandsDungeons\SpiresofAscension.lua
 ShadowlandsDungeons\TheaterofPain.lua
 ShadowlandsDungeons\TheNecroticWake.lua
+ShadowlandsDungeons\TazaveshTheVeiledMarket.lua
 
 BattleForAzerothRaids\Uldir.lua
 BattleForAzerothRaids\BattleOfDazaralor.lua
