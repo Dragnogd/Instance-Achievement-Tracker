@@ -26,6 +26,7 @@ function core._2097:Gunker()
     --If Carrying Helpless Critter removed and player is alive, increment counter by 1
     if core.type == "SPELL_AURA_REMOVED" and core.spellId == 302766 and UnitIsDead(core.destName) == false then
         helplessCritersSaved = helplessCritersSaved + 1
+        core:sendMessage(core:getAchievement() .. " " .. getNPCName(155543) .. " " .. L["Core_Counter"] .. " (" .. helplessCritersSaved .. "/5)",true)
     end
 
     if helplessCritersSaved >= 5 then
@@ -39,7 +40,7 @@ function core._2097:TussleTonks()
     if core.type == "SPELL_DAMAGE" and core.destID == "151654" and core.spellId == 282943 then
         core:getAchievementSuccess()
     end
-end 
+end
 
 function core._2097:MachinistsGarden()
     --Defeat the Machinist's Garden in Operation: Mechagon without being struck by "Hidden" Flame Cannon, Self-Trimming Hedges, Discom-BOMB-ulator, or Roaring Flame on Mythic Difficulty.
@@ -48,10 +49,13 @@ function core._2097:MachinistsGarden()
     --Discom-BOMB-ulator (285460)
     --Roaring Flame (294869)
 
-    if (core.type == "SPELL_AURA_APPLIED" and core.spellId == 285443) or (core.type == "SPELL_DAMAGE" and core.spellId == 294954) or (core.type == "SPELL_AURA_APPLIED" and core.spellId == 285460) or (core.type == "SPELL_DAMAGE" and core.spellId == 294869) then
+    InfoFrame_UpdatePlayersOnInfoFramePersonal()
+    InfoFrame_SetHeaderCounter(L["Shared_PlayersWhoNeedAchievement"],#core.currentBosses[1].players,#core.currentBosses[1].players)
+
+    if (core.type == "SPELL_AURA_APPLIED" and core.spellId == 285443) or ((core.type == "SPELL_DAMAGE" or core.type == "SPELL_MISSED") and core.spellId == 294954) or (core.type == "SPELL_AURA_APPLIED" and core.spellId == 285460) or ((core.type == "SPELL_DAMAGE" or core.type == "SPELL_MISSED") and core.spellId == 294869) then
         --If someone gets hit by the ability, check if they need the achievement or not
         if core.destName ~= nil then
-            local name, realm = strsplit("-", core.destName)  
+            local name, realm = strsplit("-", core.destName)
             if UnitIsPlayer(name) then
                 --Detect the reason the player has failed the achievement
                 local reason = ""
@@ -69,7 +73,10 @@ function core._2097:MachinistsGarden()
                     --Check if the player actually needs the achievement
                     if core:has_value(core.currentBosses[1].players, core.destName) then
                         --Player needs achievement but has failed it
-                        core:sendMessage(format(L["Shared_FailedPersonalAchievement"], core.destName, GetAchievementLink(core.achievementIDs[1]), reason))
+                        if InfoFrame_GetPlayerFailed(core.destName) == false then
+                            InfoFrame_SetPlayerFailed(core.destName)
+                            core:sendMessage(format(L["Shared_FailedPersonalAchievement"], core.destName, GetAchievementLink(core.achievementIDs[1]), reason),true)
+                        end
                     end
                     playersHit[core.destName] = true
                 end

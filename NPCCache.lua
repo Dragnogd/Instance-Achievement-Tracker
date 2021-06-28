@@ -594,4 +594,5 @@ core.NPCCache = {
 	[71984] =71984, --Siege Engineer
 	[90049] =90049, --Iron Star Mk. II
 	[71983] =71983, --Farseer Wolf Rider
+	[155543] =155543, --Helpless Critter
 }
