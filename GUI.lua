@@ -61,11 +61,7 @@ function Config:getLocalisedInstanceName(instanceID)
 end
 
 function Config:getLocalisedScenarioName(dungeonID)
-    if core.gameVersion == "9.1.0" then
-        return C_LFGInfo.GetDungeonInfo(dungeonID).name
-    else
-        return GetDungeonInfo(dungeonID)
-    end
+    return C_LFGInfo.GetDungeonInfo(dungeonID).name
 end
 
 function Config:getLocalisedEncouterName(encounterID,instanceType)
@@ -1064,19 +1060,19 @@ local function SetTabs(frame, numTabs, ...)
     end
 
     --Tabs for other addons
-    local tab = CreateFrame("Button", "InstanceAchievementTrackerTab", frame, "OptionsFrameTabButtonTemplate")
-    tab:SetID(100)                                 --This is used when clicking on the tab to load the correct frames
-    tab:SetText("Dungeons & Raids")  --This select the variables arguments passed into the function. Needs updating each expansion
-    tab:SetScript("OnClick", IAT_OnClick)       --This will run the Tab_OnClick() function once the user has selected a tab so we can load the correct frames into the GUI
-    tab:SetPoint("TOPLEFT")
-    tab:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 20)
+    -- local tab = CreateFrame("Button", "InstanceAchievementTrackerTab", frame, "OptionsFrameTabButtonTemplate")
+    -- tab:SetID(100)                                 --This is used when clicking on the tab to load the correct frames
+    -- tab:SetText("Dungeons & Raids")  --This select the variables arguments passed into the function. Needs updating each expansion
+    -- tab:SetScript("OnClick", IAT_OnClick)       --This will run the Tab_OnClick() function once the user has selected a tab so we can load the correct frames into the GUI
+    -- tab:SetPoint("TOPLEFT")
+    -- tab:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 20)
 
-    local tab = CreateFrame("Button", "ExplorationAchievementTrackerTab", _G["InstanceAchievementTrackerTab"], "OptionsFrameTabButtonTemplate")
-    tab:SetID(100)                                 --This is used when clicking on the tab to load the correct frames
-    tab:SetText("Exploration")  --This select the variables arguments passed into the function. Needs updating each expansion
-    tab:SetScript("OnClick", EAT_OnClick)       --This will run the Tab_OnClick() function once the user has selected a tab so we can load the correct frames into the GUI
-    tab:SetPoint("TOPLEFT")
-    tab:SetPoint("TOPLEFT", _G["InstanceAchievementTrackerTab"], "TOPLEFT", 120, 0)
+    -- local tab = CreateFrame("Button", "ExplorationAchievementTrackerTab", _G["InstanceAchievementTrackerTab"], "OptionsFrameTabButtonTemplate")
+    -- tab:SetID(100)                                 --This is used when clicking on the tab to load the correct frames
+    -- tab:SetText("Exploration")  --This select the variables arguments passed into the function. Needs updating each expansion
+    -- tab:SetScript("OnClick", EAT_OnClick)       --This will run the Tab_OnClick() function once the user has selected a tab so we can load the correct frames into the GUI
+    -- tab:SetPoint("TOPLEFT")
+    -- tab:SetPoint("TOPLEFT", _G["InstanceAchievementTrackerTab"], "TOPLEFT", 120, 0)
 
 	Tab_OnClick(_G[frameName.."Tab1"]) --Load in the main frame to begin with
 
