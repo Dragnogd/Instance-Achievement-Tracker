@@ -23,6 +23,49 @@ local immediateExterminationCast = false
 local playerPhotoFlashCounter = 0
 local playerPhotoFlashUID = {}
 
+------------------------------------------------------
+---- The Nine
+------------------------------------------------------
+local fragmentsOfDestinyCounter = 0
+
+function core._2450:TheNine()
+    --Defeat The Nine after forming a Shard of Destiny from 9 or more Fragments of Destiny in the Sanctum of Domination on Normal difficulty or higher.
+    InfoFrame_UpdateDynamicPlayerList()
+    InfoFrame_SetHeaderCounter(GetSpellLink(350542) .. " " .. L["Core_Counter"],fragmentsOfDestinyCounter,9)
+
+    --1. Count how many Fragments of Destiny are currently spawned (SPELL_AURA_APPLIED, SPELL_AURA_REMOVED 350542)
+
+    --Fragments of Destiny Spawned
+    if core.type == "SPELL_AURA_APPLIED"  and core.spellId == 350542 and core.destName ~= nil then
+        fragmentsOfDestinyCounter = fragmentsOfDestinyCounter + 1
+        InfoFrame_IncrementDynamicPlayer(core.destName,1)
+        --core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. GetSpellLink(350542) .. " (" .. fragmentsOfDestinyCounter .. "/9)",true)
+    end
+
+    if core.type == "SPELL_AURA_APPLIED_DOSE" and core.spellId == 350542 and core.destName ~= nil then
+        fragmentsOfDestinyCounter = fragmentsOfDestinyCounter + 1
+        InfoFrame_IncrementDynamicPlayer(core.destName,core.amount)
+        --core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. GetSpellLink(350542) .. " (" .. fragmentsOfDestinyCounter .. "/9)",true)
+    end
+
+    --Fragments of Destiny Despawned
+    if core.type == "SPELL_AURA_REMOVED" and core.spellId == 350542 and core.destName ~= nil then
+        fragmentsOfDestinyCounter = fragmentsOfDestinyCounter - 1
+        InfoFrame_DecrementDynamicPlayer(core.destName,1)
+        --core:sendMessage(core.destName .. " " .. L["Shared_HasLost"] .. " " .. GetSpellLink(350542) .. " (" .. fragmentsOfDestinyCounter .. "/9)",true)
+    end
+
+    if core.type == "SPELL_AURA_REMOVED_DOSE" and core.spellId == 350542 and core.destName ~= nil then
+        fragmentsOfDestinyCounter = fragmentsOfDestinyCounter - 1
+        InfoFrame_DecrementDynamicPlayer(core.destName,core.amount)
+        --core:sendMessage(core.destName .. " " .. L["Shared_HasLost"] .. " " .. GetSpellLink(350542) .. " (" .. fragmentsOfDestinyCounter .. "/9)",true)
+    end
+
+    if core:getBlizzardTrackingStatus(15003) == true then
+        core:getAchievementSuccess()
+    end
+end
+
 function core._2450:EyeOfTheJailer()
     --Defeat the Eye of the Jailer after using the Scavenged S.E.L.F.I.E. Camera to take a picture of the Eye of the Jailer and the entire raid after it has cast Immediate Extermination in the Sanctum of Domination on Normal difficulty or higher.
 
@@ -166,4 +209,9 @@ function core._2450:ClearVariables()
     immediateExterminationCast = false
     playerPhotoFlashCounter = 0
     playerPhotoFlashUID = {}
+
+    ------------------------------------------------------
+    ---- The Nine
+    ------------------------------------------------------
+    fragmentsOfDestinyCounter = 0
 end

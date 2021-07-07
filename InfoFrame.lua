@@ -34,6 +34,8 @@ local colourGreen = "|cff59FF00"
 local colourWhite = "|cffFFFFFF"
 local colourOrange = "|cffff6100"
 
+core.InfoFrame_DynamicTable = {}
+
 function InfoFrame_UpdatePlayersOnInfoFrame(updateInfoFrame)
     --This will update list of players on the info frame
     if next(core.InfoFrame_PlayersTable) == nil then
@@ -91,6 +93,71 @@ function InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
             end
         end
         core.IATInfoFrame:SetText1(messageStr)
+    end
+end
+
+function InfoFrame_UpdateDynamicPlayerList()
+    if next(core.InfoFrame_DynamicTable) == nil then
+        --Table is empty. Do nothing
+        core.IATInfoFrame:SetText1("")
+    else
+        --Update Info Frame with values from table
+        local messageStr = ""
+        for player, status in pairs(core.InfoFrame_DynamicTable) do
+            --1 = incomplete, 2 = complete, 3 = failed
+            if status[1] == 1 then
+                --Player has not completed the requirements for the achievement yet
+                messageStr = messageStr .. colourWhite .. player .. " (" .. status[2] .. ")|r\n"
+            elseif status[1] == 2 then
+                --Player has completed the requirements for the achievement
+                messageStr = messageStr .. colourGreen .. player .. " (" .. status[2] .. ")|r\n"
+            elseif status[1] == 4 then
+                --Player requirements are currently in progress
+                messageStr = messageStr .. colourOrange .. player .. " (" .. status[2] .. ")|r\n"
+            elseif status[1] then
+                --Player had completed the requirements for the achievement but has since failed it
+                messageStr = messageStr .. colourRed .. player .. " (" .. status[2] .. ")|r\n"
+            end
+        end
+        core.IATInfoFrame:SetText1(messageStr)
+    end
+end
+
+function InfoFrame_IncrementDynamicPlayer(player,count)
+    if core.InfoFrame_DynamicTable[player] == nil then
+        --Setup new player in table
+        core.InfoFrame_DynamicTable[player] = {1,count}
+    else
+        if count ~= nil then
+            --Increment player counter in table
+            core.InfoFrame_DynamicTable[player][2] = core.InfoFrame_DynamicTable[player][2] + count
+
+            if core.InfoFrame_DynamicTable[player][2] >= 9 then
+                core.InfoFrame_DynamicTable[player] = {2,core.InfoFrame_DynamicTable[player][2]}
+            else
+                core.InfoFrame_DynamicTable[player] = {1,core.InfoFrame_DynamicTable[player][2]}
+            end
+        end
+    end
+end
+
+function InfoFrame_DecrementDynamicPlayer(player,count)
+    if core.InfoFrame_DynamicTable[player] ~= nil then
+        core.InfoFrame_DynamicTable[player][2] = core.InfoFrame_DynamicTable[player][2] - count
+        if core.InfoFrame_DynamicTable[player][2] <= 0 then
+            core.InfoFrame_DynamicTable[player] = nil
+        else
+            core.InfoFrame_DynamicTable[player] = {1,core.InfoFrame_DynamicTable[player][2]}
+        end
+    end
+
+
+    if core.InfoFrame_PlayersTable[player] == 3 then
+        core.InfoFrame_PlayersTable[player] = 3
+        return false
+    else
+        core.InfoFrame_PlayersTable[player] = 3
+        return true
     end
 end
 

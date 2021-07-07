@@ -1986,6 +1986,7 @@ function checkAndClearInstanceVariables()
 			core.IATInfoFrame:SetText2()
 			core.infoFrameShown = false
 			core.InfoFrame_PlayersTable = {}
+			core.InfoFrame_DynamicTable = {}
 			core.infoFrameLock = false
 		else
 			core:sendDebugMessage("InfoFrame was not active")
@@ -3734,6 +3735,7 @@ function core:clearVariables()
 		core.IATInfoFrame:SetText2()
 		core.infoFrameShown = false
 		core.InfoFrame_PlayersTable = {}
+		core.InfoFrame_DynamicTable = {}
 	elseif core.infoFrameLock == true then
 		core:sendDebugMessage("InfoFrame is in locked state")
 	else

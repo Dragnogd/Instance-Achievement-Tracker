@@ -2256,6 +2256,7 @@ function IATInfoFrame:Reset()
     IATInfoFrame:SetSubHeading2()
     IATInfoFrame:SetText2()
     core.InfoFrame_PlayersTable = {}
+    core.InfoFrame_DynamicTable = {}
     core:sendDebugMessage("InfoFrame has been reset")
 end
 
