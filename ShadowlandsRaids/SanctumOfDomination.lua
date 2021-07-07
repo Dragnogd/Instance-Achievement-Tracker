@@ -28,6 +28,12 @@ local playerPhotoFlashUID = {}
 ------------------------------------------------------
 local fragmentsOfDestinyCounter = 0
 
+------------------------------------------------------
+---- Soulrender Dormazain
+------------------------------------------------------
+local hellscreamsBurdenCounter = 0
+local hellscremBurdenUID = {}
+
 function core._2450:TheNine()
     --Defeat The Nine after forming a Shard of Destiny from 9 or more Fragments of Destiny in the Sanctum of Domination on Normal difficulty or higher.
     InfoFrame_UpdateDynamicPlayerList()
@@ -114,24 +120,13 @@ end
 function core._2450:SoulrenderDormazain()
     --Defeat Soulrender Dormazain after /taunting Garrosh Hellscream before combat begins and avoiding all Torment impacts in the Sanctum of Domination on Normal difficulty or higher.
 
-    InfoFrame_UpdatePlayersOnInfoFramePersonal()
-    InfoFrame_SetHeaderCounter(L["Shared_PlayersWhoNeedAchievement"],#core.currentBosses[1].players,#core.currentBosses[1].players)
-
-    if core.destName ~= nil then
-        local name, realm = UnitName(core.destName)
-        if core:has_value(core.Instances[core.expansion][core.instanceType][core.instance]["boss3"].players, name) == true then --TODO: Fix BossID
-            --Fate Fragment
-            if core.type == "SPELL_AURA_APPLIED" and (core.spellId == 350217 or core.spellId == 353023) then --TODO: Possibly wrong IDS ???
-                if core.destName ~= nil then
-                    if UnitIsPlayer(core.destName) then
-                        if InfoFrame_GetPlayerFailed(core.destName) == false then
-                            InfoFrame_SetPlayerFailed(core.destName)
-                            core:sendMessage(format(L["Shared_FailedPersonalAchievement"], core.destName, GetAchievementLink(core.achievementIDs[1]), format(L["Shared_DamageFromAbility"], GetSpellLink(350217))),true)
-                        end
-                    end
-                end
+    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 350217 and core.destName ~= nil then --353023??
+        local tmpPlayer = core.destName
+        C_Timer.After(1, function()
+            if core:getBlizzardTrackingStatus(15105, 1) == false then
+                core:getAchievementFailedWithMessageAfter("(" .. tmpPlayer .. ")")
             end
-        end
+        end)
     end
 end
 
@@ -195,6 +190,47 @@ function core._2450:FatescribeRohKalo()
     end
 end
 
+function core._2296:TrackAdditional()
+    --Soulrender Dormazain -- Hellscream's Burden
+    if (core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_REMOVED") and core.spellId == 356731 then
+        core.IATInfoFrame:ToggleOn()
+        core.IATInfoFrame:SetHeading(GetAchievementLink(15105))
+        InfoFrame_SetHeaderCounter(GetSpellLink(356731) .. " " .. L["Core_Counter"],hellscreamsBurdenCounter,core.groupSize)
+        InfoFrame_UpdatePlayersOnInfoFrame()
+
+        --Check all players in group for Hellscream's Burden Buff
+        for player2, status in pairs(core.InfoFrame_PlayersTable) do
+            local buffFound = false
+            local _, _, player_UID2 = strsplit("-", UnitGUID(player2))
+            for i=1,40 do
+                local _, _, count2, _, _, _, _, _, _, spellId = UnitDebuff(player2, i)
+                if spellId == 356731 then
+                    buffFound = true
+                end
+            end
+            if buffFound == true then
+                InfoFrame_SetPlayerComplete(player2)
+                if hellscremBurdenUID[player_UID2] == nil then
+                    hellscremBurdenUID[player_UID2] = player_UID2
+                    hellscreamsBurdenCounter = hellscreamsBurdenCounter + 1
+                    core:sendDebugMessage("InfoFrame set green for wilted Rose (Unit Scanning): " .. player2)
+                end
+            else
+                InfoFrame_SetPlayerFailed(player2)
+                if hellscremBurdenUID[player_UID2] ~= nil then
+                    hellscremBurdenUID[player_UID2] = nil
+                    hellscreamsBurdenCounter = hellscreamsBurdenCounter - 1
+                    core:sendDebugMessage("InfoFrame set failed for wilted Rose (Unit Scanning): " .. player2)
+                end
+            end
+        end
+
+        --Update with any changes
+        InfoFrame_SetHeaderCounterWithAdditionalMessage(L["Shared_PlayersMetCriteria"],WiltingFlowersCounter,core.groupSize,L["CastleNathria_OrbTimer"] .. ": " .. wiltedMasterTimer .. " (" .. wiltedMasterPlayer .. ")\n" .. L["CastleNathria_KillTimer"] .. ": " .. bloomingMasterTimer)
+        InfoFrame_UpdatePlayersOnInfoFrame()
+    end
+end
+
 function core._2450:ClearVariables()
     ------------------------------------------------------
     ---- Remnant of Ner'zhul
@@ -214,4 +250,9 @@ function core._2450:ClearVariables()
     ---- The Nine
     ------------------------------------------------------
     fragmentsOfDestinyCounter = 0
+
+    ------------------------------------------------------
+    ---- Soulrender Dormazain
+    ------------------------------------------------------
+    hellscreamsBurdenCounter = 0
 end
