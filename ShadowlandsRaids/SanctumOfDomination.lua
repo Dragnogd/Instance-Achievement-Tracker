@@ -34,6 +34,11 @@ local fragmentsOfDestinyCounter = 0
 local hellscreamsBurdenCounter = 0
 local hellscremBurdenUID = {}
 
+------------------------------------------------------
+---- Guardian of the First Ones
+------------------------------------------------------
+local vazzarenTheSeekerDetected = false
+
 function core._2450:TheNine()
     --Defeat The Nine after forming a Shard of Destiny from 9 or more Fragments of Destiny in the Sanctum of Domination on Normal difficulty or higher.
     InfoFrame_UpdateDynamicPlayerList()
@@ -106,13 +111,27 @@ end
 
 function core._2450:RemnantOfNerZhul()
     --Defeat the Remnant of Ner'zhul after scoring seven goals in the Sanctum of Domination on Normal difficulty or higher.
+    if core:getBlizzardTrackingStatus(15058, 1) == true then
+        core:getAchievementSuccess()
+    end
+end
 
-    if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 350424 then
-        goalCounter = goalCounter + 1
-        core:sendMessage(core:getAchievement() .. " " .. L["Core_Counter"] .. " " .. " (" .. goalCounter .. "/7)",true)
+function core._2450:PainsmithRaznal()
+    --Defeat Painsmith Raznal after activating the Burning Gibbets in the Sanctum of Domination on Normal difficulty or higher.
+
+    if core:getBlizzardTrackingStatus(15131, 1) == false then
+        core:getAchievementFailed()
+    end
+end
+
+function core._2450:GuardianOfTheFirstOnes()
+    --Defeat the Guardian of the First Ones after enlightening and defeating Vazzaren the Seeker in the Sanctum of Domination in Normal difficulty or higher.
+
+    if core.sourceID == "180690" or core.destID == "180690" and vazzarenTheSeekerDetected == false then
+        core:sendMessage(format(L["Shared_KillTheAddNow"], getNPCName(180690)),true)
     end
 
-    if core:getBlizzardTrackingStatus(15058, 1) == true and goalCounter >= 7 then
+    if core:getBlizzardTrackingStatus(15132, 1) == true then
         core:getAchievementSuccess()
     end
 end
@@ -138,7 +157,7 @@ function core._2450:FatescribeRohKalo()
 
     if core.destName ~= nil then
         local name, realm = UnitName(core.destName)
-        if core:has_value(core.Instances[core.expansion][core.instanceType][core.instance]["boss3"].players, name) == true then --TODO: Fix BossID
+        if core:has_value(core.Instances[core.expansion][core.instanceType][core.instance]["boss8"].players, name) == true then
             --Call of Eternity (Explosion)
             if (core.type == "SPELL_DAMAGE" or core.type == "SPELL_MISSED" or core.type == "SPELL_ABSORBED") and core.spellId == 350819 then
                 if core.destName ~= nil then
@@ -187,6 +206,22 @@ function core._2450:FatescribeRohKalo()
                 end
             end
         end
+    end
+end
+
+function core._2450:KelThuzad()
+    --Defeat Kel'Thuzad after thawing the Remnant's heart in the Sanctum of Domination on Normal difficulty or higher.
+
+    if core:getBlizzardTrackingStatus(15108) == true then
+        core:getAchievementSuccess()
+    end
+end
+
+function core._2450:SylvanasWindrunner()
+    --Defeat Sylvanas Windrunner after activating the Focusing Prism in the Sanctum of Domination on Normal difficulty or higher.
+
+    if core:getBlizzardTrackingStatus(15133, 1) == true then
+        core:getAchievementSuccess()
     end
 end
 
@@ -255,4 +290,10 @@ function core._2450:ClearVariables()
     ---- Soulrender Dormazain
     ------------------------------------------------------
     hellscreamsBurdenCounter = 0
+    hellscremBurdenUID = {}
+
+    ------------------------------------------------------
+    ---- Guardian of the First Ones
+    ------------------------------------------------------
+    vazzarenTheSeekerDetected = false
 end
