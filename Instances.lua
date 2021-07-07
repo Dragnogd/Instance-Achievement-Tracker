@@ -1,5 +1,5 @@
 --------------------------------------
--- Last Auto Generated: 07/07/2021 21:26:27
+-- Last Auto Generated: 07/07/2021 21:54:03
 --------------------------------------
 local _, core = ...
 local L = core.L
@@ -17,8 +17,8 @@ core.Instances = {
 					achievement = 14998,
 					players = {},
 					tactics = L["SanctumOfDomination_TheTarragrue"],
-					enabled = false,
-					track = nil,
+					enabled = true,
+					track = function() core._2450:TheTarragrue() end,
 					partial = false,
 					encounterID = 2423,
 				},
@@ -28,10 +28,11 @@ core.Instances = {
 					achievement = 15065,
 					players = {},
 					tactics = L["SanctumOfDomination_EyeOfTheJailer"],
-					enabled = false,
-					track = nil,
+					enabled = true,
+					track = function() core._2450:EyeOfTheJailer() end,
 					partial = false,
 					encounterID = 2433,
+					displayInfoFrame = true,
 				},
 				boss3 = {
 					name = 2439, --The Nine

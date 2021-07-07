@@ -39,6 +39,14 @@ local hellscremBurdenUID = {}
 ------------------------------------------------------
 local vazzarenTheSeekerDetected = false
 
+function core._2450:TheTarragrue()
+    --Defeat The Tarragrue after entering the mists and reuniting Moriaz with Buttons in the Sanctum of Domination on Normal difficulty or higher.
+
+    if core:getBlizzardTrackingStatus(14998) == true then
+        core:getAchievementSuccess()
+    end
+end
+
 function core._2450:TheNine()
     --Defeat The Nine after forming a Shard of Destiny from 9 or more Fragments of Destiny in the Sanctum of Domination on Normal difficulty or higher.
     InfoFrame_UpdateDynamicPlayerList()
@@ -80,16 +88,16 @@ end
 function core._2450:EyeOfTheJailer()
     --Defeat the Eye of the Jailer after using the Scavenged S.E.L.F.I.E. Camera to take a picture of the Eye of the Jailer and the entire raid after it has cast Immediate Extermination in the Sanctum of Domination on Normal difficulty or higher.
 
-    if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 348974 then
-        --TODO: Announce that SELFIE camera can now be used
-        immediateExterminationCast = true
-    end
-
     InfoFrame_UpdatePlayersOnInfoFrame()
 	InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],playerPhotoFlashCounter,core.groupSize)
 
-	--Player has gained Photoflash!
-	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 355427 and playerPhotoFlashUID[core.spawn_uid_dest_Player] == nil then
+    if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 348974 and immediateExterminationCast == false then
+        immediateExterminationCast = true
+        core:sendMessage(format(L["Shared_CanNowBeUsed"], GetSpellLink(355379)),true)
+    end
+
+    --Player has gained Photoflash!
+	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 355427 and playerPhotoFlashUID[core.spawn_uid_dest_Player] == nil and core.destName ~= nil then
 		playerPhotoFlashCounter = playerPhotoFlashCounter + 1
 		playerPhotoFlashUID[core.spawn_uid_dest_Player] = core.spawn_uid_dest_Player
 		--core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. GetSpellLink(355427) .. " (" .. playerPhotoFlashCounter .. "/" .. core.groupSize .. ")",true)
