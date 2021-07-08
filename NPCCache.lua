@@ -595,4 +595,5 @@ core.NPCCache = {
 	[90049] =90049, --Iron Star Mk. II
 	[71983] =71983, --Farseer Wolf Rider
 	[155543] =155543, --Helpless Critter
+	[180690] =180690, --Vazzaren The Seeker
 }

@@ -33,11 +33,17 @@ local fragmentsOfDestinyCounter = 0
 ------------------------------------------------------
 local hellscreamsBurdenCounter = 0
 local hellscremBurdenUID = {}
+local lastPersonToGetHit = ""
 
 ------------------------------------------------------
 ---- Guardian of the First Ones
 ------------------------------------------------------
 local vazzarenTheSeekerDetected = false
+
+------------------------------------------------------
+---- FatescribeRohKalo
+------------------------------------------------------
+local playersWhoHaveNotFailed = nil
 
 function core._2450:TheTarragrue()
     --Defeat The Tarragrue after entering the mists and reuniting Moriaz with Buttons in the Sanctum of Domination on Normal difficulty or higher.
@@ -51,8 +57,6 @@ function core._2450:TheNine()
     --Defeat The Nine after forming a Shard of Destiny from 9 or more Fragments of Destiny in the Sanctum of Domination on Normal difficulty or higher.
     InfoFrame_UpdateDynamicPlayerList()
     InfoFrame_SetHeaderCounter(GetSpellLink(350542) .. " " .. L["Core_Counter"],fragmentsOfDestinyCounter,9)
-
-    --1. Count how many Fragments of Destiny are currently spawned (SPELL_AURA_APPLIED, SPELL_AURA_REMOVED 350542)
 
     --Fragments of Destiny Spawned
     if core.type == "SPELL_AURA_APPLIED"  and core.spellId == 350542 and core.destName ~= nil then
@@ -89,7 +93,7 @@ function core._2450:EyeOfTheJailer()
     --Defeat the Eye of the Jailer after using the Scavenged S.E.L.F.I.E. Camera to take a picture of the Eye of the Jailer and the entire raid after it has cast Immediate Extermination in the Sanctum of Domination on Normal difficulty or higher.
 
     InfoFrame_UpdatePlayersOnInfoFrame()
-	InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],playerPhotoFlashCounter,core.groupSize)
+    InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],playerPhotoFlashCounter,core.groupSize)
 
     if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 348974 and immediateExterminationCast == false then
         immediateExterminationCast = true
@@ -104,11 +108,11 @@ function core._2450:EyeOfTheJailer()
 		InfoFrame_SetPlayerComplete(core.destName)
     end
 
-    if core:getBlizzardTrackingStatus(15058, 1) == true and playerPhotoFlashCounter == core.groupSize then
+    if core:getBlizzardTrackingStatus(15065, 1) == true and playerPhotoFlashCounter == core.groupSize then
         allPlayersPhotoFlash = true
     end
 
-    if core:getBlizzardTrackingStatus(15058, 2) == true then
+    if core:getBlizzardTrackingStatus(15065, 2) == true then
         bossPhotoFlash = true
     end
 
@@ -135,8 +139,9 @@ end
 function core._2450:GuardianOfTheFirstOnes()
     --Defeat the Guardian of the First Ones after enlightening and defeating Vazzaren the Seeker in the Sanctum of Domination in Normal difficulty or higher.
 
-    if core.sourceID == "180690" or core.destID == "180690" and vazzarenTheSeekerDetected == false then
+    if (core.sourceID == "180690" or core.destID == "180690") and vazzarenTheSeekerDetected == false then
         core:sendMessage(format(L["Shared_KillTheAddNow"], getNPCName(180690)),true)
+        vazzarenTheSeekerDetected = true
     end
 
     if core:getBlizzardTrackingStatus(15132, 1) == true then
@@ -147,21 +152,25 @@ end
 function core._2450:SoulrenderDormazain()
     --Defeat Soulrender Dormazain after /taunting Garrosh Hellscream before combat begins and avoiding all Torment impacts in the Sanctum of Domination on Normal difficulty or higher.
 
+    --Check who the last player was to pick up an orb
     if core.type == "SPELL_AURA_APPLIED" and core.spellId == 350217 and core.destName ~= nil then --353023??
-        local tmpPlayer = core.destName
-        C_Timer.After(1, function()
-            if core:getBlizzardTrackingStatus(15105, 1) == false then
-                core:getAchievementFailedWithMessageAfter("(" .. tmpPlayer .. ")")
-            end
-        end)
+        lastPersonToGetHit = core.destName
+    end
+
+    --Blizzard Tracker has gone red so achievement failed
+    if core:getBlizzardTrackingStatus(15105, 1) == false then
+        core:getAchievementFailedWithMessageAfter("(" .. lastPersonToGetHit .. ")")
     end
 end
 
 function core._2450:FatescribeRohKalo()
     --Defeat Fatescribe Roh-Kalo without taking damage from Fate Fragments, Fated Conjunction, or the explosions from Call of Eternity and Echo of Eternity on Normal difficulty or higher.
+    if playersWhoHaveNotFailed == nil then
+        playersWhoHaveNotFailed = #core.currentBosses[1].players,#core.currentBosses[1]
+    end
 
     InfoFrame_UpdatePlayersOnInfoFramePersonal()
-    InfoFrame_SetHeaderCounter(L["Shared_PlayersWhoNeedAchievement"],#core.currentBosses[1].players,#core.currentBosses[1].players)
+    InfoFrame_SetHeaderCounter(L["Shared_PlayersMetCriteria"],playersWhoHaveNotFailed,#core.currentBosses[1].players)
 
     if core.destName ~= nil then
         local name, realm = UnitName(core.destName)
@@ -173,6 +182,7 @@ function core._2450:FatescribeRohKalo()
                         if InfoFrame_GetPlayerFailed(core.destName) == false then
                             InfoFrame_SetPlayerFailed(core.destName)
                             core:sendMessage(format(L["Shared_FailedPersonalAchievement"], core.destName, GetAchievementLink(core.achievementIDs[1]), format(L["Shared_DamageFromAbility"], GetSpellLink(350819))),true)
+                            playersWhoHaveNotFailed = playersWhoHaveNotFailed - 1
                         end
                     end
                 end
@@ -185,6 +195,7 @@ function core._2450:FatescribeRohKalo()
                         if InfoFrame_GetPlayerFailed(core.destName) == false then
                             InfoFrame_SetPlayerFailed(core.destName)
                             core:sendMessage(format(L["Shared_FailedPersonalAchievement"], core.destName, GetAchievementLink(core.achievementIDs[1]), format(L["Shared_DamageFromAbility"], GetSpellLink(353162))),true)
+                            playersWhoHaveNotFailed = playersWhoHaveNotFailed - 1
                         end
                     end
                 end
@@ -197,6 +208,7 @@ function core._2450:FatescribeRohKalo()
                         if InfoFrame_GetPlayerFailed(core.destName) == false then
                             InfoFrame_SetPlayerFailed(core.destName)
                             core:sendMessage(format(L["Shared_FailedPersonalAchievement"], core.destName, GetAchievementLink(core.achievementIDs[1]), format(L["Shared_DamageFromAbility"], GetSpellLink(350355))),true)
+                            playersWhoHaveNotFailed = playersWhoHaveNotFailed - 1
                         end
                     end
                 end
@@ -209,6 +221,7 @@ function core._2450:FatescribeRohKalo()
                         if InfoFrame_GetPlayerFailed(core.destName) == false then
                             InfoFrame_SetPlayerFailed(core.destName)
                             core:sendMessage(format(L["Shared_FailedPersonalAchievement"], core.destName, GetAchievementLink(core.achievementIDs[1]), format(L["Shared_DamageFromAbility"], GetSpellLink(350826))),true)
+                            playersWhoHaveNotFailed = playersWhoHaveNotFailed - 1
                         end
                     end
                 end
@@ -233,7 +246,7 @@ function core._2450:SylvanasWindrunner()
     end
 end
 
-function core._2296:TrackAdditional()
+function core._2450:TrackAdditional()
     --Soulrender Dormazain -- Hellscream's Burden
     if (core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_REMOVED") and core.spellId == 356731 then
         core.IATInfoFrame:ToggleOn()
@@ -256,20 +269,18 @@ function core._2296:TrackAdditional()
                 if hellscremBurdenUID[player_UID2] == nil then
                     hellscremBurdenUID[player_UID2] = player_UID2
                     hellscreamsBurdenCounter = hellscreamsBurdenCounter + 1
-                    core:sendDebugMessage("InfoFrame set green for wilted Rose (Unit Scanning): " .. player2)
                 end
             else
                 InfoFrame_SetPlayerFailed(player2)
                 if hellscremBurdenUID[player_UID2] ~= nil then
                     hellscremBurdenUID[player_UID2] = nil
                     hellscreamsBurdenCounter = hellscreamsBurdenCounter - 1
-                    core:sendDebugMessage("InfoFrame set failed for wilted Rose (Unit Scanning): " .. player2)
                 end
             end
         end
 
         --Update with any changes
-        InfoFrame_SetHeaderCounterWithAdditionalMessage(L["Shared_PlayersMetCriteria"],WiltingFlowersCounter,core.groupSize,L["CastleNathria_OrbTimer"] .. ": " .. wiltedMasterTimer .. " (" .. wiltedMasterPlayer .. ")\n" .. L["CastleNathria_KillTimer"] .. ": " .. bloomingMasterTimer)
+        InfoFrame_SetHeaderCounter(GetSpellLink(356731) .. " " .. L["Core_Counter"],hellscreamsBurdenCounter,core.groupSize)
         InfoFrame_UpdatePlayersOnInfoFrame()
     end
 end
@@ -299,9 +310,15 @@ function core._2450:ClearVariables()
     ------------------------------------------------------
     hellscreamsBurdenCounter = 0
     hellscremBurdenUID = {}
+    lastPersonToGetHit = ""
 
     ------------------------------------------------------
     ---- Guardian of the First Ones
     ------------------------------------------------------
     vazzarenTheSeekerDetected = false
+
+    ------------------------------------------------------
+    ---- FatescribeRohKalo
+    ------------------------------------------------------
+    playersWhoHaveNotFailed = nil
 end
