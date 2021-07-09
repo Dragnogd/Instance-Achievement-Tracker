@@ -3752,7 +3752,7 @@ function core:clearVariables()
 			if Transcriptor:IsLogging() == 1 then
 				Transcriptor:StopLog(1)
 				core:printMessage(L["Core_TranscriptorLogDisabled"])
-				RaidNotice_AddMessage(RaidWarningFrame, "[IAT] Transcriptor Log Stopped", ChatTypeInfo["SYSTEM"])
+				--RaidNotice_AddMessage(RaidWarningFrame, "[IAT] Transcriptor Log Stopped", ChatTypeInfo["SYSTEM"])
 			end
 		end
 	end
