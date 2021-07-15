@@ -596,4 +596,6 @@ core.NPCCache = {
 	[71983] =71983, --Farseer Wolf Rider
 	[155543] =155543, --Helpless Critter
 	[180690] =180690, --Vazzaren The Seeker
+	[178763] =178763, --Buttons
+	[175725] = 175725, --Eye of the Jailer
 }

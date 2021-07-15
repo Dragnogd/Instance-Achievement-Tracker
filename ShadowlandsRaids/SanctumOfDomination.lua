@@ -8,6 +8,7 @@ local L = core.L
 ---- Sanctum of Domination
 ------------------------------------------------------
 core._2450 = {}
+core._2450.Events = CreateFrame("Frame")
 
 ------------------------------------------------------
 ---- Remnant of Ner'zhul
@@ -22,6 +23,7 @@ local bossPhotoFlash = false
 local immediateExterminationCast = false
 local playerPhotoFlashCounter = 0
 local playerPhotoFlashUID = {}
+local criteriaPartsMet = 0
 
 ------------------------------------------------------
 ---- The Nine
@@ -56,32 +58,32 @@ end
 function core._2450:TheNine()
     --Defeat The Nine after forming a Shard of Destiny from 9 or more Fragments of Destiny in the Sanctum of Domination on Normal difficulty or higher.
     InfoFrame_UpdateDynamicPlayerList()
-    InfoFrame_SetHeaderCounter(GetSpellLink(350542) .. " " .. L["Core_Counter"],fragmentsOfDestinyCounter,9)
+    InfoFrame_SetHeaderMessage(GetSpellLink(350542) .. " " .. L["Core_Counter"] .. " " .. fragmentsOfDestinyCounter)
 
     --Fragments of Destiny Spawned
-    if core.type == "SPELL_AURA_APPLIED"  and core.spellId == 350542 and core.destName ~= nil then
+    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 350542 and core.destName ~= nil then
         fragmentsOfDestinyCounter = fragmentsOfDestinyCounter + 1
         InfoFrame_IncrementDynamicPlayer(core.destName,1)
-        --core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. GetSpellLink(350542) .. " (" .. fragmentsOfDestinyCounter .. "/9)",true)
     end
 
     if core.type == "SPELL_AURA_APPLIED_DOSE" and core.spellId == 350542 and core.destName ~= nil then
         fragmentsOfDestinyCounter = fragmentsOfDestinyCounter + 1
         InfoFrame_IncrementDynamicPlayer(core.destName,core.amount)
-        --core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. GetSpellLink(350542) .. " (" .. fragmentsOfDestinyCounter .. "/9)",true)
     end
 
     --Fragments of Destiny Despawned
     if core.type == "SPELL_AURA_REMOVED" and core.spellId == 350542 and core.destName ~= nil then
-        fragmentsOfDestinyCounter = fragmentsOfDestinyCounter - 1
-        InfoFrame_DecrementDynamicPlayer(core.destName,1)
-        --core:sendMessage(core.destName .. " " .. L["Shared_HasLost"] .. " " .. GetSpellLink(350542) .. " (" .. fragmentsOfDestinyCounter .. "/9)",true)
+        local fragmentStacks = core.InfoFrame_DynamicTable[core.destName][2]
+
+        if fragmentStacks ~= nil then
+            fragmentsOfDestinyCounter = fragmentsOfDestinyCounter - fragmentStacks
+            InfoFrame_DecrementDynamicPlayer(core.destName, fragmentStacks)
+        end
     end
 
     if core.type == "SPELL_AURA_REMOVED_DOSE" and core.spellId == 350542 and core.destName ~= nil then
         fragmentsOfDestinyCounter = fragmentsOfDestinyCounter - 1
         InfoFrame_DecrementDynamicPlayer(core.destName,core.amount)
-        --core:sendMessage(core.destName .. " " .. L["Shared_HasLost"] .. " " .. GetSpellLink(350542) .. " (" .. fragmentsOfDestinyCounter .. "/9)",true)
     end
 
     if core:getBlizzardTrackingStatus(15003) == true then
@@ -93,7 +95,8 @@ function core._2450:EyeOfTheJailer()
     --Defeat the Eye of the Jailer after using the Scavenged S.E.L.F.I.E. Camera to take a picture of the Eye of the Jailer and the entire raid after it has cast Immediate Extermination in the Sanctum of Domination on Normal difficulty or higher.
 
     InfoFrame_UpdatePlayersOnInfoFrame()
-    InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],playerPhotoFlashCounter,core.groupSize)
+    InfoFrame_AddNPCToInfoFrame(getNPCName(175725))
+    InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],playerPhotoFlashCounter,(core.groupSize + 1))
 
     if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 348974 and immediateExterminationCast == false then
         immediateExterminationCast = true
@@ -104,16 +107,19 @@ function core._2450:EyeOfTheJailer()
 	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 355427 and playerPhotoFlashUID[core.spawn_uid_dest_Player] == nil and core.destName ~= nil then
 		playerPhotoFlashCounter = playerPhotoFlashCounter + 1
 		playerPhotoFlashUID[core.spawn_uid_dest_Player] = core.spawn_uid_dest_Player
-		--core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. GetSpellLink(355427) .. " (" .. playerPhotoFlashCounter .. "/" .. core.groupSize .. ")",true)
 		InfoFrame_SetPlayerComplete(core.destName)
     end
 
-    if core:getBlizzardTrackingStatus(15065, 1) == true and playerPhotoFlashCounter == core.groupSize then
+    if core:getBlizzardTrackingStatus(15065, 1) == true and playerPhotoFlashCounter == core.groupSize and allPlayersPhotoFlash == false then
         allPlayersPhotoFlash = true
+        criteriaPartsMet = criteriaPartsMet + 1
+        core:sendMessage(GetAchievementCriteriaInfo(15065,1) .. " " .. L["Shared_Completed"] .. " (" .. criteriaPartsMet .. "/2)",true)
     end
 
-    if core:getBlizzardTrackingStatus(15065, 2) == true then
+    if core:getBlizzardTrackingStatus(15065, 2) == true and bossPhotoFlash == false then
         bossPhotoFlash = true
+        criteriaPartsMet = criteriaPartsMet + 1
+        core:sendMessage(GetAchievementCriteriaInfo(15065,2) .. " " .. L["Shared_Completed"] .. " (" .. criteriaPartsMet .. "/2)",true)
     end
 
     if allPlayersPhotoFlash == true and bossPhotoFlash == true then
@@ -133,6 +139,8 @@ function core._2450:PainsmithRaznal()
 
     if core:getBlizzardTrackingStatus(15131, 1) == false then
         core:getAchievementFailed()
+    else
+        core:getAchievementSuccess()
     end
 end
 
@@ -282,6 +290,11 @@ function core._2450:TrackAdditional()
         --Update with any changes
         InfoFrame_SetHeaderCounter(GetSpellLink(356731) .. " " .. L["Core_Counter"],hellscreamsBurdenCounter,core.groupSize)
         InfoFrame_UpdatePlayersOnInfoFrame()
+
+        --Hide if no one has the debuff anymore
+        if hellscreamsBurdenCounter == 0 then
+            core.IATInfoFrame:ToggleOff()
+        end
     end
 end
 
@@ -299,6 +312,7 @@ function core._2450:ClearVariables()
     immediateExterminationCast = false
     playerPhotoFlashCounter = 0
     playerPhotoFlashUID = {}
+    criteriaPartsMet = 0
 
     ------------------------------------------------------
     ---- The Nine
@@ -321,4 +335,29 @@ function core._2450:ClearVariables()
     ---- FatescribeRohKalo
     ------------------------------------------------------
     playersWhoHaveNotFailed = nil
+end
+
+core._2450.Events:SetScript("OnEvent", function(self, event, ...)
+    return self[event] and self[event](self, event, ...)
+end)
+
+function core._2450:InstanceCleanup()
+    core._2450.Events:UnregisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+end
+
+function core._2450:InitialSetup()
+    core._2450.Events:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+end
+
+function core._2450.Events:UNIT_SPELLCAST_SUCCEEDED(self, unitTarget, castGUID, spellID)
+	if spellID == 352832 then
+		core:sendMessage(format(L["Shared_HasBeenPickedUp"],getNPCName(178763)),true)
+	end
+end
+
+function core._2450.Events:CHAT_MSG_MONSTER_EMOTE(self, text, playerName, languageName, channelName, playerName2, specialFlags, zoneChannelID, channelIndex, channelBaseName, unused, lineID, guid, bnSenderID, isMobile, isSubtitle, hideSenderInLetterbox, supressRaidIcons)
+    if text == "A goal has been scored." then
+        goalCounter = goalCounter + 1
+        core:sendMessage(core:getAchievement() .. L["Core_Counter"] .. " (" .. goalCounter .. "/3)",true)
+    end
 end

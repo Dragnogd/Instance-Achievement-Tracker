@@ -123,6 +123,18 @@ function InfoFrame_UpdateDynamicPlayerList()
     end
 end
 
+function InfoFrame_AddNPCToInfoFrame(npcName)
+    if npcName ~= nil then
+        --Only add additional npc's once we the players have been added
+        if next(core.InfoFrame_PlayersTable) ~= nil then
+            --If table is empty then generate players
+            if core.InfoFrame_PlayersTable[npcName] == nil then
+                core.InfoFrame_PlayersTable[npcName] = 1
+            end
+        end
+    end
+end
+
 function InfoFrame_IncrementDynamicPlayer(player,count)
     if core.InfoFrame_DynamicTable[player] == nil then
         --Setup new player in table
@@ -143,6 +155,10 @@ end
 
 function InfoFrame_DecrementDynamicPlayer(player,count)
     if core.InfoFrame_DynamicTable[player] ~= nil then
+        if count == nil then
+            count = core.InfoFrame_DynamicTable[player][2]
+        end
+
         core.InfoFrame_DynamicTable[player][2] = core.InfoFrame_DynamicTable[player][2] - count
         if core.InfoFrame_DynamicTable[player][2] <= 0 then
             core.InfoFrame_DynamicTable[player] = nil
@@ -158,6 +174,14 @@ function InfoFrame_DecrementDynamicPlayer(player,count)
     else
         core.InfoFrame_PlayersTable[player] = 3
         return true
+    end
+end
+
+function InfoFrame_GetDynamicPlayer(player)
+    if core.InfoFrame_DynamicTable[player] ~= nil then
+        return core.InfoFrame_DynamicTable[player][2]
+    else
+        return nil
     end
 end
 
@@ -542,6 +566,10 @@ function InfoFrame_SetPlayerIncomplete(player)
     if core.InfoFrame_PlayersTable[player] ~= nil then
         core.InfoFrame_PlayersTable[player] = 1
     end
+end
+
+function InfoFrame_SetHeaderMessage(message)
+    core.IATInfoFrame:SetSubHeading1(message)
 end
 
 function InfoFrame_SetHeaderCounter(message,counter,maximum)

@@ -686,6 +686,7 @@ local baseLocale = {
 	["TazaveshTheVeiledMarket_MailroomMayhem"] = "",
 	["TazaveshTheVeiledMarket_Hylbrande"] = "",
 	["TazaveshTheVeiledMarket_Soleah"] = "",
-	["Shared_CanNowBeUsed"] = "%s can now be used"
+	["Shared_CanNowBeUsed"] = "%s can now be used",
+	["Shared_HasBeenPickedUp"] = "%s has been picked up",
 }
 core:RegisterLocale('enUS', baseLocale)
