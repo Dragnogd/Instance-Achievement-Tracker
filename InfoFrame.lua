@@ -367,6 +367,12 @@ function InfoFrame_GetPlayerStatusWithMessage(player)
 end
 
 function InfoFrame_GetPlayerFailed(player)
+    --Make sure we remove realm info from player before checking name
+    if string.find(player, "-") then
+        local name, realm = strsplit("-", player)
+        player = name
+    end
+
     if core.InfoFrame_PlayersTable[player] == 3 then
         return true
     else
@@ -625,6 +631,10 @@ end
 
 function InfoFrame_GetManualCounterCount()
     return core.manualCountCurrentSize
+end
+
+function InfoFrame_SetCustomMessage(message)
+    core.IATInfoFrame:SetText1(message)
 end
 
 function core.InfoFrame.Events:CHAT_MSG_RAID(self, text, playerName)
