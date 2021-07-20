@@ -46,6 +46,21 @@ local vazzarenTheSeekerDetected = false
 ---- FatescribeRohKalo
 ------------------------------------------------------
 local playersWhoHaveNotFailed = nil
+local initialSetup = false
+
+------------------------------------------------------
+---- Sylvanas Windrunner
+------------------------------------------------------
+local KyrianPlayer = ""
+local VenthyrPlayer = ""
+local NecrolordPlayer = ""
+local NightFaePlayer = ""
+local KyrianName = nil
+local VenthyrName = nil
+local NecrolordName = nil
+local NightFaeName = nil
+local sigilCounter = 0
+local sylvanasSetup = false
 
 function core._2450:TheTarragrue()
     --Defeat The Tarragrue after entering the mists and reuniting Moriaz with Buttons in the Sanctum of Domination on Normal difficulty or higher.
@@ -67,7 +82,7 @@ function core._2450:TheNine()
     end
 
     if core.type == "SPELL_AURA_APPLIED_DOSE" and core.spellId == 350542 and core.destName ~= nil then
-        fragmentsOfDestinyCounter = fragmentsOfDestinyCounter + 1
+        fragmentsOfDestinyCounter = fragmentsOfDestinyCounter + core.amount
         InfoFrame_IncrementDynamicPlayer(core.destName,core.amount)
     end
 
@@ -82,7 +97,7 @@ function core._2450:TheNine()
     end
 
     if core.type == "SPELL_AURA_REMOVED_DOSE" and core.spellId == 350542 and core.destName ~= nil then
-        fragmentsOfDestinyCounter = fragmentsOfDestinyCounter - 1
+        fragmentsOfDestinyCounter = fragmentsOfDestinyCounter - core.amount
         InfoFrame_DecrementDynamicPlayer(core.destName,core.amount)
     end
 
@@ -96,7 +111,7 @@ function core._2450:EyeOfTheJailer()
 
     InfoFrame_UpdatePlayersOnInfoFrame()
     InfoFrame_AddNPCToInfoFrame(getNPCName(175725))
-    InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],playerPhotoFlashCounter,(core.groupSize + 1))
+    InfoFrame_SetHeaderCounter(GetSpellLink(355427) .. " " .. L["Core_Counter"],playerPhotoFlashCounter,(core.groupSize + 1))
 
     if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 348974 and immediateExterminationCast == false then
         immediateExterminationCast = true
@@ -104,10 +119,20 @@ function core._2450:EyeOfTheJailer()
     end
 
     --Player has gained Photoflash!
-	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 355427 and playerPhotoFlashUID[core.spawn_uid_dest_Player] == nil and core.destName ~= nil then
-		playerPhotoFlashCounter = playerPhotoFlashCounter + 1
-		playerPhotoFlashUID[core.spawn_uid_dest_Player] = core.spawn_uid_dest_Player
-		InfoFrame_SetPlayerComplete(core.destName)
+    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 355427 and core.destName ~= nil then
+        if core.currentDest == "Player" then
+            if playerPhotoFlashUID[core.spawn_uid_dest_Player] == nil then
+                playerPhotoFlashCounter = playerPhotoFlashCounter + 1
+                playerPhotoFlashUID[core.spawn_uid_dest_Player] = core.spawn_uid_dest_Player
+                InfoFrame_SetPlayerComplete(core.destName)
+            end
+        elseif core.currentDest == "Creature" then
+            if playerPhotoFlashUID[core.spawn_uid_dest] == nil and core.destID == "175725" then
+                playerPhotoFlashCounter = playerPhotoFlashCounter + 1
+                playerPhotoFlashUID[core.spawn_uid_dest] = core.spawn_uid_dest
+                InfoFrame_SetPlayerComplete(core.destName)
+            end
+        end
     end
 
     if core:getBlizzardTrackingStatus(15065, 1) == true and playerPhotoFlashCounter == core.groupSize and allPlayersPhotoFlash == false then
@@ -147,7 +172,7 @@ end
 function core._2450:GuardianOfTheFirstOnes()
     --Defeat the Guardian of the First Ones after enlightening and defeating Vazzaren the Seeker in the Sanctum of Domination in Normal difficulty or higher.
 
-    if (core.sourceID == "180690" or core.destID == "180690") and vazzarenTheSeekerDetected == false then
+    if core.destName == "Vazzeran the Enlightened" and vazzarenTheSeekerDetected == false then
         core:sendMessage(format(L["Shared_KillTheAddNow"], getNPCName(180690)),true)
         vazzarenTheSeekerDetected = true
     end
@@ -179,6 +204,14 @@ function core._2450:FatescribeRohKalo()
 
     InfoFrame_UpdatePlayersOnInfoFramePersonal()
     InfoFrame_SetHeaderCounter(L["Shared_PlayersMetCriteria"],playersWhoHaveNotFailed,#core.currentBosses[1].players)
+
+    if initialSetup == false then
+        --Set every player to complete on pulling the boss
+        initialSetup = true
+        for player,status in pairs(core.InfoFrame_PlayersTable) do
+            InfoFrame_SetPlayerComplete(player)
+		end
+    end
 
     if core.destName ~= nil then
         local name, realm = UnitName(core.destName)
@@ -249,6 +282,38 @@ end
 function core._2450:SylvanasWindrunner()
     --Defeat Sylvanas Windrunner after activating the Focusing Prism in the Sanctum of Domination on Normal difficulty or higher.
 
+    if sylvanasSetup == false then
+        sylvanasSetup = true
+        --Kyrian
+        KyrianName = GetSpellInfo(321076)
+        --Venthyr
+        VenthyrName = GetSpellInfo(321079)
+        --Necrolord
+        NecrolordName = GetSpellInfo(321078)
+        --Night Fae
+        NightFaeName = GetSpellInfo(321077)
+    end
+
+    InfoFrame_SetHeaderMessage(getNPCName(180658))
+
+    if core.type == "SPELL_AURA_APPLIED" and core.spellID == 358022 and core.destName ~= nil then
+        --Kyrian
+        KyrianPlayer = core.destName
+    elseif core.type == "SPELL_AURA_APPLIED" and core.spellID == 358157 and core.destName ~= nil then
+        --Venthyr
+        VenthyrPlayer = core.destName
+    elseif core.type == "SPELL_AURA_APPLIED" and core.spellID == 358150 and core.destName ~= nil then
+        --Necrolord
+        NecrolordPlayer = core.destName
+    elseif core.type == "SPELL_AURA_APPLIED" and core.spellID == 358145 and core.destName ~= nil then
+        --Night Fae
+        NightFaePlayer = core.destName
+    end
+
+    if KyrianName ~= nil and VenthyrName ~= nil and NecrolordName ~= nil and NightFaeName ~= nil then
+	    InfoFrame_SetCustomMessage(KyrianName .. ": " .. KyrianPlayer .. "\n" .. VenthyrName .. ": " .. VenthyrPlayer .. "\n" .. NecrolordName .. ": " .. NecrolordPlayer .. "\n" .. NightFaeName .. ": " .. NightFaePlayer .. "\n")
+    end
+
     if core:getBlizzardTrackingStatus(15133, 1) == true then
         core:getAchievementSuccess()
     end
@@ -296,6 +361,11 @@ function core._2450:TrackAdditional()
             core.IATInfoFrame:ToggleOff()
         end
     end
+
+    --Kel'Thuzard - Together Forever
+    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 356347 and core.destName ~= nil then
+        core:sendMessage(core.destName .. L["Shared_HasGained"] .. " " .. GetSpellLink(356347),true)
+    end
 end
 
 function core._2450:ClearVariables()
@@ -335,6 +405,21 @@ function core._2450:ClearVariables()
     ---- FatescribeRohKalo
     ------------------------------------------------------
     playersWhoHaveNotFailed = nil
+    initialSetup = false
+
+    ------------------------------------------------------
+    ---- Sylvanas Windrunner
+    ------------------------------------------------------
+    KyrianPlayer = ""
+    VenthyrPlayer = ""
+    NecrolordPlayer = ""
+    NightFaePlayer = ""
+    KyrianName = nil
+    VenthyrName = nil
+    NecrolordName = nil
+    NightFaeName = nil
+    sigilCounter = 0
+    sylvanasSetup = false
 end
 
 core._2450.Events:SetScript("OnEvent", function(self, event, ...)
@@ -343,10 +428,12 @@ end)
 
 function core._2450:InstanceCleanup()
     core._2450.Events:UnregisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+    core._2450.Events:UnregisterEvent("CHAT_MSG_MONSTER_EMOTE")
 end
 
 function core._2450:InitialSetup()
     core._2450.Events:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+    core._2450.Events:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 end
 
 function core._2450.Events:UNIT_SPELLCAST_SUCCEEDED(self, unitTarget, castGUID, spellID)
