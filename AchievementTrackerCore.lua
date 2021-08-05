@@ -612,10 +612,10 @@ function getInstanceInfomation()
 					instanceCompatible = true
 
 					--Set instance we want to debug
-					-- core.instanceNameSpaces = "Castle Nathria"
-					-- core.instanceName = "CastleNathria"
-					-- core.instance = 2296
-					-- core.instanceClear = "_2296"
+					-- core.instanceNameSpaces = "Sanctum of Domination"
+					-- core.instanceName = "SanctumOfDomination"
+					-- core.instance = 2450
+					-- core.instanceClear = "_2450"
 					-- core.expansion = 2
 					-- core.instanceType = "Raids"
 				end
@@ -2466,7 +2466,9 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 
 		if string.match(core.sourceGUID, "Creature") or string.match(core.sourceGUID, "Vehicle") then
 			core.currentSource = "Creature"
-		elseif string.match(core.destGUID, "Creature") or string.match(core.destGUID, "Vehicle") then
+		end
+
+		if string.match(core.destGUID, "Creature") or string.match(core.destGUID, "Vehicle") then
 			core.currentDest = "Creature"
 		end
 	end
@@ -2479,7 +2481,9 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 
 		if string.match(core.sourceGUID, "Player") then
 			core.currentSource = "Player"
-		elseif string.match(core.destGUID, "Player") then
+		end
+
+		if string.match(core.destGUID, "Player") then
 			core.currentDest = "Player"
 		end
 	end

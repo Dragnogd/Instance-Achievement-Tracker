@@ -82,7 +82,7 @@ function core._2450:TheNine()
     end
 
     if core.type == "SPELL_AURA_APPLIED_DOSE" and core.spellId == 350542 and core.destName ~= nil then
-        fragmentsOfDestinyCounter = fragmentsOfDestinyCounter + core.amount
+        fragmentsOfDestinyCounter = core.amount
         InfoFrame_IncrementDynamicPlayer(core.destName,core.amount)
     end
 
@@ -97,7 +97,7 @@ function core._2450:TheNine()
     end
 
     if core.type == "SPELL_AURA_REMOVED_DOSE" and core.spellId == 350542 and core.destName ~= nil then
-        fragmentsOfDestinyCounter = fragmentsOfDestinyCounter - core.amount
+        fragmentsOfDestinyCounter = core.amount
         InfoFrame_DecrementDynamicPlayer(core.destName,core.amount)
     end
 
@@ -296,16 +296,16 @@ function core._2450:SylvanasWindrunner()
 
     InfoFrame_SetHeaderMessage(getNPCName(180658))
 
-    if core.type == "SPELL_AURA_APPLIED" and core.spellID == 358022 and core.destName ~= nil then
+    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 358022 and core.destName ~= nil then
         --Kyrian
         KyrianPlayer = core.destName
-    elseif core.type == "SPELL_AURA_APPLIED" and core.spellID == 358157 and core.destName ~= nil then
+    elseif core.type == "SPELL_AURA_APPLIED" and core.spellId == 358157 and core.destName ~= nil then
         --Venthyr
         VenthyrPlayer = core.destName
-    elseif core.type == "SPELL_AURA_APPLIED" and core.spellID == 358150 and core.destName ~= nil then
+    elseif core.type == "SPELL_AURA_APPLIED" and core.spellId == 358150 and core.destName ~= nil then
         --Necrolord
         NecrolordPlayer = core.destName
-    elseif core.type == "SPELL_AURA_APPLIED" and core.spellID == 358145 and core.destName ~= nil then
+    elseif core.type == "SPELL_AURA_APPLIED" and core.spellId == 358145 and core.destName ~= nil then
         --Night Fae
         NightFaePlayer = core.destName
     end
