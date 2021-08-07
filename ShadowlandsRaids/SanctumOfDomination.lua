@@ -61,6 +61,11 @@ local NecrolordName = nil
 local NightFaeName = nil
 local sigilCounter = 0
 local sylvanasSetup = false
+local prismOrder = 1
+local KyrianOrder = ""
+local VenthyrOrder = ""
+local NecrolordOrder = ""
+local NightFaeOrder = ""
 
 function core._2450:TheTarragrue()
     --Defeat The Tarragrue after entering the mists and reuniting Moriaz with Buttons in the Sanctum of Domination on Normal difficulty or higher.
@@ -77,13 +82,15 @@ function core._2450:TheNine()
 
     --Fragments of Destiny Spawned
     if core.type == "SPELL_AURA_APPLIED" and core.spellId == 350542 and core.destName ~= nil then
-        fragmentsOfDestinyCounter = fragmentsOfDestinyCounter + 1
         InfoFrame_IncrementDynamicPlayer(core.destName,1)
+
+        fragmentsOfDestinyCounter = InfoFrame_GetHighestDynamicPlayer()
     end
 
     if core.type == "SPELL_AURA_APPLIED_DOSE" and core.spellId == 350542 and core.destName ~= nil then
-        fragmentsOfDestinyCounter = core.amount
-        InfoFrame_IncrementDynamicPlayer(core.destName,core.amount)
+        InfoFrame_SetDynamicPlayer(core.destName,core.amount)
+
+        fragmentsOfDestinyCounter = InfoFrame_GetHighestDynamicPlayer()
     end
 
     --Fragments of Destiny Despawned
@@ -91,14 +98,16 @@ function core._2450:TheNine()
         local fragmentStacks = core.InfoFrame_DynamicTable[core.destName][2]
 
         if fragmentStacks ~= nil then
-            fragmentsOfDestinyCounter = fragmentsOfDestinyCounter - fragmentStacks
             InfoFrame_DecrementDynamicPlayer(core.destName, fragmentStacks)
         end
+
+        fragmentsOfDestinyCounter = InfoFrame_GetHighestDynamicPlayer()
     end
 
     if core.type == "SPELL_AURA_REMOVED_DOSE" and core.spellId == 350542 and core.destName ~= nil then
-        fragmentsOfDestinyCounter = core.amount
-        InfoFrame_DecrementDynamicPlayer(core.destName,core.amount)
+        InfoFrame_SetDynamicPlayer(core.destName,core.amount)
+
+        fragmentsOfDestinyCounter = InfoFrame_GetHighestDynamicPlayer()
     end
 
     if core:getBlizzardTrackingStatus(15003) == true then
@@ -299,19 +308,39 @@ function core._2450:SylvanasWindrunner()
     if core.type == "SPELL_AURA_APPLIED" and core.spellId == 358022 and core.destName ~= nil then
         --Kyrian
         KyrianPlayer = core.destName
+
+        if KyrianOrder == "" then
+            KyrianOrder = prismOrder
+            prismOrder = prismOrder + 1
+        end
     elseif core.type == "SPELL_AURA_APPLIED" and core.spellId == 358157 and core.destName ~= nil then
         --Venthyr
         VenthyrPlayer = core.destName
+
+        if VenthyrOrder == "" then
+            VenthyrOrder = prismOrder
+            prismOrder = prismOrder + 1
+        end
     elseif core.type == "SPELL_AURA_APPLIED" and core.spellId == 358150 and core.destName ~= nil then
         --Necrolord
         NecrolordPlayer = core.destName
+
+        if NecrolordOrder == "" then
+            NecrolordOrder = prismOrder
+            prismOrder = prismOrder + 1
+        end
     elseif core.type == "SPELL_AURA_APPLIED" and core.spellId == 358145 and core.destName ~= nil then
         --Night Fae
         NightFaePlayer = core.destName
+
+        if NightFaeOrder == "" then
+            NightFaeOrder = prismOrder
+            prismOrder = prismOrder + 1
+        end
     end
 
     if KyrianName ~= nil and VenthyrName ~= nil and NecrolordName ~= nil and NightFaeName ~= nil then
-	    InfoFrame_SetCustomMessage(KyrianName .. ": " .. KyrianPlayer .. "\n" .. VenthyrName .. ": " .. VenthyrPlayer .. "\n" .. NecrolordName .. ": " .. NecrolordPlayer .. "\n" .. NightFaeName .. ": " .. NightFaePlayer .. "\n")
+	    InfoFrame_SetCustomMessage(KyrianName .. ": " .. KyrianPlayer .. " (" .. KyrianOrder .. ")" .. "\n" .. VenthyrName .. ": " .. VenthyrPlayer .. " (" .. VenthyrOrder .. ")" .. "\n" .. NecrolordName .. ": " .. NecrolordPlayer .. " (" .. NecrolordOrder .. ")" .. "\n" .. NightFaeName .. ": " .. NightFaePlayer .. " (" .. NightFaeOrder .. ")" .. "\n")
     end
 
     if core:getBlizzardTrackingStatus(15133, 1) == true then
@@ -344,6 +373,10 @@ function core._2450:TrackAdditional()
                     hellscreamsBurdenCounter = hellscreamsBurdenCounter + 1
                 end
             else
+                if core.encounterStarted == true then
+                    core:getAchievementFailedWithMessageAfter("(" .. player2 .. ")")
+                end
+
                 InfoFrame_SetPlayerFailed(player2)
                 if hellscremBurdenUID[player_UID2] ~= nil then
                     hellscremBurdenUID[player_UID2] = nil
@@ -420,6 +453,11 @@ function core._2450:ClearVariables()
     NightFaeName = nil
     sigilCounter = 0
     sylvanasSetup = false
+    prismOrder = 1
+    KyrianOrder = ""
+    VenthyrOrder = ""
+    NecrolordOrder = ""
+    NightFaeOrder = ""
 end
 
 core._2450.Events:SetScript("OnEvent", function(self, event, ...)
