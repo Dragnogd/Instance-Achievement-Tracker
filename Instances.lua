@@ -1,5 +1,5 @@
 --------------------------------------
--- Last Auto Generated: 20/07/2021 20:45:09
+-- Last Auto Generated: 02/11/2021 21:17:19
 --------------------------------------
 local _, core = ...
 local L = core.L
@@ -554,13 +554,14 @@ core.Instances = {
 					enabled = false,
 					track = nil,
 					partial = false,
+					image = {"Mischief","512","512"},
 				},
 				boss2 = {
 					name = 2437, --Zo'phex the Sentinel
 					bossIDs = {},
 					achievement = 15109,
 					players = {},
-					tactics = L["TazaveshTheVeiledMarket_ZophexTheSentinel"],
+					tactics = format(L["TazaveshTheVeiledMarket_ZophexTheSentinel"], "IAT_187178", "IAT_187179", "IAT_187173", "IAT_187171", "IAT_175616", GetSpellLink(345598), GetSpellLink(356436), GetSpellLink(356397), GetSpellLink(356484), GetSpellLink(356493), GetSpellLink(345598)),
 					enabled = true,
 					track = function() core._2441:ZophexTheSentinel() end,
 					partial = false,
@@ -571,7 +572,7 @@ core.Instances = {
 					bossIDs = {},
 					achievement = 15106,
 					players = {},
-					tactics = L["TazaveshTheVeiledMarket_MailroomMayhem"],
+					tactics = format(L["TazaveshTheVeiledMarket_MailroomMayhem"], GetSpellLink(346947), GetSpellLink(346947), GetSpellLink(346404), GetSpellLink(346947)),
 					enabled = false,
 					track = nil,
 					partial = false,
@@ -582,7 +583,7 @@ core.Instances = {
 					bossIDs = {},
 					achievement = 15179,
 					players = {},
-					tactics = L["TazaveshTheVeiledMarket_Hylbrande"],
+					tactics = format(L["TazaveshTheVeiledMarket_Hylbrande"], GetSpellLink(346766), GetSpellLink(346828), GetSpellLink(346828), GetSpellLink(346828)),
 					enabled = false,
 					track = nil,
 					partial = false,

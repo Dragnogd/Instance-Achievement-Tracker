@@ -16,4 +16,8 @@ core.ItemCache = {
 	[80313] = 80313, --Ling-Ting's Favorite Tea
 	[180052] = 180052, --Left Gem eye
 	[180053] = 180053, --Right Gem Eye
+	[187178] = 187178, --Sc'ootie's Favorite Plushie
+	[187179] = 187179, --Glow Sticks
+	[187173] = 187173, --Wriggling Tentacle
+	[187171] = 187171, --Organic Melon
 }

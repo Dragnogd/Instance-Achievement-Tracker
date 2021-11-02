@@ -611,4 +611,5 @@ core.NPCCache = {
 	[176583] =176583, --Energy Core
 	[177584] =177584, --Burning Gibbet
 	[180658] =180658, --Focusing Prism
+	[175616] =175616, --Zo'phex
 }
