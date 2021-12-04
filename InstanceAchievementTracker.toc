@@ -33,6 +33,7 @@ Localization.koKR.lua
 
 ShadowlandsRaids\CastleNathria.lua
 ShadowlandsRaids\SanctumOfDomination.lua
+ShadowlandsRaids\SepulcherOfTheFirstOnes.lua
 
 ShadowlandsDungeons\DeOtherSide.lua
 ShadowlandsDungeons\HallsofAtonement.lua

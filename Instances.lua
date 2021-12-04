@@ -1,5 +1,5 @@
 --------------------------------------
--- Last Auto Generated: 02/11/2021 21:17:19
+-- Last Auto Generated: 03/12/2021 21:25:11
 --------------------------------------
 local _, core = ...
 local L = core.L
@@ -242,6 +242,131 @@ core.Instances = {
 					partial = false,
 					encounterID = 2407,
 					displayInfoFrame = true,
+				},
+			},
+
+			[2481] = { --Sepulcher of the First Ones
+				name = 1195,
+				boss1 = {
+					name = 2458, --Vigilant Guardian
+					bossIDs = {},
+					achievement = 15381,
+					players = {},
+					tactics = L["SuplcherOfTheFirstOnes_VigilantGuardian"],
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 2512,
+				},
+				boss2 = {
+					name = 2459, --Dausegne, the Fallen Oracle
+					bossIDs = {},
+					achievement = 15397,
+					players = {},
+					tactics = L["SuplcherOfTheFirstOnes_DausegneTheFallenOracle"],
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 2540,
+				},
+				boss3 = {
+					name = 2470, --Artificer Xy'mox
+					bossIDs = {},
+					achievement = 15398,
+					players = {},
+					tactics = L["SuplcherOfTheFirstOnes_ArtificerXymox"],
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 2553,
+				},
+				boss4 = {
+					name = 2460, --Prototype Pantheon
+					bossIDs = {},
+					achievement = 6,
+					players = {},
+					tactics = L["SuplcherOfTheFirstOnes_PrototypePantheon"],
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 2544,
+				},
+				boss5 = {
+					name = 2461, --Lihuvim, Principal Architect
+					bossIDs = {},
+					achievement = 6,
+					players = {},
+					tactics = L["SuplcherOfTheFirstOnes_LihuvimPrincipalArchitect"],
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 2539,
+				},
+				boss6 = {
+					name = 2465, --Skolex, the Insatiable Ravener
+					bossIDs = {},
+					achievement = 15401,
+					players = {},
+					tactics = L["SuplcherOfTheFirstOnes_SkolexTheInsatiableRavener"],
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 2542,
+				},
+				boss7 = {
+					name = 2463, --Halondrus the Reclaimer
+					bossIDs = {},
+					achievement = 15386,
+					players = {},
+					tactics = L["SuplcherOfTheFirstOnes_HalondrusTheReclaimer"],
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 2529,
+				},
+				boss8 = {
+					name = 2469, --Anduin Wrynn
+					bossIDs = {},
+					achievement = 15399,
+					players = {},
+					tactics = L["SuplcherOfTheFirstOnes_AnduinWrynn"],
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 2546,
+				},
+				boss9 = {
+					name = 2457, --Lords of Dread
+					bossIDs = {},
+					achievement = 15315,
+					players = {},
+					tactics = L["SuplcherOfTheFirstOnes_LordsOfDread"],
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 2543,
+				},
+				boss10 = {
+					name = 2467, --Rygelon
+					bossIDs = {},
+					achievement = 15396,
+					players = {},
+					tactics = L["SuplcherOfTheFirstOnes_Rygelon"],
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 2549,
+				},
+				boss11 = {
+					name = 2464, --The Jailer
+					bossIDs = {},
+					achievement = 6,
+					players = {},
+					tactics = L["SuplcherOfTheFirstOnes_TheJailer"],
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 2537,
 				},
 			},
 		},

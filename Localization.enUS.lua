@@ -688,5 +688,16 @@ local baseLocale = {
 	["TazaveshTheVeiledMarket_Soleah"] = "",
 	["Shared_CanNowBeUsed"] = "%s can now be used",
 	["Shared_HasBeenPickedUp"] = "%s has been picked up",
+	["SuplcherOfTheFirstOnes_VigilantGuardian"] = "",
+	["SuplcherOfTheFirstOnes_DausegneTheFallenOracle"] = "",
+	["SuplcherOfTheFirstOnes_ArtificerXymox"] = "",
+	["SuplcherOfTheFirstOnes_PrototypePantheon"] = "",
+	["SuplcherOfTheFirstOnes_LihuvimPrincipalArchitect"] = "",
+	["SuplcherOfTheFirstOnes_SkolexTheInsatiableRavener"] = "",
+	["SuplcherOfTheFirstOnes_HalondrusTheReclaimer"] = "",
+	["SuplcherOfTheFirstOnes_AnduinWrynn"] = "",
+	["SuplcherOfTheFirstOnes_LordsOfDread"] = "",
+	["SuplcherOfTheFirstOnes_Rygelon"] = "",
+	["SuplcherOfTheFirstOnes_TheJailer"] = "",
 }
 core:RegisterLocale('enUS', baseLocale)
