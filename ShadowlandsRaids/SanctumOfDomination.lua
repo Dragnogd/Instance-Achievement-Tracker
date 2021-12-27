@@ -397,7 +397,7 @@ function core._2450:TrackAdditional()
 
     --Kel'Thuzard - Together Forever
     if core.type == "SPELL_AURA_APPLIED" and core.spellId == 356347 and core.destName ~= nil then
-        core:sendMessage(core.destName .. L["Shared_HasGained"] .. " " .. GetSpellLink(356347),true)
+        core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. GetSpellLink(356347),true)
     end
 end
 
