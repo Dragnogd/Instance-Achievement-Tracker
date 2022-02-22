@@ -1,5 +1,5 @@
 --------------------------------------
--- Last Auto Generated: 03/12/2021 21:25:11
+-- Last Auto Generated: 22/02/2022 19:55:29
 --------------------------------------
 local _, core = ...
 local L = core.L
@@ -283,7 +283,7 @@ core.Instances = {
 				boss4 = {
 					name = 2460, --Prototype Pantheon
 					bossIDs = {},
-					achievement = 6,
+					achievement = 15400,
 					players = {},
 					tactics = L["SuplcherOfTheFirstOnes_PrototypePantheon"],
 					enabled = false,
@@ -294,7 +294,7 @@ core.Instances = {
 				boss5 = {
 					name = 2461, --Lihuvim, Principal Architect
 					bossIDs = {},
-					achievement = 6,
+					achievement = 15419,
 					players = {},
 					tactics = L["SuplcherOfTheFirstOnes_LihuvimPrincipalArchitect"],
 					enabled = false,
@@ -360,7 +360,7 @@ core.Instances = {
 				boss11 = {
 					name = 2464, --The Jailer
 					bossIDs = {},
-					achievement = 6,
+					achievement = 15494,
 					players = {},
 					tactics = L["SuplcherOfTheFirstOnes_TheJailer"],
 					enabled = false,
