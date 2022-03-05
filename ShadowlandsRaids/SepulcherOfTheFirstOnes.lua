@@ -32,6 +32,7 @@ local announceRygelonCompleted = false
 ------------------------------------------------------
 local lickedCounter = 0
 local playerLickedStacks = {}
+local inititalPrototypeSetup = false
 
 ------------------------------------------------------
 ---- Xymox
@@ -178,6 +179,15 @@ function core._2481:PrototypePantheon()
 	InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
     InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],lickedCounter,core.groupSize)
 
+	if inititalPrototypeSetup == false then
+		inititalPrototypeSetup = true
+		for player,status in pairs(core.InfoFrame_PlayersTable) do
+			if playerLickedStacks[player] == nil then
+				playerLickedStacks[player] = 0
+			end
+		end
+	end
+
     --Player has gained a stack of Licked
 	if (core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_APPLIED_DOSE") and core.spellId == 367322 then
 		--Track individually how many times each player has been licked
@@ -196,7 +206,7 @@ function core._2481:PrototypePantheon()
 						lickedCounter = lickedCounter + 1
 						core:sendMessage(core.destName .. " " .. L["Shared_HasCompleted"] .. " " .. core:getAchievement() .. " (" .. lickedCounter .. "/" .. core.groupSize .. ")",true)
 					end
-				elseif playerAnnihilationStacks[player] < 30 then
+				else
 					InfoFrame_SetPlayerNeutralWithMessage(core.destName, playerLickedStacks[player])
 				end
 			end
@@ -318,6 +328,7 @@ function core._2481:ClearVariables()
     ------------------------------------------------------
     lickedCounter = 0
     playerLickedStacks = {}
+    inititalPrototypeSetup = false
 
     ------------------------------------------------------
     ---- Xymox
