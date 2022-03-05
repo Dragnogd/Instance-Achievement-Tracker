@@ -223,7 +223,7 @@ function core._2481:Lihuvim()
     --Defeat Lihuvim after synthesizing and defeating a Reaving Automa: Neo in the Sepulcher of the First Ones on Normal difficulty or higher.
 
     --Reaving Automa: Neo has spawned
-    if core.type == "SWING_DAMAGE" and core.sourceID == "185423" then
+    if core.type == "SWING_DAMAGE" and core.sourceID == "185423" and reavingAutomaNeoSpawned == false then
         core:sendMessage(format(L["Shared_KillTheAddNow"], getNPCName(185423)),true)
         reavingAutomaNeoSpawned = true
     end
