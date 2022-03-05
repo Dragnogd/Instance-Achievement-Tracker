@@ -614,4 +614,15 @@ core.NPCCache = {
 	[175616] =175616, --Zo'phex
 	[181012] =181012, --Strange Construct
 	[185423] =185423, --Reaving Automa: Neo
+	[184759] =184759, --Depleted Automa
+	[185128] =185128, --Memorial Pylon
+	[185130] =185130, --Memorial Pylon
+	[185131] =185131, --Memorial Pylon
+	[185129] =185129, --Memorial Pylon
+	[185427] =185427, --Unstable Progenitor Relic
+	[185438] =185438, --Massive Progenitor Relic
+	[185439] =185439, --Tainted Progenitor Relic
+	[99031] =99031, --Artifact
+	[185423] =185423, --Reaving Automa: Neo
+	[181012] =181012, --Strange Construct
 }

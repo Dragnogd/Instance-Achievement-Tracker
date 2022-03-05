@@ -612,10 +612,10 @@ function getInstanceInfomation()
 					instanceCompatible = true
 
 					--Set instance we want to debug
-					-- core.instanceNameSpaces = "Sanctum of Domination"
-					-- core.instanceName = "SanctumOfDomination"
-					-- core.instance = 2450
-					-- core.instanceClear = "_2450"
+					-- core.instanceNameSpaces = "Sepulcher of the First Ones"
+					-- core.instanceName = "SepulcherOfTheFirstOnes"
+					-- core.instance = 2481
+					-- core.instanceClear = "_2481"
 					-- core.expansion = 2
 					-- core.instanceType = "Raids"
 				end

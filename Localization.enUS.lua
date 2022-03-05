@@ -699,5 +699,6 @@ local baseLocale = {
 	["SuplcherOfTheFirstOnes_LordsOfDread"] = "",
 	["SuplcherOfTheFirstOnes_Rygelon"] = "",
 	["SuplcherOfTheFirstOnes_TheJailer"] = "",
+	["Shared_HasSpawned2"] = "%s has spawned",
 }
 core:RegisterLocale('enUS', baseLocale)
