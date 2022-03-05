@@ -612,4 +612,6 @@ core.NPCCache = {
 	[177584] =177584, --Burning Gibbet
 	[180658] =180658, --Focusing Prism
 	[175616] =175616, --Zo'phex
+	[181012] =181012, --Strange Construct
+	[185423] =185423, --Reaving Automa: Neo
 }

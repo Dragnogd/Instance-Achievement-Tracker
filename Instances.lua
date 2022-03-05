@@ -1,5 +1,5 @@
 --------------------------------------
--- Last Auto Generated: 02/03/2022 19:41:52
+-- Last Auto Generated: 05/03/2022 15:42:09
 --------------------------------------
 local _, core = ...
 local L = core.L
@@ -290,6 +290,7 @@ core.Instances = {
 					track = function() core._2481:PrototypePantheon() end,
 					partial = false,
 					encounterID = 2544,
+					displayInfoFrame = true,
 				},
 				boss5 = {
 					name = 2461, --Lihuvim, Principal Architect
@@ -323,6 +324,7 @@ core.Instances = {
 					track = function() core._2481:HalondrusTheReclaimer() end,
 					partial = false,
 					encounterID = 2529,
+					displayInfoFrame = true,
 				},
 				boss8 = {
 					name = 2469, --Anduin Wrynn
