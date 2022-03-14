@@ -170,7 +170,7 @@ function core._2481:Dausegne()
 
     --Achievement tracker red as player has dropped the afterlife core
     if core:getBlizzardTrackingStatus(15397) == false and afterLifeCoreDetected == true then
-        core:getAchievementSuccess()
+        core:getAchievementFailed()
     end
 end
 
@@ -200,12 +200,12 @@ function core._2481:PrototypePantheon()
 			end
 			if playerLickedStacks[player] ~= nil then
 				playerLickedStacks[player] = playerLickedStacks[player] + 1
-				if playerLickedStacks[player] == 5 then
+				if playerLickedStacks[player] >= 5 then
 					if InfoFrame_GetPlayerCompleteWithMessage(player) == false then
-						InfoFrame_SetPlayerCompleteWithMessage(core.destName, playerLickedStacks[player])
 						lickedCounter = lickedCounter + 1
 						core:sendMessage(core.destName .. " " .. L["Shared_HasCompleted"] .. " " .. core:getAchievement() .. " (" .. lickedCounter .. "/" .. core.groupSize .. ")",true)
 					end
+                    InfoFrame_SetPlayerCompleteWithMessage(core.destName, playerLickedStacks[player])
 				else
 					InfoFrame_SetPlayerNeutralWithMessage(core.destName, playerLickedStacks[player])
 				end
