@@ -115,19 +115,19 @@ function core._2481:Xymox()
     --Defeat Xy'mox with all players under the effects of pilfered artifacts in the Sepulcher of the First Ones on Normal difficulty or higher.
 
     --Unstable Progenitor Relic (Unstable)
-    if core:getHealthPercent("boss1") <= 100 and unstableRelic == false then
+    if core:getHealthPercent("boss1") <= 100 and core:getHealthPercent("boss1") >= 10 and unstableRelic == false then
         core:sendMessage(format(L["Shared_HasSpawned2"], getNPCName(185427)),true)
         unstableRelic = true
     end
 
     --Massive Progenitor Relic (Crippling)
-    if core:getHealthPercent("boss1") <= 75 and massiveRelic == false then
+    if core:getHealthPercent("boss1") <= 75 and core:getHealthPercent("boss1") >= 10 and massiveRelic == false then
         core:sendMessage(format(L["Shared_HasSpawned2"], getNPCName(185438)),true)
         massiveRelic = true
     end
 
     --Tainted Progenitor Relic (Enfeebling)
-    if core:getHealthPercent("boss1") <= 51 and taintedRelic == false then
+    if core:getHealthPercent("boss1") <= 51 and core:getHealthPercent("boss1") >= 10 and taintedRelic == false then
         core:sendMessage(format(L["Shared_HasSpawned2"], getNPCName(185439)),true)
         taintedRelic = true
     end
@@ -214,7 +214,7 @@ function core._2481:PrototypePantheon()
 	end
 
     --Achievement tracker white
-    if core:getBlizzardTrackingStatus(15400, 1) == true then
+    if core:getBlizzardTrackingStatus(15400, 1) == true and lickedCounter == core.groupSize then
         core:getAchievementSuccess()
     end
 end
@@ -248,11 +248,16 @@ function core._2481:HalondrusTheReclaimer()
 
     --Player has lost a strange artifact. This is a wipe as it cannot be picked up again
     if core.type == "SPELL_AURA_REMOVED" and core.spellId == 365761 then
-        core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")")
+        C_Timer.After(5, function()
+            if strangeConstructSpawned == false then
+                --We have not transitioned to the next phase, so achievement has failed
+                core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")")
+            end
+        end)
     end
 
     --Strange Construct adds have spawned.
-    if core.destID == "181012" or core.sourceID == "181012" and strangeConstructSpawned == false then
+    if (core.destID == "181012" or core.sourceID == "181012") and strangeConstructSpawned == false then
         core:sendMessage(format(L["Shared_KillTheAddNow"], getNPCName(181012)),true)
         strangeConstructSpawned = true
     end
