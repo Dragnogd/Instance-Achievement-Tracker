@@ -20,4 +20,6 @@ core.ItemCache = {
 	[187179] = 187179, --Glow Sticks
 	[187173] = 187173, --Wriggling Tentacle
 	[187171] = 187171, --Organic Melon
+	[132523] = 132523, --Reaves Battery
+	[144341] = 144341, --Rechargeable Reaves Battery
 }
