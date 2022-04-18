@@ -1,5 +1,5 @@
 --------------------------------------
--- Last Auto Generated: 17/04/2022 15:57:18
+-- Last Auto Generated: 18/04/2022 16:08:18
 --------------------------------------
 local _, core = ...
 local L = core.L
@@ -279,6 +279,7 @@ core.Instances = {
 					track = function() core._2481:Xymox() end,
 					partial = false,
 					encounterID = 2553,
+					displayInfoFrame = true,
 				},
 				boss4 = {
 					name = 2460, --Prototype Pantheon
@@ -360,6 +361,7 @@ core.Instances = {
 					track = function() core._2481:Rygelon() end,
 					partial = false,
 					encounterID = 2549,
+					displayInfoFrame = true,
 				},
 				boss11 = {
 					name = 2464, --The Jailer

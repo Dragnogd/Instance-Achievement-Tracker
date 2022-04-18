@@ -700,5 +700,6 @@ local baseLocale = {
 	["SuplcherOfTheFirstOnes_Rygelon"] = "Before pulling the boss, have every player stand on one of the six blue panels in the room. On pulling the boss players will get the %s debuff increasing movement speed by 20%%. Throughout the fight you will occasionally get either pulled in or knocked back. Simply kill the boss while all players in the group have debuff activate the get this achievement. \n\nNote: All players will lose the debuff when a single person in the raid dies, therefore no one is allowed to die throughout the encounter as there is no way to get the debuff back during the fight.",
 	["SuplcherOfTheFirstOnes_TheJailer"] = "To complete this achievement you must collect all 6 Progenitor Orbs during phase 1 of the fight. The Progenitor Orbs will only appear when %s is active. Therefore players who get %s will need to jump into the pylon conduit to launch themselves into the air and collect the orbs. Once every orb has been collected, you can kill the boss to get this achievement.\n\nNote: You do not need to click on the orbs, just run through them with your character.",
 	["Shared_HasSpawned2"] = "%s has spawned",
+	["Shared_KilledInWrongOrder"] = "Killed in the wrong order",
 }
 core:RegisterLocale('enUS', baseLocale)
