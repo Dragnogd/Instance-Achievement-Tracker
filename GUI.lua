@@ -2343,26 +2343,32 @@ end
 function GetNameFromLocalNpcIDCache()
     --Attempt to fetch NPC name from local cache if it exists
     if AchievementTrackerNPCCache ~= nil then
-        for npcID,name in pairs(AchievementTrackerNPCCache) do
-            --core:sendDebugMessage("Located: " .. name)
-            for expansion, _ in pairs(core.Instances) do
-                for instanceType, _ in pairs(core.Instances[expansion]) do
-                    for instance, _ in pairs(core.Instances[expansion][instanceType]) do
-                        for boss, _ in pairs(core.Instances[expansion][instanceType][instance]) do
-                            if boss ~= "name" then
-                                if type(core.Instances[expansion][instanceType][instance][boss].tactics) == "table" then
-                                    if UnitFactionGroup("player") == "Alliance" then
-                                        if string.find(core.Instances[expansion][instanceType][instance][boss].tactics[1], ("IAT_" .. npcID)) then
-                                            core.Instances[expansion][instanceType][instance][boss].tactics[1] = string.gsub(core.Instances[expansion][instanceType][instance][boss].tactics[1], ("IAT_" .. npcID), name)
+        tmpSortedTable = {}
+        for k in pairs(AchievementTrackerNPCCache) do table.insert(tmpSortedTable, k) end
+        table.sort(tmpSortedTable)
+
+        for i = #tmpSortedTable, 1, -1 do
+            if tmpSortedTable[i] ~= nil then
+                npcID = tmpSortedTable[i]
+                for expansion, _ in pairs(core.Instances) do
+                    for instanceType, _ in pairs(core.Instances[expansion]) do
+                        for instance, _ in pairs(core.Instances[expansion][instanceType]) do
+                            for boss, _ in pairs(core.Instances[expansion][instanceType][instance]) do
+                                if boss ~= "name" then
+                                    if type(core.Instances[expansion][instanceType][instance][boss].tactics) == "table" then
+                                        if UnitFactionGroup("player") == "Alliance" then
+                                            if string.find(core.Instances[expansion][instanceType][instance][boss].tactics[1], ("IAT_" .. npcID)) then
+                                                core.Instances[expansion][instanceType][instance][boss].tactics[1] = string.gsub(core.Instances[expansion][instanceType][instance][boss].tactics[1], ("IAT_" .. npcID), AchievementTrackerNPCCache[npcID])
+                                            end
+                                        else
+                                            if string.find(core.Instances[expansion][instanceType][instance][boss].tactics[2], ("IAT_" .. npcID)) then
+                                                core.Instances[expansion][instanceType][instance][boss].tactics[2] = string.gsub(core.Instances[expansion][instanceType][instance][boss].tactics[2], ("IAT_" .. npcID), AchievementTrackerNPCCache[npcID])
+                                            end
                                         end
                                     else
-                                        if string.find(core.Instances[expansion][instanceType][instance][boss].tactics[2], ("IAT_" .. npcID)) then
-                                            core.Instances[expansion][instanceType][instance][boss].tactics[2] = string.gsub(core.Instances[expansion][instanceType][instance][boss].tactics[2], ("IAT_" .. npcID), name)
+                                        if string.find(core.Instances[expansion][instanceType][instance][boss].tactics, ("IAT_" .. npcID)) then
+                                            core.Instances[expansion][instanceType][instance][boss].tactics = string.gsub(core.Instances[expansion][instanceType][instance][boss].tactics, ("IAT_" .. npcID), AchievementTrackerNPCCache[npcID])
                                         end
-                                    end
-                                else
-                                    if string.find(core.Instances[expansion][instanceType][instance][boss].tactics, ("IAT_" .. npcID)) then
-                                        core.Instances[expansion][instanceType][instance][boss].tactics = string.gsub(core.Instances[expansion][instanceType][instance][boss].tactics, ("IAT_" .. npcID), name)
                                     end
                                 end
                             end
