@@ -1356,6 +1356,7 @@ function Config:CreateGUI()
     local buttonHeight = 30
     local numButtons = 200 --Total number of button we need for any instance. We can hide excess button for raids/dungeons with less bosses
     local idCounter = 0
+    local button
     for j = 2, 8 do
         local globalCounter = 1
         for i = 1, numButtons do
