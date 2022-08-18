@@ -49,8 +49,17 @@ Config.minorVersion = 43    				--Addon with a minor version change have prioirt
 Config.revisionVersion = 0					--Addon with a revision change have the same priorty as a lower revision verison
 Config.releaseType = ""                     --Release type (Alpha, Beta, Release)
 
+------------------------------------------------------
+---- Game Versions
+------------------------------------------------------
 -- Purpose:         Used to detect which version of the game the user is running. This is used so we can add features for different versions of the game.
 core.gameVersion, core.gameBuild, core.gameDate, core.tocVersion = GetBuildInfo()
+
+function getGameBuild()
+    core.gameVersionMajor, core.gameVersionMinor, core.gameVersionRevision = strsplit(".", core.gameVersion, 3)
+
+    core.gameVersionMajor = 3
+end
 
 ------------------------------------------------------
 ---- Localisation
@@ -173,7 +182,24 @@ end
 -- Purpose:         This is used to load the correct frames when clicking on each of the tabs
 function Tab_OnClick(self)
     Config.currentTab = self:GetID();                           --Get the ID of the tab the user has selected.
-    PanelTemplates_SetTab(self:GetParent(), self:GetID())       --Changed the selected tab to the tab the user has just clicked on
+
+    if Config.currentTab == 9 then
+        PanelTemplates_SetTab(self:GetParent(), 2)       --Changed the selected tab to the tab the user has just clicked on
+    elseif Config.currentTab == 8 then
+        PanelTemplates_SetTab(self:GetParent(), 3)       --Changed the selected tab to the tab the user has just clicked on
+    elseif Config.currentTab == 7 then
+        PanelTemplates_SetTab(self:GetParent(), 4)       --Changed the selected tab to the tab the user has just clicked on
+    elseif Config.currentTab == 6 then
+        PanelTemplates_SetTab(self:GetParent(), 5)       --Changed the selected tab to the tab the user has just clicked on
+    elseif Config.currentTab == 5 then
+        PanelTemplates_SetTab(self:GetParent(), 6)       --Changed the selected tab to the tab the user has just clicked on
+    elseif Config.currentTab == 4 then
+        PanelTemplates_SetTab(self:GetParent(), 7)       --Changed the selected tab to the tab the user has just clicked on
+    elseif Config.currentTab == 3 then
+        PanelTemplates_SetTab(self:GetParent(), 8)       --Changed the selected tab to the tab the user has just clicked on
+    else
+        PanelTemplates_SetTab(self:GetParent(), self:GetID())       --Changed the selected tab to the tab the user has just clicked on
+    end
 
     --This scrollframe holds the button for each instances shown on the expansion tabs
     --If this scrollframe is currently being shown then hide it and shown the correct frame for the tab that has just been clicked
@@ -1026,9 +1052,27 @@ local function SetTabs(frame, numTabs, ...)
 
     --IAT Expansions Tabs
 	for i = 1, numTabs do
-		local tab = CreateFrame("Button", frameName.."Tab"..i, frame, "CharacterFrameTabButtonTemplate")
-		tab:SetID(i)                                --This is used when clicking on the tab to load the correct frames
-		tab:SetText(select(i, ...))                 --This select the variables arguments passed into the function. Needs updating each expansion
+        local tab = CreateFrame("Button", frameName.."Tab"..i, frame, "CharacterFrameTabButtonTemplate")
+
+        if i == 1 then
+            tab:SetID(i)                                --This is used when clicking on the tab to load the correct frames
+        elseif i == 2 then
+            tab:SetID(9)                                --This is used when clicking on the tab to load the correct frames
+        elseif i == 3 then
+            tab:SetID(8)                                --This is used when clicking on the tab to load the correct frames
+        elseif i == 4 then
+            tab:SetID(7)                                --This is used when clicking on the tab to load the correct frames
+        elseif i == 5 then
+            tab:SetID(6)                                --This is used when clicking on the tab to load the correct frames
+        elseif i == 6 then
+            tab:SetID(5)                                --This is used when clicking on the tab to load the correct frames
+        elseif i == 7 then
+            tab:SetID(4)                                --This is used when clicking on the tab to load the correct frames
+        elseif i == 8 then
+            tab:SetID(3)                                --This is used when clicking on the tab to load the correct frames
+        end
+
+        tab:SetText(select(i, ...))                 --This select the variables arguments passed into the function. Needs updating each expansion
 		tab:SetScript("OnClick", Tab_OnClick)       --This will run the Tab_OnClick() function once the user has selected a tab so we can load the correct frames into the GUI
 
         if (i == 1) then
@@ -1121,6 +1165,9 @@ end
 -- What it Does:    Create the IAT main GUI tab
 -- Purpose:         This create the main GUI tab for IAT
 function Config:CreateGUI()
+    --Get Game Version
+    getGameBuild()
+
     --Main Frame
     UIConfig = CreateFrame("Frame", "AchievementTracker", UIParent, "UIPanelDialogTemplate", "AchievementTemplate")
     UIConfig:SetSize(800, 500)
@@ -1176,9 +1223,9 @@ function Config:CreateGUI()
     --content1.title:SetText("Welcome to Achievement Tracker V1.0");
 
     --Create the navigation buttons for each expansion
-    local expansions = 7
+    local expansions = 8
 
-    for i = 2, 8 do
+    for i = 3, 9 do
         --Raids
         local firstRaid = false
         local previousInstance
@@ -1203,7 +1250,7 @@ function Config:CreateGUI()
         end
 
         --Scenarios only happen for MOP expansion. Needs updating each expansion
-        if i == 6 then
+        if i == 5 then
             for instance,v in pairs(core.Instances[i].Scenarios) do
                 if instance == 1103 or instance == 1000 then
                     --Alliance only scenarios
@@ -1230,50 +1277,50 @@ function Config:CreateGUI()
 
         for instance,instanceTable in pairs(localisedRaidNames) do
             if firstRaid == false then
-                if i == 2 then
+                if i == 9 then
                     ShadowlandsNav[instanceTable.id] = self:CreateButton("TOPLEFT", ShadowlandsNav, "TOPLEFT", 0, instanceTable.name, instanceTable.id);
                     ShadowlandsNav[instanceTable.id]:SetScript("OnClick", Instance_OnClick);
-                elseif i == 3 then
+                elseif i == 8 then
                     BattleForAzerothNav[instanceTable.id] = self:CreateButton("TOPLEFT", BattleForAzerothNav, "TOPLEFT", 0, instanceTable.name, instanceTable.id);
                     BattleForAzerothNav[instanceTable.id]:SetScript("OnClick", Instance_OnClick);
-                elseif i == 4 then
+                elseif i == 7 then
                     LegionNav[instanceTable.id] = self:CreateButton("TOPLEFT", LegionNav, "TOPLEFT", 0, instanceTable.name, instanceTable.id);
                     LegionNav[instanceTable.id]:SetScript("OnClick", Instance_OnClick);
-                elseif i == 5 then
+                elseif i == 6 then
                     WarlordsOfDraenorNav[instanceTable.id] = self:CreateButton("TOPLEFT", WarlordsOfDraenorNav, "TOPLEFT", 0, instanceTable.name, instanceTable.id);
                     WarlordsOfDraenorNav[instanceTable.id]:SetScript("OnClick", Instance_OnClick);
-                elseif i == 6 then
+                elseif i == 5 then
                     MistsOfPandariaNav[instanceTable.id] = self:CreateButton("TOPLEFT", MistsOfPandariaNav, "TOPLEFT", 0, instanceTable.name, instanceTable.id);
                     MistsOfPandariaNav[instanceTable.id]:SetScript("OnClick", Instance_OnClick);
-                elseif i == 7 then
+                elseif i == 4 then
                     CataclysmNav[instanceTable.id] = self:CreateButton("TOPLEFT", CataclysmNav, "TOPLEFT", 0, instanceTable.name, instanceTable.id);
                     CataclysmNav[instanceTable.id]:SetScript("OnClick", Instance_OnClick);
-                elseif i == 8 then
+                elseif i == 3 then
                     WrathOfTheLichKingNav[instanceTable.id] = self:CreateButton("TOPLEFT", WrathOfTheLichKingNav, "TOPLEFT", 0, instanceTable.name, instanceTable.id);
                     WrathOfTheLichKingNav[instanceTable.id]:SetScript("OnClick", Instance_OnClick);
                 end
                 firstRaid = true
                 previousInstance = instanceTable.id
             else
-                if i == 2 then
+                if i == 9 then
                     ShadowlandsNav[instanceTable.id] = self:CreateButton("TOPLEFT", ShadowlandsNav[previousInstance], "TOPLEFT", -32, instanceTable.name, instanceTable.id);
                     ShadowlandsNav[instanceTable.id]:SetScript("OnClick", Instance_OnClick);
-                elseif i == 3 then
+                elseif i == 8 then
                     BattleForAzerothNav[instanceTable.id] = self:CreateButton("TOPLEFT", BattleForAzerothNav[previousInstance], "TOPLEFT", -32, instanceTable.name, instanceTable.id);
                     BattleForAzerothNav[instanceTable.id]:SetScript("OnClick", Instance_OnClick);
-                elseif i == 4 then
+                elseif i == 7 then
                     LegionNav[instanceTable.id] = self:CreateButton("TOPLEFT", LegionNav[previousInstance], "TOPLEFT", -32, instanceTable.name, instanceTable.id);
                     LegionNav[instanceTable.id]:SetScript("OnClick", Instance_OnClick);
-                elseif i == 5 then
+                elseif i == 6 then
                     WarlordsOfDraenorNav[instanceTable.id] = self:CreateButton("TOPLEFT", WarlordsOfDraenorNav[previousInstance], "TOPLEFT", -32, instanceTable.name, instanceTable.id);
                     WarlordsOfDraenorNav[instanceTable.id]:SetScript("OnClick", Instance_OnClick);
-                elseif i == 6 then
+                elseif i == 5 then
                     MistsOfPandariaNav[instanceTable.id] = self:CreateButton("TOPLEFT", MistsOfPandariaNav[previousInstance], "TOPLEFT", -32, instanceTable.name, instanceTable.id);
                     MistsOfPandariaNav[instanceTable.id]:SetScript("OnClick", Instance_OnClick);
-                elseif i == 7 then
+                elseif i == 4 then
                     CataclysmNav[instanceTable.id] = self:CreateButton("TOPLEFT", CataclysmNav[previousInstance], "TOPLEFT", -32, instanceTable.name, instanceTable.id);
                     CataclysmNav[instanceTable.id]:SetScript("OnClick", Instance_OnClick);
-                elseif i == 8 then
+                elseif i == 3 then
                     WrathOfTheLichKingNav[instanceTable.id] = self:CreateButton("TOPLEFT", WrathOfTheLichKingNav[previousInstance], "TOPLEFT", -32, instanceTable.name, instanceTable.id);
                     WrathOfTheLichKingNav[instanceTable.id]:SetScript("OnClick", Instance_OnClick);
                 end
@@ -1285,50 +1332,50 @@ function Config:CreateGUI()
         local firstDungeon = false
         for instance,instanceTable in pairs(localisedDungeonNames) do
             if firstDungeon == false then
-                if i == 2 then
+                if i == 9 then
                     ShadowlandsNav[instanceTable.id] = self:CreateButton("TOPLEFT", ShadowlandsNav[previousInstance], "TOPLEFT", -40, instanceTable.name, instanceTable.id);
                     ShadowlandsNav[instanceTable.id]:SetScript("OnClick", Instance_OnClick);
-                elseif i == 3 then
+                elseif i == 8 then
                     BattleForAzerothNav[instanceTable.id] = self:CreateButton("TOPLEFT", BattleForAzerothNav[previousInstance], "TOPLEFT", -40, instanceTable.name, instanceTable.id);
                     BattleForAzerothNav[instanceTable.id]:SetScript("OnClick", Instance_OnClick);
-                elseif i == 4 then
+                elseif i == 7 then
                     LegionNav[instanceTable.id] = self:CreateButton("TOPLEFT", LegionNav[previousInstance], "TOPLEFT", -40, instanceTable.name, instanceTable.id);
                     LegionNav[instanceTable.id]:SetScript("OnClick", Instance_OnClick);
-                elseif i == 5 then
+                elseif i == 6 then
                     WarlordsOfDraenorNav[instanceTable.id] = self:CreateButton("TOPLEFT", WarlordsOfDraenorNav[previousInstance], "TOPLEFT", -40, instanceTable.name, instanceTable.id);
                     WarlordsOfDraenorNav[instanceTable.id]:SetScript("OnClick", Instance_OnClick);
-                elseif i == 6 then
+                elseif i == 5 then
                     MistsOfPandariaNav[instanceTable.id] = self:CreateButton("TOPLEFT", MistsOfPandariaNav[previousInstance], "TOPLEFT", -40, instanceTable.name, instanceTable.id);
                     MistsOfPandariaNav[instanceTable.id]:SetScript("OnClick", Instance_OnClick);
-                elseif i == 7 then
+                elseif i == 4 then
                     CataclysmNav[instanceTable.id] = self:CreateButton("TOPLEFT", CataclysmNav[previousInstance], "TOPLEFT", -40, instanceTable.name, instanceTable.id);
                     CataclysmNav[instanceTable.id]:SetScript("OnClick", Instance_OnClick);
-                elseif i == 8 then
+                elseif i == 3 then
                     WrathOfTheLichKingNav[instanceTable.id] = self:CreateButton("TOPLEFT", WrathOfTheLichKingNav[previousInstance], "TOPLEFT", -40, instanceTable.name, instanceTable.id);
                     WrathOfTheLichKingNav[instanceTable.id]:SetScript("OnClick", Instance_OnClick);
                 end
                 firstDungeon = true
                 previousInstance = instanceTable.id
             else
-                if i == 2 then
+                if i == 9 then
                     ShadowlandsNav[instanceTable.id] = self:CreateButton("TOPLEFT", ShadowlandsNav[previousInstance], "TOPLEFT", -32, instanceTable.name, instanceTable.id);
                     ShadowlandsNav[instanceTable.id]:SetScript("OnClick", Instance_OnClick);
-                elseif i == 3 then
+                elseif i == 8 then
                     BattleForAzerothNav[instanceTable.id] = self:CreateButton("TOPLEFT", BattleForAzerothNav[previousInstance], "TOPLEFT", -32, instanceTable.name, instanceTable.id);
                     BattleForAzerothNav[instanceTable.id]:SetScript("OnClick", Instance_OnClick);
-                elseif i == 4 then
+                elseif i == 7 then
                     LegionNav[instanceTable.id] = self:CreateButton("TOPLEFT", LegionNav[previousInstance], "TOPLEFT", -32, instanceTable.name, instanceTable.id);
                     LegionNav[instanceTable.id]:SetScript("OnClick", Instance_OnClick);
-                elseif i == 5 then
+                elseif i == 6 then
                     WarlordsOfDraenorNav[instanceTable.id] = self:CreateButton("TOPLEFT", WarlordsOfDraenorNav[previousInstance], "TOPLEFT", -32, instanceTable.name, instanceTable.id);
                     WarlordsOfDraenorNav[instanceTable.id]:SetScript("OnClick", Instance_OnClick);
-                elseif i == 6 then
+                elseif i == 5 then
                     MistsOfPandariaNav[instanceTable.id] = self:CreateButton("TOPLEFT", MistsOfPandariaNav[previousInstance], "TOPLEFT", -32, instanceTable.name, instanceTable.id);
                     MistsOfPandariaNav[instanceTable.id]:SetScript("OnClick", Instance_OnClick);
-                elseif i == 7 then
+                elseif i == 4 then
                     CataclysmNav[instanceTable.id] = self:CreateButton("TOPLEFT", CataclysmNav[previousInstance], "TOPLEFT", -32, instanceTable.name, instanceTable.id);
                     CataclysmNav[instanceTable.id]:SetScript("OnClick", Instance_OnClick);
-                elseif i == 8 then
+                elseif i == 3 then
                     WrathOfTheLichKingNav[instanceTable.id] = self:CreateButton("TOPLEFT", WrathOfTheLichKingNav[previousInstance], "TOPLEFT", -32, instanceTable.name, instanceTable.id);
                     WrathOfTheLichKingNav[instanceTable.id]:SetScript("OnClick", Instance_OnClick);
                 end
@@ -1357,10 +1404,10 @@ function Config:CreateGUI()
     local numButtons = 200 --Total number of button we need for any instance. We can hide excess button for raids/dungeons with less bosses
     local idCounter = 0
     local button
-    for j = 2, 8 do
+    for j = 3, 9 do
         local globalCounter = 1
         for i = 1, numButtons do
-            if j == 2 then
+            if j == 9 then
                 ShadowlandsContentButtons[i] = CreateFrame("Button","IAT_Achievement_"..j.."_"..globalCounter,ShadowlandsContent)
                 button = ShadowlandsContentButtons[i]
                 button:SetSize(ShadowlandsContent:GetWidth()-18,buttonHeight)
@@ -1370,7 +1417,7 @@ function Config:CreateGUI()
                 else
                     button:SetPoint("TOPLEFT",ShadowlandsContentButtons[i-1],"BOTTOMLEFT",0,0)
                 end
-            elseif j == 3 then
+            elseif j == 8 then
                 BattleForAzerothContentButtons[i] = CreateFrame("Button","IAT_Achievement_"..j.."_"..globalCounter,BattleForAzerothContent)
                 button = BattleForAzerothContentButtons[i]
                 button:SetSize(BattleForAzerothContent:GetWidth()-18,buttonHeight)
@@ -1380,7 +1427,7 @@ function Config:CreateGUI()
                 else
                     button:SetPoint("TOPLEFT",BattleForAzerothContentButtons[i-1],"BOTTOMLEFT",0,0)
                 end
-            elseif j == 4 then
+            elseif j == 7 then
                 LegionContentButtons[i] = CreateFrame("Button","IAT_Achievement_"..j.."_"..globalCounter,LegionContent)
                 button = LegionContentButtons[i]
                 button:SetSize(LegionContent:GetWidth()-18,buttonHeight)
@@ -1390,7 +1437,7 @@ function Config:CreateGUI()
                 else
                     button:SetPoint("TOPLEFT",LegionContentButtons[i-1],"BOTTOMLEFT",0,0)
                 end
-            elseif j == 5 then
+            elseif j == 6 then
                 WarlordsOfDraenorContentButtons[i] = CreateFrame("Button","IAT_Achievement_"..j.."_"..globalCounter,WarlordsOfDraenorContent)
                 button = WarlordsOfDraenorContentButtons[i]
                 button:SetSize(WarlordsOfDraenorContent:GetWidth()-18,buttonHeight)
@@ -1400,7 +1447,7 @@ function Config:CreateGUI()
                 else
                     button:SetPoint("TOPLEFT",WarlordsOfDraenorContentButtons[i-1],"BOTTOMLEFT",0,0)
                 end
-            elseif j == 6 then
+            elseif j == 5 then
                 MistsOfPandariaContentButtons[i] = CreateFrame("Button","IAT_Achievement_"..j.."_"..globalCounter,MistsOfPandariaContent)
                 button = MistsOfPandariaContentButtons[i]
                 button:SetSize(MistsOfPandariaContent:GetWidth()-18,buttonHeight)
@@ -1410,7 +1457,7 @@ function Config:CreateGUI()
                 else
                     button:SetPoint("TOPLEFT",MistsOfPandariaContentButtons[i-1],"BOTTOMLEFT",0,0)
                 end
-            elseif j == 7 then
+            elseif j == 4 then
                 CataclysmContentButtons[i] = CreateFrame("Button","IAT_Achievement_"..j.."_"..globalCounter,CataclysmContent)
                 button = CataclysmContentButtons[i]
                 button:SetSize(CataclysmContent:GetWidth()-18,buttonHeight)
@@ -1420,7 +1467,7 @@ function Config:CreateGUI()
                 else
                     button:SetPoint("TOPLEFT",CataclysmContentButtons[i-1],"BOTTOMLEFT",0,0)
                 end
-            elseif j == 8 then
+            elseif j == 3 then
                 WrathOfTheLichKingContentButtons[i] = CreateFrame("Button","IAT_Achievement_"..j.."_"..globalCounter,WrathOfTheLichKingContent)
                 button = WrathOfTheLichKingContentButtons[i]
                 button:SetSize(WrathOfTheLichKingContent:GetWidth()-18,buttonHeight)
@@ -1524,7 +1571,7 @@ function Instance_OnClick(self)
         local InstanceID = self:GetID()     --Get the ID of the button that was pressed
 
         --If raid is wrath of the lich king as is not Ulduar then we need to re-add the '-' so the button can find the correct raid
-        if Config.currentTab == 8 then --Current position of WOTLK expansion. Needs updating each expansion
+        if Config.currentTab == 3 then --Current position of WOTLK expansion. Needs updating each expansion
             local numberToNotConvert = {603,574,576,595,601,619,600,608,604,599,602,578,575,650,632,658,668}
             if core:has_value(numberToNotConvert, InstanceID) == false then
                 InstanceID = tostring(InstanceID)
@@ -1601,19 +1648,19 @@ function Instance_OnClick(self)
     --Hide all buttons initially
     for i = 1, numButtons do
         local button
-        if Config.currentTab == 2 then
+        if Config.currentTab == 9 then
             button = ShadowlandsContentButtons[i]
-        elseif Config.currentTab == 3 then
-            button = BattleForAzerothContentButtons[i]
-        elseif Config.currentTab == 4 then
-            button = LegionContentButtons[i]
-        elseif Config.currentTab == 5 then
-            button = WarlordsOfDraenorContentButtons[i]
-        elseif Config.currentTab == 6 then
-            button = MistsOfPandariaContentButtons[i]
-        elseif Config.currentTab == 7 then
-            button = CataclysmContentButtons[i]
         elseif Config.currentTab == 8 then
+            button = BattleForAzerothContentButtons[i]
+        elseif Config.currentTab == 7 then
+            button = LegionContentButtons[i]
+        elseif Config.currentTab == 6 then
+            button = WarlordsOfDraenorContentButtons[i]
+        elseif Config.currentTab == 5 then
+            button = MistsOfPandariaContentButtons[i]
+        elseif Config.currentTab == 4 then
+            button = CataclysmContentButtons[i]
+        elseif Config.currentTab == 3 then
             button = WrathOfTheLichKingContentButtons[i]
         end
         button:Hide()
@@ -1646,19 +1693,19 @@ function Instance_OnClick(self)
 
                 --Header
                 --Get the set of buttons for the current selected tab
-                if Config.currentTab == 2 then
+                if Config.currentTab == 9 then
                     button = ShadowlandsContentButtons[counter]
-                elseif Config.currentTab == 3 then
-                    button = BattleForAzerothContentButtons[counter]
-                elseif Config.currentTab == 4 then
-                    button = LegionContentButtons[counter]
-                elseif Config.currentTab == 5 then
-                    button = WarlordsOfDraenorContentButtons[counter]
-                elseif Config.currentTab == 6 then
-                    button = MistsOfPandariaContentButtons[counter]
-                elseif Config.currentTab == 7 then
-                    button = CataclysmContentButtons[counter]
                 elseif Config.currentTab == 8 then
+                    button = BattleForAzerothContentButtons[counter]
+                elseif Config.currentTab == 7 then
+                    button = LegionContentButtons[counter]
+                elseif Config.currentTab == 6 then
+                    button = WarlordsOfDraenorContentButtons[counter]
+                elseif Config.currentTab == 5 then
+                    button = MistsOfPandariaContentButtons[counter]
+                elseif Config.currentTab == 4 then
+                    button = CataclysmContentButtons[counter]
+                elseif Config.currentTab == 3 then
                     button = WrathOfTheLichKingContentButtons[counter]
                 end
 
@@ -1666,19 +1713,19 @@ function Instance_OnClick(self)
 
                 if counter > 1 then
                     button:ClearAllPoints()
-                    if Config.currentTab == 2 then
+                    if Config.currentTab == 9 then
                         button:SetPoint("TOPLEFT",ShadowlandsContentButtons[counter-1],"BOTTOMLEFT",0,30-heightDifference)
-                    elseif Config.currentTab == 3 then
-                        button:SetPoint("TOPLEFT",BattleForAzerothContentButtons[counter-1],"BOTTOMLEFT",0,30-heightDifference)
-                    elseif Config.currentTab == 4 then
-                        button:SetPoint("TOPLEFT",LegionContentButtons[counter-1],"BOTTOMLEFT",0,30-heightDifference)
-                    elseif Config.currentTab == 5 then
-                        button:SetPoint("TOPLEFT",WarlordsOfDraenorContentButtons[counter-1],"BOTTOMLEFT",0,30-heightDifference)
-                    elseif Config.currentTab == 6 then
-                        button:SetPoint("TOPLEFT",MistsOfPandariaContentButtons[counter-1],"BOTTOMLEFT",0,30-heightDifference)
-                    elseif Config.currentTab == 7 then
-                        button:SetPoint("TOPLEFT",CataclysmContentButtons[counter-1],"BOTTOMLEFT",0,30-heightDifference)
                     elseif Config.currentTab == 8 then
+                        button:SetPoint("TOPLEFT",BattleForAzerothContentButtons[counter-1],"BOTTOMLEFT",0,30-heightDifference)
+                    elseif Config.currentTab == 7 then
+                        button:SetPoint("TOPLEFT",LegionContentButtons[counter-1],"BOTTOMLEFT",0,30-heightDifference)
+                    elseif Config.currentTab == 6 then
+                        button:SetPoint("TOPLEFT",WarlordsOfDraenorContentButtons[counter-1],"BOTTOMLEFT",0,30-heightDifference)
+                    elseif Config.currentTab == 5 then
+                        button:SetPoint("TOPLEFT",MistsOfPandariaContentButtons[counter-1],"BOTTOMLEFT",0,30-heightDifference)
+                    elseif Config.currentTab == 4 then
+                        button:SetPoint("TOPLEFT",CataclysmContentButtons[counter-1],"BOTTOMLEFT",0,30-heightDifference)
+                    elseif Config.currentTab == 3 then
                         button:SetPoint("TOPLEFT",WrathOfTheLichKingContentButtons[counter-1],"BOTTOMLEFT",0,30-heightDifference)
                     end
                 end
@@ -1724,19 +1771,19 @@ function Instance_OnClick(self)
                 end
 
                 --Content
-                if Config.currentTab == 2 then
+                if Config.currentTab == 9 then
                     button = ShadowlandsContentButtons[counter]
-                elseif Config.currentTab == 3 then
-                    button = BattleForAzerothContentButtons[counter]
-                elseif Config.currentTab == 4 then
-                    button = LegionContentButtons[counter]
-                elseif Config.currentTab == 5 then
-                    button = WarlordsOfDraenorContentButtons[counter]
-                elseif Config.currentTab == 6 then
-                    button = MistsOfPandariaContentButtons[counter]
-                elseif Config.currentTab == 7 then
-                    button = CataclysmContentButtons[counter]
                 elseif Config.currentTab == 8 then
+                    button = BattleForAzerothContentButtons[counter]
+                elseif Config.currentTab == 7 then
+                    button = LegionContentButtons[counter]
+                elseif Config.currentTab == 6 then
+                    button = WarlordsOfDraenorContentButtons[counter]
+                elseif Config.currentTab == 5 then
+                    button = MistsOfPandariaContentButtons[counter]
+                elseif Config.currentTab == 4 then
+                    button = CataclysmContentButtons[counter]
+                elseif Config.currentTab == 3 then
                     button = WrathOfTheLichKingContentButtons[counter]
                 end
 
@@ -1842,19 +1889,19 @@ function Instance_OnClick(self)
     --Hide the remaining buttons
     for i = counter, numButtons do
         local button
-        if Config.currentTab == 2 then
+        if Config.currentTab == 9 then
             button = ShadowlandsContentButtons[i]
-        elseif Config.currentTab == 3 then
-            button = BattleForAzerothContentButtons[i]
-        elseif Config.currentTab == 4 then
-            button = LegionContentButtons[i]
-        elseif Config.currentTab == 5 then
-            button = WarlordsOfDraenorContentButtons[i]
-        elseif Config.currentTab == 6 then
-            button = MistsOfPandariaContentButtons[i]
-        elseif Config.currentTab == 7 then
-            button = CataclysmContentButtons[i]
         elseif Config.currentTab == 8 then
+            button = BattleForAzerothContentButtons[i]
+        elseif Config.currentTab == 7 then
+            button = LegionContentButtons[i]
+        elseif Config.currentTab == 6 then
+            button = WarlordsOfDraenorContentButtons[i]
+        elseif Config.currentTab == 5 then
+            button = MistsOfPandariaContentButtons[i]
+        elseif Config.currentTab == 4 then
+            button = CataclysmContentButtons[i]
+        elseif Config.currentTab == 3 then
             button = WrathOfTheLichKingContentButtons[i]
         end
         button:Hide()
@@ -1891,7 +1938,7 @@ end
 
 function Achievement_OnEnter(self)
     local foundAchievement = false
-    if Config.currentTab == 2 then
+    if Config.currentTab == 9 then
         for i = 1, #ShadowlandsContentButtons do
             if MouseIsOver(ShadowlandsContentButtons[i]) then
                 AltGameTooltip:SetOwner(UIConfig, "ANCHOR_TOPRIGHT")
@@ -1900,7 +1947,7 @@ function Achievement_OnEnter(self)
                 foundAchievement = true
             end
         end
-    elseif Config.currentTab == 3 then
+    elseif Config.currentTab == 8 then
         for i = 1, #BattleForAzerothContentButtons do
             if MouseIsOver(BattleForAzerothContentButtons[i]) then
                 AltGameTooltip:SetOwner(UIConfig, "ANCHOR_TOPRIGHT")
@@ -1909,7 +1956,7 @@ function Achievement_OnEnter(self)
                 foundAchievement = true
             end
         end
-    elseif Config.currentTab == 4 then
+    elseif Config.currentTab == 7 then
         for i = 1, #LegionContentButtons do
             if MouseIsOver(LegionContentButtons[i]) then
                 AltGameTooltip:SetOwner(UIConfig, "ANCHOR_TOPRIGHT")
@@ -1918,7 +1965,7 @@ function Achievement_OnEnter(self)
                 foundAchievement = true
             end
         end
-    elseif Config.currentTab == 5 then
+    elseif Config.currentTab == 6 then
         for i = 1, #WarlordsOfDraenorContentButtons do
             if MouseIsOver(WarlordsOfDraenorContentButtons[i]) then
                 AltGameTooltip:SetOwner(UIConfig, "ANCHOR_TOPRIGHT")
@@ -1927,7 +1974,7 @@ function Achievement_OnEnter(self)
                 foundAchievement = true
             end
         end
-    elseif Config.currentTab == 6 then
+    elseif Config.currentTab == 5 then
         for i = 1, #MistsOfPandariaContentButtons do
             if MouseIsOver(MistsOfPandariaContentButtons[i]) then
                 AltGameTooltip:SetOwner(UIConfig, "ANCHOR_TOPRIGHT")
@@ -1936,7 +1983,7 @@ function Achievement_OnEnter(self)
                 foundAchievement = true
             end
         end
-    elseif Config.currentTab == 7 then
+    elseif Config.currentTab == 4 then
         for i = 1, #CataclysmContentButtons do
             if MouseIsOver(CataclysmContentButtons[i]) then
                 AltGameTooltip:SetOwner(UIConfig, "ANCHOR_TOPRIGHT")
@@ -1945,7 +1992,7 @@ function Achievement_OnEnter(self)
                 foundAchievement = true
             end
         end
-    elseif Config.currentTab == 8 then
+    elseif Config.currentTab == 3 then
         for i = 1, #WrathOfTheLichKingContentButtons do
             if MouseIsOver(WrathOfTheLichKingContentButtons[i]) then
                 AltGameTooltip:SetOwner(UIConfig, "ANCHOR_TOPRIGHT")
