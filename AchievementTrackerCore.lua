@@ -32,7 +32,7 @@ function generateItemCache()									--The Item Cache can only be generated once
 				for instanceType, _ in pairs(core.Instances[expansion]) do
 					for instance, _ in pairs(core.Instances[expansion][instanceType]) do
 						for boss, _ in pairs(core.Instances[expansion][instanceType][instance]) do
-							if boss ~= "name" then
+							if boss ~= "name" and boss ~= "nameLocalised" then
 								if type(core.Instances[expansion][instanceType][instance][boss].tactics) == "table" then
 									if UnitFactionGroup("player") == "Alliance" then
 										if string.find(core.Instances[expansion][instanceType][instance][boss].tactics[1], ("IAT_" .. core.ItemCache[v])) then
@@ -64,7 +64,7 @@ function events:GET_ITEM_INFO_RECEIVED(self, arg1)
 			for instanceType, _ in pairs(core.Instances[expansion]) do
 				for instance, _ in pairs(core.Instances[expansion][instanceType]) do
 					for boss, _ in pairs(core.Instances[expansion][instanceType][instance]) do
-						if boss ~= "name" then
+						if boss ~= "name" and boss ~= "nameLocalised" then
 							if type(core.Instances[expansion][instanceType][instance][boss].tactics) == "table" then
 								if UnitFactionGroup("player") == "Alliance" then
 									if string.find(core.Instances[expansion][instanceType][instance][boss].tactics[1], ("IAT_" .. arg1)) then
@@ -98,26 +98,28 @@ function events:GET_ITEM_INFO_RECEIVED(self, arg1)
 end
 
 function generateNPCCache()
-	core:sendDebugMessage("Attempting to load from local NPC Cache")
-	GetNameFromLocalNpcIDCache()
+	if core.gameVersionMajor > 3 then
+		core:sendDebugMessage("Attempting to load from local NPC Cache")
+		GetNameFromLocalNpcIDCache()
 
-	core:sendDebugMessage("Generating NPC Cache...")
-	local count = 1
-	local tempNPC = {}
-	for i,v in pairs(core.NPCCache) do
-		--GetNameFromNpcIDCache(core.NPCCache[v])
-		table.insert(tempNPC, core.NPCCache[v])
-	end
-
-	generateNPCs = C_Timer.NewTicker(0.01, function()
-		--core:sendDebugMessage("Fetching: " .. tempNPC[count] .. "(" .. count .. "/" .. #tempNPC .. ")")
-		GetNameFromNpcIDCache(tempNPC[count])
-		count = count + 1
-
-		if generateNPCs._remainingIterations == 1 then
-			core:sendDebugMessage("NPC cache generated")
+		core:sendDebugMessage("Generating NPC Cache...")
+		local count = 1
+		local tempNPC = {}
+		for i,v in pairs(core.NPCCache) do
+			--GetNameFromNpcIDCache(core.NPCCache[v])
+			table.insert(tempNPC, core.NPCCache[v])
 		end
-	end, #tempNPC)
+
+		generateNPCs = C_Timer.NewTicker(0.01, function()
+			--core:sendDebugMessage("Fetching: " .. tempNPC[count] .. "(" .. count .. "/" .. #tempNPC .. ")")
+			GetNameFromNpcIDCache(tempNPC[count])
+			count = count + 1
+
+			if generateNPCs._remainingIterations == 1 then
+				core:sendDebugMessage("NPC cache generated")
+			end
+		end, #tempNPC)
+	end
 end
 
 function getNPCName(npcID)
@@ -359,7 +361,7 @@ function getPlayersInGroup()
 				if core:has_value(currentGroup, playersScanned[i]) == false then
 					--Remove player from the table that generates the UI for that achievementw
 					for boss,_ in pairs(core.Instances[core.expansion][core.instanceType][core.instance]) do
-						if boss ~= "name" then
+						if boss ~= "name" and boss ~= "nameLocalised" then
 							local name = playersScanned[i]
 							--print("Removing: " .. name)
 
@@ -404,7 +406,7 @@ function getPlayersInGroup()
 				local achievements = ""
 				local foundAchievement = false
 				for boss,_ in pairs(core.Instances[core.expansion][core.instanceType][core.instance]) do
-					if boss ~= "name" then
+					if boss ~= "name" and boss ~= "nameLocalised" then
 						local name, _ = UnitName("player")
 						if core:has_value(core.Instances[core.expansion][core.instanceType][core.instance][boss].players, name) == true then
 							foundAchievement = true
@@ -627,7 +629,7 @@ function getInstanceInfomation()
 					core:sendDebugMessage("Instance Type: " .. core.instanceType)
 					core:sendDebugMessage("Instance: " .. core.instance)
 					for boss,_ in pairs(core.Instances[core.expansion][core.instanceType][core.instance]) do
-						if boss ~= "name" then
+						if boss ~= "name" and boss ~= "nameLocalised" then
 							if core.Instances[core.expansion][core.instanceType][core.instance][boss].track ~= nil then
 								foundTracking = true
 							end
@@ -1049,11 +1051,21 @@ function events:PLAYER_LOGIN()
 	if not LibStub:GetLibrary("LibDataBroker-1.1", true) then return end
 
 	if not core.ATButton:IsRegistered("ExplorationAchievementTracker") then
+		--Icon
+		local IATIcon = "Interface\\Icons\\ACHIEVEMENT_GUILDPERK_MRPOPULARITY"
+		if core.gameVersionMajor > 3 then
+			IATIcon = "Interface\\Icons\\ACHIEVEMENT_GUILDPERK_MRPOPULARITY"
+		else
+			IATIcon = "Interface\\AddOns\\InstanceAchievementTracker\\Images\\icon"
+		end
+
+		print(IATIcon)
+
 		--Make an LDB object
 		local MiniMapLDB = LibStub:GetLibrary("LibDataBroker-1.1"):NewDataObject("InstanceAchievementTracker", {
 			type = "launcher",
 			text = "InstanceAchievementTracker",
-			icon = "Interface\\Icons\\ACHIEVEMENT_GUILDPERK_MRPOPULARITY",
+			icon = IATIcon,
 			OnTooltipShow = function(tooltip)
 				tooltip:AddLine("Instance Achievement Tracker");
 			end,
@@ -1064,7 +1076,6 @@ function events:PLAYER_LOGIN()
 
 		--Register Minimap Icon
 		core.ATButton:Register("InstanceAchievementTracker", MiniMapLDB, AchievementTrackerOptions);
-
 
 		--Show Minimap Icon
 		if AchievementTrackerOptions["showMinimap"] then
@@ -1650,7 +1661,7 @@ function events:UPDATE_MOUSEOVER_UNIT()
 	if core:has_value(mobMouseoverCache, UnitName("mouseover")) == false then
 		local bossFound = false
 		for boss,_ in pairs(core.Instances[core.expansion][core.instanceType][core.instance]) do
-			if boss ~= "name" then
+			if boss ~= "name" and boss ~= "nameLocalised" then
 				local counter = 1
 				--If the name property is a table then loop through each value in table
 				if type(core.Instances[core.expansion][core.instanceType][core.instance][boss].name) == "table" then
@@ -1709,7 +1720,7 @@ function events:INSPECT_ACHIEVEMENT_READY(self, GUID)
 				for instanceType,_ in pairs(core.Instances[expansion]) do
 					for instance,_ in pairs(core.Instances[expansion][instanceType]) do
 						for boss,_ in pairs(core.Instances[expansion][instanceType][instance]) do
-							if boss ~= "name" then
+							if boss ~= "name" and boss ~= "nameLocalised" then
 								local achievementComplete = false
 								if core.currentComparisonUnit == UnitName("Player") and trackCharacterAchievements == true then
 									local id, name, points, completed, month, day, year, description, flags, icon, rewardText, isGuild, wasEarnedByMe, earnedBy = GetAchievementInfo(core.Instances[expansion][instanceType][instance][boss].achievement)
@@ -1745,7 +1756,7 @@ function events:INSPECT_ACHIEVEMENT_READY(self, GUID)
 				for instanceType,_ in pairs(core.Instances[expansion]) do
 					for instance,_ in pairs(core.Instances[expansion][instanceType]) do
 						for boss,_ in pairs(core.Instances[expansion][instanceType][instance]) do
-							if boss ~= "name" then
+							if boss ~= "name" and boss ~= "nameLocalised" then
 								if #core.Instances[expansion][instanceType][instance][boss].players == 0 then
 									table.insert(core.Instances[expansion][instanceType][instance][boss].players, L["GUI_NoPlayersNeedAchievement"])
 								end
@@ -1786,7 +1797,7 @@ function events:INSPECT_ACHIEVEMENT_READY(self, GUID)
 					local achievements = ""
 					local foundAchievement = false
 					for boss,_ in pairs(core.Instances[core.expansion][core.instanceType][core.instance]) do
-						if boss ~= "name" then
+						if boss ~= "name" and boss ~= "nameLocalised" then
 							local name, _ = UnitName("player")
 							if core:has_value(core.Instances[core.expansion][core.instanceType][core.instance][boss].players, name) == true then
 								foundAchievement = true
@@ -1892,7 +1903,7 @@ function checkAndClearInstanceVariables()
 			for instanceType,_ in pairs(core.Instances[expansion]) do
 				for instance,_ in pairs(core.Instances[expansion][instanceType]) do
 					for boss,_ in pairs(core.Instances[expansion][instanceType][instance]) do
-						if boss ~= "name" then
+						if boss ~= "name" and boss ~= "nameLocalised" then
 							core.Instances[expansion][instanceType][instance][boss].players = {}
 						end
 					end
@@ -2625,7 +2636,7 @@ function detectBossByEncounterID(id)
 	core:sendDebugMessage("Found the following encounter ID: " .. id)
 	local counter = 0
 	for boss,_ in pairs(core.Instances[core.expansion][core.instanceType][core.instance]) do
-		if boss ~= "name" then
+		if boss ~= "name" and boss ~= "nameLocalised" then
 			if core.Instances[core.expansion][core.instanceType][core.instance][boss].encounterID ~= nil then
 				--Detect boss by the encounter ID
 				--core:sendDebugMessage("Type:")
@@ -2713,7 +2724,7 @@ function detectBossByNameplate(id)
 	core:sendDebugMessage("Found the following boss ID: " .. id)
 
 	for boss,_ in pairs(core.Instances[core.expansion][core.instanceType][core.instance]) do
-		if boss ~= "name" then
+		if boss ~= "name" and boss ~= "nameLocalised" then
 			if core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs ~= nil and core.encounterDetected == false then
 				if #core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs > 0 then
 					for i = 1, #core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs do
@@ -2759,7 +2770,7 @@ function detectBoss(id)
 	core:sendDebugMessage("Found the following boss ID: " .. id)
 
 	for boss,_ in pairs(core.Instances[core.expansion][core.instanceType][core.instance]) do
-		if boss ~= "name" then
+		if boss ~= "name" and boss ~= "nameLocalised" then
 			if core.Instances[core.expansion][core.instanceType][core.instance][boss].bossIDs ~= nil and core.encounterDetected == false then
 				--Detect boss by the ID of the npc
 				--core:sendDebugMessage("Detecting boss by npc ID")
