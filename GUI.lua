@@ -1893,12 +1893,24 @@ function Instance_OnClick(self)
                 local tactics
                 if type(instanceLocation["boss" .. counter2].tactics) == "table" then
                     if UnitFactionGroup("player") == "Alliance" then
-                        tactics = instanceLocation["boss" .. counter2].tactics[1]
+                        if core.gameVersionMajor > 3 then
+                            tactics = instanceLocation["boss" .. counter2].tactics[1]
+                        else
+                            tactics = instanceLocation["boss" .. counter2].tacticsClassic[1]
+                        end
                     else
-                        tactics = instanceLocation["boss" .. counter2].tactics[2]
+                        if core.gameVersionMajor > 3 then
+                            tactics = instanceLocation["boss" .. counter2].tactics[2]
+                        else
+                            tactics = instanceLocation["boss" .. counter2].tacticsClassic[2]
+                        end
                     end
                 else
-                    tactics = instanceLocation["boss" .. counter2].tactics
+                    if core.gameVersionMajor > 3 then
+                        tactics = instanceLocation["boss" .. counter2].tactics
+                    else
+                        tactics = instanceLocation["boss" .. counter2].tacticsClassic
+                    end
                 end
 
                 tactics = tactics:gsub("%\n", "<br />")
