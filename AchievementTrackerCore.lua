@@ -1059,8 +1059,6 @@ function events:PLAYER_LOGIN()
 			IATIcon = "Interface\\AddOns\\InstanceAchievementTracker\\Images\\icon"
 		end
 
-		print(IATIcon)
-
 		--Make an LDB object
 		local MiniMapLDB = LibStub:GetLibrary("LibDataBroker-1.1"):NewDataObject("InstanceAchievementTracker", {
 			type = "launcher",
