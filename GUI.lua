@@ -50,6 +50,7 @@ Config.majorVersion = 3						--Addon with a higher major version change have pri
 Config.minorVersion = 44    				--Addon with a minor version change have prioirty over a lower minor version
 Config.revisionVersion = 0					--Addon with a revision change have the same priorty as a lower revision verison
 Config.releaseType = ""                     --Release type (Alpha, Beta, Release)
+Config.classicPhase = 1                     --What phase classic realms are currently running
 
 ------------------------------------------------------
 ---- Game Versions
@@ -353,7 +354,7 @@ function Tab_OnClick(self)
                 for instanceType, _ in pairs(core.Instances[expansion]) do
                     for instance, _ in pairs(core.Instances[expansion][instanceType]) do
                         for boss, _ in pairs(core.Instances[expansion][instanceType][instance]) do
-                            if boss ~= "name" and boss ~= "nameLocalised" then
+                            if string.match(boss, "boss") then
                                 if core.Instances[expansion][instanceType][instance][boss].track ~= nil then
                                     achievementsTracked = achievementsTracked + 1
                                 end
@@ -1043,7 +1044,7 @@ function Config:SetupAchievementTracking(mode)
         for instanceType,_ in pairs(core.Instances[expansion]) do
             for instance,_ in pairs(core.Instances[expansion][instanceType]) do
                 for boss,_ in pairs(core.Instances[expansion][instanceType][instance]) do
-                    if boss ~= "name" and boss ~= "nameLocalised" then
+                    if string.match(boss, "boss") then
                         if mode == false then
                             core.Instances[expansion][instanceType][instance][boss].players = {}
                             table.insert(core.Instances[expansion][instanceType][instance][boss].players, L["GUI_TrackingDisabled"])
@@ -1281,7 +1282,9 @@ function Config:CreateGUI()
 
             if core.gameVersionMajor == 3 and i == 3 then
                 --For wrath we must fetch the localisaed names as the encounter journal is not avaliable
-                instanceName = core.Instances[i].Raids[instance].nameLocalised
+                if core.Instances[i].Raids[instance].classicPhase == Config.classicPhase then
+                    instanceName = core.Instances[i].Raids[instance].nameLocalised
+                end
             else
                 --All other expansions have the encounter journal so pass the ID to fetch from API
                 instanceName = Config:getLocalisedInstanceName(core.Instances[i].Raids[instance].name)
@@ -1296,7 +1299,10 @@ function Config:CreateGUI()
 
             if core.gameVersionMajor == 3 and i == 3 then
                 --For wrath we must fetch the localisaed names as the encounter journal is not avaliable
-                instanceName = core.Instances[i].Dungeons[instance].nameLocalised
+                if core.Instances[i].Dungeons[instance].classicPhase == Config.classicPhase then
+                    print(core.Instances[i].Dungeons[instance].classicPhase, Config.classicPhase, core.Instances[i].Dungeons[instance].nameLocalised)
+                    instanceName = core.Instances[i].Dungeons[instance].nameLocalised
+                end
             else
                 --All other expansions have the encounter journal so pass the ID to fetch from API
                 instanceName = Config:getLocalisedInstanceName(core.Instances[i].Dungeons[instance].name)
@@ -1608,7 +1614,7 @@ function Config:CreateGUI()
 		for instanceType,_ in pairs(core.Instances[expansion]) do
 			for instance,_ in pairs(core.Instances[expansion][instanceType]) do
                 for boss,_ in pairs(core.Instances[expansion][instanceType][instance]) do
-                    if boss ~= "name" and boss ~= "nameLocalised" then
+                    if string.match(boss, "boss") then
                         core.Instances[expansion][instanceType][instance][boss].generatedID = generatedIDCounter
                         generatedIDCounter = generatedIDCounter + 1
                         --print("Setting ID " .. generatedIDCounter .. " for " .. boss)
@@ -1751,7 +1757,7 @@ function Instance_OnClick(self)
     end
 
     for bossName,v in pairs(instanceLocation) do
-        if bossName ~= "name" and bossName ~= "nameLocalised" then --Don't fetch the name of the instance that has been clicked
+        if string.match(bossName, "boss") then --Don't fetch the name of the instance that has been clicked
             --Check if any players in the group need the achievement
             local playersFound = false
 
@@ -2140,7 +2146,7 @@ function Player_OnClick(self)
 		for instanceType,_ in pairs(core.Instances[expansion]) do
 			for instance,_ in pairs(core.Instances[expansion][instanceType]) do
                 for boss,_ in pairs(core.Instances[expansion][instanceType][instance]) do
-                    if boss ~= "name" and boss ~= "nameLocalised" then
+                    if string.match(boss, "boss") then
                         if core.Instances[expansion][instanceType][instance][boss].generatedID == self:GetID() then
                             local players
                             if core.inInstance == true then
@@ -2183,7 +2189,7 @@ function Tactics_OnClick(self)
 		for instanceType,_ in pairs(core.Instances[expansion]) do
 			for instance,_ in pairs(core.Instances[expansion][instanceType]) do
                 for boss,_ in pairs(core.Instances[expansion][instanceType][instance]) do
-                    if boss ~= "name" and boss ~= "nameLocalised" then
+                    if string.match(boss, "boss") then
                         if core.Instances[expansion][instanceType][instance][boss].generatedID == self:GetID() then
                             if type(core.Instances[expansion][instanceType][instance][boss].tactics) == "table" then
                                 if UnitFactionGroup("player") == "Alliance" then
@@ -2208,7 +2214,7 @@ function Enabled_OnClick(self)
 		for instanceType,_ in pairs(core.Instances[expansion]) do
 			for instance,_ in pairs(core.Instances[expansion][instanceType]) do
                 for boss,_ in pairs(core.Instances[expansion][instanceType][instance]) do
-                    if boss ~= "name" and boss ~= "nameLocalised" then
+                    if string.match(boss, "boss") then
                         if core.Instances[expansion][instanceType][instance][boss].generatedID == self:GetID() then
                             core.Instances[expansion][instanceType][instance][boss].enabled = self:GetChecked()
                             --Print to chat
@@ -2461,7 +2467,7 @@ function GetNameFromNpcIDCache(npcID)
 			for instanceType, _ in pairs(core.Instances[expansion]) do
 				for instance, _ in pairs(core.Instances[expansion][instanceType]) do
 					for boss, _ in pairs(core.Instances[expansion][instanceType][instance]) do
-                        if boss ~= "name" and boss ~= "nameLocalised" then
+                        if string.match(boss, "boss") then
                             if type(core.Instances[expansion][instanceType][instance][boss].tactics) == "table" then
                                 if UnitFactionGroup("player") == "Alliance" then
                                     if string.find(core.Instances[expansion][instanceType][instance][boss].tactics[1], ("IAT_" .. npcID)) then
@@ -2495,7 +2501,7 @@ function GetNameFromNpcIDCache(npcID)
                     for instanceType, _ in pairs(core.Instances[expansion]) do
                         for instance, _ in pairs(core.Instances[expansion][instanceType]) do
                             for boss, _ in pairs(core.Instances[expansion][instanceType][instance]) do
-                                if boss ~= "name" and boss ~= "nameLocalised" then
+                                if string.match(boss, "boss") then
                                     if string.find(core.Instances[expansion][instanceType][instance][boss].tactics, ("IAT_" .. npcID)) then
                                         core.Instances[expansion][instanceType][instance][boss].tactics = string.gsub(core.Instances[expansion][instanceType][instance][boss].tactics, ("IAT_" .. npcID), name)
                                     end
@@ -2528,7 +2534,7 @@ function GetNameFromLocalNpcIDCache()
                     for instanceType, _ in pairs(core.Instances[expansion]) do
                         for instance, _ in pairs(core.Instances[expansion][instanceType]) do
                             for boss, _ in pairs(core.Instances[expansion][instanceType][instance]) do
-                                if boss ~= "name" and boss ~= "nameLocalised" then
+                                if string.match(boss, "boss") then
                                     if type(core.Instances[expansion][instanceType][instance][boss].tactics) == "table" then
                                         if UnitFactionGroup("player") == "Alliance" then
                                             if string.find(core.Instances[expansion][instanceType][instance][boss].tactics[1], ("IAT_" .. npcID)) then
@@ -2564,7 +2570,7 @@ function IAT_HasAchievement(achievementID)
         for instanceType, _ in pairs(core.Instances[expansion]) do
             for instance, _ in pairs(core.Instances[expansion][instanceType]) do
                 for boss, _ in pairs(core.Instances[expansion][instanceType][instance]) do
-                    if boss ~= "name" and boss ~= "nameLocalised" then
+                    if string.match(boss, "boss") then
                         if core.Instances[expansion][instanceType][instance][boss].achievement == achievementID then
                             -- Achievement found
                             lastExpansion, lastInstanceType, lastInstance = expansion, instanceType, instance
