@@ -1722,7 +1722,23 @@ function Instance_OnClick(self)
         end
 
         --Set the current tab to the expansion of the current instance
-        Config.currentTab = core.expansion
+        if core.expansion == 3 then
+            Config.currentTab = 9
+        elseif core.expansion == 4 then
+            Config.currentTab = 8
+        elseif core.expansion == 5 then
+            Config.currentTab = 7
+        elseif core.expansion == 6 then
+            Config.currentTab = 6
+        elseif core.expansion == 7 then
+            Config.currentTab = 5
+        elseif core.expansion == 8 then
+            Config.currentTab = 4
+        elseif core.expansion == 9 then
+            Config.currentTab = 3
+        elseif core.expansion == 10 then
+            Config.currentTab = 2
+        end
 
         --Set the current instance
         Config.currentInstance = core.instance

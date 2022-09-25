@@ -1,5 +1,5 @@
 --------------------------------------
--- Last Auto Generated: 25/09/2022 20:37:58
+-- Last Auto Generated: 25/09/2022 20:59:30
 --------------------------------------
 local _, core = ...
 local L = core.L
@@ -7874,7 +7874,7 @@ core.Instances = {
 			[650] = { --Trial of the Champion
 				name = 284,
 				nameLocalised = L["Instance_TrialOfTheChampion"],
-				classicPhase = 1,
+				classicPhase = 3,
 				boss1 = {
 					name = 636, --Argent Confessor Paletress
 					bossIDs = {},
