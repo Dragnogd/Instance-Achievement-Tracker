@@ -7,7 +7,7 @@ local L = core.L												--Translation Table
 local events = CreateFrame("Frame")								--All events are registered to this frame
 local UIConfig													--UIConfig is used to make a display asking the user if they would like
 local UICreated = false											--To enable achievement tracking when they enter an instances
-local debugMode = false
+local debugMode = true
 local debugModeChat = false
 local sendDebugMessages = true
 
@@ -657,20 +657,21 @@ function getInstanceInfomation()
 					end
 
 					--Switch to correct tab in GUI
-					if core.expansion == 2 then
-						Tab_OnClick(_G["AchievementTrackerTab2"])
-					elseif core.expansion == 3 then
-						Tab_OnClick(_G["AchievementTrackerTab3"])
+					core:sendDebugMessage("Expansion: " .. core.expansion)
+					if core.expansion == 3 then
+						Tab_OnClick(_G["AchievementTrackerTab9"])
 					elseif core.expansion == 4 then
-						Tab_OnClick(_G["AchievementTrackerTab4"])
+						Tab_OnClick(_G["AchievementTrackerTab8"])
 					elseif core.expansion == 5 then
-						Tab_OnClick(_G["AchievementTrackerTab5"])
+						Tab_OnClick(_G["AchievementTrackerTab7"])
 					elseif core.expansion == 6 then
 						Tab_OnClick(_G["AchievementTrackerTab6"])
 					elseif core.expansion == 7 then
-						Tab_OnClick(_G["AchievementTrackerTab7"])
+						Tab_OnClick(_G["AchievementTrackerTab5"])
 					elseif core.expansion == 8 then
-						Tab_OnClick(_G["AchievementTrackerTab8"])
+						Tab_OnClick(_G["AchievementTrackerTab4"])
+					elseif core.expansion == 9 then
+						Tab_OnClick(_G["AchievementTrackerTab3"])
 					end
 
 					--Make sure right instance is selected
