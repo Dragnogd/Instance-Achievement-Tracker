@@ -1653,53 +1653,56 @@ end
 
 --Used to display current boss achievement on mouseover and playing that are currently missing the achievment
 function events:UPDATE_MOUSEOVER_UNIT()
-	--If not in cache
-	--Loop through each boss in db
-	--Loop through EJ_GetCreatureInfo for each boss and compare with mouseover target
-	local currentMouseoverTarget, _ = UnitName("mouseover")
-	if core:has_value(mobMouseoverCache, UnitName("mouseover")) == false then
-		local bossFound = false
-		for boss,_ in pairs(core.Instances[core.expansion][core.instanceType][core.instance]) do
-			if string.match(boss, "boss") then
-				local counter = 1
-				--If the name property is a table then loop through each value in table
-				if type(core.Instances[core.expansion][core.instanceType][core.instance][boss].name) == "table" then
-					for i = 1, #core.Instances[core.expansion][core.instanceType][core.instance][boss].name do
-						while EJ_GetCreatureInfo(counter, core.Instances[core.expansion][core.instanceType][core.instance][boss].name[i]) ~= nil do
-							local _, name, _, _, _ = EJ_GetCreatureInfo(counter, core.Instances[core.expansion][core.instanceType][core.instance][boss].name[i])
-							if currentMouseoverTarget == name and core:has_value(encounterCache, core.Instances[core.expansion][core.instanceType][core.instance][boss].name[i]) == false then
+	if core.gameVersionMajor > 3 then
+		print("Running Caching")
+		--If not in cache
+		--Loop through each boss in db
+		--Loop through EJ_GetCreatureInfo for each boss and compare with mouseover target
+		local currentMouseoverTarget, _ = UnitName("mouseover")
+		if core:has_value(mobMouseoverCache, UnitName("mouseover")) == false then
+			local bossFound = false
+			for boss,_ in pairs(core.Instances[core.expansion][core.instanceType][core.instance]) do
+				if string.match(boss, "boss") then
+					local counter = 1
+					--If the name property is a table then loop through each value in table
+					if type(core.Instances[core.expansion][core.instanceType][core.instance][boss].name) == "table" then
+						for i = 1, #core.Instances[core.expansion][core.instanceType][core.instance][boss].name do
+							while EJ_GetCreatureInfo(counter, core.Instances[core.expansion][core.instanceType][core.instance][boss].name[i]) ~= nil do
+								local _, name, _, _, _ = EJ_GetCreatureInfo(counter, core.Instances[core.expansion][core.instanceType][core.instance][boss].name[i])
+								if currentMouseoverTarget == name and core:has_value(encounterCache, core.Instances[core.expansion][core.instanceType][core.instance][boss].name[i]) == false then
+									bossFound = true
+									local players = L["GUI_PlayersWhoNeedAchievement"] .. ": "
+									for i = 1, #core.Instances[core.expansion][core.instanceType][core.instance][boss].players do
+										players = players .. core.Instances[core.expansion][core.instanceType][core.instance][boss].players[i] .. ", "
+									end
+									core:printMessage(GetAchievementLink(core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement) .. " " .. players)
+									table.insert(encounterCache, core.Instances[core.expansion][core.instanceType][core.instance][boss].name[i])
+								end
+								counter = counter + 1
+							end
+						end
+					else
+						while EJ_GetCreatureInfo(counter, core.Instances[core.expansion][core.instanceType][core.instance][boss].name) ~= nil do
+							local _, name, _, _, _ = EJ_GetCreatureInfo(counter, core.Instances[core.expansion][core.instanceType][core.instance][boss].name)
+							if currentMouseoverTarget == name and core:has_value(encounterCache, core.Instances[core.expansion][core.instanceType][core.instance][boss].name) == false then
 								bossFound = true
 								local players = L["GUI_PlayersWhoNeedAchievement"] .. ": "
 								for i = 1, #core.Instances[core.expansion][core.instanceType][core.instance][boss].players do
 									players = players .. core.Instances[core.expansion][core.instanceType][core.instance][boss].players[i] .. ", "
 								end
 								core:printMessage(GetAchievementLink(core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement) .. " " .. players)
-								table.insert(encounterCache, core.Instances[core.expansion][core.instanceType][core.instance][boss].name[i])
+								table.insert(encounterCache, core.Instances[core.expansion][core.instanceType][core.instance][boss].name)
 							end
 							counter = counter + 1
 						end
 					end
-				else
-					while EJ_GetCreatureInfo(counter, core.Instances[core.expansion][core.instanceType][core.instance][boss].name) ~= nil do
-						local _, name, _, _, _ = EJ_GetCreatureInfo(counter, core.Instances[core.expansion][core.instanceType][core.instance][boss].name)
-						if currentMouseoverTarget == name and core:has_value(encounterCache, core.Instances[core.expansion][core.instanceType][core.instance][boss].name) == false then
-							bossFound = true
-							local players = L["GUI_PlayersWhoNeedAchievement"] .. ": "
-							for i = 1, #core.Instances[core.expansion][core.instanceType][core.instance][boss].players do
-								players = players .. core.Instances[core.expansion][core.instanceType][core.instance][boss].players[i] .. ", "
-							end
-							core:printMessage(GetAchievementLink(core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement) .. " " .. players)
-							table.insert(encounterCache, core.Instances[core.expansion][core.instanceType][core.instance][boss].name)
-						end
-						counter = counter + 1
-					end
+
+
 				end
-
-
 			end
-		end
-		if bossFound == false then
-			table.insert(mobMouseoverCache, currentMouseoverTarget)
+			if bossFound == false then
+				table.insert(mobMouseoverCache, currentMouseoverTarget)
+			end
 		end
 	end
 end
