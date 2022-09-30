@@ -9,7 +9,7 @@ local UIConfig													--UIConfig is used to make a display asking the user 
 local UICreated = false											--To enable achievement tracking when they enter an instances
 local debugMode = false
 local debugModeChat = false
-local sendDebugMessages = false
+local sendDebugMessages = true
 
 local ptrVersion = "9.0.1"
 
@@ -576,12 +576,12 @@ function getInstanceInfomation()
 				core:sendDebugMessage("DifficultyID: " .. core.difficultyID)
 				if core.difficultyID == 2 then
 					--WOTLK/Cata/Mop/Wod heroic dungeons
-					if core.expansion == 8 or core.expansion == 7 or core.expansion == 6 or core.expansion == 5 then
+					if core.expansion == 3 or core.expansion == 3 or core.expansion == 4 or core.expansion == 5 then
 						instanceCompatible = true
 					end
 				elseif core.difficultyID == 23 then
-					--Legion/BFA/Shadowlands Mythics
-					if core.expansion == 5 or core.expansion == 4 or core.expansion == 3 or core.expansion == 2 then
+					--Mythics from legion onwards
+					if core.expansion >= 7 then
 						instanceCompatible = true
 					end
 
@@ -597,7 +597,7 @@ function getInstanceInfomation()
 					instanceCompatible = true
 				elseif core.difficultyID == 11 or core.difficultyID == 12 then
 					--scenerios"
-					if core.expansion == 6 then
+					if core.expansion == 5 then
 						instanceCompatible = true
 					end
 				elseif core.difficultyID == 13 or core.difficultyID == 14 or core.difficultyID == 15 or core.difficultyID == 16 then
