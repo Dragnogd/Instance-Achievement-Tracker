@@ -1654,7 +1654,6 @@ end
 --Used to display current boss achievement on mouseover and playing that are currently missing the achievment
 function events:UPDATE_MOUSEOVER_UNIT()
 	if core.gameVersionMajor > 3 then
-		print("Running Caching")
 		--If not in cache
 		--Loop through each boss in db
 		--Loop through EJ_GetCreatureInfo for each boss and compare with mouseover target
