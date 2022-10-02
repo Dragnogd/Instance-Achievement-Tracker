@@ -178,14 +178,14 @@ end
 -- What it Does:    Create a new frame of type fontstring
 -- Purpose:         This is used to put text on the GUI
 function Config:CreateText(point, relativeFrame, relativePoint, xOffset, yOffset, textString)
-    local text = relativeFrame:CreateFontString(nil, relativeFrame, "GameFontHighlightSmall")
+    local text = relativeFrame:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
     text:SetPoint(point, relativeFrame, relativePoint, xOffset, yOffset)
     text:SetText(textString)
     return text
 end
 
 function Config:CreateText2(point, relativeFrame, relativePoint, xOffset, yOffset, textString, size)
-    local text = UIConfig:CreateFontString(nil, relativeFrame, size)
+    local text = UIConfig:CreateFontString(nil, "OVERLAY", size)
     text:SetPoint(point, relativeFrame, relativePoint, xOffset, yOffset)
     text:SetText(textString)
     return text
@@ -239,7 +239,9 @@ function Tab_OnClick(self)
     if scrollChild2 then
         scrollChild2:Hide()
     end
-    UIConfig.ScrollFrame2:SetScrollChild(self.contenta)
+    if Config.currentTab > 1 then
+        UIConfig.ScrollFrame2:SetScrollChild(self.contenta)
+    end
 
     --Show the content for the selected instances
     self.content:Show()
@@ -1077,7 +1079,12 @@ local function SetTabs(frame, numTabs, ...)
 
     --IAT Expansions Tabs
 	for i = 1, numTabs do
-        local tab = CreateFrame("Button", frameName.."Tab"..i, frame, "CharacterFrameTabButtonTemplate")
+        local tab
+        if core.gameVersionMajor > 9 then
+            tab = CreateFrame("Button", frameName.."Tab"..i, frame, "PanelTabButtonTemplate")
+        else
+            tab = CreateFrame("Button", frameName.."Tab"..i, frame, "CharacterFrameTabButtonTemplate")
+        end
 
         if i == 1 then
             tab:SetID(i)                                --This is used when clicking on the tab to load the correct frames
@@ -1583,7 +1590,8 @@ function Config:CreateGUI()
             end)
             button.contentText:SetParent(button)
             button.contentText:SetPoint("TOPLEFT",16,0)
-            button.contentText:SetJustifyH("LEFT")
+            button.contentText:SetJustifyH("p","LEFT")
+
             --button.contentText:SetIndentedWordWrap(true)
 
             --Tactics
@@ -1948,7 +1956,11 @@ function Instance_OnClick(self)
                 elseif (GetLocale() == 'ruRU') then
                     button.contentText:SetFont("Fonts\\FRIZQT___CYR.TTF", 12);
                 else
-                    button.contentText:SetFont("Fonts\\FRIZQT__.TTF", 12);
+                    if core.gameVersionMajor > 9 then
+                        button.contentText:SetFont("p","Fonts\\FRIZQT__.TTF", 12, "OUTLINE, MONOCHROME");
+                    else
+                        button.contentText:SetFont("Fonts\\FRIZQT__.TTF", 12);
+                    end
                 end
                 local achievementLink = GetAchievementLink(instanceLocation["boss" .. counter2].achievement)
 		        achievementLink = achievementLink:gsub("&", "&amp;"); -- & in the achievement name would resolve the html syntax wrong
@@ -1971,15 +1983,15 @@ function Instance_OnClick(self)
 
                 if playersFound == false and core.achievementDisplayStatus == "grey" then
                     --Grey Out/Hide achievements
-                    button.contentText:SetTextColor(0.827, 0.811, 0.811, 0.3)
+                    button.contentText:SetTextColor("p", 0.827, 0.811, 0.811, 0.3)
                 else
                     --Show/Un-grey achievements
-                    button.contentText:SetTextColor(1, 1, 1)
+                    button.contentText:SetTextColor("p", 1, 1, 1)
                 end
 
                 button.contentText:Show()
                 button.headerText:Hide()
-                button:SetNormalTexture(nil)
+                --button:SetNormalTexture(nil)
                 button.contentText:SetHeight(button.contentText:GetContentHeight())
                 button:SetHeight(button.contentText:GetContentHeight())
 
