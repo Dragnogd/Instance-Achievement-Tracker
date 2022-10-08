@@ -2030,7 +2030,7 @@ function Instance_OnClick(self)
                 UIConfig.achievementsCompleted:SetText(L["GUI_AchievementsCompletedForInstance"] .. " " .. Config:getLocalisedScenarioName(instanceLocation.name));
             else
                 if core.gameVersionMajor == 3 and Config.currentTab == 3 then
-                    UIConfig.achievementsCompleted:SetText(L["GUI_AchievementsCompletedForInstance"] .. " " .. instanceLocation.nameWrath);
+                    UIConfig.achievementsCompleted:SetText(L["GUI_AchievementsCompletedForInstance"] .. " " .. instanceLocation.nameLocalised);
                 else
                     UIConfig.achievementsCompleted:SetText(L["GUI_AchievementsCompletedForInstance"] .. " " .. Config:getLocalisedInstanceName(instanceLocation.name));
                 end
