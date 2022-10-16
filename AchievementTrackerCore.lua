@@ -631,6 +631,13 @@ function getInstanceInfomation()
 					instanceCompatible = true
 				end
 
+				--Make sure that we haven't enabled any instances present in retail that were refreshed from their classic counterparts
+				--When running on Classic wow
+				if core.gameVersionMajor == 3 and core.expansion > 3 and instanceCompatible == true then
+					core:sendDebugMessage("This instance is not compatible on classic")
+					instanceCompatible = false
+				end
+
 				if debugMode == true then
 					instanceCompatible = true
 
