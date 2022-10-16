@@ -2226,14 +2226,18 @@ function Tactics_OnClick(self)
                 for boss,_ in pairs(core.Instances[expansion][instanceType][instance]) do
                     if string.match(boss, "boss") then
                         if core.Instances[expansion][instanceType][instance][boss].generatedID == self:GetID() then
-                            if type(core.Instances[expansion][instanceType][instance][boss].tactics) == "table" then
-                                if UnitFactionGroup("player") == "Alliance" then
-                                    core:sendMessageSafe(GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " " .. core.Instances[expansion][instanceType][instance][boss].tactics[1])
+                            if core.gameVersionMajor > 3 then
+                                if type(core.Instances[expansion][instanceType][instance][boss].tactics) == "table" then
+                                    if UnitFactionGroup("player") == "Alliance" then
+                                        core:sendMessageSafe(GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " " .. core.Instances[expansion][instanceType][instance][boss].tactics[1])
+                                    else
+                                        core:sendMessageSafe(GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " " .. core.Instances[expansion][instanceType][instance][boss].tactics[2])
+                                    end
                                 else
-                                    core:sendMessageSafe(GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " " .. core.Instances[expansion][instanceType][instance][boss].tactics[2])
+                                    core:sendMessageSafe(GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " " .. core.Instances[expansion][instanceType][instance][boss].tactics)
                                 end
                             else
-                                core:sendMessageSafe(GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " " .. core.Instances[expansion][instanceType][instance][boss].tactics)
+                                core:sendMessageSafe(GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " " .. core.Instances[expansion][instanceType][instance][boss].tacticsClassic)
                             end
                         end
                     end
