@@ -650,4 +650,12 @@ core.NPCCache = {
 	[179392] =179392, --Kin'tessa
 	[183937] =183937, --Skolex
 	[184823] =184823, --Strange Artifact
+	[157161] =157161, --Sand Vortex
+	[143045] =143045, --Coastal Scuttler
+}
+core.NPCCacheClassic = {
+	[29364] =29364, --Void Sentry
+	[29313] =29313, --Ichoron
+	[174060] =174060, --Prince Keleseth
+	[23953] =23953, --Prince Keleseth
 }

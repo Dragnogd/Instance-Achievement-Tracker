@@ -1,5 +1,5 @@
 --------------------------------------
--- Last Auto Generated: 25/09/2022 20:59:30
+-- Last Auto Generated: 16/10/2022 17:00:30
 --------------------------------------
 local _, core = ...
 local L = core.L
@@ -12,6 +12,7 @@ core.Instances = {
 		},
 
 		Dungeons = {
+
 		},
 	},
 
@@ -7328,7 +7329,7 @@ core.Instances = {
 					partial = false,
 					encounterID = 2026,
 					nameWrath = L["Boss_PrinceKeleseth"],
-					tacticsClassic = "",
+					tacticsClassic = format(L["UtgardeKeep_Classic_PrinceKeleseth"], "IAT_23953", GetSpellLink(42672), GetSpellLink(42672)),
 				},
 			},
 
@@ -7407,7 +7408,7 @@ core.Instances = {
 			[601] = { --Azjol Nerub
 				name = 272,
 				nameLocalised = L["Instance_AzjolNerub"],
-				classicPhase = 3,
+				classicPhase = 1,
 				boss1 = {
 					name = 585, --Krik'thir the Gatewatcher
 					bossIDs = {},
@@ -7554,7 +7555,7 @@ core.Instances = {
 					partial = false,
 					encounterID = 2020,
 					nameWrath = L["Boss_Cyanigosa"],
-					tacticsClassic = "",
+					tacticsClassic = L["VioletHold_Cyanigosa"],
 				},
 				boss2 = {
 					name = L["Instances_Other"], --MISSINGNAME74
@@ -7566,7 +7567,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					nameWrath = L["Instances_Other"],
-					tacticsClassic = "",
+					tacticsClassic = L["VioletHold_Other"],
 				},
 				boss3 = {
 					name = 628, --Ichoron
@@ -7578,7 +7579,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					nameWrath = L["Boss_Ichoron"],
-					tacticsClassic = "",
+					tacticsClassic = format(L["TheVioletHold_Classic_Ichoron"], GetSpellLink(57804), "IAT_29313", "IAT_29313"),
 				},
 				boss4 = {
 					name = 631, --Zuramat the Obliterator
@@ -7590,7 +7591,7 @@ core.Instances = {
 					track = function() core._608:ZuramatTheObliterator() end,
 					partial = false,
 					nameWrath = L["Boss_ZuramatTheObliterator"],
-					tacticsClassic = "",
+					tacticsClassic = format(L["TheVioletHold_Classic_ZuramatTheObliterator"], "IAT_29364"),
 				},
 			},
 
@@ -7629,7 +7630,7 @@ core.Instances = {
 					bossIDs = {},
 					achievement = 1864,
 					players = {},
-					tactics = format(L["Gundrak_Galdarah1"], GetSpellLink(55817), "IAT_29932", GetSpellLink(55814), "IAT_29932", "IAT_29305", GetSpellLink(55817), "IAT_150017", GetSpellLink(55817)),
+					tactics = format(L["Gundrak_Galdarah1"], GetSpellLink(55817), "IAT_29932", "IAT_29932", "IAT_29932", GetSpellLink(55814), "IAT_29932", "IAT_29932", "IAT_29932"),
 					enabled = false,
 					track = nil,
 					partial = false,
