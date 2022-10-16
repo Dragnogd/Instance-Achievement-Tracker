@@ -119,6 +119,27 @@ function generateNPCCache()
 				core:sendDebugMessage("NPC cache generated")
 			end
 		end, #tempNPC)
+	else
+		core:sendDebugMessage("Attempting to load from local NPC Cache classic")
+		GetNameFromLocalNpcIDCache()
+
+		core:sendDebugMessage("Generating NPC Cache Classic...")
+		local count = 1
+		local tempNPC = {}
+		for i,v in pairs(core.NPCCacheClassic) do
+			--GetNameFromNpcIDCache(core.NPCCache[v])
+			table.insert(tempNPC, core.NPCCacheClassic[v])
+		end
+
+		generateNPCs = C_Timer.NewTicker(0.01, function()
+			--core:sendDebugMessage("Fetching: " .. tempNPC[count] .. "(" .. count .. "/" .. #tempNPC .. ")")
+			GetNameFromNpcIDCache(tempNPC[count])
+			count = count + 1
+
+			if generateNPCs._remainingIterations == 1 then
+				core:sendDebugMessage("NPC cache classic generated")
+			end
+		end, #tempNPC)
 	end
 end
 
@@ -614,12 +635,12 @@ function getInstanceInfomation()
 					instanceCompatible = true
 
 					--Set instance we want to debug
-					-- core.instanceNameSpaces = "Sepulcher of the First Ones"
-					-- core.instanceName = "SepulcherOfTheFirstOnes"
-					-- core.instance = 2481
-					-- core.instanceClear = "_2481"
-					-- core.expansion = 2
-					-- core.instanceType = "Raids"
+					-- core.instanceNameSpaces = "Halls of Lightning"
+					-- core.instanceName = "HallsOfLightning"
+					-- core.instance = 602
+					-- core.instanceClear = "_602"
+					-- core.expansion = 3
+					-- core.instanceType = "Dungeons"
 				end
 
 				if instanceCompatible == true and core.expansion ~= nil then
