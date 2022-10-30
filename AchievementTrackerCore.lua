@@ -152,6 +152,15 @@ function getNPCName(npcID)
 	end
 end
 
+function getNPCNameClassic(npcID)
+	if not tonumber(core.NPCCacheClassic[npcID]) then
+		return core.NPCCacheClassic[npcID]
+	else
+		GetNameFromNpcIDCache(npcID)
+		return ""
+	end
+end
+
 events:SetScript("OnEvent", function(self, event, ...)
     return self[event] and self[event](self, event, ...) 	--Allow event arguments to be called from seperate functions
 end)
@@ -3297,13 +3306,23 @@ end
 ------------------------------------------------------
 
 --Display the failed achievement message for achievements
-function core:getAchievementFailed(index)
+function core:getAchievementFailed(index, achievementID)
 	local value = index
+	local achievementValue = index
 	if index == nil then
 		value = 1
+		achievementValue = 1
+	end
+
+	if achievementID ~= nil then
+		for i=1, #core.achievementIDs do
+			if core.achievementIDs[i] == achievementID then
+				achievementValue = i
+			end
+		end
 	end
 	if core.achievementsFailed[value] == false then
-		core:sendMessage(GetAchievementLink(core.achievementIDs[value]) .. " " .. L["Core_Failed"],true,"failed")
+		core:sendMessage(GetAchievementLink(core.achievementIDs[achievementValue]) .. " " .. L["Core_Failed"],true,"failed")
 		core.achievementsFailed[value] = true
 	end
 end
@@ -3322,13 +3341,24 @@ function core:getAchievementFailedWithMessageBefore(message, index)
 end
 
 --Display the failed achievement message for achievements with message after
-function core:getAchievementFailedWithMessageAfter(message, index)
+function core:getAchievementFailedWithMessageAfter(message, index, achievementID)
 	local value = index
+	local achievementValue = index
 	if index == nil then
 		value = 1
+		achievementValue = 1
 	end
+
+	if achievementID ~= nil then
+		for i=1, #core.achievementIDs do
+			if core.achievementIDs[i] == achievementID then
+				achievementValue = i
+			end
+		end
+	end
+
 	if core.achievementsFailed[value] == false then
-		core:sendMessage(GetAchievementLink(core.achievementIDs[value]) .. " " .. L["Core_Failed"] .. " " .. message,true,"failed")
+		core:sendMessage(GetAchievementLink(core.achievementIDs[achievementValue]) .. " " .. L["Core_Failed"] .. " " .. message,true,"failed")
 		core.achievementsFailed[value] = true
 	end
 end
