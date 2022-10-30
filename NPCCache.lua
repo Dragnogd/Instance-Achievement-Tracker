@@ -658,4 +658,5 @@ core.NPCCacheClassic = {
 	[29313] =29313, --Ichoron
 	[174060] =174060, --Prince Keleseth
 	[23953] =23953, --Prince Keleseth
+	[23562] =23562, --Unstoppable Abomination
 }
