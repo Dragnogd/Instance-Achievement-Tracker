@@ -23,6 +23,8 @@ local fixedTimer = nil
 local mobTimestamp = nil
 local chatMobsAliveLastMessage = ""
 local timestampTimer = nil
+local countDownTicker = nil
+local blockCountDownReset = false
 
 events:SetScript("OnEvent", function(self, event, ...)
     return self[event] and self[event](self, event, ...) 	--Allow event arguments to be called from seperate functions
@@ -63,6 +65,47 @@ function MobCounter:Setup(maxMobs, timeWindow, mobIdentifier)
     end
 end
 
+function MobCounter:SetupCountdown(time,achievementID,manualReset)
+    local timeRemaining = time
+
+    if manualReset == true then
+        blockCountDownReset = true
+    end
+
+    if mobCounterSetup == false then
+        mobCounterSetup = true
+        C_Timer.After(5, function()
+            core.IATInfoFrame:SetSubHeading1(L["MobCounter_TimeReamining"] .. ": " .. timeRemaining)
+        end)
+
+        countDownTicker = C_Timer.NewTicker(1, function()
+            timeRemaining = timeRemaining - 1
+
+            core.IATInfoFrame:SetSubHeading1(L["MobCounter_TimeReamining"] .. ": " .. timeRemaining)
+
+            if mobCounterSetup == false then
+                countDownTicker:Cancel()
+            else
+                if timeRemaining == 0 then
+                    if achievementID ~= nil then
+                        core:sendMessage(GetAchievementLink(achievementID) .. " " .. L["Core_Failed"],true,"failed")
+                    else
+                        core:getAchievementFailed()
+                    end
+                end
+            end
+        end, time)
+    end
+end
+
+function MobCounter:CancelCountdown()
+    if countDownTicker ~= nil then
+        blockCountDownReset = false
+        countDownTicker:Cancel()
+    end
+end
+
+
 function MobCounter:Reset()
     mobID = nil
     mobCriteria = 0
@@ -85,6 +128,12 @@ function MobCounter:Reset()
     if fixedTimer ~= nil then
         fixedTimer:Cancel()
         fixedTimer = nil
+    end
+    if blockCountDownReset == false then
+        if countDownTicker ~= nil then
+            countDownTicker:Cancel()
+            countDownTicker = nil
+        end
     end
 end
 
