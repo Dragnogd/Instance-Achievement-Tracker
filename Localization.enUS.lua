@@ -171,6 +171,7 @@ local baseLocale = {
 	["Shared_AddsKilled"] = "Adds killed",
 	["Shared_PlayersMetCriteria"] = "Players who have met criteria",
 	["Shared_Players25Yards"] = "Players must be within 25 yards of a player running IAT to track this achievement accurately",
+	["Shared_WrongGroupConfig"] = "cannot be completed with the current group configuration",
 	["TimeBetweenLast"] = "Time between last %s %s seconds",
 	["TheaterOfPain_AffrontOfChallengers"] = "To complete this achievement, simply defeat each of the bosses last.\n\nNote: You can run the dungeon multiple times to complete the achievement in a single day.",
 	["TheaterOfPain_Gorechop"] = "For this achievement you have to use %s %s to destroy the two hunks of meat in the corners.\n\n Once both hunks of meat have been destroyed, you can kill the boss and get the achievement.",
