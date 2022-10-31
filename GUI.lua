@@ -1955,11 +1955,11 @@ function Instance_OnClick(self)
                     --Only show players if user has enabled achievement tracking
                     button.contentText:SetWidth(600)
                     if (GetLocale() == 'koKR') then
-                        button.contentText:SetFont("Fonts\\2002.TTF", 12);
+                        button.contentText:SetFont("Fonts\\2002.TTF", 12, "OUTLINE");
                     elseif (GetLocale() == 'zhCN') then
-                        button.contentText:SetFont("Fonts\\ARKai_T.ttf", 16);
+                        button.contentText:SetFont("Fonts\\ARKai_T.ttf", 16, "OUTLINE");
                     elseif (GetLocale() == 'zhTW') then
-                        button.contentText:SetFont("Fonts\\blei00d.TTF", 16);
+                        button.contentText:SetFont("Fonts\\blei00d.TTF", 16, "OUTLINE");
                     elseif (GetLocale() == 'ruRU') then
                         button.contentText:SetFont("p", "Fonts\\FRIZQT___CYR.TTF", 12, "OUTLINE");
                     else
