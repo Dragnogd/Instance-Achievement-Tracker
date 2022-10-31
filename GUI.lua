@@ -1961,7 +1961,7 @@ function Instance_OnClick(self)
                     elseif (GetLocale() == 'zhTW') then
                         button.contentText:SetFont("Fonts\\blei00d.TTF", 16);
                     elseif (GetLocale() == 'ruRU') then
-                        button.contentText:SetFont("Fonts\\FRIZQT___CYR.TTF", 12);
+                        button.contentText:SetFont("p", "Fonts\\FRIZQT___CYR.TTF", 12, "OUTLINE");
                     else
                         if core.gameVersionMajor > 9 then
                             button.contentText:SetFont("p","Fonts\\FRIZQT__.TTF", 13, "OUTLINE");
