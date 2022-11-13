@@ -197,7 +197,7 @@ function sapphironFrostResistanceChecker()
                 local baseResistance, totalResistance, bonusResistance, minusResistance = UnitResistance(player, 4)
 
                 if totalResistance > 100 then
-                    if core.encounterStarted == true then
+                    if core.encounterStarted == true and core.currentBosses[1].encounterID == 1119 then
                         core:getAchievementFailedWithMessageAfter("(" .. player .. ")")
                     end
                     InfoFrame_SetPlayerFailedWithMessage(player, totalResistance)
