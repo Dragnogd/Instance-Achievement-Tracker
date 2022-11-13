@@ -512,8 +512,10 @@ function core._2296:TrackAdditional()
                         local player = player2
                         local playerUID = player_UID2
                         core:sendDebugMessage("Starting Wilted Timer for " .. player)
+                        local iterations = 600
                         wiltedTimers[player_UID2] = C_Timer.NewTicker(1, function()
                             if (wiltedTimers[playerUID]._remainingIterations - 1) < wiltedMasterTimer then
+                                wiltedTimers[playerUID]._remainingIterations = wiltedTimers[playerUID]._remainingIterations - 1
                                 wiltedMasterTimer = wiltedTimers[playerUID]._remainingIterations - 1
                                 wiltedMasterPlayer = player
                                 if initialStoneLegionSetup == false then
@@ -522,7 +524,8 @@ function core._2296:TrackAdditional()
                                     InfoFrame_SetHeaderCounterWithAdditionalMessage(L["Shared_PlayersMetCriteria"],BloomingFlowersCounter,core.groupSize,L["CastleNathria_OrbTimer"] .. ": " .. wiltedMasterTimer .. " (" .. wiltedMasterPlayer .. ")\n" .. L["CastleNathria_KillTimer"] .. ": " .. bloomingMasterTimer)
                                 end
                             end
-                        end, 600)
+                        end, iterations)
+                        wiltedTimers[player_UID2]._remainingIterations = iterations
                     end
                 end
             else
