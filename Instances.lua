@@ -1,5 +1,5 @@
 --------------------------------------
--- Last Auto Generated: 13/11/2022 09:53:21
+-- Last Auto Generated: 13/11/2022 19:52:18
 --------------------------------------
 local _, core = ...
 local L = core.L
@@ -5510,8 +5510,8 @@ core.Instances = {
 					achievement = 2148,
 					players = {},
 					tactics = L["EyeOfEternity_Malygos"],
-					enabled = true,
-					track = function() core._616:DenyinTheScion() end,
+					enabled = false,
+					track = nil,
 					partial = false,
 					encounterID = 1094,
 					nameWrath = L["Boss_Malygos"],
@@ -5555,8 +5555,8 @@ core.Instances = {
 					achievement = 2149,
 					players = {},
 					tactics = L["EyeOfEternity_Malygos"],
-					enabled = true,
-					track = function() core._616:DenyinTheScion() end,
+					enabled = false,
+					track = nil,
 					partial = false,
 					encounterID = 1094,
 					nameWrath = L["Boss_Malygos"],

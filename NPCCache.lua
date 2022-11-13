@@ -652,6 +652,8 @@ core.NPCCache = {
 	[184823] =184823, --Strange Artifact
 	[157161] =157161, --Sand Vortex
 	[143045] =143045, --Coastal Scuttler
+	[26641] =26641, --Drakkari Gutripper
+	[26628] =26628, --Drakkari Scytheclaw
 }
 core.NPCCacheClassic = {
 	[29364] =29364, --Void Sentry
@@ -659,4 +661,6 @@ core.NPCCacheClassic = {
 	[174060] =174060, --Prince Keleseth
 	[23953] =23953, --Prince Keleseth
 	[23562] =23562, --Unstoppable Abomination
+	[26641] =26641, --Drakkari Gutripper
+	[26628] =26628, --Drakkari Scytheclaw
 }
