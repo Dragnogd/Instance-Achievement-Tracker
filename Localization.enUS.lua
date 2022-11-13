@@ -51,6 +51,7 @@ local baseLocale = {
 	["GUI_TrackAchievementsInBlizzardUI"] = "Track achievements in Achievements UI",
 	["Gui_TacticsNames"] = "Night, Daugen, Whizzey",
 	["GUI_TrackCharacterAchievements"] = "Track character achievements (Default: Account)",
+	["GUI_DifficultyWarning"] = "Some achievements do not worth correctly on mythic mode. It is highly recommended doing the achievements on Heroic mode as per the achievement descriptions",
 	["Core_StartingAchievementScan"] = "Starting achievement scan for",
 	["Core_GameFreezeWarning"] = "This may freeze your game for a few seconds",
 	["Core_AchievementScanFinished"] = "Achievement Scanning Finished",

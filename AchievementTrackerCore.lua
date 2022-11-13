@@ -606,17 +606,17 @@ function getInstanceInfomation()
 				core:sendDebugMessage("DifficultyID: " .. core.difficultyID)
 				if core.difficultyID == 2 then
 					--WOTLK/Cata/Mop/Wod heroic dungeons
-					if core.expansion == 3 or core.expansion == 3 or core.expansion == 4 or core.expansion == 5 then
+					if core.expansion == 3 or core.expansion == 4 or core.expansion == 5 or core.expansion == 6 then
 						instanceCompatible = true
 					end
 				elseif core.difficultyID == 23 then
 					--Mythics from legion onwards
-					if core.expansion >= 7 then
+					if core.expansion >= 6 then
 						instanceCompatible = true
 					end
 
 					--Mythic WoD don't work for most achievements
-					if core.difficultyID == 23 and core.expansion == 5 then
+					if core.difficultyID == 23 and core.expansion == 6 then
 						core.warnCompatible = true
 					end
 				elseif core.difficultyID == 3 or core.difficultyID == 5 then
@@ -651,12 +651,12 @@ function getInstanceInfomation()
 					instanceCompatible = true
 
 					--Set instance we want to debug
-					-- core.instanceNameSpaces = "Halls of Lightning"
-					-- core.instanceName = "HallsOfLightning"
-					-- core.instance = 602
-					-- core.instanceClear = "_602"
+					-- core.instanceNameSpaces = "Naxxramas"
+					-- core.instanceName = "Naxxramas"
+					-- core.instance = "533-10"
+					-- core.instanceClear = "_533"
 					-- core.expansion = 3
-					-- core.instanceType = "Dungeons"
+					-- core.instanceType = "Raids"
 				end
 
 				if instanceCompatible == true and core.expansion ~= nil then
