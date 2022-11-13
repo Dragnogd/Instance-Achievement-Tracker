@@ -462,7 +462,7 @@ end
 function getInstanceAchievements()
 	ClearAchievementComparisonUnit()
 	--Make sure the player we are about to scan is still in the group
-	if UnitName(playersToScan[1]) ~= nil then
+	if UnitExists(playersToScan[1]) then
 		playerCurrentlyScanning = playersToScan[1]
 		--core:sendDebugMessage("Setting Comparison Unit to: " .. UnitName(playersToScan[1]))
 		core.currentComparisonUnit = UnitName(playersToScan[1])
@@ -1751,7 +1751,7 @@ function events:INSPECT_ACHIEVEMENT_READY(self, GUID)
 	--Check if the Inspect_Achievement_Ready was from a request that we made and not from another addon. Really important.
 	if core.currentComparisonUnit == name then
 		--Make sure the player is still online since achievement scanning may happen some time after scanning players
-		if UnitName(playerCurrentlyScanning) ~= nil then
+		if UnitExists(playerCurrentlyScanning) then
 			local name2, realm2 = UnitName(playerCurrentlyScanning)
 			--Find all bosses for the current instance the player is in.
 			for expansion,_ in pairs(core.Instances) do
