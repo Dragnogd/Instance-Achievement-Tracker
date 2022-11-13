@@ -1,5 +1,5 @@
 --------------------------------------
--- Last Auto Generated: 30/10/2022 21:21:16
+-- Last Auto Generated: 13/11/2022 09:53:21
 --------------------------------------
 local _, core = ...
 local L = core.L
@@ -1603,17 +1603,6 @@ core.Instances = {
 					achievement = 13624,
 					players = {},
 					tactics = format(L["OperationMechagon_KeepDpsingAndNobodyExplodes"], "IAT_150190", "IAT_150190", "IAT_152703", "IAT_150190", "IAT_150295", "IAT_155760", GetSpellLink(303885), "IAT_155645", "IAT_144246", "IAT_155056", GetSpellLink(301850), "IAT_154817", "IAT_151168", "IAT_151168", "IAT_151168"),
-					enabled = false,
-					track = nil,
-					partial = false,
-					encounterID = 2260,
-				},
-				boss6 = {
-					name = L["Instances_Other"], --King Mechagon
-					bossIDs = {},
-					achievement = 13789,
-					players = {},
-					tactics = format(L["OperationMechagon_HertzLocker"], "IAT_150190", "IAT_150190", "IAT_152703", "IAT_150190", "IAT_150295", "IAT_155760", GetSpellLink(303885), "IAT_155645", "IAT_144246", "IAT_155056", GetSpellLink(301850), "IAT_154817", "IAT_151168", "IAT_151168", "IAT_151168"),
 					enabled = false,
 					track = nil,
 					partial = false,
@@ -5498,6 +5487,7 @@ core.Instances = {
 					track = function() core._616:YouDontHaveAnEternity() end,
 					partial = false,
 					encounterID = 1094,
+					displayInfoFrame = true,
 					nameWrath = L["Boss_Malygos"],
 					tacticsClassic = "",
 				},
@@ -7526,8 +7516,8 @@ core.Instances = {
 					achievement = 2057,
 					players = {},
 					tactics = format(L["DarkTharonKeep_NovosTheSummoner"], "IAT_26627", "IAT_26627", "IAT_26627"),
-					enabled = false,
-					track = nil,
+					enabled = true,
+					track = function() core._600:NovosTheSummoner() end,
 					partial = false,
 					encounterID = 1976,
 					nameWrath = L["Boss_NovosTheSummoner"],
@@ -7644,7 +7634,7 @@ core.Instances = {
 					partial = false,
 					encounterID = 1981,
 					nameWrath = L["Boss_Galdarah"],
-					tacticsClassic = "",
+					tacticsClassic = format(L["Gundrak_Classic_Galdarah"], "IAT_143045"),
 				},
 				boss4 = {
 					name = 596, --Gal'darah
