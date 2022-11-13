@@ -149,7 +149,7 @@ function core._533:Subtraction()
 end
 
 function core._533:Shocking()
-    if (core.spellId == 28085 or core.spellId == 28059) and (core.type == "SPELL_DAMAGE" or core.type == "SPELL_MISSED") then
+    if (core.spellId == 28085 or core.spellId == 28062) and (core.type == "SPELL_DAMAGE" or core.type == "SPELL_MISSED") then
         if core.sourceName ~= nil and core.destName ~= nil then
             if core.difficultyID == 3 then
                 core:getAchievementFailedWithMessageAfter("(" .. core.sourceName .. ", " .. core.destName .. ")",nil,2178)
