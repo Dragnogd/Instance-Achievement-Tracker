@@ -15,28 +15,31 @@ local timer
 local timerStarted = false
 
 function core._616:YouDontHaveAnEternity()
+    --Defeat Malygos in 6 minutes or less-Defeat Malygos in 6 minutes or less
+
     if timerStarted == false then
         timerStarted = true
-        timer = C_Timer.NewTimer(360, function()
-            core:getAchievementFailed(2)
-        end) 
+        if core.difficultyID == 3 then
+            core.MobCounter:SetupCountdown(1874)
+        elseif core.difficultyID == 4 then
+            core.MobCounter:SetupCountdown(1875)
+        end
     end
 end
 
 function core._616:APokeInTheEye()
-    if core.difficultyID == 3 then
-        --10 Man
-        if core.groupSize < 9 then
-            core:getAchievementSuccess()
-        else
-            core:getAchievementFailed()
-        end
-    elseif core.difficultyID == 4 then
-        --25 Man
-        if core.groupSize < 21 then
-            core:getAchievementSuccess()
-        else
-            core:getAchievementFailed()
+    if subtractionFailWarningAnnounced == false then
+        subtractionFailWarningAnnounced = true
+        if core.difficultyID == 3 then
+            --10 Man
+            if core.groupSize > 9 then
+                core:sendMessage(GetAchievementLink(1869) .. " " .. L["Shared_WrongGroupConfig"])
+            end
+        elseif core.difficultyID == 4 then
+            --25 Man
+            if core.groupSize > 21 then
+                core:sendMessage(GetAchievementLink(1870) .. " " .. L["Shared_WrongGroupConfig"])
+            end
         end
     end
 end
@@ -52,7 +55,4 @@ function core._616:ClearVariables()
     ---- You Don't Have an Eternity
     ------------------------------------------------------
     timerStarted = false
-    if timer ~= nil then
-        timer:Cancel()
-    end
 end
