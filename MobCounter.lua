@@ -354,7 +354,9 @@ function MobCounter:StartFixedTimerNoOutput()
         core.achievementsFailed[1] = false
         local InititalTime = GetTime()
         local AchievementSuccess = false
+        local iterations = (mobCriteriaTimeWindow) * 100
         fixedTimer = C_Timer.NewTicker(0.01, function()
+            fixedTimer._remainingIterations = fixedTimer._remainingIterations - 1
             currentTick = fixedTimer._remainingIterations
             if AchievementSuccess == false then
                 if mobCriteriaTimeWindow - (GetTime() - InititalTime) >= 0 then
@@ -377,7 +379,8 @@ function MobCounter:StartFixedTimerNoOutput()
                 fixedTimerStarted = false
                 fixedTimer:Cancel()
             end
-        end, (mobCriteriaTimeWindow) * 100)
+        end, iterations)
+        fixedTimer._remainingIterations = iterations
     end
 end
 
