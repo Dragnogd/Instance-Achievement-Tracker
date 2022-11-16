@@ -1,8 +1,0 @@
-## Interface: 90001
-## Title: MSA-DropDownMenu-1.0
-## Notes: DropDown menu for non-Blizzard addons
-## Version: 1.0.11
-## Author: Kaliel (Marouan Sabbagh)
-## X-Category: Library
-
-MSA-DropDownMenu-1.0.xml

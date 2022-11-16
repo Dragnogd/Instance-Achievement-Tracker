@@ -1,10 +1,10 @@
 --- MSA-DropDownMenu-1.0 - DropDown menu for non-Blizzard addons
---- Copyright (c) 2016-2020, Marouan Sabbagh <mar.sabbagh@gmail.com>
+--- Copyright (c) 2016-2022, Marouan Sabbagh <mar.sabbagh@gmail.com>
 --- All Rights Reserved.
 ---
 --- https://www.curseforge.com/wow/addons/msa-dropdownmenu-10
 
-local name, version = "MSA-DropDownMenu-1.0", 11
+local name, version = "MSA-DropDownMenu-1.0", 15
 
 local lib, oldVersion = LibStub:NewLibrary(name, version)
 if not lib then return end
@@ -206,9 +206,9 @@ local function CreateDropDownList(name, parent)
 
     local frame1
     if oldVersion and oldVersion > 8 then  -- WoW 9.0 compatibility
-        frame1 = _G[name.."Backdrop"] or CreateFrame("Frame", name.."Backdrop", DropDownList, BackdropTemplateMixin and "BackdropTemplate")
+        frame1 = _G[name.."Backdrop"] or CreateFrame("Frame", name.."Backdrop", DropDownList, "BackdropTemplate")
     else
-        frame1 = CreateFrame("Frame", name.."Backdrop", DropDownList, BackdropTemplateMixin and "BackdropTemplate")
+        frame1 = CreateFrame("Frame", name.."Backdrop", DropDownList, "BackdropTemplate")
     end
     frame1:SetAllPoints()
     frame1:SetBackdrop({
@@ -227,9 +227,9 @@ local function CreateDropDownList(name, parent)
 
     local frame2
     if oldVersion and oldVersion > 8 then  -- WoW 9.0 compatibility
-        frame2 = _G[name.."MenuBackdrop"] or CreateFrame("Frame", name.."MenuBackdrop", DropDownList, BackdropTemplateMixin and "BackdropTemplate")
+        frame2 = _G[name.."MenuBackdrop"] or CreateFrame("Frame", name.."MenuBackdrop", DropDownList, "BackdropTemplate")
     else
-        frame2 = CreateFrame("Frame", name.."MenuBackdrop", DropDownList, BackdropTemplateMixin and "BackdropTemplate")
+        frame2 = CreateFrame("Frame", name.."MenuBackdrop", DropDownList, "BackdropTemplate")
     end
     frame2:SetAllPoints()
     frame2:SetBackdrop({
@@ -1447,6 +1447,26 @@ if ToggleDropDownMenu then
     end)
 end
 
+if UIDropDownMenu_HandleGlobalMouseEvent then
+    local function MSA_DropDownMenu_ContainsMouse()
+        for i = 1, MSA_DROPDOWNMENU_MAXLEVELS do
+            local dropdown = _G["MSA_DropDownList"..i];
+            if dropdown:IsShown() and dropdown:IsMouseOver() then
+                return true;
+            end
+        end
+        return false;
+    end
+
+    hooksecurefunc("UIDropDownMenu_HandleGlobalMouseEvent", function(button, event)
+        if event == "GLOBAL_MOUSE_DOWN" and (button == "LeftButton" or button == "RightButton") then
+            if not MSA_DropDownMenu_ContainsMouse() then
+                MSA_CloseDropDownMenus()
+            end
+        end
+    end)
+end
+
 function MSA_CloseDropDownMenus(level)
     if ( not level ) then
         level = 1;
@@ -1681,8 +1701,8 @@ local function LoadSkin_Aurora()
     if not IsAddOnLoaded("Aurora") then return end
     local Skin = _G.Aurora.Skin
     for i = 1, MSA_DROPDOWNMENU_MAXLEVELS do
-        Skin.TooltipBackdropTemplate(_G["MSA_DropDownList"..i.."MenuBackdrop"])
-        Skin.TooltipBackdropTemplate(_G["MSA_DropDownList"..i.."Backdrop"])
+        Skin.FrameTypeFrame(_G["MSA_DropDownList"..i.."MenuBackdrop"])
+        Skin.FrameTypeFrame(_G["MSA_DropDownList"..i.."Backdrop"])
     end
 end
 
