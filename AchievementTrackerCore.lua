@@ -642,7 +642,9 @@ function getInstanceInfomation()
 
 				--Make sure that we haven't enabled any instances present in retail that were refreshed from their classic counterparts
 				--When running on Classic wow
-				if core.gameVersionMajor == 3 and core.expansion > 3 and instanceCompatible == true then
+				if core.expansion == nil then
+					instanceCompatible = false
+				elseif core.gameVersionMajor == 3 and core.expansion > 3 and instanceCompatible == true then
 					core:sendDebugMessage("This instance is not compatible on classic")
 					instanceCompatible = false
 				end
@@ -1780,8 +1782,12 @@ function events:INSPECT_ACHIEVEMENT_READY(self, GUID)
 
 								--If the player has not completed the achievement then add them to the players string to display in the GUI
 								if achievementComplete == false then
-									local name, _ = UnitName(playersToScan[1])
-									table.insert(core.Instances[expansion][instanceType][instance][boss].players, name)
+									if UnitExists(playersToScan[1]) then
+										local name, _ = UnitName(playersToScan[1])
+										table.insert(core.Instances[expansion][instanceType][instance][boss].players, name)
+									else
+										core:sendDebugMessage("Fatal error. This shouldn't happen. Trying to load into achievement scanning " .. playersToScan[1])
+									end
 								end
 							end
 						end
