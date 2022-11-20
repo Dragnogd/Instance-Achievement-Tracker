@@ -116,20 +116,20 @@ end
 function Config:Toggle()
     local GUI = UIConfig or Config:CreateGUI()
     GUI:SetShown(not GUI:IsShown())
-    AltGameTooltip:Hide()
+    GameTooltip:Hide()
 end
 
 function Config:ToggleOn()
     --Toggle on only
     local GUI = UIConfig or Config:CreateGUI()
     GUI:SetShown(true)
-    AltGameTooltip:Hide()
+    GameTooltip:Hide()
 end
 
 function IAT_GlobalToggle()
     local GUI = UIConfig or Config:CreateGUI()
     GUI:SetShown(not GUI:IsShown())
-    AltGameTooltip:Hide()
+    GameTooltip:Hide()
 end
 
 -- Method:          Config:CreateButton()
@@ -397,12 +397,12 @@ function Tab_OnClick(self)
             UIConfig.Main2.options2:SetScript("OnClick", enableAddon_OnClick)
             UIConfig.Main2.options3 = Config:CreateText2("TOPLEFT", UIConfig, "TOPLEFT", 51, -170, L["GUI_EnableAddon"],"GameFontHighlight")
             UIConfig.Main2.options2:SetScript("OnEnter", function(self)
-                AltGameTooltip:SetOwner(self, "ANCHOR_TOPRIGHT")
-                AltGameTooltip:SetText(L["GUI_EnableAddonDescription"],1.0,0.82,0.0,1,true)
-                AltGameTooltip:Show()
+                GameTooltip:SetOwner(self, "ANCHOR_TOPRIGHT")
+                GameTooltip:SetText(L["GUI_EnableAddonDescription"],1.0,0.82,0.0,1,true)
+                GameTooltip:Show()
             end)
             UIConfig.Main2.options2:SetScript("OnLeave", function(self)
-                AltGameTooltip:Hide()
+                GameTooltip:Hide()
             end)
 
             --Toggle Minimap Icon
@@ -410,12 +410,12 @@ function Tab_OnClick(self)
             UIConfig.Main2.options4:SetScript("OnClick", ATToggleMinimapIcon_OnClick)
             UIConfig.Main2.options5 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options4, "TOPLEFT", 30, -9, L["GUI_ToggleMinimap"],"GameFontHighlight")
             UIConfig.Main2.options4:SetScript("OnEnter", function(self)
-                AltGameTooltip:SetOwner(self, "ANCHOR_TOPRIGHT")
-                AltGameTooltip:SetText(L["GUI_ShowMimapButtonDescription"],1.0,0.82,0.0,1,true)
-                AltGameTooltip:Show()
+                GameTooltip:SetOwner(self, "ANCHOR_TOPRIGHT")
+                GameTooltip:SetText(L["GUI_ShowMimapButtonDescription"],1.0,0.82,0.0,1,true)
+                GameTooltip:Show()
             end)
             UIConfig.Main2.options4:SetScript("OnLeave", function(self)
-                AltGameTooltip:Hide()
+                GameTooltip:Hide()
             end)
 
             --Link achievements being tracked for current boss to chat
@@ -426,12 +426,12 @@ function Tab_OnClick(self)
             UIConfig.Main2.options7:SetWidth(320)
             UIConfig.Main2.options7:SetJustifyH("LEFT")
             UIConfig.Main2.options6:SetScript("OnEnter", function(self)
-                AltGameTooltip:SetOwner(self, "ANCHOR_TOPRIGHT")
-                AltGameTooltip:SetText(L["GUI_AnnounceAchievementsToGroupDescription"],1.0,0.82,0.0,1,true)
-                AltGameTooltip:Show()
+                GameTooltip:SetOwner(self, "ANCHOR_TOPRIGHT")
+                GameTooltip:SetText(L["GUI_AnnounceAchievementsToGroupDescription"],1.0,0.82,0.0,1,true)
+                GameTooltip:Show()
             end)
             UIConfig.Main2.options6:SetScript("OnLeave", function(self)
-                AltGameTooltip:Hide()
+                GameTooltip:Hide()
             end)
 
             --Only track achievements in the group that players need.
@@ -441,12 +441,12 @@ function Tab_OnClick(self)
             UIConfig.Main2.options8:SetScript("OnClick", ATToggleTrackMissingAchievementsOnly_OnClick)
             UIConfig.Main2.options9 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options8, "TOPLEFT", 30, -9, L["GUI_OnlyTrackMissingAchievements"],"GameFontHighlight")
             UIConfig.Main2.options8:SetScript("OnEnter", function(self)
-                AltGameTooltip:SetOwner(self, "ANCHOR_TOPRIGHT")
-                AltGameTooltip:SetText(L["GUI_OnlyTrackMissingAchievementsDescription"],1.0,0.82,0.0,1,true)
-                AltGameTooltip:Show()
+                GameTooltip:SetOwner(self, "ANCHOR_TOPRIGHT")
+                GameTooltip:SetText(L["GUI_OnlyTrackMissingAchievementsDescription"],1.0,0.82,0.0,1,true)
+                GameTooltip:Show()
             end)
             UIConfig.Main2.options8:SetScript("OnLeave", function(self)
-                AltGameTooltip:Hide()
+                GameTooltip:Hide()
             end)
 
             --Announce messages to Raid Warning if player has permission
@@ -454,12 +454,12 @@ function Tab_OnClick(self)
             UIConfig.Main2.options10:SetScript("OnClick", ATToggleAnnounceToRaidWarning_OnClick)
             UIConfig.Main2.options11 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options10, "TOPLEFT", 30, -9, L["GUI_AnnounceMessagesToRaidWarning"],"GameFontHighlight")
             UIConfig.Main2.options10:SetScript("OnEnter", function(self)
-                AltGameTooltip:SetOwner(self, "ANCHOR_TOPRIGHT")
-                AltGameTooltip:SetText(L["GUI_AnnounceMessagesToRaidWarningDescription"],1.0,0.82,0.0,1,true)
-                AltGameTooltip:Show()
+                GameTooltip:SetOwner(self, "ANCHOR_TOPRIGHT")
+                GameTooltip:SetText(L["GUI_AnnounceMessagesToRaidWarningDescription"],1.0,0.82,0.0,1,true)
+                GameTooltip:Show()
             end)
             UIConfig.Main2.options10:SetScript("OnLeave", function(self)
-                AltGameTooltip:Hide()
+                GameTooltip:Hide()
             end)
 
             --Links to current guides and achievement discord credit for tactics
@@ -478,12 +478,12 @@ function Tab_OnClick(self)
             UIConfig.Main2.options12:SetScript("OnClick", ATToggleSound_OnClick)
             UIConfig.Main2.options13 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options12, "TOPLEFT", 30, -9, L["GUI_PlaySoundOnSuccess"],"GameFontHighlight")
             UIConfig.Main2.options12:SetScript("OnEnter", function(self)
-                AltGameTooltip:SetOwner(self, "ANCHOR_TOPRIGHT")
-                AltGameTooltip:SetText(L["GUI_PlaySoundOnCompletionDescription"],1.0,0.82,0.0,1,true)
-                AltGameTooltip:Show()
+                GameTooltip:SetOwner(self, "ANCHOR_TOPRIGHT")
+                GameTooltip:SetText(L["GUI_PlaySoundOnCompletionDescription"],1.0,0.82,0.0,1,true)
+                GameTooltip:Show()
             end)
             UIConfig.Main2.options12:SetScript("OnLeave", function(self)
-                AltGameTooltip:Hide()
+                GameTooltip:Hide()
             end)
 
             --Dropdown menu to select sound for completed Achievement
@@ -509,12 +509,12 @@ function Tab_OnClick(self)
             UIConfig.Main2.options012:SetScript("OnClick", ATToggleSoundFailed_OnClick)
             UIConfig.Main2.options013 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options012, "TOPLEFT", 30, -9, L["GUI_PlaySoundOnFailed"],"GameFontHighlight")
             UIConfig.Main2.options012:SetScript("OnEnter", function(self)
-                AltGameTooltip:SetOwner(self, "ANCHOR_TOPRIGHT")
-                AltGameTooltip:SetText(L["GUI_PlaySoundOnFailDescription"],1.0,0.82,0.0,1,true)
-                AltGameTooltip:Show()
+                GameTooltip:SetOwner(self, "ANCHOR_TOPRIGHT")
+                GameTooltip:SetText(L["GUI_PlaySoundOnFailDescription"],1.0,0.82,0.0,1,true)
+                GameTooltip:Show()
             end)
             UIConfig.Main2.options012:SetScript("OnLeave", function(self)
-                AltGameTooltip:Hide()
+                GameTooltip:Hide()
             end)
 
             --Dropdown menu to select sound for failed Achievement
@@ -540,12 +540,12 @@ function Tab_OnClick(self)
             UIConfig.Main2.options18:SetScript("OnClick", ATToggleHideCompletedAchievements_OnClick)
             UIConfig.Main2.options19 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options18, "TOPLEFT", 30, -9, L["GUI_HideCompletedAchievements"],"GameFontHighlight")
             UIConfig.Main2.options18:SetScript("OnEnter", function(self)
-                AltGameTooltip:SetOwner(self, "ANCHOR_TOPRIGHT")
-                AltGameTooltip:SetText(L["GUI_HideCompletedAchievementsDescription"],1.0,0.82,0.0,1,true)
-                AltGameTooltip:Show()
+                GameTooltip:SetOwner(self, "ANCHOR_TOPRIGHT")
+                GameTooltip:SetText(L["GUI_HideCompletedAchievementsDescription"],1.0,0.82,0.0,1,true)
+                GameTooltip:Show()
             end)
             UIConfig.Main2.options18:SetScript("OnLeave", function(self)
-                AltGameTooltip:Hide()
+                GameTooltip:Hide()
             end)
 
             --Grey out completed achievements
@@ -553,12 +553,12 @@ function Tab_OnClick(self)
             UIConfig.Main2.options20:SetScript("OnClick", ATToggleGreyOutCompletedAchievements_OnClick)
             UIConfig.Main2.options21 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options20, "TOPLEFT", 30, -9, L["GUI_GreyOutCompletedAchievements"],"GameFontHighlight")
             UIConfig.Main2.options20:SetScript("OnEnter", function(self)
-                AltGameTooltip:SetOwner(self, "ANCHOR_TOPRIGHT")
-                AltGameTooltip:SetText(L["GUI_GreyOutCompletedAchievementsDescription"],1.0,0.82,0.0,1,true)
-                AltGameTooltip:Show()
+                GameTooltip:SetOwner(self, "ANCHOR_TOPRIGHT")
+                GameTooltip:SetText(L["GUI_GreyOutCompletedAchievementsDescription"],1.0,0.82,0.0,1,true)
+                GameTooltip:Show()
             end)
             UIConfig.Main2.options20:SetScript("OnLeave", function(self)
-                AltGameTooltip:Hide()
+                GameTooltip:Hide()
             end)
             -- UIConfig.Main2.options20:Hide()
             -- UIConfig.Main2.options21:Hide()
@@ -568,12 +568,12 @@ function Tab_OnClick(self)
             UIConfig.Main2.options22:SetScript("OnClick", ATToggleAutomaticCombatLogging_OnClick)
             UIConfig.Main2.options23 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options22, "TOPLEFT", 30, -9, L["GUI_EnableAutomaticCombatLogging"],"GameFontHighlight")
             UIConfig.Main2.options22:SetScript("OnEnter", function(self)
-                AltGameTooltip:SetOwner(self, "ANCHOR_TOPRIGHT")
-                AltGameTooltip:SetText(L["GUI_EnableCombatLogDescription"],1.0,0.82,0.0,1,true)
-                AltGameTooltip:Show()
+                GameTooltip:SetOwner(self, "ANCHOR_TOPRIGHT")
+                GameTooltip:SetText(L["GUI_EnableCombatLogDescription"],1.0,0.82,0.0,1,true)
+                GameTooltip:Show()
             end)
             UIConfig.Main2.options22:SetScript("OnLeave", function(self)
-                AltGameTooltip:Hide()
+                GameTooltip:Hide()
             end)
 
             --Disable InfoFrame
@@ -581,12 +581,12 @@ function Tab_OnClick(self)
             UIConfig.Main2.options24:SetScript("OnClick", ATToggleInfoFrame_OnClick)
             UIConfig.Main2.options25 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options24, "TOPLEFT", 30, -9, L["GUI_DisplayInfoFrame"],"GameFontHighlight")
             UIConfig.Main2.options24:SetScript("OnEnter", function(self)
-                AltGameTooltip:SetOwner(self, "ANCHOR_TOPRIGHT")
-                AltGameTooltip:SetText(L["GUI_EnableInfoFrameDescription"],1.0,0.82,0.0,1,true)
-                AltGameTooltip:Show()
+                GameTooltip:SetOwner(self, "ANCHOR_TOPRIGHT")
+                GameTooltip:SetText(L["GUI_EnableInfoFrameDescription"],1.0,0.82,0.0,1,true)
+                GameTooltip:Show()
             end)
             UIConfig.Main2.options24:SetScript("OnLeave", function(self)
-                AltGameTooltip:Hide()
+                GameTooltip:Hide()
             end)
 
             --Track missing achievements in Blizzard UI
@@ -594,12 +594,12 @@ function Tab_OnClick(self)
             UIConfig.Main2.options26:SetScript("OnClick", ATToggleTrackAchievementsInBlizzardUI_OnClick)
             UIConfig.Main2.options27 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options26, "TOPLEFT", 30, -9, L["GUI_TrackAchievementsInBlizzardUI"],"GameFontHighlight")
             UIConfig.Main2.options26:SetScript("OnEnter", function(self)
-                AltGameTooltip:SetOwner(self, "ANCHOR_TOPRIGHT")
-                AltGameTooltip:SetText(L["GUI_TrackAchievementsInUIDescription"],1.0,0.82,0.0,1,true)
-                AltGameTooltip:Show()
+                GameTooltip:SetOwner(self, "ANCHOR_TOPRIGHT")
+                GameTooltip:SetText(L["GUI_TrackAchievementsInUIDescription"],1.0,0.82,0.0,1,true)
+                GameTooltip:Show()
             end)
             UIConfig.Main2.options26:SetScript("OnLeave", function(self)
-                AltGameTooltip:Hide()
+                GameTooltip:Hide()
             end)
 
             --Track achievements completed by player instead of account
@@ -610,12 +610,12 @@ function Tab_OnClick(self)
             UIConfig.Main2.options29:SetWidth(400)
             UIConfig.Main2.options29:SetJustifyH("LEFT")
             UIConfig.Main2.options28:SetScript("OnEnter", function(self)
-                AltGameTooltip:SetOwner(self, "ANCHOR_TOPRIGHT")
-                AltGameTooltip:SetText(L["GUI_TrackChararcterAchievementsDescription"],1.0,0.82,0.0,1,true)
-                AltGameTooltip:Show()
+                GameTooltip:SetOwner(self, "ANCHOR_TOPRIGHT")
+                GameTooltip:SetText(L["GUI_TrackChararcterAchievementsDescription"],1.0,0.82,0.0,1,true)
+                GameTooltip:Show()
             end)
             UIConfig.Main2.options28:SetScript("OnLeave", function(self)
-                AltGameTooltip:Hide()
+                GameTooltip:Hide()
             end)
 
             --Track achievement automatically upon entering a compatible instance
@@ -626,12 +626,12 @@ function Tab_OnClick(self)
             UIConfig.Main2.options31:SetWidth(400)
             UIConfig.Main2.options31:SetJustifyH("LEFT")
             UIConfig.Main2.options30:SetScript("OnEnter", function(self)
-                AltGameTooltip:SetOwner(self, "ANCHOR_TOPRIGHT")
-                AltGameTooltip:SetText(L["GUI_TrackAchievementsAutomaticallyDescription"],1.0,0.82,0.0,1,true)
-                AltGameTooltip:Show()
+                GameTooltip:SetOwner(self, "ANCHOR_TOPRIGHT")
+                GameTooltip:SetText(L["GUI_TrackAchievementsAutomaticallyDescription"],1.0,0.82,0.0,1,true)
+                GameTooltip:Show()
             end)
             UIConfig.Main2.options30:SetScript("OnLeave", function(self)
-                AltGameTooltip:Hide()
+                GameTooltip:Hide()
             end)
 
             --Change Minimap icon when addon is enabled/disabled
@@ -642,12 +642,12 @@ function Tab_OnClick(self)
             UIConfig.Main2.options33:SetWidth(400)
             UIConfig.Main2.options33:SetJustifyH("LEFT")
             UIConfig.Main2.options32:SetScript("OnEnter", function(self)
-                AltGameTooltip:SetOwner(self, "ANCHOR_TOPRIGHT")
-                AltGameTooltip:SetText(L["GUI_ChangeMinimapIconDescription"],1.0,0.82,0.0,1,true)
-                AltGameTooltip:Show()
+                GameTooltip:SetOwner(self, "ANCHOR_TOPRIGHT")
+                GameTooltip:SetText(L["GUI_ChangeMinimapIconDescription"],1.0,0.82,0.0,1,true)
+                GameTooltip:Show()
             end)
             UIConfig.Main2.options32:SetScript("OnLeave", function(self)
-                AltGameTooltip:Hide()
+                GameTooltip:Hide()
             end)
 
             --Show/Hide InfoFrame
@@ -655,12 +655,12 @@ function Tab_OnClick(self)
             UIConfig.Main2.options34:SetWidth(UIConfig.Main2.options34:GetTextWidth() + 10)
             UIConfig.Main2.options34:SetScript("OnClick", ATToggleShowInfoFrameTestFrame_OnClick)
             UIConfig.Main2.options34:SetScript("OnEnter", function(self)
-                AltGameTooltip:SetOwner(self, "ANCHOR_TOPRIGHT")
-                AltGameTooltip:SetText(L["GUI_ToggleInfoFrameTestFrameDescription"],1.0,0.82,0.0,1,true)
-                AltGameTooltip:Show()
+                GameTooltip:SetOwner(self, "ANCHOR_TOPRIGHT")
+                GameTooltip:SetText(L["GUI_ToggleInfoFrameTestFrameDescription"],1.0,0.82,0.0,1,true)
+                GameTooltip:Show()
             end)
             UIConfig.Main2.options34:SetScript("OnLeave", function(self)
-                AltGameTooltip:Hide()
+                GameTooltip:Hide()
             end)
 
             -- --Make a sound whxen an achievement has been failed
@@ -668,12 +668,12 @@ function Tab_OnClick(self)
             -- UIConfig.Main2.options35:SetScript("OnClick", ATToggleSoundFailed_OnClick)
             -- UIConfig.Main2.options36 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options35, "TOPLEFT", 30, -9, L["GUI_SelectLocalisation"],"GameFontHighlight")
             -- UIConfig.Main2.options35:SetScript("OnEnter", function(self)
-            --     AltGameTooltip:SetOwner(self, "ANCHOR_TOPRIGHT")
-            --     AltGameTooltip:SetText(L["GUI_SelectLocalisationDescription"],1.0,0.82,0.0,1,true)
-            --     AltGameTooltip:Show()
+            --     GameTooltip:SetOwner(self, "ANCHOR_TOPRIGHT")
+            --     GameTooltip:SetText(L["GUI_SelectLocalisationDescription"],1.0,0.82,0.0,1,true)
+            --     GameTooltip:Show()
             -- end)
             -- UIConfig.Main2.options35:SetScript("OnLeave", function(self)
-            --     AltGameTooltip:Hide()
+            --     GameTooltip:Hide()
             -- end)
 
             -- --Dropdown menu to select sound for failed Achievement
@@ -1586,12 +1586,13 @@ function Config:CreateGUI()
             -- button.contentText = button:CreateFontString(nil,"ARTWORK","GameFontHighlight")
             button.contentText = CreateFrame("SimpleHTML")
             button.contentText:SetScript("OnHyperlinkEnter", function(self, linkData, link, button)
-                AltGameTooltip:SetOwner(UIConfig, "ANCHOR_TOPRIGHT")
-                AltGameTooltip:SetHyperlink(linkData)
-                AltGameTooltip:Show()
+                GameTooltip:SetOwner(UIConfig, "ANCHOR_TOPRIGHT")
+                print(linkData)
+                GameTooltip:SetHyperlink(linkData)
+                GameTooltip:Show()
             end)
             button.contentText:SetScript("OnHyperlinkLeave", function(self, linkData, link, button)
-                AltGameTooltip:Hide()
+                GameTooltip:Hide()
             end)
             button.contentText:SetParent(button)
             button.contentText:SetPoint("TOPLEFT",16,0)
@@ -2087,11 +2088,11 @@ function ClearGUITabs()
 end
 
 function Achievement_OnEnter(self)
-    AltGameTooltip:Hide()
+    GameTooltip:Hide()
 end
 
 function Achievement_OnHide(self)
-    AltGameTooltip:Hide()
+    GameTooltip:Hide()
 end
 
 function Achievement_OnEnter(self)
@@ -2099,79 +2100,79 @@ function Achievement_OnEnter(self)
     if Config.currentTab == 10 then
         for i = 1, #DragonflightContentButtons do
             if MouseIsOver(DragonflightContentButtons[i]) then
-                AltGameTooltip:SetOwner(UIConfig, "ANCHOR_TOPRIGHT")
-                AltGameTooltip:SetHyperlink(GetAchievementLink(DragonflightContentButtons[i].achievementID))
-                AltGameTooltip:Show()
+                GameTooltip:SetOwner(UIConfig, "ANCHOR_TOPRIGHT")
+                GameTooltip:SetHyperlink(GetAchievementLink(DragonflightContentButtons[i].achievementID))
+                GameTooltip:Show()
                 foundAchievement = true
             end
         end
     elseif Config.currentTab == 9 then
         for i = 1, #ShadowlandsContentButtons do
             if MouseIsOver(ShadowlandsContentButtons[i]) then
-                AltGameTooltip:SetOwner(UIConfig, "ANCHOR_TOPRIGHT")
-                AltGameTooltip:SetHyperlink(GetAchievementLink(ShadowlandsContentButtons[i].achievementID))
-                AltGameTooltip:Show()
+                GameTooltip:SetOwner(UIConfig, "ANCHOR_TOPRIGHT")
+                GameTooltip:SetHyperlink(GetAchievementLink(ShadowlandsContentButtons[i].achievementID))
+                GameTooltip:Show()
                 foundAchievement = true
             end
         end
     elseif Config.currentTab == 8 then
         for i = 1, #BattleForAzerothContentButtons do
             if MouseIsOver(BattleForAzerothContentButtons[i]) then
-                AltGameTooltip:SetOwner(UIConfig, "ANCHOR_TOPRIGHT")
-                AltGameTooltip:SetHyperlink(GetAchievementLink(BattleForAzerothContentButtons[i].achievementID))
-                AltGameTooltip:Show()
+                GameTooltip:SetOwner(UIConfig, "ANCHOR_TOPRIGHT")
+                GameTooltip:SetHyperlink(GetAchievementLink(BattleForAzerothContentButtons[i].achievementID))
+                GameTooltip:Show()
                 foundAchievement = true
             end
         end
     elseif Config.currentTab == 7 then
         for i = 1, #LegionContentButtons do
             if MouseIsOver(LegionContentButtons[i]) then
-                AltGameTooltip:SetOwner(UIConfig, "ANCHOR_TOPRIGHT")
-                AltGameTooltip:SetHyperlink(GetAchievementLink(LegionContentButtons[i].achievementID))
-                AltGameTooltip:Show()
+                GameTooltip:SetOwner(UIConfig, "ANCHOR_TOPRIGHT")
+                GameTooltip:SetHyperlink(GetAchievementLink(LegionContentButtons[i].achievementID))
+                GameTooltip:Show()
                 foundAchievement = true
             end
         end
     elseif Config.currentTab == 6 then
         for i = 1, #WarlordsOfDraenorContentButtons do
             if MouseIsOver(WarlordsOfDraenorContentButtons[i]) then
-                AltGameTooltip:SetOwner(UIConfig, "ANCHOR_TOPRIGHT")
-                AltGameTooltip:SetHyperlink(GetAchievementLink(WarlordsOfDraenorContentButtons[i].achievementID))
-                AltGameTooltip:Show()
+                GameTooltip:SetOwner(UIConfig, "ANCHOR_TOPRIGHT")
+                GameTooltip:SetHyperlink(GetAchievementLink(WarlordsOfDraenorContentButtons[i].achievementID))
+                GameTooltip:Show()
                 foundAchievement = true
             end
         end
     elseif Config.currentTab == 5 then
         for i = 1, #MistsOfPandariaContentButtons do
             if MouseIsOver(MistsOfPandariaContentButtons[i]) then
-                AltGameTooltip:SetOwner(UIConfig, "ANCHOR_TOPRIGHT")
-                AltGameTooltip:SetHyperlink(GetAchievementLink(MistsOfPandariaContentButtons[i].achievementID))
-                AltGameTooltip:Show()
+                GameTooltip:SetOwner(UIConfig, "ANCHOR_TOPRIGHT")
+                GameTooltip:SetHyperlink(GetAchievementLink(MistsOfPandariaContentButtons[i].achievementID))
+                GameTooltip:Show()
                 foundAchievement = true
             end
         end
     elseif Config.currentTab == 4 then
         for i = 1, #CataclysmContentButtons do
             if MouseIsOver(CataclysmContentButtons[i]) then
-                AltGameTooltip:SetOwner(UIConfig, "ANCHOR_TOPRIGHT")
-                AltGameTooltip:SetHyperlink(GetAchievementLink(CataclysmContentButtons[i].achievementID))
-                AltGameTooltip:Show()
+                GameTooltip:SetOwner(UIConfig, "ANCHOR_TOPRIGHT")
+                GameTooltip:SetHyperlink(GetAchievementLink(CataclysmContentButtons[i].achievementID))
+                GameTooltip:Show()
                 foundAchievement = true
             end
         end
     elseif Config.currentTab == 3 then
         for i = 1, #WrathOfTheLichKingContentButtons do
             if MouseIsOver(WrathOfTheLichKingContentButtons[i]) then
-                AltGameTooltip:SetOwner(UIConfig, "ANCHOR_TOPRIGHT")
-                AltGameTooltip:SetHyperlink(GetAchievementLink(WrathOfTheLichKingContentButtons[i].achievementID))
-                AltGameTooltip:Show()
+                GameTooltip:SetOwner(UIConfig, "ANCHOR_TOPRIGHT")
+                GameTooltip:SetHyperlink(GetAchievementLink(WrathOfTheLichKingContentButtons[i].achievementID))
+                GameTooltip:Show()
                 foundAchievement = true
             end
         end
     end
 
     if foundAchievement == false then
-        AltGameTooltip:Hide()
+        GameTooltip:Hide()
     end
 end
 
