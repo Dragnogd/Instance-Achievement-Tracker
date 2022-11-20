@@ -48,7 +48,7 @@ AchievementTrackerNPCCacheClassic = {}
 
 -- Purpose:         Information about the current release. This is mianly used to detect which addon should output messages to chat to avoid spam
 Config.majorVersion = 4						--Addon with a higher major version change have priority over a lower major version
-Config.minorVersion = 4    				--Addon with a minor version change have prioirty over a lower minor version
+Config.minorVersion = 5    				--Addon with a minor version change have prioirty over a lower minor version
 Config.revisionVersion = 0					--Addon with a revision change have the same priorty as a lower revision verison
 Config.releaseType = ""                     --Release type (Alpha, Beta, Release)
 Config.classicPhase = 1                     --What phase classic realms are currently running
