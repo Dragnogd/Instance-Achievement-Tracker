@@ -1,5 +1,5 @@
 --------------------------------------
--- Last Auto Generated: 13/11/2022 19:52:18
+-- Last Auto Generated: 26/11/2022 21:05:08
 --------------------------------------
 local _, core = ...
 local L = core.L
@@ -9,10 +9,393 @@ core.Instances = {
 	--Dragonflight
 	[10] = {
 		Raids = {
+			[2522] = { --Vault of the Incarnates
+				name = 1200,
+				boss1 = {
+					name = 2480, --Eranog
+					bossIDs = {},
+					achievement = 16335,
+					players = {},
+					tactics = L["VaultOfTheIncarnates_Eranog"],
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 2587,
+				},
+				boss2 = {
+					name = 2500, --Terros
+					bossIDs = {},
+					achievement = 16365,
+					players = {},
+					tactics = L["VaultOfTheIncarnates_Terros"],
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 2639,
+				},
+				boss3 = {
+					name = 2486, --The Primal Council
+					bossIDs = {},
+					achievement = 16364,
+					players = {},
+					tactics = L["VaultOfTheIncarnates_ThePrimalCouncil"],
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 2590,
+				},
+				boss4 = {
+					name = 2482, --Sennarth, The Cold Breath
+					bossIDs = {},
+					achievement = 16419,
+					players = {},
+					tactics = L["VaultOfTheIncarnates_SennarthTheColdBreath"],
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 2592,
+				},
+				boss5 = {
+					name = 2502, --Dathea, Ascended
+					bossIDs = {},
+					achievement = 16458,
+					players = {},
+					tactics = L["VaultOfTheIncarnates_DatheaAscended"],
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 2635,
+				},
+				boss6 = {
+					name = 2491, --Kurog Grimtotem
+					bossIDs = {},
+					achievement = 16450,
+					players = {},
+					tactics = L["VaultOfTheIncarnates_KurogGrimtotem"],
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 2605,
+				},
+				boss7 = {
+					name = 2493, --Broodkeeper Diurna
+					bossIDs = {},
+					achievement = 16442,
+					players = {},
+					tactics = L["VaultOfTheIncarnates_BroodkeeperDiurna"],
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 2614,
+				},
+				boss8 = {
+					name = 2499, --Raszageth the Storm-Eater
+					bossIDs = {},
+					achievement = 16451,
+					players = {},
+					tactics = L["VaultOfTheIncarnates_RaszagethTheStormEater"],
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 2607,
+				},
+			},
 		},
 
 		Dungeons = {
+			[2526] = { --Algeth'ar Academy
+				name = 1201,
+				boss1 = {
+					name = 2509, --Vexamus
+					bossIDs = {},
+					achievement = 16434,
+					players = {},
+					tactics = L["AlgetharAcademy_Vexamus"],
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 2562,
+				},
+				boss2 = {
+					name = 2495, --Crawth
+					bossIDs = {},
+					achievement = 16441,
+					players = {},
+					tactics = L["AlgetharAcademy_Crawth"],
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 2564,
+				},
+			},
 
+			[2520] = { --Brackenhide Hollow
+				name = 1196,
+				boss1 = {
+					name = 2471, --Hackclaw's War-Band
+					bossIDs = {},
+					achievement = 16296,
+					players = {},
+					tactics = L["BrackenhideHollow_HackclawsWarBand"],
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 2570,
+				},
+				boss2 = {
+					name = 2473, --Treemouth
+					bossIDs = {},
+					achievement = 16430,
+					players = {},
+					tactics = L["BrackenhideHollow_Treemouth"],
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 2568,
+				},
+				boss3 = {
+					name = 2474, --Decatriarch Wratheye
+					bossIDs = {},
+					achievement = 16404,
+					players = {},
+					tactics = L["BrackenhideHollow_DecatriarchWratheye"],
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 2569,
+				},
+			},
+
+			[2527] = { --Halls of Infusion
+				name = 1204,
+				boss2 = {
+					name = 2507, --Gulping Goliath
+					bossIDs = {},
+					achievement = 16426,
+					players = {},
+					tactics = L["HallsOfInfusion_GulpingGoliath"],
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 2616,
+				},
+				boss3 = {
+					name = 2511, --Primal Tsunami
+					bossIDs = {},
+					achievement = 16427,
+					players = {},
+					tactics = L["HallsOfInfusion_PrimalTsunami"],
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 2618,
+				},
+				boss1 = {
+					name = L["Instances_Other"], --Toxicity Strike Team
+					bossIDs = {},
+					achievement = 16517,
+					players = {},
+					tactics = L["HallsOfInfusion_ToxicityStrikeTeam"],
+					enabled = false,
+					track = nil,
+					partial = false,
+				},
+			},
+
+			[2519] = { --Neltharus
+				name = 1199,
+				boss1 = {
+					name = 2490, --Chargath, Bane of Scales
+					bossIDs = {},
+					achievement = 16438,
+					players = {},
+					tactics = L["Neltharus_ChargathBaneOfScales"],
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 2613,
+				},
+				boss2 = {
+					name = 2489, --Forgemaster Gorek
+					bossIDs = {},
+					achievement = 16432,
+					players = {},
+					tactics = L["Neltharus_ForgemasterGorek"],
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 2612,
+				},
+				boss3 = {
+					name = 2494, --Magmatusk
+					bossIDs = {},
+					achievement = 16453,
+					players = {},
+					tactics = L["Neltharus_Magmatusk"],
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 2610,
+				},
+			},
+
+			[2521] = { --Ruby Life Pools
+				name = 1202,
+				boss1 = {
+					name = 2503, --Kyrakka and Erkhart Stormvein
+					bossIDs = {},
+					achievement = 16440,
+					players = {},
+					tactics = L["RubyLifePools_KyrakkaAndErkhartStormvein"],
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 2623,
+				},
+				boss2 = {
+					name = 2488, --Melidrussa Chillworn
+					bossIDs = {},
+					achievement = 16402,
+					players = {},
+					tactics = L["RubyLifePools_MelidrussaChillworn"],
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 2609,
+				},
+				boss3 = {
+					name = 2485, --Kokia Blazehoof
+					bossIDs = {},
+					achievement = 16320,
+					players = {},
+					tactics = L["RubyLifePools_KokiaBlazehoof"],
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 2606,
+				},
+			},
+
+			[2515] = { --The Azure Vault
+				name = 1203,
+				boss1 = {
+					name = 2508, --Umbrelskul
+					bossIDs = {},
+					achievement = 16330,
+					players = {},
+					tactics = L["TheAzureVault_Umbrelskul"],
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 2584,
+				},
+				boss2 = {
+					name = 2508, --Umbrelskul
+					bossIDs = {},
+					achievement = 16331,
+					players = {},
+					tactics = L["TheAzureVault_Umbrelskul2"],
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 2584,
+				},
+				boss3 = {
+					name = 2483, --Telash Greywing
+					bossIDs = {},
+					achievement = 16445,
+					players = {},
+					tactics = L["TheAzureVault_TelashGreywing"],
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 2583,
+				},
+			},
+
+			[2516] = { --The Nokhud Offensive
+				name = 1198,
+				boss2 = {
+					name = 2497, --The Raging Tempest
+					bossIDs = {},
+					achievement = 16447,
+					players = {},
+					tactics = L["TheNokhudOffensive_TheRagingTempest"],
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 2636,
+				},
+				boss3 = {
+					name = 2478, --Teera and Maruuk
+					bossIDs = {},
+					achievement = 16456,
+					players = {},
+					tactics = L["TheNokhudOffensive_TeeraAndMaruuk"],
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 2581,
+				},
+				boss4 = {
+					name = 2477, --Balakar Khan
+					bossIDs = {},
+					achievement = 16602,
+					players = {},
+					tactics = L["TheNokhudOffensive_BalakarKhan"],
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 2580,
+				},
+				boss1 = {
+					name = L["Instances_Other"], --Ohuna Incubation
+					bossIDs = {},
+					achievement = 16620,
+					players = {},
+					tactics = L["TheNokhudOffensive_OhunaIncubation"],
+					enabled = false,
+					track = nil,
+					partial = false,
+				},
+			},
+
+			[2451] = { --Uldaman: Legacy of Tyr
+				name = 1197,
+				boss1 = {
+					name = 2487, --Bromach
+					bossIDs = {},
+					achievement = 16337,
+					players = {},
+					tactics = L["UldamanLegacyOfTyr_Bromach"],
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 2556,
+				},
+				boss2 = {
+					name = 2484, --Sentinel Talondras
+					bossIDs = {},
+					achievement = 16282,
+					players = {},
+					tactics = L["UldamanLegacyOfTyr_SentinelTalondras"],
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 2557,
+				},
+				boss3 = {
+					name = 2479, --Chrono-Lord Deios
+					bossIDs = {},
+					achievement = 16281,
+					players = {},
+					tactics = L["UldamanLegacyOfTyr_ChronoLordDeios"],
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 2559,
+				},
+			},
 		},
 	},
 

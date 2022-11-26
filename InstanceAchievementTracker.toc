@@ -31,6 +31,17 @@ Localization.zhCN.lua
 Localization.zhTW.lua
 Localization.koKR.lua
 
+DragonflightRaids\VaultOfTheIncarnates.lua
+
+DragonflightDungeons\AlgetharAcademy.lua
+DragonflightDungeons\BrackenhideHollow.lua
+DragonflightDungeons\HallsOfInfusion.lua
+DragonflightDungeons\Neltharus.lua
+DragonflightDungeons\RubyLifePools.lua
+DragonflightDungeons\TheAzureVault.lua
+DragonflightDungeons\TheNokhudOffensive.lua
+DragonflightDungeons\UldamanLegacyOfTyr.lua
+
 ShadowlandsRaids\CastleNathria.lua
 ShadowlandsRaids\SanctumOfDomination.lua
 ShadowlandsRaids\SepulcherOfTheFirstOnes.lua
