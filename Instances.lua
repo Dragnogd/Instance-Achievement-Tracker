@@ -1,5 +1,5 @@
 --------------------------------------
--- Last Auto Generated: 26/11/2022 21:05:08
+-- Last Auto Generated: 27/11/2022 12:23:49
 --------------------------------------
 local _, core = ...
 local L = core.L
@@ -126,6 +126,18 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 2564,
+				},
+				boss3 = {
+					name = 2512, --Overgrown Ancient
+					bossIDs = {},
+					achievement = 16329,
+					players = {},
+					tactics = L["AlgetharAcademy_OvergrownAncient"],
+					enabled = true,
+					track = function() core._2526:OvergrownAncient() end,
+					partial = false,
+					encounterID = 2563,
+					displayInfoFrame = true,
 				},
 			},
 

@@ -1000,5 +1000,6 @@ local baseLocale = {
 	["UldamanLegacyOfTyr_Bromach"] = "",
 	["UldamanLegacyOfTyr_SentinelTalondras"] = "",
 	["UldamanLegacyOfTyr_ChronoLordDeios"] = "",
+	["AlgetharAcademy_OvergrownAncient"] = "",
 }
 core:RegisterLocale('enUS', baseLocale)
