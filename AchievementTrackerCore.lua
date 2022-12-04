@@ -243,6 +243,8 @@ local sendMessageOnTimer_OnCooldown = false		--Waiting n seconds before outputti
 
 local trackAchievementsUIAutomatic = false		--Whether the Track Achievement UI was generated automatically after entering instance
 
+local ListOfFrameToReEnable = {} 				--When we are running SetAchievementComparisonUnit we disable all others frames that have registered the event to avoid lua errors
+
 --------------------------------------
 -- Current Instance Variables
 --------------------------------------
@@ -457,27 +459,50 @@ function getPlayersInGroup()
 	end
 end
 
+function core:unregisterEvents(event, widget, ...)
+	if widget then
+		if widget:GetName() ~= nil then
+			core:sendDebugMessage("Disabling: " .. widget:GetName())
+		else
+			core:sendDebugMessage("Disabling widget with no name")
+		end
+	 	widget:UnregisterEvent(event)
+		table.insert(ListOfFrameToReEnable, widget)
+	 	return core:unregisterEvents(event, ...)
+	end
+end
+
+function core:reregisterEvents(event)
+	for i = 1, #ListOfFrameToReEnable do
+		if ListOfFrameToReEnable[i] ~= nil then
+			if ListOfFrameToReEnable[i]:GetName() ~= nil then
+				core:sendDebugMessage("Enabling: " .. ListOfFrameToReEnable[i]:GetName())
+			else
+				core:sendDebugMessage("Enabling widget with no name")
+			end
+
+			ListOfFrameToReEnable[i]:RegisterEvent(event)
+			table.remove(ListOfFrameToReEnable, widget)
+		end
+	end
+end
+
 --Used to fetch achievement information for each player in the group. This is used so players can see and output which players in the group are missing which achievements
 --TODO: have a limit on the amount of times a certain player is scanned. This is needed so we are not constantly scanning players that are offline or players who never enter the instance
 function getInstanceAchievements()
 	ClearAchievementComparisonUnit()
+
 	--Make sure the player we are about to scan is still in the group
 	if UnitExists(playersToScan[1]) then
 		playerCurrentlyScanning = playersToScan[1]
 		--core:sendDebugMessage("Setting Comparison Unit to: " .. UnitName(playersToScan[1]))
 		core.currentComparisonUnit = UnitName(playersToScan[1])
 
-		--Check if the achievement ui is open before setting the comparison unit
-		if _G["AchievementFrame"] then
-			--The AchievementFrameComparison_OnEvent in Blizzard_AchievementUI does not check if the INSPECT_ACHIEVEMENT_READY event was fired from it's own addon or not
-			--Temporarily disable the event while we do our scanning.
-			--To protect against errors by disabling event, pause the scanning if the achievement ui or inspect achievement ui is shown
-			_G["AchievementFrameComparison"]:UnregisterEvent("INSPECT_ACHIEVEMENT_READY");
-			SetAchievementComparisonUnit(playersToScan[1])
-		else
-			--Achievement Frame has not been loaded so go ahead and set the comparison unit
-			SetAchievementComparisonUnit(playersToScan[1])
-		end
+		--Check for any other frames listeing for INSPECT_ACHIEVEMENT_READY and unregister them while we do our call
+		--The Blizzard Achievement UI will always error if you try to call SetAchievementComparisonUnit without doing this first
+		core:unregisterEvents("INSPECT_ACHIEVEMENT_READY", GetFramesRegisteredForEvent("INSPECT_ACHIEVEMENT_READY"))
+		events:RegisterEvent("INSPECT_ACHIEVEMENT_READY")
+		SetAchievementComparisonUnit(playersToScan[1])
 
 		--Set the id to the current scanCounter so we can determine if the timer is still valid or not. If the scanCounter is higher than the local timer then ignore the output from the timer since it's no longer valid
 		local scanCounterloc = scanCounter
@@ -487,21 +512,6 @@ function getInstanceAchievements()
 		C_Timer.After(2, function()
 			--Check if the scan is still valid or not
 			if scanCounterloc == scanCounter then
-				--Last player scan was successfully. Check if we need to continue scanning
-				-- if #playersToScan > 0 then
-				-- 	getInstanceAchievements()
-				-- elseif #playersToScan == 0 and rescanNeeded == false then
-				-- 	printMessage("Achievment Scanning Finished (" .. #playersScanned .. "/" .. core.groupSize .. ")")
-				-- 	scanInProgress = false
-				-- 	core.scanFinished = true
-				-- elseif #playersToScan == 0 and rescanNeeded == true then
-				-- 	--print("Achievement Scanning Finished but some players still need scanning. Waiting 20 seconds then trying again (" .. #playersScanned .. "/" .. core.groupSize .. ")")
-				-- 	C_Timer.After(10, function()
-				-- 		scanInProgress = true
-				-- 		getPlayersInGroup()
-				-- 	end)
-				-- end
-
 				--Last player to scan was not successfull
 				--core:sendDebugMessage("Last scan was unsuccessfull: " .. scanCounterloc)
 				rescanNeeded = true
@@ -519,8 +529,6 @@ function getInstanceAchievements()
 						getPlayersInGroup()
 					end)
 				end
-			else
-				--core:sendDebugMessage("Cancelling: " .. scanCounterloc)
 			end
 		end)
 	else
@@ -1866,11 +1874,6 @@ function events:INSPECT_ACHIEVEMENT_READY(self, GUID)
 				end
 			elseif #playersToScan == 0 and rescanNeeded == true then
 				core:sendDebugMessage("Achievement Scanning Finished but some players still need scanning. Waiting 20 seconds then trying again (" .. #playersScanned .. "/" .. core.groupSize .. ")")
-				--Once the achievement scanning has finished enable the achievement tab to start scanning again
-				if _G["AchievementFrameComparison"] ~= nil then
-					--Re-register this event so achievement ui and inspect achievement ui work as intended
-					_G["AchievementFrameComparison"]:RegisterEvent("INSPECT_ACHIEVEMENT_READY")
-				end
 
 				C_Timer.After(10, function()
 					scanInProgress = true
@@ -1888,6 +1891,9 @@ function events:INSPECT_ACHIEVEMENT_READY(self, GUID)
 		--Someone else has called the INSPECT_ACHIEVEMENT_READY event so do not perform achievement scanning for that player
 		core:sendDebugMessage("Incorrect INSPECT_ACHIEVEMENT_READY call for " .. name)
 	end
+
+	--Reregister the event on other addons that we previously disabled
+	core:reregisterEvents("INSPECT_ACHIEVEMENT_READY")
 end
 
 --Fired when the players has finished loading in the world.
