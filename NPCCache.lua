@@ -654,6 +654,8 @@ core.NPCCache = {
 	[143045] =143045, --Coastal Scuttler
 	[26641] =26641, --Drakkari Gutripper
 	[26628] =26628, --Drakkari Scytheclaw
+	[196696] =196696, --Geode Chunk
+	[189893] =189893, --Infused Whelp
 }
 core.NPCCacheClassic = {
 	[29364] =29364, --Void Sentry
