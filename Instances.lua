@@ -1,5 +1,5 @@
 --------------------------------------
--- Last Auto Generated: 04/12/2022 20:51:00
+-- Last Auto Generated: 11/12/2022 19:45:31
 --------------------------------------
 local _, core = ...
 local L = core.L
@@ -5740,6 +5740,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 1090,
+					encounterIDWrath = 742,
 					nameWrath = L["Boss_Sartharion"],
 					tacticsClassic = "",
 				},
@@ -5753,6 +5754,7 @@ core.Instances = {
 					track = function() core._615:GonnaGoWhenTheVolcanoBlows() end,
 					partial = false,
 					encounterID = 1090,
+					encounterIDWrath = 742,
 					displayInfoFrame = true,
 					nameWrath = L["Boss_Sartharion"],
 					tacticsClassic = "",
@@ -5767,6 +5769,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 1090,
+					encounterIDWrath = 742,
 					nameWrath = L["Boss_Sartharion"],
 					tacticsClassic = "",
 				},
@@ -5780,6 +5783,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 1090,
+					encounterIDWrath = 742,
 					nameWrath = L["Boss_Sartharion"],
 					tacticsClassic = "",
 				},
@@ -5793,6 +5797,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 1090,
+					encounterIDWrath = 742,
 					nameWrath = L["Boss_Sartharion"],
 					tacticsClassic = "",
 				},
@@ -5812,6 +5817,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 1090,
+					encounterIDWrath = 742,
 					nameWrath = L["Boss_Sartharion"],
 					tacticsClassic = "",
 				},
@@ -5825,6 +5831,7 @@ core.Instances = {
 					track = function() core._615:GonnaGoWhenTheVolcanoBlows() end,
 					partial = false,
 					encounterID = 1090,
+					encounterIDWrath = 742,
 					displayInfoFrame = true,
 					nameWrath = L["Boss_Sartharion"],
 					tacticsClassic = "",
@@ -5839,6 +5846,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 1090,
+					encounterIDWrath = 742,
 					nameWrath = L["Boss_Sartharion"],
 					tacticsClassic = "",
 				},
@@ -5852,6 +5860,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 1090,
+					encounterIDWrath = 742,
 					nameWrath = L["Boss_Sartharion"],
 					tacticsClassic = "",
 				},
@@ -5865,6 +5874,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 1090,
+					encounterIDWrath = 742,
 					nameWrath = L["Boss_Sartharion"],
 					tacticsClassic = "",
 				},
@@ -5884,6 +5894,7 @@ core.Instances = {
 					track = function() core._616:YouDontHaveAnEternity() end,
 					partial = false,
 					encounterID = 1094,
+					encounterIDWrath = 734,
 					displayInfoFrame = true,
 					nameWrath = L["Boss_Malygos"],
 					tacticsClassic = "",
@@ -5898,6 +5909,7 @@ core.Instances = {
 					track = function() core._616:APokeInTheEye() end,
 					partial = false,
 					encounterID = 1094,
+					encounterIDWrath = 734,
 					nameWrath = L["Boss_Malygos"],
 					tacticsClassic = "",
 				},
@@ -5911,6 +5923,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 1094,
+					encounterIDWrath = 734,
 					nameWrath = L["Boss_Malygos"],
 					tacticsClassic = "",
 				},
@@ -5930,6 +5943,7 @@ core.Instances = {
 					track = function() core._616:YouDontHaveAnEternity() end,
 					partial = false,
 					encounterID = 1094,
+					encounterIDWrath = 734,
 					nameWrath = L["Boss_Malygos"],
 					tacticsClassic = "",
 				},
@@ -5943,6 +5957,7 @@ core.Instances = {
 					track = function() core._616:APokeInTheEye() end,
 					partial = false,
 					encounterID = 1094,
+					encounterIDWrath = 734,
 					nameWrath = L["Boss_Malygos"],
 					tacticsClassic = "",
 				},
@@ -5956,6 +5971,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 1094,
+					encounterIDWrath = 734,
 					nameWrath = L["Boss_Malygos"],
 					tacticsClassic = "",
 				},
@@ -7069,7 +7085,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					nameWrath = L["Instances_Other"],
-					tacticsClassic = "",
+					tacticsClassic = L["Naxxramas_TheDedicatedFew"],
 				},
 				boss2 = {
 					name = 1603, --Maexxna
@@ -7081,6 +7097,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 1116,
+					encounterIDWrath = 1116,
 					nameWrath = L["Boss_Maexxna"],
 					tacticsClassic = "",
 				},
@@ -7094,9 +7111,10 @@ core.Instances = {
 					track = function() core._533:Patchwerk() end,
 					partial = false,
 					encounterID = 1118,
+					encounterIDWrath = 1118,
 					displayInfoFrame = true,
 					nameWrath = L["Boss_Patchwerk"],
-					tacticsClassic = "",
+					tacticsClassic = format(L["Naxxramas_Classic_Patchwerk"], "IAT_16028"),
 				},
 				boss4 = {
 					name = 1605, --Heigan the Unclean
@@ -7108,6 +7126,7 @@ core.Instances = {
 					track = function() core._533:HeiganTheUnclean() end,
 					partial = false,
 					encounterID = 1112,
+					encounterIDWrath = 1112,
 					nameWrath = L["Boss_HeiganTheUnclean"],
 					tacticsClassic = "",
 				},
@@ -7121,6 +7140,7 @@ core.Instances = {
 					track = function() core._533:GrandWidowFaerlina() end,
 					partial = false,
 					encounterID = 1110,
+					encounterIDWrath = 1110,
 					nameWrath = L["Boss_GrandWidowFaerlina"],
 					tacticsClassic = "",
 				},
@@ -7134,6 +7154,7 @@ core.Instances = {
 					track = function() core._533:Shocking() end,
 					partial = false,
 					encounterID = 1120,
+					encounterIDWrath = 1120,
 					nameWrath = L["Boss_Thaddius"],
 					tacticsClassic = "",
 				},
@@ -7147,6 +7168,7 @@ core.Instances = {
 					track = function() core._533:Subtraction() end,
 					partial = false,
 					encounterID = 1120,
+					encounterIDWrath = 1120,
 					nameWrath = L["Boss_Thaddius"],
 					tacticsClassic = "",
 				},
@@ -7160,6 +7182,7 @@ core.Instances = {
 					track = function() core._533:Loatheb() end,
 					partial = false,
 					encounterID = 1115,
+					encounterIDWrath = 1115,
 					nameWrath = L["Boss_Loatheb"],
 					tacticsClassic = "",
 				},
@@ -7173,6 +7196,7 @@ core.Instances = {
 					track = function() core._533:FourHorsemen() end,
 					partial = false,
 					encounterID = 1121,
+					encounterIDWrath = 1121,
 					displayInfoFrame = true,
 					nameWrath = L["Boss_TheFourHorsemen"],
 					tacticsClassic = "",
@@ -7187,6 +7211,7 @@ core.Instances = {
 					track = function() core._533:Sapphiron() end,
 					partial = false,
 					encounterID = 1119,
+					encounterIDWrath = 1119,
 					displayInfoFrame = true,
 					nameWrath = L["Boss_Sapphiron"],
 					tacticsClassic = "",
@@ -7201,6 +7226,7 @@ core.Instances = {
 					track = function() core._533:KelThuzad() end,
 					partial = false,
 					encounterID = 1114,
+					encounterIDWrath = 1114,
 					nameWrath = L["Boss_KelThuzad"],
 					tacticsClassic = "",
 				},
@@ -7220,7 +7246,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					nameWrath = L["Instances_Other"],
-					tacticsClassic = "",
+					tacticsClassic = L["Naxxramas_TheDedicatedFew"],
 				},
 				boss2 = {
 					name = 1603, --Maexxna
@@ -7232,6 +7258,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 1116,
+					encounterIDWrath = 1116,
 					nameWrath = L["Boss_Maexxna"],
 					tacticsClassic = "",
 				},
@@ -7245,9 +7272,10 @@ core.Instances = {
 					track = function() core._533:Patchwerk() end,
 					partial = false,
 					encounterID = 1118,
+					encounterIDWrath = 1118,
 					displayInfoFrame = true,
 					nameWrath = L["Boss_Patchwerk"],
-					tacticsClassic = "",
+					tacticsClassic = format(L["Naxxramas_Classic_Patchwerk"], "IAT_16028"),
 				},
 				boss4 = {
 					name = 1605, --Heigan the Unclean
@@ -7259,6 +7287,7 @@ core.Instances = {
 					track = function() core._533:HeiganTheUnclean() end,
 					partial = false,
 					encounterID = 1112,
+					encounterIDWrath = 1112,
 					nameWrath = L["Boss_HeiganTheUnclean"],
 					tacticsClassic = "",
 				},
@@ -7272,6 +7301,7 @@ core.Instances = {
 					track = function() core._533:GrandWidowFaerlina() end,
 					partial = false,
 					encounterID = 1110,
+					encounterIDWrath = 1110,
 					nameWrath = L["Boss_GrandWidowFaerlina"],
 					tacticsClassic = "",
 				},
@@ -7285,6 +7315,7 @@ core.Instances = {
 					track = function() core._533:Shocking() end,
 					partial = false,
 					encounterID = 1120,
+					encounterIDWrath = 1120,
 					nameWrath = L["Boss_Thaddius"],
 					tacticsClassic = "",
 				},
@@ -7298,6 +7329,7 @@ core.Instances = {
 					track = function() core._533:Subtraction() end,
 					partial = false,
 					encounterID = 1120,
+					encounterIDWrath = 1120,
 					nameWrath = L["Boss_Thaddius"],
 					tacticsClassic = "",
 				},
@@ -7311,6 +7343,7 @@ core.Instances = {
 					track = function() core._533:Loatheb() end,
 					partial = false,
 					encounterID = 1115,
+					encounterIDWrath = 1115,
 					nameWrath = L["Boss_Loatheb"],
 					tacticsClassic = "",
 				},
@@ -7324,6 +7357,7 @@ core.Instances = {
 					track = function() core._533:FourHorsemen() end,
 					partial = false,
 					encounterID = 1121,
+					encounterIDWrath = 1121,
 					displayInfoFrame = true,
 					nameWrath = L["Boss_TheFourHorsemen"],
 					tacticsClassic = "",
@@ -7338,6 +7372,7 @@ core.Instances = {
 					track = function() core._533:Sapphiron() end,
 					partial = false,
 					encounterID = 1119,
+					encounterIDWrath = 1119,
 					displayInfoFrame = true,
 					nameWrath = L["Boss_Sapphiron"],
 					tacticsClassic = "",
@@ -7352,6 +7387,7 @@ core.Instances = {
 					track = function() core._533:KelThuzad() end,
 					partial = false,
 					encounterID = 1114,
+					encounterIDWrath = 1114,
 					nameWrath = L["Boss_KelThuzad"],
 					tacticsClassic = "",
 				},
@@ -7723,6 +7759,7 @@ core.Instances = {
 					track = function() core._574:PrinceKeleseth() end,
 					partial = false,
 					encounterID = 2026,
+					encounterIDWrath = 571,
 					nameWrath = L["Boss_PrinceKeleseth"],
 					tacticsClassic = format(L["UtgardeKeep_Classic_PrinceKeleseth"], "IAT_23953", GetSpellLink(42672), GetSpellLink(42672)),
 				},
@@ -7742,7 +7779,7 @@ core.Instances = {
 					track = function() core._576:GrandMagusTelestra() end,
 					partial = false,
 					nameWrath = L["Boss_GrandMagusTelestra"],
-					tacticsClassic = "",
+					tacticsClassic = format(L["TheNexus_Classic_GrandMagusTelestra"], "IAT_26731", GetSpellLink(70421)),
 				},
 				boss2 = {
 					name = 619, --Anomalus
@@ -7754,7 +7791,7 @@ core.Instances = {
 					track = function() core._576:Anomalus() end,
 					partial = false,
 					nameWrath = L["Boss_Anomalus"],
-					tacticsClassic = "",
+					tacticsClassic = format(L["TheNexus_Classic_Anomalus"], "IAT_26918", "IAT_26763", "IAT_26746", "IAT_26918", "IAT_26918"),
 				},
 				boss3 = {
 					name = 621, --Keristrasza
@@ -7766,7 +7803,7 @@ core.Instances = {
 					track = function() core._576:Keristrasza() end,
 					partial = false,
 					nameWrath = L["Boss_Keristasza"],
-					tacticsClassic = "",
+					tacticsClassic = format(L["TheNexus_Classic_Keristasza"], GetSpellLink(48095), "IAT_26206", GetSpellLink(48179), GetSpellLink(32592)),
 				},
 			},
 
@@ -7796,7 +7833,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					nameWrath = L["Instances_Other"],
-					tacticsClassic = "",
+					tacticsClassic = format(L["TheCullingOfStratholme_Other2"], "IAT_26533", "IAT_32273", "IAT_26533"),
 				},
 			},
 
@@ -7814,8 +7851,9 @@ core.Instances = {
 					track = function() end,
 					partial = false,
 					encounterID = 1971,
+					encounterIDWrath = 216,
 					nameWrath = L["Boss_KrikthirTheGatewatcher"],
-					tacticsClassic = "",
+					tacticsClassic = format(L["AzjolNerub_Classic_KrikthirTheGatewatcher"], "IAT_28730", "IAT_28729", "IAT_28731"),
 				},
 				boss2 = {
 					name = 586, --Hadronox
@@ -7827,6 +7865,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 1972,
+					encounterIDWrath = 217,
 					nameWrath = L["Boss_Hadronox"],
 					tacticsClassic = "",
 				},
@@ -7840,8 +7879,9 @@ core.Instances = {
 					track = function() core._601:Anubarak() end,
 					partial = false,
 					encounterID = 1973,
+					encounterIDWrath = 218,
 					nameWrath = L["Boss_Anubarak"],
-					tacticsClassic = "",
+					tacticsClassic = L["AzjolNerub_Classic_Anubarak"],
 				},
 			},
 
@@ -7859,8 +7899,9 @@ core.Instances = {
 					track = function() core._619:ElderNadox() end,
 					partial = false,
 					encounterID = 1969,
+					encounterIDWrath = 212,
 					nameWrath = L["Boss_ElderNadox"],
-					tacticsClassic = "",
+					tacticsClassic = format(L["AhnkahetTheOldKingdom_Classic_ElderNadox"], "IAT_30176", GetSpellLink(56153), GetSpellLink(9484)),
 				},
 				boss2 = {
 					name = 582, --Jedoga Shadowseeker
@@ -7872,8 +7913,9 @@ core.Instances = {
 					track = function() core._619:JedogaShadowseeker() end,
 					partial = false,
 					encounterID = 1967,
+					encounterIDWrath = 214,
 					nameWrath = L["Boss_JedogaShadowseeker"],
-					tacticsClassic = "",
+					tacticsClassic = format(L["AhnkahetTheOldKingdom_Classic_JedogaShadowseeker"], "IAT_29310", "IAT_30385", GetSpellLink(56219)),
 				},
 				boss3 = {
 					name = 584, --Herald Volazj
@@ -7885,8 +7927,9 @@ core.Instances = {
 					track = function() core._619:HeraldVolazj() end,
 					partial = false,
 					encounterID = 1968,
+					encounterIDWrath = 215,
 					nameWrath = L["Boss_HeraldVolazj"],
-					tacticsClassic = "",
+					tacticsClassic = format(L["AhnkahetTheOldKingdom_Classic_HeraldVolazj"], "IAT_30623"),
 				},
 			},
 
@@ -7904,8 +7947,9 @@ core.Instances = {
 					track = function() core._600:Trollgore() end,
 					partial = false,
 					encounterID = 1974,
+					encounterIDWrath = 369,
 					nameWrath = L["Boss_Trollgore"],
-					tacticsClassic = "",
+					tacticsClassic = format(L["DrakTharonKeep_Classic_Trollgore"], "IAT_26630", GetSpellLink(49381), GetSpellLink(49381)),
 				},
 				boss2 = {
 					name = 589, --Novos the Summoner
@@ -7917,8 +7961,9 @@ core.Instances = {
 					track = function() core._600:NovosTheSummoner() end,
 					partial = false,
 					encounterID = 1976,
+					encounterIDWrath = 371,
 					nameWrath = L["Boss_NovosTheSummoner"],
-					tacticsClassic = "",
+					tacticsClassic = format(L["DrakTharonKeep_Classic_NovosTheSummoner"], "IAT_26627"),
 				},
 				boss3 = {
 					name = 590, --King Dred
@@ -7930,8 +7975,9 @@ core.Instances = {
 					track = function() core._600:KingDred() end,
 					partial = false,
 					encounterID = 1977,
+					encounterIDWrath = 373,
 					nameWrath = L["Boss_KingDred"],
-					tacticsClassic = "",
+					tacticsClassic = format(L["DrakTharonKeep_Classic_KingDred"], "IAT_27483", "IAT_26641", "IAT_26628", "IAT_27483", "IAT_27483", "IAT_27483", GetSpellLink(36922)),
 				},
 			},
 
@@ -7949,6 +7995,7 @@ core.Instances = {
 					track = function() end,
 					partial = false,
 					encounterID = 2020,
+					encounterIDWrath = 545,
 					nameWrath = L["Boss_Cyanigosa"],
 					tacticsClassic = L["VioletHold_Cyanigosa"],
 				},
@@ -8004,8 +8051,9 @@ core.Instances = {
 					track = function() core._604:Sladran() end,
 					partial = false,
 					encounterID = 1978,
+					encounterIDWrath = 383,
 					nameWrath = L["Boss_Sladran"],
-					tacticsClassic = "",
+					tacticsClassic = format(L["Gundrak_Classic_Sladran"], "IAT_29304", "IAT_29713", GetSpellLink(55093), "IAT_29713", GetSpellLink(55093)),
 				},
 				boss2 = {
 					name = 594, --Moorabi
@@ -8017,8 +8065,9 @@ core.Instances = {
 					track = function() core._604:Moorabi() end,
 					partial = false,
 					encounterID = 1980,
+					encounterIDWrath = 387,
 					nameWrath = L["Boss_Moorabi"],
-					tacticsClassic = "",
+					tacticsClassic = format(L["Gundrak_Classic_Moorabi"], "IAT_29305", GetSpellLink(55098), "IAT_29305", GetSpellLink(55163), GetSpellLink(55098)),
 				},
 				boss3 = {
 					name = 596, --Gal'darah
@@ -8030,8 +8079,9 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 1981,
+					encounterIDWrath = 390,
 					nameWrath = L["Boss_Galdarah"],
-					tacticsClassic = format(L["Gundrak_Classic_Galdarah"], "IAT_143045"),
+					tacticsClassic = format(L["Gundrak_Classic_Galdarah"], "IAT_29932", "IAT_29932", GetSpellLink(55814), GetSpellLink(55817), "IAT_29932", "IAT_29306", "IAT_29306", GetSpellLink(55817)),
 				},
 				boss4 = {
 					name = 596, --Gal'darah
@@ -8043,8 +8093,9 @@ core.Instances = {
 					track = function() core._604:Galdarah() end,
 					partial = false,
 					encounterID = 1981,
+					encounterIDWrath = 390,
 					nameWrath = L["Boss_Galdarah"],
-					tacticsClassic = "",
+					tacticsClassic = format(L["Gundrak_Galdarah2"], GetSpellLink(54956), GetSpellLink(54956)),
 				},
 			},
 
@@ -8062,8 +8113,9 @@ core.Instances = {
 					track = function() core._599:MaidenOfGrief() end,
 					partial = false,
 					encounterID = 1996,
+					encounterIDWrath = 565,
 					nameWrath = L["Boss_MaidenOfGrief"],
-					tacticsClassic = "",
+					tacticsClassic = format(L["HallsOfStone_Classic_MaidenOfGrief"], "IAT_27975", GetSpellLink(59726)),
 				},
 				boss2 = {
 					name = 606, --Tribunal of Ages
@@ -8075,8 +8127,9 @@ core.Instances = {
 					track = function() core._599:TribunalOfAges() end,
 					partial = false,
 					encounterID = 1995,
+					encounterIDWrath = 567,
 					nameWrath = L["Boss_TribunalOfAges"],
-					tacticsClassic = "",
+					tacticsClassic = format(L["HallsOfStone_Classic_TribunalOfAges"], "IAT_29579"),
 				},
 				boss3 = {
 					name = 607, --Sjonnir The Ironshaper
@@ -8088,8 +8141,9 @@ core.Instances = {
 					track = function() core._599:SjonnirTheIronshaper() end,
 					partial = false,
 					encounterID = 1998,
+					encounterIDWrath = 569,
 					nameWrath = L["Boss_SjonnirTheIronshaper"],
-					tacticsClassic = "",
+					tacticsClassic = format(L["HallsOfStone_Classic_SjonnirTheIronshaper"], "IAT_27981", "IAT_27981", "IAT_28165", "IAT_28165", "IAT_28165", "IAT_27981"),
 				},
 			},
 
@@ -8107,8 +8161,9 @@ core.Instances = {
 					track = function() core._602:GeneralBjarngrim() end,
 					partial = false,
 					encounterID = 1987,
+					encounterIDWrath = 555,
 					nameWrath = L["Boss_GeneralBjarngrim"],
-					tacticsClassic = "",
+					tacticsClassic = format(L["HallsOfLightning_Classic_GeneralBjarngrim"], "IAT_28586", GetSpellLink(52092), "IAT_29240", "IAT_28586", GetSpellLink(52092)),
 				},
 				boss2 = {
 					name = 598, --Volkhan
@@ -8120,8 +8175,9 @@ core.Instances = {
 					track = function() core._602:Volkhan() end,
 					partial = false,
 					encounterID = 1985,
+					encounterIDWrath = 557,
 					nameWrath = L["Boss_Volkhan"],
-					tacticsClassic = "",
+					tacticsClassic = format(L["HallsOfLightning_Classic_Volkhan"], "IAT_28681", "IAT_28681"),
 				},
 				boss3 = {
 					name = 600, --Loken
@@ -8133,8 +8189,9 @@ core.Instances = {
 					track = function() core._602:Loken() end,
 					partial = false,
 					encounterID = 1986,
+					encounterIDWrath = 561,
 					nameWrath = L["Boss_Loken"],
-					tacticsClassic = "",
+					tacticsClassic = L["HallsOfLightning_Classic_Loken"],
 				},
 			},
 
@@ -8224,7 +8281,7 @@ core.Instances = {
 					partial = false,
 					encounterID = 2030,
 					nameWrath = L["Boss_SvalaSorrowgrave"],
-					tacticsClassic = "",
+					tacticsClassic = format(L["UtgardePinnacle_Classic_SvalaSorrowgrave"], "IAT_26555", "IAT_26555", GetSpellLink(48276), "IAT_26555", "IAT_26555", "IAT_26668", GetSpellLink(48277)),
 				},
 				boss2 = {
 					name = 643, --Skadi the Ruthless
@@ -8236,8 +8293,9 @@ core.Instances = {
 					track = function() core._575:SkadiTheRuthless() end,
 					partial = false,
 					encounterID = 2029,
+					encounterIDWrath = 581,
 					nameWrath = L["Boss_SkadiTheRuthless"],
-					tacticsClassic = "",
+					tacticsClassic = format(L["UtgardePinnacle_Classic_SkadiTheRuthless"], "IAT_26693"),
 				},
 				boss3 = {
 					name = 643, --Skadi the Ruthless
@@ -8249,8 +8307,9 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 2029,
+					encounterIDWrath = 581,
 					nameWrath = L["Boss_SkadiTheRuthless"],
-					tacticsClassic = "",
+					tacticsClassic = format(L["UtgardePinnacle_Classic_SkadiTheRuthless2"], "IAT_26893", "IAT_26693"),
 				},
 				boss4 = {
 					name = 644, --King Ymiron
@@ -8262,8 +8321,9 @@ core.Instances = {
 					track = function() core._575:KingYmiron() end,
 					partial = false,
 					encounterID = 2028,
+					encounterIDWrath = 583,
 					nameWrath = L["Boss_KingYmiron"],
-					tacticsClassic = "",
+					tacticsClassic = format(L["UtgardePinnacle_Classic_KingYmiron"], "IAT_26861", GetSpellLink(48294), "IAT_26861"),
 				},
 			},
 
