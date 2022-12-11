@@ -20,9 +20,9 @@ function core._616:YouDontHaveAnEternity()
     if timerStarted == false then
         timerStarted = true
         if core.difficultyID == 3 then
-            core.MobCounter:SetupCountdown(1874)
+            core.MobCounter:SetupCountdown(360, 1874)
         elseif core.difficultyID == 4 then
-            core.MobCounter:SetupCountdown(1875)
+            core.MobCounter:SetupCountdown(360, 1875)
         end
     end
 end
