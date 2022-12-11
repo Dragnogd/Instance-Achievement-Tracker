@@ -1746,148 +1746,155 @@ function events:UPDATE_MOUSEOVER_UNIT()
 end
 
 --This event is used to scan players in the group to see which achievements they are currently missing
-function events:INSPECT_ACHIEVEMENT_READY(self, GUID)
-	local class, classFilename, race, raceFilename, sex, name, realm = GetPlayerInfoByGUID(GUID)
-	core:sendDebugMessage("INSPECT_ACHIEVEMENT_READY FIRED. INFORMATION FOR: " .. name)
+function events:INSPECT_ACHIEVEMENT_READY(self, GUID, ...)
+	if (GUID and C_PlayerInfo.GUIDIsPlayer(GUID)) then
+		local class, classFilename, race, raceFilename, sex, name, realm = GetPlayerInfoByGUID(GUID)
+		core:sendDebugMessage("INSPECT_ACHIEVEMENT_READY FIRED. INFORMATION FOR: " .. name)
 
-	--Check if the Inspect_Achievement_Ready was from a request that we made and not from another addon. Really important.
-	if core.currentComparisonUnit == name then
-		--Make sure the player is still online since achievement scanning may happen some time after scanning players
-		if UnitExists(playerCurrentlyScanning) then
-			local name2, realm2 = UnitName(playerCurrentlyScanning)
-			--Find all bosses for the current instance the player is in.
-			for expansion,_ in pairs(core.Instances) do
-				for instanceType,_ in pairs(core.Instances[expansion]) do
-					for instance,_ in pairs(core.Instances[expansion][instanceType]) do
-						for boss,_ in pairs(core.Instances[expansion][instanceType][instance]) do
-							if string.match(boss, "boss") then
-								local achievementComplete = false
-								if core.currentComparisonUnit == UnitName("Player") and trackCharacterAchievements == true then
-									local id, name, points, completed, month, day, year, description, flags, icon, rewardText, isGuild, wasEarnedByMe, earnedBy = GetAchievementInfo(core.Instances[expansion][instanceType][instance][boss].achievement)
-									if wasEarnedByMe then
-										achievementComplete = true
-									end
-								else
-									--Check if the player has completed the achievement for the current boss
-									local completed, month, day, year = GetAchievementComparisonInfo(core.Instances[expansion][instanceType][instance][boss].achievement)
-									if completed then
-										achievementComplete = true
-									end
-								end
-
-								--Make sure any text being displayed currently for the achievement is removed.
-								if core.Instances[expansion][instanceType][instance][boss].players[1] == L["GUI_EnterInstanceToStartScanning"] or core.Instances[expansion][instanceType][instance][boss].players[1] == L["GUI_NoPlayersNeedAchievement"] then
-									table.remove(core.Instances[expansion][instanceType][instance][boss].players, 1)
-								end
-
-								--If the player has not completed the achievement then add them to the players string to display in the GUI
-								if achievementComplete == false then
-									if UnitExists(playersToScan[1]) then
-										local name, _ = UnitName(playersToScan[1])
-										table.insert(core.Instances[expansion][instanceType][instance][boss].players, name)
+		--Check if the Inspect_Achievement_Ready was from a request that we made and not from another addon. Really important.
+		if core.currentComparisonUnit == name then
+			--Make sure the player is still online since achievement scanning may happen some time after scanning players
+			if UnitExists(playerCurrentlyScanning) then
+				local name2, realm2 = UnitName(playerCurrentlyScanning)
+				--Find all bosses for the current instance the player is in.
+				for expansion,_ in pairs(core.Instances) do
+					for instanceType,_ in pairs(core.Instances[expansion]) do
+						for instance,_ in pairs(core.Instances[expansion][instanceType]) do
+							for boss,_ in pairs(core.Instances[expansion][instanceType][instance]) do
+								if string.match(boss, "boss") then
+									local achievementComplete = false
+									if core.currentComparisonUnit == UnitName("Player") and trackCharacterAchievements == true then
+										local id, name, points, completed, month, day, year, description, flags, icon, rewardText, isGuild, wasEarnedByMe, earnedBy = GetAchievementInfo(core.Instances[expansion][instanceType][instance][boss].achievement)
+										if wasEarnedByMe then
+											achievementComplete = true
+										end
 									else
-										core:sendDebugMessage("Fatal error. This shouldn't happen. Trying to load into achievement scanning " .. playersToScan[1])
+										--Check if the player has completed the achievement for the current boss
+										local completed, month, day, year = GetAchievementComparisonInfo(core.Instances[expansion][instanceType][instance][boss].achievement)
+										if completed then
+											achievementComplete = true
+										end
+									end
+
+									--Make sure any text being displayed currently for the achievement is removed.
+									if core.Instances[expansion][instanceType][instance][boss].players[1] == L["GUI_EnterInstanceToStartScanning"] or core.Instances[expansion][instanceType][instance][boss].players[1] == L["GUI_NoPlayersNeedAchievement"] then
+										table.remove(core.Instances[expansion][instanceType][instance][boss].players, 1)
+									end
+
+									--If the player has not completed the achievement then add them to the players string to display in the GUI
+									if achievementComplete == false then
+										if UnitExists(playersToScan[1]) then
+											local name, _ = UnitName(playersToScan[1])
+											table.insert(core.Instances[expansion][instanceType][instance][boss].players, name)
+										else
+											core:sendDebugMessage("Fatal error. This shouldn't happen. Trying to load into achievement scanning " .. playersToScan[1])
+										end
 									end
 								end
 							end
 						end
 					end
 				end
-			end
 
-			--Check if any of the achievements have been achieved by every player in the group. If they have then update GUI with appropriate text
-			for expansion,_ in pairs(core.Instances) do
-				for instanceType,_ in pairs(core.Instances[expansion]) do
-					for instance,_ in pairs(core.Instances[expansion][instanceType]) do
-						for boss,_ in pairs(core.Instances[expansion][instanceType][instance]) do
+				--Check if any of the achievements have been achieved by every player in the group. If they have then update GUI with appropriate text
+				for expansion,_ in pairs(core.Instances) do
+					for instanceType,_ in pairs(core.Instances[expansion]) do
+						for instance,_ in pairs(core.Instances[expansion][instanceType]) do
+							for boss,_ in pairs(core.Instances[expansion][instanceType][instance]) do
+								if string.match(boss, "boss") then
+									if #core.Instances[expansion][instanceType][instance][boss].players == 0 then
+										table.insert(core.Instances[expansion][instanceType][instance][boss].players, L["GUI_NoPlayersNeedAchievement"])
+									end
+								end
+							end
+						end
+					end
+				end
+
+				--print("Scanned " .. UnitName(playersToScan[1]))
+				table.insert(playersScanned, playersToScan[1])
+				table.remove(playersToScan, 1)
+
+				--Update the GUI
+				core.Config:Instance_OnClickAutomatic()
+
+				playerCurrentlyScanning = nil
+
+				--Last player scan was successfully. Check if we need to continue scanning
+				scanCounter = scanCounter + 1 --Stop previous timers from executing!
+				if #playersToScan > 0 then
+					--More players still need scanning
+					getInstanceAchievements()
+				elseif #playersToScan == 0 and rescanNeeded == false and #playersScanned == core.groupSize then
+					printMessage(L["Core_AchievementScanFinished"] .. " (" .. #playersScanned .. "/" .. core.groupSize .. ")")
+					scanInProgress = false
+					core.scanFinished = true
+
+					--Once the achievement scanning has finished enable the achievement tab to start scanning again
+					if _G["AchievementFrameComparison"] ~= nil then
+						--Re-register this event so achievement ui and inspect achievement ui work as intended
+						_G["AchievementFrameComparison"]:RegisterEvent("INSPECT_ACHIEVEMENT_READY")
+					end
+
+					--Announce which achievements this addon player needs to still get in this instance
+					if announceMissingAchievements == false then
+						announceMissingAchievements = true
+						local achievements = ""
+						local foundAchievement = false
+						for boss,_ in pairs(core.Instances[core.expansion][core.instanceType][core.instance]) do
 							if string.match(boss, "boss") then
-								if #core.Instances[expansion][instanceType][instance][boss].players == 0 then
-									table.insert(core.Instances[expansion][instanceType][instance][boss].players, L["GUI_NoPlayersNeedAchievement"])
-								end
-							end
-						end
-					end
-				end
-			end
+								local name, _ = UnitName("player")
+								if core:has_value(core.Instances[core.expansion][core.instanceType][core.instance][boss].players, name) == true then
+									foundAchievement = true
+									achievements = achievements .. GetAchievementLink(core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
 
-			--print("Scanned " .. UnitName(playersToScan[1]))
-			table.insert(playersScanned, playersToScan[1])
-			table.remove(playersToScan, 1)
-
-			--Update the GUI
-			core.Config:Instance_OnClickAutomatic()
-
-			playerCurrentlyScanning = nil
-
-			--Last player scan was successfully. Check if we need to continue scanning
-			scanCounter = scanCounter + 1 --Stop previous timers from executing!
-			if #playersToScan > 0 then
-				--More players still need scanning
-				getInstanceAchievements()
-			elseif #playersToScan == 0 and rescanNeeded == false and #playersScanned == core.groupSize then
-				printMessage(L["Core_AchievementScanFinished"] .. " (" .. #playersScanned .. "/" .. core.groupSize .. ")")
-				scanInProgress = false
-				core.scanFinished = true
-
-				--Once the achievement scanning has finished enable the achievement tab to start scanning again
-				if _G["AchievementFrameComparison"] ~= nil then
-					--Re-register this event so achievement ui and inspect achievement ui work as intended
-					_G["AchievementFrameComparison"]:RegisterEvent("INSPECT_ACHIEVEMENT_READY")
-				end
-
-				--Announce which achievements this addon player needs to still get in this instance
-				if announceMissingAchievements == false then
-					announceMissingAchievements = true
-					local achievements = ""
-					local foundAchievement = false
-					for boss,_ in pairs(core.Instances[core.expansion][core.instanceType][core.instance]) do
-						if string.match(boss, "boss") then
-							local name, _ = UnitName("player")
-							if core:has_value(core.Instances[core.expansion][core.instanceType][core.instance][boss].players, name) == true then
-								foundAchievement = true
-								achievements = achievements .. GetAchievementLink(core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
-
-								--Add to achievement tracking ui if option enabled by user
-								if trackAchievementsInUI == true then
-									if GetNumTrackedAchievements() < 10 then
-										AddTrackedAchievement(core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
-										table.insert(trackAchievementInUiTable, core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
+									--Add to achievement tracking ui if option enabled by user
+									if trackAchievementsInUI == true then
+										if GetNumTrackedAchievements() < 10 then
+											AddTrackedAchievement(core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
+											table.insert(trackAchievementInUiTable, core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
+										end
 									end
 								end
 							end
 						end
+
+						if foundAchievement == false then
+							core:printMessage(L["Core_CompletedAllAchievements"])
+						else
+							core:printMessage(L["Core_IncompletedAchievements"] .. " " .. achievements)
+						end
+					end
+				elseif #playersToScan == 0 and rescanNeeded == true then
+					core:sendDebugMessage("Achievement Scanning Finished but some players still need scanning. Waiting 20 seconds then trying again (" .. #playersScanned .. "/" .. core.groupSize .. ")")
+					--Once the achievement scanning has finished enable the achievement tab to start scanning again
+					if _G["AchievementFrameComparison"] ~= nil then
+						--Re-register this event so achievement ui and inspect achievement ui work as intended
+						_G["AchievementFrameComparison"]:RegisterEvent("INSPECT_ACHIEVEMENT_READY")
 					end
 
-					if foundAchievement == false then
-						core:printMessage(L["Core_CompletedAllAchievements"])
-					else
-						core:printMessage(L["Core_IncompletedAchievements"] .. " " .. achievements)
-					end
+					C_Timer.After(10, function()
+						scanInProgress = true
+						getPlayersInGroup()
+					end)
+				else
+					core:sendDebugMessage("UNKNOWN ERROR")
 				end
-			elseif #playersToScan == 0 and rescanNeeded == true then
-				core:sendDebugMessage("Achievement Scanning Finished but some players still need scanning. Waiting 20 seconds then trying again (" .. #playersScanned .. "/" .. core.groupSize .. ")")
-				--Once the achievement scanning has finished enable the achievement tab to start scanning again
-				if _G["AchievementFrameComparison"] ~= nil then
-					--Re-register this event so achievement ui and inspect achievement ui work as intended
-					_G["AchievementFrameComparison"]:RegisterEvent("INSPECT_ACHIEVEMENT_READY")
-				end
-
-				C_Timer.After(10, function()
-					scanInProgress = true
-					getPlayersInGroup()
-				end)
 			else
-				core:sendDebugMessage("UNKNOWN ERROR")
+				--Someone in the group cannot be scanned because they have gone offline since scanning took place, or they are not currently out of range of scanning.
+				--Must be in the same instance in order to get scanned.
+				rescanNeeded = true
 			end
 		else
-			--Someone in the group cannot be scanned because they have gone offline since scanning took place, or they are not currently out of range of scanning.
-			--Must be in the same instance in order to get scanned.
-			rescanNeeded = true
+			--Someone else has called the INSPECT_ACHIEVEMENT_READY event so do not perform achievement scanning for that player
+			core:sendDebugMessage("Incorrect INSPECT_ACHIEVEMENT_READY call for " .. name)
 		end
-	else
-		--Someone else has called the INSPECT_ACHIEVEMENT_READY event so do not perform achievement scanning for that player
-		core:sendDebugMessage("Incorrect INSPECT_ACHIEVEMENT_READY call for " .. name)
-	end
+    end
+
+	if (AchievementFrame and AchievementFrame.isComparison and AchievementFrameComparison) then
+		print("c")
+        AchievementFrameComparison_OnEvent(AchievementFrameComparison, event, guid, ...)
+    end
 end
 
 --Fired when the players has finished loading in the world.
