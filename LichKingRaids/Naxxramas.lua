@@ -44,6 +44,7 @@ local sapphironKilled = false
 ---- Thaddius
 ------------------------------------------------------
 local subtractionFailWarningAnnounced = false
+local thaddiusKilled = false
 
 function core._533:HeiganTheUnclean()
     --Defeat Heigan the Unclean in Naxxramas without anyone in the raid dying in 10 player mode.
@@ -149,18 +150,24 @@ function core._533:Subtraction()
 end
 
 function core._533:Shocking()
-    if (core.spellId == 28085 or core.spellId == 28062) and (core.type == "SPELL_DAMAGE" or core.type == "SPELL_MISSED") then
-        if core.sourceName ~= nil and core.destName ~= nil then
-            if core.difficultyID == 3 then
-                core:getAchievementFailedWithMessageAfter("(" .. core.sourceName .. ", " .. core.destName .. ")",nil,2178)
-            elseif core.difficultyID == 4 then
-                core:getAchievementFailedWithMessageAfter("(" .. core.sourceName .. ", " .. core.destName .. ")",nil,2179)
-            end
-        else
-            if core.difficultyID == 3 then
-                core:getAchievementFailed(nil,2178)
-            elseif core.difficultyID == 4 then
-                core:getAchievementFailed(nil,2179)
+	if core.type == "UNIT_DIED" and core.destID == "15928" then
+        thaddiusKilled = true
+    end
+
+	if thaddiusKilled == false then
+        if (core.spellId == 28085 or core.spellId == 28062) and (core.type == "SPELL_DAMAGE" or core.type == "SPELL_MISSED") then
+            if core.sourceName ~= nil and core.destName ~= nil then
+                if core.difficultyID == 3 then
+                    core:getAchievementFailedWithMessageAfter("(" .. core.sourceName .. ", " .. core.destName .. ")",nil,2178)
+                elseif core.difficultyID == 4 then
+                    core:getAchievementFailedWithMessageAfter("(" .. core.sourceName .. ", " .. core.destName .. ")",nil,2179)
+                end
+            else
+                if core.difficultyID == 3 then
+                    core:getAchievementFailed(nil,2178)
+                elseif core.difficultyID == 4 then
+                    core:getAchievementFailed(nil,2179)
+                end
             end
         end
     end
@@ -312,4 +319,5 @@ function core._533:ClearVariables()
     ---- Thaddius
     ------------------------------------------------------
     subtractionFailWarningAnnounced = false
+    thaddiusKilled = false
 end
