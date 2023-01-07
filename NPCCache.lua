@@ -707,4 +707,7 @@ core.NPCCacheClassic = {
 	[26693] =26693, --Skadi the Ruthless
 	[26893] =26893, --Grauf
 	[26861] =26861, --King Ymiron
+	[27654] =27654, --Drakos the Interrogator
+	[27658] =27658, --Belgaristrasz
+	[27756] =27756, --Ruby Drake
 }
