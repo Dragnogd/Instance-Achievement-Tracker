@@ -27,6 +27,11 @@ local strangeChickensFreed = 0
 local strangeChickensKilled = 0
 
 ------------------------------------------------------
+---- Kurog Grimtotem
+------------------------------------------------------
+local primalAvaterSpawned = false
+
+------------------------------------------------------
 ---- Raszageth The Storm Eater
 ------------------------------------------------------
 local concetratedStormSpawned = false
@@ -94,6 +99,12 @@ end
 function core._2522:KurogGrimtotem()
     --Defeat Kurog Grimtotem after destroying the Primal Avatar in Vault of the Incarnates on Normal difficulty or higher.
 
+	--Announce when Primal Avater has spawned
+	if (core.destID == 198038 or core.sourceID == 198038) and primalAvaterSpawned == false then
+        core:sendMessage(format(L["Shared_KillTheAddNow"], getNPCName(198038)),true)
+        primalAvaterSpawned = true
+    end
+
     if core:getBlizzardTrackingStatus(16450, 1) == true then
 		core:getAchievementSuccess()
 	end
@@ -115,7 +126,8 @@ function core._2522:RaszagethTheStormEater()
     --Defeat Raszageth the Storm-Eater after successfully gathering two Concentrated Storm Essences and defeating the Concentrated Storm in Vault of the Incarnates on Normal difficulty or higher.
 
     --Concetrated Storm spawned
-    if core.destID == "198370" then
+    if (core.destID == "198370" or core.sourceID == "198370") and concetratedStormSpawned == false then
+        core:sendMessage(format(L["Shared_KillTheAddNow"], getNPCName(198370)),true)
         concetratedStormSpawned = true
     end
 
@@ -160,6 +172,11 @@ function core._2522:ClearVariables()
     ------------------------------------------------------
     strangeChickensFreed = 0
     strangeChickensKilled = 0
+
+    ------------------------------------------------------
+    ---- Kurog Grimtotem
+    ------------------------------------------------------
+    primalAvaterSpawned = false
 
     ------------------------------------------------------
     ---- Raszageth The Storm Eater

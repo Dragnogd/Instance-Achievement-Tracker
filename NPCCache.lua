@@ -710,4 +710,9 @@ core.NPCCacheClassic = {
 	[27654] =27654, --Drakos the Interrogator
 	[27658] =27658, --Belgaristrasz
 	[27756] =27756, --Ruby Drake
+	[197396] =197396, --Strange Chicken
+	[196993] =196993, --Energized Earth
+	[198038] =198038, --Primal Avatar
+	[197298] =197298, --Nascent Proto-Dragon
+	[198370] =198370, --Concentrated Storm
 }
