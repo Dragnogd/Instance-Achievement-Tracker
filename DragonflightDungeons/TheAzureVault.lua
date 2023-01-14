@@ -25,7 +25,7 @@ function core._2515:Umbrelskul2()
 
     if core.type == "UNIT_DIED" and core.destID == "196696" then
         geodeChunksKilled = geodeChunksKilled + 1
-        core:sendMessage(core:getAchievement() .. " " .. getNPCName(196696) .. " " .. L["Shared_Killed"] .. " (" .. disciplesKilled .. "/3)",true)
+        core:sendMessage(core:getAchievement() .. " " .. getNPCName(196696) .. " " .. L["Shared_Killed"] .. " (" .. geodeChunksKilled .. "/3)",true)
     end
 
     if core:getBlizzardTrackingStatus(16331, 1) == true then
