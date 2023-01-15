@@ -77,12 +77,14 @@ function core._2515:TrackAdditional()
 	end
 end
 
-function core._2515:ClearVariables()
+function core._2515:InstanceCleanup()
     ------------------------------------------------------
     ---- Other
     ------------------------------------------------------
     hidePlayersFailed = {}
+end
 
+function core._2515:ClearVariables()
     ------------------------------------------------------
     ---- The Azure Vault Bosses
     ------------------------------------------------------
