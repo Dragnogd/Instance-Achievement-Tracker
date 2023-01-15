@@ -661,6 +661,8 @@ core.NPCCache = {
 	[198038] =198038, --Primal Avatar
 	[197298] =197298, --Nascent Proto-Dragon
 	[198370] =198370, --Concentrated Storm
+	[191736] =191736, --Crawth
+	[197774] =197774, --Toxic Swogmother
 }
 core.NPCCacheClassic = {
 	[29364] =29364, --Void Sentry

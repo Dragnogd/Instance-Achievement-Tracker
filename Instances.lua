@@ -1,5 +1,5 @@
 --------------------------------------
--- Last Auto Generated: 07/01/2023 09:13:11
+-- Last Auto Generated: 15/01/2023 14:30:49
 --------------------------------------
 local _, core = ...
 local L = core.L
@@ -111,7 +111,7 @@ core.Instances = {
 					bossIDs = {},
 					achievement = 16434,
 					players = {},
-					tactics = L["AlgetharAcademy_Vexamus"],
+					tactics = format(L["AlgetharAcademy_Vexamus"], GetSpellLink(387691), GetSpellLink(387691)),
 					enabled = true,
 					track = function() core._2526:Vexamus() end,
 					partial = false,
@@ -122,7 +122,7 @@ core.Instances = {
 					bossIDs = {},
 					achievement = 16441,
 					players = {},
-					tactics = L["AlgetharAcademy_Crawth"],
+					tactics = format(L["AlgetharAcademy_Crawth"], "IAT_191736", GetSpellLink(377182)),
 					enabled = true,
 					track = function() core._2526:Crawth() end,
 					partial = false,
@@ -133,7 +133,7 @@ core.Instances = {
 					bossIDs = {},
 					achievement = 16329,
 					players = {},
-					tactics = L["AlgetharAcademy_OvergrownAncient"],
+					tactics = format(L["AlgetharAcademy_OvergrownAncient"], GetSpellLink(392005)),
 					enabled = true,
 					track = function() core._2526:OvergrownAncient() end,
 					partial = false,
@@ -208,8 +208,8 @@ core.Instances = {
 					bossIDs = {},
 					achievement = 16517,
 					players = {},
-					tactics = L["HallsOfInfusion_ToxicityStrikeTeam"],
-					enabled = false,
+					tactics = format(L["HallsOfInfusion_ToxicityStrikeTeam"], GetSpellLink(391694), "IAT_197774"),
+					enabled = true,
 					track = nil,
 					partial = false,
 				},
@@ -298,7 +298,7 @@ core.Instances = {
 					achievement = 16330,
 					players = {},
 					tactics = L["TheAzureVault_Umbrelskul"],
-					enabled = false,
+					enabled = true,
 					track = nil,
 					partial = false,
 					encounterID = 2584,
