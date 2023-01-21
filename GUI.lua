@@ -1963,11 +1963,7 @@ function Instance_OnClick(self)
                     elseif (GetLocale() == 'ruRU') then
                         button.contentText:SetFont("p", "Fonts\\FRIZQT___CYR.TTF", 12, "OUTLINE");
                     else
-                        if core.gameVersionMajor > 9 then
-                            button.contentText:SetFont("p","Fonts\\FRIZQT__.TTF", 13, "OUTLINE");
-                        else
-                            button.contentText:SetFont("Fonts\\FRIZQT__.TTF", 12);
-                        end
+                        button.contentText:SetFont("p","Fonts\\FRIZQT__.TTF", 13, "OUTLINE");
                     end
                     local achievementLink = GetAchievementLink(instanceLocation["boss" .. counter2].achievement)
                     achievementLink = achievementLink:gsub("&", "&amp;"); -- & in the achievement name would resolve the html syntax wrong
