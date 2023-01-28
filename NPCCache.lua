@@ -663,6 +663,9 @@ core.NPCCache = {
 	[198370] =198370, --Concentrated Storm
 	[191736] =191736, --Crawth
 	[197774] =197774, --Toxic Swogmother
+	[33388] =33388, --Dark Rune Guardian
+	[33343] =33343, --XS-013 Scrapbot
+	[196845] =196845, --Frozen Behemoth
 }
 core.NPCCacheClassic = {
 	[29364] =29364, --Void Sentry
@@ -717,4 +720,7 @@ core.NPCCacheClassic = {
 	[27654] =27654, --Drakos the Interrogator
 	[27658] =27658, --Belgaristrasz
 	[27756] =27756, --Ruby Drake
+	[33388] =33388, --Dark Rune Guardian
+	[33343] =33343, --XS-013 Scrapbot
+	[33136] =33136, --Guardian of Yogg-Saron
 }
