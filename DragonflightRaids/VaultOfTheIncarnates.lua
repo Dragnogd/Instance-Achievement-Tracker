@@ -217,6 +217,7 @@ end
 
 function core._2522:InstanceCleanup()
     core._2522.Events:UnregisterEvent("UNIT_AURA")
+    core._2522.Events:UnregisterEvent("UNIT_SPELLCAST_SUCCEEDED")
 end
 
 core._2522.Events:SetScript("OnEvent", function(self, event, ...)
@@ -225,12 +226,13 @@ end)
 
 function core._2522:InitialSetup()
     core._2522.Events:RegisterEvent("UNIT_AURA")
+    core._2522.Events:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
 end
 
 function core._2522.Events:UNIT_SPELLCAST_SUCCEEDED(self, unitTarget, castGUID, spellID)
 	if spellID == 389209 then
         local name, realm = UnitName(unitTarget)
-		core:sendMessage(name .. " " .. L["Shared_HasGained"] .. " " .. GetSpellLink(393365),true)
+		core:sendMessage(name .. " " .. L["Shared_HasGained"] .. " " .. GetSpellLink(389209),true)
 	end
 end
 
