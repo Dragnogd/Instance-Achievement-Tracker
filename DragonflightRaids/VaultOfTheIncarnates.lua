@@ -11,6 +11,12 @@ core._2522 = {}
 core._2522.Events = CreateFrame("Frame")
 
 ------------------------------------------------------
+---- Eranog
+------------------------------------------------------
+local frozenSolidCounter = 8
+local frozenBehmeothAnnounce = false
+
+------------------------------------------------------
 ---- Dathea, Ascended
 ------------------------------------------------------
 local condensedGaleCounter = 0
@@ -41,6 +47,20 @@ local concetratedStormEssencePlayers = {}
 function core._2522:Eranog()
     --Defeat Eranog after finding a Frozen Portal Stone and defeating a Burning Behemoth in Vault of the Incarnates on Normal difficulty or higher.
 
+    if (core.type == "SPELL_AURA_REMOVED_DOSE" or core.type == "SPELL_AURA_REMOVED") and core.spellId == 389203 then
+        frozenSolidCounter = frozenSolidCounter - 1
+        core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(389203) .. " " .. L["Shared_StacksRemaining"] .. " " .. frozenSolidCounter,true)
+    end
+
+    if frozenSolidCounter == 0 and frozenBehmeothAnnounce == false then
+        core:sendMessage(format(L["Shared_KillTheAddNow"], getNPCName(196845)),true)
+        frozenBehmeothAnnounce = true
+    end
+
+    if core.type == "UNIT_DIED" and frozenSolidCounter > 0 then
+        core:getAchievementFailedWithMessageAfter("(" .. L["Shared_StacksRemaining"] .. " " .. frozenSolidCounter .. ")")
+    end
+
     if core:getBlizzardTrackingStatus(16335, 1) == true then
 		core:getAchievementSuccess()
 	end
@@ -58,7 +78,6 @@ end
 function core._2522:ThePrimalCouncil()
     --Use fishing to lure the Lurking Lunker living in the lava out, then engage and defeat the Primal Council in the Vault of the Incarnates on Normal difficulty or higher.
 
-    --TODO: Check in game for this
     if core:getBlizzardTrackingStatus(16364, 1) == true then
 		core:getAchievementSuccess()
 	end
@@ -117,9 +136,9 @@ end
 function core._2522:BroodkeeperDiurna()
     --Defeat Broodkeeper Diurna after successfully hatching and defeating lieutenants from each Primal element's eggs within 10 seconds of each other in Vault of the Incarnates on Normal difficulty or higher.
 
-	core.MobCounter:Setup(4, 10, "197298")
-	core.MobCounter:DetectSpawnedMob()
-	core.MobCounter:DetectKilledMob()
+	-- core.MobCounter:Setup(4, 10, "197298")
+	-- core.MobCounter:DetectSpawnedMob()
+	-- core.MobCounter:DetectKilledMob()
 
     if core:getBlizzardTrackingStatus(16442, 1) == true then
 		core:getAchievementSuccess()
@@ -162,6 +181,12 @@ end
 
 function core._2522:ClearVariables()
     ------------------------------------------------------
+    ---- Eranog
+    ------------------------------------------------------
+    frozenSolidCounter = 8
+    frozenBehmeothAnnounce = false
+
+    ------------------------------------------------------
     ---- Dathea, Ascended
     ------------------------------------------------------
     condensedGaleCounter = 0
@@ -200,6 +225,13 @@ end)
 
 function core._2522:InitialSetup()
     core._2522.Events:RegisterEvent("UNIT_AURA")
+end
+
+function core._2522.Events:UNIT_SPELLCAST_SUCCEEDED(self, unitTarget, castGUID, spellID)
+	if spellID == 389209 then
+        local name, realm = UnitName(unitTarget)
+		core:sendMessage(name .. " " .. L["Shared_HasGained"] .. " " .. GetSpellLink(393365),true)
+	end
 end
 
 function core._2522.Events:UNIT_AURA(self, unitID)
