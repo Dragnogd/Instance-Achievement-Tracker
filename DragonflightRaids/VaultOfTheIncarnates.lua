@@ -70,13 +70,13 @@ function core._2522:SennarthTheColdBreath()
     --Freed Strange Chicken
     if core.type == "SPELL_SUMMON" and core.destID == "197396" then
         strangeChickensFreed = strangeChickensFreed + 1
-        core:sendMessage(core:getAchievement() .. " " .. getNPCName(197396) .. " " .. L["Shared_Killed"] .. " (" .. strangeChickensFreed .. "/5)",true)
+        core:sendMessage(core:getAchievement() .. " " .. getNPCName(197396) .. " " .. L["Shared_Freed"] .. " (" .. strangeChickensFreed .. "/5)" .. " " .. L["Shared_Killed"] .. " (" .. strangeChickensKilled .. "/5)",true)
     end
 
     --Killed Strange Chicken
     if core.type == "UNIT_DIED" and core.destID == "197396" then
         strangeChickensKilled = strangeChickensKilled + 1
-        core:sendMessage(core:getAchievement() .. " " .. getNPCName(197396) .. " " .. L["Shared_Killed"] .. " (" .. strangeChickensKilled .. "/5)",true)
+        core:sendMessage(core:getAchievement() .. " " .. getNPCName(197396) .. " " .. L["Shared_Freed"] .. " (" .. strangeChickensFreed .. "/5)" .. " " .. L["Shared_Killed"] .. " (" .. strangeChickensKilled .. "/5)",true)
     end
 
     if core:getBlizzardTrackingStatus(16419, 1) == true then
