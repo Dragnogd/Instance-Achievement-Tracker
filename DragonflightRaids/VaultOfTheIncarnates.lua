@@ -205,7 +205,7 @@ function core._2522.Events:UNIT_AURA(self, unitID)
             for i=1,40 do
                 local _, _, count2, _, _, _, _, _, _, spellId = UnitDebuff(unitID, i)
                 if name ~= nil then
-                    if spellId == 393365 then
+                    if spellId == 393365 and concetratedStormEssencePlayers[name] == nil then
                         --Concentrated Storm Essence
                         core:sendMessage(name .. " " .. L["Shared_HasGained"] .. " " .. GetSpellLink(393365),true)
                         concetratedStormEssencePlayers[name] = true
