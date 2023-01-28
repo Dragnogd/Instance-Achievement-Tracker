@@ -57,7 +57,7 @@ function core._2522:Eranog()
         frozenBehmeothAnnounce = true
     end
 
-    if core.type == "UNIT_DIED" and frozenSolidCounter > 0 then
+    if core.type == "UNIT_DIED" and core.destID == "196845" and frozenSolidCounter > 0 then
         core:getAchievementFailedWithMessageAfter("(" .. L["Shared_StacksRemaining"] .. " " .. frozenSolidCounter .. ")")
     end
 
