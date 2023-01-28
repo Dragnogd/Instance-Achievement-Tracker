@@ -14,6 +14,7 @@ core._2522.Events = CreateFrame("Frame")
 ---- Dathea, Ascended
 ------------------------------------------------------
 local condensedGaleCounter = 0
+local condensedGaleUID = {}
 
 ------------------------------------------------------
 ---- Terros
@@ -86,9 +87,12 @@ end
 function core._2522:DatheaAscended()
     --Defeat Dathea, Ascended after collecting 8 Condensed Gales in Vault of the Incarnates on Normal difficulty or higher.
 
-    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 392036 then
-        condensedGaleCounter = condensedGaleCounter + 1
-        core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. GetSpellLink(392036) .. " (" .. condensedGaleCounter .. "/8)",true)
+    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 392036 and core.destName ~= nil then
+        if condensedGaleUID[core.destName] == nil then
+            condensedGaleCounter = condensedGaleCounter + 1
+            condensedGaleUID[core.destName] = core.destName
+            core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. GetSpellLink(392036) .. " (" .. condensedGaleCounter .. "/8)",true)
+        end
     end
 
     if core:getBlizzardTrackingStatus(16458, 1) == true and condensedGaleCounter >= 8 then
@@ -161,6 +165,7 @@ function core._2522:ClearVariables()
     ---- Dathea, Ascended
     ------------------------------------------------------
     condensedGaleCounter = 0
+    condensedGaleUID = {}
 
     ------------------------------------------------------
     ---- Terros
