@@ -2,6 +2,7 @@
 -- Namespaces
 --------------------------------------
 local _, core = ...
+local L = core.L
 
 ------------------------------------------------------
 ---- _603 Bosses
@@ -16,8 +17,7 @@ local timerStarted3 = false
 ---- Dwarfageddon
 ------------------------------------------------------
 local dwarfageddonComplete = false
-local steelforgedDefenderKilled = 0
-local steelforgedDefenderAnnounced = false
+local dwarfageddonSetup = false
 
 ------------------------------------------------------
 ---- Unbroken
@@ -25,7 +25,7 @@ local steelforgedDefenderAnnounced = false
 local repairedAnnounced = false
 
 ------------------------------------------------------
----- Iron Dwarf, Medium Rare 
+---- Iron Dwarf, Medium Rare
 ------------------------------------------------------
 local darkRuneGuardianKilled = 0
 
@@ -112,81 +112,87 @@ local guardianOfYoggSaronKilled = 0
 local kissAndMakeUpAnnounced = false
 
 function core._603:Dwarfageddon()
-    core:trackMob("33572", "Steelforged Defender", 100, "100 Steelforged Defenders have spawned. AOE them now!", 10, nil, nil)
-
-    if core.mobCounter >= 100 and steelforgedDefenderAnnounced == false then
-        steelforgedDefenderAnnounced = true
+    --Destroy 100 Steelforged Defenders in 10 seconds in the Iron Concourse at the entrance to Ulduar.
+    if dwarfageddonSetup == false then
+        dwarfageddonSetup = true
+        core.achievementsCompleted[1] = false
     end
 
-    --Add killed
-    if core.type == "UNIT_DIED" and steelforgedDefenderAnnounced == true then
-        --Only start the timer if enough adds have been collected.
-        steelforgedDefenderKilled = steelforgedDefenderKilled + 1
-        if timerStarted == false then
-            timerStarted = true
-            core:sendMessage(core:getAchievement() .. " Timer Started! 10 seconds remaining")
+    --Only run tracking for this achievement when not complete and we have not pulled any other bosses
+    if dwarfageddonComplete == false and core.currentBosses[1].achievement and #core.currentBosses == 1 then
+        core.MobCounter:Setup(100, 10, "33572")
+	    core.MobCounter:DetectSpawnedMob()
+	    core.MobCounter:DetectKilledMob()
+
+        if core.achievementsCompleted[1] == true then
+            dwarfageddonComplete = true
+
+            --Hide InfoFrame as we have pulled boss
             C_Timer.After(10, function()
-                if steelforgedDefenderKilled >= 100 then
-                    if dwarfageddonComplete == false then
-                        core:sendMessage(core:getAchievement() .. " COMPLETED! Steelforged Defenders were killed in time (" .. steelforgedDefenderKilled .. "/100)")
-                        dwarfageddonComplete = true
-                    end
-                else
-                    core:sendMessage(core.getAchievement() .. " FAILED! Steelforged Defenders were not killed in time (" .. steelforgedDefenderKilled .. "/100). This achievement can be attempted again.")
-                    steelforgedDefenderKilled = 0
-                    timerStarted = false
-                    steelforgedDefenderAnnounced = false
-                end
+                core.IATInfoFrame:ToggleOff()
             end)
-        else
-            if steelforgedDefenderKilled >= 100 then
-                if dwarfageddonComplete == false then
-                    core:sendMessage(core:getAchievement() .. " COMPLETED! Steelforged Defenders were killed in time (" .. steelforgedDefenderKilled .. "/100)")
-                    dwarfageddonComplete = true
-                end
-            end
         end
+    else
+        --Hide InfoFrame as we have pulled boss
+        core.IATInfoFrame:ToggleOff()
     end
 end
 
-function core._603:FlameLeviathanTakeOutThoseTurrets()
+function core._603:FlameLeviathanTakeOutThoseTurrets(id)
+    --Destroy a Flame Leviathan Defense Turret
+
+    --TODO: Party_kill doesn't work in a raid as you will only see events for people in your party
+
     if core.type == "PARTY_KILL" and core.destID == 33142 then
         core:getAchievementSuccessPersonal()
     end
 end
 
-function core._603:FlameLeviathanShutout()
+function core._603:FlameLeviathanShutout(id)
+    --Defeat Flame Leviathan in Ulduar without causing a System Shutdown.
+
     if core.type == "SPELL_AURA_APPLIED" and core.spellID == 62475 then
-        core:getAchievementFailed(2)
+        core:getAchievementFailed(id)
     end
 end
 
-function core._603:RazorscaleIronDwarfMediumRare()
+function core._603:RazorscaleIronDwarfMediumRare(id)
+    --Defeat 25 Dark Rune Guardian Dwarves with Razorscale's Flame Breath
+
+    --TODO: Localise
+
+    core:trackMob("33388", getNPCName(33388), 25, "25 Dark Rune Guardian have spawned!",5)
+
     if core.type == "UNIT_DIED" and core.spellId == 63317 and core.destID == "33388" then
         darkRuneGuardianKilled = darkRuneGuardianKilled + 1
-        --print(darkRuneGuardianKilled)
-        core:sendMessageDelay("Dark Rune Guardian Killed (" .. darkRuneGuardianKilled .. "/25)",darkRuneGuardianKilled,5)
+        core:sendMessage(GetAchievementLink(id) .. " " .. getNPCName(33388) .. " " .. L["Shared_Killed"] .. " (" .. darkRuneGuardianKilled .. "/25)",true)
     end
 
-    core:trackMob("33388", "Dark Rune Guardian", 25, "25 Dark Rune Guardian have spawned!",5)
-
     if darkRuneGuardianKilled >= 25 then
-        core:getAchievementSuccess()
+        core:getAchievementSuccess(nil, id)
     end
 end
 
-function core._603:RazorscaleAQuickShave()
+function core._603:RazorscaleAQuickShave(id)
+    --Defeat Razorscale in Ulduar without allowing her to fly into the air more than once
+
     if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 62666 and (UnitHealth("boss1") / UnitHealthMax("boss1") * 100) > 50 then
         takeOff = takeOff + 1
-        --print(takeOff)
     end
 
     if takeOff == 2 then
-        core:getAchievementFailed()
+        core:getAchievementFailed(id)
     end
 end
 
 function core._603:IgnisTheFurnaceMasterShattered()
+    --Defeat Ignis the Furnace Master in Ulduar after shattering 2 Iron Constructs within 5 seconds
+
+    --TODO: Below
+    core.MobCounter:Setup(100, 10, "33572")
+    core.MobCounter:DetectSpawnedMob()
+    core.MobCounter:DetectKilledMob(nil, nil, true)
+
     if core.type == "SPELL_AURA_APPLIED" and core.spellId == 62383 then
         brittleTargetsKilled = brittleTargetsKilled + 1
         if timerStarted == false then
@@ -204,84 +210,94 @@ function core._603:IgnisTheFurnaceMasterShattered()
     end
 end
 
-function core._603:IgnisTheFurnaceMasterStokinTheFurnace()
+function core._603:IgnisTheFurnaceMasterStokinTheFurnace(id)
+    --Defeat Ignis the Furnace Master in Ulduar in under 4 minutes
+
     if timerStarted2 == false then
         timerStarted2 = true
-        timer = C_Timer.NewTimer(240, function() 
-            core:getAchievementFailed(2)
+        timer = C_Timer.NewTimer(240, function()
+            core:getAchievementFailed(id)
         end)
-    end  
+    end
 end
 
-function core._603:XT002DeconstructorNerfEngineering()
+function core._603:XT002DeconstructorNerfEngineering(id)
+    --Defeat XT-002 Deconstructor in Ulduar without allowing him to recover any health from XS-013 Scrapbots.
+
     if core.type == "SPELL_INSTAKILL" and core.spellId == 62834 then
-        core:getAchievementFailed(4)
+        core:getAchievementFailed(id)
     end
 end
 
-function core._603:XT002DeconstructorHeartbreaker()
+function core._603:XT002DeconstructorHeartbreaker(id)
+    --Defeat XT-002 Deconstructor in Ulduar after destroying his heart
+
+    --TODO: Party_kill wont work in raid properly
+
     if core.type == "PARTY_KILL" and core.destID == "33329" then
-        core:getAchievementSuccess(3)
+        core:getAchievementSuccess(id)
     end
 end
 
-function core._603:XT002DeconstructorMustDeconstructFaster()
+function core._603:XT002DeconstructorMustDeconstructFaster(id)
+    --Defeat XT-002 Deconstructor in Ulduar in under 205 seconds
+
     if timerStarted3 == false then
         timerStarted3 = true
-        timer2 = C_Timer.NewTimer(205, function() 
+        timer2 = C_Timer.NewTimer(205, function()
             core:getAchievementFailed(1)
         end)
-    end  
+    end
 end
 
-function core._603:XT002DeconstructorNerfGravityBombs()
+function core._603:XT002DeconstructorNerfGravityBombs(id)
+    --Defeat XT-002 Deconstructor in Ulduar without any raid member dying from a Gravity Bomb
+
     if (core.type == "SPELL_DAMAGE" or core.type == "SPELL_PERIODIC_DAMAGE") and core.spellId == 63024 and core.overkill > 0 then
-        core:getAchievementFailed(2)
+        core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")", id)
     end
 end
 
-function core._603:XT002DeconstructorNerfScrapbots()
-    core:trackMob("33343", "XS-013 Scrapbot", 20, "20 XS-013 Scrapbots have spawned!",5)
+function core._603:XT002DeconstructorNerfScrapbots(id)
+    --While facing XT-002 Deconstructor in Ulduar, using XE-321 Boombots to defeat 20 XS-013 Scrapbots within 12 seconds
 
-    if core.type == "SPELL_DAMAGE" and core.destID == "33343" and core.spellId == 62834 and core.overkill > 0 then
-        scrapbotsKilled = scrapbotsKilled + 1
-        if timerStarted == false then
-            timerStarted = true
-            C_Timer.After(12, function() 
-                if scrapbotsKilled >= 20 then
-                    core:getAchievementSuccess(5)
-                else
-                    core:sendMessage(core:getAchievement(5) .. " (" .. scrapbotsKilled .. "/20) Scrapbots killed in time")
-                    timerStarted = false
-                    scrapbotsKilled = 0
-                end
-            end)
-        end
-    end
+    core.MobCounter:Setup(20, 12, "33343")
+    core.MobCounter:DetectSpawnedMob()
+    core.MobCounter:DetectKilledMob()
 end
 
-function core._603:KologarnIfLooksCouldKill()
+function core._603:KologarnIfLooksCouldKill(id)
+    --Defeat Kologarn in Ulduar without any raid member being hit by Focused Eyebeams
+
     if (core.type == "SPELL_DAMAGE" or core.type == "SPELL_MISSED") and (core.spellId == 63346 or core.spellId == 63976) then
-        core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")")
+        core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")", id)
     end
 end
 
 function core._603:KologarnRubbleAndRoll()
+    --Defeat Kologarn in Ulduar after causing at least 25 Rubble creatures to spawn
+
     core:trackMob("33768", "Rubble", 25, "25 Rubble have spawned!",5,true,3)
 end
 
-function core._603:KologarnWithOpenArms()
+function core._603:KologarnWithOpenArms(id)
+    --Defeat Kologarn in Ulduar without destroying either of his arms
+
     if core.type == "UNIT_DIED" and (core.destID == "32934" or core.destID == "32933") then
-        core:getAchievementFailed(2)
+        core:getAchievementFailed(id)
     end
 end
 
-function core._603:AuriayaNineLives()
+function core._603:AuriayaNineLives(id)
+    --Defeat the Feral Defender and then defeat Auriaya in Ulduar
+
+    --TODO: Localise
+
     if core.type == "UNIT_DIED" and core.destID == "34035" and timerStarted == false then
         timerStarted = true
         feralDefenderCounter = feralDefenderCounter - 1
         core:sendMessage(core:getAchievement(1) .. " Feral Defender Lives Remaining: " .. feralDefenderCounter)
-        C_Timer.After(5, function() 
+        C_Timer.After(5, function()
             timerStarted = false
         end)
     end
@@ -291,40 +307,47 @@ function core._603:AuriayaNineLives()
     end
 end
 
-function core._603:AuriayaCrazyCatLady()
+function core._603:AuriayaCrazyCatLady(id)
+    --Defeat Auriaya in Ulduar without destroying her Sanctum Sentries
+
     if core.type == "UNIT_DIED" and core.destID == "34014" then
-        core:getAchievementFailed(2)
+        core:getAchievementFailed(id)
     end
 end
 
-function core._603:MimironSetUpUsTheBomb()
+function core._603:MimironSetUpUsTheBomb(id)
+    --Defeat Mimiron in Ulduar without anyone in the raid being hit by the following
+
     --Proximity Mine
     if (core.type == "SPELL_DAMAGE" or core.type == "SPELL_MISSED") and core.spellId == 63009 and proximityMineFailed == false then
         proximityMineFailed = true
-        core:sendMessage("Proximity Mine part of " .. core:getAchievement(1) .. " FAILED")
+        core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ") " .. format(L["Shared_DamageFromAbility"], GetSpellLink(63009)), nil, id)
     end
 
     --Rocket Strike
     if (core.type == "SPELL_DAMAGE" or core.type == "SPELL_MISSED") and core.spellId == 63041 and rocketstrikeFailed ~= true then
         rocketstrikeFailed = true
-        core:sendMessage("Rocket Strike part of " .. core:getAchievement(1) .. " FAILED")       
+        core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ") " .. format(L["Shared_DamageFromAbility"], GetSpellLink(63041)), nil, id)
     end
-    
+
     --Bomb Bot
     if (core.type == "SPELL_DAMAGE" or core.type == "SPELL_MISSED") and core.spellId == 63801 and bombBotFailed == false then
         bombBotFailed = true
-        core:sendMessage("Bomb Bot part of " .. core:getAchievement(1) .. " FAILED")           
+        core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ") " .. format(L["Shared_DamageFromAbility"], GetSpellLink(63801)), nil, id)
     end
 end
 
-function core._603:MimironNotSoFriendlyFire()
+function core._603:MimironNotSoFriendlyFire(id)
+    --While fighting Mimiron in Ulduar, cause him to kill an Assault Bot with a Rocket Strike
+
     if core.type == "SPELL_DAMAGE" and core.spellId == 63041 and core.destID == "34057" then
-        core:getAchievementSuccess(3)
+        core:getAchievementSuccess(id)
     end
 end
 
-function core._603:AssemblyOfIronIChooseYouSteelbreaker()
-    --4
+function core._603:AssemblyOfIronIChooseYouSteelbreaker(id)
+    --Defeat the Assembly of Iron in Ulduar with Steelbreaker as the last member alive.
+
     if core.type == "UNIT_DIED" and core.destID == "32867" then
         steelbreakerKilled = true
     elseif core.type == "UNIT_DIED" and core.destID == "32927" then
@@ -335,12 +358,13 @@ function core._603:AssemblyOfIronIChooseYouSteelbreaker()
 
     if runemasterMolgeimKilled == true and stormcallerBrundirKilled == true and messageAnnounced == false then
         messageAnnounced = true
-        core:getAchievementSuccess(4)
+        core:getAchievementSuccess(id)
     end
 end
 
-function core._603:AssemblyOfIronIChooseYouStormcallerBrundir()
-    --3
+function core._603:AssemblyOfIronIChooseYouStormcallerBrundir(id)
+    --Defeat the Assembly of Iron in Ulduar with Stormcaller Brundir as the last member alive.
+
     if core.type == "UNIT_DIED" and core.destID == "32867" then
         steelbreakerKilled = true
     elseif core.type == "UNIT_DIED" and core.destID == "32927" then
@@ -351,12 +375,13 @@ function core._603:AssemblyOfIronIChooseYouStormcallerBrundir()
 
     if runemasterMolgeimKilled == true and steelbreakerKilled == true and messageAnnounced == false then
         messageAnnounced = true
-        core:getAchievementSuccess(3)
+        core:getAchievementSuccess(id)
     end
 end
 
-function core._603:AssemblyOfIronIChooseYouRunemasterMolgeim()
-    --2
+function core._603:AssemblyOfIronIChooseYouRunemasterMolgeim(id)
+    --Defeat the Assembly of Iron in Ulduar with Runemaster Molgeim as the last member alive.
+
     if core.type == "UNIT_DIED" and core.destID == "32867" then
         steelbreakerKilled = true
     elseif core.type == "UNIT_DIED" and core.destID == "32927" then
@@ -367,72 +392,79 @@ function core._603:AssemblyOfIronIChooseYouRunemasterMolgeim()
 
     if stormcallerBrundirKilled == true and steelbreakerKilled == true and messageAnnounced == false then
         messageAnnounced = true
-        core:getAchievementSuccess(2)
+        core:getAchievementSuccess(id)
     end
 end
 
-function core._603:AssemblyOfIronCantDoThatWhileStunned()
-    --1
+function core._603:AssemblyOfIronCantDoThatWhileStunned(id)
+    --Defeat the Assembly of Iron in Ulduar without allowing Stormcaller Brundir to damage anyone with Chain Lightning or Lightning Whirl.
+
     if core.type == "SPELL_DAMAGE" and core.spellId == 63479 then
-        core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")",1)
+        core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")", id)
     end
 end
 
-function core._603:HodirCheeseTheFreeze()
-    --4
+function core._603:HodirCheeseTheFreeze(id)
+    --Defeat Hodir in Ulduar without any raid member being hit by Flash Freeze.
+
     if core.type == "SPELL_AURA_APPLIED" and core.spellId == 61969 and core.currentUnit == "Player" then
-        core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")",4)
+        core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")", id)
     end
 end
 
-function core._603:HodirIHaveTheCoolestFriends()
-    --1
+function core._603:HodirIHaveTheCoolestFriends(id)
+    --Defeat Hodir in Ulduar without letting any of the frozen adventurers perish.
+
     if core.type == "UNIT_DIED" and core.unitType == "Creature" and core.destID ~= "32845" then
-        core:getAchievementFailedWithMessageAfter("(Reason: " .. core.destName .. " has died)",1)
+        core:getAchievementFailedWithMessageAfter("(Reason: " .. core.destName .. " has died)", id)
     end
 end
 
-function core._603:HodirGettingColdInHere()
-    --2
+function core._603:HodirGettingColdInHere(id)
+    --Defeat Hodir in Ulduar without any raid member ever gaining more than 2 stacks of Biting Cold.
+
     if core:trackAura(62039, 3, "debuff") == true then
-        core:getAchievementFailed(2)
+        core:getAchievementFailed(id)
     end
 end
 
-function core._603:HodirICouldSayThatThisCacheWasRare()
-    --3
+function core._603:HodirICouldSayThatThisCacheWasRare(id)
+    --Defeat Hodir in Ulduar before he shatters his Rare Cache of Winter.
+
     if timerStarted == false then
         timerStarted = true
-        timer = C_Timer.NewTimer(120, function() 
-            core:getAchievementFailed(3)
+        timer = C_Timer.NewTimer(120, function()
+            core:getAchievementFailed(id)
         end)
-    end 
+    end
 end
 
-function core._603:FreyaConSpeedAtory()
-    --1
+function core._603:FreyaConSpeedAtory(id)
+    --Defeat Freya in Ulduar within 20 minutes of the first creature killed in the Conservatory of Life.
+
     local freyaTrashIDs = {"33430", "33431", "33528", "33527", "33526", "33525", "32914", "32913", "33354", "33355", "32915"}
     if core.type == "UNIT_DIED" and timerStarted == false and freyaTrashedStarted == false and core:has_value(freyaTrashIDs, core.destID) == true then
         if timerStartedFreya == false then
             timerStartedFreya = true
             freyaTrashedStarted = true
             core:sendMessage("Tracking: " .. core:getAchievement() .. " 20 Minutes Remaining")
-            timerFreya = C_Timer.NewTimer(1200, function() 
-                core:sendMessage(GetAchievementLink(12361) .. " FAILED!")
+            timerFreya = C_Timer.NewTimer(1200, function()
+                core:sendMessage(GetAchievementLink(id) .. " FAILED!")
             end)
-        end  
+        end
     end
 
     --Freya has died so stop the timer
     if core.type == "UNIT_DIED" and core.destID == "32906" then
         if timerFreya ~= nil then
-            core:sendMessage("Cancelling Freya Timer")
             timerFreya:Cancel()
         end
     end
 end
 
-function core._603:FreyaLumberjacked()
+function core._603:FreyaLumberjacked(id)
+    --Defeat Elder Brightleaf, Elder Ironbranch, and Elder Stonebark in Ulduar within 15 seconds of each other.
+
     --Elder Stonebark
     if core.type == "UNIT_DIED" and core.destID == "32914" then
         bossesKilled = bossesKilled + 1
@@ -453,24 +485,25 @@ function core._603:FreyaLumberjacked()
         bossKilled = true
         C_Timer.After(15, function()
             if bossesKilled == 3 then
-                core:sendMessage(GetAchievementLink(12360) .. " Critera Met")
+                core:getAchievementSuccess(id)
             elseif bossesKilled < 3 then
-                core:sendMessage(GetAchievementLink(12360) .. " FAILED!")
+                core:getAchievementFailed(id)
             end
         end)
     end
 end
 
-function core._603:FreyaGettingBackToNature()
-    --3
+function core._603:FreyaGettingBackToNature(id)
+    --Defeat Freya in Ulduar while she is affected by at least 25 stacks of Attuned to Nature.
+
     if core.type == "SPELL_AURA_REMOVED_DOSE" and core.amount < 25 then
-        --print("Getting back to nature failed")
-        core:getAchievementFailed(3)
+        core:getAchievementFailed(id)
     end
 end
 
 function core._603:FreyaDeforestation()
-    --2
+    --While fighting Freya in Ulduar, defeat 2 Ancient Water Spirits, 2 Storm Lashers, and 2 Snaplashers within 10 seconds.
+
     --Ancient Water Spirit
     if core.type == "UNIT_DIED" and core.destID == "33202" then
         ancientWaterSpiritsKilled = ancientWaterSpiritsKilled + 1
@@ -502,88 +535,74 @@ function core._603:FreyaDeforestation()
     end
 end
 
-function core._603:ThorimDontStandInTheLightning()
+function core._603:ThorimDontStandInTheLightning(id)
+    --Defeat Thorim in Ulduar without any raid member being struck by Lightning Charge.
+
     if (core.type == "SPELL_DAMAGE" or core.type == "SPELL_MISSED") and core.spellId == 62466 then
-        core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")")
+        core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")", id)
     end
 end
 
-function core._603:ThorimWhoNeedsBloodlust()
-
+function core._603:ThorimWhoNeedsBloodlust(id)
+    --Defeat Thorim in Ulduar while under the effect of Aura of Celerity.
 end
 
-function core._603:Shadowdodger()
+function core._603:Shadowdodger(id)
+    --Defeat General Vezax in Ulduar without any raid member being hit by Shadow Crash.
+
     if core.type == "SPELL_AURA_APPLIED" and core.spellId == 63277 then
-        core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")", 2)
-    end
-end 
-
-function core._603:ILoveTheSmellOfSaroniteInTheMorning()
-    if core.type == "UNIT_DIED" and core.destID == "33524" then
-        core:getAchievementSuccess(1)
+        core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")", id)
     end
 end
 
-function core._603:DriveMeCrazy()
-    --3
+function core._603:ILoveTheSmellOfSaroniteInTheMorning(id)
+    --Defeat General Vezax in Ulduar after defeating the Saronite Animus.
+
+    if core.type == "UNIT_DIED" and core.destID == "33524" then
+        core:getAchievementSuccess(id)
+    end
+end
+
+function core._603:DriveMeCrazy(id)
+    --Defeat Yogg-Saron in Ulduar without any raid member going insane.
+
     if core.type == "SPELL_AURA_REMOVED" and core.spellId == 63050 then
-        C_Timer.After(1, function() 
+        C_Timer.After(1, function()
             if core.inCombat == true then
-                core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")", 3)            
+                core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")", id)
             end
         end)
     end
 end
 
 function core._603:KissAndMakeUp()
-    --4
+    --/Kiss Sara in Ulduar while she is angry with you.
+
+    --TODO: Infoframe for players who need this
+
     if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 65301 and kissAndMakeUpAnnounced == false then
         core:sendMessage(core:getAchievement(4) .. " /kiss Sara Now!")
         kissAndMakeUpAnnounced = true
     end
 end
 
-function core._603:HesNotGettingAnyOlder()
-    --2
+function core._603:HesNotGettingAnyOlder(id)
+    --Defeat Yogg-Saron in Ulduar within 7 minutes.
+
     if timerStarted3 == false then
         timerStarted3 = true
-        timer3 = C_Timer.NewTimer(410, function() 
-            core:getAchievementFailed(2)
+        timer3 = C_Timer.NewTimer(410, function()
+            core:getAchievementFailed(id)
         end)
-    end  
+    end
 end
 
-function core._603:TheyreComingOutOfTheWalls()
-    --1
-    core:trackMob("33136", "Guardian of Yogg-Saron", 9, " 9 Guardian of Yogg-Saron have spawned. Group them up then AOE them down", 1, nil, nil)
+function core._603:TheyreComingOutOfTheWalls(id)
+    --While rescuing Sara from Yogg-Saron in Ulduar, defeat 9 Guardians of Yogg-Saron within 12 seconds.
 
-    if core.mobCounter >= 9 and guardianOfYoggSaronAnnounced == false then
-        guardianOfYoggSaronAnnounced = true
-    end
-
-    --Add killed
-    if core.type == "UNIT_DIED" and core.destID == "33136" and guardianOfYoggSaronAnnounced == true then
-        --Only start the timer if enough adds have been collected.
-        guardianOfYoggSaronKilled = guardianOfYoggSaronKilled + 1
-        if timerStarted2 == false then
-            timerStarted2 = true
-            core:sendMessage(core:getAchievement() .. " Timer Started! 12 seconds remaining")
-            C_Timer.After(12, function()
-                if guardianOfYoggSaronKilled >= 9 then
-                    core:getAchievementSuccess(1)
-                else
-                    core:getAchievementFailedWithMessageAfter("Guardians of Yogg-Saron killed (" .. guardianOfYoggSaronKilled .. "/9)", 1)
-                    guardianOfYoggSaronKilled = 0
-                    timerStarted2 = false
-                    guardianOfYoggSaronAnnounced = false
-                end
-            end)
-        else
-            if guardianOfYoggSaronKilled >= 9 then
-                core:getAchievementSuccess(1)
-            end
-        end
-    end
+    core.MobCounter:Setup(9, 12, "33136")
+    core.MobCounter:DetectSpawnedMob()
+    core.MobCounter:DetectKilledMob()
 end
 
 function core._603:ClearVariables()
@@ -596,7 +615,12 @@ function core._603:ClearVariables()
     end
 
     ------------------------------------------------------
-    ---- Iron Dwarf, Medium Rare 
+    ---- Dwarfageddon
+    ------------------------------------------------------
+    dwarfageddonSetup = false
+
+    ------------------------------------------------------
+    ---- Iron Dwarf, Medium Rare
     ------------------------------------------------------
     darkRuneGuardianKilled = 0
 
@@ -710,7 +734,7 @@ function core._603.Events:CHAT_MSG_MONSTER_YELL(self, message, sender, language,
     if core.Instances[core.expansion][core.instanceType][core.instance]["boss50"].enabled == true then
         if message == "Now, why would you go and do something like that? Didn't you see the sign that said, \"DO NOT PUSH THIS BUTTON!\"? How will we finish testing with the self-destruct mechanism active?" then
             core:getAchievementSuccess(2)
-        end   
+        end
     end
 end
 
