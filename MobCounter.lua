@@ -199,7 +199,7 @@ function MobCounter:DetectKilledMobEchelon()
     core.IATInfoFrame:SetText1(format(L["MobCounter_MobsAlive"], getNPCName(tonumber(mobID))) .. " (" .. mobsDetected .. "/" .. mobCriteria .. ")\n" .. format(L["MobCounter_MobsKilled"], getNPCName(tonumber(mobID))) .. " (" .. mobsKilled .. "/" .. mobCriteria .. ")","GameFontHighlightLarge")
 end
 
-function MobCounter:DetectKilledMob(customType, customSpellID)
+function MobCounter:DetectKilledMob(customType, customSpellID, achievementID)
     --Detect when a mob has been killed in the combatlog
     if customType ~= nil and customSpellID ~= nil then
         --Custom kill detection
@@ -213,7 +213,7 @@ function MobCounter:DetectKilledMob(customType, customSpellID)
                 else
                     core:sendDebugMessage(mobsDetected .. " : " .. mobCriteria)
                     core:sendDebugMessage("Starting Fixed Timer")
-                    MobCounter:StartFixedTimer()
+                    MobCounter:StartFixedTimer(achievementID)
                 end
             end
 
@@ -264,7 +264,7 @@ function MobCounter:DetectKilledMob(customType, customSpellID)
                     MobCounter:StartTimestampTimer()
                 else
                     core:sendDebugMessage("Starting Fixed Timer")
-                    MobCounter:StartFixedTimer()
+                    MobCounter:StartFixedTimer(achievementID)
                 end
             end
         end
@@ -384,7 +384,7 @@ function MobCounter:StartFixedTimerNoOutput()
     end
 end
 
-function MobCounter:StartFixedTimer()
+function MobCounter:StartFixedTimer(achievementID)
     --Start ticker for killing mobs within a certain time period
     if fixedTimerStarted == false and core.achievementsCompleted[1] == false then
         local mobCriteriaTimeWindow = mobCriteriaTimeWindow - 1
@@ -409,12 +409,12 @@ function MobCounter:StartFixedTimer()
                 end
                 --core:sendDebugMessage("TRACKING AT TICK: " .. currentTick .. ". Time Elapsed " .. GetTime() - InititalTime)
                 if mobsKilled >= mobCriteria and (GetTime() - InititalTime) < mobCriteriaTimeWindow then
-                    core:getAchievementSuccess()
+                    core:getAchievementSuccess(achievementID)
                     AchievementSuccess = true
                 elseif (((GetTime() - InititalTime) >= mobCriteriaTimeWindow) or currentTick == 1) and AchievementSuccess == false then
                     --print("STOP",GetTime() - InititalTime,mobCriteriaTimeWindow,currentTick)
                     --core:sendDebugMessage("STOP TRACKING AT TICK: " .. currentTick .. ". Time Elapsed " .. GetTime() - InititalTime)
-                    core:getAchievementFailedWithMessageAfter("(" .. mobsKilled .. "/" .. mobCriteria .. ")")
+                    core:getAchievementFailedWithMessageAfter("(" .. mobsKilled .. "/" .. mobCriteria .. ")", achievementID)
                 end
 
                 --Unlock timer at final tick
