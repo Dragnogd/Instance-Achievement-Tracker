@@ -111,7 +111,7 @@ local guardianOfYoggSaronKilled = 0
 ------------------------------------------------------
 local kissAndMakeUpAnnounced = false
 
-function core._603:Dwarfageddon()
+function core._603:Dwarfageddon(id)
     --Destroy 100 Steelforged Defenders in 10 seconds in the Iron Concourse at the entrance to Ulduar.
     if dwarfageddonSetup == false then
         dwarfageddonSetup = true
@@ -122,7 +122,7 @@ function core._603:Dwarfageddon()
     if dwarfageddonComplete == false and core.currentBosses[1].achievement and #core.currentBosses == 1 then
         core.MobCounter:Setup(100, 10, "33572")
 	    core.MobCounter:DetectSpawnedMob()
-	    core.MobCounter:DetectKilledMob()
+	    core.MobCounter:DetectKilledMob(nil, nil, id)
 
         if core.achievementsCompleted[1] == true then
             dwarfageddonComplete = true
@@ -185,7 +185,7 @@ function core._603:RazorscaleAQuickShave(id)
     end
 end
 
-function core._603:IgnisTheFurnaceMasterShattered()
+function core._603:IgnisTheFurnaceMasterShattered(id)
     --Defeat Ignis the Furnace Master in Ulduar after shattering 2 Iron Constructs within 5 seconds
 
     --TODO: Below
@@ -245,7 +245,7 @@ function core._603:XT002DeconstructorMustDeconstructFaster(id)
     if timerStarted3 == false then
         timerStarted3 = true
         timer2 = C_Timer.NewTimer(205, function()
-            core:getAchievementFailed(1)
+            core:getAchievementFailed(id)
         end)
     end
 end
@@ -274,7 +274,7 @@ function core._603:KologarnIfLooksCouldKill(id)
     end
 end
 
-function core._603:KologarnRubbleAndRoll()
+function core._603:KologarnRubbleAndRoll(id)
     --Defeat Kologarn in Ulduar after causing at least 25 Rubble creatures to spawn
 
     core:trackMob("33768", "Rubble", 25, "25 Rubble have spawned!",5,true,3)
@@ -296,14 +296,14 @@ function core._603:AuriayaNineLives(id)
     if core.type == "UNIT_DIED" and core.destID == "34035" and timerStarted == false then
         timerStarted = true
         feralDefenderCounter = feralDefenderCounter - 1
-        core:sendMessage(core:getAchievement(1) .. " Feral Defender Lives Remaining: " .. feralDefenderCounter)
+        core:sendMessage(core:getAchievement(id) .. " Feral Defender Lives Remaining: " .. feralDefenderCounter)
         C_Timer.After(5, function()
             timerStarted = false
         end)
     end
 
     if feralDefenderCounter == 0 then
-        core:getAchievementSuccess(1)
+        core:getAchievementSuccess(id)
     end
 end
 
@@ -575,7 +575,7 @@ function core._603:DriveMeCrazy(id)
     end
 end
 
-function core._603:KissAndMakeUp()
+function core._603:KissAndMakeUp(id)
     --/Kiss Sara in Ulduar while she is angry with you.
 
     --TODO: Infoframe for players who need this
@@ -723,6 +723,7 @@ function core._603.Events:UNIT_AURA(self, unitID, ...)
         for i=1,40 do
             local _, _, _, _, _, _, _, _, _, spellId = UnitBuff(unitID, i)
             if spellId == 62705 and repairedAnnounced == false then
+                core:getAchievementFailed()
                 core:sendMessage(GetAchievementLink(2905) .. " FAILED! A player has repaired their vehicle")
                 repairedAnnounced = true
             end
