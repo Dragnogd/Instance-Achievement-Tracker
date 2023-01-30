@@ -6474,6 +6474,7 @@ core.Instances = {
 					encounterID = 1142,
 					nameWrath = L["Boss_XT-002Deconstructor"],
 					tacticsClassic = "",
+					displayInfoFrame = true,
 				},
 				boss17 = {
 					name = 1640, --XT-002 Deconstructor (Nerf Gravity Bombs)
@@ -7299,6 +7300,7 @@ core.Instances = {
 					encounterIDWrath = 747,
 					nameWrath = L["Boss_XT-002Deconstructor"],
 					tacticsClassic = "",
+					displayInfoFrame = true,
 				},
 				boss17 = {
 					name = 1640, --XT-002 Deconstructor (Nerf Gravity Bombs) 10 Man
@@ -8166,6 +8168,7 @@ core.Instances = {
 					encounterIDWrath = 747,
 					nameWrath = L["Boss_XT-002Deconstructor"],
 					tacticsClassic = "",
+					displayInfoFrame = true,
 				},
 				boss17 = {
 					name = 1640, --XT-002 Deconstructor (Nerf Gravity Bombs) 25 Man

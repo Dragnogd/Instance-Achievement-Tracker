@@ -189,9 +189,9 @@ function core._603:IgnisTheFurnaceMasterShattered(id)
     --Defeat Ignis the Furnace Master in Ulduar after shattering 2 Iron Constructs within 5 seconds
 
     --TODO: Below
-    core.MobCounter:Setup(100, 10, "33572")
-    core.MobCounter:DetectSpawnedMob()
-    core.MobCounter:DetectKilledMob(nil, nil, true)
+    -- core.MobCounter:Setup(100, 10, "33572")
+    -- core.MobCounter:DetectSpawnedMob()
+    -- core.MobCounter:DetectKilledMob(nil, nil, true)
 
     if core.type == "SPELL_AURA_APPLIED" and core.spellId == 62383 then
         brittleTargetsKilled = brittleTargetsKilled + 1
@@ -263,7 +263,7 @@ function core._603:XT002DeconstructorNerfScrapbots(id)
 
     core.MobCounter:Setup(20, 12, "33343")
     core.MobCounter:DetectSpawnedMob()
-    core.MobCounter:DetectKilledMob()
+    core.MobCounter:DetectKilledMob(nil, nil, id)
 end
 
 function core._603:KologarnIfLooksCouldKill(id)
@@ -321,19 +321,19 @@ function core._603:MimironSetUpUsTheBomb(id)
     --Proximity Mine
     if (core.type == "SPELL_DAMAGE" or core.type == "SPELL_MISSED") and core.spellId == 63009 and proximityMineFailed == false then
         proximityMineFailed = true
-        core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ") " .. format(L["Shared_DamageFromAbility"], GetSpellLink(63009)), nil, id)
+        core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ") " .. format(L["Shared_DamageFromAbility"], GetSpellLink(63009)), id)
     end
 
     --Rocket Strike
     if (core.type == "SPELL_DAMAGE" or core.type == "SPELL_MISSED") and core.spellId == 63041 and rocketstrikeFailed ~= true then
         rocketstrikeFailed = true
-        core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ") " .. format(L["Shared_DamageFromAbility"], GetSpellLink(63041)), nil, id)
+        core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ") " .. format(L["Shared_DamageFromAbility"], GetSpellLink(63041)), id)
     end
 
     --Bomb Bot
     if (core.type == "SPELL_DAMAGE" or core.type == "SPELL_MISSED") and core.spellId == 63801 and bombBotFailed == false then
         bombBotFailed = true
-        core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ") " .. format(L["Shared_DamageFromAbility"], GetSpellLink(63801)), nil, id)
+        core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ") " .. format(L["Shared_DamageFromAbility"], GetSpellLink(63801)), id)
     end
 end
 
