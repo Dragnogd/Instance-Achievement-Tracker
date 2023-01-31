@@ -51,7 +51,7 @@ Config.majorVersion = 4						--Addon with a higher major version change have pri
 Config.minorVersion = 13    				--Addon with a minor version change have prioirty over a lower minor version
 Config.revisionVersion = 2					--Addon with a revision change have the same priorty as a lower revision verison
 Config.releaseType = ""                     --Release type (Alpha, Beta, Release)
-Config.classicPhase = 1                     --What phase classic realms are currently running
+Config.classicPhase = 2                     --What phase classic realms are currently running
 
 ------------------------------------------------------
 ---- Game Versions
@@ -1292,18 +1292,22 @@ function Config:CreateGUI()
         for instance,v in pairs(core.Instances[i].Raids) do
             local instanceName
 
-            if core.gameVersionMajor == 3 and i == 3 then
-                --For wrath we must fetch the localisaed names as the encounter journal is not avaliable
-                if core.Instances[i].Raids[instance].classicPhase == Config.classicPhase then
-                    instanceName = core.Instances[i].Raids[instance].nameLocalised
-                end
-            else
-                --All other expansions have the encounter journal so pass the ID to fetch from API
-                instanceName = Config:getLocalisedInstanceName(core.Instances[i].Raids[instance].name)
-            end
+            if (core.gameVersionMajor > 3 and core.Instances[i].Raids[instance].classicOnly ~= true) or (core.gameVersionMajor == 3 and core.Instances[i].Raids[instance].retailOnly ~= true) then
+                --Do not load classic only instance on retail and visa versa
 
-            if instanceName ~= nil then
-                table.insert(localisedRaidNames, {name = instanceName, id = instance});
+                if core.gameVersionMajor == 3 and i == 3 then
+                    --For wrath we must fetch the localisaed names as the encounter journal is not avaliable
+                    if core.Instances[i].Raids[instance].classicPhase <= Config.classicPhase then
+                        instanceName = core.Instances[i].Raids[instance].nameLocalised
+                    end
+                else
+                    --All other expansions have the encounter journal so pass the ID to fetch from API
+                    instanceName = Config:getLocalisedInstanceName(core.Instances[i].Raids[instance].name)
+                end
+
+                if instanceName ~= nil then
+                    table.insert(localisedRaidNames, {name = instanceName, id = instance});
+                end
             end
         end
         for instance,v in pairs(core.Instances[i].Dungeons) do
@@ -1311,7 +1315,7 @@ function Config:CreateGUI()
 
             if core.gameVersionMajor == 3 and i == 3 then
                 --For wrath we must fetch the localisaed names as the encounter journal is not avaliable
-                if core.Instances[i].Dungeons[instance].classicPhase == Config.classicPhase then
+                if core.Instances[i].Dungeons[instance].classicPhase <= Config.classicPhase then
                     instanceName = core.Instances[i].Dungeons[instance].nameLocalised
                 end
             else
