@@ -6279,6 +6279,7 @@ core.Instances = {
 					partial = true,
 					nameWrath = L["Boss_MISSINGNAME67"],
 					tacticsClassic = "",
+					displayInfoFrame = true,
 				},
 				boss2 = {
 					name = L["Instances_Other"], --Unbroken
@@ -7092,6 +7093,7 @@ core.Instances = {
 					partial = true,
 					nameWrath = L["Boss_MISSINGNAME67"],
 					tacticsClassic = "",
+					displayInfoFrame = true,
 				},
 				boss2 = {
 					name = L["Instances_Other"], --Unbroken 10 Man
@@ -7960,6 +7962,7 @@ core.Instances = {
 					partial = true,
 					nameWrath = L["Boss_MISSINGNAME67"],
 					tacticsClassic = "",
+					displayInfoFrame = true,
 				},
 				boss2 = {
 					name = L["Instances_Other"], --Unbroken 25 Man

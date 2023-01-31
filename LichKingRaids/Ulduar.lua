@@ -63,7 +63,7 @@ local rubbleCounter = 0
 ------------------------------------------------------
 ---- Nine Lives
 ------------------------------------------------------
-local feralDefenderCounter = 9
+local feralDefenderCounter = 0
 
 ------------------------------------------------------
 ---- Set Up Us The Bomb
@@ -201,7 +201,7 @@ function core._603:IgnisTheFurnaceMasterShattered(id)
                 if brittleTargetsKilled >= 2 then
                     core:getAchievementSuccess()
                 else
-                    core:sendMessage(core:getAchievement() .. "(" .. brittleTargetsKilled .. "/2) Brittle Targets killed in time")
+                    core:sendMessage(core:getAchievement(id) .. "(" .. brittleTargetsKilled .. "/2) Brittle Targets killed in time")
                     brittleTargetsKilled = 0
                     timerStarted = false
                 end
@@ -295,14 +295,14 @@ function core._603:AuriayaNineLives(id)
 
     if core.type == "UNIT_DIED" and core.destID == "34035" and timerStarted == false then
         timerStarted = true
-        feralDefenderCounter = feralDefenderCounter - 1
-        core:sendMessage(core:getAchievement(id) .. " Feral Defender Lives Remaining: " .. feralDefenderCounter)
+        feralDefenderCounter = feralDefenderCounter + 1
+        core:sendMessage(core:getAchievement(id) .. " " .. getNPCName(34035) .. " " .. L["Core_Counter"] .. " (" .. feralDefenderCounter .. "/9)",true)
         C_Timer.After(5, function()
             timerStarted = false
         end)
     end
 
-    if feralDefenderCounter == 0 then
+    if feralDefenderCounter == 9 then
         core:getAchievementSuccess(id)
     end
 end
@@ -662,7 +662,7 @@ function core._603:ClearVariables()
     ------------------------------------------------------
     ---- Nine Lives
     ------------------------------------------------------
-    feralDefenderCounter = 9
+    feralDefenderCounter = 0
 
     ------------------------------------------------------
     ---- Set Up Us The Bomb
@@ -707,6 +707,7 @@ function core._603:InstanceCleanup()
     core._603.Events:UnregisterEvent("UNIT_AURA")
     core._603.Events:UnregisterEvent("CHAT_MSG_MONSTER_YELL")
     dwarfageddonComplete = false
+    repairedAnnounced = false
 end
 
 function core._603:InitialSetup()
@@ -723,8 +724,7 @@ function core._603.Events:UNIT_AURA(self, unitID, ...)
         for i=1,40 do
             local _, _, _, _, _, _, _, _, _, spellId = UnitBuff(unitID, i)
             if spellId == 62705 and repairedAnnounced == false then
-                core:getAchievementFailed()
-                core:sendMessage(GetAchievementLink(2905) .. " FAILED! A player has repaired their vehicle")
+                core:getAchievementFailed(core.Instances[core.expansion][core.instanceType][core.instance]["boss2"].achievement)
                 repairedAnnounced = true
             end
         end
@@ -734,11 +734,7 @@ end
 function core._603.Events:CHAT_MSG_MONSTER_YELL(self, message, sender, language, channelString, target, flags, unknown, channelNumber, channelName, unknown, counter, ...)
     if core.Instances[core.expansion][core.instanceType][core.instance]["boss50"].enabled == true then
         if message == "Now, why would you go and do something like that? Didn't you see the sign that said, \"DO NOT PUSH THIS BUTTON!\"? How will we finish testing with the self-destruct mechanism active?" then
-            core:getAchievementSuccess(2)
+            --core:getAchievementSuccess(2)
         end
     end
-end
-
-function core._603.TrackAdditional()
-
 end
