@@ -144,11 +144,22 @@ function generateNPCCache()
 end
 
 function getNPCName(npcID)
-	if not tonumber(core.NPCCache[npcID]) then
-		return core.NPCCache[npcID]
+	if core.gameVersionMajor == 3 then
+		--Look in the Wrath Classic Cache
+		if not tonumber(core.NPCCacheClassic[npcID]) then
+			return core.NPCCacheClassic[npcID]
+		else
+			GetNameFromNpcIDCache(npcID)
+			return ""
+		end
 	else
-		GetNameFromNpcIDCache(npcID)
-		return ""
+		--Look in the Retail Cache
+		if not tonumber(core.NPCCache[npcID]) then
+			return core.NPCCache[npcID]
+		else
+			GetNameFromNpcIDCache(npcID)
+			return ""
+		end
 	end
 end
 
@@ -583,6 +594,21 @@ function getInstanceInfomation()
 					end
 				end
 
+				--Wrath classic returns the old 10man and 25man ulduar not present on retail
+				if core.gameVersionMajor == 3 and core.instance == 603 then
+					if core.difficultyID == 175 or core.difficultyID == 193 then
+						--10 Man
+						core:sendDebugMessage("Detected Legacy 10 man Raid (wrath classic ulduar)")
+						core.instance = core.instance .. -10
+						core:sendDebugMessage("New Instance Name: " .. core.instance)
+					elseif core.difficultyID == 176 or core.difficultyID == 194 then
+						--25 Man
+						core:sendDebugMessage("Detected Legacy 25 man raid (wrath classic ulduar)s")
+						core.instance = core.instance .. -25
+						core:sendDebugMessage("New Instance Name: " .. core.instance)
+					end
+				end
+
 				--Find the instance in the core.instances table so we can cache the value to be used later
 				for expansion,_ in pairs(core.Instances) do
 					for instanceType,_ in pairs(core.Instances[expansion]) do
@@ -637,6 +663,12 @@ function getInstanceInfomation()
 					instanceCompatible = true
 				elseif core.difficultyID == 24 or core.difficultyID == 33 then
 					--Timewalking
+					instanceCompatible = true
+				elseif core.difficultyID == 175 or core.difficultyID == 193 then
+					--legacy10 (wrath classic ulduar)
+					instanceCompatible = true
+				elseif core.difficultyID == 176 or core.difficultyID == 194 then
+					--legacy25 (wrath classic ulduar)
 					instanceCompatible = true
 				end
 
@@ -1647,7 +1679,11 @@ function events:ENCOUNTER_START(self, encounterID, encounterName, difficultyID, 
 	if encounterID ~= nil then
 		--Found the boss encounter ID so clear out any other bosses currently stored
 		if core.lockDetection == false then
-			detectBossByEncounterID(encounterID)
+			if core.gameVersionMajor > 3 then
+				detectBossByEncounterID(encounterID)
+			elseif core.gameVersionMajor == 3 then
+				detectBossByEncounterIDClassic(encounterID)
+			end
 		end
 	end
 
@@ -1787,7 +1823,9 @@ function events:INSPECT_ACHIEVEMENT_READY(self, GUID, ...)
 											local name, _ = UnitName(playersToScan[1])
 											table.insert(core.Instances[expansion][instanceType][instance][boss].players, name)
 										else
-											core:sendDebugMessage("Fatal error. This shouldn't happen. Trying to load into achievement scanning " .. playersToScan[1])
+											core:sendDebugMessage("Fatal error. This shouldn't happen. Trying to load into achievement scanning ")
+											--deepdump(playersToScan)
+											--deepdump(playersToScan[1])
 										end
 									end
 								end
@@ -2675,7 +2713,7 @@ function core:detectGroupType()
 		core.chatType = "INSTANCE_CHAT"
 	end
 
-	core:sendDebugMessage("Setting chat mode to " .. core.chatType)
+	--core:sendDebugMessage("Setting chat mode to " .. core.chatType)
 
 	--Debug to stop message going out to other people by accident
 	--core.chatType = "OFFICER"
@@ -2739,6 +2777,93 @@ function detectBossByEncounterID(id)
 						end
 						if core:has_value(core.achievementIDs, core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement) == false then
 							core:sendDebugMessage("(E) Adding the following achievement ID beacuse it doesn't exist: " .. core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
+							table.insert(core.achievementIDs, core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
+						end
+						if core.Instances[core.expansion][core.instanceType][core.instance][boss].enabled == true then
+							core.outputTrackingStatus = true
+						end
+						core.foundBoss = true
+					end
+					core.encounterDetected = true --This will stop other bosses being detected by accident through the detection method below
+				end
+			end
+		end
+	end
+
+	--If encounter is detected but no achievements for the boss have been found then output no achievements to track for this encounter
+	if core.outputTrackingStatus == false then
+		if core.encounterDetected == true and core.onlyTrackMissingAchievements == false then
+			core:printMessage(L["Core_NoTrackingForInstance"])
+
+			--Announce to chat if enabled
+			core:sendMessage(L["Core_NoTrackingForInstance"],true)
+		end
+	end
+
+	if core.foundBoss == true then
+		--Display tracking achievement for that boss if it has not been output yet for the fight. Make sure we are in combat as well before calling this function
+		core:getAchievementToTrack()
+	end
+end
+
+--Detect Raid and dungeons bosses which have an encounter ID
+function detectBossByEncounterIDClassic(id)
+	core:sendDebugMessage("Detected boss using ENCOUNTER ID (classic)")
+	core:sendDebugMessage("Found the following encounter ID (classic): " .. id)
+	local counter = 0
+	for boss,_ in pairs(core.Instances[core.expansion][core.instanceType][core.instance]) do
+		if string.match(boss, "boss") then
+			if core.Instances[core.expansion][core.instanceType][core.instance][boss].encounterIDWrath ~= nil then
+				--Detect boss by the encounter ID
+				--core:sendDebugMessage("Type:")
+				--core:sendDebugMessage(core.Instances[core.expansion][core.instanceType][core.instance][boss].encounterIDWrath)
+				if type(core.Instances[core.expansion][core.instanceType][core.instance][boss].encounterIDWrath) == "table" then
+					--If achievement relates to multiple encounters
+					for i = 1, #core.Instances[core.expansion][core.instanceType][core.instance][boss].encounterIDWrath do
+						--Check whether the boss has an achievement first before adding. This is so we can output to the chat. "IAT cannot track any achievements for this encounter" if needed
+						if id == core.Instances[core.expansion][core.instanceType][core.instance][boss].encounterIDWrath[i] then
+							if core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement ~= false then
+								if core:has_value(currentBossNums, boss) == false then
+									if counter == 0 then
+										--Clear the array storing bosses and achievements so we only output track achievements relevant to that fight
+										core.currentBosses = {}
+										core.achievementIDs = {}
+										currentBossNums = {}
+										counter = 1
+									end
+									core:sendDebugMessage("(E) Adding the following encounter ID (classic): " .. boss)
+									table.insert(core.currentBosses, core.Instances[core.expansion][core.instanceType][core.instance][boss])
+									table.insert(currentBossNums, boss)
+								end
+								if core:has_value(core.achievementIDs, core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement) == false then
+									core:sendDebugMessage("(E) Adding the following achievement ID beacuse it doesn't exist (classic): " .. core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
+									table.insert(core.achievementIDs, core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
+								end
+								if core.Instances[core.expansion][core.instanceType][core.instance][boss].enabled == true then
+									core.outputTrackingStatus = true
+								end
+								core.foundBoss = true
+							end
+							core.encounterDetected = true --This will stop other bosses being detected by accident through the detection method below
+						end
+					end
+				elseif id == core.Instances[core.expansion][core.instanceType][core.instance][boss].encounterIDWrath then
+					--Check whether the boss has an achievement first before adding. This is so we can output to the chat. "IAT cannot track any achievements for this encounter" if needed
+					if core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement ~= false then
+						if core:has_value(currentBossNums, boss) == false then
+							if counter == 0 then
+								--Clear the array storing bosses and achievements so we only output track achievements relevant to that fight
+								core.currentBosses = {}
+								core.achievementIDs = {}
+								currentBossNums = {}
+								counter = 1
+							end
+							core:sendDebugMessage("(E) Adding the following encounter ID: (classic)" .. boss)
+							table.insert(core.currentBosses, core.Instances[core.expansion][core.instanceType][core.instance][boss])
+							table.insert(currentBossNums, boss)
+						end
+						if core:has_value(core.achievementIDs, core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement) == false then
+							core:sendDebugMessage("(E) Adding the following achievement ID beacuse it doesn't exist: (classic)" .. core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
 							table.insert(core.achievementIDs, core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
 						end
 						if core.Instances[core.expansion][core.instanceType][core.instance][boss].enabled == true then
@@ -3306,12 +3431,18 @@ function core:printMessage(message)
 end
 
 --Get the current achievement being tracked for custom output messages
-function core:getAchievement(index)
-	local value = index
-	if index == nil then
-		value = 1
+function core:getAchievement(achievementID)
+	local index = 1
+
+	if achievementID ~= nil then
+		for i=1, #core.achievementIDs do
+			if core.achievementIDs[i] == achievementID then
+				index = i
+			end
+		end
 	end
-	return GetAchievementLink(core.achievementIDs[value])
+
+	return GetAchievementLink(core.achievementIDs[index])
 end
 
 ------------------------------------------------------
@@ -3319,72 +3450,74 @@ end
 ------------------------------------------------------
 
 --Display the failed achievement message for achievements
-function core:getAchievementFailed(index, achievementID)
-	local value = index
-	local achievementValue = index
-	if index == nil then
-		value = 1
-		achievementValue = 1
-	end
+function core:getAchievementFailed(achievementID)
+	local achievementIndex = 1
 
 	if achievementID ~= nil then
 		for i=1, #core.achievementIDs do
 			if core.achievementIDs[i] == achievementID then
-				achievementValue = i
+				achievementIndex = i
 			end
 		end
 	end
-	if core.achievementsFailed[value] == false then
-		core:sendMessage(GetAchievementLink(core.achievementIDs[achievementValue]) .. " " .. L["Core_Failed"],true,"failed")
-		core.achievementsFailed[value] = true
+
+	if core.achievementsFailed[achievementIndex] == false then
+		core:sendMessage(GetAchievementLink(core.achievementIDs[achievementIndex]) .. " " .. L["Core_Failed"],true,"failed")
+		core.achievementsFailed[achievementIndex] = true
 	end
 end
 
 --Display the failed achievement message for achievements with message before
-function core:getAchievementFailedWithMessageBefore(message, index)
-	local value = index
-	if index == nil then
-		value = 1
-	end
-	if core.achievementsFailed[value] == false then
-
-		core:sendMessage(message .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " " .. L["Core_Failed"],true,"failed")
-		core.achievementsFailed[value] = true
-	end
-end
-
---Display the failed achievement message for achievements with message after
-function core:getAchievementFailedWithMessageAfter(message, index, achievementID)
-	local value = index
-	local achievementValue = index
-	if index == nil then
-		value = 1
-		achievementValue = 1
-	end
+function core:getAchievementFailedWithMessageBefore(message, achievementID)
+	local achievementIndex = 1
 
 	if achievementID ~= nil then
 		for i=1, #core.achievementIDs do
 			if core.achievementIDs[i] == achievementID then
-				achievementValue = i
+				achievementIndex = i
 			end
 		end
 	end
 
-	if core.achievementsFailed[value] == false then
-		core:sendMessage(GetAchievementLink(core.achievementIDs[achievementValue]) .. " " .. L["Core_Failed"] .. " " .. message,true,"failed")
-		core.achievementsFailed[value] = true
+	if core.achievementsFailed[achievementIndex] == false then
+		core:sendMessage(message .. " " .. GetAchievementLink(core.achievementIDs[achievementIndex]) .. " " .. L["Core_Failed"],true,"failed")
+		core.achievementsFailed[achievementIndex] = true
+	end
+end
+
+--Display the failed achievement message for achievements with message after
+function core:getAchievementFailedWithMessageAfter(message, achievementID)
+	local achievementIndex = 1
+
+	if achievementID ~= nil then
+		for i=1, #core.achievementIDs do
+			if core.achievementIDs[i] == achievementID then
+				achievementIndex = i
+			end
+		end
+	end
+
+	if core.achievementsFailed[achievementIndex] == false then
+		core:sendMessage(GetAchievementLink(core.achievementIDs[achievementIndex]) .. " " .. L["Core_Failed"] .. " " .. message,true,"failed")
+		core.achievementsFailed[achievementIndex] = true
 	end
 end
 
 --Display the failed achievement message for achievements with message before and after
-function core:getAchievementFailedWithMessageBeforeAndAfter(messageBefore, messageAfter, index)
-	local value = index
-	if index == nil then
-		value = 1
+function core:getAchievementFailedWithMessageBeforeAndAfter(messageBefore, messageAfter, achievementID)
+	local achievementIndex = 1
+
+	if achievementID ~= nil then
+		for i=1, #core.achievementIDs do
+			if core.achievementIDs[i] == achievementID then
+				achievementIndex = i
+			end
+		end
 	end
-	if core.achievementsFailed[value] == false then
-		core:sendMessage(messageBefore .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " " .. L["Core_Failed"] .. " " .. messageAfter,true,"failed")
-		core.achievementsFailed[value] = true
+
+	if core.achievementsFailed[achievementIndex] == false then
+		core:sendMessage(messageBefore .. " " .. GetAchievementLink(core.achievementIDs[achievementIndex]) .. " " .. L["Core_Failed"] .. " " .. messageAfter,true,"failed")
+		core.achievementsFailed[achievementIndex] = true
 	end
 end
 
@@ -3513,62 +3646,92 @@ end
 ------------------------------------------------------
 
 --Display the requirements completed message for achievements
-function core:getAchievementSuccess(index)
-	local value = index
-	if index == nil then
-		value = 1
+function core:getAchievementSuccess(achievementID)
+	local achievementIndex = 1
+
+	if achievementID ~= nil then
+		for i=1, #core.achievementIDs do
+			if core.achievementIDs[i] == achievementID then
+				achievementIndex = i
+			end
+		end
 	end
-	if core.achievementsCompleted[value] == false then
-		core:sendMessage(GetAchievementLink(core.achievementIDs[value]) .. " " .. L["Core_CriteriaMet"],true,"completed")
-		core.achievementsCompleted[value] = true
+
+	if core.achievementsCompleted[achievementIndex] == false then
+		core:sendMessage(GetAchievementLink(core.achievementIDs[achievementIndex]) .. " " .. L["Core_CriteriaMet"],true,"completed")
+		core.achievementsCompleted[achievementIndex] = true
 	end
 end
 
 --Display the requirements completed message for achievements with manually counting
-function core:getAchievementSuccessManual(index)
-	local value = index
-	if index == nil then
-		value = 1
+function core:getAchievementSuccessManual(achievementID)
+	local achievementIndex = 1
+
+	if achievementID ~= nil then
+		for i=1, #core.achievementIDs do
+			if core.achievementIDs[i] == achievementID then
+				achievementIndex = i
+			end
+		end
 	end
-	if core.achievementsCompleted[value] == false then
-		core:sendMessage(GetAchievementLink(core.achievementIDs[value]) .. " " .. L["Core_CriteriaMetManual"],true,"completed")
-		core.achievementsCompleted[value] = true
+
+	if core.achievementsCompleted[achievementIndex] == false then
+		core:sendMessage(GetAchievementLink(core.achievementIDs[achievementIndex]) .. " " .. L["Core_CriteriaMetManual"],true,"completed")
+		core.achievementsCompleted[achievementIndex] = true
 	end
 end
 
 --Display the requirements completed message for achievements with message before
-function core:getAchievementSuccessWithMessageBefore(message, index)
-	local value = index
-	if index == nil then
-		value = 1
+function core:getAchievementSuccessWithMessageBefore(message, achievementID)
+	local achievementIndex = 1
+
+	if achievementID ~= nil then
+		for i=1, #core.achievementIDs do
+			if core.achievementIDs[i] == achievementID then
+				achievementIndex = i
+			end
+		end
 	end
-	if core.achievementsCompleted[value] == false then
-		core:sendMessage(message .. " " .. GetAchievementLink(core.achievementIDs[value]) .. " " .. L["Core_CriteriaMet"],true,"completed")
-		core.achievementsCompleted[value] = true
+
+	if core.achievementsCompleted[achievementIndex] == false then
+		core:sendMessage(message .. " " .. GetAchievementLink(core.achievementIDs[achievementIndex]) .. " " .. L["Core_CriteriaMet"],true,"completed")
+		core.achievementsCompleted[achievementIndex] = true
 	end
 end
 
 --Display the requirements completed message for achievements with message after
-function core:getAchievementSuccessWithMessageAfter(message, index)
-	local value = index
-	if index == nil then
-		value = 1
+function core:getAchievementSuccessWithMessageAfter(message, achievementID)
+	local achievementIndex = 1
+
+	if achievementID ~= nil then
+		for i=1, #core.achievementIDs do
+			if core.achievementIDs[i] == achievementID then
+				achievementIndex = i
+			end
+		end
 	end
-	if core.achievementsCompleted[value] == false then
-		core:sendMessage(GetAchievementLink(core.achievementIDs[value]) .. " " .. L["Core_CriteriaMet"] .. " " .. message,true,"completed")
-		core.achievementsCompleted[value] = true
+
+	if core.achievementsCompleted[achievementIndex] == false then
+		core:sendMessage(GetAchievementLink(core.achievementIDs[achievementIndex]) .. " " .. L["Core_CriteriaMet"] .. " " .. message,true,"completed")
+		core.achievementsCompleted[achievementIndex] = true
 	end
 end
 
 --Display the requirements completed message for achievements with message before and after
-function core:getAchievementSuccessWithMessageBeforeAndAfter(messageBefore, messageAfter, index)
-	local value = index
-	if index == nil then
-		value = 1
+function core:getAchievementSuccessWithMessageBeforeAndAfter(messageBefore, messageAfter, achievementID)
+	local achievementIndex = 1
+
+	if achievementID ~= nil then
+		for i=1, #core.achievementIDs do
+			if core.achievementIDs[i] == achievementID then
+				achievementIndex = i
+			end
+		end
 	end
-	if core.achievementsCompleted[value] == false then
-		core:sendMessage(messageBefore .. " " .. GetAchievementLink(core.achievementIDs[value]) .. L["Core_CriteriaMet"] .. " " .. messageAfter,true,"completed")
-		core.achievementsCompleted[value] = true
+
+	if core.achievementsCompleted[achievementIndex] == false then
+		core:sendMessage(messageBefore .. " " .. GetAchievementLink(core.achievementIDs[achievementIndex]) .. L["Core_CriteriaMet"] .. " " .. messageAfter,true,"completed")
+		core.achievementsCompleted[achievementIndex] = true
 	end
 end
 
