@@ -724,4 +724,5 @@ core.NPCCacheClassic = {
 	[33343] =33343, --XS-013 Scrapbot
 	[33136] =33136, --Guardian of Yogg-Saron
 	[34035] =34035, --Feral Defender
+	[33572] =33572, --Steelforged Defender
 }
