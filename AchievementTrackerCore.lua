@@ -1930,7 +1930,6 @@ function events:INSPECT_ACHIEVEMENT_READY(self, GUID, ...)
     end
 
 	if (AchievementFrame and AchievementFrame.isComparison and AchievementFrameComparison) then
-		print("c")
         AchievementFrameComparison_OnEvent(AchievementFrameComparison, event, guid, ...)
     end
 end
