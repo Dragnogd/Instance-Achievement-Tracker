@@ -20,8 +20,8 @@ function core._2451:Bromach()
 
     --TODO: InfoFrame to show how many Stonevault Troggs are alive
 
-    if core:getBlizzardTrackingStatus(16337, 1) == false then
-		core:getAchievementFailed()
+    if core:getBlizzardTrackingStatus(16337, 1) == true then
+		core:getAchievementSuccess()
 	end
 end
 
