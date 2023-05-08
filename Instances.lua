@@ -1,5 +1,5 @@
 --------------------------------------
--- Last Auto Generated: 29/01/2023 20:21:37
+-- Last Auto Generated: 08/05/2023 20:03:36
 --------------------------------------
 local _, core = ...
 local L = core.L
@@ -99,6 +99,109 @@ core.Instances = {
 					track = function() core._2522:RaszagethTheStormEater() end,
 					partial = false,
 					encounterID = 2607,
+				},
+			},
+
+			[2569] = { --Aberrus the Shadowed Crucible
+				name = 1208,
+				boss1 = {
+					name = 2522, --Kazzara
+					bossIDs = {},
+					achievement = 18229,
+					players = {},
+					tactics = L["AberrusTheShadowedCrucible_Kazzara"],
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 2688,
+				},
+				boss2 = {
+					name = 2529, --The Amalgamation Chamber
+					bossIDs = {},
+					achievement = 18168,
+					players = {},
+					tactics = L["AberrusTheShadowedCrucible_TheAmalgamationChamber"],
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 2687,
+				},
+				boss3 = {
+					name = 2530, --The Forgotten Experiments
+					bossIDs = {},
+					achievement = 18173,
+					players = {},
+					tactics = L["AberrusTheShadowedCrucible_TheForgottenExperiments"],
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 2693,
+				},
+				boss4 = {
+					name = 2524, --Assault of the Zaqali
+					bossIDs = {},
+					achievement = 18228,
+					players = {},
+					tactics = L["AberrusTheShadowedCrucible_AssaultOfTheZaqali"],
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 2682,
+				},
+				boss5 = {
+					name = 2525, --Rashok the Elder
+					bossIDs = {},
+					achievement = 18230,
+					players = {},
+					tactics = L["AberrusTheShadowedCrucible_RashokTheElder"],
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 2680,
+				},
+				boss6 = {
+					name = 2532, --The Vigilant Steward Zskarn
+					bossIDs = {},
+					achievement = 18193,
+					players = {},
+					tactics = L["AberrusTheShadowedCrucible_TheVigilantStewardZskarn"],
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 2689,
+				},
+				boss7 = {
+					name = 2527, --Magmorax
+					bossIDs = {},
+					achievement = 18172,
+					players = {},
+					tactics = L["AberrusTheShadowedCrucible_Magmorax"],
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 2683,
+				},
+				boss8 = {
+					name = 2523, --Echo of Neltharion
+					bossIDs = {},
+					achievement = 18149,
+					players = {},
+					tactics = L["AberrusTheShadowedCrucible_EchoOfNeltharion"],
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 2684,
+				},
+				boss9 = {
+					name = 2520, --Scalecommander Sarkareth
+					bossIDs = {},
+					achievement = 17877,
+					players = {},
+					tactics = L["AberrusTheShadowedCrucible_ScalecommanderSarkareth"],
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 2685,
 				},
 			},
 		},

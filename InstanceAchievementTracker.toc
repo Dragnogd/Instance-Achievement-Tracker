@@ -34,6 +34,7 @@ Localization.zhTW.lua
 Localization.koKR.lua
 
 DragonflightRaids\VaultOfTheIncarnates.lua
+DragonflightRaids\AberrusTheShadowedCrucible.lua
 
 DragonflightDungeons\AlgetharAcademy.lua
 DragonflightDungeons\BrackenhideHollow.lua

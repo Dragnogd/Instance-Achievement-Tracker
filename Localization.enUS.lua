@@ -1006,5 +1006,14 @@ local baseLocale = {
 	["UldamanLegacyOfTyr_ChronoLordDeios"] = "",
 	["AlgetharAcademy_OvergrownAncient"] = "Before starting the encounter, all players will need to click on a %s in the pool behind the boss. Once everyone has a duckling, kill the boss to get this achievement.",
 	["Naxxramas_TheDedicatedFew"] = "To complete this achievement, simply kill all the bosses in the raid with less than 9 players present.",
+	["AberrusTheShadowedCrucible_Kazzara"] = "",
+	["AberrusTheShadowedCrucible_TheAmalgamationChamber"] = "",
+	["AberrusTheShadowedCrucible_TheForgottenExperiments"] = "",
+	["AberrusTheShadowedCrucible_AssaultOfTheZaqali"] = "",
+	["AberrusTheShadowedCrucible_RashokTheElder"] = "",
+	["AberrusTheShadowedCrucible_TheVigilantStewardZskarn"] = "",
+	["AberrusTheShadowedCrucible_Magmorax"] = "",
+	["AberrusTheShadowedCrucible_EchoOfNeltharion"] = "",
+	["AberrusTheShadowedCrucible_ScalecommanderSarkareth"] = "",
 }
 core:RegisterLocale('enUS', baseLocale)
