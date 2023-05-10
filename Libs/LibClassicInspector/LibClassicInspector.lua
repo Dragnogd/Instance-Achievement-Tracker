@@ -4,11 +4,11 @@
     for Classic/TBC/WOTLK
 
     Requires: LibStub, CallbackHandler-1.0, LibDetours-1.0
-    Version: 8 (2022-12-08)
+    Version: 14 (2023-02-26)
 
 --]]
 
-local LCI_VERSION = 8
+local LCI_VERSION = 14
 
 local clientVersionString = GetBuildInfo()
 local clientBuildMajor = string.byte(clientVersionString, 1)
@@ -220,6 +220,10 @@ end
 -- TODO: talent IDs
 -- TODO: localization
 if (isWotlk) then
+if (oldminor < 13) then
+  lib.glyphs_table = nil
+  lib.glyph_r_tbl = nil
+end
 lib.tracked_achievements = lib.tracked_achievements or {}
 lib.glyphs_table = lib.glyphs_table or {
   ["WARRIOR"] = {
@@ -291,7 +295,8 @@ lib.glyphs_table = lib.glyphs_table or {
       [25] = 63222, -- Glyph of Shield of Righteousness
       [26] = 63223, -- Glyph of Divine Plea
       [27] = 63224, -- Glyph of Holy Shock
-      [28] = 63225  -- Glyph of Salvation
+      [28] = 63225, -- Glyph of Salvation
+      [29] = 405004 -- Glyph of Reckoning
     },
     [2] = {
       [1] = 57937,  -- Glyph of Blessing of Kings
@@ -364,7 +369,7 @@ lib.glyphs_table = lib.glyphs_table or {
       [19] = 56819, -- Glyph of Preparation
       [20] = 56820, -- Glyph of Crippling Poison
       [21] = 56821, -- Glyph of Sinister Strike
-      [22] = 63239, -- Glyph of Cloak of Shadows
+      [22] = 63269, -- Glyph of Cloak of Shadows
       [23] = 63249, -- Glyph of Hunger of Blood
       [24] = 63252, -- Glyph of Killing Spree
       [25] = 63253, -- Glyph of Shadow Dance
@@ -2816,7 +2821,7 @@ local function addCacheUser(guid, inventory, talents, achievements, glyphs)
             else
                 local next = cache.first.next
                 cache.first = nil
-                cache.first = next 
+                cache.first = next
             end
         else
             cache.len = cache.len + 1
@@ -2884,6 +2889,18 @@ local function cacheUserAchievements(guid)
     end
 end
 
+local function tryCompare(unit)
+    if (AchievementFrameComparison) then
+        AchievementFrameComparison:UnregisterEvent("INSPECT_ACHIEVEMENT_READY")
+    end
+    if (not AchievementFrame or not AchievementFrame.isComparison) then
+        ClearAchievementComparisonUnit()
+        SetAchievementComparisonUnit(unit)
+        return true
+    end
+    return false
+end
+
 local function tryInspect(unit, refresh)
     if (lib:CanInspect(unit)) then
         local guid = UnitGUID(unit)
@@ -2897,9 +2914,7 @@ local function tryInspect(unit, refresh)
                     ret = true
                 end
                 if (isWotlk and user.achievements.time < t) then
-                    if (not AchievementFrame or not AchievementFrame.isComparison) then
-                        ClearAchievementComparisonUnit()
-                        SetAchievementComparisonUnit(unit)
+                    if (tryCompare(unit)) then
                         ret = true
                     end
                 end
@@ -2909,18 +2924,15 @@ local function tryInspect(unit, refresh)
                     ret = true
                 end
                 if (isWotlk and user.achievements.time == 0) then
-                    if (not AchievementFrame or not AchievementFrame.isComparison) then
-                        ClearAchievementComparisonUnit()
-                        SetAchievementComparisonUnit(unit)
+                    if (tryCompare(unit)) then
                         ret = true
                     end
                 end
             end
         else
             NotifyInspect(unit)
-            if (isWotlk and (not AchievementFrame or not AchievementFrame.isComparison)) then
-                ClearAchievementComparisonUnit()
-                SetAchievementComparisonUnit(unit)
+            if (isWotlk) then
+                tryCompare(unit)
             end
             return true
         end
@@ -2929,7 +2941,7 @@ local function tryInspect(unit, refresh)
 end
 
 function f:INSPECT_READY(event, guid)
-    if (not guid) then 
+    if (not guid) then
         return
     end
     local unit = lib:PlayerGUIDToUnitToken(guid)
@@ -2950,7 +2962,7 @@ function f:CHAT_MSG_ADDON(event, prefix, text, channelType, senderFullName, send
     if (prefix ~= C_PREFIX) then return end
     if (string.byte(text, 1) ~= 48 or string.byte(text, 3) ~= 45) then return end
     local v = string.byte(text, 2)
-    if (v == 48 or v == 49) then
+    if (v == 48 or v == 49 or v == 50) then
         local guid = UnitGUID(sender)
         if (not guid or not GUIDIsPlayer(guid)) then
             if (not IsInGuild()) then return end
@@ -2978,7 +2990,7 @@ function f:CHAT_MSG_ADDON(event, prefix, text, channelType, senderFullName, send
             end
         end
         local glyphs
-        if (isWotlk and v == 49) then
+        if (isWotlk and v == 50) then
             glyphs = {["time"] = time()}
             for x = 1, 12 do
                 y = y + 1
@@ -3046,17 +3058,11 @@ function f:INSPECT_ACHIEVEMENT_READY(event, guid, ...)
     if (guid and GUIDIsPlayer(guid)) then
         cacheUserAchievements(guid)
         -- Fire ACHIEVEMENTS_READY(guid, isInspect) callback
-        lib.callbacks:Fire("ACHIEVEMENTS_READY", guid, true)
+        lib.callbacks:Fire("ACHIEVEMENTS_READY", guid, true, nil)
     end
     if (AchievementFrame and AchievementFrame.isComparison and AchievementFrameComparison) then
         AchievementFrameComparison_OnEvent(AchievementFrameComparison, event, guid, ...)
     end
-end
-if (not AchievementFrame or not AchievementFrameComparison) then
-    AchievementFrame_LoadUI()
-end
-if (AchievementFrameComparison) then
-    AchievementFrameComparison:UnregisterEvent("INSPECT_ACHIEVEMENT_READY")
 end
 end
 
@@ -3081,7 +3087,7 @@ C_ChatInfo.RegisterAddonMessagePrefix(C_PREFIX)
 
 local function sendInfo()
     if (IsInGroup() or IsInGuild()) then
-        local s = "01-"
+        local s = "02-"
         s = s .. (isWotlk and GetActiveTalentGroup(false, false) or 1)
         for x = 1, (isWotlk and 2 or 1) do
             for i = 1, 3 do  -- GetNumTalentTabs
@@ -3095,6 +3101,7 @@ local function sendInfo()
                 for i = 1, 6 do
                     local z = select(3, GetGlyphSocketInfo(i, x))
                     if (z) then
+                        if (z == 55115) then z = 54929 end
                         s = s..string.char(glyph_r_tbl[z]+48)
                     else
                         s = s.."0"
@@ -3143,7 +3150,7 @@ local function inspectQueueTick()
             end
         end
     end
-end 
+end
 if lib.queueTicker then
     lib.queueTicker:Cancel()
 end
@@ -3270,7 +3277,7 @@ end
 --  Returns
 --     @number status              - inspection status
 --                                   == 0 : target cannot be inspected
---                                   == 1 : instant inspection 
+--                                   == 1 : instant inspection
 --                                   == 2 : queued inspection
 --
 function lib:DoInspect(unitorguid)
@@ -3286,9 +3293,8 @@ function lib:DoInspect(unitorguid)
     if (lib:CanInspect(unit)) then
         if (GetTime() >= nextInspectTime) then
             NotifyInspect(unit)
-            if (isWotlk and (not AchievementFrame or not AchievementFrame.isComparison)) then
-                ClearAchievementComparisonUnit()
-                SetAchievementComparisonUnit(unit)
+            if (isWotlk) then
+                tryCompare(unit)
             end
             return 1
         else
@@ -3318,15 +3324,17 @@ end
 --     @string unitorguid          - unit token or guid
 --
 --  Returns
---     @number talentsCacheTime    - time when talents were last cached or 0 if not found
---     @number inventoryCacheTime  - time when inventory was last cached or 0 if not found
+--     @number talentsTime         - time when talents were last cached or 0 if not found
+--     @number inventoryTime       - time when inventory was last cached or 0 if not found
+--     @number achievementsTime    - time when achievements were last cached or 0 if not found
+--     @number glyphsTime          - time when glyphs were last cached or 0 if not found
 --
 function lib:GetLastCacheTime(unitorguid)
     local user = getCacheUser2(getPlayerGUID(unitorguid))
     if (user) then
-        return user.talents.time, user.inventory.time
+        return user.talents.time, user.inventory.time, user.achievements.time, user.glyphs.time
     end
-    return 0, 0
+    return 0, 0, 0, 0
 end
 
 
@@ -3342,7 +3350,7 @@ end
 --     @string specName            - specialization name e.g. "Retribution"
 --
 function lib:GetSpecializationName(class, tabIndex, localized)
-    assert(class == "WARRIOR" or class == "PALADIN" or class == "HUNTER" or class == "ROGUE" or class == "PRIEST" or class == "SHAMAN" or 
+    assert(class == "WARRIOR" or class == "PALADIN" or class == "HUNTER" or class == "ROGUE" or class == "PRIEST" or class == "SHAMAN" or
            class == "MAGE" or class == "WARLOCK" or class == "DRUID" or (isWotlk and class == "DEATHKNIGHT"), "invalid class")
     local n = tonumber(tabIndex) or 0
     assert(n > 0 and n < 4, "tabIndex is not a valid number (1-3)")
@@ -3361,7 +3369,7 @@ end
 --     @number numTalents          - number of talents in tab
 --
 function lib:GetNumTalentsByClass(class, tabIndex)
-    assert(class == "WARRIOR" or class == "PALADIN" or class == "HUNTER" or class == "ROGUE" or class == "PRIEST" or class == "SHAMAN" or 
+    assert(class == "WARRIOR" or class == "PALADIN" or class == "HUNTER" or class == "ROGUE" or class == "PRIEST" or class == "SHAMAN" or
            class == "MAGE" or class == "WARLOCK" or class == "DRUID" or (isWotlk and class == "DEATHKNIGHT"), "invalid class")
     local n = tonumber(tabIndex) or 0
     assert(n > 0 and n < 4, "tabIndex is not a valid number (1-3)")
@@ -3580,7 +3588,7 @@ end
 --     @number talentID            - talent ID
 --
 function lib:GetTalentInfoByClass(class, tabIndex, talentIndex)
-    assert(class == "WARRIOR" or class == "PALADIN" or class == "HUNTER" or class == "ROGUE" or class == "PRIEST" or class == "SHAMAN" or 
+    assert(class == "WARRIOR" or class == "PALADIN" or class == "HUNTER" or class == "ROGUE" or class == "PRIEST" or class == "SHAMAN" or
            class == "MAGE" or class == "WARLOCK" or class == "DRUID" or (isWotlk and class == "DEATHKNIGHT"), "invalid class")
     tabIndex = tonumber(tabIndex) or 0
     assert(tabIndex > 0 and tabIndex < 4, "tabIndex is not a valid number (1-3)")
@@ -3966,14 +3974,14 @@ end
 --     @boolean enabled            - true if the socket has a glyph inserted
 --     @number glyphType           - type of glyph accepted by this socket (GLYPHTYPE_MAJOR=1 or GLYPHTYPE_MINOR=2)
 --     @number glyphSpellID        - spell ID of the socketed glyph
---     @number iconFile            - file ID of the sigil icon associated with the socketed glyph (currently not implemented for non-local players, returns 0)
+--     @number iconFile            - file ID of the sigil icon associated with the socketed glyph
 --
 function lib:GetGlyphSocketInfo(unitorguid, socketID, _group)
     if (not isWotlk) then
         return nil
     end
     local n = tonumber(socketID) or 0
-    assert(n >= 1 and n <= 6, "socketID is not a valid number")    
+    assert(n >= 1 and n <= 6, "socketID is not a valid number")
     local guid = getPlayerGUID(unitorguid)
     if (not guid) then
         return nil
@@ -3989,7 +3997,7 @@ function lib:GetGlyphSocketInfo(unitorguid, socketID, _group)
     local _, class = GetPlayerInfoByGUID(guid)
     if (not class) then
         return nil
-    end    
+    end
     if (guid == UnitGUID("player")) then
         return GetGlyphSocketInfo(n, group)
     else
@@ -4044,12 +4052,15 @@ function lib:HasGlyph(unitorguid, glyphSpellID, _group)
     local _, class = GetPlayerInfoByGUID(guid)
     if (not class) then
         return nil
-    end    
+    end
     if (guid == UnitGUID("player")) then
         for i=1,6 do
             local enabled, _, id = GetGlyphSocketInfo(i, group)
-            if (enabled and id == glyphSpellID) then
-                return true
+            if (enabled and id) then
+                if (id == 55115) then id = 54929 end
+                if (id == glyphSpellID) then
+                    return true
+                end
             end
         end
         return false
@@ -4078,7 +4089,7 @@ end
 
 
 --------------------------------------------------------------------------
--- ClassicInspector:GetGlyphs(unitorguid, _group)
+-- ClassicInspector:GetGlyphs(unitorguid[, group])
 --
 --  Parameters
 --     @string unitorguid          - unit token or guid
@@ -4117,6 +4128,7 @@ function lib:GetGlyphs(unitorguid, _group)
         for i=1,6 do
             local enabled, _, id = GetGlyphSocketInfo(i, group)
             if (enabled and id) then
+                if (id == 55115) then id = 54929 end
                 glyphs[i] = id
             else
                 glyphs[i] = 0

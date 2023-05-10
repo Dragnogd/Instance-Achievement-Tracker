@@ -21,7 +21,7 @@ function lib:SecureHook(addon, arg1, arg2, arg3)
     assert(type(addon) == "table", "invalid argument addon: not a table")
     assert(addon ~= lib, "invalid argument addon: can not be self")
     addon.hooks = addon.hooks or {}
-    
+
     local funcTable, funcName, func, isHookInstalled
     if (type(arg1) == "table") then
         funcTable = arg1
@@ -52,11 +52,11 @@ function lib:SecureHook(addon, arg1, arg2, arg3)
     end
     if (not isHookInstalled) then
         if (funcTable) then
-            hooksecurefunc(funcTable, funcName, function(...) 
+            hooksecurefunc(funcTable, funcName, function(...)
                 return addon.hooks[tostring(funcTable).."__"..funcName](...)
             end)
         else
-            hooksecurefunc(funcName, function(...) 
+            hooksecurefunc(funcName, function(...)
                 return addon.hooks[funcName](...)
             end)
         end
@@ -143,7 +143,7 @@ function lib:ScriptHook(addon, arg1, arg2, arg3)
         addon.shooks[tostring(funcTable).."__"..funcName] = func
     end
     if (not isScriptHookInstalled) then
-        funcTable:HookScript(funcName, function(...) 
+        funcTable:HookScript(funcName, function(...)
             return addon.shooks[tostring(funcTable).."__"..funcName](...)
         end)
     end
