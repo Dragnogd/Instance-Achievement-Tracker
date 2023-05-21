@@ -509,7 +509,7 @@ function core._2569.Events:UNIT_SPELLCAST_SUCCEEDED(self, unitID, lineID, spellI
     if core.Instances[core.expansion][core.instanceType][core.instance]["boss8"].enabled then
         if spellID == 411075 then
             local name, realm = UnitName(unitID)
-            core:sendMessage(name .. " " .. L["Shared_HasGained"] .. " " .. GetSpellLink(341186),true)
+            core:sendMessage(name .. " " .. L["Shared_HasGained"] .. " " .. GetSpellLink(411075),true)
         end
     end
 end
