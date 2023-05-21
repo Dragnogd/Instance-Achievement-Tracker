@@ -666,6 +666,11 @@ core.NPCCache = {
 	[33388] =33388, --Dark Rune Guardian
 	[33343] =33343, --XS-013 Scrapbot
 	[196845] =196845, --Frozen Behemoth
+	[205340] =205340, --Expired Experiment
+	[205341] =205341, --Stack of Scrolls
+	[205342] =205342, --Neverburning Ebon Candle
+	[205343] =205343, --Portable" Ebon Anvil
+	[205378] =205378, --Shadowflame Remnant
 }
 core.NPCCacheClassic = {
 	[29364] =29364, --Void Sentry

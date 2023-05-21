@@ -149,7 +149,7 @@ function core._2569:ShadowflameAmalgamation()
     --Nothing in combat log for this?
 
 	--Detect when Shadowflame Remnant Spawns
-	if (core.destName == getNPCName(205378) or core.sourceName == getNPCName(205378)) and shadowflameRemnantSpawned == false then
+	if (core.destID == 205378 or core.sourceID == 205378) and shadowflameRemnantSpawned == false then
         core:sendMessage(format(L["Shared_KillTheAddNow"], getNPCName(205378)),true)
         shadowflameRemnantSpawned = true
     end
