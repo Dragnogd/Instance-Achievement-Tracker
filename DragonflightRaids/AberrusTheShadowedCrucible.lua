@@ -268,18 +268,11 @@ end
 function core._2569:Magmorax()
     --Defeat Magmorax after feeding him 20 Spicy Lava Snails in Aberrus, the Shadowed Crucible on Normal difficulty or higher.
 
-    --Announce when player picks up snail
-    --Announce when stack increases on boss
-    --Announce when achievement completed
-
     InfoFrame_UpdatePlayersOnInfoFrame()
     InfoFrame_SetHeaderCounter(GetSpellLink(411573) .. " " .. L["Core_Counter"],spicyLavaSnailsCounter,20)
 
-    --Picked up snail
+    --Picked up snail (Handled in UNIT_AURA due to room size)
     --5/10 12:22:40.763  SPELL_AURA_APPLIED,0000000000000000,nil,0x514,0x0,Player-1084-05D22E7D,"Ouaa-TarrenMill",0x514,0x0,411367,"Spicy Lava Snail",0x4,DEBUFF
-    -- if core.type == "SPELL_AURA_APPLIED" and core.spellId == 411367 then
-    --     core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. GetSpellLink(411367),true)
-    -- end
 
     --Thrown snail to boss
     --5/12 21:42:10.215  SPELL_CAST_SUCCESS,Player-78-0C23A3B4,"Ceasarsalad-Magtheridon",0x514,0x0,Creature-0-4227-2569-26620-201579-00005EEA67,"Magmorax",0x10a48,0x0,411368,"Feed Magmorax",0x1,Player-78-0C23A3B4,0000000000000000,515853,551670,915,10443,2076,2197,0,249022,250000,0,2676.52,2438.99,2166,1.7284,423
@@ -550,7 +543,8 @@ function core._2569.Events:UNIT_AURA(self, unitID)
                 local _, _, count2, _, _, _, _, _, _, spellId = UnitDebuff(unitID, i)
                 if name ~= nil then
                     if spellId == 411367 and spicyLavaPlayers[name] == nil then
-                        --Concentrated Storm Essence
+                        --Spicy Lava Snail
+                        InfoFrame_SetPlayerComplete(name)
                         core:sendMessage(name .. " " .. L["Shared_HasGained"] .. " " .. GetSpellLink(411367),true)
                         spicyLavaPlayers[name] = true
                     end
