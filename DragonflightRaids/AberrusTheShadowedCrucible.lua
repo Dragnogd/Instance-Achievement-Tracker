@@ -68,11 +68,6 @@ local tearOfCounter = 0
 function core._2569:KazzaraTheHellforged()
     --Defeat Kazzara, the Hellforged after shattering your own Hellsteel Plating in Aberrus, the Shadowed Crucible on Normal difficulty or higher.
 
-    --Personal achievement
-    --Before pull, infoframe to show who need to pick up the Hellsteel Plating and go green once picked up
-    --Once boss pulled, go white on Infoframe, then green once stacks have been cleared
-    --Once all stacks from all players who need achievement are cleared, achievement success
-
     InfoFrame_UpdatePlayersOnInfoFramePersonal2()
     InfoFrame_SetHeaderCounter(L["Shared_PlayersMetCriteria"],shatteredHellsteelCounter,#core.currentBosses[1].players)
 
@@ -81,12 +76,10 @@ function core._2569:KazzaraTheHellforged()
         --Players that didn't collect will stay red and announce fail for those players on pull
         initialSetup = true
         for player,status in pairs(core.InfoFrame_PlayersTable) do
-            print("processing",player)
             if status == 2 then
                 InfoFrame_SetPlayerNeutral(player)
                 hellSteelPlatingCounter = hellSteelPlatingCounter + 1
             elseif status == 3 or status == 1 then
-                print(player,"failed")
                 core:getAchievementFailedPersonalWithName(1,player,true)
             end
 		end
@@ -96,7 +89,7 @@ function core._2569:KazzaraTheHellforged()
         local name, realm = UnitName(core.destName)
         if core:has_value(core.Instances[core.expansion][core.instanceType][core.instance]["boss1"].players, name) == true then
             --Gained Shattered Hellsteel
-            if (core.type == "SPELL_AURA_APPLIED" and core.spellId == 411921) then --411921
+            if (core.type == "SPELL_AURA_APPLIED" and core.spellId == 411921) then
                 if core.destName ~= nil then
                     if UnitIsPlayer(core.destName) then
                         if InfoFrame_GetPlayerComplete(core.destName) == false then
@@ -110,16 +103,16 @@ function core._2569:KazzaraTheHellforged()
             end
 
             --Lost Hellsteel plating but did not gain Shattered Hellsteel
-            if (core.type == "SPELL_AURA_APPLIED" and core.spellId == 774) then --411919
+            if (core.type == "SPELL_AURA_REMOVED" and core.spellId == 411919) then
                 if core.destName ~= nil then
                     if UnitIsPlayer(core.destName) then
                         local player = core.destName
                         local playerUID = core.spawn_uid_dest_Player
-                        C_Timer.After(1, function()
+                        C_Timer.After(3, function()
                             if InfoFrame_GetPlayerComplete(player) == false and shatteredHellsteelUID[playerUID] == nil then
                                 hellSteelPlatingCounter = hellSteelPlatingCounter - 1
                                 InfoFrame_SetPlayerFailed(player)
-                                core:getAchievementFailedPersonal(player)
+                                core:getAchievementFailedPersonalWithName(1,player,true)
                             end
                         end)
                     end
@@ -419,7 +412,7 @@ end
 function core._2569:TrackAdditional()
     --Kazzara (Hellsteel plating)
     if core.Instances[core.expansion][core.instanceType][core.instance]["boss1"].enabled == true then
-        if (core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_REMOVED") and core.spellId == 411919 and core.encounterStarted == false then --CHANGEME: 411919
+        if (core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_REMOVED") and core.spellId == 411919 and core.encounterStarted == false then
             local players = #core.Instances[core.expansion][core.instanceType][core.instance]["boss1"].players
             core.IATInfoFrame:ToggleOn()
             core.IATInfoFrame:SetHeading(GetAchievementLink(18229))
@@ -431,7 +424,7 @@ function core._2569:TrackAdditional()
                 local buffFound = false
                 local _, _, player_UID2 = strsplit("-", UnitGUID(player2))
                 for i=1,40 do
-                    local _, _, count2, _, _, _, _, _, _, spellId = UnitBuff(player2, i) --CHANGEME: UnitDebuff
+                    local _, _, count2, _, _, _, _, _, _, spellId = UnitDebuff(player2, i)
                     if spellId == 411919 then
                         buffFound = true
                     end
@@ -454,11 +447,6 @@ function core._2569:TrackAdditional()
             --Update with any changes
             InfoFrame_SetHeaderCounter(GetSpellLink(411919) .. " " .. L["Core_Counter"],hellSteelPlatingCounter,players)
             InfoFrame_UpdatePlayersOnInfoFramePersonal2()
-
-            --Hide if no one has the debuff anymore
-            if hellSteelPlatingCounter == 0 then
-                --core.IATInfoFrame:ToggleOff()
-            end
         end
     end
 
@@ -476,7 +464,7 @@ function core._2569:TrackAdditional()
                 local buffFound = false
                 local _, _, player_UID2 = strsplit("-", UnitGUID(player2))
                 for i=1,40 do
-                    local _, _, count2, _, _, _, _, _, _, spellId = UnitBuff(player2, i) --CHANGEME: UnitDebuff
+                    local _, _, count2, _, _, _, _, _, _, spellId = UnitDebuff(player2, i)
                     if spellId == 410277 then
                         buffFound = true
                     end
