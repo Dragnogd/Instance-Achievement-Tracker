@@ -176,6 +176,7 @@ local baseLocale = {
 	["Shared_WrongGroupConfig"] = "cannot be completed with the current group configuration",
 	["Shared_HasPressed"] = "has pressed %s",
 	["Shared_StacksRemaining"] = "stacks remaining",
+	["Shared_CatchNow"] = "Catch %s NOW!",
 	["TimeBetweenLast"] = "Time between last %s %s seconds",
 	["TheaterOfPain_AffrontOfChallengers"] = "To complete this achievement, simply defeat each of the bosses last.\n\nNote: You can run the dungeon multiple times to complete the achievement in a single day.",
 	["TheaterOfPain_Gorechop"] = "For this achievement you have to use %s %s to destroy the two hunks of meat in the corners.\n\n Once both hunks of meat have been destroyed, you can kill the boss and get the achievement.",
@@ -1015,5 +1016,6 @@ local baseLocale = {
 	["AberrusTheShadowedCrucible_Magmorax"] = "",
 	["AberrusTheShadowedCrucible_EchoOfNeltharion"] = "",
 	["AberrusTheShadowedCrucible_ScalecommanderSarkareth"] = "",
+	["AberrusTheShadowedCrucible_DelicateExperimentalEgg"] = "Delicate Experimental Egg",
 }
 core:RegisterLocale('enUS', baseLocale)

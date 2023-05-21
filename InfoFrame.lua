@@ -331,6 +331,37 @@ function InfoFrame_UpdatePlayersOnInfoFramePersonal()
     end
 end
 
+function InfoFrame_UpdatePlayersOnInfoFramePersonal2()
+    --This will update list of players on the info frame for personal achievements.
+    --This will only display names of players who still need the achievement
+
+    if next(core.InfoFrame_PlayersTable) == nil then
+        --If table is empty then generate players
+        for k,player in ipairs(core.Instances[core.expansion][core.instanceType][core.instance]["boss1"].players) do
+            core.InfoFrame_PlayersTable[player] = 1
+        end
+    else
+        --Update Info Frame with values from table
+        local messageStr = ""
+        for player, status in pairs(core.InfoFrame_PlayersTable) do
+            if status == 1 then
+                --Player has not completed the requirements for the achievement yet
+                messageStr = messageStr .. colourWhite .. player .. "|r\n"
+            elseif status == 2 then
+                --Player has completed the requirements for the achievement
+                messageStr = messageStr .. colourGreen .. player .. "|r\n"
+            elseif status == 3 then
+                --Player had completed the requirements for the achievement but has since failed it
+                messageStr = messageStr .. colourRed .. player .. "|r\n"
+            elseif status == 4 then
+                --Player is out of tracking range
+                messageStr = messageStr .. colourOrange .. player .. "|r\n"
+            end
+        end
+        core.IATInfoFrame:SetText1(messageStr)
+    end
+end
+
 function InfoFrame_GetRangeCheck(range)
     local maxChecker = rc:GetFriendChecker(range)
     if maxChecker ~= nil then

@@ -685,12 +685,12 @@ function getInstanceInfomation()
 					instanceCompatible = true
 
 					--Set instance we want to debug
-					-- core.instanceNameSpaces = "Naxxramas"
-					-- core.instanceName = "Naxxramas"
-					-- core.instance = "533-10"
-					-- core.instanceClear = "_533"
-					-- core.expansion = 3
-					-- core.instanceType = "Raids"
+					--core.instanceNameSpaces = "Aberrus, the Shadowed Crucible"
+					--core.instanceName = "AberrusTheShadowedCrucible"
+					--core.instance = 2569
+					--core.instanceClear = "_2569"
+					--core.expansion = 10
+					--core.instanceType = "Raids"
 				end
 
 				if instanceCompatible == true and core.expansion ~= nil then
