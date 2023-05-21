@@ -228,7 +228,7 @@ function core._2569:AssaultOfTheZaqali()
         core:sendMessage(GetAchievementCriteriaInfo(18228,5) .. " " .. L["Shared_Completed"] .. " (" .. creaturesHit .. "/5)",true)
     end
 
-    if creaturesHit == 5 then
+    if creaturesHit >= 5 then
         core:getAchievementSuccess()
     end
 end
@@ -236,7 +236,7 @@ end
 function core._2569:RashokTheElder()
     --Defeat Rashok, the Elder after hitting the Lost Lunker with Searing Slam 5 times in Aberrus, the Shadowed Crucible on Normal difficulty or higher.
 
-    if core:getBlizzardTrackingStatus(18230, 1) then
+    if core:getBlizzardTrackingStatus(18230, 1) == true then
         core:getAchievementSuccess()
     end
 end
@@ -244,20 +244,15 @@ end
 function core._2569:TheVigilantStewardZskarn()
     --Defeat The Vigilant Steward, Zskarn while a member of your raid is carrying the Delicate Experimental Egg in Aberrus, the Shadowed Crucible on Normal difficulty or higher.
 
-    --Announce when player has caught egg
-    --Announce when egg about to expire
-    --Announce when egg has been dropped
-    --Announce fail using blizzard tracking?
-
     --Caught Egg
     --5/10 11:16:03.372  SPELL_AURA_APPLIED,Player-3391-0B84FFCA,"Gollemfell-Silvermoon",0x514,0x0,Player-3674-0B23A7AF,"Âshix-TwistingNether",0x514,0x0,411635,"Panic!",0x1,DEBUFF
-    if core.type == "SPELL_AURA_APPLIED" and core.spellId == "411635" then
+    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 411635 then
 		core:sendMessage(core.destName .. " " .. L["Shared_HasCaught"] .. " " .. L["AberrusTheShadowedCrucible_DelicateExperimentalEgg"],true)
     end
 
     --Lost Egg
     --5/10 11:11:24.260  SPELL_AURA_REMOVED,Player-1596-0A8280E9,"Maraa-Deathwing",0x514,0x0,Player-1403-054D7508,"Karnatron-Draenor",0x514,0x0,411635,"Panic!",0x1,DEBUFF
-    if core.type == "SPELL_AURA_APPLIED" and core.spellId == "411635" then
+    if core.type == "SPELL_AURA_REMOVED" and core.spellId == 411635 then
 		core:sendMessage(format(L["Shared_CatchNow"], L["AberrusTheShadowedCrucible_DelicateExperimentalEgg"]),true)
     end
 
