@@ -149,6 +149,7 @@ function core._2569:ShadowflameAmalgamation()
     --Nothing in combat log for this?
 
 	--Detect when Shadowflame Remnant Spawns
+    --5/10 10:48:49.112  SPELL_CAST_SUCCESS,Player-1403-0538EBCC,"Flowreen-Draenor",0x514,0x0,Creature-0-4237-2569-570-205378-00005B5A6F,"Shadowflame Remnant",0x10a48,0x0,8921,"Moonfire",0x40,Player-1403-0538EBCC,0000000000000000,416440,417715,11090,10663,7387,0,8,380,1000,0,2663.19,2791.12,2167,3.3285,420
 	if (core.destID == 205378 or core.sourceID == 205378) and shadowflameRemnantSpawned == false then
         core:sendMessage(format(L["Shared_KillTheAddNow"], getNPCName(205378)),true)
         shadowflameRemnantSpawned = true
@@ -158,7 +159,6 @@ function core._2569:ShadowflameAmalgamation()
 		core:getAchievementSuccess()
 	end
 
-    --5/10 10:48:49.112  SPELL_CAST_SUCCESS,Player-1403-0538EBCC,"Flowreen-Draenor",0x514,0x0,Creature-0-4237-2569-570-205378-00005B5A6F,"Shadowflame Remnant",0x10a48,0x0,8921,"Moonfire",0x40,Player-1403-0538EBCC,0000000000000000,416440,417715,11090,10663,7387,0,8,380,1000,0,2663.19,2791.12,2167,3.3285,420
 end
 
 function core._2569:TheForgottenExperiments()
@@ -168,23 +168,23 @@ function core._2569:TheForgottenExperiments()
 
     --Rended
     --5/10 11:00:07.498  SPELL_AURA_APPLIED_DOSE,Creature-0-4237-2569-570-205352-00005B4EDD,"Nutraal",0xa18,0x20,Creature-0-4237-2569-570-205352-00005B4EDD,"Nutraal",0xa18,0x20,411116,"Rended",0x1,BUFF,2
-    if (core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_APPLIED_DOSE") and core.spellId == 411116 and rendedCounter < 3 then
+    if (core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_APPLIED_DOSE") and core.destID == "205352" and core.spellId == 411116 and rendedCounter < 3 then
         rendedCounter = rendedCounter + 1
-        core:sendMessage(GetSpellLink(411116) .. " " .. L["Core_Counter"] .. " (" .. rendedCounter .. "/3)")
+        core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(411116) .. " " .. L["Core_Counter"] .. " (" .. rendedCounter .. "/3)")
     end
 
     --Slimed
     --5/10 11:01:20.187  SPELL_AURA_APPLIED_DOSE,Creature-0-4237-2569-570-205352-00005B4EDD,"Nutraal",0xa18,0x20,Creature-0-4237-2569-570-205352-00005B4EDD,"Nutraal",0xa18,0x20,411117,"Slimed",0x1,BUFF,2
-    if (core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_APPLIED_DOSE") and core.spellId == 411117 and rendedCounter < 3 then
+    if (core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_APPLIED_DOSE") and core.destID == "205352" and core.spellId == 411117 and slimedCounter < 3 then
         slimedCounter = slimedCounter + 1
-        core:sendMessage(GetSpellLink(411117) .. " " .. L["Core_Counter"] .. " (" .. slimedCounter .. "/3)")
+        core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(411117) .. " " .. L["Core_Counter"] .. " (" .. slimedCounter .. "/3)")
     end
 
     --Singed
     --5/10 11:03:46.969  SPELL_AURA_APPLIED_DOSE,Creature-0-4237-2569-570-205352-00005B4EDD,"Nutraal",0xa18,0x20,Creature-0-4237-2569-570-205352-00005B4EDD,"Nutraal",0xa18,0x20,411118,"Singed",0x1,BUFF,2
-    if (core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_APPLIED_DOSE") and core.spellId == 411118 and rendedCounter < 3 then
+    if (core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_APPLIED_DOSE") and core.destID == "205352" and core.spellId == 411118 and singedCounter < 3 then
         singedCounter = singedCounter + 1
-        core:sendMessage(GetSpellLink(411118) .. " " .. L["Core_Counter"] .. " (" .. singedCounter .. "/3)")
+        core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(411118) .. " " .. L["Core_Counter"] .. " (" .. singedCounter .. "/3)")
     end
 
     if rendedCounter == 3 and slimedCounter == 3 and singedCounter == 3 then
