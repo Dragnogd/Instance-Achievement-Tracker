@@ -315,7 +315,7 @@ function core._2569:EchoOfNeltharion()
     if core.type == "SPELL_AURA_APPLIED" and core.sourceID == "205340" and core.spellId == 411101 and expiredExperimentCompleted == false then
          expiredExperimentCompleted = true
          partsCompleted = partsCompleted + 1
-         core:sendMessage(core:getAchievement() .. " " .. getNPCName(205340) .. " " .. L["Shared_Completed"] .. " (" .. partsCompleted .. "/4)")
+         core:sendMessage(core:getAchievement() .. " " .. getNPCName(205340) .. " " .. L["Shared_Completed"] .. " (" .. partsCompleted .. "/4)",true)
     end
 
     --Stack of Scrolls
@@ -323,7 +323,7 @@ function core._2569:EchoOfNeltharion()
     if core.type == "SPELL_AURA_APPLIED" and core.sourceID == "205341" and core.spellId == 411101 and stackOfScrollsCompleted == false then
         stackOfScrollsCompleted = true
         partsCompleted = partsCompleted + 1
-        core:sendMessage(core:getAchievement() .. " " .. getNPCName(205341) .. " " .. L["Shared_Completed"] .. " (" .. partsCompleted .. "/4)")
+        core:sendMessage(core:getAchievement() .. " " .. getNPCName(205341) .. " " .. L["Shared_Completed"] .. " (" .. partsCompleted .. "/4)",true)
     end
 
     --Neverburning Ebon Candle
@@ -331,7 +331,7 @@ function core._2569:EchoOfNeltharion()
     if core.type == "SPELL_AURA_APPLIED" and core.sourceID == "205342" and core.spellId == 411101 and neverburningEbonCandleCompleted == false then
         neverburningEbonCandleCompleted = true
         partsCompleted = partsCompleted + 1
-        core:sendMessage(core:getAchievement() .. " " .. getNPCName(205342) .. " " .. L["Shared_Completed"] .. " (" .. partsCompleted .. "/4)")
+        core:sendMessage(core:getAchievement() .. " " .. getNPCName(205342) .. " " .. L["Shared_Completed"] .. " (" .. partsCompleted .. "/4)",true)
     end
 
     --"Portable" Ebon Anvil
@@ -339,7 +339,7 @@ function core._2569:EchoOfNeltharion()
     if core.type == "SPELL_AURA_APPLIED" and core.sourceID == "205343" and core.spellId == 411101 and portableEbonAnvilCompleted == false then
         portableEbonAnvilCompleted = true
         partsCompleted = partsCompleted + 1
-        core:sendMessage(core:getAchievement() .. " " .. getNPCName(205343) .. " " .. L["Shared_Completed"] .. " (" .. partsCompleted .. "/4)")
+        core:sendMessage(core:getAchievement() .. " " .. getNPCName(205343) .. " " .. L["Shared_Completed"] .. " (" .. partsCompleted .. "/4)",true)
     end
 
     if core:getBlizzardTrackingStatus(18149, 1) == true and partsCompleted == 4 then
