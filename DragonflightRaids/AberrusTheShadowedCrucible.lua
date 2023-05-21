@@ -525,6 +525,7 @@ end
 
 function core._2569:InstanceCleanup()
     core._2569.Events:UnregisterEvent("UNIT_AURA")
+    core._2569.Events:UnregisterEvent("UNIT_SPELLCAST_SUCCEEDED")
 end
 
 core._2569.Events:SetScript("OnEvent", function(self, event, ...)
@@ -533,6 +534,16 @@ end)
 
 function core._2569:InitialSetup()
     core._2569.Events:RegisterEvent("UNIT_AURA")
+    core._2569.Events:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+end
+
+function core._2569.Events:UNIT_SPELLCAST_SUCCEEDED(self, unitID, lineID, spellID, ...)
+    if core.Instances[core.expansion][core.instanceType][core.instance]["boss8"].enabled then
+        if spellID == 411075 then
+            local name, realm = UnitName(unitID)
+            core:sendMessage(name .. " " .. L["Shared_HasGained"] .. " " .. GetSpellLink(341186),true)
+        end
+    end
 end
 
 function core._2569.Events:UNIT_AURA(self, unitID)
