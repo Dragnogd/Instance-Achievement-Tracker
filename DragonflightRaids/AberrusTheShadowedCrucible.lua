@@ -61,7 +61,7 @@ local portableEbonAnvilCompleted = false
 ------------------------------------------------------
 local lumpOfFleshUID = {}
 local lumpOfFleshCounter = 0
-local intitalSetup2 = false
+local initialSetup2 = false
 local tearOffUID = {}
 local tearOfCounter = 0
 
@@ -350,9 +350,6 @@ end
 function core._2569:ScalecommanderSarkareth()
     --Defeat Scalecommander Sarkareth after cultivating a Lump of Flesh and hurling it into the Emptiness Between Stars in Aberrus, the Shadowed Crucible on Normal difficulty or higher.
 
-    --Track who has got Lump of Flesh pre pull
-    --Announce if player fails the achievement
-
     InfoFrame_UpdatePlayersOnInfoFramePersonal2()
     InfoFrame_SetHeaderCounter(L["Shared_PlayersMetCriteria"],tearOfCounter,#core.currentBosses[1].players)
 
@@ -371,9 +368,9 @@ function core._2569:ScalecommanderSarkareth()
 
     if core.destName ~= nil then
         local name, realm = UnitName(core.destName)
-        if core:has_value(core.Instances[core.expansion][core.instanceType][core.instance]["boss1"].players, name) == true then
+        if core:has_value(core.Instances[core.expansion][core.instanceType][core.instance]["boss9"].players, name) == true then
             --Gained Tear Off
-            if (core.type == "SPELL_AURA_APPLIED" and core.spellId == 410287) then --410287
+            if (core.type == "SPELL_AURA_APPLIED" and core.spellId == 410287) then
                 if core.destName ~= nil then
                     if UnitIsPlayer(core.destName) then
                         if InfoFrame_GetPlayerComplete(core.destName) == false then
@@ -387,16 +384,16 @@ function core._2569:ScalecommanderSarkareth()
             end
 
             --Lost Lump of Flesh
-            if (core.type == "SPELL_AURA_APPLIED" and core.spellId == 410277) then --410277
+            if (core.type == "SPELL_AURA_REMOVED" and core.spellId == 410277) then
                 if core.destName ~= nil then
                     if UnitIsPlayer(core.destName) then
                         local player = core.destName
                         local playerUID = core.spawn_uid_dest_Player
-                        C_Timer.After(1, function()
+                        C_Timer.After(3, function()
                             if InfoFrame_GetPlayerComplete(player) == false and tearOffUID[playerUID] == nil then
                                 lumpOfFleshCounter = lumpOfFleshCounter - 1
                                 InfoFrame_SetPlayerFailed(player)
-                                core:getAchievementFailedPersonal(player)
+                                core:getAchievementFailedPersonalWithName(1,player,true)
                             end
                         end)
                     end
@@ -467,14 +464,14 @@ function core._2569:TrackAdditional()
 
     --Scalecommander Sarkareth Lump of Flesh
     if core.Instances[core.expansion][core.instanceType][core.instance]["boss9"].enabled == true then
-        if (core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_REMOVED") and core.spellId == 410277 and core.encounterStarted == false then --CHANGEME: 410277
-            local players = #core.Instances[core.expansion][core.instanceType][core.instance]["boss1"].players
+        if (core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_REMOVED") and core.spellId == 410277 and core.encounterStarted == false then
+            local players = #core.Instances[core.expansion][core.instanceType][core.instance]["boss9"].players
             core.IATInfoFrame:ToggleOn()
             core.IATInfoFrame:SetHeading(GetAchievementLink(17877))
             InfoFrame_SetHeaderCounter(GetSpellLink(410277) .. " " .. L["Core_Counter"],lumpOfFleshCounter,players)
             InfoFrame_UpdatePlayersOnInfoFramePersonal2()
 
-            --Check all players in group for Hellsteel Plating Debuff
+            --Check all players in group for Lump of Flesh Debuff
             for player2, status in pairs(core.InfoFrame_PlayersTable) do
                 local buffFound = false
                 local _, _, player_UID2 = strsplit("-", UnitGUID(player2))
@@ -502,11 +499,6 @@ function core._2569:TrackAdditional()
             --Update with any changes
             InfoFrame_SetHeaderCounter(GetSpellLink(410277) .. " " .. L["Core_Counter"],lumpOfFleshCounter,players)
             InfoFrame_UpdatePlayersOnInfoFramePersonal2()
-
-            --Hide if no one has the debuff anymore
-            if lumpOfFleshCounter == 0 then
-                --core.IATInfoFrame:ToggleOff()
-            end
         end
     end
 end
@@ -606,7 +598,7 @@ function core._2569:ClearVariables()
     ------------------------------------------------------
     lumpOfFleshUID = {}
     lumpOfFleshCounter = 0
-    intitalSetup2 = false
+    initialSetup2 = false
     tearOffUID = {}
     tearOfCounter = 0
 end
