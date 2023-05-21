@@ -322,39 +322,39 @@ end
 function core._2569:EchoOfNeltharion()
     --Defeat the Echo of Neltharion after players smash through walls of Twisted Earth while carrying the Expired Experiment, the Stack of Scrolls, the Neverburning Ebon Candle, and the "Portable" Ebon Anvil in Aberrus, the Shadowed Crucible on Normal difficulty or higher.
 
-    -- --Expired Experiment
-    -- if core:getBlizzardTrackingStatus(18149, 1) == true and expiredExperimentCompleted == false then
-    --     expiredExperimentCompleted = true
-    --     partsCompleted = partsCompleted + 1
-    --     core:sendMessage(core:getAchievement() .. " " .. getNPCName(205340) .. " " .. L["Shared_Completed"] .. " (" .. partsCompleted .. "/4)")
-    -- end
+    --Expired Experiment
+    --5/12 22:03:47.971  SPELL_AURA_APPLIED,Creature-0-4227-2569-26620-205340-00005EEF66,"Expired Experiment",0xa18,0x4,Player-1171-07E6056A,"Jurvichious-WyrmrestAccord",0x512,0x0,411101,"Artifact Shards",0x1,DEBUFF
+    if core.type == "SPELL_AURA_APPLIED" and core.sourceID == "205340" and core.spellId == 411101 and expiredExperimentCompleted == false then
+         expiredExperimentCompleted = true
+         partsCompleted = partsCompleted + 1
+         core:sendMessage(core:getAchievement() .. " " .. getNPCName(205340) .. " " .. L["Shared_Completed"] .. " (" .. partsCompleted .. "/4)")
+    end
 
-    -- --Stack of Scrolls
-    -- if core:getBlizzardTrackingStatus(18149, 2) == true and stackOfScrollsCompleted == false then
-    --     stackOfScrollsCompleted = true
-    --     partsCompleted = partsCompleted + 1
-    --     core:sendMessage(core:getAchievement() .. " " .. getNPCName(205341) .. " " .. L["Shared_Completed"] .. " (" .. partsCompleted .. "/4)")
-    -- end
+    --Stack of Scrolls
+    --5/12 22:00:04.930  SPELL_AURA_APPLIED,Creature-0-4227-2569-26620-205341-00005EEDFA,"Stack of Scrolls",0xa18,0x0,Player-57-0B46A027,"Koakumá-Illidan",0x514,0x0,411101,"Artifact Shards",0x1,DEBUFF
+    if core.type == "SPELL_AURA_APPLIED" and core.sourceID == "205341" and core.spellId == 411101 and stackOfScrollsCompleted == false then
+        stackOfScrollsCompleted = true
+        partsCompleted = partsCompleted + 1
+        core:sendMessage(core:getAchievement() .. " " .. getNPCName(205341) .. " " .. L["Shared_Completed"] .. " (" .. partsCompleted .. "/4)")
+    end
 
-    -- --Neverburning Ebon Candle
-    -- if core:getBlizzardTrackingStatus(18149, 3) == true and neverburningEbonCandleCompleted == false then
-    --     neverburningEbonCandleCompleted = true
-    --     partsCompleted = partsCompleted + 1
-    --     core:sendMessage(core:getAchievement() .. " " .. getNPCName(205342) .. " " .. L["Shared_Completed"] .. " (" .. partsCompleted .. "/4)")
-    -- end
+    --Neverburning Ebon Candle
+    --5/12 22:10:50.205  SPELL_AURA_APPLIED,Creature-0-4227-2569-26620-205342-00005EF0EB,"Neverburning Ebon Candle",0xa18,0x0,Player-3684-0E1F272B,"Sadpandaa-Mal'Ganis",0x514,0x0,411101,"Artifact Shards",0x1,DEBUFF
+    if core.type == "SPELL_AURA_APPLIED" and core.sourceID == "205342" and core.spellId == 411101 and neverburningEbonCandleCompleted == false then
+        neverburningEbonCandleCompleted = true
+        partsCompleted = partsCompleted + 1
+        core:sendMessage(core:getAchievement() .. " " .. getNPCName(205342) .. " " .. L["Shared_Completed"] .. " (" .. partsCompleted .. "/4)")
+    end
 
-    -- --"Portable" Ebon Anvil
-    -- if core:getBlizzardTrackingStatus(18149, 4) == true and portableEbonAnvilCompleted == false then
-    --     portableEbonAnvilCompleted = true
-    --     partsCompleted = partsCompleted + 1
-    --     core:sendMessage(core:getAchievement() .. " " .. getNPCName(205343) .. " " .. L["Shared_Completed"] .. " (" .. partsCompleted .. "/4)")
-    -- end
+    --"Portable" Ebon Anvil
+    --5/12 22:13:28.331  SPELL_AURA_APPLIED,Creature-0-4227-2569-26620-205343-00005EF1EE,"\"Portable\" Ebon Anvil",0xa18,0x0,Player-57-0D710C93,"Idontwipe-Illidan",0x514,0x0,411101,"Artifact Shards",0x1,DEBUFF
+    if core.type == "SPELL_AURA_APPLIED" and core.sourceID == "205343" and core.spellId == 411101 and portableEbonAnvilCompleted == false then
+        portableEbonAnvilCompleted = true
+        partsCompleted = partsCompleted + 1
+        core:sendMessage(core:getAchievement() .. " " .. getNPCName(205343) .. " " .. L["Shared_Completed"] .. " (" .. partsCompleted .. "/4)")
+    end
 
-    -- if partsCompleted == 4 then
-    --     core:getAchievementSuccess()
-    -- end
-
-    if core:getBlizzardTrackingStatus(18149, 1) == true then
+    if core:getBlizzardTrackingStatus(18149, 1) == true and partsCompleted == 4 then
         core:getAchievementSuccess()
     end
 end
