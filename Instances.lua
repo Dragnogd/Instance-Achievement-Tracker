@@ -185,7 +185,7 @@ core.Instances = {
 				},
 				boss8 = {
 					name = 2523, --Echo of Neltharion
-					bossIDs = {60583, 60586, 60585},
+					bossIDs = {},
 					achievement = 18149,
 					players = {},
 					tactics = L["AberrusTheShadowedCrucible_EchoOfNeltharion"],
