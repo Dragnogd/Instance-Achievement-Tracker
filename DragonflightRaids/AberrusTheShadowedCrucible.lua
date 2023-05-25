@@ -75,14 +75,25 @@ function core._2569:KazzaraTheHellforged()
         --Set every player to white on pulling the boss that collected the Hellsteel Plating before starting the encounter
         --Players that didn't collect will stay red and announce fail for those players on pull
         initialSetup = true
-        for player,status in pairs(core.InfoFrame_PlayersTable) do
-            if status == 2 then
-                InfoFrame_SetPlayerNeutral(player)
-                hellSteelPlatingCounter = hellSteelPlatingCounter + 1
-            elseif status == 3 or status == 1 then
-                core:getAchievementFailedPersonalWithName(1,player,true)
+
+        for player2, status in pairs(core.InfoFrame_PlayersTable) do
+            print(player2,status)
+            local buffFound = false
+            local _, _, player_UID2 = strsplit("-", UnitGUID(player2))
+            for i=1,40 do
+                local _, _, count2, _, _, _, _, _, _, spellId = UnitDebuff(player2, i)
+                if spellId == 411919 then
+                    buffFound = true
+                end
             end
-		end
+            if buffFound == true then
+                InfoFrame_SetPlayerNeutral(player2)
+            else
+                print("Player FAILED",player2)
+                InfoFrame_SetPlayerFailed(player2)
+                core:getAchievementFailedPersonalWithName(1,player2,true)
+            end
+        end
     end
 
     if core.destName ~= nil then
@@ -350,13 +361,28 @@ function core._2569:ScalecommanderSarkareth()
         --Set every player to white on pulling the boss that collected the Hellsteel Plating before starting the encounter
         --Players that didn't collect will stay red and announce fail for those players on pull
         initialSetup2 = true
-        for player,status in pairs(core.InfoFrame_PlayersTable) do
-            if status == 2 then
-                InfoFrame_SetPlayerNeutral(player)
-            elseif status == 3 or status == 1 then
-                core:getAchievementFailedPersonalWithName(1,player,true)
+
+        --Check all players in group for Lump of Flesh Debuff
+        for player2, status in pairs(core.InfoFrame_PlayersTable) do
+            local buffFound = false
+            local _, _, player_UID2 = strsplit("-", UnitGUID(player2))
+            for i=1,40 do
+                local _, _, count2, _, _, _, _, _, _, spellId = UnitDebuff(player2, i)
+                if spellId == 410277 then
+                    buffFound = true
+                end
             end
-		end
+            if buffFound == true then
+                InfoFrame_SetPlayerNeutral(player2)
+                if lumpOfFleshUID[player_UID2] == nil then
+                    lumpOfFleshUID[player_UID2] = player_UID2
+                    lumpOfFleshCounter = lumpOfFleshCounter + 1
+                end
+            else
+                InfoFrame_SetPlayerFailed(player2)
+                core:getAchievementFailedPersonalWithName(1,player2,true)
+            end
+        end
     end
 
     if core.destName ~= nil then
