@@ -374,10 +374,6 @@ function core._2569:ScalecommanderSarkareth()
             end
             if buffFound == true then
                 InfoFrame_SetPlayerNeutral(player2)
-                if lumpOfFleshUID[player_UID2] == nil then
-                    lumpOfFleshUID[player_UID2] = player_UID2
-                    lumpOfFleshCounter = lumpOfFleshCounter + 1
-                end
             else
                 InfoFrame_SetPlayerFailed(player2)
                 core:getAchievementFailedPersonalWithName(1,player2,true)
