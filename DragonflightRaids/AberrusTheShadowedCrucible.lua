@@ -174,21 +174,21 @@ function core._2569:TheForgottenExperiments()
     --5/10 11:00:07.498  SPELL_AURA_APPLIED_DOSE,Creature-0-4237-2569-570-205352-00005B4EDD,"Nutraal",0xa18,0x20,Creature-0-4237-2569-570-205352-00005B4EDD,"Nutraal",0xa18,0x20,411116,"Rended",0x1,BUFF,2
     if (core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_APPLIED_DOSE") and core.destID == "205352" and core.spellId == 411116 and rendedCounter < 3 then
         rendedCounter = rendedCounter + 1
-        core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(411116) .. " " .. L["Core_Counter"] .. " (" .. rendedCounter .. "/3)")
+        core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(411116) .. " " .. L["Core_Counter"] .. " (" .. rendedCounter .. "/3)",true)
     end
 
     --Slimed
     --5/10 11:01:20.187  SPELL_AURA_APPLIED_DOSE,Creature-0-4237-2569-570-205352-00005B4EDD,"Nutraal",0xa18,0x20,Creature-0-4237-2569-570-205352-00005B4EDD,"Nutraal",0xa18,0x20,411117,"Slimed",0x1,BUFF,2
     if (core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_APPLIED_DOSE") and core.destID == "205352" and core.spellId == 411117 and slimedCounter < 3 then
         slimedCounter = slimedCounter + 1
-        core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(411117) .. " " .. L["Core_Counter"] .. " (" .. slimedCounter .. "/3)")
+        core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(411117) .. " " .. L["Core_Counter"] .. " (" .. slimedCounter .. "/3)",true)
     end
 
     --Singed
     --5/10 11:03:46.969  SPELL_AURA_APPLIED_DOSE,Creature-0-4237-2569-570-205352-00005B4EDD,"Nutraal",0xa18,0x20,Creature-0-4237-2569-570-205352-00005B4EDD,"Nutraal",0xa18,0x20,411118,"Singed",0x1,BUFF,2
     if (core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_APPLIED_DOSE") and core.destID == "205352" and core.spellId == 411118 and singedCounter < 3 then
         singedCounter = singedCounter + 1
-        core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(411118) .. " " .. L["Core_Counter"] .. " (" .. singedCounter .. "/3)")
+        core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(411118) .. " " .. L["Core_Counter"] .. " (" .. singedCounter .. "/3)",true)
     end
 
     if rendedCounter == 3 and slimedCounter == 3 and singedCounter == 3 then
