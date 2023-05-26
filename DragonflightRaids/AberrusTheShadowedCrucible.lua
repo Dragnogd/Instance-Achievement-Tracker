@@ -39,6 +39,7 @@ local siegeMammothCompleted = false
 local rockSnailCompleted = false
 local zaqaliBoltthrowerCompleted = false
 local magmaSlugCompleted = false
+local caveBeetleCompleted = false
 local creaturesHit = 0
 
 ------------------------------------------------------
@@ -205,34 +206,40 @@ function core._2569:AssaultOfTheZaqali()
         --Ember Mouse
         emberMouseCompleted = true
         creaturesHit = creaturesHit + 1
-        core:sendMessage(GetAchievementCriteriaInfo(18228,1) .. " " .. L["Shared_Completed"] .. " (" .. creaturesHit .. "/5)",true)
+        core:sendMessage(GetAchievementCriteriaInfo(18228,1) .. " " .. L["Shared_Completed"] .. " (" .. creaturesHit .. "/6)",true)
     end
     if core:getBlizzardTrackingStatus(18228, 2) == true and siegeMammothCompleted == false then
         --Siege Mammoth
         siegeMammothCompleted = true
         creaturesHit = creaturesHit + 1
-        core:sendMessage(GetAchievementCriteriaInfo(18228,2) .. " " .. L["Shared_Completed"] .. " (" .. creaturesHit .. "/5)",true)
+        core:sendMessage(GetAchievementCriteriaInfo(18228,2) .. " " .. L["Shared_Completed"] .. " (" .. creaturesHit .. "/6)",true)
     end
     if core:getBlizzardTrackingStatus(18228, 3) == true and rockSnailCompleted == false then
         --Rock Snail
         rockSnailCompleted = true
         creaturesHit = creaturesHit + 1
-        core:sendMessage(GetAchievementCriteriaInfo(18228,3) .. " " .. L["Shared_Completed"] .. " (" .. creaturesHit .. "/5)",true)
+        core:sendMessage(GetAchievementCriteriaInfo(18228,3) .. " " .. L["Shared_Completed"] .. " (" .. creaturesHit .. "/6)",true)
     end
     if core:getBlizzardTrackingStatus(18228, 4) == true and zaqaliBoltthrowerCompleted == false then
         --Zaqali Boltthrower
         zaqaliBoltthrowerCompleted = true
         creaturesHit = creaturesHit + 1
-        core:sendMessage(GetAchievementCriteriaInfo(18228,4) .. " " .. L["Shared_Completed"] .. " (" .. creaturesHit .. "/5)",true)
+        core:sendMessage(GetAchievementCriteriaInfo(18228,4) .. " " .. L["Shared_Completed"] .. " (" .. creaturesHit .. "/6)",true)
     end
     if core:getBlizzardTrackingStatus(18228, 5) == true and magmaSlugCompleted == false then
         --Magma Slug
         magmaSlugCompleted = true
         creaturesHit = creaturesHit + 1
-        core:sendMessage(GetAchievementCriteriaInfo(18228,5) .. " " .. L["Shared_Completed"] .. " (" .. creaturesHit .. "/5)",true)
+        core:sendMessage(GetAchievementCriteriaInfo(18228,5) .. " " .. L["Shared_Completed"] .. " (" .. creaturesHit .. "/6)",true)
+    end
+    if core:getBlizzardTrackingStatus(18228, 6) == true and caveBeetleCompleted == false then
+        --Magma Slug
+        caveBeetleCompleted = true
+        creaturesHit = creaturesHit + 1
+        core:sendMessage(GetAchievementCriteriaInfo(18228,6) .. " " .. L["Shared_Completed"] .. " (" .. creaturesHit .. "/6)",true)
     end
 
-    if creaturesHit >= 5 then
+    if creaturesHit >= 6 then
         core:getAchievementSuccess()
     end
 end
@@ -278,14 +285,9 @@ function core._2569:Magmorax()
     --Picked up snail (Handled in UNIT_AURA due to room size)
     --5/10 12:22:40.763  SPELL_AURA_APPLIED,0000000000000000,nil,0x514,0x0,Player-1084-05D22E7D,"Ouaa-TarrenMill",0x514,0x0,411367,"Spicy Lava Snail",0x4,DEBUFF
 
-    --Thrown snail to boss
+    --Thrown snail to boss (Handled in UNIT_SPELLCAST_SUCCEEDED as not firing from combat log)
     --5/12 21:42:10.215  SPELL_CAST_SUCCESS,Player-78-0C23A3B4,"Ceasarsalad-Magtheridon",0x514,0x0,Creature-0-4227-2569-26620-201579-00005EEA67,"Magmorax",0x10a48,0x0,411368,"Feed Magmorax",0x1,Player-78-0C23A3B4,0000000000000000,515853,551670,915,10443,2076,2197,0,249022,250000,0,2676.52,2438.99,2166,1.7284,423
-    if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 411368 then
-        if InfoFrame_GetPlayerComplete(core.destName) then
-            --Player has successfully tossed the snail to the boss
-            InfoFrame_SetPlayerNeutral(core.destName)
-        end
-    end
+
 
     --Player died when holding snail
     if core.type == "UNIT_DIED" and core.currentDest == "Player" and core.destName ~= nil then
@@ -599,6 +601,7 @@ function core._2569:ClearVariables()
     rockSnailCompleted = false
     zaqaliBoltthrowerCompleted = false
     magmaSlugCompleted = false
+    caveBeetleCompleted = false
     creaturesHit = 0
 
     ------------------------------------------------------
