@@ -47,6 +47,7 @@ local creaturesHit = 0
 ------------------------------------------------------
 local spicyLavaSnailsCounter = 0
 local spicyLavaPlayers = {}
+local playersHoldingSnailCounter = 0
 
 ------------------------------------------------------
 ---- Echo of Neltharion
@@ -280,7 +281,7 @@ function core._2569:Magmorax()
     --Defeat Magmorax after feeding him 20 Spicy Lava Snails in Aberrus, the Shadowed Crucible on Normal difficulty or higher.
 
     InfoFrame_UpdatePlayersOnInfoFrame()
-    InfoFrame_SetHeaderCounter(GetSpellLink(411573) .. " " .. L["Core_Counter"],spicyLavaSnailsCounter,20)
+    InfoFrame_SetHeaderCounter(GetSpellLink(411367) .. " " .. L["Core_Counter"],spicyLavaSnailsCounter,20)
 
     --Picked up snail (Handled in UNIT_AURA due to room size)
     --5/10 12:22:40.763  SPELL_AURA_APPLIED,0000000000000000,nil,0x514,0x0,Player-1084-05D22E7D,"Ouaa-TarrenMill",0x514,0x0,411367,"Spicy Lava Snail",0x4,DEBUFF
@@ -535,7 +536,7 @@ function core._2569.Events:UNIT_SPELLCAST_SUCCEEDED(self, unitID, lineID, spellI
     if core.Instances[core.expansion][core.instanceType][core.instance]["boss8"].enabled then
         local name, realm = UnitName(unitID)
 
-        --Magmorax (Spicy Lava Snail)
+        --Echo of Neltharion (Carrying Artifact)
         if spellID == 411075 then
             core:sendMessage(name .. " " .. L["Shared_HasGained"] .. " " .. GetSpellLink(411075),true)
         end
@@ -546,6 +547,7 @@ function core._2569.Events:UNIT_SPELLCAST_SUCCEEDED(self, unitID, lineID, spellI
                 --Player has successfully tossed the snail to the boss
                 InfoFrame_SetPlayerNeutral(name)
                 spicyLavaPlayers[name] = nil
+                playersHoldingSnailCounter = playersHoldingSnailCounter - 1
             end
         end
     end
@@ -564,6 +566,7 @@ function core._2569.Events:UNIT_AURA(self, unitID)
                         InfoFrame_SetPlayerComplete(name)
                         core:sendMessage(name .. " " .. L["Shared_HasGained"] .. " " .. GetSpellLink(411367),true)
                         spicyLavaPlayers[name] = true
+                        playersHoldingSnailCounter = playersHoldingSnailCounter + 1
                     end
                 end
             end
@@ -609,6 +612,7 @@ function core._2569:ClearVariables()
     ------------------------------------------------------
     spicyLavaSnailsCounter = 0
     spicyLavaPlayers = {}
+    playersHoldingSnailCounter = 0
 
     ------------------------------------------------------
     ---- Echo of Neltharion
