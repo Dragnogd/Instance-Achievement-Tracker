@@ -306,7 +306,9 @@ function core._2569:Magmorax()
     --Achievement complete
     --5/10 12:55:36.952  SPELL_AURA_APPLIED,0000000000000000,nil,0x10a48,0x0,Creature-0-4237-2569-570-201579-00005B76BA,"Magmorax",0x10a48,0x0,411581,"Escargorged",0x1,BUFF
 
-    if core:getBlizzardTrackingStatus(18172, 1) == true and spicyLavaSnailsCounter >= 20 then
+    if core:getBlizzardTrackingStatus(18172, 1) == true and spicyLavaSnailsCounter == 19 then
+        spicyLavaSnailsCounter = spicyLavaSnailsCounter + 1
+        core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(411573) .. " " .. L["Core_Counter"] .. " (" .. spicyLavaSnailsCounter .. "/20)",true)
 		core:getAchievementSuccess()
 	end
 end
