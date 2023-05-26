@@ -531,9 +531,20 @@ end
 
 function core._2569.Events:UNIT_SPELLCAST_SUCCEEDED(self, unitID, lineID, spellID, ...)
     if core.Instances[core.expansion][core.instanceType][core.instance]["boss8"].enabled then
+        local name, realm = UnitName(unitID)
+
+        --Magmorax (Spicy Lava Snail)
         if spellID == 411075 then
-            local name, realm = UnitName(unitID)
             core:sendMessage(name .. " " .. L["Shared_HasGained"] .. " " .. GetSpellLink(411075),true)
+        end
+
+        --Magmorax (Feed Magmorax)
+        if spellID == 411368 then
+            if InfoFrame_GetPlayerComplete(name) then
+                --Player has successfully tossed the snail to the boss
+                InfoFrame_SetPlayerNeutral(name)
+                spicyLavaPlayers[name] = nil
+            end
         end
     end
 end
