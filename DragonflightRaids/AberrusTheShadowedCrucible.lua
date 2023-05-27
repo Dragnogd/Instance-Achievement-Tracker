@@ -49,6 +49,7 @@ local spicyLavaSnailsCounter = 0
 local spicyLavaPlayers = {}
 local playersHoldingSnailCounter = 0
 local escargorgedFound = false
+local magmoraxFailed = false
 
 ------------------------------------------------------
 ---- Echo of Neltharion
@@ -294,19 +295,20 @@ function core._2569:Magmorax()
             --Player has died while holding snail. As there are only 20 snails and don't respawn, this is a fail
             InfoFrame_SetPlayerFailed(core.destName)
             core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")")
+            magmoraxFailed = true
         end
     end
 
     --Track stacks
     --5/10 12:22:51.293  SPELL_AURA_APPLIED_DOSE,0000000000000000,nil,0x514,0x0,Creature-0-4237-2569-570-201579-00005B4EDD,"Magmorax",0x10a48,0x0,411573,"Magmosnax",0x1,BUFF,2
-    if (core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_APPLIED_DOSE") and core.spellId == 411573 then
+    if (core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_APPLIED_DOSE") and core.spellId == 411573 and magmoraxFailed == false then
         spicyLavaSnailsCounter = spicyLavaSnailsCounter + 1
         core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(411573) .. " " .. L["Core_Counter"] .. " (" .. spicyLavaSnailsCounter .. "/20)",true)
     end
 
     --Achievement complete
     --5/10 12:55:36.952  SPELL_AURA_APPLIED,0000000000000000,nil,0x10a48,0x0,Creature-0-4237-2569-570-201579-00005B76BA,"Magmorax",0x10a48,0x0,411581,"Escargorged",0x1,BUFF
-    if core.type == "SPELL_AURA_APPLIED" and core.destID == "201579" and core.spellId == 411581 and escargorgedFound == false then
+    if core.type == "SPELL_AURA_APPLIED" and core.destID == "201579" and core.spellId == 411581 and escargorgedFound == false and magmoraxFailed == false then
         spicyLavaSnailsCounter = spicyLavaSnailsCounter + 1
         core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(411573) .. " " .. L["Core_Counter"] .. " (" .. spicyLavaSnailsCounter .. "/20)",true)
         escargorgedFound = true
@@ -569,7 +571,6 @@ function core._2569.Events:UNIT_AURA(self, unitID)
                     if spellId == 411367 and spicyLavaPlayers[name] == nil then
                         --Spicy Lava Snail
                         InfoFrame_SetPlayerComplete(name)
-                        core:sendMessage(name .. " " .. L["Shared_HasGained"] .. " " .. GetSpellLink(411367),true)
                         spicyLavaPlayers[name] = true
                         playersHoldingSnailCounter = playersHoldingSnailCounter + 1
                     end
@@ -619,6 +620,7 @@ function core._2569:ClearVariables()
     spicyLavaPlayers = {}
     playersHoldingSnailCounter = 0
     escargorgedFound = false
+    magmoraxFailed = false
 
     ------------------------------------------------------
     ---- Echo of Neltharion
