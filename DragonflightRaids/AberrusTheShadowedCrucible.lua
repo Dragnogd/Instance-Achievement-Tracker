@@ -288,7 +288,6 @@ function core._2569:Magmorax()
     --Thrown snail to boss (Handled in UNIT_SPELLCAST_SUCCEEDED as not firing from combat log)
     --5/12 21:42:10.215  SPELL_CAST_SUCCESS,Player-78-0C23A3B4,"Ceasarsalad-Magtheridon",0x514,0x0,Creature-0-4227-2569-26620-201579-00005EEA67,"Magmorax",0x10a48,0x0,411368,"Feed Magmorax",0x1,Player-78-0C23A3B4,0000000000000000,515853,551670,915,10443,2076,2197,0,249022,250000,0,2676.52,2438.99,2166,1.7284,423
 
-
     --Player died when holding snail
     if core.type == "UNIT_DIED" and core.currentDest == "Player" and core.destName ~= nil then
         if InfoFrame_GetPlayerComplete(core.destName) then
@@ -307,13 +306,13 @@ function core._2569:Magmorax()
 
     --Achievement complete
     --5/10 12:55:36.952  SPELL_AURA_APPLIED,0000000000000000,nil,0x10a48,0x0,Creature-0-4237-2569-570-201579-00005B76BA,"Magmorax",0x10a48,0x0,411581,"Escargorged",0x1,BUFF
-    if core.type == "SPELL_AURA_APPLIED" and core.destID == "201579" and core.spellId == 411581 then
+    if core.type == "SPELL_AURA_APPLIED" and core.destID == "201579" and core.spellId == 411581 and escargorgedFound == false then
+        spicyLavaSnailsCounter = spicyLavaSnailsCounter + 1
+        core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(411573) .. " " .. L["Core_Counter"] .. " (" .. spicyLavaSnailsCounter .. "/20)",true)
         escargorgedFound = true
     end
 
     if core:getBlizzardTrackingStatus(18172, 1) == true and spicyLavaSnailsCounter >= 19 and escargorgedFound == true then
-        spicyLavaSnailsCounter = spicyLavaSnailsCounter + 1
-        core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(411573) .. " " .. L["Core_Counter"] .. " (" .. spicyLavaSnailsCounter .. "/20)",true)
 		core:getAchievementSuccess()
 	end
 end
@@ -548,7 +547,6 @@ function core._2569.Events:UNIT_SPELLCAST_SUCCEEDED(self, unitID, lineID, spellI
             if InfoFrame_GetPlayerComplete(name) then
                 --Player has successfully tossed the snail to the boss
                 InfoFrame_SetPlayerNeutral(name)
-                playersHoldingSnailCounter = playersHoldingSnailCounter - 1
 
                 --Wait 1 second before unlocking spicy lava snail so not re-applied immediately
                 local spicyName = name
