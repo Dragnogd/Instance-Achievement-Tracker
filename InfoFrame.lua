@@ -331,9 +331,29 @@ function InfoFrame_UpdatePlayersOnInfoFramePersonal()
     end
 end
 
-function InfoFrame_UpdatePlayersOnInfoFramePersonal2()
+function InfoFrame_UpdatePlayersOnInfoFramePersonal2(boss, checkForAllPlayers)
     --This will update list of players on the info frame for personal achievements.
     --This will only display names of players who still need the achievement
+
+    --Check that we have all players
+    if checkForAllPlayers == true then
+        if core.InfoFrame_PlayersTable ~= nil then
+            local playersTableLength = 0
+            for k,v in pairs(core.InfoFrame_PlayersTable) do
+                if v ~= nil then
+                    playersTableLength = playersTableLength + 1
+                end
+            end
+
+            if playersTableLength ~= #core.Instances[core.expansion][core.instanceType][core.instance][boss].players then
+                --Group composition has changed, let reset the InfoFrame and rescan
+                core.InfoFrame_PlayersTable = {}
+                for k,player in ipairs(core.Instances[core.expansion][core.instanceType][core.instance][boss].players) do
+                    core.InfoFrame_PlayersTable[player] = 1
+                end
+            end
+        end
+    end
 
     if next(core.InfoFrame_PlayersTable) == nil then
         --If table is empty then generate players

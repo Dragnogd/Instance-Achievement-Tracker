@@ -71,7 +71,7 @@ local tearOfCounter = 0
 function core._2569:KazzaraTheHellforged()
     --Defeat Kazzara, the Hellforged after shattering your own Hellsteel Plating in Aberrus, the Shadowed Crucible on Normal difficulty or higher.
 
-    InfoFrame_UpdatePlayersOnInfoFramePersonal2()
+    InfoFrame_UpdatePlayersOnInfoFramePersonal2("boss1")
     InfoFrame_SetHeaderCounter(L["Shared_PlayersMetCriteria"],shatteredHellsteelCounter,#core.currentBosses[1].players)
 
     if initialSetup == false then
@@ -363,7 +363,7 @@ end
 function core._2569:ScalecommanderSarkareth()
     --Defeat Scalecommander Sarkareth after cultivating a Lump of Flesh and hurling it into the Emptiness Between Stars in Aberrus, the Shadowed Crucible on Normal difficulty or higher.
 
-    InfoFrame_UpdatePlayersOnInfoFramePersonal2()
+    InfoFrame_UpdatePlayersOnInfoFramePersonal2("boss9")
     InfoFrame_SetHeaderCounter(L["Shared_PlayersMetCriteria"],tearOfCounter,#core.currentBosses[1].players)
 
     if initialSetup2 == false then
@@ -448,7 +448,7 @@ function core._2569:TrackAdditional()
             core.IATInfoFrame:ToggleOn()
             core.IATInfoFrame:SetHeading(GetAchievementLink(18229))
             InfoFrame_SetHeaderCounter(GetSpellLink(411919) .. " " .. L["Core_Counter"],hellSteelPlatingCounter,players)
-            InfoFrame_UpdatePlayersOnInfoFramePersonal2()
+            InfoFrame_UpdatePlayersOnInfoFramePersonal2("boss1", true)
 
             --Check all players in group for Hellsteel Plating Debuff
             for player2, status in pairs(core.InfoFrame_PlayersTable) do
@@ -477,7 +477,7 @@ function core._2569:TrackAdditional()
 
             --Update with any changes
             InfoFrame_SetHeaderCounter(GetSpellLink(411919) .. " " .. L["Core_Counter"],hellSteelPlatingCounter,players)
-            InfoFrame_UpdatePlayersOnInfoFramePersonal2()
+            InfoFrame_UpdatePlayersOnInfoFramePersonal2("boss1", true)
         end
     end
 
@@ -488,7 +488,7 @@ function core._2569:TrackAdditional()
             core.IATInfoFrame:ToggleOn()
             core.IATInfoFrame:SetHeading(GetAchievementLink(17877))
             InfoFrame_SetHeaderCounter(GetSpellLink(410277) .. " " .. L["Core_Counter"],lumpOfFleshCounter,players)
-            InfoFrame_UpdatePlayersOnInfoFramePersonal2()
+            InfoFrame_UpdatePlayersOnInfoFramePersonal2("boss9", true)
 
             --Check all players in group for Lump of Flesh Debuff
             for player2, status in pairs(core.InfoFrame_PlayersTable) do
@@ -517,7 +517,7 @@ function core._2569:TrackAdditional()
 
             --Update with any changes
             InfoFrame_SetHeaderCounter(GetSpellLink(410277) .. " " .. L["Core_Counter"],lumpOfFleshCounter,players)
-            InfoFrame_UpdatePlayersOnInfoFramePersonal2()
+            InfoFrame_UpdatePlayersOnInfoFramePersonal2("boss9", true)
         end
     end
 end
