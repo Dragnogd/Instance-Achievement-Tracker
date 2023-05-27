@@ -157,7 +157,7 @@ function core._2569:ShadowflameAmalgamation()
 
 	--Detect when Shadowflame Remnant Spawns
     --5/10 10:48:49.112  SPELL_CAST_SUCCESS,Player-1403-0538EBCC,"Flowreen-Draenor",0x514,0x0,Creature-0-4237-2569-570-205378-00005B5A6F,"Shadowflame Remnant",0x10a48,0x0,8921,"Moonfire",0x40,Player-1403-0538EBCC,0000000000000000,416440,417715,11090,10663,7387,0,8,380,1000,0,2663.19,2791.12,2167,3.3285,420
-	if (core.destID == 205378 or core.sourceID == 205378) and shadowflameRemnantSpawned == false then
+	if (core.destID == "205378" or core.sourceID == "205378") and shadowflameRemnantSpawned == false then
         core:sendMessage(format(L["Shared_KillTheAddNow"], getNPCName(205378)),true)
         shadowflameRemnantSpawned = true
     end
