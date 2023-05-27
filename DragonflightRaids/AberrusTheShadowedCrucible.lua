@@ -80,7 +80,6 @@ function core._2569:KazzaraTheHellforged()
         initialSetup = true
 
         for player2, status in pairs(core.InfoFrame_PlayersTable) do
-            print(player2,status)
             local buffFound = false
             local _, _, player_UID2 = strsplit("-", UnitGUID(player2))
             for i=1,40 do
@@ -92,7 +91,6 @@ function core._2569:KazzaraTheHellforged()
             if buffFound == true then
                 InfoFrame_SetPlayerNeutral(player2)
             else
-                print("Player FAILED",player2)
                 InfoFrame_SetPlayerFailed(player2)
                 core:getAchievementFailedPersonalWithName(1,player2,true)
             end
