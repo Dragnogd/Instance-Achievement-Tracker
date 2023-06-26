@@ -51,7 +51,7 @@ Config.majorVersion = 4						--Addon with a higher major version change have pri
 Config.minorVersion = 21    				--Addon with a minor version change have prioirty over a lower minor version
 Config.revisionVersion = 0					--Addon with a revision change have the same priorty as a lower revision verison
 Config.releaseType = ""                     --Release type (Alpha, Beta, Release)
-Config.classicPhase = 2                     --What phase classic realms are currently running
+Config.classicPhase = 3                     --What phase classic realms are currently running
 
 ------------------------------------------------------
 ---- Game Versions
