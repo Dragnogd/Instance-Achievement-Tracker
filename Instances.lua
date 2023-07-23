@@ -1,5 +1,5 @@
 --------------------------------------
--- Last Auto Generated: 21/05/2023 19:14:54
+-- Last Auto Generated: 23/07/2023 20:00:56
 --------------------------------------
 local _, core = ...
 local L = core.L
@@ -109,7 +109,7 @@ core.Instances = {
 					bossIDs = {},
 					achievement = 18229,
 					players = {},
-					tactics = L["AberrusTheShadowedCrucible_Kazzara"],
+					tactics = format(L["AberrusTheShadowedCrucible_Kazzara"], "IAT_205674", GetSpellLink(411919), GetSpellLink(400430), GetSpellLink(411921)),
 					enabled = true,
 					track = function() core._2569:KazzaraTheHellforged() end,
 					partial = false,
@@ -121,7 +121,7 @@ core.Instances = {
 					bossIDs = {},
 					achievement = 18168,
 					players = {},
-					tactics = L["AberrusTheShadowedCrucible_TheAmalgamationChamber"],
+					tactics = format(L["AberrusTheShadowedCrucible_TheAmalgamationChamber"], "IAT_205989", GetSpellLink(404732), "IAT_201773", GetSpellLink(405016), "IAT_76209", GetSpellLink(405641), "IAT_201934", "IAT_205378", "IAT_201773", "IAT_205989", "IAT_205989", GetSpellLink(404732), "IAT_205989", "IAT_201773", "IAT_76209", "IAT_205989", GetSpellLink(405016), GetSpellLink(405641), "IAT_205378"),
 					enabled = true,
 					track = function() core._2569:ShadowflameAmalgamation() end,
 					partial = false,
@@ -132,7 +132,7 @@ core.Instances = {
 					bossIDs = {},
 					achievement = 18173,
 					players = {},
-					tactics = L["AberrusTheShadowedCrucible_TheForgottenExperiments"],
+					tactics = format(L["AberrusTheShadowedCrucible_TheForgottenExperiments"], "IAT_202800", "IAT_202800", "IAT_205352", "IAT_205352", "IAT_200912", GetSpellLink(406358), "IAT_205352", "IAT_200913", GetSpellLink(405492), "IAT_205352", "IAT_200918", "IAT_205352", GetSpellLink(411118), "IAT_205352"),
 					enabled = true,
 					track = function() core._2569:TheForgottenExperiments() end,
 					partial = false,
@@ -210,6 +210,64 @@ core.Instances = {
 		},
 
 		Dungeons = {
+			[2579] = { --Dawn of the Infinite
+				name = 1209,
+				boss1 = {
+					name = 2521, --Chronikar
+					bossIDs = {},
+					achievement = 18589,
+					players = {},
+					tactics = L["DawnOfTheInfinite_Chronikar"],
+					enabled = true,
+					track = function() core._2579:Chronikar() end,
+					partial = false,
+					encounterID = 2666,
+				},
+				boss2 = {
+					name = 2528, --Manifested Timeways
+					bossIDs = {},
+					achievement = 18556,
+					players = {},
+					tactics = L["DawnOfTheInfinite_ManifestedTimeways"],
+					enabled = true,
+					track = function() core._2579:ManifestedTimeways() end,
+					partial = false,
+					encounterID = 2667,
+				},
+				boss3 = {
+					name = 2535, --Blight ofGalakrond
+					bossIDs = {},
+					achievement = 18612,
+					players = {},
+					tactics = L["DawnOfTheInfinite_BlightOfGalakrond"],
+					enabled = true,
+					track = function() core._2579:BlightOfGalarond() end,
+					partial = false,
+					encounterID = 2668,
+				},
+				boss4 = {
+					name = 2526, --Tyr The Infinite Keeper
+					bossIDs = {},
+					achievement = 18539,
+					players = {},
+					tactics = L["DawnOfTheInfinite_TyrTheInfiniteKeeper"],
+					enabled = true,
+					track = function() core._2579:TyrTheInfiniteKeeper() end,
+					partial = false,
+					encounterID = 2670,
+				},
+				boss5 = {
+					name = L["Instances_Other"], --Put That Thing Back Where It Came From
+					bossIDs = {},
+					achievement = 18706,
+					players = {},
+					tactics = L["DawnOfTheInfinite_PutThatThingBackWhereItCameFrom"],
+					enabled = false,
+					track = nil,
+					partial = false,
+				},
+			},
+
 			[2526] = { --Algeth'ar Academy
 				name = 1201,
 				boss1 = {

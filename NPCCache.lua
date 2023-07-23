@@ -671,6 +671,16 @@ core.NPCCache = {
 	[205342] =205342, --Neverburning Ebon Candle
 	[205343] =205343, --Portable" Ebon Anvil
 	[205378] =205378, --Shadowflame Remnant
+	[205674] =205674, --Molten Vortex
+	[205989] =205989, --Forgotten Specimen Tank
+	[201773] =201773, --Eternal Blaze
+	[76209] =76209, --Essence of Shadow
+	[201934] =201934, --Shadowflame Amalgamation
+	[202800] =202800, --Specimen Tank
+	[205352] =205352, --Nutraal
+	[200912] =200912, --Neldris
+	[200913] =200913, --Thadrion
+	[200918] =200918, --Rionthus
 }
 core.NPCCacheClassic = {
 	[29364] =29364, --Void Sentry

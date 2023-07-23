@@ -1007,9 +1007,9 @@ local baseLocale = {
 	["UldamanLegacyOfTyr_ChronoLordDeios"] = "",
 	["AlgetharAcademy_OvergrownAncient"] = "Before starting the encounter, all players will need to click on a %s in the pool behind the boss. Once everyone has a duckling, kill the boss to get this achievement.",
 	["Naxxramas_TheDedicatedFew"] = "To complete this achievement, simply kill all the bosses in the raid with less than 9 players present.",
-	["AberrusTheShadowedCrucible_Kazzara"] = "",
-	["AberrusTheShadowedCrucible_TheAmalgamationChamber"] = "",
-	["AberrusTheShadowedCrucible_TheForgottenExperiments"] = "",
+	["AberrusTheShadowedCrucible_Kazzara"] = "This achievement is a personal achievement. When you enter the boss room there is a large interactable %s on the right hand side in the lava. You have to swim into the lava and down a little to be able to click it. When you do you'll get a debuff called %s which does ticking damage.\n\nIn order to remove the debuff you need to get hit by a single tick of the frontal breath the boss does (%s). As soon as your debuff is removed, you should move out of the beam due to the high amount of damage it does. Furthermore it is suggested you clear the debuffs in multiple groups  if you have a large raid group to reduce raid damage for the healers. Once you successfully cleared your debuff, it will be replaced by %s and you're safe to kill the boss.",
+	["AberrusTheShadowedCrucible_TheAmalgamationChamber"] = "On the left hand corner of the room as you walk in, there's a %s.\n\n -Hitting it with %s from %s (fire elemental) will turn it red.\n -Hitting it with %s from %s (void elemental) will turn it purple.\n -Hitting it with %s from the %s in P2 will spawn a %s.\n\n Start the fight by pulling the %s to the %s, facing him towards the %s. When he casts %s have players stand ontop of the %s to turn it red. Once complete move the %s away and the %s near the %s. Have a player erupt from %s next to it to turn it purple.\n\n Lastly push the bosses to 50%% then during the last phase, have a player drop a %s on it to turn  to spawn the %s. Kill this add, then kill the boss to complete this achievement.",
+	["AberrusTheShadowedCrucible_TheForgottenExperiments"] = "In the room just before the stairs to the boss there is a %s off to the left. Clicking the %s will release %s and he willl run up the stairs into the boss room to wait for you.\n\n Once you pull the boss, %s will take it upon himself to run continuously throughout the fight, only stopping for a few seconds at a time. While he is running around you have to hit him 3 times with the signature abilities of each of the bosses.\n\n-P1 (%s), hit him with %s by keeping %s in the white arrows between people that get picked.\n -P2 (%s), get him hit by the swirlies that spawn from %s. Since the swirlies target players, you should have your group surround %s during this phase.\n -P3 (%s), stand in the same quadrant as %s to allow %s to hit him.\n\n Once %s has got 3 stacks of each ability, you can kill the boss to get this achievement.",
 	["AberrusTheShadowedCrucible_AssaultOfTheZaqali"] = "",
 	["AberrusTheShadowedCrucible_RashokTheElder"] = "",
 	["AberrusTheShadowedCrucible_TheVigilantStewardZskarn"] = "",
@@ -1017,5 +1017,10 @@ local baseLocale = {
 	["AberrusTheShadowedCrucible_EchoOfNeltharion"] = "",
 	["AberrusTheShadowedCrucible_ScalecommanderSarkareth"] = "",
 	["AberrusTheShadowedCrucible_DelicateExperimentalEgg"] = "Delicate Experimental Egg",
+	["DawnOfTheInfinite_Chronikar"] = "",
+	["DawnOfTheInfinite_ManifestedTimeways"] = "",
+	["DawnOfTheInfinite_BlightOfGalakrond"] = "",
+	["DawnOfTheInfinite_TyrTheInfiniteKeeper"] = "",
+	["DawnOfTheInfinite_PutThatThingBackWhereItCameFrom"] = "",
 }
 core:RegisterLocale('enUS', baseLocale)

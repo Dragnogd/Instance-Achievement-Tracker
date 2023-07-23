@@ -44,6 +44,7 @@ DragonflightDungeons\RubyLifePools.lua
 DragonflightDungeons\TheAzureVault.lua
 DragonflightDungeons\TheNokhudOffensive.lua
 DragonflightDungeons\UldamanLegacyOfTyr.lua
+DragonflightDungeons\DawnOfTheInfinite.lua
 
 ShadowlandsRaids\CastleNathria.lua
 ShadowlandsRaids\SanctumOfDomination.lua
