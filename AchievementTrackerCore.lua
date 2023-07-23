@@ -1888,8 +1888,19 @@ function events:INSPECT_ACHIEVEMENT_READY(self, GUID, ...)
 
 									--Add to achievement tracking ui if option enabled by user
 									if trackAchievementsInUI == true then
-										if GetNumTrackedAchievements() < 10 then
-											AddTrackedAchievement(core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
+										local numTrackedAchievements = 0
+										if core.gameVersionMajor == 3 then
+											numTrackedAchievements = GetNumTrackedAchievements()
+										else
+											numTrackedAchievements = #C_ContentTracking.GetTrackedIDs(2)
+										end
+
+										if numTrackedAchievements < 10 then
+											if core.gameVersionMajor == 3 then
+												AddTrackedAchievement(core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
+											else
+												C_ContentTracking.StartTracking(2, core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
+											end
 											table.insert(trackAchievementInUiTable, core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
 										end
 									end
@@ -2062,7 +2073,11 @@ function checkAndClearInstanceVariables()
 
 		--Untrack achievements that we tracked
 		for k,v in pairs(trackAchievementInUiTable) do
-			RemoveTrackedAchievement(v)
+			if core.gameVersionMajor == 3 then
+				RemoveTrackedAchievement(v)
+			else
+				C_ContentTracking.StopTracking(2, v)
+			end
 		end
 
 		--Disable Combatlog if applicable
