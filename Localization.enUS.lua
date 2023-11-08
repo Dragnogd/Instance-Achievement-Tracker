@@ -1022,5 +1022,14 @@ local baseLocale = {
 	["DawnOfTheInfinite_BlightOfGalakrond"] = "",
 	["DawnOfTheInfinite_TyrTheInfiniteKeeper"] = "",
 	["DawnOfTheInfinite_PutThatThingBackWhereItCameFrom"] = "",
+	["AmirdrassilTheDreamsHope_Gnarlroot"] = "",
+	["AmirdrassilTheDreamsHope_IgiraTheCruel"] = "",
+	["AmirdrassilTheDreamsHope_Volcoross"] = "",
+	["AmirdrassilTheDreamsHope_CouncilOfDreams"] = "",
+	["AmirdrassilTheDreamsHope_LarodarKeeperOfTheFlame"] = "",
+	["AmirdrassilTheDreamsHope_NymueWeaverOfTheCycle"] = "",
+	["AmirdrassilTheDreamsHope_Smolderon"] = "",
+	["AmirdrassilTheDreamsHope_TindralSageswift"] = "",
+	["AmirdrassilTheDreamsHope_FyrakkTheBlazing"] = "",
 }
 core:RegisterLocale('enUS', baseLocale)

@@ -35,6 +35,7 @@ Localization.koKR.lua
 
 DragonflightRaids\VaultOfTheIncarnates.lua
 DragonflightRaids\AberrusTheShadowedCrucible.lua
+DragonflightRaids\AmirdrassilTheDreamsHope.lua
 
 DragonflightDungeons\AlgetharAcademy.lua
 DragonflightDungeons\BrackenhideHollow.lua

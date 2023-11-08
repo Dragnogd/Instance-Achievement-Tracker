@@ -1,5 +1,5 @@
 --------------------------------------
--- Last Auto Generated: 23/07/2023 20:00:56
+-- Last Auto Generated: 08/11/2023 20:40:03
 --------------------------------------
 local _, core = ...
 local L = core.L
@@ -205,6 +205,109 @@ core.Instances = {
 					partial = false,
 					encounterID = 2685,
 					displayInfoFrame = true,
+				},
+			},
+
+			[2549] = { --Amirdrassil the Dream's Hope
+				name = 1207,
+				boss1 = {
+					name = 2564, --Gnarlroot
+					bossIDs = {},
+					achievement = 19322,
+					players = {},
+					tactics = L["AmirdrassilTheDreamsHope_Gnarlroot"],
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 2820,
+				},
+				boss2 = {
+					name = 2554, --Igira the Cruel
+					bossIDs = {},
+					achievement = 19320,
+					players = {},
+					tactics = L["AmirdrassilTheDreamsHope_IgiraTheCruel"],
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 2709,
+				},
+				boss3 = {
+					name = 2557, --Volcoross
+					bossIDs = {},
+					achievement = 19321,
+					players = {},
+					tactics = L["AmirdrassilTheDreamsHope_Volcoross"],
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 2737,
+				},
+				boss4 = {
+					name = 2555, --Council of Dreams
+					bossIDs = {},
+					achievement = 19193,
+					players = {},
+					tactics = L["AmirdrassilTheDreamsHope_CouncilOfDreams"],
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 2728,
+				},
+				boss5 = {
+					name = 2553, --Larodar, Keeper of the Flame
+					bossIDs = {},
+					achievement = 19089,
+					players = {},
+					tactics = L["AmirdrassilTheDreamsHope_LarodarKeeperOfTheFlame"],
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 2731,
+				},
+				boss6 = {
+					name = 2556, --Nymue, Weaver of the Cycle
+					bossIDs = {},
+					achievement = 19394,
+					players = {},
+					tactics = L["AmirdrassilTheDreamsHope_NymueWeaverOfTheCycle"],
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 2708,
+				},
+				boss7 = {
+					name = 2563, --Smolderon
+					bossIDs = {},
+					achievement = 19319,
+					players = {},
+					tactics = L["AmirdrassilTheDreamsHope_Smolderon"],
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 2824,
+				},
+				boss8 = {
+					name = 2565, --Tindral Sageswift
+					bossIDs = {},
+					achievement = 19393,
+					players = {},
+					tactics = L["AmirdrassilTheDreamsHope_TindralSageswift"],
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 2786,
+				},
+				boss9 = {
+					name = 2519, --Fyrakk the Blazing
+					bossIDs = {},
+					achievement = 19390,
+					players = {},
+					tactics = L["AmirdrassilTheDreamsHope_FyrakkTheBlazing"],
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 2677,
 				},
 			},
 		},
