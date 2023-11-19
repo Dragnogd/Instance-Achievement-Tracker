@@ -681,6 +681,7 @@ core.NPCCache = {
 	[200912] =200912, --Neldris
 	[200913] =200913, --Thadrion
 	[200918] =200918, --Rionthus
+	[214020] =214020, --Manifested Monarch
 }
 core.NPCCacheClassic = {
 	[29364] =29364, --Void Sentry
