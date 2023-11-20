@@ -18,7 +18,7 @@ local sizzlingSwoggersCounter = 0
 ------------------------------------------------------
 ---- Larodar
 ------------------------------------------------------
-local singedCounter = 0
+local singedCounter = 50
 
 ------------------------------------------------------
 ---- Larodar
@@ -29,6 +29,17 @@ local manifestedMonarchSpawned = false
 ---- Smolderon
 ------------------------------------------------------
 local runesDoused = 0
+
+------------------------------------------------------
+---- Fyrakk the Blazing
+------------------------------------------------------
+local wispsHealed = 0
+local idrianaHealed = false
+local lariiaHealed = false
+local denatharionHealed = false
+local melynnHealed = false
+local dendrythisHealed = false
+local fyldanHealed = false
 
 function core._2549:Gnarlroot()
     --Defeat Gnarlroot after igniting 8 Harmless Blossoms in Amirdrassil, the Dream's Hope on Normal difficulty or higher.
@@ -58,7 +69,7 @@ function core._2549:Volcoross()
     --SPELL_AURA_APPLIED_DOSE,0000000000000000,nil,0xa28,0x0,Creature-0-3020-2549-12391-208478-00005818D4,"Volcoross",0xa48,0x0,427995,"Sizzling Swoggers",0x1,BUFF,2
     --SPELL_AURA_APPLIED,0000000000000000,nil,0x10a48,0x0,Creature-0-3020-2549-12391-208478-00005818D4,"Volcoross",0x10a48,0x0,428049,"Swog Champion",0x1,BUFF
 
-    if (core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_APPLIED_DOSE") and core.destID == "208478" and core.spellId == 427995 then
+    if (core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_APPLIED_DOSE") and core.destID == "208478" and core.spellId == 427995 and sizzlingSwoggersCounter < 30 then
         sizzlingSwoggersCounter = sizzlingSwoggersCounter + 1
         core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(427995) .. " " .. L["Core_Counter"] .. " (" .. sizzlingSwoggersCounter .. "/30)",true)
     end
@@ -75,9 +86,11 @@ function core._2549:Larodar()
     --SPELL_AURA_REMOVED_DOSE,Creature-0-3020-2549-12391-211268-000058221A,"Ivy",0xa18,0x1,Creature-0-3020-2549-12391-211268-000058221A,"Ivy",0xa18,0x1,424595,"Singed",0x1,BUFF,45
 
     if (core.type == "SPELL_AURA_REMOVED" or core.type == "SPELL_AURA_REMOVED_DOSE") and core.destID == "211268" and core.spellId == 424595 then
-        singedCounter = singedCounter + 1
+        singedCounter = singedCounter - 1
         core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(424595) .. " " .. L["Core_Counter"] .. " " .. singedCounter,true)
     end
+
+    --If Ivy dies, then fail achievement
 
     if core:getBlizzardTrackingStatus(19089, 1) == true then
 		core:getAchievementSuccess()
@@ -152,6 +165,40 @@ function core._2549:FyrakkTheBlazing()
 
     --SPELL_AURA_APPLIED,Creature-0-3020-2549-12391-214242-0000583E3E,"Fyldan",0xa18,0x0,Creature-0-3020-2549-12391-214242-0000583E3E,"Fyldan",0xa18,0x0,422605,"Lifeforce Barrier",0x8,BUFF
 
+    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 422605 then
+        if core.destID == "214211" and idrianaHealed == false then
+            --Idriana
+            wispsHealed = wispsHealed + 1
+            idrianaHealed = true
+            core:sendMessage(getNPCName(214211) .. " " .. L["Shared_Completed"] .. " (" .. wispsHealed .. "/6)",true)
+        elseif core.destID == "214235" and lariiaHealed == false then
+            --Lariia
+            wispsHealed = wispsHealed + 1
+            lariiaHealed = true
+            core:sendMessage(getNPCName(214235) .. " " .. L["Shared_Completed"] .. " (" .. wispsHealed .. "/6)",true)
+        elseif core.destID == "214236" and denatharionHealed == false then
+            --Denatharion
+            wispsHealed = wispsHealed + 1
+            denatharionHealed = true
+            core:sendMessage(getNPCName(214236) .. " " .. L["Shared_Completed"] .. " (" .. wispsHealed .. "/6)",true)
+        elseif core.destID == "214240" and melynnHealed == false then
+            --Me'lynn
+            wispsHealed = wispsHealed + 1
+            melynnHealed = true
+            core:sendMessage(getNPCName(214240) .. " " .. L["Shared_Completed"] .. " (" .. wispsHealed .. "/6)",true)
+        elseif core.destID == "214241" and dendrythisHealed == false then
+            --Dendrythis
+            wispsHealed = wispsHealed + 1
+            dendrythisHealed = true
+            core:sendMessage(getNPCName(214241) .. " " .. L["Shared_Completed"] .. " (" .. wispsHealed .. "/6)",true)
+        elseif core.destID == "214242" and fyldanHealed == false then
+            --Fyldan
+            wispsHealed = wispsHealed + 1
+            fyldanHealed = true
+            core:sendMessage(getNPCName(214242) .. " " .. L["Shared_Completed"] .. " (" .. wispsHealed .. "/6)",true)
+        end
+    end
+
     --Wisps to heal
     --Idriana: 214211
     --Lariia: 214235
@@ -177,7 +224,7 @@ function core._2549:InitialSetup()
     core._2549.Events:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
 end
 
-function core._2569.Events:UNIT_SPELLCAST_SUCCEEDED(self, unitID, lineID, spellID, ...)
+function core._2549.Events:UNIT_SPELLCAST_SUCCEEDED(self, unitID, lineID, spellID, ...)
     if core.Instances[core.expansion][core.instanceType][core.instance]["boss3"].enabled then
         local name, realm = UnitName(unitID)
 
@@ -186,4 +233,37 @@ function core._2569.Events:UNIT_SPELLCAST_SUCCEEDED(self, unitID, lineID, spellI
             core:sendMessage(name .. " " .. L["Shared_HasGained"] .. " " .. GetSpellLink(426753),true)
         end
     end
+end
+
+function core._2549:ClearVariables()
+    ------------------------------------------------------
+    ---- Volcoross
+    ------------------------------------------------------
+    sizzlingSwoggersCounter = 0
+
+    ------------------------------------------------------
+    ---- Larodar
+    ------------------------------------------------------
+    singedCounter = 50
+
+    ------------------------------------------------------
+    ---- Larodar
+    ------------------------------------------------------
+    manifestedMonarchSpawned = false
+
+    ------------------------------------------------------
+    ---- Smolderon
+    ------------------------------------------------------
+    runesDoused = 0
+
+    ------------------------------------------------------
+    ---- Fyrakk the Blazing
+    ------------------------------------------------------
+    wispsHealed = 0
+    idrianaHealed = false
+    lariiaHealed = false
+    denatharionHealed = false
+    melynnHealed = false
+    dendrythisHealed = false
+    fyldanHealed = false
 end

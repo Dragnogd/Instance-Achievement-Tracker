@@ -682,6 +682,12 @@ core.NPCCache = {
 	[200913] =200913, --Thadrion
 	[200918] =200918, --Rionthus
 	[214020] =214020, --Manifested Monarch
+	[214211] =214211, --Idriana
+    [214235] =214235, --Lariia
+    [214236] =214236, --Denatharion
+    [214240] =214240, --Me'lynn
+    [214241] =214241, --Dendrythis
+    [214242] =214242, --Fyldan
 }
 core.NPCCacheClassic = {
 	[29364] =29364, --Void Sentry
