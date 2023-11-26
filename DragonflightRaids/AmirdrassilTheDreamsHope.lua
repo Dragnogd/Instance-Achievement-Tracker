@@ -91,6 +91,9 @@ function core._2549:Larodar()
     end
 
     --If Ivy dies, then fail achievement
+    if core.type == "UNIT_DIED" and core.destID == "211268" then
+       core:getAchievementFailed()
+    end
 
     if core:getBlizzardTrackingStatus(19089, 1) == true then
 		core:getAchievementSuccess()
