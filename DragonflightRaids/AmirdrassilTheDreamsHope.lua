@@ -18,7 +18,7 @@ local sizzlingSwoggersCounter = 0
 ------------------------------------------------------
 ---- Larodar
 ------------------------------------------------------
-local singedCounter = 50
+local singedCounter = 70
 
 ------------------------------------------------------
 ---- Nymue
@@ -90,7 +90,9 @@ function core._2549:Larodar()
 
     if (core.type == "SPELL_AURA_REMOVED" or core.type == "SPELL_AURA_REMOVED_DOSE") and core.destID == "211268" and core.spellId == 424595 then
         singedCounter = singedCounter - 1
-        core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(424595) .. " " .. L["Core_Counter"] .. " " .. singedCounter,true)
+        if singedCounter % 5 == 0 then
+            core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(424595) .. " " .. L["Core_Counter"] .. " " .. singedCounter,true)
+        end
     end
 
     --If Ivy dies, then fail achievement
@@ -265,7 +267,7 @@ function core._2549:ClearVariables()
     ------------------------------------------------------
     ---- Larodar
     ------------------------------------------------------
-    singedCounter = 50
+    singedCounter = 70
 
     ------------------------------------------------------
     ---- Nymue
