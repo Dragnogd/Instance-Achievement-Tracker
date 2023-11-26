@@ -156,7 +156,7 @@ function core._2549:Smolderon()
         if runeOfTheFirelordUID[core.spawn_uid_dest] == nil then
             runeOfTheFirelordUID[core.spawn_uid_dest] = core.spawn_uid_dest
             runesDoused = runesDoused + 1
-            core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(426342) .. " " .. L["Core_Counter"] .. " " .. runesDoused,true)
+            core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(426342) .. " " .. L["Core_Counter"] .. " (" .. runesDoused .. "/6)",true)
         end
     end
 
