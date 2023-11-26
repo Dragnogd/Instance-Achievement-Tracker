@@ -31,6 +31,7 @@ local dreamProjectionUID = {}
 ---- Smolderon
 ------------------------------------------------------
 local runesDoused = 0
+local runeOfTheFirelordUID = {}
 
 ------------------------------------------------------
 ---- Fyrakk the Blazing
@@ -151,9 +152,12 @@ function core._2549:Smolderon()
     --Extra action button to douse.
     --SPELL_CAST_SUCCESS,Player-3676-0AEEA135,"Exiledmage-Area52",0x514,0x0,0000000000000000,nil,0x80000000,0x80000000,426342,"Douse!",0x1,Player-3676-0AEEA135,0000000000000000,664200,664200,1864,17005,2599,0,0,392047,397176,0,4065.63,13080.76,2233,1.8352,461
 
-    if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 426342 then
-        runesDoused = runesDoused + 1
-        core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(426342) .. " " .. L["Core_Counter"] .. " " .. runesDoused,true)
+    if core.type == "SPELL_AURA_APPLIED" and core.destID == "212432" and core.spellId == 426342 then
+        if runeOfTheFirelordUID[core.spawn_uid_dest] == nil then
+            runeOfTheFirelordUID[core.spawn_uid_dest] = core.spawn_uid_dest
+            runesDoused = runesDoused + 1
+            core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(426342) .. " " .. L["Core_Counter"] .. " " .. runesDoused,true)
+        end
     end
 
     if core:getBlizzardTrackingStatus(19319, 1) == true then
@@ -274,6 +278,7 @@ function core._2549:ClearVariables()
     ---- Smolderon
     ------------------------------------------------------
     runesDoused = 0
+    runeOfTheFirelordUID = {}
 
     ------------------------------------------------------
     ---- Fyrakk the Blazing
