@@ -21,9 +21,11 @@ local sizzlingSwoggersCounter = 0
 local singedCounter = 50
 
 ------------------------------------------------------
----- Larodar
+---- Nymue
 ------------------------------------------------------
 local manifestedMonarchSpawned = false
+local projectedDreamCounter = 0
+local dreamProjectionUID = {}
 
 ------------------------------------------------------
 ---- Smolderon
@@ -115,6 +117,18 @@ function core._2549:Nymue()
 
     --Track debuff when the 5 players sleep?
     --SPELL_AURA_REMOVED,Player-1171-0AB15BFE,"Vallashä-WyrmrestAccord",0x514,0x0,Player-1171-0AB15BFE,"Vallashä-WyrmrestAccord",0x514,0x0,429721,"Dreaming",0x1,BUFF
+    --SPELL_AURA_APPLIED,Player-3676-0E0171A2,"Chrusvoker-Area52",0x514,0x1,Player-3676-0E0171A2,"Chrusvoker-Area52",0x514,0x1,429721,"Dreaming",0x1,BUFF
+
+    --SPELL_CAST_SUCCESS,Player-3676-0E45093F,"Spiritlinker-Area52",0x514,0x0,Creature-0-3020-2549-12391-213127-0001D82D74,"Dream Projection",0xa18,0x0,427352,"Dream Attunement",0x8,Player-3676-0E45093F,0000000000000000,426023,577540,1135,12077,2431,0,0,241959,262500,0,4428.45,12268.62,2240,3.3395,445
+    --SPELL_AURA_APPLIED,Creature-0-3020-2549-12391-213127-0001D82D74,"Dream Projection",0xa18,0x0,Player-3676-0E45093F,"Spiritlinker-Area52",0x514,0x0,427358,"Projected Dream",0x8,DEBUFF
+
+    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 427358 and core.sourceID == "213127" then
+        if dreamProjectionUID[core.spawn_uid] == nil then
+            projectedDreamCounter = projectedDreamCounter + 1
+            dreamProjectionUID[core.spawn_uid] = core.spawn_uid
+            core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(427358) .. " " .. L["Core_Counter"] .. " (" .. projectedDreamCounter .. "/30)",true)
+        end
+    end
 
     --Announce when moth has spawned
     --Creature-0-3020-2549-12391-214020-0000582DD8,"Manifested Monarch"
@@ -250,9 +264,11 @@ function core._2549:ClearVariables()
     singedCounter = 50
 
     ------------------------------------------------------
-    ---- Larodar
+    ---- Nymue
     ------------------------------------------------------
     manifestedMonarchSpawned = false
+    projectedDreamCounter = 0
+    dreamProjectionUID = {}
 
     ------------------------------------------------------
     ---- Smolderon
