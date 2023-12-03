@@ -129,7 +129,7 @@ function core._2549:Nymue()
         if dreamProjectionUID[core.spawn_uid] == nil then
             projectedDreamCounter = projectedDreamCounter + 1
             dreamProjectionUID[core.spawn_uid] = core.spawn_uid
-            core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(427358) .. " " .. L["Core_Counter"] .. " (" .. projectedDreamCounter .. "/30)",true)
+            core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(427358) .. " " .. L["Core_Counter"] .. " (" .. projectedDreamCounter .. "/5)",true)
         end
     end
 
