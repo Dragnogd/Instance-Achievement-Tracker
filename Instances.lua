@@ -1,5 +1,5 @@
 --------------------------------------
--- Last Auto Generated: 26/11/2023 15:02:22
+-- Last Auto Generated: 02/12/2023 14:02:40
 --------------------------------------
 local _, core = ...
 local L = core.L
@@ -143,7 +143,7 @@ core.Instances = {
 					bossIDs = {},
 					achievement = 18228,
 					players = {},
-					tactics = L["AberrusTheShadowedCrucible_AssaultOfTheZaqali"],
+					tactics = format(L["AberrusTheShadowedCrucible_AssaultOfTheZaqali"], GetSpellLink(411834), "IAT_202621", "IAT_198484", "IAT_205665", "IAT_192104", "IAT_205667", "IAT_205627", "IAT_192104", "IAT_202621", "IAT_198484", GetSpellLink(411834), "IAT_201340", GetSpellLink(401258), "IAT_201340", GetSpellLink(401258), GetSpellLink(411834), GetSpellLink(411834), "IAT_205627", "IAT_205667", GetSpellLink(411834)),
 					enabled = true,
 					track = function() core._2569:AssaultOfTheZaqali() end,
 					partial = false,
@@ -154,7 +154,7 @@ core.Instances = {
 					bossIDs = {},
 					achievement = 18230,
 					players = {},
-					tactics = L["AberrusTheShadowedCrucible_RashokTheElder"],
+					tactics = format(L["AberrusTheShadowedCrucible_RashokTheElder"], "IAT_201320", "IAT_205630", "IAT_205630", GetSpellLink(405821), "IAT_205630", "IAT_205630", GetSpellLink(405821), "IAT_205630"),
 					enabled = true,
 					track = function() core._2569:RashokTheElder() end,
 					partial = false,
@@ -165,7 +165,7 @@ core.Instances = {
 					bossIDs = {},
 					achievement = 18193,
 					players = {},
-					tactics = L["AberrusTheShadowedCrucible_TheVigilantStewardZskarn"],
+					tactics = format(L["AberrusTheShadowedCrucible_TheVigilantStewardZskarn"], "IAT_202637", GetSpellLink(411635), GetSpellLink(412323)),
 					enabled = true,
 					track = function() core._2569:TheVigilantStewardZskarn() end,
 					partial = false,
@@ -176,7 +176,7 @@ core.Instances = {
 					bossIDs = {},
 					achievement = 18172,
 					players = {},
-					tactics = L["AberrusTheShadowedCrucible_Magmorax"],
+					tactics = format(L["AberrusTheShadowedCrucible_Magmorax"], "IAT_205437", GetSpellLink(411368), "IAT_205437", GetSpellLink(411573), GetSpellLink(411581)),
 					enabled = true,
 					track = function() core._2569:Magmorax() end,
 					partial = false,
@@ -188,7 +188,7 @@ core.Instances = {
 					bossIDs = {},
 					achievement = 18149,
 					players = {},
-					tactics = L["AberrusTheShadowedCrucible_EchoOfNeltharion"],
+					tactics = format(L["AberrusTheShadowedCrucible_EchoOfNeltharion"], "IAT_185437", "IAT_205340", "IAT_201261", "IAT_205341", "IAT_202637", "IAT_201320", "IAT_205343", "IAT_202637", "IAT_205342", "IAT_205343", GetSpellLink(401022), GetSpellLink(407790), GetSpellLink(407221), GetSpellLink(401022), "IAT_205343"),
 					enabled = true,
 					track = function() core._2569:EchoOfNeltharion() end,
 					partial = false,
