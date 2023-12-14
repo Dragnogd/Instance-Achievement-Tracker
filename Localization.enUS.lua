@@ -95,6 +95,7 @@ local baseLocale = {
 	["Shared_PlayersWithBuff"] = "Players with buff",
 	["Shared_PlayersWhoStillNeedToGetResurrected"] = "The following players need to be resurrected in order to receive the achievement:",
 	["Shared_HasGained"] = "has gained",
+	["Shared_PlayersMissing"] = "Players missing",
 	["Shared_HasLost"] = "has lost",
 	["Shared_HasFailed"] = "has failed",
 	["Shared_HasCompleted"] = "has completed",
