@@ -253,6 +253,7 @@ core.Instances = {
 					track = function() core._2549:CouncilOfDreams() end,
 					partial = false,
 					encounterID = 2728,
+					displayInfoFrame = true,
 				},
 				boss5 = {
 					name = 2553, --Larodar, Keeper of the Flame

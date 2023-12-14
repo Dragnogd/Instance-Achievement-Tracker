@@ -44,6 +44,18 @@ local melynnHealed = false
 local dendrythisHealed = false
 local fyldanHealed = false
 
+------------------------------------------------------
+---- Tindral Sageswift
+------------------------------------------------------
+local playersWithRescuedWhelps = {}
+local rescuedWhelpCounter = 0
+
+------------------------------------------------------
+---- Council of Dreams
+------------------------------------------------------
+local trackPolymorphBomb = false
+local polymorphBombCounter = 0
+
 function core._2549:Gnarlroot()
     --Defeat Gnarlroot after igniting 8 Harmless Blossoms in Amirdrassil, the Dream's Hope on Normal difficulty or higher.
 
@@ -107,6 +119,54 @@ end
 
 function core._2549:CouncilOfDreams()
     --Defeat the Council of Dreams after recruiting Sergeant Quackers to join the cause in Amirdrassil, the Dream's Hope on Normal difficulty or higher.
+
+    InfoFrame_UpdatePlayersOnInfoFrame()
+    InfoFrame_SetHeaderCounter(GetSpellLink(425410) .. " " .. L["Core_Counter"],polymorphBombCounter,core.groupSize)
+
+    --When player casts preen, check who has been turned in ducks
+    --SPELL_CAST_SUCCESS,Player-3676-0E0171A2,"Chrusvoker-Area52",0x514,0x1,0000000000000000,nil,0x80000000,0x80000000,422372,"Preen",0x1,Player-3676-0E0171A2,0000000000000000,642977,723760,3688,14301,10747,0,0,250000,250000,0,4070.15,12620.02,2240,1.9152,462
+    -- if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 8936 then --422372
+    --     --Set all players back to white
+    --     local playerWhoCastSpell = core.sourceName
+    --     if string.find(playerWhoCastSpell, "-") then
+    --         local name, realm = strsplit("-", playerWhoCastSpell)
+    --         playerWhoCastSpell = name
+    --     end
+
+    --     trackPolymorphBomb = true
+    --     C_Timer.After(2, function()
+    --         trackPolymorphBomb = false
+
+    --         --Announce players who did not get hit by polymorph bomb
+    --         local playerStr = ""
+    --         local playerFailed = false
+    --         for player,status in pairs(core.InfoFrame_PlayersTable) do
+    --             if core.InfoFrame_PlayersTable[player] == 1 or core.InfoFrame_PlayersTable[player] == 3 then
+    --                 --Make sure it's not the player who cast the spell
+    --                 if player ~= playerWhoCastSpell then
+    --                     InfoFrame_SetPlayerFailed(player)
+    --                     playerStr = playerStr .. player .. ", "
+    --                     playerFailed = true;
+    --                 end
+    --             end
+    --         end
+    --         if playerFailed == true then
+    --             core:sendMessageSafe(core:getAchievement() .. " " .. L["Shared_PlayersMissing"] .. " " .. GetSpellLink(425410) .. " " .. playerStr,false,true)
+    --         end
+    --     end)
+    -- end
+
+    if (core.type == "SPELL_AURA_REFRESH" or core.type == "SPELL_AURA_APPLIED") and core.spellId == 425410 then
+        if InfoFrame_GetPlayerComplete(core.destName) == false then
+            polymorphBombCounter = polymorphBombCounter + 1
+            InfoFrame_SetPlayerComplete(core.destName)
+        end
+    elseif core.type == "SPELL_AURA_REMOVED" and core.spellId == 425410 then
+        if InfoFrame_GetPlayerFailed(core.destName) == false then
+            polymorphBombCounter = polymorphBombCounter - 1
+            InfoFrame_SetPlayerFailed(core.destName)
+        end
+    end
 
     --https://www.wowhead.com/spell=425036/looking-for-allies??
 
@@ -173,6 +233,18 @@ function core._2549:TindralSageswift()
     --Buff on players https://www.wowhead.com/ptr-2/spell=428781/rescued-whelp#comments. Not in log as room is too big ?
     --Use UNIT_AURA to track when they come back, but if they die while out and about, we won't know who has failed
     --InfoFrame to show who has picked up whelps?
+    if core.type == "UNIT_DIED" and core.currentDest == "Player" and core.destName ~= nil then
+        local playerWhoDied = core.destName
+        if string.find(playerWhoDied, "-") then
+            local name, realm = strsplit("-", playerWhoDied)
+            playerWhoDied = name
+
+            if playersWithRescuedWhelps[name] ~= nil then
+                --Player who had rescued whelp has died so fail achievement
+                core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")")
+            end
+        end
+    end
 
     --Tracking seems to do success and fail, so need to change this
     if core:getBlizzardTrackingStatus(19393) == true then
@@ -222,6 +294,10 @@ function core._2549:FyrakkTheBlazing()
         end
     end
 
+    if core.type == "UNIT_DIED" and (core.destID == "214211" or core.destID == "214235" or core.destID == "214236" or core.destID == "214240" or core.destID == "214241" or core.destID == "214242") then
+        core:getAchievementFailed()
+    end
+
     --Wisps to heal
     --Idriana: 214211
     --Lariia: 214235
@@ -237,6 +313,7 @@ end
 
 function core._2549:InstanceCleanup()
     core._2549.Events:UnregisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+    core._2549.Events:UnregisterEvent("UNIT_AURA")
 end
 
 core._2549.Events:SetScript("OnEvent", function(self, event, ...)
@@ -245,6 +322,7 @@ end)
 
 function core._2549:InitialSetup()
     core._2549.Events:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+    core._2549.Events:RegisterEvent("UNIT_AURA")
 end
 
 function core._2549.Events:UNIT_SPELLCAST_SUCCEEDED(self, unitID, lineID, spellID, ...)
@@ -254,6 +332,26 @@ function core._2549.Events:UNIT_SPELLCAST_SUCCEEDED(self, unitID, lineID, spellI
         --Volcoross (Swoghorn)
         if spellID == 426753 then
             core:sendMessage(name .. " " .. L["Shared_HasGained"] .. " " .. GetSpellLink(426753),true)
+        end
+    end
+end
+
+function core._2549.Events:UNIT_AURA(self, unitID)
+    --Tindral Sageswift Achievement
+    if next(core.currentBosses) ~= nil then
+        if core.currentBosses[1].encounterID == 2786 then
+            local name, realm = UnitName(unitID)
+            for i=1,40 do
+                local _, _, count2, _, _, _, _, _, _, spellId = UnitDebuff(unitID, i)
+                if name ~= nil then
+                    if spellId == 428781 and playersWithRescuedWhelps[name] == nil then
+                        --Rescued Whelp
+                        playersWithRescuedWhelps[name] = true
+                        rescuedWhelpCounter = rescuedWhelpCounter + 1
+                        core:sendMessage(name .. " " .. L["Shared_HasGained"] .. " " .. GetSpellLink(428781) .. " " .. L["Core_Counter"] .. " (" .. rescuedWhelpCounter .. "/6)",true)
+                    end
+                end
+            end
         end
     end
 end
@@ -292,4 +390,16 @@ function core._2549:ClearVariables()
     melynnHealed = false
     dendrythisHealed = false
     fyldanHealed = false
+
+    ------------------------------------------------------
+    ---- Council of Dreams
+    ------------------------------------------------------
+    trackPolymorphBomb = false
+    polymorphBombCounter = 0
+
+    ------------------------------------------------------
+    ---- Tindral Sageswift
+    ------------------------------------------------------
+    playersWithRescuedWhelps = {}
+    rescuedWhelpCounter = 0
 end
