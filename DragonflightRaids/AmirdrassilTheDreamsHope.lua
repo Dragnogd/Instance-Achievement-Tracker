@@ -32,6 +32,7 @@ local dreamProjectionUID = {}
 ------------------------------------------------------
 local runesDoused = 0
 local runeOfTheFirelordUID = {}
+local runeOfTheFirelordDurations = {}
 
 ------------------------------------------------------
 ---- Fyrakk the Blazing
@@ -213,12 +214,23 @@ function core._2549:Smolderon()
 
     --Extra action button to douse.
     --SPELL_CAST_SUCCESS,Player-3676-0AEEA135,"Exiledmage-Area52",0x514,0x0,0000000000000000,nil,0x80000000,0x80000000,426342,"Douse!",0x1,Player-3676-0AEEA135,0000000000000000,664200,664200,1864,17005,2599,0,0,392047,397176,0,4065.63,13080.76,2233,1.8352,461
+    --SPELL_AURA_APPLIED,Player-3676-0DA97324,"Yarini-Area52",0x511,0x40,Creature-0-3020-2549-12391-212432-0001D818D4,"Rune of the Firelord",0xa18,0x0,426342,"Douse!",0x1,BUFF
+    --SPELL_AURA_REMOVED,Player-3676-0DA97324,"Yarini-Area52",0x511,0x40,Creature-0-3020-2549-12391-212432-0001D818D4,"Rune of the Firelord",0xa18,0x0,426342,"Douse!",0x1,BUFF
 
-    if core.type == "SPELL_AURA_APPLIED" and core.destID == "212432" and core.spellId == 426342 then
+    if (core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_REFRESH") and core.destID == "212432" and core.spellId == 426342 then
+        --Store the initial time this happened, as when aura is removed we will calculate if the full duration of the cast has elapsed
+        runeOfTheFirelordDurations[core.sourceName] = core.timestamp
+    end
+
+    if core.type == "SPELL_AURA_REMOVED" and core.destID == "212432" and core.spellId == 426342 then
         if runeOfTheFirelordUID[core.spawn_uid_dest] == nil then
-            runeOfTheFirelordUID[core.spawn_uid_dest] = core.spawn_uid_dest
-            runesDoused = runesDoused + 1
-            core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(426342) .. " " .. L["Core_Counter"] .. " (" .. runesDoused .. "/6)",true)
+            local auraRemovedTimestamp = core.timestamp
+
+            if auraRemovedTimestamp - runeOfTheFirelordDurations[core.sourceName] >= 8 then
+                runeOfTheFirelordUID[core.spawn_uid_dest] = core.spawn_uid_dest
+                runesDoused = runesDoused + 1
+                core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(426342) .. " " .. L["Core_Counter"] .. " (" .. runesDoused .. "/6)",true)
+            end
         end
     end
 
@@ -379,6 +391,7 @@ function core._2549:ClearVariables()
     ------------------------------------------------------
     runesDoused = 0
     runeOfTheFirelordUID = {}
+    runeOfTheFirelordDurations = {}
 
     ------------------------------------------------------
     ---- Fyrakk the Blazing
