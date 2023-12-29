@@ -306,8 +306,16 @@ function core._2549:FyrakkTheBlazing()
         end
     end
 
-    if core.type == "UNIT_DIED" and (core.destID == "214211" or core.destID == "214235" or core.destID == "214236" or core.destID == "214240" or core.destID == "214241" or core.destID == "214242") then
+    --Not sure a UNIT_DIED event is ever fired
+    if (core.type == "UNIT_DIED") and (core.destID == "214211" or core.destID == "214235" or core.destID == "214236" or core.destID == "214240" or core.destID == "214241" or core.destID == "214242") then
         core:getAchievementFailed()
+    end
+
+    --Check overkill on mob too in case
+    if(core.overkill ~= nil and (core.destID == "214211" or core.destID == "214235" or core.destID == "214236" or core.destID == "214240" or core.destID == "214241" or core.destID == "214242")) then
+        if(core.overkill > 0) then
+            core:getAchievementFailed()
+        end
     end
 
     --Wisps to heal
