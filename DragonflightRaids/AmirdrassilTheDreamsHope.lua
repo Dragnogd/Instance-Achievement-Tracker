@@ -259,7 +259,7 @@ function core._2549:TindralSageswift()
     end
 
     --Tracking seems to do success and fail, so need to change this
-    if core:getBlizzardTrackingStatus(19393) == true then
+    if core:getBlizzardTrackingStatus(19393) == true and rescuedWhelpCounter == 6 then
 		core:getAchievementSuccess()
 	end
 end
