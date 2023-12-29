@@ -726,7 +726,7 @@ core.NPCCache = {
 	[205665] =205665, --Siege Mammoth
 	[192104] =192104, --Magma Slug
 	[201340] =201340, --Cave Rubble
-	[201261] =201261, --Kazzara, the Hellforged
+	[201261] =201261, --Kazzara
 }
 core.NPCCacheClassic = {
 	[29364] =29364, --Void Sentry
