@@ -1,5 +1,5 @@
 --------------------------------------
--- Last Auto Generated: 02/12/2023 14:02:40
+-- Last Auto Generated: 29/12/2023 09:21:38
 --------------------------------------
 local _, core = ...
 local L = core.L
@@ -3754,17 +3754,6 @@ core.Instances = {
 					encounterID = 1746,
 				},
 				boss2 = {
-					name = 1208, --Archmage Sol
-					bossIDs = {},
-					achievement = 9493,
-					players = {},
-					tactics = format(L["TheEverbloom_ArchmageSol"], GetSpellLink(166489), GetSpellLink(166489), GetSpellLink(168885), GetSpellLink(166489)),
-					enabled = false,
-					track = nil,
-					partial = false,
-					encounterID = 1751,
-				},
-				boss3 = {
 					name = 1210, --Yalnu
 					bossIDs = {}, --83846,
 					achievement = 9223,
@@ -5538,28 +5527,6 @@ core.Instances = {
 
 			[643] = { --Throne of the Tides
 				name = 65,
-				boss1 = {
-					name = 101, --Lady Naz'Jar
-					bossIDs = {40586},
-					achievement = 5285,
-					players = {},
-					tactics = format(L["ThroneOfTheTides_LadyNazJar"], "IAT_43468", "IAT_40634", "IAT_44530", "IAT_44530", "IAT_44530"),
-					enabled = true,
-					track = function() core._643:LadyNazjar() end,
-					partial = false,
-					encounterID = 1045,
-				},
-				boss2 = {
-					name = 104, --Ozumat
-					bossIDs = {44658, 44715, 44648},
-					achievement = 5286,
-					players = {},
-					tactics = L["ThroneOfTheTides_Ozumat"],
-					enabled = true,
-					track = function() core._643:Ozumat() end,
-					partial = false,
-					encounterID = 1047,
-				},
 			},
 
 			[725] = { --The Stonecore
@@ -6545,9 +6512,9 @@ core.Instances = {
 					enabled = true,
 					track = function() core._603:Dwarfageddon(12312) end,
 					partial = true,
+					displayInfoFrame = true,
 					nameWrath = L["Boss_MISSINGNAME67"],
 					tacticsClassic = "",
-					displayInfoFrame = true,
 				},
 				boss2 = {
 					name = L["Instances_Other"], --Unbroken
@@ -6741,9 +6708,9 @@ core.Instances = {
 					track = function() core._603:XT002DeconstructorNerfScrapbots(12327) end,
 					partial = false,
 					encounterID = 1142,
+					displayInfoFrame = true,
 					nameWrath = L["Boss_XT-002Deconstructor"],
 					tacticsClassic = "",
-					displayInfoFrame = true,
 				},
 				boss17 = {
 					name = 1640, --XT-002 Deconstructor (Nerf Gravity Bombs)
@@ -7359,9 +7326,9 @@ core.Instances = {
 					enabled = true,
 					track = function() core._603:Dwarfageddon(3097) end,
 					partial = true,
+					displayInfoFrame = true,
 					nameWrath = L["Boss_MISSINGNAME67"],
 					tacticsClassic = "",
-					displayInfoFrame = true,
 				},
 				boss2 = {
 					name = L["Instances_Other"], --Unbroken 10 Man
@@ -7568,9 +7535,9 @@ core.Instances = {
 					partial = false,
 					encounterID = 1142,
 					encounterIDWrath = 747,
+					displayInfoFrame = true,
 					nameWrath = L["Boss_XT-002Deconstructor"],
 					tacticsClassic = "",
-					displayInfoFrame = true,
 				},
 				boss17 = {
 					name = 1640, --XT-002 Deconstructor (Nerf Gravity Bombs) 10 Man
@@ -8228,9 +8195,9 @@ core.Instances = {
 					enabled = true,
 					track = function() core._603:Dwarfageddon(3098) end,
 					partial = true,
+					displayInfoFrame = true,
 					nameWrath = L["Boss_MISSINGNAME67"],
 					tacticsClassic = "",
-					displayInfoFrame = true,
 				},
 				boss2 = {
 					name = L["Instances_Other"], --Unbroken 25 Man
@@ -8437,9 +8404,9 @@ core.Instances = {
 					partial = false,
 					encounterID = 1142,
 					encounterIDWrath = 747,
+					displayInfoFrame = true,
 					nameWrath = L["Boss_XT-002Deconstructor"],
 					tacticsClassic = "",
-					displayInfoFrame = true,
 				},
 				boss17 = {
 					name = 1640, --XT-002 Deconstructor (Nerf Gravity Bombs) 25 Man
