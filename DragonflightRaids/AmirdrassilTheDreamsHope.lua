@@ -31,8 +31,7 @@ local dreamProjectionUID = {}
 ---- Smolderon
 ------------------------------------------------------
 local runesDoused = 0
-local runeOfTheFirelordUID = {}
-local runeOfTheFirelordDurations = {}
+local overloadedRunePlayersUID = {}
 
 ------------------------------------------------------
 ---- Fyrakk the Blazing
@@ -217,20 +216,21 @@ function core._2549:Smolderon()
     --SPELL_AURA_APPLIED,Player-3676-0DA97324,"Yarini-Area52",0x511,0x40,Creature-0-3020-2549-12391-212432-0001D818D4,"Rune of the Firelord",0xa18,0x0,426342,"Douse!",0x1,BUFF
     --SPELL_AURA_REMOVED,Player-3676-0DA97324,"Yarini-Area52",0x511,0x40,Creature-0-3020-2549-12391-212432-0001D818D4,"Rune of the Firelord",0xa18,0x0,426342,"Douse!",0x1,BUFF
 
-    if (core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_REFRESH") and core.destID == "212432" and core.spellId == 426342 then
-        --Store the initial time this happened, as when aura is removed we will calculate if the full duration of the cast has elapsed
-        runeOfTheFirelordDurations[core.sourceName] = core.timestamp
-    end
+    --SPELL_DAMAGE,Creature-0-3020-2549-12391-200927-00005818D4,"Smolderon",0x10a48,0x0,Player-3676-0E019383,"Selbink-Area52",0x514,0x4,426484,"Overloaded Rune",0x4,Player-3676-0E019383,0000000000000000,336266,647340,3,13528,2583,0,0,243205,250000,0,4079.63,13133.19,2233,2.4292,457,100582,208721,-1,4,0,0,76582,nil,nil,nil
 
-    if core.type == "SPELL_AURA_REMOVED" and core.destID == "212432" and core.spellId == 426342 then
-        if runeOfTheFirelordUID[core.spawn_uid_dest] == nil then
-            local auraRemovedTimestamp = core.timestamp
+    --We will track each time a player get damage from Overloaded Rune and use the highest hit count from any player as number of runes doused
 
-            if auraRemovedTimestamp - runeOfTheFirelordDurations[core.sourceName] >= 8 then
-                runeOfTheFirelordUID[core.spawn_uid_dest] = core.spawn_uid_dest
-                runesDoused = runesDoused + 1
-                core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(426342) .. " " .. L["Core_Counter"] .. " (" .. runesDoused .. "/6)",true)
-            end
+    if core.type == "SPELL_DAMAGE" and core.sourceID == "200927" and core.spellId == 426484 then
+        if overloadedRunePlayersUID[core.spawn_uid_dest_Player] == nil then
+            overloadedRunePlayersUID[core.spawn_uid_dest_Player] = 1
+        else
+            overloadedRunePlayersUID[core.spawn_uid_dest_Player] = overloadedRunePlayersUID[core.spawn_uid_dest_Player] + 1
+        end
+
+        --Check if we need to announce a new rune being doused
+        if overloadedRunePlayersUID[core.spawn_uid_dest_Player] > runesDoused then
+            runesDoused = runesDoused + 1
+            core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(426342) .. " " .. L["Core_Counter"] .. " (" .. runesDoused .. "/6)",true)
         end
     end
 
@@ -398,8 +398,7 @@ function core._2549:ClearVariables()
     ---- Smolderon
     ------------------------------------------------------
     runesDoused = 0
-    runeOfTheFirelordUID = {}
-    runeOfTheFirelordDurations = {}
+    overloadedRunePlayersUID = {}
 
     ------------------------------------------------------
     ---- Fyrakk the Blazing
