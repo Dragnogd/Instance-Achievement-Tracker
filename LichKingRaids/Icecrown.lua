@@ -2,6 +2,7 @@
 -- Namespaces
 --------------------------------------
 local _, core = ...
+local L = core.L
 
 ------------------------------------------------------
 ---- _631 Citadel Bosses
@@ -285,7 +286,7 @@ function core._631.Events:UNIT_AURA(self, unitID)
 				local _, _, count2, _, _, _, _, _, _, spellId = UnitDebuff(unitID, i)
 				if spellId == 70337 or spellId == 70338 then
 					foundNecroticPlague = true
-					if count > necroticPlagueStack and necroticPlagueCompletedAnnounced == false then
+					if count2 > necroticPlagueStack and necroticPlagueCompletedAnnounced == false then
                         necroticPlagueStack = count2
                         core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(70337) .. " " .. L["Core_Counter"] .. " (" .. necroticPlagueStack .. "/30)",true)
 					end
