@@ -7,6 +7,7 @@ local _, core = ...
 ---- _631 Citadel Bosses
 ------------------------------------------------------
 core._631 = {}
+core._631.Events = CreateFrame("Frame")
 
 ------------------------------------------------------
 ---- Lady Deathwhisper
@@ -43,7 +44,7 @@ local players = {}
 ------------------------------------------------------
 ---- Sindragosa
 ------------------------------------------------------
-local mysticBuffetStack = 0 
+local mysticBuffetStack = 0
 
 ------------------------------------------------------
 ---- Festergut
@@ -62,9 +63,9 @@ local playersCompleted = {}
 ---- Lich King
 ------------------------------------------------------
 local necroticPlagueStack = 0
-local necroticPlagueCompletedAnnounced = false   
+local necroticPlagueCompletedAnnounced = false
 
-function core._631:LordMarrowgar()					
+function core._631:LordMarrowgar()
 	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 69065 then
         core:sendMessage(core.destName .. " has been Impaled")
         C_Timer.After(8, function()
@@ -83,7 +84,7 @@ function core._631:LadyDeathwhisper()
     local CultAdherent = {"Cult Adherent", "Partidario del Culto"}
     local DeformedFanatic = {"Deformed Fanatic", "Fanático deformado"}
     local ReanimatedFanatic = {"Reanimated Fanatic", "Fanático reanimado"}
-    local ReanimatedAdherent = {"Reanimated Adherent", "Partidario reanimado"} 
+    local ReanimatedAdherent = {"Reanimated Adherent", "Partidario reanimado"}
     local currentAddSource = nil
     local currentAddDest = nil
     local languages = 2
@@ -101,7 +102,7 @@ function core._631:LadyDeathwhisper()
                 currentAddSource = "Reanimated Fanatic"
             elseif string.find(core.sourceName, ReanimatedAdherent[langCount]) then
                 currentAddSource = "Reanimated Adherent"
-            end         
+            end
         end
         --When a mob has died
         if core.destName ~= nil then
@@ -115,8 +116,8 @@ function core._631:LadyDeathwhisper()
                 currentAddDest = "Reanimated Fanatic"
             elseif string.find(core.destName, ReanimatedAdherent[langCount]) then
                 currentAddDest = "Reanimated Adherent"
-            end   
-        end        
+            end
+        end
     end
 
     if core.type == "SPELL_DAMAGE" or core.type == "SPELL_CAST_SUCCESS" or core.type == "SWING_MISSED" or core.type == "SPELL_AURA_APPLIED" or core.type == "SWING_DAMAGE" or core.type == "SPELL_PERIODIC_HEAL" or core.type == "SPELL_CAST_START" then
@@ -161,11 +162,11 @@ function core._631:LadyDeathwhisper()
                         AddCounter = AddCounter - 1
                         core:sendMessage("[WIP] Reanimated Fanatic has died. Looking for another add. DO NOT KILL BOSS (" .. AddCounter .. "/5)")
                     end
-                end            
+                end
             end
         end
      end
-    
+
     if core.type == "UNIT_DIED" then
         if currentAddDest == "Cult Fanatic" and CultFanaticFound == true then
             CultFanaticWait = true
@@ -190,7 +191,7 @@ function core._631:LadyDeathwhisper()
         elseif currentAddDest == "Deformed Fanatic" and DeformedFanaticFound == true then
             DeformedFanaticFound = false
             AddCounter = AddCounter - 1
-            core:sendMessage("Deformed Fanatic has died. Looking for another add. DO NOT KILL BOSS (" .. AddCounter .. "/5)")						
+            core:sendMessage("Deformed Fanatic has died. Looking for another add. DO NOT KILL BOSS (" .. AddCounter .. "/5)")
         end
     end
 
@@ -203,7 +204,7 @@ function core._631:DeathbringerSaurfang()
     --Detect if mark of the fallen champion has been cast
     if core.type == "SPELL_CAST_START" and core.spellId == 72293 and markOfTheFallenChampionCounter ~= 5 then
             markOfTheFallenChampionCounter = markOfTheFallenChampionCounter + 1
-    end	
+    end
 
     --if counter reaches 5 then the achievement has failed
     if markOfTheFallenChampionCounter == 5 then
@@ -245,8 +246,8 @@ end
 --                     else
 --                         portalsEntered = 0
 --                         players = {}
---                         noteTwoDisplay = false  
---                     end              
+--                         noteTwoDisplay = false
+--                     end
 --                 end
 --             end)
 
@@ -267,7 +268,7 @@ end
 --             elseif core.chatType == "SAY" then
 --                 unit = "player"
 --             end
-            
+
 --             if unit ~= nil then
 --                 --If the player running the addon goes into the dream then only look for debuff. Otherwise look for players not in the same phase
 --                 if UnitDebuff("player", "Dream State") then
@@ -276,15 +277,15 @@ end
 --                         print("Here1")
 --                         portalsEntered = portalsEntered + 1
 --                         players[UnitName(unit)] = UnitName(unit)
---                         SendChatMessage("[WIP] " .. UnitName(unit) .. " entered portal (" .. portalsEntered .. "/" .. totalPortals .. ")",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)                     
+--                         SendChatMessage("[WIP] " .. UnitName(unit) .. " entered portal (" .. portalsEntered .. "/" .. totalPortals .. ")",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
 --                     end
 --                 else
 --                     if UnitInPhase(unit) == false and players[UnitName(unit)] == nil then
 --                         print("Here2")
 --                         portalsEntered = portalsEntered + 1
 --                         players[UnitName(unit)] = UnitName(unit)
---                         SendChatMessage("[WIP] " .. UnitName(unit) .. " entered portal (" .. portalsEntered .. "/" .. totalPortals .. ")",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)                    
---                     end                   
+--                         SendChatMessage("[WIP] " .. UnitName(unit) .. " entered portal (" .. portalsEntered .. "/" .. totalPortals .. ")",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+--                     end
 --                 end
 --             end
 --         end
@@ -297,12 +298,12 @@ function core._631:Sindragosa()
             if core.amount == nil then
                 core.amount = 1
             end
-            core:sendMessage(core.destName .. " has " .. core.amount .. " stacks of Mystic Buffet")          
+            core:sendMessage(core.destName .. " has " .. core.amount .. " stacks of Mystic Buffet")
 
             --Get the highest stack of Mystic Buffet and save to variable
             if core.amount > mysticBuffetStack and mysticBuffetStack < 6 then
                 mysticBuffetStack = core.amount
-            end  
+            end
 
             if mysticBuffetStack > 5 then
                 core:getAchievementFailed()
@@ -317,13 +318,13 @@ function core._631:Festergut()
         if core.spellId == 69291 and core.unitType ~= "Pet" then
             if core.amount == nil then
                 core.amount = 1
-            end  
+            end
 
             --Get the highest stack of Mystic Buffet and save to variable
             if core.amount > InoculatedStack and InoculatedStack < 3 then
                 InoculatedStack = core.amount
-                core:sendMessage(core.destName .. " has " .. core.amount .. " stacks of Inoculated")     
-            end  
+                core:sendMessage(core.destName .. " has " .. core.amount .. " stacks of Inoculated")
+            end
 
             if InoculatedStack > 2 then
                 core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")")
@@ -348,7 +349,7 @@ end
 --     if core.amount ~= nil and UnitIsPlayer(core.destName) and UnitIsPlayer(core.sourceName) ~= true then
 --         if core.amount > 23000 and core.type == "SPELL_DAMAGE" or core.type == "SPELL_PERIODIC_DAMAGE" or core.type == "SWING_DAMAGE" then
 --             core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")")
---         end       
+--         end
 --     end
 -- end
 
@@ -397,16 +398,16 @@ end
 --         end
 
 --         if noSelectionListAdded then
--- 			SendChatMessage(noSelectionList,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)            
+-- 			SendChatMessage(noSelectionList,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
 --         end
 
 --     elseif vampireChecker == true then
 --         if sender ~= nil and message == "vampire" or message == "Vampire" or message == "'vampire'" or message == "'Vampire'" or message == "no vampire" or message == "no Vampire" or message == "No vampire" or message == "No Vampire" or message == "'no vampire'" or message == "'no Vampire'" or message == "'No vampire'" or message == "'No Vampire'" then
 --             local name, realm = strsplit("-", sender);
 --             local userSelectedRole = false
---             if message == "vampire" or message == "Vampire" or message == "'vampire'" or message == "'Vampire'"  then 
+--             if message == "vampire" or message == "Vampire" or message == "'vampire'" or message == "'Vampire'"  then
 --                 SendChatMessage("[WIP] Tracking " .. sender .. " for becoming a vampire",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
-                
+
 --                 if has_value(vampires, name) == false then
 --                     --print("Adding player to vampire because has_value returned " .. tostring(has_value(vampires, name)))
 -- 			        table.insert(vampires, name)
@@ -414,7 +415,7 @@ end
 --                 end
 
 --                 if has_value(nonVampires, name) then
---                     --print("Removing Player From Non Vampires")                    
+--                     --print("Removing Player From Non Vampires")
 --                     for i = 1, #nonVampires do
 --                         if nonVampires[i] == name then
 --                             nonVampires[i] = nil
@@ -431,7 +432,7 @@ end
 --                 end
 
 --                 if has_value(vampires, name) then
---                     --print("Removing Player From Vampires")                    
+--                     --print("Removing Player From Vampires")
 --                     for i = 1, #vampires do
 --                         if vampires[i] == name then
 --                             vampires[i] = nil
@@ -447,7 +448,7 @@ end
 --                         --Found player so remove them from the array
 --                         table.remove(otherPlayers, i)
 --                     end
---                 end            
+--                 end
 --             end
 
 
@@ -463,8 +464,8 @@ end
 --             -- for i = 1, #nonVampires do
 --             --     --SendChatMessage(i .. ": " .. nonVampires[i],core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
 --             --     --print(i .. ": " .. nonVampires[i])
---             -- end            
---         end       
+--             -- end
+--         end
 --     else
 --         core:getAchievementsToTrackWrath(4618,4539)
 
@@ -501,13 +502,13 @@ end
 --             end
 
 --             if nonVampiresListPlayerAdded == true then
---                 SendChatMessage(nonVampiresList,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)   
---             end         
-         
---             if playersWithoutSelectionPlayerAdded == true then
---                 SendChatMessage(playersWithoutSelection,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)      
+--                 SendChatMessage(nonVampiresList,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
 --             end
- 
+
+--             if playersWithoutSelectionPlayerAdded == true then
+--                 SendChatMessage(playersWithoutSelection,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
+--             end
+
 --             noteDisplayed = true
 --         end
 
@@ -535,7 +536,7 @@ end
 --                     end
 --                 end
 --                 if vampireListAdded then
---                     SendChatMessage(vampireList,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)                    
+--                     SendChatMessage(vampireList,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
 --                 end
 --             elseif has_value(nonVampires, name) and has_value(playersCompleted, name) == false then
 --                 --Player has been bitten but didn't want to become a vampire
@@ -544,7 +545,7 @@ end
 --                 elseif AchievementTracker_playerCount == 10 then
 --                     SendChatMessage("[WIP] " .. GetAchievementLink(4539) .. " 'Defeat Blood-Queen Lana'thel without becoming a vampire' FAILED for " .. name,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
 --                 end
---                 table.insert(playersCompleted, name)                              	
+--                 table.insert(playersCompleted, name)
 --             end
 --         end
 
@@ -572,47 +573,49 @@ end
 --             elseif AchievementTracker_playerCount == 10 then
 --                 SendChatMessage("[WIP] " .. GetAchievementLink(4539) .. " All players who wanted to become a vampire did. However some players became vampires when they specified they didn't",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
 --             end
---             core.achievementCompleted = true                    
+--             core.achievementCompleted = true
 --         end
 --     end
 
 -- end
 
-function core._631:LichKing()
-	for i = 1, core.groupSize do
-		local unit = nil
-		if core.chatType == "PARTY" then
-			if i < core.groupSize then
-				unit = "party" .. i
-			else
-				unit = "player"
+function core._631:InstanceCleanup()
+    core._631.Events:UnregisterEvent("UNIT_AURA")
+end
+
+core._631.Events:SetScript("OnEvent", function(self, event, ...)
+    return self[event] and self[event](self, event, ...)
+end)
+
+function core._631:InitialSetup()
+    core._631.Events:RegisterEvent("UNIT_AURA")
+end
+
+function core._631.Events:UNIT_AURA(self, unitID)
+	if next(core.currentBosses) ~= nil then
+		if core.currentBosses[1].encounterID == 1106 and necroticPlagueCompletedAnnounced == false then
+			local foundNecroticPlague = false
+			for i=1,40 do
+				local _, _, count2, _, _, _, _, _, _, spellId = UnitDebuff(unitID, i)
+				if spellId == 70337 or spellId == 70338 then
+					foundNecroticPlague = true
+					if count > necroticPlagueStack and necroticPlagueCompletedAnnounced == false then
+                        necroticPlagueStack = count2
+                        core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(70337) .. " " .. L["Core_Counter"] .. " (" .. necroticPlagueStack .. "/30)",true)
+					end
+				end
 			end
-		elseif core.chatType == "RAID" then
-			unit = "raid" .. i
-		elseif core.chatType == "SAY" then
-			unit = "player"
-        end
-        
-        if unit ~= nil then
-            local unitType, destID, spawn_uid_dest = strsplit("-",UnitGUID(unit));
-            for i=1,40 do
-                local _, _, count, _, _, _, _, _, _, spellId = UnitDebuff(unit, i)
-                if (spellId == 70337 or spellId == 70338) and count > necroticPlagueStack and necroticPlagueCompletedAnnounced == false then
-                    necroticPlagueStack = count
-                    core:sendMessage("Necrotic Plague at " .. necroticPlagueStack .. " stacks")
+
+            if necroticPlagueStack >= 30 and necroticPlagueCompletedAnnounced == false then
+                if core.difficultyID == 3 then
+                    core:getAchievementSuccess(4601)
+                elseif core.difficultyID == 4 then
+                    core:getAchievementSuccess(4621)
                 end
-                local _, _, count, _, _, _, _, _, _, spellId = UnitDebuff(unit .. "target", i)
-                if (spellId == 70337 or spellId == 70338) and count > necroticPlagueStack and necroticPlagueCompletedAnnounced == false then
-                    necroticPlagueStack = count
-                    core:sendMessage("Necrotic Plague at " .. necroticPlagueStack .. " stacks")
-                end
+                necroticPlagueCompletedAnnounced = true
             end
         end
-
-        if necroticPlagueStack >= 30 then
-            core:getAchievementSuccess(2)
-        end
-    end	
+    end
 end
 
 function core._631:ClearVariables()
@@ -636,7 +639,7 @@ function core._631:ClearVariables()
     ------------------------------------------------------
     ---- _631 Gunship Battle
     ------------------------------------------------------
-    currentTimestamp = nil 
+    currentTimestamp = nil
 
     ------------------------------------------------------
     ---- Deathbringer Saurfang
@@ -665,8 +668,8 @@ function core._631:ClearVariables()
     ------------------------------------------------------
     ---- Lich King
     ------------------------------------------------------
-    necroticPlagueStack = 0 
-    necroticPlagueCompletedAnnounced = false  
+    necroticPlagueStack = 0
+    necroticPlagueCompletedAnnounced = false
 end
 
 -- function core._631:GunshipBattle()
@@ -685,7 +688,7 @@ end
 --             if players[core.sourceName] ~= nil then
 --                 if players[core.sourceName] > 2 then
 --                     core:getAchievementFailedWithMessageAfter("(" .. sourceName .. ")")
---                 end           
+--                 end
 --             end
 --         end
 --     end
