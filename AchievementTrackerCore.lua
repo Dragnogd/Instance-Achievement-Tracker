@@ -2076,7 +2076,7 @@ function checkAndClearInstanceVariables()
 			if core.gameVersionMajor == 3 then
 				RemoveTrackedAchievement(v)
 			else
-				C_ContentTracking.StopTracking(2, v)
+				C_ContentTracking.StopTracking(2, v, 2)
 			end
 		end
 
