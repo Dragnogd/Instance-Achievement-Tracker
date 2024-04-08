@@ -1147,6 +1147,10 @@ function events:PLAYER_LOGIN()
 		--Register Minimap Icon
 		core.ATButton:Register("InstanceAchievementTracker", MiniMapLDB, AchievementTrackerOptions);
 
+		--Reigster Minimap Addon Compartment
+		local LibDBCompartment = LibStub:GetLibrary("LibDBCompartment-1.0")
+		LibDBCompartment:Register("InstanceAchievementTracker", MiniMapLDB)
+
 		--Show Minimap Icon
 		if AchievementTrackerOptions["showMinimap"] then
 			core:sendDebugMessage("Showing Minimap Icon")

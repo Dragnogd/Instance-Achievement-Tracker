@@ -1,0 +1,20 @@
+## Interface: 30403
+## Title: LibDBCompartment
+## Notes: Library for handling integration into Blizzards' minimap addon compartment.
+## Author: Daniel "Meorawr" Yates <me@meorawr.io>
+## Version: v10
+## IconAtlas: minortalents-icon-book
+## LoadOnDemand: 1
+
+## X-Category: Libraries
+## X-License: Public Domain
+## X-Website: https://github.com/Meorawr/LibDBCompartment
+## X-Curse-Project-ID: 844143
+## X-Wago-ID: QN5mDvNB
+## X-WoWI-ID: 26567
+
+Libs\LibStub\LibStub.lua
+Libs\CallbackHandler-1.0\CallbackHandler-1.0.xml
+Libs\LibDataBroker-1.1\LibDataBroker-1.1.lua
+
+lib.xml
