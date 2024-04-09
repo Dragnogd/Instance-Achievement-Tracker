@@ -24,7 +24,7 @@ local ducklingCheck = false
 
 function core._2526:Vexamus()
 	--Defeat Vexamus without players absorbing any Arcane Orbs in Algeth'ar Academy on Mythic Difficulty.
-	if core.type == "SPELL_ABSORBED" and core.spellId == 385981 then
+	if core.type == "SPELL_DAMAGE" and core.spellId == 385981 then
 		if core.destName ~= nil then
 			playerFailedAchievement = core.destName
 		end
@@ -81,24 +81,14 @@ function core._2526:OvergrownAncient()
     end
 
 	if overgrownAncientKilled == false then
-		if core.type == "SPELL_AURA_REMOVED" and core.spellId == 392005 then
-			if core.destName ~= nil then
-				wellFedDucklingCounter = wellFedDucklingCounter - 1
-				core:sendMessage(core.destName .. " " .. L["Shared_HasLost"] .. " " .. GetSpellLink(392005) .. " (" .. wellFedDucklingCounter .. "/" .. core.groupSize .. ")",true)
-				InfoFrame_SetPlayerFailed(core.destName)
-			end
-		end
-
 		--Announce success once everyone has had the debuff at some point during the fight
 		if wellFedDucklingCounter == core.groupSize then
 			core:getAchievementSuccess()
-			core.achievementsFailed[1] = false
 		end
 
 		--Announce fail if player looses debuff after criteria has been met
 		if core.achievementsCompleted[1] == true and wellFedDucklingCounter ~= core.groupSize then
 			core:getAchievementFailed()
-			core.achievementsCompleted[1] = false
 		end
 	end
 end
