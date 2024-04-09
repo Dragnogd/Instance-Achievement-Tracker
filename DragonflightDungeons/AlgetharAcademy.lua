@@ -55,7 +55,7 @@ function core._2526:OvergrownAncient()
 		for player,status in pairs(core.InfoFrame_PlayersTable) do
 			local debuffFound = false
 			for i=1,40 do
-				local _, _, count2, _, _, _, _, _, _, spellId = UnitDebuff(player, i)
+				local _, _, count2, _, _, _, _, _, _, spellId = UnitBuff(player, i)
 				if spellId == 392005 then
 					debuffFound = true
 				end
@@ -66,7 +66,7 @@ function core._2526:OvergrownAncient()
 				InfoFrame_SetPlayerFailed(player)
 			else
 				InfoFrame_SetPlayerComplete(player)
-				heraldOfTheCosmosCounter = heraldOfTheCosmosCounter + 1
+				wellFedDucklingCounter = wellFedDucklingCounter + 1
 			end
 		end
 
@@ -82,9 +82,8 @@ function core._2526:OvergrownAncient()
 
 	if overgrownAncientKilled == false then
 		if core.type == "SPELL_AURA_REMOVED" and core.spellId == 392005 then
-			if core.destName ~= nil and wellFedDucklingUID[core.spawn_uid_dest_Player] ~= nil then
+			if core.destName ~= nil then
 				wellFedDucklingCounter = wellFedDucklingCounter - 1
-				wellFedDucklingUID[core.spawn_uid_dest_Player] = nil
 				core:sendMessage(core.destName .. " " .. L["Shared_HasLost"] .. " " .. GetSpellLink(392005) .. " (" .. wellFedDucklingCounter .. "/" .. core.groupSize .. ")",true)
 				InfoFrame_SetPlayerFailed(core.destName)
 			end
