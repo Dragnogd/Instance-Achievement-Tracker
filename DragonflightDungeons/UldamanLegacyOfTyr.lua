@@ -57,9 +57,8 @@ end
 
 function core._2451:ChronoLordDeios()
     --Defeat Chrono-Lord Deios after catching every Eternity Orb as it falls to the ground in Uldaman: Legacy of Tyr on Mythic difficulty.
-
-    if core:getBlizzardTrackingStatus(16281, 1) == false then
-		core:getAchievementFailed()
+    if core:getBlizzardTrackingStatus(16281, 1) == true then
+		core:getAchievementSuccess()
 	end
 end
 
