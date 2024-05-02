@@ -1,0 +1,93 @@
+﻿## Interface: 40400
+## Notes: An addon for tracking the completion/faliure of instance achievements.
+## Title:Instance Achievement Tracker
+## Author: Whizzey
+## Version: 4.40.0
+## IconTexture: Interface/AddOns/InstanceAchievementTracker/Images/icon.jpg
+## OptionalDeps: LibStub, CallbackHandler-1.0, LibDBIcon-1.0, LibInspect, LibRangeCheck-2.0, LibWindow-1.1
+## SavedVariables: AchievementTrackerOptions, AchievementTrackerDebug, AchievementTrackerNPCCache, AchievementTrackerNPCCacheClassic
+## X-Curse-Project-ID: 286675
+## X-WoWI-ID: 24756
+## X-Wago-ID: RBKpXaKE
+
+Libs\LibStub\LibStub.lua
+Libs\CallbackHandler-1.0\CallbackHandler-1.0.lua
+Libs\LibDataBroker-1.1\LibDataBroker-1.1.lua
+Libs\LibDBIcon-1.0\LibDBIcon-1.0.lua
+Libs\UTF8\utf8.lua
+Libs\UTF8\utf8data.lua
+Libs\MSA-DropDownMenu-1.0\MSA-DropDownMenu-1.0.lua
+Libs\LibRangeCheck-2.0\LibRangeCheck-2.0.lua
+Libs\LibWindow-1.1\LibWindow-1.1.lua
+Libs\LibDetours-1.0\LibDetours-1.0.lua
+Libs\LibClassicInspector\LibClassicInspector.lua
+Libs\LibDBCompartment\LibDBCompartment-1.0.lua
+Libs\TaintLess\TaintLess.xml
+
+Localization.lua
+Localization.enUS.lua
+Localization.deDE.lua
+Localization.esES.lua
+Localization.frFR.lua
+Localization.ptBR.lua
+Localization.ruRU.lua
+Localization.zhCN.lua
+Localization.zhTW.lua
+Localization.koKR.lua
+
+CataclysmRaids\BastionOfTwilight.lua
+CataclysmRaids\BlackwingDescent.lua
+CataclysmRaids\DragonSoul.lua
+CataclysmRaids\Firelands.lua
+CataclysmRaids\ThroneOfTheFourWinds.lua
+
+CataclysmDungeons\BlackrockCaverns.lua
+CataclysmDungeons\EndTime.lua
+CataclysmDungeons\GrimBatol.lua
+CataclysmDungeons\HallsOfOrigination.lua
+CataclysmDungeons\HourOfTwilight.lua
+CataclysmDungeons\LostCityOfTolvir.lua
+CataclysmDungeons\ShadowfangKeep.lua
+CataclysmDungeons\Stonecore.lua
+CataclysmDungeons\TheDeadmines.lua
+CataclysmDungeons\ThroneOfTheTides.lua
+CataclysmDungeons\VortexPinnacle.lua
+CataclysmDungeons\WellOfEternity.lua
+CataclysmDungeons\ZulAman.lua
+CataclysmDungeons\ZulGurub.lua
+
+LichKingRaids\Icecrown.lua
+LichKingRaids\EyeOfEternity.lua
+LichKingRaids\Naxxramas.lua
+LichKingRaids\ObsidianSanctum.lua
+LichKingRaids\OnyxiasLair.lua
+LichKingRaids\TrialOfTheCrusader.lua
+LichKingRaids\Ulduar.lua
+LichKingRaids\VaultOfArchavon.lua
+
+LichKingDungeons\AhnkahetTheOldKingdom.lua
+LichKingDungeons\AzjolNerub.lua
+LichKingDungeons\DrakTharonKeep.lua
+LichKingDungeons\ForgeOfSouls.lua
+LichKingDungeons\Gundrak.lua
+LichKingDungeons\HallsOfLightning.lua
+LichKingDungeons\HallsOfReflection.lua
+LichKingDungeons\HallsOfStone.lua
+LichKingDungeons\PitOfSaron.lua
+LichKingDungeons\TheCullingOfStratholme.lua
+LichKingDungeons\TheNexus.lua
+LichKingDungeons\TheOculus.lua
+LichKingDungeons\TheVioletHold.lua
+LichKingDungeons\TrialOfTheChampion.lua
+LichKingDungeons\UtgardeKeep.lua
+LichKingDungeons\UtgardePinnacle.lua
+
+Instances.lua
+ItemCache.lua
+NPCCache.lua
+InfoFrame.lua
+GUI.lua
+MobCounter.lua
+emotes.lua
+AchievementTrackerCore.lua
+Debug.lua
