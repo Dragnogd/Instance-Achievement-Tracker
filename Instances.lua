@@ -5158,6 +5158,7 @@ core.Instances = {
 		Raids = {
 			[967] = { --Dragon Soul
 				name = 187,
+				classicPhase = 5,
 				boss1 = {
 					name = 311, --Morchok
 					bossIDs = {},
@@ -5250,6 +5251,7 @@ core.Instances = {
 
 			[669] = { --Blackwing Descent
 				name = 73,
+				classicPhase = 5,
 				boss1 = {
 					name = 170, --Magmaw
 					bossIDs = {41570},
@@ -5321,6 +5323,7 @@ core.Instances = {
 
 			[671] = { --Bastion of Twilight
 				name = 72,
+				classicPhase = 5,
 				boss1 = {
 					name = 156, --Halfus Wyrmbreaker
 					bossIDs = {44600},
@@ -5369,6 +5372,7 @@ core.Instances = {
 
 			[754] = { --Throne of the Four Winds
 				name = 74,
+				classicPhase = 5,
 				boss1 = {
 					name = 154, --Conclave of Wind
 					bossIDs = {},
@@ -5395,6 +5399,7 @@ core.Instances = {
 
 			[720] = { --Firelands
 				name = 78,
+				classicPhase = 5,
 				boss1 = {
 					name = 192, --Beth'tilac
 					bossIDs = {52498},
@@ -5479,6 +5484,7 @@ core.Instances = {
 		Dungeons = {
 			[645] = { --Blackrock Caverns
 				name = 66,
+				classicPhase = 5,
 				boss1 = {
 					name = 105, --Rom'ogg Bonecrusher
 					bossIDs = {39665},
@@ -5527,10 +5533,12 @@ core.Instances = {
 
 			[643] = { --Throne of the Tides
 				name = 65,
+				classicPhase = 5,
 			},
 
 			[725] = { --The Stonecore
 				name = 67,
+				classicPhase = 5,
 				boss1 = {
 					name = 113, --High Priestess Azil
 					bossIDs = {42333},
@@ -5546,6 +5554,7 @@ core.Instances = {
 
 			[657] = { --The Vortex Pinnacle
 				name = 68,
+				classicPhase = 5,
 				boss1 = {
 					name = 116, --Asaad
 					bossIDs = {43875},
@@ -5571,6 +5580,7 @@ core.Instances = {
 
 			[670] = { --Grim Batol
 				name = 71,
+				classicPhase = 5,
 				boss1 = {
 					name = 131, --General Umbriss
 					bossIDs = {39625},
@@ -5597,6 +5607,7 @@ core.Instances = {
 
 			[644] = { --Halls of Origination
 				name = 70,
+				classicPhase = 5,
 				boss1 = {
 					name = 124, --Temple Guardian Anhuur
 					bossIDs = {39425},
@@ -5644,6 +5655,7 @@ core.Instances = {
 
 			[755] = { --Lost City of the Tol'Vir
 				name = 69,
+				classicPhase = 5,
 				boss1 = {
 					name = 118, --Lockmaw
 					bossIDs = {43614},
@@ -5681,6 +5693,7 @@ core.Instances = {
 
 			[36] = { --Deadmines
 				name = 63,
+				classicPhase = 5,
 				boss1 = {
 					name = 89, --Glubtok
 					bossIDs = {47162},
@@ -5751,6 +5764,7 @@ core.Instances = {
 
 			[33] = { --Shadowfang Keep
 				name = 64,
+				classicPhase = 5,
 				boss1 = {
 					name = 96, --Baron Ashbury
 					bossIDs = {46962},
@@ -5788,6 +5802,7 @@ core.Instances = {
 
 			[859] = { --Zul'Gurub
 				name = 76,
+				classicPhase = 5,
 				boss1 = {
 					name = L["Instances_Other"], --Gurubashi Headhunter
 					bossIDs = {},
@@ -5846,6 +5861,7 @@ core.Instances = {
 
 			[568] = { --Zul'Aman
 				name = 77,
+				classicPhase = 5,
 				boss1 = {
 					name = 189, --Halazzi
 					bossIDs = {23577},
@@ -5892,6 +5908,7 @@ core.Instances = {
 
 			[938] = { --End Time
 				name = 184,
+				classicPhase = 5,
 				boss1 = {
 					name = 283, --Echo of Tyrande
 					bossIDs = {},
@@ -5918,6 +5935,7 @@ core.Instances = {
 
 			[939] = { --Well of Eternity
 				name = 185,
+				classicPhase = 5,
 				boss1 = {
 					name = 290, --Peroth'arn
 					bossIDs = {55085},
@@ -5944,6 +5962,7 @@ core.Instances = {
 
 			[940] = { --Hour of Twilight
 				name = 186,
+				classicPhase = 5,
 				boss1 = {
 					name = 341, --Archbishop Benedictus
 					bossIDs = {54938},

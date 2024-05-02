@@ -98,7 +98,7 @@ function events:GET_ITEM_INFO_RECEIVED(self, arg1)
 end
 
 function generateNPCCache()
-	if core.gameVersionMajor > 3 then
+	if core.gameVersionMajor > 4 then
 		core:sendDebugMessage("Attempting to load from local NPC Cache")
 		GetNameFromLocalNpcIDCache()
 
@@ -144,8 +144,8 @@ function generateNPCCache()
 end
 
 function getNPCName(npcID)
-	if core.gameVersionMajor == 3 then
-		--Look in the Wrath Classic Cache
+	if core.gameVersionMajor == 4 then
+		--Look in the Classic Cache
 		if not tonumber(core.NPCCacheClassic[npcID]) then
 			return core.NPCCacheClassic[npcID]
 		else
@@ -594,8 +594,8 @@ function getInstanceInfomation()
 					end
 				end
 
-				--Wrath classic returns the old 10man and 25man ulduar not present on retail
-				if core.gameVersionMajor == 3 and core.instance == 603 then
+				--Classic returns the old 10man and 25man ulduar not present on retail
+				if core.gameVersionMajor == 4 and core.instance == 603 then
 					if core.difficultyID == 175 or core.difficultyID == 193 then
 						--10 Man
 						core:sendDebugMessage("Detected Legacy 10 man Raid (wrath classic ulduar)")
@@ -676,7 +676,7 @@ function getInstanceInfomation()
 				--When running on Classic wow
 				if core.expansion == nil then
 					instanceCompatible = false
-				elseif core.gameVersionMajor == 3 and core.expansion > 3 and instanceCompatible == true then
+				elseif core.gameVersionMajor == 4 and core.expansion > 4 and instanceCompatible == true then
 					core:sendDebugMessage("This instance is not compatible on classic")
 					instanceCompatible = false
 				end
@@ -1683,9 +1683,9 @@ function events:ENCOUNTER_START(self, encounterID, encounterName, difficultyID, 
 	if encounterID ~= nil then
 		--Found the boss encounter ID so clear out any other bosses currently stored
 		if core.lockDetection == false then
-			if core.gameVersionMajor > 3 then
+			if core.gameVersionMajor > 4 then
 				detectBossByEncounterID(encounterID)
-			elseif core.gameVersionMajor == 3 then
+			elseif core.gameVersionMajor == 4 then
 				detectBossByEncounterIDClassic(encounterID)
 			end
 		end
@@ -1732,7 +1732,7 @@ end
 
 --Used to display current boss achievement on mouseover and playing that are currently missing the achievment
 function events:UPDATE_MOUSEOVER_UNIT()
-	if core.gameVersionMajor > 3 then
+	if core.gameVersionMajor > 4 then
 		--If not in cache
 		--Loop through each boss in db
 		--Loop through EJ_GetCreatureInfo for each boss and compare with mouseover target
