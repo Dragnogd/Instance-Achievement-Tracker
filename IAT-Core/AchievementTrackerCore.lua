@@ -498,21 +498,6 @@ function getInstanceAchievements()
 		C_Timer.After(2, function()
 			--Check if the scan is still valid or not
 			if scanCounterloc == scanCounter then
-				--Last player scan was successfully. Check if we need to continue scanning
-				-- if #playersToScan > 0 then
-				-- 	getInstanceAchievements()
-				-- elseif #playersToScan == 0 and rescanNeeded == false then
-				-- 	printMessage("Achievment Scanning Finished (" .. #playersScanned .. "/" .. core.groupSize .. ")")
-				-- 	scanInProgress = false
-				-- 	core.scanFinished = true
-				-- elseif #playersToScan == 0 and rescanNeeded == true then
-				-- 	--print("Achievement Scanning Finished but some players still need scanning. Waiting 20 seconds then trying again (" .. #playersScanned .. "/" .. core.groupSize .. ")")
-				-- 	C_Timer.After(10, function()
-				-- 		scanInProgress = true
-				-- 		getPlayersInGroup()
-				-- 	end)
-				-- end
-
 				--Last player to scan was not successfull
 				--core:sendDebugMessage("Last scan was unsuccessfull: " .. scanCounterloc)
 				rescanNeeded = true

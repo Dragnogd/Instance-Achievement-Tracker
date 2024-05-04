@@ -258,14 +258,6 @@ function Tab_OnClick(self)
             UIConfig.Main:Show()
             UIConfig.Main2:Show()
 
-            -- UIConfig.Main2.features:Show()
-            -- UIConfig.Main2.features1:Show()
-            -- UIConfig.Main2.features2:Show()
-            -- UIConfig.Main2.features3:Show()
-            -- UIConfig.Main2.features4:Show()
-            -- UIConfig.Main2.features5:Show()
-            -- UIConfig.Main2.features6:Show()
-
             UIConfig.Main2.options:Show()
             UIConfig.Main2.options:Show()
             UIConfig.Main2.options2:Show()
@@ -373,19 +365,6 @@ function Tab_OnClick(self)
 
             UIConfig.Main2.content = Config:CreateText2("TOPLEFT", UIConfig.Main2, "TOPLEFT", 0, -20, achievementsTracked .. " " .. L["GUI_Achievements"] .. " (" .. tonumber(string.format("%.0f", (achievementsTracked/totalCount)*100)) .. "%)","GameFontHighlight")
             UIConfig.Main2.content2 = Config:CreateText2("TOPLEFT", UIConfig.Main2.content, "TOPLEFT", 0, -15, tacticsTracked .. " " .. L["GUI_Tactics"] .. " (" .. tonumber(string.format("%.0f", (tacticsTracked/totalCount)*100)) .. "%)","GameFontHighlight")
-
-            -- --Features
-            -- UIConfig.Main2.features = Config:CreateText2("TOPLEFT", UIConfig.Main2.content, "TOPLEFT", 0, -40, L["Features"] .. ":","GameFontNormalLarge")
-            -- UIConfig.Main2.features:SetWidth(750)
-            -- UIConfig.Main2.features:SetJustifyH("LEFT")
-            -- UIConfig.Main2.features1 = Config:CreateText2("TOPLEFT", UIConfig.Main2.features, "TOPLEFT", 0, -20, L["- Tracks when the criteria of instance achievements have been met and output this to chat"],"GameFontHighlight")
-            -- UIConfig.Main2.features2 = Config:CreateText2("TOPLEFT", UIConfig.Main2.features1, "TOPLEFT", 0, -20, L["- Tracks when the criteria of instance achievements has been failed and outputs this to chat"],"GameFontHighlight")
-            -- UIConfig.Main2.features3 = Config:CreateText2("TOPLEFT", UIConfig.Main2.features2, "TOPLEFT", 0, -20, L["- Keeps track of achievements which require you to kill so many mobs within a certain time period. It will announce to chat when enough mobs have spawned and whether they were killed in the time period."],"GameFontHighlight")
-            -- UIConfig.Main2.features4 = Config:CreateText2("TOPLEFT", UIConfig.Main2.features3, "TOPLEFT", 0, -30, L["- Scans all players in the group to see which achievements each player is missing for the current instance"],"GameFontHighlight")
-            -- UIConfig.Main2.features5 = Config:CreateText2("TOPLEFT", UIConfig.Main2.features4, "TOPLEFT", 0, -20, L["- Announce to chat players who are missing achievements for certain bosses"],"GameFontHighlight")
-            -- UIConfig.Main2.features6 = Config:CreateText2("TOPLEFT", UIConfig.Main2.features5, "TOPLEFT", 0, -20, L["- Announce to chat tactics for a certain boss"],"GameFontHighlight")
-            -- UIConfig.Main2.features3:SetWidth(750)
-            -- UIConfig.Main2.features3:SetJustifyH("LEFT")
 
             --Options
             UIConfig.Main2.options = Config:CreateText2("TOPLEFT", UIConfig.Main2.content2, "TOPLEFT", 0, -30, L["GUI_Options"] .. ":","GameFontNormalLarge")
@@ -662,39 +641,6 @@ function Tab_OnClick(self)
             UIConfig.Main2.options34:SetScript("OnLeave", function(self)
                 GameTooltip:Hide()
             end)
-
-            -- --Make a sound whxen an achievement has been failed
-            -- UIConfig.Main2.options35 = Config:CreateCheckBox("TOPLEFT", UIConfig.Main2.options34, "TOPLEFT", 0, -25, "AchievementTracker_ToggleLocalisation")
-            -- UIConfig.Main2.options35:SetScript("OnClick", ATToggleSoundFailed_OnClick)
-            -- UIConfig.Main2.options36 = Config:CreateText2("TOPLEFT", UIConfig.Main2.options35, "TOPLEFT", 30, -9, L["GUI_SelectLocalisation"],"GameFontHighlight")
-            -- UIConfig.Main2.options35:SetScript("OnEnter", function(self)
-            --     GameTooltip:SetOwner(self, "ANCHOR_TOPRIGHT")
-            --     GameTooltip:SetText(L["GUI_SelectLocalisationDescription"],1.0,0.82,0.0,1,true)
-            --     GameTooltip:Show()
-            -- end)
-            -- UIConfig.Main2.options35:SetScript("OnLeave", function(self)
-            --     GameTooltip:Hide()
-            -- end)
-
-            -- --Dropdown menu to select sound for failed Achievement
-            -- UIConfig.Main2.options37 = MSA_DropDownMenu_Create("AchievementTracker_SelectLocalisationDropdown", UIConfig.Main2.options35)
-            -- UIConfig.Main2.options37:SetPoint("TOPLEFT", UIConfig.Main2.options35, "TOPLEFT", UIConfig.Main2.options36:GetStringWidth() + 30, 0)
-            -- MSA_DropDownMenu_SetWidth(UIConfig.Main2.options37, 100)
-            -- MSA_DropDownMenu_SetText(UIConfig.Main2.options37, L["GUI_Automatic"])
-            -- MSA_DropDownMenu_Initialize(UIConfig.Main2.options37, function(self, level, menuList)
-            --     local info = MSA_DropDownMenu_CreateInfo()
-            --     info.func = AchievementTracker_SelectLocalisation
-            --     local languages = {L["GUI_Automatic"],_G["ENGB"],_G["DEDE"],_G["ESES"],_G["RURU"],_G["FRFR"],_G["ZHCN"],_G["ZHTW"]}
-            --     for i=1,#languages do
-            --         info.text = languages[i]
-            --         info.menuList = i
-            --         info.value = i
-            --         info.arg1 = languages[i]
-            --         info.arg2 = UIConfig.Main2.options37
-            --         info.arg3 = i
-            --         MSA_DropDownMenu_AddButton(info)
-            --     end
-            -- end)
         end
     else                                --User has selected an expansion tab so hide main menu options
         UIConfig.ScrollFrame:Show()
@@ -702,14 +648,6 @@ function Tab_OnClick(self)
 
         UIConfig.Main:Hide()
         UIConfig.Main2:Hide()
-
-        -- UIConfig.Main2.features:Hide()
-        -- UIConfig.Main2.features1:Hide()
-        -- UIConfig.Main2.features2:Hide()
-        -- UIConfig.Main2.features3:Hide()
-        -- UIConfig.Main2.features4:Hide()
-        -- UIConfig.Main2.features5:Hide()
-        -- UIConfig.Main2.features6:Hide()
 
         UIConfig.Main2.options:Hide()
         UIConfig.Main2.options:Hide()
@@ -1148,28 +1086,6 @@ local function SetTabs(frame, numTabs, ...)
             lastTabAdded = i
         end
     end
-
-    --Tabs for other addons
-    -- local tab = CreateFrame("Button", "InstanceAchievementTrackerTab", frame, "OptionsFrameTabButtonTemplate")
-    -- tab:SetID(100)                                 --This is used when clicking on the tab to load the correct frames
-    -- tab:SetText("Dungeons & Raids")  --This select the variables arguments passed into the function. Needs updating each expansion
-    -- tab:SetScript("OnClick", IAT_OnClick)       --This will run the Tab_OnClick() function once the user has selected a tab so we can load the correct frames into the GUI
-    -- tab:SetPoint("TOPLEFT")
-    -- tab:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 20)
-
-    -- local tab = CreateFrame("Button", "ExplorationAchievementTrackerTab", _G["InstanceAchievementTrackerTab"], "OptionsFrameTabButtonTemplate")
-    -- tab:SetID(100)                                 --This is used when clicking on the tab to load the correct frames
-    -- tab:SetText("Exploration")  --This select the variables arguments passed into the function. Needs updating each expansion
-    -- tab:SetScript("OnClick", EAT_OnClick)       --This will run the Tab_OnClick() function once the user has selected a tab so we can load the correct frames into the GUI
-    -- tab:SetPoint("TOPLEFT")
-    -- tab:SetPoint("TOPLEFT", _G["InstanceAchievementTrackerTab"], "TOPLEFT", 120, 0)
-
-    -- local tab = CreateFrame("Button", "WorldEventsAchievementTab", _G["InstanceAchievementTrackerTab"], "OptionsFrameTabButtonTemplate")
-    -- tab:SetID(100)                                 --This is used when clicking on the tab to load the correct frames
-    -- tab:SetText("World Events")  --This select the variables arguments passed into the function. Needs updating each expansion
-    -- tab:SetScript("OnClick", EAT_OnClick)       --This will run the Tab_OnClick() function once the user has selected a tab so we can load the correct frames into the GUI
-    -- tab:SetPoint("TOPLEFT")
-    -- tab:SetPoint("TOPLEFT", _G["ExplorationAchievementTrackerTab"], "TOPLEFT", 85, 0)
 
 	Tab_OnClick(_G[frameName.."Tab1"]) --Load in the main frame to begin with
 
@@ -1756,25 +1672,6 @@ function Instance_OnClick(self)
                 instanceLocation = core.Instances[core.expansion].Scenarios[core.instance]
             end
 
-            --Set the current tab to the expansion of the current instance
-            -- if core.expansion == 3 then
-            --     Config.currentTab = 9
-            -- elseif core.expansion == 4 then
-            --     Config.currentTab = 8
-            -- elseif core.expansion == 5 then
-            --     Config.currentTab = 7
-            -- elseif core.expansion == 6 then
-            --     Config.currentTab = 6
-            -- elseif core.expansion == 7 then
-            --     Config.currentTab = 5
-            -- elseif core.expansion == 8 then
-            --     Config.currentTab = 4
-            -- elseif core.expansion == 9 then
-            --     Config.currentTab = 3
-            -- elseif core.expansion == 10 then
-            --     Config.currentTab = 2
-            -- end
-
             --Set the current instance
             Config.currentInstance = core.instance
         end
@@ -2341,30 +2238,6 @@ function IATInfoFrame:SetupInfoFrame()
     InfoFrame:EnableMouse(true)
     core.LibWindow.EnableMouseWheelScaling(InfoFrame)
 
-
-    -- -- InfoFrame:SetBackdrop(frameBackdrop);
-    -- InfoFrame:SetMovable(true)
-    -- InfoFrame:EnableMouse(true)
-    -- InfoFrame:SetClampedToScreen(true)
-    -- InfoFrame:RegisterForDrag("LeftButton")
-    -- InfoFrame:SetScript("OnDragStart", UIConfig.StartMoving)
-    -- InfoFrame:SetScript("OnDragStop", function(self)
-    --     self:StopMovingOrSizing()
-    --     AchievementTrackerOptions["infoFrameXPos"] = self:GetLeft()
-    --     AchievementTrackerOptions["infoFrameYPos"] = self:GetBottom()
-    --     AchievementTrackerOptions["infoFrameScale"] = self:GetScale()
-    -- end)
-
-    -- --Info Frame X/Y Posiions
-	-- if AchievementTrackerOptions["infoFrameXPos"] ~= nil and AchievementTrackerOptions["infoFrameYPos"] ~= nil then
-    --     InfoFrame:ClearAllPoints()
-    --     InfoFrame:SetPoint("BOTTOMLEFT",AchievementTrackerOptions["infoFrameXPos"],AchievementTrackerOptions["infoFrameYPos"])
-
-    --     if AchievementTrackerOptions["infoFrameScale"] ~= nil then
-    --         InfoFrame:SetScale(AchievementTrackerOptions["infoFrameScale"])
-    --     end
-	-- end
-
     core:sendDebugMessage("InfoFrame Setup Complete")
     InfoFrame:SetShown(false)
 end
@@ -2390,14 +2263,6 @@ function IATInfoFrame:SetSubHeading1(text)
     InfoFrame.subHeading1:SetHeight(InfoFrame.subHeading1:GetStringHeight())
     InfoFrame.subHeading1:ClearAllPoints()
     InfoFrame.subHeading1:SetPoint("TOPLEFT", InfoFrame.heading, "BOTTOMLEFT", 0, -5)
-
-    -- if InfoFrame.subHeading1:GetStringWidth() > InfoFrame:GetWidth()then
-    --     InfoFrame:SetWidth(InfoFrame.subHeading1:GetRight() - InfoFrame.subHeading1:GetLeft() + 23)
-    -- end
-
-    -- if InfoFrame.subHeading1:GetBottom() ~= nil and InfoFrame:GetTop() ~= nil then
-    --     InfoFrame:SetHeight(InfoFrame.subHeading1:GetBottom() - InfoFrame:GetTop() - 10)
-    -- end
 end
 
 function IATInfoFrame:SetText1(text,size,colour,width)
@@ -2417,14 +2282,6 @@ function IATInfoFrame:SetText1(text,size,colour,width)
     InfoFrame.setText1:SetHeight(InfoFrame.setText1:GetStringHeight())
     InfoFrame.setText1:SetPoint("TOPLEFT", InfoFrame.subHeading1, "BOTTOMLEFT", 0, -5)
 
-    -- if InfoFrame.setText1:GetStringWidth() > InfoFrame:GetWidth()then
-    --     InfoFrame:SetWidth(InfoFrame.setText1:GetRight() - InfoFrame.setText1:GetLeft() + 23)
-    -- end
-
-    -- if InfoFrame.setText1:GetBottom() ~= nil and InfoFrame:GetTop() ~= nil then
-    --     InfoFrame:SetHeight(InfoFrame.setText1:GetBottom() - InfoFrame:GetTop() - 10)
-    -- end
-
     InfoFrame.setText1:SetJustifyH("LEFT")
     InfoFrame.setText1:SetJustifyV("TOP")
 end
@@ -2436,14 +2293,6 @@ function IATInfoFrame:SetSubHeading2(text)
     InfoFrame.setSubHeading2:SetText(text)
     InfoFrame.setSubHeading2:SetHeight(InfoFrame.setSubHeading2:GetStringHeight())
     InfoFrame.setSubHeading2:SetPoint("TOPLEFT", InfoFrame.setText1, "BOTTOMLEFT", 0, -5)
-
-    -- if InfoFrame.setSubHeading2:GetStringWidth() > InfoFrame:GetWidth()then
-    --     InfoFrame:SetWidth(InfoFrame.setSubHeading2:GetRight() - InfoFrame.setSubHeading2:GetLeft() + 23)
-    -- end
-
-    -- if InfoFrame.setSubHeading2:GetBottom() ~= nil and InfoFrame:GetTop() ~= nil then
-    --     InfoFrame:SetHeight(InfoFrame.setSubHeading2:GetBottom() - InfoFrame:GetTop() - 10)
-    -- end
 
     InfoFrame.setSubHeading2:SetJustifyH("LEFT")
     InfoFrame.setSubHeading2:SetJustifyV("TOP")
@@ -2461,14 +2310,6 @@ function IATInfoFrame:SetText2(text,width)
     InfoFrame.setText2:SetText(text)
     InfoFrame.setText2:SetHeight(InfoFrame.setText2:GetStringHeight())
     InfoFrame.setText2:SetPoint("TOPLEFT", InfoFrame.setSubHeading2, "BOTTOMLEFT", 0, -5)
-
-    -- if InfoFrame.setText2:GetStringWidth() > InfoFrame:GetWidth() and width == nil then
-    --     InfoFrame:SetWidth(InfoFrame.setText2:GetRight() - InfoFrame.setText2:GetLeft() + 23)
-    -- end
-
-    -- if InfoFrame.setText2:GetBottom() ~= nil and InfoFrame:GetTop() ~= nil then
-    --     InfoFrame:SetHeight(InfoFrame.setText2:GetBottom() - InfoFrame:GetTop() - 10)
-    -- end
 
     InfoFrame.setText2:SetJustifyH("LEFT")
     InfoFrame.setText2:SetJustifyV("BOTTOM")
@@ -2726,46 +2567,5 @@ function IAT_DisplayAchievement(achievementID)
         Config:Instance_OnClickAPI("API")
 
         Config:ToggleOn()
-
-        --Scroll to the correct position
-        -- C_Timer.After(1, function()
-        --     local _, maxVal =  UIConfig.ScrollFrame2.ScrollBar:GetMinMaxValues(); -- minVal = 0
-        --     --local size = UIConfig.ScrollFrame2:GetTop() - UIConfig.ScrollFrame2:GetBottom(); -- This way you know the total height of your tactics scroll frame
-        --     --Find Correct Frame
-        --     --print("IAT_Achievement_" .. lastExpansion .. "_1")
-
-        --     local newHeight = 0
-        --     local headersInUse = 0
-        --     -- print(maxVal,size,bossLocation, newHeight)
-        --     for i=1,200 do
-        --         local frameName = "IAT_Achievement_" .. lastExpansion .. "_" .. i
-        --         if _G[frameName].achievementID == achievementID then
-        --             --frameName = "IAT_Achievement_" .. (i - 1)
-        --             print("IAT_Achievement_" .. lastExpansion .. headersInUse)
-        --             local size = _G["IAT_Achievement_" .. lastExpansion .. "_1"].headerText:GetTop() - _G["IAT_Achievement_" .. lastExpansion .. "_" .. headersInUse]:GetBottom()
-        --             local headerFrame = _G[frameName].headerText
-        --             local bossLocation = headerFrame:GetTop(); -- this way you know where the boss is inside the container
-        --             -- Now, based on size, maxVal and bossLocation, you might be able to calculate where to set the scrollBar value to show boss on top
-        --             --local newHeight = size / newHeight * maxVal;
-        --             local scaleFactor = newHeight / size * maxVal
-        --             scaleFactor = min(scaleFactor, maxVal);
-        --             UIConfig.ScrollFrame2.ScrollBar:SetValue(math.abs(scaleFactor));
-        --             -- print(maxVal,size,bossLocation, scaleFactor)
-        --             -- print("Scrollbar MaxValue: " .. maxVal)
-        --             -- print("ScrollFrame Size: " .. size)
-        --             -- print("Location of boss in Frame: " .. bossLocation)
-        --             -- print("New Height: " .. newHeight)
-        --             -- print("Scale Factor: " .. scaleFactor)
-        --             -- print(UIConfig.ScrollFrame2:GetHeight())
-        --         else
-        --             headersInUse = headersInUse + 1
-        --             if (i % 2 == 0) then
-        --                 newHeight = newHeight + _G[frameName].contentText:GetContentHeight()
-        --             else
-        --                 newHeight = newHeight + _G[frameName].headerText:GetStringHeight()
-        --             end
-        --         end
-        --     end
-        -- end)
 	end
 end
