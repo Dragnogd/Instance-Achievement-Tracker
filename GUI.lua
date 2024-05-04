@@ -1393,11 +1393,9 @@ function Config:CreateGUI()
                     MistsOfPandariaNav[instanceTable.id] = self:CreateButton("TOPLEFT", MistsOfPandariaNav, "TOPLEFT", 0, instanceTable.name, instanceTable.id);
                     MistsOfPandariaNav[instanceTable.id]:SetScript("OnClick", Instance_OnClick);
                 elseif i == 4 then
-                    print(instanceTable.name)
                     CataclysmNav[instanceTable.id] = self:CreateButton("TOPLEFT", CataclysmNav, "TOPLEFT", 0, instanceTable.name, instanceTable.id);
                     CataclysmNav[instanceTable.id]:SetScript("OnClick", Instance_OnClick);
                 elseif i == 3 then
-                    print(instanceTable.name)
                     WrathOfTheLichKingNav[instanceTable.id] = self:CreateButton("TOPLEFT", WrathOfTheLichKingNav, "TOPLEFT", 0, instanceTable.name, instanceTable.id);
                     WrathOfTheLichKingNav[instanceTable.id]:SetScript("OnClick", Instance_OnClick);
                 end
@@ -1426,7 +1424,6 @@ function Config:CreateGUI()
                     CataclysmNav[instanceTable.id] = self:CreateButton("TOPLEFT", CataclysmNav[previousInstance], "TOPLEFT", -32, instanceTable.name, instanceTable.id);
                     CataclysmNav[instanceTable.id]:SetScript("OnClick", Instance_OnClick);
                 elseif i == 3 then
-                    print(instanceTable.name)
                     WrathOfTheLichKingNav[instanceTable.id] = self:CreateButton("TOPLEFT", WrathOfTheLichKingNav[previousInstance], "TOPLEFT", -32, instanceTable.name, instanceTable.id);
                     WrathOfTheLichKingNav[instanceTable.id]:SetScript("OnClick", Instance_OnClick);
                 end
