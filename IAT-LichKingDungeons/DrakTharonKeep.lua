@@ -17,6 +17,14 @@ local drakkariKilled = 0
 function core._600:Trollgore()
     --Defeat Trollgore in Drak'Tharon Keep on Heroic Difficulty before Consume reaches ten stacks.
 
+    if (core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_APPLIED_DOSE") and core.spellId == 49381 then
+        if core.type == "SPELL_AURA_APPLIED" then
+            print(1)
+        else
+            print(core.amount)
+        end
+    end
+
     if core.type == "SPELL_AURA_APPLIED_DOSE" and core.amount >= 10 and core.spellId == 59805 then
         core:getAchievementFailed()
     end

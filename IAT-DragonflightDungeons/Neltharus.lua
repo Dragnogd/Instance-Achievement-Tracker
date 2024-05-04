@@ -9,10 +9,13 @@ local L = core.L
 ------------------------------------------------------
 core._2519 = {}
 
+------------------------------------------------------
+---- Magmatusk
+------------------------------------------------------
+local magmaTentacleCheck = false
+
 function core._2519:ChargathBaneOfScales()
     --Defeat Chargath, Bane of Scales while burning less than 15 books in Neltharus on Mythic difficulty.
-
-    --TODO: Can we track when a book has been burned?
 
     if core:getBlizzardTrackingStatus(16438, 1) == false then
 		core:getAchievementFailed()
@@ -98,9 +101,23 @@ function core._2519:Magmatusk()
     --Defeat Magmatusk after it has been mutated with Draconic Tincture in Neltharus on Mythic difficulty.
 
     --TODO: Check if this has blizzard tracking
-    --TODO: Annouce to chat each time stacks increases/decreases and announce success if no blizzard tracking
 
-    if (core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_APPLIED_DOSE") and core.spellId == 374410 then
-    else
+    --On boss pull check if we have all the required stacks, otherwise announce fail
+    if magmaTentacleCheck == false then
+        magmaTentacleCheck = true
+        local buffFound = false
+
+        for i = 1, 40 do
+            local _, _, stacks, _, _, _, _, _, _, spellId = UnitBuff(bossUnit, i)
+            if spellId == 374410 and stacks == 5 then
+                buffFound = true
+            end
+        end
+
+        if buffFound then
+            core:getAchievementSuccess()
+        else
+            core:getAchievementFailed()
+        end
     end
 end
