@@ -1,0 +1,29 @@
+﻿## Interface: 100206
+## Notes: An addon for tracking the completion/faliure of instance achievements.
+## Title:Instance Achievement Tracker
+## Author: Whizzey
+## Version: 4.42.0
+## LoadOnDemand: 1
+## RequiredDeps: IAT-Core
+## IconTexture: Interface/AddOns/InstanceAchievementTracker/Images/icon.jpg
+## X-Curse-Project-ID: 286675
+## X-WoWI-ID: 24756
+## X-Wago-ID: RBKpXaKE
+
+PandariaScenarios\ABrewingStorm.lua
+PandariaScenarios\ALittlePatience.lua
+PandariaScenarios\ArenaOfAnnihilation.lua
+PandariaScenarios\AssaultOnZanvess.lua
+PandariaScenarios\BattleOnTheHighSeas.lua
+PandariaScenarios\BloodInTheSnow.lua
+PandariaScenarios\BrewmoonFestival.lua
+PandariaScenarios\CryptOfForgottenKings.lua
+PandariaScenarios\DaggerInTheDark.lua
+PandariaScenarios\DarkHeartOfPandaria.lua
+PandariaScenarios\GreenstoneVillage.lua
+PandariaScenarios\LionsLanding.lua
+PandariaScenarios\DominationPoint.lua
+PandariaScenarios\SecretsOfRagefire.lua
+PandariaScenarios\TheramoresFallAlliance.lua
+PandariaScenarios\TheramoresFallHorde.lua
+PandariaScenarios\UngaIngoo.lua
