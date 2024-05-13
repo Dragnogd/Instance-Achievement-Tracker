@@ -1683,9 +1683,9 @@ function events:ENCOUNTER_START(self, encounterID, encounterName, difficultyID, 
 	if encounterID ~= nil then
 		--Found the boss encounter ID so clear out any other bosses currently stored
 		if core.lockDetection == false then
-			if core.gameVersionMajor > 4 then
+			if core.gameVersionMajor >= 4 then
 				detectBossByEncounterID(encounterID)
-			elseif core.gameVersionMajor == 4 then
+			elseif core.gameVersionMajor == 3 then
 				detectBossByEncounterIDClassic(encounterID)
 			end
 		end
