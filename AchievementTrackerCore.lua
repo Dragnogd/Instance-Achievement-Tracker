@@ -2077,7 +2077,7 @@ function checkAndClearInstanceVariables()
 
 		--Untrack achievements that we tracked
 		for k,v in pairs(trackAchievementInUiTable) do
-			if core.gameVersionMajor == 3 then
+			if core.gameVersionMajor == 3 or core.gameVersionMajor == 4 then
 				RemoveTrackedAchievement(v)
 			else
 				C_ContentTracking.StopTracking(2, v, 2)
