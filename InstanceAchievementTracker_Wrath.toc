@@ -2,7 +2,7 @@
 ## Notes: An addon for tracking the completion/faliure of instance achievements.
 ## Title:Instance Achievement Tracker
 ## Author: Whizzey
-## Version: 4.43.0
+## Version: 4.44.0
 ## IconTexture: Interface/AddOns/InstanceAchievementTracker/Images/icon.jpg
 ## OptionalDeps: LibStub, CallbackHandler-1.0, LibDBIcon-1.0, LibInspect, LibRangeCheck-2.0, LibWindow-1.1
 ## SavedVariables: AchievementTrackerOptions, AchievementTrackerDebug, AchievementTrackerNPCCache, AchievementTrackerNPCCacheClassic
