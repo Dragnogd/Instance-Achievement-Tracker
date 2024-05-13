@@ -1,5 +1,5 @@
 --------------------------------------
--- Last Auto Generated: 13/05/2024 20:41:06
+-- Last Auto Generated: 13/05/2024 21:02:34
 --------------------------------------
 local _, core = ...
 local L = core.L
@@ -5565,6 +5565,31 @@ core.Instances = {
 			[643] = { --Throne of the Tides
 				name = 65,
 				classicPhase = 1,
+				classicOnly = true,
+				boss1 = {
+					name = 101, --Lady Naz'Jar
+					bossIDs = {40586},
+					achievement = 5285,
+					players = {},
+					tactics = format(L["ThroneOfTheTides_LadyNazJar"], "IAT_43468", "IAT_40634", "IAT_44530", "IAT_44530", "IAT_44530"),
+					enabled = true,
+					track = function() core._643:LadyNazjar() end,
+					partial = false,
+					encounterID = 1045,
+					tacticsClassic = "",
+				},
+				boss2 = {
+					name = 104, --Ozumat
+					bossIDs = {44658, 44715, 44648},
+					achievement = 5286,
+					players = {},
+					tactics = L["ThroneOfTheTides_Ozumat"],
+					enabled = true,
+					track = function() core._643:Ozumat() end,
+					partial = false,
+					encounterID = 1047,
+					tacticsClassic = "",
+				},
 			},
 
 			[725] = { --The Stonecore
