@@ -1305,7 +1305,9 @@ function Config:CreateGUI()
                     --In classic cata only cata is in encounter journal
                     if core.gameVersionMajor == 4 then
                         if i == 4 then
-                            instanceName = Config:getLocalisedInstanceName(core.Instances[i].Raids[instance].name)
+                            if core.Instances[i].Raids[instance].classicPhase <= Config.classicPhase then
+                                instanceName = Config:getLocalisedInstanceName(core.Instances[i].Raids[instance].name)
+                            end
                         else
                             instanceName = ""
                         end
@@ -1332,7 +1334,9 @@ function Config:CreateGUI()
                 --All other expansions have the encounter journal so pass the ID to fetch from API
                 if core.gameVersionMajor == 4 then
                     if i == 4 then
-                        instanceName = Config:getLocalisedInstanceName(core.Instances[i].Dungeons[instance].name)
+                        if core.Instances[i].Dungeons[instance].classicPhase <= Config.classicPhase then
+                            instanceName = Config:getLocalisedInstanceName(core.Instances[i].Dungeons[instance].name)
+                        end
                     else
                         instanceName = ""
                     end
