@@ -1,5 +1,5 @@
 --------------------------------------
--- Last Auto Generated: 13/04/2024 17:23:43
+-- Last Auto Generated: 13/05/2024 20:41:06
 --------------------------------------
 local _, core = ...
 local L = core.L
@@ -5158,7 +5158,7 @@ core.Instances = {
 		Raids = {
 			[967] = { --Dragon Soul
 				name = 187,
-				classicPhase = 5,
+				classicPhase = 8,
 				boss1 = {
 					name = 311, --Morchok
 					bossIDs = {},
@@ -5169,6 +5169,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 1292,
+					tacticsClassic = "",
 				},
 				boss2 = {
 					name = 324, --Warlord Zon'ozz
@@ -5180,6 +5181,7 @@ core.Instances = {
 					track = function() core._967:WarlordZonozz() end,
 					partial = false,
 					encounterID = 1294,
+					tacticsClassic = "",
 				},
 				boss3 = {
 					name = 325, --Yor'sahj the Unsleeping
@@ -5191,6 +5193,7 @@ core.Instances = {
 					track = function() core._967:YorsahjTheUnsleeping() end,
 					partial = false,
 					encounterID = 1295,
+					tacticsClassic = "",
 				},
 				boss4 = {
 					name = 317, --Hagara the Stormbinder
@@ -5202,6 +5205,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 1296,
+					tacticsClassic = "",
 				},
 				boss5 = {
 					name = 331, --Ultraxion
@@ -5213,6 +5217,7 @@ core.Instances = {
 					track = function() core._967:Ultraxion() end,
 					partial = false,
 					encounterID = 1297,
+					tacticsClassic = "",
 				},
 				boss6 = {
 					name = 332, --Warmaster Blackhorn
@@ -5224,6 +5229,7 @@ core.Instances = {
 					track = function() core._967:Skyfire() end,
 					partial = false,
 					encounterID = 1298,
+					tacticsClassic = "",
 				},
 				boss7 = {
 					name = 318, --Spine of Deathwing
@@ -5235,6 +5241,7 @@ core.Instances = {
 					track = function() core._967:SpineOfDeathwing() end,
 					partial = false,
 					encounterID = 1291,
+					tacticsClassic = "",
 				},
 				boss8 = {
 					name = 333, --Madness of Deathwing
@@ -5246,6 +5253,7 @@ core.Instances = {
 					track = function() end,
 					partial = false,
 					encounterID = 1299,
+					tacticsClassic = "",
 				},
 			},
 
@@ -5262,6 +5270,7 @@ core.Instances = {
 					track = function() core._669:Magmaw() end,
 					partial = false,
 					encounterID = 1024,
+					tacticsClassic = "",
 				},
 				boss2 = {
 					name = 169, --Omnotron Defense System
@@ -5273,6 +5282,7 @@ core.Instances = {
 					track = function() core._669:OminitronDefenseSystem() end,
 					partial = false,
 					encounterID = 1027,
+					tacticsClassic = "",
 				},
 				boss3 = {
 					name = 173, --Maloriak
@@ -5285,6 +5295,7 @@ core.Instances = {
 					partial = false,
 					encounterID = 1025,
 					displayInfoFrame = true,
+					tacticsClassic = "",
 				},
 				boss4 = {
 					name = 171, --Atramedes
@@ -5296,6 +5307,7 @@ core.Instances = {
 					track = function() end,
 					partial = false,
 					encounterID = 1022,
+					tacticsClassic = "",
 				},
 				boss5 = {
 					name = 172, --Chimaeron
@@ -5307,6 +5319,7 @@ core.Instances = {
 					track = function() core._669:Chimaeron() end,
 					partial = false,
 					encounterID = 1023,
+					tacticsClassic = "",
 				},
 				boss6 = {
 					name = 174, --Nefarian
@@ -5318,6 +5331,7 @@ core.Instances = {
 					track = function() core._669:Nefarian() end,
 					partial = false,
 					encounterID = 1026,
+					tacticsClassic = "",
 				},
 			},
 
@@ -5334,6 +5348,7 @@ core.Instances = {
 					track = function() core._671:HalfusWyrmbreaker() end,
 					partial = false,
 					encounterID = 1030,
+					tacticsClassic = "",
 				},
 				boss2 = {
 					name = 157, --Valiona And Theralion
@@ -5345,6 +5360,7 @@ core.Instances = {
 					track = function() core._671:ValionaAndTheralion() end,
 					partial = false,
 					encounterID = 1032,
+					tacticsClassic = "",
 				},
 				boss3 = {
 					name = 158, --Ascendant Council
@@ -5356,6 +5372,7 @@ core.Instances = {
 					track = function() core._671:AscendantCouncil() end,
 					partial = false,
 					encounterID = 1028,
+					tacticsClassic = "",
 				},
 				boss4 = {
 					name = 167, --Cho'gall
@@ -5367,6 +5384,7 @@ core.Instances = {
 					track = function() end,
 					partial = false,
 					encounterID = 1029,
+					tacticsClassic = "",
 				},
 			},
 
@@ -5383,6 +5401,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 1035,
+					tacticsClassic = "",
 				},
 				boss2 = {
 					name = 155, --Al'Akir
@@ -5394,12 +5413,13 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 1034,
+					tacticsClassic = "",
 				},
 			},
 
 			[720] = { --Firelands
 				name = 78,
-				classicPhase = 5,
+				classicPhase = 7,
 				boss1 = {
 					name = 192, --Beth'tilac
 					bossIDs = {52498},
@@ -5410,6 +5430,7 @@ core.Instances = {
 					track = function() core._720:Bethtilac() end,
 					partial = false,
 					encounterID = 1197,
+					tacticsClassic = "",
 				},
 				boss2 = {
 					name = 193, --Lord Rhyolith
@@ -5421,6 +5442,7 @@ core.Instances = {
 					track = function() end,
 					partial = false,
 					encounterID = 1204,
+					tacticsClassic = "",
 				},
 				boss3 = {
 					name = 194, --Alysrazor
@@ -5432,6 +5454,7 @@ core.Instances = {
 					track = function() core._720:Alysrazor() end,
 					partial = false,
 					encounterID = 1206,
+					tacticsClassic = "",
 				},
 				boss4 = {
 					name = 195, --Shannox
@@ -5444,6 +5467,7 @@ core.Instances = {
 					partial = false,
 					encounterID = 1205,
 					image = {"Shannox","512","256"},
+					tacticsClassic = "",
 				},
 				boss5 = {
 					name = 196, --Baleroc
@@ -5455,6 +5479,7 @@ core.Instances = {
 					track = function() core._720:Baleroc() end,
 					partial = false,
 					encounterID = 1200,
+					tacticsClassic = "",
 				},
 				boss6 = {
 					name = 197, --Majordomo Staghelm
@@ -5466,6 +5491,7 @@ core.Instances = {
 					track = function() end,
 					partial = false,
 					encounterID = 1185,
+					tacticsClassic = "",
 				},
 				boss7 = {
 					name = 198, --Ragnaros
@@ -5477,6 +5503,7 @@ core.Instances = {
 					track = function() core._720:Ragnaros() end,
 					partial = false,
 					encounterID = 1203,
+					tacticsClassic = "",
 				},
 			},
 		},
@@ -5495,6 +5522,7 @@ core.Instances = {
 					track = function() core._645:RomoggBonecrusher() end,
 					partial = false,
 					encounterID = 1040,
+					tacticsClassic = "",
 				},
 				boss2 = {
 					name = 106, --Corla
@@ -5506,6 +5534,7 @@ core.Instances = {
 					track = function() core._645:Corla() end,
 					partial = false,
 					encounterID = 1038,
+					tacticsClassic = "",
 				},
 				boss3 = {
 					name = 107, --Karsh Steelbender
@@ -5517,6 +5546,7 @@ core.Instances = {
 					track = function() core._645:KarshSteelbender() end,
 					partial = false,
 					encounterID = 1039,
+					tacticsClassic = "",
 				},
 				boss4 = {
 					name = 109, --Ascendant Lord Obsidius
@@ -5528,12 +5558,13 @@ core.Instances = {
 					track = function() core._645:AscendantLordObsidius() end,
 					partial = false,
 					encounterID = 1036,
+					tacticsClassic = "",
 				},
 			},
 
 			[643] = { --Throne of the Tides
 				name = 65,
-				classicPhase = 5,
+				classicPhase = 1,
 			},
 
 			[725] = { --The Stonecore
@@ -5549,6 +5580,7 @@ core.Instances = {
 					track = function() core._725:HighPriestessAzil() end,
 					partial = false,
 					encounterID = 1057,
+					tacticsClassic = "",
 				},
 			},
 
@@ -5565,6 +5597,7 @@ core.Instances = {
 					track = function() core._657:Asaad() end,
 					partial = false,
 					encounterID = 1042,
+					tacticsClassic = "",
 				},
 				boss2 = {
 					name = L["Instances_Other"], --MISSINGNAME62
@@ -5575,6 +5608,7 @@ core.Instances = {
 					enabled = false,
 					track = nil,
 					partial = false,
+					tacticsClassic = "",
 				},
 			},
 
@@ -5591,6 +5625,7 @@ core.Instances = {
 					track = function() core._670:GeneralUmbriss() end,
 					partial = false,
 					encounterID = 1051,
+					tacticsClassic = "",
 				},
 				boss2 = {
 					name = 134, --Erudax
@@ -5602,6 +5637,7 @@ core.Instances = {
 					track = function() core._670:Erudax() end,
 					partial = false,
 					encounterID = 1049,
+					tacticsClassic = "",
 				},
 			},
 
@@ -5618,6 +5654,7 @@ core.Instances = {
 					track = function() core._644:TempleGuardianAnhuur() end,
 					partial = false,
 					encounterID = 1080,
+					tacticsClassic = "",
 				},
 				boss2 = {
 					name = 125, --Earthrager Ptah
@@ -5629,6 +5666,7 @@ core.Instances = {
 					track = function() core._644:EarthragerPtah() end,
 					partial = false,
 					encounterID = 1076,
+					tacticsClassic = "",
 				},
 				boss3 = {
 					name = L["Instances_Other"], --MISSINGNAME63
@@ -5639,6 +5677,7 @@ core.Instances = {
 					enabled = false,
 					track = nil,
 					partial = false,
+					tacticsClassic = "",
 				},
 				boss4 = {
 					name = 130, --Rajh
@@ -5650,6 +5689,7 @@ core.Instances = {
 					track = function() core._644:Rajh() end,
 					partial = false,
 					encounterID = 1078,
+					tacticsClassic = "",
 				},
 			},
 
@@ -5666,6 +5706,7 @@ core.Instances = {
 					track = function() core._755:Lockmaw() end,
 					partial = false,
 					encounterID = 1054,
+					tacticsClassic = "",
 				},
 				boss2 = {
 					name = 119, --High Prophet Barim
@@ -5677,6 +5718,7 @@ core.Instances = {
 					track = function() core._755:HighProphetBarim() end,
 					partial = false,
 					encounterID = 1053,
+					tacticsClassic = "",
 				},
 				boss3 = {
 					name = 122, --Siamat
@@ -5688,6 +5730,7 @@ core.Instances = {
 					track = function() core._755:Siamat() end,
 					partial = false,
 					encounterID = 1055,
+					tacticsClassic = "",
 				},
 			},
 
@@ -5704,6 +5747,7 @@ core.Instances = {
 					track = function() core._36:Glubtok() end,
 					partial = false,
 					encounterID = 1064,
+					tacticsClassic = "",
 				},
 				boss2 = {
 					name = 90, --Helix Gearbreaker
@@ -5715,6 +5759,7 @@ core.Instances = {
 					track = function() core._36:HelixGearbreaker() end,
 					partial = false,
 					encounterID = 1065,
+					tacticsClassic = "",
 				},
 				boss3 = {
 					name = 91, --Foe Reaper 5000
@@ -5726,6 +5771,7 @@ core.Instances = {
 					track = nil,
 					partial = true,
 					encounterID = 1063,
+					tacticsClassic = "",
 				},
 				boss4 = {
 					name = 92, --Admiral Ripsnarl
@@ -5737,6 +5783,7 @@ core.Instances = {
 					track = function() core._36:AdmiralRipsnarl() end,
 					partial = false,
 					encounterID = 1062,
+					tacticsClassic = "",
 				},
 				boss5 = {
 					name = 93, --'Captain' Cookie
@@ -5748,6 +5795,7 @@ core.Instances = {
 					track = function() core._36:CaptainCookie() end,
 					partial = false,
 					encounterID = 1060,
+					tacticsClassic = "",
 				},
 				boss6 = {
 					name = 95, --Vanessa VanCleef
@@ -5759,6 +5807,7 @@ core.Instances = {
 					track = function() core._36:VanessaVanCleef() end,
 					partial = false,
 					encounterID = 1081,
+					tacticsClassic = "",
 				},
 			},
 
@@ -5775,6 +5824,7 @@ core.Instances = {
 					track = function() core._33:BaronAshbury() end,
 					partial = false,
 					encounterID = 1069,
+					tacticsClassic = "",
 				},
 				boss2 = {
 					name = 98, --Commander Springvale
@@ -5786,6 +5836,7 @@ core.Instances = {
 					track = function() core._33:CommanderSpringvale() end,
 					partial = false,
 					encounterID = 1071,
+					tacticsClassic = "",
 				},
 				boss3 = {
 					name = 100, --Lord Godfrey
@@ -5797,12 +5848,13 @@ core.Instances = {
 					track = function() core._33:LordGodfrey() end,
 					partial = false,
 					encounterID = 1072,
+					tacticsClassic = "",
 				},
 			},
 
 			[859] = { --Zul'Gurub
 				name = 76,
-				classicPhase = 5,
+				classicPhase = 6,
 				boss1 = {
 					name = L["Instances_Other"], --Gurubashi Headhunter
 					bossIDs = {},
@@ -5812,6 +5864,7 @@ core.Instances = {
 					enabled = false,
 					track = nil,
 					partial = false,
+					tacticsClassic = "",
 				},
 				boss2 = {
 					name = 175, --High Priest Venoxis
@@ -5823,6 +5876,7 @@ core.Instances = {
 					track = function() core._859:HighPriestVenoxis() end,
 					partial = false,
 					encounterID = 1178,
+					tacticsClassic = "",
 				},
 				boss3 = {
 					name = 176, --Bloodlord Mandokir
@@ -5834,6 +5888,7 @@ core.Instances = {
 					track = function() core._859:BloodlordMandokir() end,
 					partial = false,
 					encounterID = 1179,
+					tacticsClassic = "",
 				},
 				boss4 = {
 					name = 181, --High Priestess Kilnara
@@ -5845,6 +5900,7 @@ core.Instances = {
 					track = function() core._859:HighPriestessKilnara() end,
 					partial = false,
 					encounterID = 1180,
+					tacticsClassic = "",
 				},
 				boss5 = {
 					name = 185, --Jin'do
@@ -5856,12 +5912,13 @@ core.Instances = {
 					track = function() core._859:Jindo() end,
 					partial = false,
 					encounterID = 1182,
+					tacticsClassic = "",
 				},
 			},
 
 			[568] = { --Zul'Aman
 				name = 77,
-				classicPhase = 5,
+				classicPhase = 6,
 				boss1 = {
 					name = 189, --Halazzi
 					bossIDs = {23577},
@@ -5872,6 +5929,7 @@ core.Instances = {
 					track = function() core._568:Halazzi() end,
 					partial = false,
 					encounterID = 1192,
+					tacticsClassic = "",
 				},
 				boss2 = {
 					name = L["Instances_Other"], --MISSINGNAME65
@@ -5882,6 +5940,7 @@ core.Instances = {
 					enabled = false,
 					track = nil,
 					partial = false,
+					tacticsClassic = "",
 				},
 				boss3 = {
 					name = L["Instances_Other"], --MISSINGNAME66
@@ -5892,6 +5951,7 @@ core.Instances = {
 					enabled = false,
 					track = nil,
 					partial = false,
+					tacticsClassic = "",
 				},
 				boss4 = {
 					name = 191, --Daakara
@@ -5903,12 +5963,13 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 1194,
+					tacticsClassic = "",
 				},
 			},
 
 			[938] = { --End Time
 				name = 184,
-				classicPhase = 5,
+				classicPhase = 8,
 				boss1 = {
 					name = 283, --Echo of Tyrande
 					bossIDs = {},
@@ -5919,6 +5980,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 1884,
+					tacticsClassic = "",
 				},
 				boss2 = {
 					name = 323, --Echo of Sylvanas
@@ -5930,12 +5992,13 @@ core.Instances = {
 					track = function() core._938:EchoOfSylvanas() end,
 					partial = false,
 					encounterID = 1882,
+					tacticsClassic = "",
 				},
 			},
 
 			[939] = { --Well of Eternity
 				name = 185,
-				classicPhase = 5,
+				classicPhase = 8,
 				boss1 = {
 					name = 290, --Peroth'arn
 					bossIDs = {55085},
@@ -5946,6 +6009,7 @@ core.Instances = {
 					track = function() core._939:Perotharn() end,
 					partial = false,
 					encounterID = 1272,
+					tacticsClassic = "",
 				},
 				boss2 = {
 					name = 292, --Mannoroth
@@ -5957,12 +6021,13 @@ core.Instances = {
 					track = function() core._939:Mannoroth() end,
 					partial = false,
 					encounterID = 1274,
+					tacticsClassic = "",
 				},
 			},
 
 			[940] = { --Hour of Twilight
 				name = 186,
-				classicPhase = 5,
+				classicPhase = 8,
 				boss1 = {
 					name = 341, --Archbishop Benedictus
 					bossIDs = {54938},
@@ -5973,6 +6038,7 @@ core.Instances = {
 					track = function() core._940:ArchbishopBenedictus() end,
 					partial = false,
 					encounterID = 1339,
+					tacticsClassic = "",
 				},
 			},
 		},
