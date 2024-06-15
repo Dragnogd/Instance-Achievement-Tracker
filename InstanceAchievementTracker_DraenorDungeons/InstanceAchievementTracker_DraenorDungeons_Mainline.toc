@@ -1,15 +1,20 @@
 ﻿## Interface: 100206
 ## Notes: An addon for tracking the completion/faliure of instance achievements.
-## Title:Instance Achievement Tracker
+## Title:IAT|cffc030c0 Dungeons (WoD)|r
 ## Author: Whizzey
 ## Version: 4.42.0
 ## LoadOnDemand: 1
-## RequiredDeps: IAT-Core
+## RequiredDeps: InstanceAchievementTracker
 ## IconTexture: Interface/AddOns/InstanceAchievementTracker/Images/icon.jpg
 ## X-Curse-Project-ID: 286675
 ## X-WoWI-ID: 24756
 ## X-Wago-ID: RBKpXaKE
 
-DraenorRaids\BlackrockFoundary.lua
-DraenorRaids\HellfireCitadel.lua
-DraenorRaids\Highmaul.lua
+Auchindoun.lua
+BloodmaulSlagMines.lua
+GrimrailDepot.lua
+IronDocks.lua
+ShadowmoonBurialGrounds.lua
+Skyreach.lua
+TheEverbloom.lua
+UpperBlackrockSpire.lua

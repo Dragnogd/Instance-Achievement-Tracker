@@ -1,0 +1,26 @@
+﻿## Interface: 100206
+## Notes: An addon for tracking the completion/faliure of instance achievements.
+## Title:IAT|cffc030c0 Dungeons (Cata)|r
+## Author: Whizzey
+## Version: 4.42.0
+## LoadOnDemand: 1
+## RequiredDeps: InstanceAchievementTracker
+## IconTexture: Interface/AddOns/InstanceAchievementTracker/Images/icon.jpg
+## X-Curse-Project-ID: 286675
+## X-WoWI-ID: 24756
+## X-Wago-ID: RBKpXaKE
+
+BlackrockCaverns.lua
+EndTime.lua
+GrimBatol.lua
+HallsOfOrigination.lua
+HourOfTwilight.lua
+LostCityOfTolvir.lua
+ShadowfangKeep.lua
+Stonecore.lua
+TheDeadmines.lua
+ThroneOfTheTides.lua
+VortexPinnacle.lua
+WellOfEternity.lua
+ZulAman.lua
+ZulGurub.lua

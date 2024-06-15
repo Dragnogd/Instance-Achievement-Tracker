@@ -1,0 +1,28 @@
+﻿## Interface: 40400
+## Notes: An addon for tracking the completion/faliure of instance achievements.
+## Title:IAT|cffc030c0 Dungeons (WotLK)|r
+## Author: Whizzey
+## Version: 4.42.0
+## LoadOnDemand: 1
+## RequiredDeps: IAT-Core
+## IconTexture: Interface/AddOns/InstanceAchievementTracker/Images/icon.jpg
+## X-Curse-Project-ID: 286675
+## X-WoWI-ID: 24756
+## X-Wago-ID: RBKpXaKE
+
+AhnkahetTheOldKingdom.lua
+AzjolNerub.lua
+DrakTharonKeep.lua
+ForgeOfSouls.lua
+Gundrak.lua
+HallsOfLightning.lua
+HallsOfReflection.lua
+HallsOfStone.lua
+PitOfSaron.lua
+TheCullingOfStratholme.lua
+TheNexus.lua
+TheOculus.lua
+TheVioletHold.lua
+TrialOfTheChampion.lua
+UtgardeKeep.lua
+UtgardePinnacle.lua

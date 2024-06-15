@@ -1,15 +1,23 @@
 ﻿## Interface: 100206
 ## Notes: An addon for tracking the completion/faliure of instance achievements.
-## Title:Instance Achievement Tracker
+## Title:IAT|cffc030c0 Dungeons (BfA)|r
 ## Author: Whizzey
 ## Version: 4.42.0
 ## LoadOnDemand: 1
-## RequiredDeps: IAT-Core
+## RequiredDeps: InstanceAchievementTracker
 ## IconTexture: Interface/AddOns/InstanceAchievementTracker/Images/icon.jpg
 ## X-Curse-Project-ID: 286675
 ## X-WoWI-ID: 24756
 ## X-Wago-ID: RBKpXaKE
 
-DragonflightRaids\VaultOfTheIncarnates.lua
-DragonflightRaids\AberrusTheShadowedCrucible.lua
-DragonflightRaids\AmirdrassilTheDreamsHope.lua
+AtalDazar.lua
+Freehold.lua
+KingsRest.lua
+ShrineOfTheStorm.lua
+SiegeOfBoralus.lua
+TempleOfSethraliss.lua
+TheMotherlode.lua
+TheUnderrot.lua
+TolDagor.lua
+WaycrestManor.lua
+OperationMechagon.lua

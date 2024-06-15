@@ -1,0 +1,17 @@
+﻿## Interface: 40400
+## Notes: An addon for tracking the completion/faliure of instance achievements.
+## Title:IAT|cff69ccf0 Raids (Cata)|r
+## Author: Whizzey
+## Version: 4.42.0
+## LoadOnDemand: 1
+## RequiredDeps: InstanceAchievementTracker
+## IconTexture: Interface/AddOns/InstanceAchievementTracker/Images/icon.jpg
+## X-Curse-Project-ID: 286675
+## X-WoWI-ID: 24756
+## X-Wago-ID: RBKpXaKE
+
+BastionOfTwilight.lua
+BlackwingDescent.lua
+DragonSoul.lua
+Firelands.lua
+ThroneOfTheFourWinds.lua

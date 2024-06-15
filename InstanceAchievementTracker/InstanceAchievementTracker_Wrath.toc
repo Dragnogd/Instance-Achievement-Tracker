@@ -1,6 +1,6 @@
 ﻿## Interface: 30403
 ## Notes: An addon for tracking the completion/faliure of instance achievements.
-## Title:Instance Achievement Tracker
+## Title:IAT|cff10ff10 Core|r
 ## Author: Whizzey
 ## Version: 4.42.0
 ## IconTexture: Interface/AddOns/InstanceAchievementTracker/Images/icon.jpg

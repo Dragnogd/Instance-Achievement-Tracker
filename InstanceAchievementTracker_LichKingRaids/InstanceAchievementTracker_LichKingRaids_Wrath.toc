@@ -1,6 +1,6 @@
 ﻿## Interface: 30403
 ## Notes: An addon for tracking the completion/faliure of instance achievements.
-## Title:Instance Achievement Tracker
+## Title:IAT|cff69ccf0 Raids (WotLK)|r
 ## Author: Whizzey
 ## Version: 4.42.0
 ## LoadOnDemand: 1
@@ -10,11 +10,11 @@
 ## X-WoWI-ID: 24756
 ## X-Wago-ID: RBKpXaKE
 
-LichKingRaids\Icecrown.lua
-LichKingRaids\EyeOfEternity.lua
-LichKingRaids\Naxxramas.lua
-LichKingRaids\ObsidianSanctum.lua
-LichKingRaids\OnyxiasLair.lua
-LichKingRaids\TrialOfTheCrusader.lua
-LichKingRaids\Ulduar.lua
-LichKingRaids\VaultOfArchavon.lua
+Icecrown.lua
+EyeOfEternity.lua
+Naxxramas.lua
+ObsidianSanctum.lua
+OnyxiasLair.lua
+TrialOfTheCrusader.lua
+Ulduar.lua
+VaultOfArchavon.lua
