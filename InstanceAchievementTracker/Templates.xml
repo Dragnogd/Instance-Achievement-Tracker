@@ -1,0 +1,185 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
+	<EventButton name="CustomFrameTemplate" mixin="BossContentMixin" inherits="TooltipBorderBackdropTemplate" virtual="true">
+		<Size x="434" y="142"/>
+		<Layers>
+		  <Layer level="BACKGROUND">
+			<Texture parentKey="Background" file="Interface\AddOns\InstanceAchievementTracker\Images\UI-MailFrameBG.png">
+				<Anchors>
+				<Anchor point="TOPLEFT" x="3" y="-3"/>
+				<Anchor point="BOTTOMRIGHT" x="-3" y="3"/>
+			  </Anchors>
+			</Texture>
+		  </Layer>
+		  <Layer level="BORDER">
+			<Texture parentKey="BottomLeftTsunami" file="Interface\AchievementFrame\UI-Achievement-Tsunami-Corners">
+			  <Size x="32" y="32"/>
+			  <Anchors>
+				<Anchor point="BOTTOMLEFT" x="-2" y="-2"/>
+			  </Anchors>
+			  <Color r="1" g="1" b="1" a=".2"/>
+			  <TexCoords left="0" right=".5" top="0" bottom="1"/>
+			</Texture>
+			<Texture parentKey="BottomRightTsunami" file="Interface\AchievementFrame\UI-Achievement-Tsunami-Corners">
+			  <Size x="32" y="32"/>
+			  <Anchors>
+				<Anchor point="BOTTOMRIGHT" x="2" y="-2"/>
+			  </Anchors>
+			  <Color r="1" g="1" b="1" a=".2"/>
+			  <TexCoords left=".5" right="1" top="0" bottom="1"/>
+			</Texture>
+			<Texture parentKey="TopLeftTsunami" file="Interface\AchievementFrame\UI-Achievement-Tsunami-Corners">
+			  <Size x="32" y="32"/>
+			  <Anchors>
+				<Anchor point="TOPLEFT" x="-2" y="-20"/>
+			  </Anchors>
+			  <Color r="1" g="1" b="1" a=".1"/>
+			  <TexCoords left="1" right=".5" top="1" bottom="0"/>
+			</Texture>
+			<Texture parentKey="TopRightTsunami" file="Interface\AchievementFrame\UI-Achievement-Tsunami-Corners">
+			  <Size x="32" y="32"/>
+			  <Anchors>
+				<Anchor point="TOPRIGHT" x="2" y="-20"/>
+			  </Anchors>
+			  <Color r="1" g="1" b="1" a=".1"/>
+			  <TexCoords left=".5" right="0" top="1" bottom="0"/>
+			</Texture>
+			<Texture parentKey="BottomTsunami1" file="Interface\AchievementFrame\UI-Achievement-Borders">
+			  <Size x="370" y="16"/>
+			  <Anchors>
+				<Anchor point="BOTTOMLEFT" relativeKey="$parent.BottomLeftTsunami" relativePoint="BOTTOMRIGHT" x="0" y="3"/>
+				<Anchor point="BOTTOMRIGHT" relativeKey="$parent.BottomRightTsunami" relativePoint="BOTTOMLEFT"/>
+			  </Anchors>
+			  <Color r="1" g="1" b="1" a=".35"/>
+			  <TexCoords left="0" right="0.72265" top="0.51953125" bottom="0.58203125"/>
+			</Texture>
+			<Texture parentKey="TopTsunami1" file="Interface\AchievementFrame\UI-Achievement-Borders">
+			  <Size x="370" y="16"/>
+			  <Anchors>
+				<Anchor point="TOPLEFT" relativeKey="$parent.TopLeftTsunami" relativePoint="TOPRIGHT" x="0" y="-3"/>
+				<Anchor point="TOPRIGHT" relativeKey="$parent.TopRightTsunami" relativePoint="TOPLEFT"/>
+			  </Anchors>
+			  <Color r="1" g="1" b="1" a="0.3"/>
+			  <TexCoords left="0.72265" right="0" top="0.58203125" bottom="0.51953125"/>
+			</Texture>
+		  </Layer>
+		  <Layer level="ARTWORK">
+			<Texture parentKey="TitleBar" file="Interface\AchievementFrame\UI-Achievement-Borders">
+			  <Size x="0" y="24"/>
+			  <Anchors>
+				<Anchor point="TOPLEFT" x="5" y="-4"/>
+				<Anchor point="TOPRIGHT" x="-5" y="-4"/>
+			  </Anchors>
+			  <TexCoords left="0" right="0.9765625" top="0.66015625" bottom="0.73828125"/>
+			  <Color r="1" g="1" b="1" a=".8"/>
+			</Texture>
+			<Texture parentKey="Glow" file="Interface\AchievementFrame\UI-Achievement-Borders">
+			  <Size x="10" y="64"/>
+			  <Anchors>
+				<Anchor point="TOPLEFT" relativeKey="$parent.TitleBar" relativePoint="BOTTOMLEFT" x="0" y="4"/>
+				<Anchor point="RIGHT" x="0" y="4"/>
+			  </Anchors>
+			  <TexCoords left="0" right="1" top="0.00390625" bottom="0.25390625"/>
+			</Texture>
+			<Texture parentKey="RewardBackground" file="Interface\AchievementFrame\UI-Achievement-Reward-Background" hidden="true">
+			  <Size x="384" y="24"/>
+			  <Anchors>
+				<Anchor point="BOTTOMLEFT" x="5" y="-2"/>
+				<Anchor point="BOTTOMRIGHT" x="-5" y="5"/>
+			  </Anchors>
+			  <TexCoords left="0" right=".69" top="0" bottom=".75"/>
+			</Texture>
+			<Texture parentKey="GuildCornerL" file="Interface\AchievementFrame\UI-Achievement-Guild" hidden="true">
+			  <Size x="54" y="53"/>
+			  <Anchors>
+				<Anchor point="BOTTOMLEFT" x="-1" y="-1"/>
+			  </Anchors>
+			  <TexCoords left="0.89062500" right="0.99609375" top="0.08593750" bottom="0.18945313"/>
+			</Texture>
+			<Texture parentKey="GuildCornerR" file="Interface\AchievementFrame\UI-Achievement-Guild" hidden="true">
+			  <Size x="54" y="53"/>
+			  <Anchors>
+				<Anchor point="BOTTOMRIGHT" x="1" y="-1"/>
+			  </Anchors>
+			  <TexCoords left="0.75195313" right="0.85742188" top="0.36328125" bottom="0.46679688"/>
+			</Texture>
+		  </Layer>
+		  <Layer level="OVERLAY">
+			<FontString parentKey="Trackable" inherits="GameFontNormal" text="Trackable" hidden="true">
+				<Size x="100" y="20"/>
+				<Anchors>
+				  <Anchor point="TOPLEFT" relativeKey="$parent.TitleBar" relativePoint="TOPLEFT" x="0" y="0"/>
+				</Anchors>
+			</FontString>
+			<FontString parentKey="Label" inherits="GameFontHighlightMedium" text="Wrathion, the Black Emperor">
+			  <Size x="320" y="20"/>
+			  <Anchors>
+				<Anchor point="TOP" relativeKey="$parent.TitleBar" relativePoint="TOP" x="0" y="0"/>
+			  </Anchors>
+			</FontString>
+			<FontString parentKey="Reward" inherits="GameFontNormalSmall" hidden="true">
+			  <Size x="355" y="20"/>
+			  <Anchors>
+				<Anchor point="TOP" relativeKey="$parent.RewardBackground" relativePoint="TOP" x="0" y="1"/>
+			  </Anchors>
+			</FontString>
+			<FontString parentKey="Description" inherits="AchievementDescriptionFont">
+			  <Size x="0" y="0"/>
+			  <Anchors>
+				<Anchor point="TOP" x="0" y="-30"/>
+			  </Anchors>
+			</FontString>
+			<FontString parentKey="HiddenDescription" inherits="AchievementDescriptionFont" hidden="true">
+			  <Size x="0" y="0"/>
+			  <Anchors>
+				<Anchor point="TOP" x="0" y="-30"/>
+			  </Anchors>
+			</FontString>
+			<Texture parentKey="Check" file="Interface\Buttons\UI-CheckBox-Check" hidden="true">
+			  <Size x="20" y="16"/>
+			  <Anchors>
+				<Anchor point="LEFT" relativeKey="$parent.Label" relativePoint="RIGHT" x="0" y="-1"/>
+			  </Anchors>
+			  <TexCoords left="0" right="1" top="0" bottom="1"/>
+			</Texture>
+			<Texture parentKey="PlusMinus" file="Interface\AchievementFrame\UI-Achievement-PlusMinus" hidden="true">
+			  <Size x="15" y="15"/>
+			  <Anchors>
+				<Anchor point="TOPLEFT" x="72" y="-9"/>
+			  </Anchors>
+			  <TexCoords left="0" right=".5" top="0" bottom=".25"/>
+			</Texture>
+		  </Layer>
+		</Layers>
+		<Scripts>
+		  <OnLoad method="OnLoad"/>
+		  <OnClick method="OnClick"/>
+		</Scripts>
+		<Frames>
+			<SimpleHTML parentKey="Test123">
+				<Size x="650" y="400" />
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeKey="$parent.TitleBar" x="20" y="-35" />
+				</Anchors>
+				<FontString inherits="MailTextFontNormal" justifyV="TOP" justifyH="LEFT" />
+			</SimpleHTML >
+			<!-- <CinematicModel parentKey="Model">
+				<Size>
+					<AbsDimension x="100" y="100"/>
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOMRIGHT" />
+				</Anchors>
+			</CinematicModel> -->
+			<Button name="OutputTactics" parentKey="OutputTactics" inherits="UIPanelButtonTemplate" text="Output Tactics">
+				<Anchors>
+					<Anchor point="TOPRIGHT" x="-4" y="-4" />
+				</Anchors>
+			</Button>
+			<Button parentKey="OutputPlayers" inherits="UIPanelButtonTemplate" text="Output Players">
+				<Anchors>
+					<Anchor point="TOPRIGHT" x="-114" y="-4" />
+				</Anchors>
+			</Button>
+		</Frames>
+	  </EventButton>
+</Ui>

@@ -18,13 +18,14 @@ Libs\LibDataBroker-1.1\LibDataBroker-1.1.lua
 Libs\LibDBIcon-1.0\LibDBIcon-1.0.lua
 Libs\UTF8\utf8.lua
 Libs\UTF8\utf8data.lua
-Libs\MSA-DropDownMenu-1.0\MSA-DropDownMenu-1.0.lua
 Libs\LibRangeCheck-3.0\LibRangeCheck-3.0.lua
 Libs\LibWindow-1.1\LibWindow-1.1.lua
 Libs\LibDetours-1.0\LibDetours-1.0.lua
 Libs\LibClassicInspector\LibClassicInspector.lua
 Libs\LibDBCompartment\LibDBCompartment-1.0.lua
 Libs\TaintLess\TaintLess.xml
+
+
 
 Localization.lua
 Localization.enUS.lua
@@ -46,3 +47,5 @@ MobCounter.lua
 emotes.lua
 AchievementTrackerCore.lua
 Debug.lua
+
+Templates.xml
