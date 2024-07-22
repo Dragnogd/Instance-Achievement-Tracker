@@ -362,9 +362,9 @@ function core._2549.Events:UNIT_AURA(self, unitID)
         if core.currentBosses[1].encounterID == 2786 then
             local name, realm = UnitName(unitID)
             for i=1,40 do
-                local _, _, count2, _, _, _, _, _, _, spellId = UnitDebuff(unitID, i)
+                local auraData = C_UnitAuras.GetDebuffDataByIndex(unitID, i)
                 if name ~= nil then
-                    if spellId == 428781 and playersWithRescuedWhelps[name] == nil then
+                    if auraData ~= nil and auraData.spellId == 428781 and playersWithRescuedWhelps[name] == nil then
                         --Rescued Whelp
                         playersWithRescuedWhelps[name] = true
                         rescuedWhelpCounter = rescuedWhelpCounter + 1

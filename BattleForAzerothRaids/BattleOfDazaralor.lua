@@ -73,8 +73,8 @@ function core._2070:ChampionOfTheLight()
                     local unitType, destID, spawn_uid_dest = strsplit("-",UnitGUID(unit));
                     local debuffFound = false
                     for i=1,40 do
-                        local _, _, _, _, _, _, _, _, _, spellId = UnitDebuff(unit, i)
-                        if spellId == 288579 then
+                        local auraData = C_UnitAuras.GetDebuffDataByIndex(unit, i)
+                        if auraData ~= nil and auraData.spellId == 288579 then
                             debuffFound = true
                             core:sendDebugMessage(UnitName(unit) .. " has debuff")
                         end
@@ -93,8 +93,8 @@ function core._2070:ChampionOfTheLight()
             local unitType, destID, spawn_uid_dest = strsplit("-",UnitGUID("Player"));
             local debuffFound = false
             for i=1,40 do
-                local _, _, _, _, _, _, _, _, _, spellId = UnitDebuff("Player", i)
-                if spellId == 288579 then
+                local auraData = C_UnitAuras.GetDebuffDataByIndex("Player", i)
+                if auraData ~= nil and auraData.spellId == 288579 then
                     debuffFound = true
                 end
                 if debuffFound == false then
@@ -439,8 +439,8 @@ function core._2070.Events:CHAT_MSG_TEXT_EMOTE(self, message, sender, lineID, se
                         --core:sendDebugMessage("Detected Singing Sunflower Self")
                         --They have praised the correct npc. Check if they have the correct buff
                         for i=1,40 do
-                            local _, _, _, _, _, _, _, _, _, spellId = UnitDebuff(sender, i)
-                            if spellId == 284802 then
+                            local auraData = C_UnitAuras.GetDebuffDataByIndex(sender, i)
+                            if auraData ~= nil and auraData.spellId == 284802 then
                                 --Check if the player actually needs the achievement since it is personal
                                 --core:sendDebugMessage("Found player who hugged singing sunflower")
                                 --core:sendDebugMessage(sender)
@@ -465,8 +465,8 @@ function core._2070.Events:CHAT_MSG_TEXT_EMOTE(self, message, sender, lineID, se
                         --core:sendDebugMessage("Detected Singing Sunflower in other")
                         --They have praised the correct npc. Check if they have the correct buff
                         for i=1,40 do
-                            local _, _, _, _, _, _, _, _, _, spellId = UnitDebuff(sender, i)
-                            if spellId == 284802 then
+                            local auraData = C_UnitAuras.GetDebuffDataByIndex(sender, i)
+                            if auraData ~= nil and auraData.spellId == 284802 then
                                 --Check if the player actually needs the achievement since it is personal
                                 --core:sendDebugMessage("Found player who hugged singing sunflower in other")
                                 --core:sendDebugMessage(sender)

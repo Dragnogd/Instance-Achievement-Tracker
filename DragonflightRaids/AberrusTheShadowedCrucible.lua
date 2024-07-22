@@ -84,8 +84,8 @@ function core._2569:KazzaraTheHellforged()
             local buffFound = false
             local _, _, player_UID2 = strsplit("-", UnitGUID(player2))
             for i=1,40 do
-                local _, _, count2, _, _, _, _, _, _, spellId = UnitDebuff(player2, i)
-                if spellId == 411919 then
+                local auraData = C_UnitAuras.GetDebuffDataByIndex(player2, i)
+                if auraData ~= nil and auraData.spellId == 411919 then
                     buffFound = true
                 end
             end
@@ -375,8 +375,8 @@ function core._2569:ScalecommanderSarkareth()
             local buffFound = false
             local _, _, player_UID2 = strsplit("-", UnitGUID(player2))
             for i=1,40 do
-                local _, _, count2, _, _, _, _, _, _, spellId = UnitDebuff(player2, i)
-                if spellId == 410277 then
+                local auraData = C_UnitAuras.GetDebuffDataByIndex(player2, i)
+                if auraData ~= nil and auraData.spellId == 410277 then
                     buffFound = true
                 end
             end
@@ -454,8 +454,8 @@ function core._2569:TrackAdditional()
                 local buffFound = false
                 local _, _, player_UID2 = strsplit("-", UnitGUID(player2))
                 for i=1,40 do
-                    local _, _, count2, _, _, _, _, _, _, spellId = UnitDebuff(player2, i)
-                    if spellId == 411919 then
+                    local auraData = C_UnitAuras.GetDebuffDataByIndex(player2, i)
+                    if auraData ~= nil and auraData.spellId == 411919 then
                         buffFound = true
                     end
                 end
@@ -494,8 +494,8 @@ function core._2569:TrackAdditional()
                 local buffFound = false
                 local _, _, player_UID2 = strsplit("-", UnitGUID(player2))
                 for i=1,40 do
-                    local _, _, count2, _, _, _, _, _, _, spellId = UnitDebuff(player2, i)
-                    if spellId == 410277 then
+                    local auraData = C_UnitAuras.GetDebuffDataByIndex(player2, i)
+                    if auraData ~= nil and auraData.spellId == 410277 then
                         buffFound = true
                     end
                 end
@@ -566,9 +566,9 @@ function core._2569.Events:UNIT_AURA(self, unitID)
         if core.currentBosses[1].encounterID == 2683 then
             local name, realm = UnitName(unitID)
             for i=1,40 do
-                local _, _, count2, _, _, _, _, _, _, spellId = UnitDebuff(unitID, i)
+                local auraData = C_UnitAuras.GetDebuffDataByIndex(unitID, i)
                 if name ~= nil then
-                    if spellId == 411367 and spicyLavaPlayers[name] == nil then
+                    if auraData ~= nil and auraData.spellId == 411367 and spicyLavaPlayers[name] == nil then
                         --Spicy Lava Snail
                         InfoFrame_SetPlayerComplete(name)
                         spicyLavaPlayers[name] = true

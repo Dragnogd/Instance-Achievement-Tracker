@@ -119,9 +119,9 @@ function core._2291:TrackAdditional()
                     if core.InfoFrame_PlayersTable ~= nil then
                         for player,status in pairs(core.InfoFrame_PlayersTable) do
                             for i=1,40 do
-                                local _, _, _, _, _, expirationTime, _, _, _, spellId = UnitDebuff(player, i)
-                                if spellId == 322746 then ----322746
-                                    core.InfoFrame_PlayersTable[player] = {2, math.floor(expirationTime - GetTime())}
+                                local auraData = C_UnitAuras.GetDebuffDataByIndex(player, i)
+                                if auraData ~= nil and auraData.spellId == 322746 then ----322746
+                                    core.InfoFrame_PlayersTable[player] = {2, math.floor(auraData.expirationTime - GetTime())}
                                     InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
                                     updatePerformed = true
                                 end

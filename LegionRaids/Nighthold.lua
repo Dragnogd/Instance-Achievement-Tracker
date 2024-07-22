@@ -267,8 +267,8 @@ function core._1530.Events:UNIT_AURA(self, unitID, ...)
                     --Check if player still has the mysterious fruits debuff
                     local debuffFound = false
                     for i=1,40 do
-                        local name, _, _, _, _, _, _, _, _, spellId = UnitDebuff(unitID, i)
-                        if spellId == 220114 then
+                        local auraData = C_UnitAuras.GetDebuffDataByIndex(unitID, i)
+                        if auraData ~= nil and auraData.spellId == 220114 then
                             --We have found the debuff so no action needs to be  taken
                             debuffFound = true
                         end
@@ -296,8 +296,8 @@ function core._1530.Events:UNIT_AURA(self, unitID, ...)
                 elseif mysteriousFruitPlayers[UnitName(unitID)] == nil then
                     --Check if player has picked up the mysterious fruit debuff
                     for i=1,40 do
-                        local _, _, _, _, _, _, _, _, _, spellId = UnitDebuff(unitID, i)
-                        if spellId == 220114 then
+                        local auraData = C_UnitAuras.GetDebuffDataByIndex(unitID, i)
+                        if auraData ~= nil and auraData.spellId == 220114 then
                             --We have found the debuff so add player to the table
                             mysteriousFruitPlayers[UnitName(unitID)] = UnitName(unitID)
                             mysteriousFruitCounter = mysteriousFruitCounter + 1

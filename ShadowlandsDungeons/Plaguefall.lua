@@ -142,9 +142,9 @@ function core._2289:TrackAdditional()
                 for k,player in ipairs(core.Instances[core.expansion][core.instanceType][core.instance]["boss1"].players) do
                     if InfoFrame_GetPlayerStatusWithMessage(player) == 2 then
                         for i=1,40 do
-                            local _, _, _, _, _, expirationTime, _, _, _, spellId = UnitDebuff(player, i)
-                            if spellId == 330092 then
-                                core.InfoFrame_PlayersTable[player] = {2, math.floor(expirationTime - GetTime())}
+                            local auraData = C_UnitAuras.GetDebuffDataByIndex(player, i)
+                            if auraData ~= nil and auraData.spellId == 330092 then
+                                core.InfoFrame_PlayersTable[player] = {2, math.floor(auraData.expirationTime - GetTime())}
                                 InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfoPersonalArgs(core.Instances[core.expansion][core.instanceType][core.instance]["boss1"])
                                 updatePerformed = true
                             end

@@ -71,8 +71,8 @@ function core._631:LordMarrowgar()
         core:sendMessage(core.destName .. " has been Impaled")
         C_Timer.After(8, function()
             for i=1,40 do
-                local _, _, _, _, _, _, _, _, _, spellId = UnitDebuff(core.destName, i)
-                if spellId == 69065 then
+                local auraData = C_UnitAuras.GetDebuffDataByIndex(core.destName, i)
+                if auraData ~= nil and auraData.spellId == 69065 then
                     core:getAchievementFailed()
                 end
             end
@@ -283,11 +283,11 @@ function core._631.Events:UNIT_AURA(self, unitID)
 		if core.currentBosses[1].encounterID == 1106 and necroticPlagueCompletedAnnounced == false then
 			local foundNecroticPlague = false
 			for i=1,40 do
-				local _, _, count2, _, _, _, _, _, _, spellId = UnitDebuff(unitID, i)
-				if spellId == 70337 or spellId == 70338 then
+				local auraData = C_UnitAuras.GetDebuffDataByIndex(unitID, i)
+				if (auraData ~= nil and auraData.spellId == 70337) or (auraData ~= nil and auraData.spellId == 70338) then
 					foundNecroticPlague = true
-					if count2 > necroticPlagueStack and necroticPlagueCompletedAnnounced == false then
-                        necroticPlagueStack = count2
+					if auraData.applications > necroticPlagueStack and necroticPlagueCompletedAnnounced == false then
+                        necroticPlagueStack = auraData.applications
                         core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(70337) .. " " .. L["Core_Counter"] .. " (" .. necroticPlagueStack .. "/30)",true)
 					end
 				end

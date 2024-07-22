@@ -104,8 +104,8 @@ function core._1009.Events:UNIT_AURA(self, unitID, ...)
 				if parasitePlayers[spawn_uid_dest] == nil then
 					--Check to see if player has gained debuff
 					for i=1,40 do
-						local _, _, _, _, _, _, _, _, _, spellId = UnitDebuff(unitID, i)
-						if spellId == 125785 then
+						local auraData = C_UnitAuras.GetDebuffDataByIndex(unitID, i)
+						if auraData ~= nil and auraData.spellId == 125785 then
 							parasiteCounter = parasiteCounter + 1
 							core:sendMessage(UnitName(unitID) .. " " .. L["Shared_HasGained"] .. " " .. GetSpellLink(125785) .. " (" .. parasiteCounter .. "/" .. core.groupSize .. ")")
 							parasitePlayers[spawn_uid_dest] = spawn_uid_dest
@@ -116,8 +116,8 @@ function core._1009.Events:UNIT_AURA(self, unitID, ...)
 					--Check to see if player has not lost debuff
 					local debuffFound = false
 					for i=1,40 do
-						local _, _, _, _, _, _, _, _, _, spellId = UnitDebuff(unitID, i)
-						if spellId == 125785 then
+						local auraData = C_UnitAuras.GetDebuffDataByIndex(unitID, i)
+						if auraData ~= nil and auraData.spellId == 125785 then
 							debuffFound = true
 						end
 					end

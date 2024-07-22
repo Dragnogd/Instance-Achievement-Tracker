@@ -38,15 +38,15 @@ function core._1763:PriestessAlunza()
 			elseif core.chatType == "RAID" then
 				unit = "raid" .. i
 			end
-			
+
 			if unit ~= nil then
                 local unitType, destID, spawn_uid_dest = strsplit("-",UnitGUID(unit));
                 for i=1,40 do
-                    local _, _, count, _, _, _, _, _, _, spellId = UnitDebuff(unit, i)
-                    if spellId == 255558 and destID == "131009" then
-                        core:sendDebugMessage("Count: " .. count)
+                    local auraData = C_UnitAuras.GetDebuffDataByIndex(unit, i)
+                    if auraData ~= nil and auraData.spellId == 255558 and destID == "131009" then
+                        core:sendDebugMessage("Count: " .. auraData.applications)
                     end
-                    if spellId == 255558 and destID == "131009" and count == 8 then
+                    if auraData ~= nil and auraData.spellId == 255558 and destID == "131009" and auraData.applications == 8 then
                         core:sendMessage(core:getAchievement() .. format(L["Shared_KillTheAddNow"], getNPCName(131009)))
 					end
 				end
@@ -56,8 +56,8 @@ function core._1763:PriestessAlunza()
 		--Player is not in a group
         local unitType, destID, spawn_uid_dest = strsplit("-",UnitGUID("Player"));
         for i=1,40 do
-            local _, _, count, _, _, _, _, _, _, spellId = UnitDebuff("Player", i)
-            if spellId == 255558 and destID == "131009" and count >= 8 then
+            local auraData = C_UnitAuras.GetDebuffDataByIndex("Player", i)
+            if auraData ~= nil and auraData.spellId == 255558 and destID == "131009" and auraData.applications >= 8 then
                 core:sendMessage(core:getAchievement() .. format(L["Shared_KillTheAddNow"], getNPCName(131009)))
             end
         end
@@ -81,12 +81,12 @@ function core._1763:BringingHexyBack()
     --1 Player in group must be hexed at each boss on kill.
     if UnitGUID("boss1") ~= nil then
         local unitType, _, _, _, _, destID, spawn_uid_dest = strsplit("-", UnitGUID("boss1"))
-        
+
         if destID == "122965" or destID == "122963" or destID == "122967" or destID == "122968" then
             if core.type == "SPELL_AURA_APPLIED" and core.spellId == 252781 then
                 core:sendDebugMessage(core.destName .. " Hexed")
             end
-        
+
             --Check if boss is less than 50% health to give people a chance to cc adds / reduce spam
             if core:getHealthPercent("boss1") <= 50 then
                  --If player is hexed, complete the achievement.
@@ -101,7 +101,7 @@ function core._1763:BringingHexyBack()
                         end
                     end
                 end
-        
+
                 --If player hex is removed, wait 2 second. If no one else is hexed fail achievement
                 if core.type == "SPELL_AURA_REMOVED" and core.spellId == 252781 then
                     playerHexed = false
@@ -112,7 +112,7 @@ function core._1763:BringingHexyBack()
                         end
                     end)
                 end
-            end 
+            end
         end
     end
 end

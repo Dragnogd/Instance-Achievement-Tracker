@@ -174,14 +174,14 @@ function core._1520.Events:UNIT_AURA(self, unitID, ...)
                     local buff3Found = false
                     local buff4Found = false
                     for i=1,40 do
-                        local _, _, _, _, _, _, _, _, _, spellId = UnitBuff(unitID, i)
-                        if spellId == 214588 then
+                        local auraData = C_UnitAuras.GetBuffDataByIndex(unitID, i)
+                        if auraData ~= nil and auraData.spellId == 214588 then
                             buff1Found = true
-                        elseif spellId == 214601 then
+                        elseif auraData ~= nil and auraData.spellId == 214601 then
                             buff2Found = true
-                        elseif spellId == 214604  then
+                        elseif auraData ~= nil and auraData.spellId == 214604  then
                             buff3Found = true
-                        elseif spellId == 214610 then
+                        elseif auraData ~= nil and auraData.spellId == 214610 then
                             buff4Found = true
                         end
                     end

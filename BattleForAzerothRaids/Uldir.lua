@@ -73,23 +73,23 @@ function core._1861:FetidDevourer()
             local immunityFound = false
             local immunityName = nil
             for i=1,40 do
-                local _, _, _, _, _, _, _, _, _, spellId = UnitBuff(name, i)
-                if spellId == 45438 then
+                local auraData = C_UnitAuras.GetBuffDataByIndex(name, i)
+                if auraData ~= nil and auraData.spellId == 45438 then
                     immunityFound = true
                     immunityName = "Ice Block"
-                elseif spellId == 196555 then
+                elseif auraData ~= nil and auraData.spellId == 196555 then
                     immunityFound = true
                     immunityName = "Netherwalk"
-                elseif spellId == 186265 then
+                elseif auraData ~= nil and auraData.spellId == 186265 then
                     immunityFound = true
                     immunityName = "Aspect of the Turtle"
-                elseif spellId == 1022 then
+                elseif auraData ~= nil and auraData.spellId == 1022 then
                     immunityFound = true
                     immunityName = "Blessing of Protection"
-                elseif spellId == 204018 then
+                elseif auraData ~= nil and auraData.spellId == 204018 then
                     immunityFound = true
                     immunityName = "Blessing of Spellwarding"
-                elseif spellId == 642 then
+                elseif auraData ~= nil and auraData.spellId == 642 then
                     immunityFound = true
                     immunityName = "Divine Shield"
                 end
@@ -178,8 +178,8 @@ function core._1861:Ghuun()
                 if unit ~= nil then
                     local unitType, destID, spawn_uid_dest = strsplit("-",UnitGUID(unit));
                     for i=1,40 do
-                        local _, _, _, _, _, _, _, _, _, spellId = UnitDebuff(unit, i)
-                        if spellId == 263420 then
+                        local auraData = C_UnitAuras.GetDebuffDataByIndex(unit, i)
+                        if auraData ~= nil and auraData.spellId == 263420 then
                             core:getAchievementFailedWithMessageAfter("(" .. UnitName(unit) .. ")")
                         end
                     end
@@ -189,8 +189,8 @@ function core._1861:Ghuun()
             --Player is not in a group
             local unitType, destID, spawn_uid_dest = strsplit("-",UnitGUID("Player"));
             for i=1,40 do
-                local _, _, _, _, _, _, _, _, _, spellId = UnitDebuff("Player", i)
-                if spellId == 263420 then
+                local auraData = C_UnitAuras.GetDebuffDataByIndex("Player", i)
+                if auraData ~= nil and auraData.spellId == 263420 then
                     core:getAchievementFailedWithMessageAfter("(" .. UnitName("Player") .. ")")
 
                     --Stop tracker for working for remainder of fight to reduce lag

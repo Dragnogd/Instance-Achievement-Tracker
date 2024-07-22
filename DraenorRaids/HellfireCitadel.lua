@@ -112,8 +112,8 @@ function core._1448:ShadowLordIskar()
 				end
 
 				for i=1,40 do
-					local _, _, _, _, _, _, _, _, _, spellId = UnitBuff(unit, i)
-					if spellId == 179202 then
+					local auraData = C_UnitAuras.GetBuffDataByIndex(unit, i)
+					if auraData ~= nil and auraData.spellId == 179202 then
 						eyeOfAnzuPlayer = core.destName
 						firstPickup = true
 						C_Timer.After(5, function()
@@ -126,8 +126,8 @@ function core._1448:ShadowLordIskar()
 			end
 		else
 			for i=1,40 do
-				local _, _, _, _, _, _, _, _, _, spellId = UnitBuff("Player", i)
-				if spellId == 179202 then
+				local auraData = C_UnitAuras.GetBuffDataByIndex("Player", i)
+				if auraData ~= nil and auraData.spellId == 179202 then
 					eyeOfAnzuPlayer = core.destName
 					firstPickup = true
 					C_Timer.After(5, function()

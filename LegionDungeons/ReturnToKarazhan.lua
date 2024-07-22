@@ -53,8 +53,8 @@ function core._1651:ShadeOfMedivh()
 			if unit ~= nil then
                 local unitType, destID, spawn_uid_dest = strsplit("-",UnitGUID(unit));
                 for i=1,40 do
-					local _, _, _, _, _, _, _, _, _, spellId = UnitDebuff(unit, i)
-					if spellId == 232658 and paranoidPlayers[spawn_uid_dest] == nil then
+					local auraData = C_UnitAuras.GetDebuffDataByIndex(unit, i)
+					if auraData ~= nil and auraData.spellId == 232658 and paranoidPlayers[spawn_uid_dest] == nil then
                         paranoidCounter = paranoidCounter + 1
                         core:sendMessage(UnitName(unit) .. " " .. L["Shared_HasGained"] .. " " .. GetSpellLink(232658) .. " (" .. paranoidCounter .. "/5)")
                         paranoidPlayers[spawn_uid_dest] = spawn_uid_dest

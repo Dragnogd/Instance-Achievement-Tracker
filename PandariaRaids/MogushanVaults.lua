@@ -56,13 +56,13 @@ function core._1008:FengTheAccursed()
 		if core.spellId == 116936 and EpicenterReversed == false then
 			EpicenterReversed = true
 			itemsReversed = itemsReversed + 1
-			C_Timer.After(8, function() 
+			C_Timer.After(8, function()
 				core:sendMessage(GetSpellLink(116936) .. " " .. L["Shared_Completed"] .. " (" .. itemsReversed .. "/5)")
 			end)
 		elseif core.spellId == 118307 and WildfireSparkReversed == false then
 			WildfireSparkReversed = true
 			itemsReversed = itemsReversed + 1
-			core:sendMessage(GetSpellLink(118307) .. " " .. L["Shared_Completed"] .. " (" .. itemsReversed .. "/5)")			
+			core:sendMessage(GetSpellLink(118307) .. " " .. L["Shared_Completed"] .. " (" .. itemsReversed .. "/5)")
 		elseif core.spellId == 118194 and ArcaneResonanceReversed == false then
 			ArcaneResonanceReversed = true
 			itemsReversed = itemsReversed + 1
@@ -76,8 +76,8 @@ function core._1008:FengTheAccursed()
 		if core.spellId == 116938 and ArcaneVelocityReversed == false then
 			ArcaneVelocityReversed = true
 			itemsReversed = itemsReversed + 1
-			C_Timer.After(8, function() 
-				core:sendMessage(GetSpellLink(116938) .. " " .. L["Shared_Completed"] .. " (" .. itemsReversed .. "/5)")			
+			C_Timer.After(8, function()
+				core:sendMessage(GetSpellLink(116938) .. " " .. L["Shared_Completed"] .. " (" .. itemsReversed .. "/5)")
 			end)
 		end
 	end
@@ -96,7 +96,7 @@ function core._1008:Elegon()
 		empyrealFocusesDeactivated = empyrealFocusesDeactivated + 1
 		if timerStarted == false then
 			timerStarted = true
-			C_Timer.After(10, function() 
+			C_Timer.After(10, function()
 				if empyrealFocusesDeactivated == 6 then
 					core:getAchievementSuccess()
 				else
@@ -118,7 +118,7 @@ function core._1008:TheSpiritKings()
 	--If player gets pillaged add to another array
 	--Compare 2 arrays once timer has finished. If they dance at the correct time and got hit by pillaged at the end they executed the move at the correct time
 	--Announce in chat who did not dance in time.
-	
+
 	InfoFrame_UpdatePlayersOnInfoFrame()
 	InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],playersDancing,core.maxPlayers)
 	core.IATInfoFrame:SetSubHeading2(L["Shared_Notes"])
@@ -132,7 +132,7 @@ function core._1008:TheSpiritKings()
         end
 		playersDancing = 0
 
-		C_Timer.After(14, function() 
+		C_Timer.After(14, function()
 			--Players have 14 seconds to dance while having the pillage debuff
 			if playersDancing == core.maxPlayers then
 				core:getAchievementSuccess()
@@ -150,7 +150,7 @@ function core._1008:TheSpiritKings()
 			--Set player to complete on InfoFrame
 			local success = InfoFrame_SetPlayerComplete(sender)
 			if success then
-				playersDancing = playersDancing + 1								
+				playersDancing = playersDancing + 1
 			end
 			core.syncMessageQueue[k] = nil
 		end
@@ -222,7 +222,7 @@ function core._1008:InitialSetup()
 	core._1008.Events:RegisterEvent("ZONE_CHANGED_INDOORS")
 	core._1008.Events:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
 	core._1008.Events:RegisterEvent("CHAT_MSG_TEXT_EMOTE")
-	
+
 	if C_Map.GetBestMapForUnit("Player") == 471 and C_EncounterJournal.IsEncounterComplete(679) == false then
 		showStoneGuardInfoFrame = true
         core.IATInfoFrame:ToggleOn()
@@ -285,7 +285,7 @@ function core._1008.Events:UNIT_SPELLCAST_SUCCEEDED(self, unit, castGUID, spellI
 		--Core Hound Pup: 69452 (CONFIRMED)
 		--Fox Kit 90637 (CONFIRMED)
 		--Worg Carrier 15999 (CONFIRMED)
-		--Curious Wolvar Pup 
+		--Curious Wolvar Pup
 		--Lucky Quilen Cub
 		--Alpine Foxling
 		--Arctic Fox Kit
@@ -378,10 +378,10 @@ function core._1008.Events:UPDATE_MOUSEOVER_UNIT(self, unit, powerType)
 									local success = InfoFrame_SetPlayerCompleteWithMessage(player, petName)
 									if success then
 										mustLoveDogsCounter = mustLoveDogsCounter + 1
-	
+
 										--Send message to other addon users
 										C_ChatInfo.SendAddonMessage("Whizzey", "syncMessage" .. "-" .. player .. "," .. petName .. ",COMPLETE", "RAID")
-									end							
+									end
 								end
 							end
 						end
@@ -404,12 +404,12 @@ function core._1008.Events:UPDATE_MOUSEOVER_UNIT(self, unit, powerType)
 
 										--Send message to other addon users
 										C_ChatInfo.SendAddonMessage("Whizzey", "syncMessage" .. "-" .. player .. "," .. petName .. ",FAILED", "RAID")
-									end									
+									end
 								end
 							end
 						end
 						tip:Hide()
-					end				
+					end
 				end
 			end
 		end
@@ -489,13 +489,13 @@ function core._1008:WillOfTheEmperor()
 			playerExecutedStrikeQinxi = playerExecutedStrikeQinxi + 1
 			table.insert(QinXiPlayers, playerName)
 		end
-		
+
 		if timerStarted == false then
 			timerStarted = true
 
-			C_Timer.After(7, function() 
+			C_Timer.After(7, function()
 				if playerExecutedStrikeJanxi == core.maxPlayers or playerExecutedStrikeQinxi == core.maxPlayers then
-					--core:sendMessage(core:getAchievement() .. " (" .. playerExecutedStrike .. "/" .. core.maxPlayers .. ") Opportunistic Strikes executed in time")					
+					--core:sendMessage(core:getAchievement() .. " (" .. playerExecutedStrike .. "/" .. core.maxPlayers .. ") Opportunistic Strikes executed in time")
 					core:getAchievementSuccess()
 				else
 					if playerExecutedStrikeJanxi >= playerExecutedStrikeQinxi then
@@ -503,16 +503,16 @@ function core._1008:WillOfTheEmperor()
 							InfoFrame_SetPlayerCompleteWithMessage(v, L["Shared_Fails"] .. ": " .. playersStrikeFailCounter[v])
 						end
 						playerExecutedStrikeDisplay = playerExecutedStrikeJanxi
-						core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(116809) .. " " .. L["Core_Counter"] .. " (" .. playerExecutedStrikeJanxi .. "/" .. core.maxPlayers .. ")")					
+						core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(116809) .. " " .. L["Core_Counter"] .. " (" .. playerExecutedStrikeJanxi .. "/" .. core.maxPlayers .. ")")
 					elseif playerExecutedStrikeQinxi > playerExecutedStrikeJanxi then
 						for k, v in pairs(QinXiPlayers) do
 							InfoFrame_SetPlayerCompleteWithMessage(v, L["Shared_Fails"] .. ": " .. playersStrikeFailCounter[v])
 						end
 						playerExecutedStrikeDisplay = playerExecutedStrikeQinxi
-						core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(116809) .. " " .. L["Core_Counter"] .. " (" .. playerExecutedStrikeQinxi .. "/" .. core.maxPlayers .. ")")					
+						core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(116809) .. " " .. L["Core_Counter"] .. " (" .. playerExecutedStrikeQinxi .. "/" .. core.maxPlayers .. ")")
 					end
 					core:sendMessageSafe(core:getAchievement() .. " " .. L["Shared_PlayersWhoDidNotUse"] .. " " .. GetSpellLink(116809) .. " " .. InfoFrame_GetIncompletePlayersWithAdditionalInfo(),true)
-				
+
 					--Increase Fail Counter for players who did not execute in time
 					--Loop through all failed players increase counter by 1
 					for player,status in pairs(core.InfoFrame_PlayersTable) do
@@ -522,7 +522,7 @@ function core._1008:WillOfTheEmperor()
 						end
 					end
 				end
-	
+
 				playerExecutedStrikeJanxi = 0
 				playerExecutedStrikeQinxi = 0
 				JanXiPlayers = {}
@@ -542,7 +542,7 @@ function core._1008:WillOfTheEmperor()
 				end
 				playerExecutedStrikeDisplay = playerExecutedStrikeQinxi
 				core:getAchievementSuccess()
-			end			
+			end
 		end
 	end
 end
@@ -558,15 +558,15 @@ function core._1008.Events:CHAT_MSG_TEXT_EMOTE(self, message, sender, lineID, se
                         core:sendDebugMessage("Detected Subetai The Swift Self")
                         --They have danced with the correct npc. Check if they have the correct buff
                         for i=1,40 do
-                            local _, _, _, _, _, _, _, _, _, spellId = UnitDebuff(sender, i)
-                            if spellId == 118048 then
+                            local auraData = C_UnitAuras.GetDebuffDataByIndex(sender, i)
+                            if auraData ~= nil and auraData.spellId == 118048 then
                                 core:sendDebugMessage("Found player who danced with Subetai The Swift")
                                 core:sendDebugMessage(sender)
-								core:sendDebugMessage(spellId)
+								core:sendDebugMessage(auraData ~= nil and auraData.spellId)
 								--Set player to complete on InfoFrame
 								local success = InfoFrame_SetPlayerComplete(sender)
 								if success then
-									playersDancing = playersDancing + 1								
+									playersDancing = playersDancing + 1
 								end
 
 								--Send message to other addon users
@@ -582,20 +582,20 @@ function core._1008.Events:CHAT_MSG_TEXT_EMOTE(self, message, sender, lineID, se
                         core:sendDebugMessage("Detected Subetai The Swift in other")
                         --They have danced with the correct npc. Check if they have the correct buff
                         for i=1,40 do
-                            local _, _, _, _, _, _, _, _, _, spellId = UnitDebuff(sender, i)
-                            if spellId == 118048 then
+                            local auraData = C_UnitAuras.GetDebuffDataByIndex(sender, i)
+                            if auraData ~= nil and auraData.spellId == 118048 then
                                 core:sendDebugMessage("Found player who danced with Subetai The Swift")
                                 core:sendDebugMessage(sender)
-								core:sendDebugMessage(spellId)
+								core:sendDebugMessage(auraData.spellId)
 								--Set player to complete on InfoFrame
 								local success = InfoFrame_SetPlayerComplete(sender)
 								if success then
-									playersDancing = playersDancing + 1								
+									playersDancing = playersDancing + 1
 								end
                             end
                         end
                     end
-                end 
+                end
             end
         end
     end

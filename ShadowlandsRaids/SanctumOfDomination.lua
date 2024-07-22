@@ -361,8 +361,8 @@ function core._2450:TrackAdditional()
             local buffFound = false
             local _, _, player_UID2 = strsplit("-", UnitGUID(player2))
             for i=1,40 do
-                local _, _, count2, _, _, _, _, _, _, spellId = UnitDebuff(player2, i)
-                if spellId == 356731 then
+                local auraData = C_UnitAuras.GetDebuffDataByIndex(player2, i)
+                if auraData ~= nil and auraData.spellId == 356731 then
                     buffFound = true
                 end
             end

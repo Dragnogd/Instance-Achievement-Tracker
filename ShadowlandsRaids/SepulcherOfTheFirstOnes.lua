@@ -345,8 +345,8 @@ function core._2481:Rygelon()
                 --Check if player has the Wilted Rose Buff
                 local debuffFound = false
                 for i=1,40 do
-                    local _, _, count2, _, _, _, _, _, _, spellId = UnitDebuff(player, i)
-                    if spellId == 366195 then
+                    local auraData = C_UnitAuras.GetDebuffDataByIndex(player, i)
+                    if auraData ~= nil and auraData.spellId == 366195 then
                         debuffFound = true
                     end
                 end
@@ -452,9 +452,9 @@ end
 function core._2481.Events:UNIT_AURA(self, unitID)
     local name, realm = UnitName(unitID)
     for i=1,40 do
-        local _, _, count2, _, _, _, _, _, _, spellId = UnitDebuff(unitID, i)
+        local auraData = C_UnitAuras.GetDebuffDataByIndex(unitID, i)
         if name ~= nil then
-            if spellId == 366324 and jugglingCoreFound == false then
+            if auraData ~= nil and auraData.spellId == 366324 and jugglingCoreFound == false then
                 --Juggling Core
                 core:sendMessage(name .. L["Shared_HasGained"] .. " " .. GetSpellLink(366324),true)
                 jugglingCoreFound = true
@@ -474,9 +474,9 @@ function core._2481.Events:UNIT_AURA(self, unitID)
 
             if artifactData[player] ~= nil then
                 for i=1,40 do
-                    local _, _, count2, _, _, _, _, _, _, spellId = UnitDebuff(unitID, i)
+                    local auraData = C_UnitAuras.GetDebuffDataByIndex(unitID, i)
                     --Unstable Ephemera
-                    if spellId == 367220 then
+                    if auraData ~= nil and auraData.spellId == 367220 then
                         if player ~= nil then
                             if artifactData[player].Unstable == false then
                                 artifactData[player].Unstable = true
@@ -491,7 +491,7 @@ function core._2481.Events:UNIT_AURA(self, unitID)
                     end
 
                     --Crippling Ephemera
-                    if spellId == 367275 then
+                    if auraData ~= nil and auraData.spellId == 367275 then
                         if player ~= nil then
                             if artifactData[player].Crippling == false then
                                 artifactData[player].Crippling = true
@@ -506,7 +506,7 @@ function core._2481.Events:UNIT_AURA(self, unitID)
                     end
 
                     --Enfeebling Ephemera
-                    if spellId == 367278 then
+                    if auraData ~= nil and auraData.spellId == 367278 then
                         if player ~= nil then
                             if artifactData[player].Enfeebling == false then
                                 artifactData[player].Enfeebling = true

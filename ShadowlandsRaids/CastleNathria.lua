@@ -132,14 +132,14 @@ function core._2296:ArtificerXymox()
         initialArtificerSetup = true
         for k,player in pairs(core:getPlayersInGroupForAchievement()) do
             for i=1,40 do
-                local _, _, count2, _, _, _, _, _, _, spellId = UnitBuff(player, i)
-                if spellId == 341186 then
+                local auraData = C_UnitAuras.GetBuffDataByIndex(player, i)
+                if auraData ~= nil and auraData.spellId == 341186 then
                     --Anima of Ardenweald
                     ArdenwealdAnimaFound = player
-                elseif spellId == 341135 then
+                elseif auraData ~= nil and auraData.spellId == 341135 then
                     --Anima of Maldraxxus
                     MaldraxxusAnimaFound = player
-                elseif spellId == 341253 then
+                elseif auraData ~= nil and auraData.spellId == 341253 then
                     --Anima of the Maw
                     MawAnimaFound = player
                 end
@@ -212,20 +212,20 @@ function core._2296:ArtificerXymox()
                 local animaFoundOrCompleted = false
                 for k,player2 in pairs(core:getPlayersInGroupForAchievement()) do
                     for i=1,40 do
-                        local _, _, count2, _, _, _, _, _, _, spellId = UnitDebuff(player2, i)
+                        local auraData = C_UnitAuras.GetDebuffDataByIndex(player2, i)
                         if CurrentAnima == "Ardenweald" then
                             --Ardenweald Anima
-                            if spellId == 341209 or core:getBlizzardTrackingStatus(14617, 3) == true then
+                            if auraData ~= nil and auraData.spellId == 341209 or core:getBlizzardTrackingStatus(14617, 3) == true then
                                 animaFoundOrCompleted = true
                             end
                         elseif CurrentAnima == "Maldraxxus" then
                             --Maldraxxus Anima
-                            if spellId == 341142 or core:getBlizzardTrackingStatus(14617, 1) == true then
+                            if auraData ~= nil and auraData.spellId == 341142 or core:getBlizzardTrackingStatus(14617, 1) == true then
                                 animaFoundOrCompleted = true
                             end
                         elseif CurrentAnima == "Maw" then
                             --Maw Anima
-                            if spellId == 341262 or core:getBlizzardTrackingStatus(14617, 2) == true then
+                            if auraData ~= nil and auraData.spellId == 341262 or core:getBlizzardTrackingStatus(14617, 2) == true then
                                 animaFoundOrCompleted = true
                             end
                         end
@@ -336,8 +336,8 @@ function core._2296:StoneLegionGenerals()
                 --Check if player has the Wilted Rose Buff
                 local buffFound = false
                 for i=1,40 do
-                    local _, _, count2, _, _, _, _, _, _, spellId = UnitBuff(player, i)
-                    if spellId == 339565 then
+                    local auraData = C_UnitAuras.GetBuffDataByIndex(player, i)
+                    if auraData ~= nil and auraData.spellId == 339565 then
                         buffFound = true
                     end
                 end
@@ -495,8 +495,8 @@ function core._2296:TrackAdditional()
             local buffFound = false
             local _, _, player_UID2 = strsplit("-", UnitGUID(player2))
             for i=1,40 do
-                local _, _, count2, _, _, _, _, _, _, spellId = UnitBuff(player2, i)
-                if spellId == 339565 then
+                local auraData = C_UnitAuras.GetBuffDataByIndex(player2, i)
+                if auraData ~= nil and auraData.spellId == 339565 then
                     buffFound = true
                 end
             end
@@ -682,17 +682,17 @@ end
 function core._2296.Events:UNIT_AURA(self, unitID)
     local name, realm = UnitName(unitID)
     for i=1,40 do
-        local _, _, count2, _, _, _, _, _, _, spellId = UnitDebuff(unitID, i)
+        local auraData = C_UnitAuras.GetDebuffDataByIndex(unitID, i)
         if name ~= nil then
-            if spellId == 341209 then
+            if auraData ~= nil and auraData.spellId == 341209 then
                 --Anima of Ardenweald
                 core:sendMessage(name .. L["Shared_HasGained"] .. " " .. GetSpellLink(341209),true)
                 CurrentAnima = "Ardenweald"
-            elseif spellId == 341142 then
+            elseif auraData ~= nil and auraData.spellId == 341142 then
                 --Anima of Maldraxxus
                 core:sendMessage(name .. L["Shared_HasGained"] .. " " .. GetSpellLink(341142),true)
                 CurrentAnima = "Maldraxxus"
-            elseif spellId == 341262 then
+            elseif auraData ~= nil and auraData.spellId == 341262 then
                 --Anima of the Maw
                 core:sendMessage(name .. L["Shared_HasGained"] .. " " .. GetSpellLink(341262),true)
                 CurrentAnima = "Maw"

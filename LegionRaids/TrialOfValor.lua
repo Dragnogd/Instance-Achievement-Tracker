@@ -34,13 +34,13 @@ function core._1648:Odyn()
     if core.type == "SPELL_AURA_APPLIED" and core.spellId == 229684 then
         core:getAchievementSuccess()
     end
-    
+
     --Detetct when player looses buff and fail as personal achievement
     if core.type == "SPELL_AURA_REMOVED" and core.spellId == 229684 then
-        C_Timer.After(1, function() 
+        C_Timer.After(1, function()
             if core.encounterStarted == true then
-                core:getAchievementFailedPersonal()  
-            end      
+                core:getAchievementFailedPersonal()
+            end
         end)
     end
 end
@@ -82,7 +82,7 @@ function core._1648:Helya()
             fetidcount = fetidcount - 1
         end
     end
-    
+
     --Check achievement criteria
     if ((core.groupSize - 1) == fetidcount) or (core.groupSize == 1 and fetidcount == 0) then
         core:getAchievementSuccess()
@@ -128,14 +128,14 @@ function core._1648.Events:UNIT_AURA(self, unitID, ...)
         local saltySpittleFound = false
         local darkDischargeFound = false
         for i=1,40 do
-            local spellName, _, _, _, _, _, _, _, _, spellId = UnitDebuff(unitID, i)
-            if spellId == 231846 or spellId == 235900 then
+            local auraData = C_UnitAuras.GetDebuffDataByIndex(unitID, i)
+            if (auraData ~= nil and auraData.spellId == 231846) or (auraData ~= nil and auraData.spellId == 235900) then
                 chewToyFound = true
-            elseif spellId == 227539 or spellId == 232777 or spellId == 228758 then
+            elseif auraData ~= nil and auraData.spellId == 227539 or (auraData ~= nil and auraData.spellId == 232777) or (auraData ~= nil and auraData.spellId == 228758) then
                 fieryPhelgmFound = true
-            elseif spellId == 227566 or spellId == 232798 or spellId == 228768 then
+            elseif auraData ~= nil and auraData.spellId == 227566 or (auraData ~= nil and auraData.spellId == 232798) or (auraData ~= nil and auraData.spellId == 228768) then
                 saltySpittleFound = true
-            elseif spellId == 227570 or spellId == 232800 or spellId == 228769 then
+            elseif auraData ~= nil and auraData.spellId == 227570 or (auraData ~= nil and auraData.spellId == 232800) or (auraData ~= nil and auraData.spellId == 228769) then
                 darkDischargeFound = true
             end
 
@@ -156,6 +156,6 @@ function core._1648.Events:UNIT_AURA(self, unitID, ...)
 
         if breathCounter == 3 then
             core:getAchievementSuccess()
-        end  
+        end
     end
 end

@@ -55,8 +55,8 @@ function core._2526:OvergrownAncient()
 		for player,status in pairs(core.InfoFrame_PlayersTable) do
 			local debuffFound = false
 			for i=1,40 do
-				local _, _, count2, _, _, _, _, _, _, spellId = UnitBuff(player, i)
-				if spellId == 392005 then
+				local auraData = C_UnitAuras.GetBuffDataByIndex(player, i)
+				if auraData ~= nil and auraData.spellId == 392005 then
 					debuffFound = true
 				end
 			end

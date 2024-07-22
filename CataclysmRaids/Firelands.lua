@@ -60,19 +60,19 @@ function core._720:Alysrazor()
 	--Lava Spew
 	if core.type == "SPELL_DAMAGE" and core.spellId == 99336 and lavaSpewFailed == false then
 		core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ") (" .. L["Core_Reason"] .. ": " .. core.spellName)
-		lavaSpewFailed = true	
+		lavaSpewFailed = true
 	end
 
 	--Increndiary Cloud
 	if core.type == "SPELL_DAMAGE" and core.spellId == 99427 and incendiaryCloudFailed == false then
 		core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ") (" .. L["Core_Reason"] .. ": " .. core.spellName)
-		incendiaryCloudFailed = true		
+		incendiaryCloudFailed = true
 	end
 
 	--Fiery Tornado
 	if core.type == "SPELL_DAMAGE" and core.spellId == 99816 and fieryTornadoFailed == false then
 		core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ") (" .. L["Core_Reason"] .. ": " .. core.spellName)
-		fieryTornadoFailed = true	
+		fieryTornadoFailed = true
 	end
 end
 
@@ -108,7 +108,7 @@ function core._720:Shannox()
 	if placesVisited == 5 then
 		core:getAchievementSuccess()
 	end
-end 
+end
 
 function core._720:Bethtilac()
 	--Loop through all the unit auras currently active
@@ -116,7 +116,7 @@ function core._720:Bethtilac()
 	--If a cinderweb drone is killed and is not in this array then fail the achievement
 	if core.type == "UNIT_DIED" and core.destID == "52581" and cinderwebDroneList[core.spawn_uid_dest] == nil then
 		core:getAchievementFailed()
-	end 	
+	end
 end
 
 function core._720:Baleroc()
@@ -125,7 +125,7 @@ function core._720:Baleroc()
 			tormentStacks[core.destName] = 1
 		else
 			tormentStacks[core.destName] = tormentStacks[core.destName] + 1
-			
+
 			if tormentStacks[core.destName] == 3 then
 				core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ")")
 			end
@@ -181,13 +181,13 @@ end
 function core._720:InstanceCleanup()
     core._720.Events:UnregisterEvent("UNIT_POWER_UPDATE")
 	core._720.Events:UnregisterEvent("UNIT_AURA")
-	
+
 	onlyThePenitentFailed = false
 end
 
 function core._720:InitialSetup()
 	core._720.Events:RegisterEvent("UNIT_POWER_UPDATE")
-    core._720.Events:RegisterEvent("UNIT_AURA")	
+    core._720.Events:RegisterEvent("UNIT_AURA")
 end
 
 core._720.Events:SetScript("OnEvent", function(self, event, ...)
@@ -206,8 +206,8 @@ end
 
 function core._720.Events:UNIT_AURA(self, unitID)
 	for i=1,40 do
-		local _, _, count2, _, _, _, _, _, _, spellId = UnitDebuff(unitID, i)
-		if spellId == 100048 then
+		local auraData = C_UnitAuras.GetDebuffDataByIndex(unitID, i)
+		if auraData ~= nil and auraData.spellId == 100048 then
 			--Add the mob to an array to say that it is currently ontop of the nest
 			if spellID2 ~= nil then
 				local unitType, _, _, _, _, destID2, spawn_uid_dest = strsplit("-", UnitGUID(unitID));
