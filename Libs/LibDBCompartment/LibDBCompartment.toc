@@ -1,8 +1,8 @@
-## Interface: 100205
+## Interface: 100207
 ## Title: LibDBCompartment
 ## Notes: Library for handling integration into Blizzards' minimap addon compartment.
 ## Author: Daniel "Meorawr" Yates <me@meorawr.io>
-## Version: v10
+## Version: v11
 ## IconAtlas: minortalents-icon-book
 ## LoadOnDemand: 1
 
