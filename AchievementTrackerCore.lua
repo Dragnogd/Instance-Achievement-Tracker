@@ -3902,9 +3902,9 @@ function core:trackAura(auraID, maxCount, type)
 
 		local count = 0
         for i=1,40 do
-			local _, _, count2, _, _, _, _, _, _, spellId = UnitDebuff(unit, i)
-			if spellId == auraID then
-				count = count2
+			local auraData = C_UnitAuras.GetDebuffDataByIndex(unit, i)
+			if auraData ~= nil and auraData.spellId == auraID then
+				count = auraData.applications
             end
         end
 
@@ -4359,8 +4359,8 @@ end
 function core:hasDebuff(player,spellId)
 	local found = false
 	for i=1,40 do
-		local _, _, _, _, _, _, _, _, _, spellIdFound = UnitDebuff(player, i)
-		if spellIdFound == spellId then
+		local auraData = C_UnitAuras.GetDebuffDataByIndex(player, i)
+		if auraData ~= nil and auraData.spellIdFound == spellId then
 			found = true
 		end
 	end
