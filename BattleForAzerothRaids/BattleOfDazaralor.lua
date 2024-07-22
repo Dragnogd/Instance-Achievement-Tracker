@@ -237,7 +237,7 @@ function core._2070:JadefireMasters()
     if core.type == "SPELL_DAMAGE" and core.spellId == 286565 and core.destName ~= nil then
         --Check if the player that has been hit has the egg debuff on them
         for i=1,40 do
-            local _, _, _, _, _, _, _, _, _, spellId = UnitAura(core.destName, i)
+            local _, _, _, _, _, _, _, _, _, spellId = C_UnitAuras.GetAuraDataByIndex(core.destName, i)
             if spellId == 289547 then
                 core:getAchievementSuccess()
             end

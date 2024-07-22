@@ -21,7 +21,7 @@ local ShaOfDoubtCounter = 0
 function core._960:WiseMari()
     if core.spellId == 115167 then
         --If someone gets hit by the ability, check if they need the achievement or not
-        
+
         if playersHit[core.destName] == nil then
             --Players has not been hit already
             --Check if the player actually needs the achievement
@@ -53,7 +53,7 @@ end
 
 function core._960:ShaOfDoubt2()
     for i=1,40 do
-        local _, _, _, _, _, _, _, _, _, spellId = UnitAura("Player", i)
+        local _, _, _, _, _, _, _, _, _, spellId = C_UnitAuras.GetAuraDataByIndex("Player", i)
         if spellId == 118714 then
             core:getAchievementFailed(2)
         end

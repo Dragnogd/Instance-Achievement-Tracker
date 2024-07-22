@@ -101,7 +101,7 @@ function core._1136:Immerseus()
 	-- 	if timerStarted == false then
 	-- 		timerStarted = true
 	-- 		C_Timer.After(3, function()
-	-- 			if core.inCombat == true then 
+	-- 			if core.inCombat == true then
 	-- 				core:sendMessage("Kill the Tears of the Vale Now")
 	-- 				safeToKillTears = true
 	-- 				timerStarted = false
@@ -186,7 +186,7 @@ function core._1136:Malkorok()
 
 	--Corrupted Skullsplitter/Amalgamation Killed
 	if core.type == "UNIT_DIED" and core.destID == "72983" and core.achievementsCompleted[1] == false then
-		core:getAchievementFailedWithMessageAfter("Do not kill boss (This achievement can be repeated)")						
+		core:getAchievementFailedWithMessageAfter("Do not kill boss (This achievement can be repeated)")
 	end
 end
 
@@ -209,7 +209,7 @@ function core._1136:SecuredStockpileOfPandarenSpoils()
 	-- 		elseif core:has_value(moguMobs, core.destID) then
 	-- 			if playersSide[spawn_uid] ~= "Mogu" then
 	-- 				core:getAchievementFailedWithMessageAfter("(" .. core.sourceName .. ")")
-	-- 			end					
+	-- 			end
 	-- 		end
 	-- 	end
 	-- end
@@ -223,7 +223,7 @@ function core._1136:ThokTheBloodthirsty()
 
 	--Step 1: Lower Health to 50%
 		--Once 5 unique players have the bloodied debuff
-	
+
 	--Step 2: Detect player who has skseleton key debuff and tell them to open cage
 		--Detect open cage Spell_Cast Succedded ???
 		--Do this 3 times
@@ -260,23 +260,23 @@ end
 function core._1136:Paragons()
 	--Alert the user when they assume the power of one of the parargons
 	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 141857 then
-		core:sendMessage(core.destName .. " has gained powers from Rik'kal the Dissector")		
+		core:sendMessage(core.destName .. " has gained powers from Rik'kal the Dissector")
 	elseif core.type == "SPELL_AURA_APPLIED" and core.spellId == 141851 then
-		core:sendMessage(core.destName .. " has gained powers from Skeer the Bloodseeker")				
+		core:sendMessage(core.destName .. " has gained powers from Skeer the Bloodseeker")
 	elseif core.type == "SPELL_AURA_APPLIED" and core.spellId == 141854 then
-		core:sendMessage(core.destName .. " has gained powers from Korven the Prime")						
+		core:sendMessage(core.destName .. " has gained powers from Korven the Prime")
 	elseif core.type == "SPELL_AURA_APPLIED" and core.spellId == 141852 then
-		core:sendMessage(core.destName .. " has gained powers from Hisek the Swarmkeeper")								
+		core:sendMessage(core.destName .. " has gained powers from Hisek the Swarmkeeper")
 	elseif core.type == "SPELL_AURA_APPLIED" and core.spellId == 141856 then
-		core:sendMessage(core.destName .. " has gained powers from Xaril the Poisoned Mind")										
+		core:sendMessage(core.destName .. " has gained powers from Xaril the Poisoned Mind")
 	elseif core.type == "SPELL_AURA_APPLIED" and core.spellId == 148653 then
-		core:sendMessage(core.destName .. " has gained powers from Iyyokuk the Lucid")											
+		core:sendMessage(core.destName .. " has gained powers from Iyyokuk the Lucid")
 	elseif core.type == "SPELL_AURA_APPLIED" and core.spellId == 148648 then
-		core:sendMessage(core.destName .. " has gained powers from Kaz'tik the Manipulator")													
+		core:sendMessage(core.destName .. " has gained powers from Kaz'tik the Manipulator")
 	elseif core.type == "SPELL_AURA_APPLIED" and core.spellId == 141853 then
-		core:sendMessage(core.destName .. " has gained powers from Ka'roz the Locust")															
+		core:sendMessage(core.destName .. " has gained powers from Ka'roz the Locust")
 	elseif core.type == "SPELL_AURA_APPLIED" and core.spellId == 141859 then
-		core:sendMessage(core.destName .. " has gained powers from Kil'ruk the Wind-Reaver")																	
+		core:sendMessage(core.destName .. " has gained powers from Kil'ruk the Wind-Reaver")
 	end
 end
 
@@ -284,7 +284,7 @@ function core._1136:GarroshHellscream()
 	core.MobCounter:Setup(18, 0, "71979", false)
 	core.MobCounter:DetectSpawnedMob()
 	core.MobCounter:DetectKilledMob("SPELL_DAMAGE", 144653)
-	
+
 	--Blizzard Tracker has gone white so achievement completed
 	if core:getBlizzardTrackingStatus(8537) == true then
 		core:getAchievementSuccess()
@@ -324,7 +324,7 @@ function core._1136:TrackAdditional()
 				if theramoreCitizenKilled == false and citizensSaved == false then
 					unitsSaved = unitsSaved + 1
 					citizensSaved = true
-					core:sendMessage("Save 'A group of unwilling combat participants' part of "  .. GetAchievementLink(8453) .. " Completed (" .. unitsSaved .. "/3)")				
+					core:sendMessage("Save 'A group of unwilling combat participants' part of "  .. GetAchievementLink(8453) .. " Completed (" .. unitsSaved .. "/3)")
 				end
 			end)
 		end
@@ -343,9 +343,9 @@ function core._1136:TrackAdditional()
 				if orcsKilled == false and citizensSaved == false then
 					unitsSaved = unitsSaved + 1
 					citizensSaved = true
-					core:sendMessage("Save 'A group of unwilling combat participants' part of "  .. GetAchievementLink(8453) .. " Completed (" .. unitsSaved .. "/3)")				
+					core:sendMessage("Save 'A group of unwilling combat participants' part of "  .. GetAchievementLink(8453) .. " Completed (" .. unitsSaved .. "/3)")
 				end
-			end)		
+			end)
 		end
 
 		--Orcs Killed---
@@ -388,7 +388,7 @@ function core._1136.Events:UNIT_SPELLCAST_SUCCEEDED(self, unitID, lineID, spellI
 				superheatedCrawlerMinesUID[spawn_uid_dest] = spawn_uid_dest
 				superheatedCrawlerMinesSquashed = superheatedCrawlerMinesSquashed + 1
 				core:sendMessage(core:getAchievement() .. " Superheated Crawler Mines Stomped (" .. superheatedCrawlerMinesSquashed .. "/6)")
-	
+
 				if superheatedCrawlerMinesSquashed == 6 then
 					core:getAchievementSuccess()
 				end
@@ -401,12 +401,12 @@ end
 function core._1136.Events:UNIT_AURA(self, unitID, ...)
 	if core.Instances[core.expansion][core.instanceType][core.instance]["boss7"].enabled == true then
 		for i=1,40 do
-			local _, _, _, _, _, _, _, _, _, spellId = UnitAura("Player", i)
+			local _, _, _, _, _, _, _, _, _, spellId = C_UnitAuras.GetAuraDataByIndex("Player", i)
 			if (spellId == 145730 or spellId == 145729 or spellId == 145732) and prisonersRescued == false then
 				prisonersRescued = true
 				unitsSaved = unitsSaved + 1
 				core:sendMessage("'Rescue a set of caged prisoners,' part of "  .. GetAchievementLink(8453) .. " Completed (" .. unitsSaved .. "/3)")
-			
+
 				--Requirements Met
 				if unitsSaved == 3 and rescueRaidersCompleted == false then
 					rescueRaidersCompleted = true
@@ -436,9 +436,9 @@ function core._1136.Events:UNIT_HEALTH(self, unitID, ...)
 		-- 		warbringersCounter = warbringersCounter - 1
 		-- 		core:sendDebugMessage("HEALED: " .. spawn_uid_dest)
 		-- 		core:sendDebugMessage("Kor'kron Warbringer at <= 15% health (" .. warbringersCounter .. "/18)", warbringersCounter, 1)
-		-- 		garroshMessageQueue = "Kor'kron Warbringer at <= 15% health (" .. warbringersCounter .. "/18)"				
+		-- 		garroshMessageQueue = "Kor'kron Warbringer at <= 15% health (" .. warbringersCounter .. "/18)"
 		-- 	end
-		-- end	
+		-- end
 	end
 end
 
@@ -510,7 +510,7 @@ end
 -- 	if event == "COMBAT_LOG_EVENT_UNFILTERED" then
 -- 		local spellId, spellName, spellSchool, amount, overkill, school, resisted, blocked, absorbed, critical, glancing, crushing = select(12, ...)
 -- 		local unitType, _, _, _, _, destID, spawn_uid_dest = strsplit("-",destGUID);
-		
+
 -- 		--Corrupted Skullsplitter Pulled
 -- 		if destID == "73033" and corruptedSkullsplitterPulled == false then
 -- 			corruptedSkullsplitterPulled = true
@@ -520,7 +520,7 @@ end
 -- 		--Corrupted Skullsplitter Killed
 -- 		if type == "UNIT_DIED" and destID == "73033" and core.achievementFailed == false then
 -- 			SendChatMessage("[WIP] "  .. GetAchievementLink(8538) .. " FAILED",core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
--- 			core.achievementFailed = true							
+-- 			core.achievementFailed = true
 -- 		end
 
 -- 	end
