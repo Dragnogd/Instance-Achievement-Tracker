@@ -401,8 +401,8 @@ end
 function core._1136.Events:UNIT_AURA(self, unitID, ...)
 	if core.Instances[core.expansion][core.instanceType][core.instance]["boss7"].enabled == true then
 		for i=1,40 do
-			local _, _, _, _, _, _, _, _, _, spellId = C_UnitAuras.GetAuraDataByIndex("Player", i)
-			if (spellId == 145730 or spellId == 145729 or spellId == 145732) and prisonersRescued == false then
+			local auraData = C_UnitAuras.GetAuraDataByIndex("Player", i)
+			if auraData ~= nil and (auraData.spellId == 145730 or auraData.spellId == 145729 or auraData.spellId == 145732) and prisonersRescued == false then
 				prisonersRescued = true
 				unitsSaved = unitsSaved + 1
 				core:sendMessage("'Rescue a set of caged prisoners,' part of "  .. GetAchievementLink(8453) .. " Completed (" .. unitsSaved .. "/3)")

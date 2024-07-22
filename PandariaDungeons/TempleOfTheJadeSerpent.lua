@@ -53,8 +53,8 @@ end
 
 function core._960:ShaOfDoubt2()
     for i=1,40 do
-        local _, _, _, _, _, _, _, _, _, spellId = C_UnitAuras.GetAuraDataByIndex("Player", i)
-        if spellId == 118714 then
+        local auraData = C_UnitAuras.GetAuraDataByIndex("Player", i)
+        if auraData ~= nil and auraData.spellId == 118714 then
             core:getAchievementFailed(2)
         end
     end
