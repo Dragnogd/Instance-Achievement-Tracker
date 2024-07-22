@@ -4,7 +4,7 @@
 local _, core = ...
 local L = core.L
 
-local rc = LibStub("LibRangeCheck-2.0")
+local rc = LibStub("LibRangeCheck-3.0")
 core.InfoFrame = {}
 core.InfoFrame.Events = CreateFrame("Frame")
 
