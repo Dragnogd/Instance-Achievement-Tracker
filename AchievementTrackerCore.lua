@@ -26,7 +26,7 @@ events:RegisterEvent("PLAYER_LOGIN")							--Fired just before login has finishe
 function generateItemCache()									--The Item Cache can only be generated once the game has loaded
 	for i,v in pairs(core.ItemCache) do							--We need to first get information about the item to load into the cache
 		--If item does not return nil then add to tactics now as GET_ITEM_INFO_RECEIVED only fires if items are not in the cache
-		local itemName, itemLink = GetItemInfo(core.ItemCache[v])
+		local itemName, itemLink = C_Item.GetItemInfo(core.ItemCache[v])
 		if itemLink ~= nil then
 			for expansion, _ in pairs(core.Instances) do
 				for instanceType, _ in pairs(core.Instances[expansion]) do
@@ -68,14 +68,14 @@ function events:GET_ITEM_INFO_RECEIVED(self, arg1)
 							if type(core.Instances[expansion][instanceType][instance][boss].tactics) == "table" then
 								if UnitFactionGroup("player") == "Alliance" then
 									if string.find(core.Instances[expansion][instanceType][instance][boss].tactics[1], ("IAT_" .. arg1)) then
-										local itemName, itemLink = GetItemInfo(arg1)
+										local itemName, itemLink = C_Item.GetItemInfo(arg1)
 										if itemLink ~= nil then
 											core.Instances[expansion][instanceType][instance][boss].tactics[1] = string.gsub(core.Instances[expansion][instanceType][instance][boss].tactics[1], ("IAT_" .. arg1), itemLink)
 										end
 									end
 								else
 									if string.find(core.Instances[expansion][instanceType][instance][boss].tactics[2], ("IAT_" .. arg1)) then
-										local itemName, itemLink = GetItemInfo(arg1)
+										local itemName, itemLink = C_Item.GetItemInfo(arg1)
 										if itemLink ~= nil then
 											core.Instances[expansion][instanceType][instance][boss].tactics[2] = string.gsub(core.Instances[expansion][instanceType][instance][boss].tactics[2], ("IAT_" .. arg1), itemLink)
 										end
@@ -83,7 +83,7 @@ function events:GET_ITEM_INFO_RECEIVED(self, arg1)
 								end
 							else
 								if string.find(core.Instances[expansion][instanceType][instance][boss].tactics, ("IAT_" .. arg1)) then
-									local itemName, itemLink = GetItemInfo(arg1)
+									local itemName, itemLink = C_Item.GetItemInfo(arg1)
 									if itemLink ~= nil then
 										core.Instances[expansion][instanceType][instance][boss].tactics = string.gsub(core.Instances[expansion][instanceType][instance][boss].tactics, ("IAT_" .. arg1), itemLink)
 									end
