@@ -82,7 +82,7 @@ LichKingDungeons\TrialOfTheChampion.lua
 LichKingDungeons\UtgardeKeep.lua
 LichKingDungeons\UtgardePinnacle.lua
 
-Instances.lua
+InstancesClassic.lua
 ItemCache.lua
 NPCCache.lua
 InfoFrame.lua
