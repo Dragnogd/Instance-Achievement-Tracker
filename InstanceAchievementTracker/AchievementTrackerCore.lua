@@ -702,24 +702,27 @@ function getInstanceInfomation()
 
 					--Switch to correct tab in GUI
 					core:sendDebugMessage("Expansion: " .. core.expansion)
-					-- if core.expansion == 3 then
-					-- 	Tab_OnClick(_G["AchievementTrackerTab9"])
-					-- elseif core.expansion == 4 then
-					-- 	Tab_OnClick(_G["AchievementTrackerTab8"])
-					-- elseif core.expansion == 5 then
-					-- 	Tab_OnClick(_G["AchievementTrackerTab7"])
-					-- elseif core.expansion == 6 then
-					-- 	Tab_OnClick(_G["AchievementTrackerTab6"])
-					-- elseif core.expansion == 7 then
-					-- 	Tab_OnClick(_G["AchievementTrackerTab5"])
-					-- elseif core.expansion == 8 then
-					-- 	Tab_OnClick(_G["AchievementTrackerTab4"])
-					-- elseif core.expansion == 9 then
-					-- 	Tab_OnClick(_G["AchievementTrackerTab3"])
-					-- end
+					for k, data in ipairs(core.Config.tabDataProvider) do
+						if data.ExpansionID == core.expansion then
+							core:sendDebugMessage("Setting to tab".. k)
+							PanelTemplates_SetTab(core.Config.UI, k)
 
-					--Make sure right instance is selected
-					core.Config:Instance_OnClickAutomatic()
+							local tab = _G["AchievementTrackerTab"..k]
+
+							-- Check if the tab has an OnClick handler and call it
+							if tab and tab:GetScript("OnClick") then
+								tab:GetScript("OnClick")(tab)
+							end
+						end
+					end
+
+					local function PredicateFunction(item)
+						return item.id == core.instance
+					end
+
+					local foundItem = core.Config.InstanceListDataProvider:FindElementDataByPredicate(PredicateFunction)
+
+					core.Config:ShowContentForInstance(foundItem)
 				else
 					core:sendDebugMessage("Achievements cannot be earned for the following difficulty " .. core.difficultyID)
 				end
@@ -1535,9 +1538,6 @@ function events:INSPECT_ACHIEVEMENT_READY(self, GUID, ...)
 				--print("Scanned " .. UnitName(playersToScan[1]))
 				table.insert(playersScanned, playersToScan[1])
 				table.remove(playersToScan, 1)
-
-				--Update the GUI
-				core.Config:Instance_OnClickAutomatic()
 
 				playerCurrentlyScanning = nil
 

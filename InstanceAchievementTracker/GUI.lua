@@ -114,20 +114,20 @@ end
 -- What it Does:    Toggles the GUI to show or hide
 -- Purpose:         Checks whether the GUI is currently being shown and performs the opposite action
 function Config:Toggle()
-    local GUI = UI or Config:CreateUI()
+    local GUI = Config.UI or Config:CreateUI()
     GUI:SetShown(not GUI:IsShown())
     GameTooltip:Hide()
 end
 
 function Config:ToggleOn()
     --Toggle on only
-    local GUI = UI or Config:CreateUI()
+    local GUI = Config.UI or Config:CreateUI()
     GUI:SetShown(true)
     GameTooltip:Hide()
 end
 
 function IAT_GlobalToggle()
-    local GUI = UI or Config:CreateUI()
+    local GUI = Config.UI or Config:CreateUI()
     GUI:SetShown(not GUI:IsShown())
     GameTooltip:Hide()
 end
@@ -237,9 +237,9 @@ end
 function IAT_CheckForEscape(self, key)
     if key == "ESCAPE" then
         Config:Toggle()
-        --self.UI:SetPropagateKeyboardInput(false)
+        Config.UI:SetPropagateKeyboardInput(false)
     else
-        --self.UI:SetPropagateKeyboardInput(true)
+        Config.UI:SetPropagateKeyboardInput(true)
     end
 end
 
@@ -778,8 +778,7 @@ function Config:CreateUI()
     Config:ShowOptionsPanel()
 
     self.UI.ExpansionLayoutContainer:Hide()
-
-    self.UI:Show()
+    self.UI:Hide()
 end
 
 function Config:ShowContentForInstance(data)
@@ -945,12 +944,6 @@ function Config:ShowOptionsPanel()
     self.UI.OptionsLayoutContainer.RightDisplay.DiscordDescription:SetText(L["GUI_AchievementsDiscordDescription"])
     self.UI.OptionsLayoutContainer.RightDisplay.DiscordDescription:SetWidth(400)
     self.UI.OptionsLayoutContainer.RightDisplay.DiscordDescription:SetJustifyH("LEFT")
-end
-
--- Method:          Config:Instance_OnClickAutomatic()
--- What it Does:    Calls the Instance_OnClick() function
--- Purpose:         This is used when automatically selected the tab after enabling achievement for an instance
-function Config:Instance_OnClickAutomatic()
 end
 
 function Config:Instance_OnClickAPI()
