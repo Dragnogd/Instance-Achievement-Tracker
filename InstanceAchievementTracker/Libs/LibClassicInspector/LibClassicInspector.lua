@@ -3652,7 +3652,7 @@ function lib:GetInventoryItemLink(unitorguid, slot)
         local user = getCacheUser2(guid)
         if (user and user.inventory.time ~= 0) then
             local itemID = user.inventory[n]
-            return itemID and select(2, GetItemInfo(itemID))
+            return itemID and select(2, C_Item.GetItemInfo(itemID))
         end
     end
     return nil

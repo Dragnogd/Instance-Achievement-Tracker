@@ -25,8 +25,6 @@ Libs\LibClassicInspector\LibClassicInspector.lua
 Libs\LibDBCompartment\LibDBCompartment-1.0.lua
 Libs\TaintLess\TaintLess.xml
 
-
-
 Localization.lua
 Localization.enUS.lua
 Localization.deDE.lua
@@ -38,14 +36,16 @@ Localization.zhCN.lua
 Localization.zhTW.lua
 Localization.koKR.lua
 
+Templates.xml
+
 Instances.lua
 ItemCache.lua
 NPCCache.lua
 InfoFrame.lua
+Options.lua
 GUI.lua
 MobCounter.lua
 emotes.lua
 AchievementTrackerCore.lua
 Debug.lua
 
-Templates.xml

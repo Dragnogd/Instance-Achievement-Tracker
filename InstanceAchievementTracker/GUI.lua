@@ -31,7 +31,7 @@ AchievementTrackerOptions = {}
 AchievementTrackerNPCCache = {}
 AchievementTrackerNPCCacheClassic = {}
 
-BOSSBUTTON_COLLAPSEDHEIGHT = 55;
+BOSSBUTTON_COLLAPSEDHEIGHT = 84;
 
 local g_achievementSelectionBehavior = nil;
 local g_achievementSelections = {{},{},{}};
@@ -50,12 +50,26 @@ function getGameBuild()
     core.gameVersionRevision = tonumber(core.gameVersionRevision)
 end
 
+function deepdump( tbl )
+    local checklist = {}
+    local function innerdump( tbl, indent )
+        checklist[ tostring(tbl) ] = true
+        for k,v in pairs(tbl) do
+            print(indent..k,v,type(v),checklist[ tostring(tbl) ])
+            if (type(v) == "table" and not checklist[ tostring(v) ]) then innerdump(v,indent.."    ") end
+        end
+    end
+    print("=== DEEPDUMP -----")
+    checklist[ tostring(tbl) ] = true
+    innerdump( tbl, "" )
+    print("------------------")
+end
+
 ------------------------------------------------------
 ---- Localisation
 ------------------------------------------------------
 
 function Config:getLocalisedInstanceName(instanceID)
-    print(instanceID)
     if instanceID ~= nil then
         if core.gameVersionMajor > 3 then
             return EJ_GetInstanceInfo(instanceID)
@@ -172,7 +186,7 @@ function Config:CreateText(point, relativeFrame, relativePoint, xOffset, yOffset
 end
 
 function Config:CreateText2(point, relativeFrame, relativePoint, xOffset, yOffset, textString, size)
-    local text = UI:CreateFontString(nil, "OVERLAY", size)
+    local text = self.UI:CreateFontString(nil, "OVERLAY", size)
     text:SetPoint(point, relativeFrame, relativePoint, xOffset, yOffset)
     text:SetText(textString)
     return text
@@ -192,253 +206,6 @@ function ATToggleShowInfoFrameTestFrame_OnClick(self)
     end
 end
 
-function ATToggleChangeMinimapIcon_OnClick(self)
-    AchievementTrackerOptions["changeMinimapIcon"] = self:GetChecked()
-    setChangeMinimapIcon(self:GetChecked())
-end
-
-function ATToggleTrackAchievementsAutomatically_OnClick(self)
-    AchievementTrackerOptions["trackAchievementsAutomatically"] = self:GetChecked()
-    setTrackAchievementsAutomatically(self:GetChecked())
-end
-
-function ATToggleTrackCharacterAchievements_OnClick(self)
-    AchievementTrackerOptions["trackCharacterAchievements"] = self:GetChecked()
-    setTrackCharacterAchievements(self:GetChecked())
-end
-
-function ATToggleTrackAchievementsInBlizzardUI_OnClick(self)
-    AchievementTrackerOptions["trackAchievementsInBlizzardUI"] = self:GetChecked()
-    setTrackAchievementsInBlizzardUI(self:GetChecked())
-end
-
-function ATToggleInfoFrame_OnClick(self)
-    AchievementTrackerOptions["displayInfoFrame"] = self:GetChecked()
-    setDisplayInfoFrame(self:GetChecked())
-end
-
-function ATToggleAutomaticCombatLogging_OnClick(self)
-    AchievementTrackerOptions["enableAutomaticCombatLogging"] = self:GetChecked()
-    setEnableAutomaticCombatLogging(self:GetChecked())
-end
-
-function ATToggleHideCompletedAchievements_OnClick(self)
-    AchievementTrackerOptions["hideCompletedAchievements"] = self:GetChecked()
-    setHideCompletedAchievements(self:GetChecked())
-end
-
-function ATToggleGreyOutCompletedAchievements_OnClick(self)
-    AchievementTrackerOptions["greyOutCompletedAchievements"] = self:GetChecked()
-    setGreyOutCompletedAchievements(self:GetChecked())
-end
-
-function AchievementTracker_SelectSoundCompleted(self, arg1, arg2, checked)
-    if arg1 == 1 then
-        PlaySound(SOUNDKIT.READY_CHECK, "Master") --Success
-        AchievementTrackerOptions["completedSound"] = SOUNDKIT.RAID_WARNING
-        AchievementTrackerOptions["completedSoundID"] = 1
-        setCompletedSound(SOUNDKIT.READY_CHECK)
-    elseif arg1 == 2 then
-        PlaySound(SOUNDKIT.ALARM_CLOCK_WARNING_2, "Master") --Success
-        AchievementTrackerOptions["completedSound"] = SOUNDKIT.RAID_WARNING
-        AchievementTrackerOptions["completedSoundID"] = 2
-        setCompletedSound(SOUNDKIT.ALARM_CLOCK_WARNING_2)
-    elseif arg1 == 3 then
-        PlaySound(SOUNDKIT.ALARM_CLOCK_WARNING_3, "Master") --Success
-        AchievementTrackerOptions["completedSound"] = SOUNDKIT.RAID_WARNING
-        AchievementTrackerOptions["completedSoundID"] = 3
-        setCompletedSound(SOUNDKIT.ALARM_CLOCK_WARNING_3)
-    elseif arg1 == 4 then
-        PlaySound(SOUNDKIT.AUCTION_WINDOW_CLOSE, "Master") --Success
-        AchievementTrackerOptions["completedSound"] = SOUNDKIT.RAID_WARNING
-        AchievementTrackerOptions["completedSoundID"] = 4
-        setCompletedSound(SOUNDKIT.AUCTION_WINDOW_CLOSE)
-    elseif arg1 == 4 then
-        PlaySound(SOUNDKIT.AUCTION_WINDOW_CLOSE, "Master") --Success
-        AchievementTrackerOptions["completedSound"] = SOUNDKIT.RAID_WARNING
-        AchievementTrackerOptions["completedSoundID"] = 4
-        setCompletedSound(SOUNDKIT.AUCTION_WINDOW_CLOSE)
-    elseif arg1 == 4 then
-        PlaySound(SOUNDKIT.AUCTION_WINDOW_CLOSE, "Master") --Success
-        AchievementTrackerOptions["completedSound"] = SOUNDKIT.RAID_WARNING
-        AchievementTrackerOptions["completedSoundID"] = 4
-        setCompletedSound(SOUNDKIT.AUCTION_WINDOW_CLOSE)
-    elseif arg1 == 5 then
-        PlaySoundFile("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\You_Are_Prepared.ogg", "Master") --Success
-        AchievementTrackerOptions["completedSound"] = "Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\You_Are_Prepared.ogg"
-        AchievementTrackerOptions["completedSoundID"] = 5
-        setCompletedSound("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\You_Are_Prepared.ogg")
-    elseif arg1 == 6 then
-        PlaySoundFile("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound 6.ogg", "Master") --Success
-        AchievementTrackerOptions["completedSound"] = "Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound 6.ogg"
-        AchievementTrackerOptions["completedSoundID"] = 6
-        setCompletedSound("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound 6.ogg")
-    elseif arg1 == 7 then
-        PlaySoundFile("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound 7.ogg", "Master") --Success
-        AchievementTrackerOptions["completedSound"] = "Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound 7.ogg"
-        AchievementTrackerOptions["completedSoundID"] = 7
-        setCompletedSound("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound 7.ogg")
-    elseif arg1 == 8 then
-        PlaySoundFile("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound 8.ogg", "Master") --Success
-        AchievementTrackerOptions["completedSound"] = "Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound 8.ogg"
-        AchievementTrackerOptions["completedSoundID"] = 8
-        setCompletedSound("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound 8.ogg")
-    elseif arg1 == 9 then
-        PlaySoundFile("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound 9.ogg", "Master") --Success
-        AchievementTrackerOptions["completedSound"] = "Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound 9.ogg"
-        AchievementTrackerOptions["completedSoundID"] = 9
-        setCompletedSound("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound 9.ogg")
-    elseif arg1 == 10 then
-        PlaySoundFile("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound 10.ogg", "Master") --Success
-        AchievementTrackerOptions["completedSound"] = "Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound 10.ogg"
-        AchievementTrackerOptions["completedSoundID"] = 10
-        setCompletedSound("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound 10.ogg")
-    elseif arg1 == 11 then
-        PlaySoundFile("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound 11.ogg", "Master") --Success
-        AchievementTrackerOptions["completedSound"] = "Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound 11.ogg"
-        AchievementTrackerOptions["completedSoundID"] = 11
-        setCompletedSound("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound 11.ogg")
-    elseif arg1 == 12 then
-        PlaySoundFile("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound 12.ogg", "Master") --Success
-        AchievementTrackerOptions["completedSound"] = "Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound 12.ogg"
-        AchievementTrackerOptions["completedSoundID"] = 12
-        setCompletedSound("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound 12.ogg")
-    elseif arg1 == 13 then
-        PlaySoundFile("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Achievement Completed.ogg", "Master") --Success
-        AchievementTrackerOptions["completedSound"] = "Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Achievement Completed.ogg"
-        AchievementTrackerOptions["completedSoundID"] = 13
-        setCompletedSound("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Achievement Completed.ogg")
-    end
-    MSA_DropDownMenu_SetText(arg2, arg1)
-end
-
-function AchievementTracker_SelectSoundFailed(self, arg1, arg2, checked)
-    if arg1 == 1 then
-        PlaySound(SOUNDKIT.RAID_WARNING, "Master") --Fail
-        AchievementTrackerOptions["failedSound"] = SOUNDKIT.RAID_WARNING
-        AchievementTrackerOptions["failedSoundID"] = 1
-        setFailedSound(SOUNDKIT.RAID_WARNING)
-    elseif arg1 == 2 then
-        PlaySound(SOUNDKIT.LFG_REWARDS, "Master") --Fail
-        AchievementTrackerOptions["failedSound"] = SOUNDKIT.LFG_REWARDS
-        AchievementTrackerOptions["failedSoundID"] = 2
-        setFailedSound(SOUNDKIT.LFG_REWARDS)
-    elseif arg1 == 3 then
-        PlaySound(SOUNDKIT.UI_BATTLEGROUND_COUNTDOWN_FINISHED, "Master") --Fail
-        AchievementTrackerOptions["failedSound"] = SOUNDKIT.UI_BATTLEGROUND_COUNTDOWN_FINISHED
-        AchievementTrackerOptions["failedSoundID"] = 3
-        setFailedSound(SOUNDKIT.UI_BATTLEGROUND_COUNTDOWN_FINISHED)
-    elseif arg1 == 4 then
-        PlaySound(SOUNDKIT.UI_SCENARIO_ENDING, "Master") --Fail
-        AchievementTrackerOptions["failedSound"] = SOUNDKIT.UI_SCENARIO_ENDING
-        AchievementTrackerOptions["failedSoundID"] = 4
-        setFailedSound(SOUNDKIT.UI_SCENARIO_ENDING)
-    elseif arg1 == 5 then
-        PlaySound(SOUNDKIT.UI_GARRISON_MISSION_COMPLETE_ENCOUNTER_FAIL, "Master") --Fail
-        AchievementTrackerOptions["failedSound"] = SOUNDKIT.UI_GARRISON_MISSION_COMPLETE_ENCOUNTER_FAIL
-        AchievementTrackerOptions["failedSoundID"] = 5
-        setFailedSound(SOUNDKIT.UI_GARRISON_MISSION_COMPLETE_ENCOUNTER_FAIL)
-    elseif arg1 == 6 then
-        PlaySoundFile("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\You_Are_Not_Prepared.ogg", "Master") --Fail
-        AchievementTrackerOptions["failedSound"] = "Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\You_Are_Not_Prepared.ogg"
-        AchievementTrackerOptions["failedSoundID"] = 6
-        setFailedSound("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\You_Are_Not_Prepared.ogg")
-    elseif arg1 == 7 then
-        PlaySoundFile("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound_2.ogg", "Master") --Fail
-        AchievementTrackerOptions["failedSound"] = "Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound_2.ogg"
-        AchievementTrackerOptions["failedSoundID"] = 7
-        setFailedSound("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound_2.ogg")
-    elseif arg1 == 8 then
-        PlaySoundFile("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound_3.ogg", "Master") --Fail
-        AchievementTrackerOptions["failedSound"] = "Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound_3.ogg"
-        AchievementTrackerOptions["failedSoundID"] = 8
-        setFailedSound("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound_3.ogg")
-    elseif arg1 == 9 then
-        PlaySoundFile("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound_4.ogg", "Master") --Fail
-        AchievementTrackerOptions["failedSound"] = "Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound_4.ogg"
-        AchievementTrackerOptions["failedSoundID"] = 9
-        setFailedSound("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound_4.ogg")
-    elseif arg1 == 10 then
-        PlaySoundFile("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound_5.ogg", "Master") --Fail
-        AchievementTrackerOptions["failedSound"] = "Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound_5.ogg"
-        AchievementTrackerOptions["failedSoundID"] = 10
-        setFailedSound("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Sound_5.ogg")
-    elseif arg1 == 11 then
-        PlaySoundFile("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Achievement Failed.ogg", "Master") --Fail
-        AchievementTrackerOptions["failedSound"] = "Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Achievement Failed.ogg"
-        AchievementTrackerOptions["failedSoundID"] = 11
-        setFailedSound("Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Achievement Failed.ogg")
-    end
-    MSA_DropDownMenu_SetText(arg2, arg1)
-end
-
-function ATToggleSound_OnClick(self)
-    AchievementTrackerOptions["toggleSound"] = self:GetChecked()
-    setEnableSound(self:GetChecked())
-end
-
-function ATToggleSoundFailed_OnClick(self)
-    AchievementTrackerOptions["toggleSoundFailed"] = self:GetChecked()
-    setEnableSoundFailed(self:GetChecked())
-end
-
-function ATToggleAnnounceToRaidWarning_OnClick(self)
-    AchievementTrackerOptions["announceToRaidWarning"] = self:GetChecked()
-    setAnnounceToRaidWarning(self:GetChecked())
-end
-
-function ATToggleTrackMissingAchievementsOnly_OnClick(self)
-    AchievementTrackerOptions["onlyTrackMissingAchievements"] = self:GetChecked()
-    setOnlyTrackMissingAchievements(self:GetChecked())
-end
-
-function ATToggleAchievementAnnounce_OnClick(self)
-    AchievementTrackerOptions["announceTrackedAchievements"] = self:GetChecked()
-    setAnnounceTrackedAchievementsToChat(self:GetChecked())
-end
-
--- Method:          ATToggleMinimapIcon_OnClick()
--- What it Does:    Toggle minimap Icon
--- Purpose:         This will toggle to minimap button to show or hide depending on user preferences
-function ATToggleMinimapIcon_OnClick(self)
-    AchievementTrackerOptions["showMinimap"] = self:GetChecked()
-    if self:GetChecked() then
-        core.ATButton:Show("InstanceAchievementTracker")
-        if core.ATButton:IsRegistered("ExplorationAchievementTracker") then
-            core.ATButton:Hide("ExplorationAchievementTracker")
-        end
-    else
-        core.ATButton:Hide("InstanceAchievementTracker")
-    end
-end
-
--- Method:          enableAddon_OnClick()
--- What it Does:    Toggle the addon on or off
--- Purpose:         This will toggle whether the addon will ask if user wants to track achievements or not when entering instances
-function enableAddon_OnClick(self)
-    if (core.inCombat == false and self:GetChecked() == false) or self:GetChecked() == true then
-        AchievementTrackerOptions["enableAddon"] = self:GetChecked()
-        setAddonEnabled(self:GetChecked())
-    else
-        core:printMessage(L["GUI_BlockDisableAddon"])
-        self:SetChecked(true)
-    end
-end
-
--- Method:          EnableAchievementScan_OnClick()
--- What it Does:    TODO
--- Purpose:         TODO
-function EnableAchievementScan_OnClick(self)
-    AchievementTrackerOptions["enableAchievementScan"] = self:GetChecked()
-    setAchievementScanEnabled(self:GetChecked())
-    core.enableAchievementScanning = self:GetChecked()
-
-    Config:SetupAchievementTracking(core.enableAchievementScanning)
-end
-
--- Method:          Config:SetupAchievementTracking()
--- What it Does:    TODO
--- Purpose:         TODO
 function Config:SetupAchievementTracking(mode)
     --Update GUI to say achievement tracking is disabled
     local instanceFound = false
@@ -467,26 +234,6 @@ function Config:SetupAchievementTracking(mode)
     end
 end
 
-function IAT_OnClick()
-    -- EAT_GlobalToggle()
-    -- IAT_GlobalToggle()
-end
-
-function deepdump( tbl )
-    local checklist = {}
-    local function innerdump( tbl, indent )
-        checklist[ tostring(tbl) ] = true
-        for k,v in pairs(tbl) do
-            print(indent..k,v,type(v),checklist[ tostring(tbl) ])
-            if (type(v) == "table" and not checklist[ tostring(v) ]) then innerdump(v,indent.."    ") end
-        end
-    end
-    print("=== DEEPDUMP -----")
-    checklist[ tostring(tbl) ] = true
-    innerdump( tbl, "" )
-    print("------------------")
-end
-
 function IAT_CheckForEscape(self, key)
     if key == "ESCAPE" then
         Config:Toggle()
@@ -496,14 +243,19 @@ function IAT_CheckForEscape(self, key)
     end
 end
 
--- Function to create a tab
 local function CreateTab(parent, id, data)
     local tab = CreateFrame("Button", parent:GetName().."Tab"..id, parent, "PanelTabButtonTemplate")
     tab:SetID(id)
     tab:SetText(data.Title)
     tab:SetScript("OnClick", function(self)
         PanelTemplates_SetTab(parent, id)
-        Config:ShowInstancesForTab(self:GetID())
+        if self:GetID() == 1 then
+            --Options
+            Config:ShowOptionsPanel()
+        else
+            --Expansions
+            Config:ShowInstancesForTab(self:GetID())
+        end
     end)
     return tab
 end
@@ -726,7 +478,11 @@ function BossContentMixin:Init(elementData)
 
     local achievementLink = GetAchievementLink(elementData.boss.achievement)
     achievementLink = achievementLink:gsub("&", "&amp;"); -- & in the achievement name would resolve the html syntax wrong
-	self.Test123:SetText("<html><body><p>" .. L["GUI_Achievement"] .. ": " .. achievementLink .. "<br /><br />" .. elementData.boss.tactics .. "</p></body></html>");
+
+    local tactics = elementData.boss.tactics:gsub("%\n", "<br />")
+    local tacticsStr = tactics == '' and '' or tactics
+
+	self.Test123:SetText("<html><body><p>" .. tacticsStr .. "</p></body></html>");
 
     self.currentHeight = self.Test123:GetContentHeight()
 
@@ -764,16 +520,16 @@ function Config:CreateUI()
     self.UI:SetScript("OnDragStop", self.UI.StopMovingOrSizing)
 
     Config.tabDataProvider = {
-        [1] = {Title = "Options", ExpansionID = 0},
-        [2] = {Title = "The War Within", ExpansionID = 11},
-        [3] = {Title = "Dragonflight", ExpansionID = 10},
-        [4] = {Title = "Shadowlands", ExpansionID = 9},
-        [5] = {Title = "BFA", ExpansionID = 8},
-        [6] = {Title = "Legion", ExpansionID = 7},
-        [7] = {Title = "WoD", ExpansionID = 6},
-        [8] = {Title = "MoP", ExpansionID = 5},
-        [9] = {Title = "Cata", ExpansionID = 4},
-        [10] = {Title = "Wotlk", ExpansionID = 3}
+        [1] = {Title = L["GUI_Options"], ExpansionID = 0},
+        [2] = {Title = L["GUI_TheWarWithin"], ExpansionID = 11},
+        [3] = {Title = L["GUI_Dragonflight"], ExpansionID = 10},
+        [4] = {Title = L["GUI_Shadowlands"], ExpansionID = 9},
+        [5] = {Title = L["GUI_BattleForAzeroth"], ExpansionID = 8},
+        [6] = {Title = L["GUI_Legion"], ExpansionID = 7},
+        [7] = {Title = L["GUI_WarlordsOfDraenor"], ExpansionID = 6},
+        [8] = {Title = L["GUI_MistsOfPandaria"], ExpansionID = 5},
+        [9] = {Title = L["GUI_Cataclysm"], ExpansionID = 4},
+        [10] = {Title = L["GUI_WrathOfTheLichKing"], ExpansionID = 3}
     }
 
     local tabs = {}
@@ -786,56 +542,119 @@ function Config:CreateUI()
         end
     end
 
-    -- Set the first tab as selected
-    PanelTemplates_SetNumTabs(self.UI, #tabs)
-    PanelTemplates_SetTab(self.UI, 1)
+    --Set a container to store the layout for the option tab
+    self.UI.OptionsLayoutContainer = CreateFrame("FRAME", "OptionsTabContainer", self.UI)
+    self.UI.OptionsLayoutContainer:SetPoint("TOPLEFT")
+    self.UI.OptionsLayoutContainer:SetPoint("BOTTOMRIGHT")
 
     -- Create Left Inset
-    self.UI.LeftInset = CreateFrame("Frame", "LeftInset", self.UI)
-    self.UI.LeftInset:SetPoint("TOPLEFT", 4, -40)
-    self.UI.LeftInset:SetPoint("BOTTOMLEFT", 4, 6)
-    self.UI.LeftInset:SetSize(237, 526)
-
-    -- Create Right Inset
-    self.UI.RightInset = CreateFrame("Frame", "RightInset", self.UI)
-    self.UI.RightInset:SetPoint("TOPRIGHT", -6, -40)
-    self.UI.RightInset:SetPoint("BOTTOMLEFT", self.UI.LeftInset, "BOTTOMRIGHT", 2, 0)
+    self.UI.OptionsLayoutContainer.LeftInset = CreateFrame("Frame", "LeftInset", self.UI.OptionsLayoutContainer)
+    self.UI.OptionsLayoutContainer.LeftInset:SetPoint("TOPLEFT", 4, -40)
+    self.UI.OptionsLayoutContainer.LeftInset:SetPoint("BOTTOMLEFT", 4, 6)
+    self.UI.OptionsLayoutContainer.LeftInset:SetSize(477, 526)
 
     -- Create Left Display
-    self.UI.LeftDisplay = CreateFrame("Frame", "LeftDisplay", self.UI)
-    self.UI.LeftDisplay:SetPoint("TOPLEFT", self.UI.LeftInset, "TOPLEFT", 3, -3)
-    self.UI.LeftDisplay:SetPoint("BOTTOMRIGHT", self.UI.LeftInset, "BOTTOMRIGHT", -3, 3)
-    local LeftDisplayTexture = self.UI.LeftDisplay:CreateTexture(nil, "BACKGROUND", "store-category-bg")
-    LeftDisplayTexture:SetAllPoints(self.UI.LeftDisplay)
+    self.UI.OptionsLayoutContainer.LeftDisplay = CreateFrame("Frame", "LeftDisplay", self.UI.OptionsLayoutContainer)
+    self.UI.OptionsLayoutContainer.LeftDisplay:SetPoint("TOPLEFT", self.UI.OptionsLayoutContainer.LeftInset, "TOPLEFT", 3, -3)
+    self.UI.OptionsLayoutContainer.LeftDisplay:SetPoint("BOTTOMRIGHT", self.UI.OptionsLayoutContainer.LeftInset, "BOTTOMRIGHT", -3, 3)
+
+    -- Create Right Inset
+    self.UI.OptionsLayoutContainer.RightInset = CreateFrame("Frame", "RightInset", self.UI.OptionsLayoutContainer)
+    self.UI.OptionsLayoutContainer.RightInset:SetPoint("TOPRIGHT", -6, -40)
+    self.UI.OptionsLayoutContainer.RightInset:SetPoint("BOTTOMLEFT", self.UI.OptionsLayoutContainer.LeftInset, "BOTTOMRIGHT", 2, 0)
 
     -- Create Right Display
-    self.UI.RightDisplay = CreateFrame("Frame", "RightDisplay", self.UI)
-    self.UI.RightDisplay:SetPoint("TOPLEFT", self.UI.RightInset, "TOPLEFT", 3, -3)
-    self.UI.RightDisplay:SetPoint("BOTTOMRIGHT", self.UI.RightInset, "BOTTOMRIGHT", -3, 3)
-    -- local ShadowOverlay = CreateFrame("Frame", "ShadowOverlay", self.UI.RightDisplay, "ShadowOverlayTemplate")
-    -- ShadowOverlay:SetAllPoints(self.UI.RightDisplay)
+    self.UI.OptionsLayoutContainer.RightDisplay = CreateFrame("Frame", "RightDisplay", self.UI.OptionsLayoutContainer)
+    self.UI.OptionsLayoutContainer.RightDisplay:SetPoint("TOPLEFT", self.UI.OptionsLayoutContainer.RightInset, "TOPLEFT", 3, -3)
+    self.UI.OptionsLayoutContainer.RightDisplay:SetPoint("BOTTOMRIGHT", self.UI.OptionsLayoutContainer.RightInset, "BOTTOMRIGHT", -3, 3)
 
-    self.UI.InstanceListScrollContainer = CreateFrame("Frame", "InstanceListScrollContainer", self.UI)
-    self.UI.InstanceListScrollContainer:SetSize(210, 419)
-    self.UI.InstanceListScrollContainer:SetPoint("TOPLEFT", self.UI.LeftInset, "TOPLEFT", 6, -8)
-    self.UI.InstanceListScrollContainer:SetPoint("BOTTOMLEFT", self.UI.LeftInset, "BOTTOMRIGHT", 6, 5)
+    self.UI.OptionsLayoutContainer.OptionsListScrollContainer = CreateFrame("Frame", "OptionsListScrollContainer", self.UI.OptionsLayoutContainer)
+    self.UI.OptionsLayoutContainer.OptionsListScrollContainer:SetSize(450, 419)
+    self.UI.OptionsLayoutContainer.OptionsListScrollContainer:SetPoint("TOPLEFT", self.UI.OptionsLayoutContainer.LeftInset, "TOPLEFT", 6, -8)
+    self.UI.OptionsLayoutContainer.OptionsListScrollContainer:SetPoint("BOTTOMLEFT", self.UI.OptionsLayoutContainer.LeftInset, "BOTTOMRIGHT", 6, 5)
 
     --Create the ScrollBox Frame
-    self.UI.InstanceListScrollContainer.ScrollBox = CreateFrame("Frame", "ScrollBox", self.UI.InstanceListScrollContainer, "WowScrollBoxList")
-    self.UI.InstanceListScrollContainer.ScrollBox:SetPoint("TOPLEFT", 0, 0)
-    self.UI.InstanceListScrollContainer.ScrollBox:SetPoint("BOTTOMRIGHT", 0, 0)
+    self.UI.OptionsLayoutContainer.OptionsListScrollContainer.ScrollBox = CreateFrame("Frame", "ScrollBox", self.UI.OptionsLayoutContainer.OptionsListScrollContainer, "WowScrollBoxList")
+    self.UI.OptionsLayoutContainer.OptionsListScrollContainer.ScrollBox:SetPoint("TOPLEFT", 0, 0)
+    self.UI.OptionsLayoutContainer.OptionsListScrollContainer.ScrollBox:SetPoint("BOTTOMRIGHT", 0, 0)
 
-    self.UI.InstanceListScrollContainer.ScrollBar = CreateFrame("EventFrame", "ScrollBar", self.UI.InstanceListScrollContainer, "MinimalScrollBar")
-    self.UI.InstanceListScrollContainer.ScrollBar:SetPoint("TOPLEFT", self.UI.InstanceListScrollContainer.ScrollBox, "TOPRIGHT", 3, 0)
-    self.UI.InstanceListScrollContainer.ScrollBar:SetPoint("BOTTOMLEFT", self.UI.InstanceListScrollContainer.ScrollBox, "BOTTOMRIGHT", 3, 0)
-    --self.UI.InstanceListScrollContainer.ScrollBar.hideIfUnscrollable = true
+    self.UI.OptionsLayoutContainer.OptionsListScrollContainer.ScrollBar = CreateFrame("EventFrame", "ScrollBar", self.UI.OptionsLayoutContainer.OptionsListScrollContainer, "MinimalScrollBar")
+    self.UI.OptionsLayoutContainer.OptionsListScrollContainer.ScrollBar:SetPoint("TOPLEFT", self.UI.OptionsLayoutContainer.OptionsListScrollContainer.ScrollBox, "TOPRIGHT", 3, 0)
+    self.UI.OptionsLayoutContainer.OptionsListScrollContainer.ScrollBar:SetPoint("BOTTOMLEFT", self.UI.OptionsLayoutContainer.OptionsListScrollContainer.ScrollBox, "BOTTOMRIGHT", 3, 0)
 
+    Config.OptionsListDataProvider = CreateDataProvider()
+    local ScrollView3 = CreateScrollBoxListLinearView()
+
+    ScrollView3:SetDataProvider(Config.OptionsListDataProvider)
+
+    ScrollUtil.InitScrollBoxListWithScrollBar(self.UI.OptionsLayoutContainer.OptionsListScrollContainer.ScrollBox, self.UI.OptionsLayoutContainer.OptionsListScrollContainer.ScrollBar, ScrollView3)
+
+    local function OptionsInitalizer(frame, data)
+        frame.Text:SetText(data.name)
+        if data.get() == nil then
+            data.set(false)
+        else
+            frame.Checkbox:SetChecked(data.get())
+
+            frame.Checkbox:SetScript("OnClick", function()
+                if data.get() == true then
+                    data.set(false)
+                else
+                    data.set(true)
+                end
+            end)
+        end
+    end
+
+    ScrollView3:SetElementInitializer("MyVirtualFrameTemplate", OptionsInitalizer)
+
+    --Set a container to store the layout for the expansion tabs
+    self.UI.ExpansionLayoutContainer = CreateFrame("FRAME", "ExpansionTabContainer", self.UI)
+    self.UI.ExpansionLayoutContainer:SetPoint("TOPLEFT")
+    self.UI.ExpansionLayoutContainer:SetPoint("BOTTOMRIGHT")
+
+    -- Create Left Inset
+    self.UI.ExpansionLayoutContainer.LeftInset = CreateFrame("Frame", "LeftInset", self.UI.ExpansionLayoutContainer)
+    self.UI.ExpansionLayoutContainer.LeftInset:SetPoint("TOPLEFT", 4, -40)
+    self.UI.ExpansionLayoutContainer.LeftInset:SetPoint("BOTTOMLEFT", 4, 6)
+    self.UI.ExpansionLayoutContainer.LeftInset:SetSize(237, 526)
+
+    -- Create Right Inset
+    self.UI.ExpansionLayoutContainer.RightInset = CreateFrame("Frame", "RightInset", self.UI.ExpansionLayoutContainer)
+    self.UI.ExpansionLayoutContainer.RightInset:SetPoint("TOPRIGHT", -6, -40)
+    self.UI.ExpansionLayoutContainer.RightInset:SetPoint("BOTTOMLEFT", self.UI.ExpansionLayoutContainer.LeftInset, "BOTTOMRIGHT", 2, 0)
+
+    -- Create Left Display
+    self.UI.ExpansionLayoutContainer.LeftDisplay = CreateFrame("Frame", "LeftDisplay", self.UI.ExpansionLayoutContainer)
+    self.UI.ExpansionLayoutContainer.LeftDisplay:SetPoint("TOPLEFT", self.UI.ExpansionLayoutContainer.LeftInset, "TOPLEFT", 3, -3)
+    self.UI.ExpansionLayoutContainer.LeftDisplay:SetPoint("BOTTOMRIGHT", self.UI.ExpansionLayoutContainer.LeftInset, "BOTTOMRIGHT", -3, 3)
+    local LeftDisplayTexture = self.UI.ExpansionLayoutContainer.LeftDisplay:CreateTexture(nil, "BACKGROUND", "store-category-bg")
+    LeftDisplayTexture:SetAllPoints(self.UI.ExpansionLayoutContainer.LeftDisplay)
+
+    -- Create Right Display
+    self.UI.ExpansionLayoutContainer.RightDisplay = CreateFrame("Frame", "RightDisplay", self.UI.ExpansionLayoutContainer)
+    self.UI.ExpansionLayoutContainer.RightDisplay:SetPoint("TOPLEFT", self.UI.ExpansionLayoutContainer.RightInset, "TOPLEFT", 3, -3)
+    self.UI.ExpansionLayoutContainer.RightDisplay:SetPoint("BOTTOMRIGHT", self.UI.ExpansionLayoutContainer.RightInset, "BOTTOMRIGHT", -3, 3)
+
+    self.UI.ExpansionLayoutContainer.InstanceListScrollContainer = CreateFrame("Frame", "InstanceListScrollContainer", self.UI.ExpansionLayoutContainer)
+    self.UI.ExpansionLayoutContainer.InstanceListScrollContainer:SetSize(210, 419)
+    self.UI.ExpansionLayoutContainer.InstanceListScrollContainer:SetPoint("TOPLEFT", self.UI.ExpansionLayoutContainer.LeftInset, "TOPLEFT", 6, -8)
+    self.UI.ExpansionLayoutContainer.InstanceListScrollContainer:SetPoint("BOTTOMLEFT", self.UI.ExpansionLayoutContainer.LeftInset, "BOTTOMRIGHT", 6, 5)
+
+    --Create the ScrollBox Frame
+    self.UI.ExpansionLayoutContainer.InstanceListScrollContainer.ScrollBox = CreateFrame("Frame", "ScrollBox", self.UI.ExpansionLayoutContainer.InstanceListScrollContainer, "WowScrollBoxList")
+    self.UI.ExpansionLayoutContainer.InstanceListScrollContainer.ScrollBox:SetPoint("TOPLEFT", 0, 0)
+    self.UI.ExpansionLayoutContainer.InstanceListScrollContainer.ScrollBox:SetPoint("BOTTOMRIGHT", 0, 0)
+
+    self.UI.ExpansionLayoutContainer.InstanceListScrollContainer.ScrollBar = CreateFrame("EventFrame", "ScrollBar", self.UI.ExpansionLayoutContainer.InstanceListScrollContainer, "MinimalScrollBar")
+    self.UI.ExpansionLayoutContainer.InstanceListScrollContainer.ScrollBar:SetPoint("TOPLEFT", self.UI.ExpansionLayoutContainer.InstanceListScrollContainer.ScrollBox, "TOPRIGHT", 3, 0)
+    self.UI.ExpansionLayoutContainer.InstanceListScrollContainer.ScrollBar:SetPoint("BOTTOMLEFT", self.UI.ExpansionLayoutContainer.InstanceListScrollContainer.ScrollBox, "BOTTOMRIGHT", 3, 0)
 
     Config.InstanceListDataProvider = CreateDataProvider()
     local ScrollView = CreateScrollBoxListLinearView()
     ScrollView:SetDataProvider(Config.InstanceListDataProvider)
 
-    ScrollUtil.InitScrollBoxListWithScrollBar(self.UI.InstanceListScrollContainer.ScrollBox, self.UI.InstanceListScrollContainer.ScrollBar, ScrollView)
+    ScrollUtil.InitScrollBoxListWithScrollBar(self.UI.ExpansionLayoutContainer.InstanceListScrollContainer.ScrollBox, self.UI.ExpansionLayoutContainer.InstanceListScrollContainer.ScrollBar, ScrollView)
 
     local function Initalizer(button, data)
         button:SetScript("OnClick", function()
@@ -847,23 +666,20 @@ function Config:CreateUI()
 
     ScrollView:SetElementInitializer("UIPanelButtonTemplate", Initalizer)
 
-    self.UI.BossListScrollContainer = CreateFrame("Frame", "BossListScrollContainer", self.UI)
-    self.UI.BossListScrollContainer:SetSize(690, 419)
-    self.UI.BossListScrollContainer:SetPoint("TOPLEFT", self.UI.RightInset, "TOPLEFT", 0, -3)
-    self.UI.BossListScrollContainer:SetPoint("BOTTOMLEFT", self.UI.RightInset, "BOTTOMRIGHT", 0, 3)
-
-    --Mixin(self.UI.InstanceListScrollContainer, InstanceListScrollContainerMixin)
+    self.UI.ExpansionLayoutContainer.BossListScrollContainer = CreateFrame("Frame", "BossListScrollContainer", self.UI.ExpansionLayoutContainer)
+    self.UI.ExpansionLayoutContainer.BossListScrollContainer:SetSize(690, 419)
+    self.UI.ExpansionLayoutContainer.BossListScrollContainer:SetPoint("TOPLEFT", self.UI.ExpansionLayoutContainer.RightInset, "TOPLEFT", 0, -3)
+    self.UI.ExpansionLayoutContainer.BossListScrollContainer:SetPoint("BOTTOMLEFT", self.UI.ExpansionLayoutContainer.RightInset, "BOTTOMRIGHT", 0, 3)
 
     --Create the ScrollBox Frame
-    self.UI.BossListScrollContainer.ScrollBox = CreateFrame("Frame", "ScrollBox", self.UI.BossListScrollContainer, "WowScrollBoxList")
-    self.UI.BossListScrollContainer.ScrollBox:SetPoint("TOPLEFT", 0, 0)
-    self.UI.BossListScrollContainer.ScrollBox:SetPoint("BOTTOMRIGHT", 0, 0)
+    self.UI.ExpansionLayoutContainer.BossListScrollContainer.ScrollBox = CreateFrame("Frame", "ScrollBox", self.UI.ExpansionLayoutContainer.BossListScrollContainer, "WowScrollBoxList")
+    self.UI.ExpansionLayoutContainer.BossListScrollContainer.ScrollBox:SetPoint("TOPLEFT", 0, 0)
+    self.UI.ExpansionLayoutContainer.BossListScrollContainer.ScrollBox:SetPoint("BOTTOMRIGHT", 0, 0)
 
-    self.UI.BossListScrollContainer.ScrollBar = CreateFrame("EventFrame", "ScrollBar", self.UI.BossListScrollContainer, "MinimalScrollBar")
-    self.UI.BossListScrollContainer.ScrollBar:SetPoint("TOPLEFT", self.UI.BossListScrollContainer.ScrollBox, "TOPRIGHT", 3, 0)
-    self.UI.BossListScrollContainer.ScrollBar:SetPoint("BOTTOMLEFT", self.UI.BossListScrollContainer.ScrollBox, "BOTTOMRIGHT", 3, 0)
-    Mixin(self.UI.BossListScrollContainer, BossContentMixin)
-
+    self.UI.ExpansionLayoutContainer.BossListScrollContainer.ScrollBar = CreateFrame("EventFrame", "ScrollBar", self.UI.ExpansionLayoutContainer.BossListScrollContainer, "MinimalScrollBar")
+    self.UI.ExpansionLayoutContainer.BossListScrollContainer.ScrollBar:SetPoint("TOPLEFT", self.UI.ExpansionLayoutContainer.BossListScrollContainer.ScrollBox, "TOPRIGHT", 3, 0)
+    self.UI.ExpansionLayoutContainer.BossListScrollContainer.ScrollBar:SetPoint("BOTTOMLEFT", self.UI.ExpansionLayoutContainer.BossListScrollContainer.ScrollBox, "BOTTOMRIGHT", 3, 0)
+    Mixin(self.UI.ExpansionLayoutContainer.BossListScrollContainer, BossContentMixin)
 
     Config.BossListDataProvider = CreateDataProvider()
     local ScrollView2 = CreateScrollBoxListLinearView()
@@ -898,6 +714,7 @@ function Config:CreateUI()
 
         end)
 
+
         button.Test123:SetScript("OnHyperlinkEnter", function(abc, linkData, link, button)
             GameTooltip:SetOwner(self.UI, "ANCHOR_TOPRIGHT")
             GameTooltip:SetHyperlink(linkData)
@@ -907,25 +724,60 @@ function Config:CreateUI()
             GameTooltip:Hide()
         end)
 
+        button.Description:SetText(GetAchievementLink(data.boss.achievement):gsub("|cffffff00", "|cff0000FF"))
+
         button.Label:SetText(data.name)
         button.Test123:Hide()
         button.OutputTactics:SetWidth(110)
         button.OutputPlayers:SetWidth(110)
+
+        if string.len(data.boss.tactics) > 0 then
+            button.PlusMinus:Show()
+        else
+            button.PlusMinus:Hide()
+        end
+
+        button.Background:SetTexture("Interface\\AddOns\\InstanceAchievementTracker\\Images\\UI-MailFrameBG.png")
+
+        -- Get creature info
+        local creatureIndex = 1 -- Assuming we want the first creature
+        local creatureID, creatureName, creatureDescription, creatureDisplayID, creatureIcon = EJ_GetCreatureInfo(creatureIndex, data.boss.name)
+
+        if creatureIcon then
+            button.Icon.texture:SetTexture(creatureIcon)
+            print("Texture set to:", creatureIcon)
+        else
+            print("Creature icon not found for encounter ID:", data.boss.name)
+            button.Icon.texture:SetTexture("Interface\\Icons\\Spell_Misc_HellifrePVPHonorHoldFavor") -- Set default texture
+        end
+
+        if data.tracking ~= nil then
+            button.Trackable:Show()
+        else
+            button.Trackable:Hide()
+        end
     end
 
     ScrollView2:SetElementInitializer("CustomFrameTemplate", BossInitializer)
     ScrollView2:SetDataProvider(Config.BossListDataProvider)
-    ScrollUtil.InitScrollBoxListWithScrollBar(self.UI.BossListScrollContainer.ScrollBox, self.UI.BossListScrollContainer.ScrollBar, ScrollView2)
+    ScrollUtil.InitScrollBoxListWithScrollBar(self.UI.ExpansionLayoutContainer.BossListScrollContainer.ScrollBox, self.UI.ExpansionLayoutContainer.BossListScrollContainer.ScrollBar, ScrollView2)
 
-    g_achievementSelectionBehavior = ScrollUtil.AddSelectionBehavior(self.UI.BossListScrollContainer.ScrollBox, SelectionBehaviorFlags.Deselectable, SelectionBehaviorFlags.Intrusive)
+    g_achievementSelectionBehavior = ScrollUtil.AddSelectionBehavior(self.UI.ExpansionLayoutContainer.BossListScrollContainer.ScrollBox, SelectionBehaviorFlags.Deselectable, SelectionBehaviorFlags.Intrusive)
     g_achievementSelectionBehavior:RegisterCallback(SelectionBehaviorMixin.Event.OnSelectionChanged, function(o, elementData, selected)
-        local button = self.UI.BossListScrollContainer.ScrollBox:FindFrame(elementData)
+        local button = self.UI.ExpansionLayoutContainer.BossListScrollContainer.ScrollBox:FindFrame(elementData)
         if button then
             button:SetSelected(selected);
         end
     end, self)
 
-    ScrollUtil.AddResizableChildrenBehavior(self.UI.BossListScrollContainer.ScrollBox);
+    ScrollUtil.AddResizableChildrenBehavior(self.UI.ExpansionLayoutContainer.BossListScrollContainer.ScrollBox);
+
+    -- Set the first tab as selected
+    PanelTemplates_SetNumTabs(self.UI, #tabs)
+    PanelTemplates_SetTab(self.UI, 1)
+    Config:ShowOptionsPanel()
+
+    self.UI.ExpansionLayoutContainer:Hide()
 
     self.UI:Show()
 end
@@ -934,7 +786,7 @@ function Config:ShowContentForInstance(data)
     local instanceName = data.name
 
     Config.BossListDataProvider:Flush()
-    self.UI.BossListScrollContainer.ScrollBox:FullUpdate(ScrollBoxConstants.UpdateImmediately);
+    self.UI.ExpansionLayoutContainer.BossListScrollContainer.ScrollBox:FullUpdate(ScrollBoxConstants.UpdateImmediately);
 
     local bossesToSort = {}
 
@@ -965,13 +817,14 @@ function Config:ShowContentForInstance(data)
     for i, boss in ipairs(bossesToSort) do
         Config.BossListDataProvider:Insert(boss)
     end
-
-    deepdump(Config.BossListDataProvider.collection)
 end
 
 -- Function to show instances for a given tab
 function Config:ShowInstancesForTab(tabID)
     local data = Config.tabDataProvider[tabID]
+
+    self.UI.ExpansionLayoutContainer:Show()
+    self.UI.OptionsLayoutContainer:Hide()
 
     Config.InstanceListDataProvider:Flush()
     Config.BossListDataProvider:Flush()
@@ -1036,6 +889,62 @@ end
 
 -- Function to show the options panel
 function Config:ShowOptionsPanel()
+    print("SHowing Options")
+    self.UI.ExpansionLayoutContainer:Hide()
+    self.UI.OptionsLayoutContainer:Show()
+
+    -- Create the texture
+    self.UI.OptionsLayoutContainer.RightDisplay.Logo = self.UI.OptionsLayoutContainer.RightDisplay:CreateTexture(nil, "OVERLAY")
+    self.UI.OptionsLayoutContainer.RightDisplay.Logo:SetTexture("Interface\\AddOns\\InstanceAchievementTracker\\Images\\logo.png")
+    self.UI.OptionsLayoutContainer.RightDisplay.Logo:SetSize(120, 120)
+    self.UI.OptionsLayoutContainer.RightDisplay.Logo:SetPoint("TOPLEFT")
+
+    self.UI.OptionsLayoutContainer.RightDisplay.LogoText = self.UI.OptionsLayoutContainer.RightDisplay:CreateTexture(nil, "OVERLAY")
+    self.UI.OptionsLayoutContainer.RightDisplay.LogoText:SetTexture("Interface\\AddOns\\InstanceAchievementTracker\\Images\\IATTEXT.png")
+    self.UI.OptionsLayoutContainer.RightDisplay.LogoText:SetSize(330, 180)
+    self.UI.OptionsLayoutContainer.RightDisplay.LogoText:SetPoint("TOPLEFT", self.UI.OptionsLayoutContainer.RightDisplay.Logo, "TOPRIGHT", 5, 40)
+
+    self.UI.OptionsLayoutContainer.RightDisplay.Translators = self.UI.OptionsLayoutContainer:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+    self.UI.OptionsLayoutContainer.RightDisplay.Translators:SetPoint("BOTTOMLEFT", self.UI.OptionsLayoutContainer.RightDisplay, "BOTTOMLEFT", 0, 0)
+    self.UI.OptionsLayoutContainer.RightDisplay.Translators:SetText(L["GUI_Translators"] .. ": " .. L["Gui_TranslatorNames"])
+
+    self.UI.OptionsLayoutContainer.RightDisplay.Tactics = self.UI.OptionsLayoutContainer:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+    self.UI.OptionsLayoutContainer.RightDisplay.Tactics:SetPoint("BOTTOMLEFT", self.UI.OptionsLayoutContainer.RightDisplay.Translators, "BOTTOMLEFT", 0, 20)
+    self.UI.OptionsLayoutContainer.RightDisplay.Tactics:SetText(L["GUI_Tactics"] .. ": " .. L["Gui_TacticsNames"])
+
+    self.UI.OptionsLayoutContainer.RightDisplay.Author = self.UI.OptionsLayoutContainer:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+    self.UI.OptionsLayoutContainer.RightDisplay.Author:SetPoint("TOPLEFT", self.UI.OptionsLayoutContainer.RightDisplay.Tactics, "TOPLEFT", 0, 20)
+    self.UI.OptionsLayoutContainer.RightDisplay.Author:SetText(L["GUI_Author"] .. ": (EU) Whizzey-Doomhammer")
+
+    self.UI.OptionsLayoutContainer.RightDisplay.Version = self.UI.OptionsLayoutContainer:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+    self.UI.OptionsLayoutContainer.RightDisplay.Version:SetPoint("BOTTOMRIGHT", self.UI.OptionsLayoutContainer.RightDisplay, "BOTTOMRIGHT", 0, 0)
+    self.UI.OptionsLayoutContainer.RightDisplay.Version:SetText("v" .. Config.majorVersion .. "." .. Config.minorVersion .. "." .. Config.revisionVersion)
+
+    self.UI.OptionsLayoutContainer.RightDisplay.Tracking = self.UI.OptionsLayoutContainer:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
+    self.UI.OptionsLayoutContainer.RightDisplay.Tracking:SetPoint("TOPLEFT", self.UI.OptionsLayoutContainer.RightDisplay.Logo, "BOTTOMLEFT", 0, -5)
+    self.UI.OptionsLayoutContainer.RightDisplay.Tracking:SetText(L["GUI_TrackingNumber"] .. ":")
+
+    self.UI.OptionsLayoutContainer.RightDisplay.TrackingAchievements = self.UI.OptionsLayoutContainer:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
+    self.UI.OptionsLayoutContainer.RightDisplay.TrackingAchievements:SetPoint("TOPLEFT", self.UI.OptionsLayoutContainer.RightDisplay.Tracking, "BOTTOMLEFT", 0, -5)
+    self.UI.OptionsLayoutContainer.RightDisplay.TrackingAchievements:SetText(L["GUI_Achievements"] .. " (?%)")
+
+    self.UI.OptionsLayoutContainer.RightDisplay.TrackingTactics = self.UI.OptionsLayoutContainer:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
+    self.UI.OptionsLayoutContainer.RightDisplay.TrackingTactics:SetPoint("TOPLEFT", self.UI.OptionsLayoutContainer.RightDisplay.TrackingAchievements, "BOTTOMLEFT", 0, -5)
+    self.UI.OptionsLayoutContainer.RightDisplay.TrackingTactics:SetText(L["GUI_Tactics"] .. " (?%)")
+
+    self.UI.OptionsLayoutContainer.RightDisplay.DiscordTitle = self.UI.OptionsLayoutContainer:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
+    self.UI.OptionsLayoutContainer.RightDisplay.DiscordTitle:SetPoint("TOPLEFT", self.UI.OptionsLayoutContainer.RightDisplay.TrackingTactics, "BOTTOMLEFT", 0, -15)
+    self.UI.OptionsLayoutContainer.RightDisplay.DiscordTitle:SetText(L["GUI_AchievementsDiscordTitle"] .. ":")
+
+    self.UI.OptionsLayoutContainer.RightDisplay.DiscordURL = self.UI.OptionsLayoutContainer:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+    self.UI.OptionsLayoutContainer.RightDisplay.DiscordURL:SetPoint("TOPLEFT", self.UI.OptionsLayoutContainer.RightDisplay.DiscordTitle, "BOTTOMLEFT", 0, -5)
+    self.UI.OptionsLayoutContainer.RightDisplay.DiscordURL:SetText("https://discord.gg/achievements")
+
+    self.UI.OptionsLayoutContainer.RightDisplay.DiscordDescription = self.UI.OptionsLayoutContainer:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
+    self.UI.OptionsLayoutContainer.RightDisplay.DiscordDescription:SetPoint("TOPLEFT", self.UI.OptionsLayoutContainer.RightDisplay.DiscordURL, "BOTTOMLEFT", 0, -5)
+    self.UI.OptionsLayoutContainer.RightDisplay.DiscordDescription:SetText(L["GUI_AchievementsDiscordDescription"])
+    self.UI.OptionsLayoutContainer.RightDisplay.DiscordDescription:SetWidth(400)
+    self.UI.OptionsLayoutContainer.RightDisplay.DiscordDescription:SetJustifyH("LEFT")
 end
 
 -- Method:          Config:Instance_OnClickAutomatic()
@@ -1120,8 +1029,6 @@ SLASH_EXPANDEXAMPLE1 = "/ex"
 
 getGameBuild()
 Config:CreateUI()
---UI:Hide()
-
 
 ------------------------------------------------------
 ------- Functions to create dynamic info frame -------

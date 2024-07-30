@@ -1,4 +1,76 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
+    <EventButton name="MyVirtualFrameTemplate" virtual="true">
+		<Size x="434" y="32"/>
+		<Layers>
+			<Layer level="BACKGROUND">
+				<!-- <Texture parentKey="Background" file="Interface\AddOns\InstanceAchievementTracker\Images\UI-MailFrameBG.png">
+					<Anchors>
+					<Anchor point="TOPLEFT" x="3" y="-3"/>
+					<Anchor point="BOTTOMRIGHT" x="-3" y="3"/>
+				  </Anchors>
+				</Texture> -->
+			  </Layer>
+			  <Layer level="OVERLAY">
+				<FontString parentKey="Text" inherits="GameFontHighlightMedium" text="Trackable" justifyV="TOP" justifyH="LEFT">
+					<Size x="434" y="20"/>
+					<Anchors>
+					  <Anchor point="TOPLEFT" x="32" y="-7"/>
+					</Anchors>
+				</FontString>
+			  </Layer>
+		</Layers>
+
+		<Frames>
+			<CheckButton name="$parentCheckbox" parentKey="Checkbox" inherits="ChatConfigCheckButtonTemplate">
+				<Size x="30" y="29"/>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="0" y="0"/>
+				  </Anchors>
+				<Layers>
+				  <Layer level="BACKGROUND">
+					<Texture parentKey="HoverBackground" inherits="HoverBackgroundTemplate"/>
+				  </Layer>
+				</Layers>
+				<NormalTexture atlas="checkbox-minimal" useAtlasSize="true"/>
+				<PushedTexture atlas="checkbox-minimal" useAtlasSize="true"/>
+				<CheckedTexture atlas="checkmark-minimal" useAtlasSize="true"/>
+				<DisabledCheckedTexture atlas="checkmark-minimal-disabled" useAtlasSize="true"/>
+			</CheckButton>
+		</Frames>
+    </EventButton>
+
+	<Frame name="IconFrameTemplate" virtual="true">
+		<Layers>
+		  <Layer level="BORDER">
+			<Texture name="$parentBling" file="Interface\AchievementFrame\UI-Achievement-Bling" hidden="true" parentKey="bling">
+			  <Anchors>
+				<Anchor point="CENTER" x="-1" y="1"/>
+			  </Anchors>
+			  <Size x="116" y="116"/>
+			</Texture>
+		  </Layer>
+		  <Layer level="ARTWORK">
+			<Texture name="$parentTexture" file="Interface\ENCOUNTERJOURNAL\UI-EJ-BOSS-Soulrender Dormazain" parentKey="texture">
+			  <Anchors>
+				<Anchor point="CENTER" x="0" y="3"/>
+			  </Anchors>
+			  <Size x="50" y="50"/>
+			</Texture>
+		  </Layer>
+		  <Layer level="OVERLAY">
+			<Texture name="$parentOverlay" file="Interface\AchievementFrame\UI-Achievement-IconFrame" parentKey="frame">
+			  <Anchors>
+				<Anchor point="CENTER" x="-1" y="2"/>
+			  </Anchors>
+			  <Size x="72" y="72"/>
+			  <TexCoords left="0" right="0.5625" top="0" bottom="0.5625"/>
+			</Texture>
+		  </Layer>
+		</Layers>
+		<Scripts>
+		</Scripts>
+	  </Frame>
+
 	<EventButton name="CustomFrameTemplate" mixin="BossContentMixin" inherits="TooltipBorderBackdropTemplate" virtual="true">
 		<Size x="434" y="142"/>
 		<Layers>
@@ -104,16 +176,15 @@
 			</Texture>
 		  </Layer>
 		  <Layer level="OVERLAY">
-			<FontString parentKey="Trackable" inherits="GameFontNormal" text="Trackable" hidden="true">
+			<FontString parentKey="Trackable" inherits="GameFontHighlightMedium" text="Trackable" hidden="true">
 				<Size x="100" y="20"/>
 				<Anchors>
-				  <Anchor point="TOPLEFT" relativeKey="$parent.TitleBar" relativePoint="TOPLEFT" x="0" y="0"/>
+				  <Anchor point="TOPRIGHT" x="0" y="-40"/>
 				</Anchors>
 			</FontString>
 			<FontString parentKey="Label" inherits="GameFontHighlightMedium" text="Wrathion, the Black Emperor">
-			  <Size x="320" y="20"/>
 			  <Anchors>
-				<Anchor point="TOP" relativeKey="$parent.TitleBar" relativePoint="TOP" x="0" y="0"/>
+				<Anchor point="TOPLEFT" relativeKey="$parent.TitleBar" relativePoint="TOPLEFT" x="90" y="-5"/>
 			  </Anchors>
 			</FontString>
 			<FontString parentKey="Reward" inherits="GameFontNormalSmall" hidden="true">
@@ -122,10 +193,10 @@
 				<Anchor point="TOP" relativeKey="$parent.RewardBackground" relativePoint="TOP" x="0" y="1"/>
 			  </Anchors>
 			</FontString>
-			<FontString parentKey="Description" inherits="AchievementDescriptionFont">
+			<FontString parentKey="Description" inherits="MailTextFontNormal">
 			  <Size x="0" y="0"/>
 			  <Anchors>
-				<Anchor point="TOP" x="0" y="-30"/>
+				<Anchor point="TOPLEFT" x="80" y="-40"/>
 			  </Anchors>
 			</FontString>
 			<FontString parentKey="HiddenDescription" inherits="AchievementDescriptionFont" hidden="true">
@@ -155,21 +226,19 @@
 		  <OnClick method="OnClick"/>
 		</Scripts>
 		<Frames>
+			<Frame parentKey="Icon" inherits="IconFrameTemplate">
+				<Size x="60" y="60"/>
+				<Anchors>
+				  <Anchor point="TOPLEFT" x="8" y="-9"/>
+				</Anchors>
+			</Frame>
 			<SimpleHTML parentKey="Test123">
 				<Size x="650" y="400" />
 				<Anchors>
-					<Anchor point="TOPLEFT" relativeKey="$parent.TitleBar" x="20" y="-35" />
+					<Anchor point="TOPLEFT" relativeKey="$parent.TitleBar" x="20" y="-65" />
 				</Anchors>
 				<FontString inherits="MailTextFontNormal" justifyV="TOP" justifyH="LEFT" />
 			</SimpleHTML >
-			<!-- <CinematicModel parentKey="Model">
-				<Size>
-					<AbsDimension x="100" y="100"/>
-				</Size>
-				<Anchors>
-					<Anchor point="BOTTOMRIGHT" />
-				</Anchors>
-			</CinematicModel> -->
 			<Button name="OutputTactics" parentKey="OutputTactics" inherits="UIPanelButtonTemplate" text="Output Tactics">
 				<Anchors>
 					<Anchor point="TOPRIGHT" x="-4" y="-4" />
