@@ -109,7 +109,7 @@ function core._2569:KazzaraTheHellforged()
                             InfoFrame_SetPlayerComplete(core.destName)
                             shatteredHellsteelCounter = shatteredHellsteelCounter + 1
                             shatteredHellsteelUID[core.spawn_uid_dest_Player] = core.spawn_uid_dest_Player
-                            core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. GetSpellLink(411921) .. " (" .. shatteredHellsteelCounter .. "/" .. #core.currentBosses[1].players .. ")",true)
+                            core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. C_Spell.GetSpellLink(411921) .. " (" .. shatteredHellsteelCounter .. "/" .. #core.currentBosses[1].players .. ")",true)
                         end
                     end
                 end
@@ -176,21 +176,21 @@ function core._2569:TheForgottenExperiments()
     --5/10 11:00:07.498  SPELL_AURA_APPLIED_DOSE,Creature-0-4237-2569-570-205352-00005B4EDD,"Nutraal",0xa18,0x20,Creature-0-4237-2569-570-205352-00005B4EDD,"Nutraal",0xa18,0x20,411116,"Rended",0x1,BUFF,2
     if (core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_APPLIED_DOSE") and core.destID == "205352" and core.spellId == 411116 and rendedCounter < 3 then
         rendedCounter = rendedCounter + 1
-        core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(411116) .. " " .. L["Core_Counter"] .. " (" .. rendedCounter .. "/3)",true)
+        core:sendMessage(core:getAchievement() .. " " .. C_Spell.GetSpellLink(411116) .. " " .. L["Core_Counter"] .. " (" .. rendedCounter .. "/3)",true)
     end
 
     --Slimed
     --5/10 11:01:20.187  SPELL_AURA_APPLIED_DOSE,Creature-0-4237-2569-570-205352-00005B4EDD,"Nutraal",0xa18,0x20,Creature-0-4237-2569-570-205352-00005B4EDD,"Nutraal",0xa18,0x20,411117,"Slimed",0x1,BUFF,2
     if (core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_APPLIED_DOSE") and core.destID == "205352" and core.spellId == 411117 and slimedCounter < 3 then
         slimedCounter = slimedCounter + 1
-        core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(411117) .. " " .. L["Core_Counter"] .. " (" .. slimedCounter .. "/3)",true)
+        core:sendMessage(core:getAchievement() .. " " .. C_Spell.GetSpellLink(411117) .. " " .. L["Core_Counter"] .. " (" .. slimedCounter .. "/3)",true)
     end
 
     --Singed
     --5/10 11:03:46.969  SPELL_AURA_APPLIED_DOSE,Creature-0-4237-2569-570-205352-00005B4EDD,"Nutraal",0xa18,0x20,Creature-0-4237-2569-570-205352-00005B4EDD,"Nutraal",0xa18,0x20,411118,"Singed",0x1,BUFF,2
     if (core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_APPLIED_DOSE") and core.destID == "205352" and core.spellId == 411118 and singedCounter < 3 then
         singedCounter = singedCounter + 1
-        core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(411118) .. " " .. L["Core_Counter"] .. " (" .. singedCounter .. "/3)",true)
+        core:sendMessage(core:getAchievement() .. " " .. C_Spell.GetSpellLink(411118) .. " " .. L["Core_Counter"] .. " (" .. singedCounter .. "/3)",true)
     end
 
     if rendedCounter == 3 and slimedCounter == 3 and singedCounter == 3 then
@@ -281,7 +281,7 @@ function core._2569:Magmorax()
     --Defeat Magmorax after feeding him 20 Spicy Lava Snails in Aberrus, the Shadowed Crucible on Normal difficulty or higher.
 
     InfoFrame_UpdatePlayersOnInfoFrame()
-    InfoFrame_SetHeaderCounter(GetSpellLink(411367) .. " " .. L["Core_Counter"],playersHoldingSnailCounter,20)
+    InfoFrame_SetHeaderCounter(C_Spell.GetSpellLink(411367) .. " " .. L["Core_Counter"],playersHoldingSnailCounter,20)
 
     --Picked up snail (Handled in UNIT_AURA due to room size)
     --5/10 12:22:40.763  SPELL_AURA_APPLIED,0000000000000000,nil,0x514,0x0,Player-1084-05D22E7D,"Ouaa-TarrenMill",0x514,0x0,411367,"Spicy Lava Snail",0x4,DEBUFF
@@ -303,14 +303,14 @@ function core._2569:Magmorax()
     --5/10 12:22:51.293  SPELL_AURA_APPLIED_DOSE,0000000000000000,nil,0x514,0x0,Creature-0-4237-2569-570-201579-00005B4EDD,"Magmorax",0x10a48,0x0,411573,"Magmosnax",0x1,BUFF,2
     if (core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_APPLIED_DOSE") and core.spellId == 411573 and magmoraxFailed == false then
         spicyLavaSnailsCounter = spicyLavaSnailsCounter + 1
-        core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(411573) .. " " .. L["Core_Counter"] .. " (" .. spicyLavaSnailsCounter .. "/20)",true)
+        core:sendMessage(core:getAchievement() .. " " .. C_Spell.GetSpellLink(411573) .. " " .. L["Core_Counter"] .. " (" .. spicyLavaSnailsCounter .. "/20)",true)
     end
 
     --Achievement complete
     --5/10 12:55:36.952  SPELL_AURA_APPLIED,0000000000000000,nil,0x10a48,0x0,Creature-0-4237-2569-570-201579-00005B76BA,"Magmorax",0x10a48,0x0,411581,"Escargorged",0x1,BUFF
     if core.type == "SPELL_AURA_APPLIED" and core.destID == "201579" and core.spellId == 411581 and escargorgedFound == false and magmoraxFailed == false then
         spicyLavaSnailsCounter = spicyLavaSnailsCounter + 1
-        core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(411573) .. " " .. L["Core_Counter"] .. " (" .. spicyLavaSnailsCounter .. "/20)",true)
+        core:sendMessage(core:getAchievement() .. " " .. C_Spell.GetSpellLink(411573) .. " " .. L["Core_Counter"] .. " (" .. spicyLavaSnailsCounter .. "/20)",true)
         escargorgedFound = true
     end
 
@@ -400,7 +400,7 @@ function core._2569:ScalecommanderSarkareth()
                             InfoFrame_SetPlayerComplete(core.destName)
                             tearOfCounter = tearOfCounter + 1
                             tearOffUID[core.spawn_uid_dest_Player] = core.spawn_uid_dest_Player
-                            core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. GetSpellLink(410287) .. " (" .. tearOfCounter .. "/" .. #core.currentBosses[1].players .. ")",true)
+                            core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. C_Spell.GetSpellLink(410287) .. " (" .. tearOfCounter .. "/" .. #core.currentBosses[1].players .. ")",true)
                         end
                     end
                 end
@@ -446,7 +446,7 @@ function core._2569:TrackAdditional()
             local players = #core.Instances[core.expansion][core.instanceType][core.instance]["boss1"].players
             core.IATInfoFrame:ToggleOn()
             core.IATInfoFrame:SetHeading(GetAchievementLink(18229))
-            InfoFrame_SetHeaderCounter(GetSpellLink(411919) .. " " .. L["Core_Counter"],hellSteelPlatingCounter,players)
+            InfoFrame_SetHeaderCounter(C_Spell.GetSpellLink(411919) .. " " .. L["Core_Counter"],hellSteelPlatingCounter,players)
             InfoFrame_UpdatePlayersOnInfoFramePersonal2("boss1", true)
 
             --Check all players in group for Hellsteel Plating Debuff
@@ -475,7 +475,7 @@ function core._2569:TrackAdditional()
             end
 
             --Update with any changes
-            InfoFrame_SetHeaderCounter(GetSpellLink(411919) .. " " .. L["Core_Counter"],hellSteelPlatingCounter,players)
+            InfoFrame_SetHeaderCounter(C_Spell.GetSpellLink(411919) .. " " .. L["Core_Counter"],hellSteelPlatingCounter,players)
             InfoFrame_UpdatePlayersOnInfoFramePersonal2("boss1", true)
         end
     end
@@ -486,7 +486,7 @@ function core._2569:TrackAdditional()
             local players = #core.Instances[core.expansion][core.instanceType][core.instance]["boss9"].players
             core.IATInfoFrame:ToggleOn()
             core.IATInfoFrame:SetHeading(GetAchievementLink(17877))
-            InfoFrame_SetHeaderCounter(GetSpellLink(410277) .. " " .. L["Core_Counter"],lumpOfFleshCounter,players)
+            InfoFrame_SetHeaderCounter(C_Spell.GetSpellLink(410277) .. " " .. L["Core_Counter"],lumpOfFleshCounter,players)
             InfoFrame_UpdatePlayersOnInfoFramePersonal2("boss9", true)
 
             --Check all players in group for Lump of Flesh Debuff
@@ -515,7 +515,7 @@ function core._2569:TrackAdditional()
             end
 
             --Update with any changes
-            InfoFrame_SetHeaderCounter(GetSpellLink(410277) .. " " .. L["Core_Counter"],lumpOfFleshCounter,players)
+            InfoFrame_SetHeaderCounter(C_Spell.GetSpellLink(410277) .. " " .. L["Core_Counter"],lumpOfFleshCounter,players)
             InfoFrame_UpdatePlayersOnInfoFramePersonal2("boss9", true)
         end
     end
@@ -541,7 +541,7 @@ function core._2569.Events:UNIT_SPELLCAST_SUCCEEDED(self, unitID, lineID, spellI
 
         --Echo of Neltharion (Carrying Artifact)
         if spellID == 411075 then
-            core:sendMessage(name .. " " .. L["Shared_HasGained"] .. " " .. GetSpellLink(411075),true)
+            core:sendMessage(name .. " " .. L["Shared_HasGained"] .. " " .. C_Spell.GetSpellLink(411075),true)
         end
 
         --Magmorax (Feed Magmorax)

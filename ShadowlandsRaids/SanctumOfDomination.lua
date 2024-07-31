@@ -78,7 +78,7 @@ end
 function core._2450:TheNine()
     --Defeat The Nine after forming a Shard of Destiny from 9 or more Fragments of Destiny in the Sanctum of Domination on Normal difficulty or higher.
     InfoFrame_UpdateDynamicPlayerList()
-    InfoFrame_SetHeaderMessage(GetSpellLink(350542) .. " " .. L["Core_Counter"] .. " " .. fragmentsOfDestinyCounter)
+    InfoFrame_SetHeaderMessage(C_Spell..GetSpellLink(350542) .. " " .. L["Core_Counter"] .. " " .. fragmentsOfDestinyCounter)
 
     --Fragments of Destiny Spawned
     if core.type == "SPELL_AURA_APPLIED" and core.spellId == 350542 and core.destName ~= nil then
@@ -120,11 +120,11 @@ function core._2450:EyeOfTheJailer()
 
     InfoFrame_UpdatePlayersOnInfoFrame()
     InfoFrame_AddNPCToInfoFrame(getNPCName(175725))
-    InfoFrame_SetHeaderCounter(GetSpellLink(355427) .. " " .. L["Core_Counter"],playerPhotoFlashCounter,(core.groupSize + 1))
+    InfoFrame_SetHeaderCounter(C_Spell..GetSpellLink(355427) .. " " .. L["Core_Counter"],playerPhotoFlashCounter,(core.groupSize + 1))
 
     if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 348974 and immediateExterminationCast == false then
         immediateExterminationCast = true
-        core:sendMessage(format(L["Shared_CanNowBeUsed"], GetSpellLink(355379)),true)
+        core:sendMessage(format(L["Shared_CanNowBeUsed"], C_Spell..GetSpellLink(355379)),true)
     end
 
     --Player has gained Photoflash!
@@ -231,7 +231,7 @@ function core._2450:FatescribeRohKalo()
                     if UnitIsPlayer(core.destName) then
                         if InfoFrame_GetPlayerFailed(core.destName) == false then
                             InfoFrame_SetPlayerFailed(core.destName)
-                            core:sendMessage(format(L["Shared_FailedPersonalAchievement"], core.destName, GetAchievementLink(core.achievementIDs[1]), format(L["Shared_DamageFromAbility"], GetSpellLink(350819))),true)
+                            core:sendMessage(format(L["Shared_FailedPersonalAchievement"], core.destName, GetAchievementLink(core.achievementIDs[1]), format(L["Shared_DamageFromAbility"], C_Spell..GetSpellLink(350819))),true)
                             playersWhoHaveNotFailed = playersWhoHaveNotFailed - 1
                         end
                     end
@@ -244,7 +244,7 @@ function core._2450:FatescribeRohKalo()
                     if UnitIsPlayer(core.destName) then
                         if InfoFrame_GetPlayerFailed(core.destName) == false then
                             InfoFrame_SetPlayerFailed(core.destName)
-                            core:sendMessage(format(L["Shared_FailedPersonalAchievement"], core.destName, GetAchievementLink(core.achievementIDs[1]), format(L["Shared_DamageFromAbility"], GetSpellLink(353162))),true)
+                            core:sendMessage(format(L["Shared_FailedPersonalAchievement"], core.destName, GetAchievementLink(core.achievementIDs[1]), format(L["Shared_DamageFromAbility"], C_Spell..GetSpellLink(353162))),true)
                             playersWhoHaveNotFailed = playersWhoHaveNotFailed - 1
                         end
                     end
@@ -257,7 +257,7 @@ function core._2450:FatescribeRohKalo()
                     if UnitIsPlayer(core.destName) then
                         if InfoFrame_GetPlayerFailed(core.destName) == false then
                             InfoFrame_SetPlayerFailed(core.destName)
-                            core:sendMessage(format(L["Shared_FailedPersonalAchievement"], core.destName, GetAchievementLink(core.achievementIDs[1]), format(L["Shared_DamageFromAbility"], GetSpellLink(350355))),true)
+                            core:sendMessage(format(L["Shared_FailedPersonalAchievement"], core.destName, GetAchievementLink(core.achievementIDs[1]), format(L["Shared_DamageFromAbility"], C_Spell..GetSpellLink(350355))),true)
                             playersWhoHaveNotFailed = playersWhoHaveNotFailed - 1
                         end
                     end
@@ -270,7 +270,7 @@ function core._2450:FatescribeRohKalo()
                     if UnitIsPlayer(core.destName) then
                         if InfoFrame_GetPlayerFailed(core.destName) == false then
                             InfoFrame_SetPlayerFailed(core.destName)
-                            core:sendMessage(format(L["Shared_FailedPersonalAchievement"], core.destName, GetAchievementLink(core.achievementIDs[1]), format(L["Shared_DamageFromAbility"], GetSpellLink(350826))),true)
+                            core:sendMessage(format(L["Shared_FailedPersonalAchievement"], core.destName, GetAchievementLink(core.achievementIDs[1]), format(L["Shared_DamageFromAbility"], C_Spell..GetSpellLink(350826))),true)
                             playersWhoHaveNotFailed = playersWhoHaveNotFailed - 1
                         end
                     end
@@ -353,7 +353,7 @@ function core._2450:TrackAdditional()
     if (core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_REMOVED") and core.spellId == 356731 then
         core.IATInfoFrame:ToggleOn()
         core.IATInfoFrame:SetHeading(GetAchievementLink(15105))
-        InfoFrame_SetHeaderCounter(GetSpellLink(356731) .. " " .. L["Core_Counter"],hellscreamsBurdenCounter,core.groupSize)
+        InfoFrame_SetHeaderCounter(C_Spell..GetSpellLink(356731) .. " " .. L["Core_Counter"],hellscreamsBurdenCounter,core.groupSize)
         InfoFrame_UpdatePlayersOnInfoFrame()
 
         --Check all players in group for Hellscream's Burden Buff
@@ -386,7 +386,7 @@ function core._2450:TrackAdditional()
         end
 
         --Update with any changes
-        InfoFrame_SetHeaderCounter(GetSpellLink(356731) .. " " .. L["Core_Counter"],hellscreamsBurdenCounter,core.groupSize)
+        InfoFrame_SetHeaderCounter(C_Spell..GetSpellLink(356731) .. " " .. L["Core_Counter"],hellscreamsBurdenCounter,core.groupSize)
         InfoFrame_UpdatePlayersOnInfoFrame()
 
         --Hide if no one has the debuff anymore
@@ -397,7 +397,7 @@ function core._2450:TrackAdditional()
 
     --Kel'Thuzard - Together Forever
     if core.type == "SPELL_AURA_APPLIED" and core.spellId == 356347 and core.destName ~= nil then
-        core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. GetSpellLink(356347),true)
+        core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. C_Spell..GetSpellLink(356347),true)
     end
 end
 

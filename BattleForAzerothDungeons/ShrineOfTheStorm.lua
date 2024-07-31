@@ -21,24 +21,24 @@ function core._1864:TrackAdditional()
         if core.type == "UNIT_DIED" and core.destID == "134069" then
             volzithKilled = true
         end
-    
+
         if volzithKilled == false then
             --Player gains Maddening Dreams
             if core.type == "SPELL_AURA_APPLIED" and core.spellId == 275690 then
                 if maddeningDreamPlayersUID[core.destName] == nil then
                     maddeningDreamCount = maddeningDreamCount + 1
                     maddeningDreamPlayersUID[core.destName] = core.destName
-                    core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. GetSpellLink(275690) .. " (" .. maddeningDreamCount .. "/" .. core.groupSize .. ")")
+                    core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. C_Spell.GetSpellLink(275690) .. " (" .. maddeningDreamCount .. "/" .. core.groupSize .. ")")
                 end
             end
-    
+
             --Player looses Maddening Dreams
             if core.type == "SPELL_AURA_REMOVED" and core.spellId == 275690 then
                 if maddeningDreamPlayersUID[core.destName] ~= nil then
                     maddeningDreamCount = maddeningDreamCount - 1
                     maddeningDreamPlayersUID[core.destName] = nil
-                    core:sendMessage(core.destName .. " " .. L["Shared_HasLost"] .. " " ..  GetSpellLink(275690) .. " (" .. maddeningDreamCount .. "/" .. core.groupSize .. ")")
-    
+                    core:sendMessage(core.destName .. " " .. L["Shared_HasLost"] .. " " ..  C_Spell.GetSpellLink(275690) .. " (" .. maddeningDreamCount .. "/" .. core.groupSize .. ")")
+
                     --If achievement was already completed then fail it
                     if core.achievementsCompleted[1] == true then
                         core:getAchievementFailed()

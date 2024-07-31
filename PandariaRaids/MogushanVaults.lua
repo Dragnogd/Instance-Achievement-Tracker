@@ -57,27 +57,27 @@ function core._1008:FengTheAccursed()
 			EpicenterReversed = true
 			itemsReversed = itemsReversed + 1
 			C_Timer.After(8, function()
-				core:sendMessage(GetSpellLink(116936) .. " " .. L["Shared_Completed"] .. " (" .. itemsReversed .. "/5)")
+				core:sendMessage(C_Spell.GetSpellLink(116936) .. " " .. L["Shared_Completed"] .. " (" .. itemsReversed .. "/5)")
 			end)
 		elseif core.spellId == 118307 and WildfireSparkReversed == false then
 			WildfireSparkReversed = true
 			itemsReversed = itemsReversed + 1
-			core:sendMessage(GetSpellLink(118307) .. " " .. L["Shared_Completed"] .. " (" .. itemsReversed .. "/5)")
+			core:sendMessage(C_Spell.GetSpellLink(118307) .. " " .. L["Shared_Completed"] .. " (" .. itemsReversed .. "/5)")
 		elseif core.spellId == 118194 and ArcaneResonanceReversed == false then
 			ArcaneResonanceReversed = true
 			itemsReversed = itemsReversed + 1
-			core:sendMessage(GetSpellLink(118194) .. " " .. L["Shared_Completed"] .. " (" .. itemsReversed .. "/5)")
+			core:sendMessage(C_Spell.GetSpellLink(118194) .. " " .. L["Shared_Completed"] .. " (" .. itemsReversed .. "/5)")
 		elseif core.spellId == 115730 and LightningFistsReversed == false then
 			LightningFistsReversed = true
 			itemsReversed = itemsReversed + 1
-			core:sendMessage(GetSpellLink(115730) .. " " .. L["Shared_Completed"] .. " (" .. itemsReversed .. "/5)")
+			core:sendMessage(C_Spell.GetSpellLink(115730) .. " " .. L["Shared_Completed"] .. " (" .. itemsReversed .. "/5)")
 		end
 	elseif core.type == "SPELL_CAST_SUCCESS" then
 		if core.spellId == 116938 and ArcaneVelocityReversed == false then
 			ArcaneVelocityReversed = true
 			itemsReversed = itemsReversed + 1
 			C_Timer.After(8, function()
-				core:sendMessage(GetSpellLink(116938) .. " " .. L["Shared_Completed"] .. " (" .. itemsReversed .. "/5)")
+				core:sendMessage(C_Spell.GetSpellLink(116938) .. " " .. L["Shared_Completed"] .. " (" .. itemsReversed .. "/5)")
 			end)
 		end
 	end
@@ -429,7 +429,7 @@ end
 
 function core._1008:WillOfTheEmperor()
 	InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
-	InfoFrame_SetHeaderCounter(GetSpellLink(116809) .. " " .. L["Core_Counter"],playerExecutedStrikeDisplay,core.maxPlayers)
+	InfoFrame_SetHeaderCounter(C_Spell.GetSpellLink(116809) .. " " .. L["Core_Counter"],playerExecutedStrikeDisplay,core.maxPlayers)
 
 	if inititalFailSetup == false then
 		inititalFailSetup = true
@@ -447,7 +447,7 @@ function core._1008:WillOfTheEmperor()
 		else
 			playersFailCounter[core.destName] = playersFailCounter[core.destName] + 1
 		end
-		core:sendMessage(core.destName .. " " .. L["Shared_HitBy"] .. " " .. GetSpellLink(116835) .. " (" .. playersFailCounter[core.destName] .. ")")
+		core:sendMessage(core.destName .. " " .. L["Shared_HitBy"] .. " " .. C_Spell.GetSpellLink(116835) .. " (" .. playersFailCounter[core.destName] .. ")")
 	end
 
 	--Hit by Stomp
@@ -457,7 +457,7 @@ function core._1008:WillOfTheEmperor()
 		else
 			playersFailCounter[core.destName] = playersFailCounter[core.destName] + 1
 		end
-		core:sendMessage(core.destName .. " " .. L["Shared_HitBy"] .. " " .. GetSpellLink(116969) .. " (" .. playersFailCounter[core.destName] .. ")")
+		core:sendMessage(core.destName .. " " .. L["Shared_HitBy"] .. " " .. C_Spell.GetSpellLink(116969) .. " (" .. playersFailCounter[core.destName] .. ")")
 	end
 
 	--Jan-xi: 60400
@@ -503,15 +503,15 @@ function core._1008:WillOfTheEmperor()
 							InfoFrame_SetPlayerCompleteWithMessage(v, L["Shared_Fails"] .. ": " .. playersStrikeFailCounter[v])
 						end
 						playerExecutedStrikeDisplay = playerExecutedStrikeJanxi
-						core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(116809) .. " " .. L["Core_Counter"] .. " (" .. playerExecutedStrikeJanxi .. "/" .. core.maxPlayers .. ")")
+						core:sendMessage(core:getAchievement() .. " " .. C_Spell.GetSpellLink(116809) .. " " .. L["Core_Counter"] .. " (" .. playerExecutedStrikeJanxi .. "/" .. core.maxPlayers .. ")")
 					elseif playerExecutedStrikeQinxi > playerExecutedStrikeJanxi then
 						for k, v in pairs(QinXiPlayers) do
 							InfoFrame_SetPlayerCompleteWithMessage(v, L["Shared_Fails"] .. ": " .. playersStrikeFailCounter[v])
 						end
 						playerExecutedStrikeDisplay = playerExecutedStrikeQinxi
-						core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(116809) .. " " .. L["Core_Counter"] .. " (" .. playerExecutedStrikeQinxi .. "/" .. core.maxPlayers .. ")")
+						core:sendMessage(core:getAchievement() .. " " .. C_Spell.GetSpellLink(116809) .. " " .. L["Core_Counter"] .. " (" .. playerExecutedStrikeQinxi .. "/" .. core.maxPlayers .. ")")
 					end
-					core:sendMessageSafe(core:getAchievement() .. " " .. L["Shared_PlayersWhoDidNotUse"] .. " " .. GetSpellLink(116809) .. " " .. InfoFrame_GetIncompletePlayersWithAdditionalInfo(),true)
+					core:sendMessageSafe(core:getAchievement() .. " " .. L["Shared_PlayersWhoDidNotUse"] .. " " .. C_Spell.GetSpellLink(116809) .. " " .. InfoFrame_GetIncompletePlayersWithAdditionalInfo(),true)
 
 					--Increase Fail Counter for players who did not execute in time
 					--Loop through all failed players increase counter by 1

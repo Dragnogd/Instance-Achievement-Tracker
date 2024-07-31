@@ -49,7 +49,7 @@ function core._2284:GeneralKaal()
                     slammedCount = slammedCount + 1
                     slammedUID[core.destName] = core.destName
                     core:sendMessage(core.destName .. " " .. L["Shared_HasCompleted"] .. " " .. GetAchievementLink(14289) .. " (" .. L["Core_PersonalAchievement"] .. ") (" .. slammedCount .. "/" .. #core.Instances[core.expansion][core.instanceType][core.instance]["boss3"].players .. ")",true)
-                    InfoFrame_SetPlayerCompleteWithMessage(core.destName, GetSpellLink(330055))
+                    InfoFrame_SetPlayerCompleteWithMessage(core.destName, C_Spell.GetSpellLink(330055))
                     InfoFrame_SetHeaderCounter(L["Shared_PlayersWhoNeedAchievement"],slammedCount,#core.Instances[core.expansion][core.instanceType][core.instance]["boss3"].players)
                     InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfoPersonalArgs(core.Instances[core.expansion][core.instanceType][core.instance]["boss3"])
                 end
@@ -108,8 +108,8 @@ function core._2284:TrackAdditional()
                     shadowBallCount = shadowBallCount + 1
                     core:sendDebugMessage("Count: " .. shadowBallCount)
                     shadowBallUID[core.destName] = core.destName
-                    core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. GetSpellLink(330004) .. " (" .. shadowBallCount .. "/" .. #core.Instances[core.expansion][core.instanceType][core.instance]["boss3"].players .. ")",true)
-                    InfoFrame_SetPlayerNeutralWithMessage(core.destName, GetSpellLink(330004))
+                    core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. C_Spell.GetSpellLink(330004) .. " (" .. shadowBallCount .. "/" .. #core.Instances[core.expansion][core.instanceType][core.instance]["boss3"].players .. ")",true)
+                    InfoFrame_SetPlayerNeutralWithMessage(core.destName, C_Spell.GetSpellLink(330004))
                 end
             end
 

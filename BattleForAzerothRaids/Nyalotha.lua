@@ -150,7 +150,7 @@ function core._2217:DarkInquisitorXanesh()
 						if voidWokenBlock == false then
 							voidWokenBlock = true
 							voidOrbCounter = voidOrbCounter + 1
-							core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(264908) .. " " .. L["Core_Counter"] .. " (" .. voidOrbCounter .. "/3)",true)
+							core:sendMessage(core:getAchievement() .. " " .. C_Spell.GetSpellLink(264908) .. " " .. L["Core_Counter"] .. " (" .. voidOrbCounter .. "/3)",true)
 						end
 					else
 						core:sendDebugMessage("FAILED")
@@ -183,7 +183,7 @@ function core._2217:DrestAgath()
 			initialTime = GetTime()
 		elseif core.type == "SPELL_CAST_SUCCESS" and core.spellId == 308941 and initialTime ~= nil then
 			secondTime = GetTime()
-			core:sendMessage(core:getAchievement() .. format(L["TimeBetweenLast"],GetSpellLink(308947), core:roundNumber(secondTime - initialTime)),true)
+			core:sendMessage(core:getAchievement() .. format(L["TimeBetweenLast"],C_Spell.GetSpellLink(308947), core:roundNumber(secondTime - initialTime)),true)
 			initialTime = secondTime
 			secondTime = nil
 		end
@@ -205,7 +205,7 @@ function core._2217:ShadharTheInsatiable()
 			if core.destName ~= nil and bittenHandUID[core.spawn_uid_dest_Player] == nil then
 				bittenHandCounter = bittenHandCounter + 1
 				bittenHandUID[core.spawn_uid_dest_Player] = core.spawn_uid_dest_Player
-				core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. GetSpellLink(312590) .. " (" .. bittenHandCounter .. "/" .. core.groupSize .. ")",true)
+				core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. C_Spell.GetSpellLink(312590) .. " (" .. bittenHandCounter .. "/" .. core.groupSize .. ")",true)
 				InfoFrame_SetPlayerComplete(core.destName)
 			end
 		end
@@ -214,7 +214,7 @@ function core._2217:ShadharTheInsatiable()
 			if core.destName ~= nil and bittenHandUID[core.spawn_uid_dest_Player] ~= nil then
 				bittenHandCounter = bittenHandCounter - 1
 				bittenHandUID[core.spawn_uid_dest_Player] = nil
-				core:sendMessage(core.destName .. " " .. L["Shared_HasLost"] .. " " .. GetSpellLink(312590) .. " (" .. bittenHandCounter .. "/" .. core.groupSize .. ")",true)
+				core:sendMessage(core.destName .. " " .. L["Shared_HasLost"] .. " " .. C_Spell.GetSpellLink(312590) .. " (" .. bittenHandCounter .. "/" .. core.groupSize .. ")",true)
 				InfoFrame_SetPlayerFailed(core.destName)
 			end
 		end
@@ -362,7 +362,7 @@ function core._2217:NZothTheCorruptor()
 	if core.type == "SPELL_AURA_APPLIED" and (core.spellId == 313334 or core.spellId == 313609) and giftOfNZothUID[core.spawn_uid_dest_Player] == nil then
 		giftOfNZothCounter = giftOfNZothCounter + 1
 		giftOfNZothUID[core.spawn_uid_dest_Player] = core.spawn_uid_dest_Player
-		core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. GetSpellLink(313334) .. " (" .. giftOfNZothCounter .. "/" .. core.groupSize .. ")",true)
+		core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. C_Spell.GetSpellLink(313334) .. " (" .. giftOfNZothCounter .. "/" .. core.groupSize .. ")",true)
 		InfoFrame_SetPlayerComplete(core.destName)
 	end
 

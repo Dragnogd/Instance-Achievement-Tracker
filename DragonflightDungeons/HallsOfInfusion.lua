@@ -33,7 +33,7 @@ function core._2527:TrackAdditional()
 	if core.Instances[core.expansion][core.instanceType][core.instance]["boss1"].enabled == true then
 		if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 391694 then
 			if core.sourceName ~= nil then
-				core:sendMessage(GetAchievementLink(16517) .. " " .. core.sourceName .. " " .. format(L["Shared_HasPressed"], GetSpellLink(391694)), true)
+				core:sendMessage(GetAchievementLink(16517) .. " " .. core.sourceName .. " " .. format(L["Shared_HasPressed"], C_Spell.GetSpellLink(391694)), true)
 			end
 		end
 	end

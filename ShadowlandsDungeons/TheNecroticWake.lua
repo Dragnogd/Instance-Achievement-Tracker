@@ -57,7 +57,7 @@ function core._2286:NalthorTheRimebinder()
                     if UnitIsPlayer(core.destName) then
                         if InfoFrame_GetPlayerFailed(core.destName) == false then
                             InfoFrame_SetPlayerFailed(core.destName)
-                            core:sendMessage(format(L["Shared_FailedPersonalAchievement"], core.destName, GetAchievementLink(core.achievementIDs[1]), format(L["Shared_DamageFromAbility"], GetSpellLink(320784))),true)
+                            core:sendMessage(format(L["Shared_FailedPersonalAchievement"], core.destName, GetAchievementLink(core.achievementIDs[1]), format(L["Shared_DamageFromAbility"], C_Spell.GetSpellLink(320784))),true)
                         end
                     end
                 end
@@ -69,7 +69,7 @@ function core._2286:NalthorTheRimebinder()
                     if UnitIsPlayer(core.destName) then
                         if InfoFrame_GetPlayerFailed(core.destName) == false then
                             InfoFrame_SetPlayerFailed(core.destName)
-                            core:sendMessage(format(L["Shared_FailedPersonalAchievement"], core.destName, GetAchievementLink(core.achievementIDs[1]), format(L["Shared_DamageFromAbility"], GetSpellLink(323730))),true)
+                            core:sendMessage(format(L["Shared_FailedPersonalAchievement"], core.destName, GetAchievementLink(core.achievementIDs[1]), format(L["Shared_DamageFromAbility"], C_Spell.GetSpellLink(323730))),true)
                         end
                     end
                 end
@@ -81,7 +81,7 @@ function core._2286:NalthorTheRimebinder()
                     if UnitIsPlayer(core.destName) then
                         if InfoFrame_GetPlayerFailed(core.destName) == false then
                             InfoFrame_SetPlayerFailed(core.destName)
-                            core:sendMessage(format(L["Shared_FailedPersonalAchievement"], core.destName, GetAchievementLink(core.achievementIDs[1]), format(L["Shared_DamageFromAbility"], GetSpellLink(287294))),true)
+                            core:sendMessage(format(L["Shared_FailedPersonalAchievement"], core.destName, GetAchievementLink(core.achievementIDs[1]), format(L["Shared_DamageFromAbility"], C_Spell.GetSpellLink(287294))),true)
                         end
                     end
                 end

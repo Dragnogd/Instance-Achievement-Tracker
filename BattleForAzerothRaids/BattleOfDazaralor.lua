@@ -83,7 +83,7 @@ function core._2070:ChampionOfTheLight()
                         --Player has not picked up debuff before boss pull so fail achievement
                         core:sendDebugMessage(UnitName(unit) .. " does not have debuff")
                         C_Timer.After(4, function()
-                            core:getAchievementFailedWithMessageAfter(L["Shared_MissingDebuff"] .. " " .. GetSpellLink(288579))
+                            core:getAchievementFailedWithMessageAfter(L["Shared_MissingDebuff"] .. " " .. C_Spell.GetSpellLink(288579))
                         end)
                     end
                 end
@@ -100,7 +100,7 @@ function core._2070:ChampionOfTheLight()
                 if debuffFound == false then
                     --Player has not picked up debuff before boss pull so fail achievement
                     C_Timer.After(4, function()
-                        core:getAchievementFailedWithMessageAfter(L["Shared_MissingDebuff"] .. " " .. GetSpellLink(288579))
+                        core:getAchievementFailedWithMessageAfter(L["Shared_MissingDebuff"] .. " " .. C_Spell.GetSpellLink(288579))
                     end)
                 end
             end
@@ -305,8 +305,8 @@ end
 function core._2070:Opulence()
     --Defeat the Opulence in Battle of Dazar'alor after /praising a Singing Sunflower while under the effects of Brilliant Aura on Normal Difficulty or higher.
     if initialMessageAnnounced == false then
-        RaidNotice_AddMessage(RaidBossEmoteFrame, format(L["BattleOfDazzarlor_OpulenceRangeWarning"], UnitName("player"), getNPCName(51090), GetSpellLink(284645)), ChatTypeInfo["RAID_WARNING"])
-        core:sendMessageSafe(format(L["BattleOfDazzarlor_OpulenceRangeWarning"], UnitName("player"), getNPCName(51090), GetSpellLink(284645)),true)
+        RaidNotice_AddMessage(RaidBossEmoteFrame, format(L["BattleOfDazzarlor_OpulenceRangeWarning"], UnitName("player"), getNPCName(51090), C_Spell.GetSpellLink(284645)), ChatTypeInfo["RAID_WARNING"])
+        core:sendMessageSafe(format(L["BattleOfDazzarlor_OpulenceRangeWarning"], UnitName("player"), getNPCName(51090), C_Spell.GetSpellLink(284645)),true)
         initialMessageAnnounced = true
     end
 
@@ -350,7 +350,7 @@ function core._2070:JainaProudmoore()
     --Player has collected a snow mound. Output player to chat.
     if core.type == "SPELL_AURA_APPLIED" and (core.spellId == 289408 or core.spellId == 289405) then
         snowCounter = snowCounter + 1
-        core:sendMessage(core:getAchievement() .. " " .. core.destName .. " " .. L["Shared_HasGained"] .. " " .. GetSpellLink(289408) .. " (" .. snowCounter .. "/3)", true)
+        core:sendMessage(core:getAchievement() .. " " .. core.destName .. " " .. L["Shared_HasGained"] .. " " .. C_Spell.GetSpellLink(289408) .. " (" .. snowCounter .. "/3)", true)
 
         if snowCounter == 3 then
             snowComplete = true

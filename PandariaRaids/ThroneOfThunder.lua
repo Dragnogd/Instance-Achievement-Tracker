@@ -118,7 +118,7 @@ function core._1098:JiKun()
 
 	--Egg Caught
 	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 139168 then
-		core:sendMessage(core.destName .. " " .. L["Shared_HasCaught"] .. " " .. GetSpellLink(139168),true)
+		core:sendMessage(core.destName .. " " .. L["Shared_HasCaught"] .. " " .. C_Spell.GetSpellLink(139168),true)
 		eggCaught = true
 	end
 

@@ -86,7 +86,7 @@ function core._2549:Volcoross()
 
     if (core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_APPLIED_DOSE") and core.destID == "208478" and core.spellId == 427995 and sizzlingSwoggersCounter < 30 then
         sizzlingSwoggersCounter = sizzlingSwoggersCounter + 1
-        core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(427995) .. " " .. L["Core_Counter"] .. " (" .. sizzlingSwoggersCounter .. "/30)",true)
+        core:sendMessage(core:getAchievement() .. " " .. C_Spell.GetSpellLink(427995) .. " " .. L["Core_Counter"] .. " (" .. sizzlingSwoggersCounter .. "/30)",true)
     end
 
     if core:getBlizzardTrackingStatus(19321, 1) == true then
@@ -103,7 +103,7 @@ function core._2549:Larodar()
     if (core.type == "SPELL_AURA_REMOVED" or core.type == "SPELL_AURA_REMOVED_DOSE") and core.destID == "211268" and core.spellId == 424595 then
         singedCounter = singedCounter - 1
         if singedCounter % 5 == 0 then
-            core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(424595) .. " " .. L["Core_Counter"] .. " " .. singedCounter,true)
+            core:sendMessage(core:getAchievement() .. " " .. C_Spell.GetSpellLink(424595) .. " " .. L["Core_Counter"] .. " " .. singedCounter,true)
         end
     end
 
@@ -121,7 +121,7 @@ function core._2549:CouncilOfDreams()
     --Defeat the Council of Dreams after recruiting Sergeant Quackers to join the cause in Amirdrassil, the Dream's Hope on Normal difficulty or higher.
 
     InfoFrame_UpdatePlayersOnInfoFrame()
-    InfoFrame_SetHeaderCounter(GetSpellLink(425410) .. " " .. L["Core_Counter"],polymorphBombCounter,core.groupSize)
+    InfoFrame_SetHeaderCounter(C_Spell.GetSpellLink(425410) .. " " .. L["Core_Counter"],polymorphBombCounter,core.groupSize)
 
     --When player casts preen, check who has been turned in ducks
     --SPELL_CAST_SUCCESS,Player-3676-0E0171A2,"Chrusvoker-Area52",0x514,0x1,0000000000000000,nil,0x80000000,0x80000000,422372,"Preen",0x1,Player-3676-0E0171A2,0000000000000000,642977,723760,3688,14301,10747,0,0,250000,250000,0,4070.15,12620.02,2240,1.9152,462
@@ -151,7 +151,7 @@ function core._2549:CouncilOfDreams()
     --             end
     --         end
     --         if playerFailed == true then
-    --             core:sendMessageSafe(core:getAchievement() .. " " .. L["Shared_PlayersMissing"] .. " " .. GetSpellLink(425410) .. " " .. playerStr,false,true)
+    --             core:sendMessageSafe(core:getAchievement() .. " " .. L["Shared_PlayersMissing"] .. " " .. C_Spell.GetSpellLink(425410) .. " " .. playerStr,false,true)
     --         end
     --     end)
     -- end
@@ -189,7 +189,7 @@ function core._2549:Nymue()
         if dreamProjectionUID[core.spawn_uid] == nil then
             projectedDreamCounter = projectedDreamCounter + 1
             dreamProjectionUID[core.spawn_uid] = core.spawn_uid
-            core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(427358) .. " " .. L["Core_Counter"] .. " (" .. projectedDreamCounter .. "/5)",true)
+            core:sendMessage(core:getAchievement() .. " " .. C_Spell.GetSpellLink(427358) .. " " .. L["Core_Counter"] .. " (" .. projectedDreamCounter .. "/5)",true)
         end
     end
 
@@ -230,7 +230,7 @@ function core._2549:Smolderon()
         --Check if we need to announce a new rune being doused
         if overloadedRunePlayersUID[core.spawn_uid_dest_Player] > runesDoused then
             runesDoused = runesDoused + 1
-            core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(426342) .. " " .. L["Core_Counter"] .. " (" .. runesDoused .. "/6)",true)
+            core:sendMessage(core:getAchievement() .. " " .. C_Spell.GetSpellLink(426342) .. " " .. L["Core_Counter"] .. " (" .. runesDoused .. "/6)",true)
         end
     end
 
@@ -351,7 +351,7 @@ function core._2549.Events:UNIT_SPELLCAST_SUCCEEDED(self, unitID, lineID, spellI
 
         --Volcoross (Swoghorn)
         if spellID == 426753 then
-            core:sendMessage(name .. " " .. L["Shared_HasGained"] .. " " .. GetSpellLink(426753),true)
+            core:sendMessage(name .. " " .. L["Shared_HasGained"] .. " " .. C_Spell.GetSpellLink(426753),true)
         end
     end
 end
@@ -368,7 +368,7 @@ function core._2549.Events:UNIT_AURA(self, unitID)
                         --Rescued Whelp
                         playersWithRescuedWhelps[name] = true
                         rescuedWhelpCounter = rescuedWhelpCounter + 1
-                        core:sendMessage(name .. " " .. L["Shared_HasGained"] .. " " .. GetSpellLink(428781) .. " " .. L["Core_Counter"] .. " (" .. rescuedWhelpCounter .. "/6)",true)
+                        core:sendMessage(name .. " " .. L["Shared_HasGained"] .. " " .. C_Spell.GetSpellLink(428781) .. " " .. L["Core_Counter"] .. " (" .. rescuedWhelpCounter .. "/6)",true)
                     end
                 end
             end

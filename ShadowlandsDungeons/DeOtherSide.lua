@@ -39,14 +39,14 @@ function core._2291:TheManastorms()
     if core.type == "SPELL_DAMAGE" and core.spellId == 323992 and core.destID == "164556" and echoFingerLaserXtremeCompleted == false then
         echoFingerLaserXtremeCompleted = true
         stepsCompleted = stepsCompleted + 1
-        core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(323992) .. " " .. L["Shared_Completed"] .. " (" .. stepsCompleted .. "/2)",true)
+        core:sendMessage(core:getAchievement() .. " " .. C_Spell.GetSpellLink(323992) .. " " .. L["Shared_Completed"] .. " (" .. stepsCompleted .. "/2)",true)
     end
 
     --Echo Shadowfury
     if core.type == "SPELL_DAMAGE" and core.spellId == 320132 and core.destID == "164555" and shadowfuryCompleted == false then
         shadowfuryCompleted = true
         stepsCompleted = stepsCompleted + 1
-        core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(320132) .. " " .. L["Shared_Completed"] .. " (" .. stepsCompleted .. "/2)",true)
+        core:sendMessage(core:getAchievement() .. " " .. C_Spell.GetSpellLink(320132) .. " " .. L["Shared_Completed"] .. " (" .. stepsCompleted .. "/2)",true)
     end
 
     if stepsCompleted == 2 then

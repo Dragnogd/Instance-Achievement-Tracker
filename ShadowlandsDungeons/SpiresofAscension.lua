@@ -51,7 +51,7 @@ function core._2285:DevosParagonOfDoubt()
 
     if (core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_APPLIED_DOSE") and core.destID == "162061" and core.spellId == 334643 then
         devosSpearCounter = devosSpearCounter + 1
-        core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(334643) .. " " .. L["Core_Counter"] .. " (" .. devosSpearCounter .. "/5)",true)
+        core:sendMessage(core:getAchievement() .. " " .. C_Spell.GetSpellLink(334643) .. " " .. L["Core_Counter"] .. " (" .. devosSpearCounter .. "/5)",true)
     end
 
     if core:getBlizzardTrackingStatus(14323, 1) then

@@ -288,7 +288,11 @@ function core._631.Events:UNIT_AURA(self, unitID)
 					foundNecroticPlague = true
 					if auraData.applications > necroticPlagueStack and necroticPlagueCompletedAnnounced == false then
                         necroticPlagueStack = auraData.applications
-                        core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(70337) .. " " .. L["Core_Counter"] .. " (" .. necroticPlagueStack .. "/30)",true)
+                        if core.gameVersionMajor > 4 then
+                            core:sendMessage(core:getAchievement() .. " " .. C_Spell.GetSpellLink(70337) .. " " .. L["Core_Counter"] .. " (" .. necroticPlagueStack .. "/30)",true)
+                        else
+                            core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(70337) .. " " .. L["Core_Counter"] .. " (" .. necroticPlagueStack .. "/30)",true)
+                        end
 					end
 				end
 			end

@@ -43,7 +43,11 @@ function core._615:GonnaGoWhenTheVolcanoBlows()
                     if UnitIsPlayer(core.destName) then
                         if InfoFrame_GetPlayerFailed(core.destName) == false then
                             InfoFrame_SetPlayerFailed(core.destName)
-                            core:sendMessage(format(L["Shared_FailedPersonalAchievement"], core.destName, GetAchievementLink(core.achievementIDs[1]), format(L["Shared_DamageFromAbility"], GetSpellLink(57591))),true)
+                            if core.gameVersionMajor > 4 then
+                                core:sendMessage(format(L["Shared_FailedPersonalAchievement"], core.destName, GetAchievementLink(core.achievementIDs[1]), format(L["Shared_DamageFromAbility"], C_Spell.GetSpellLink(57591))),true)
+                            else
+                                core:sendMessage(format(L["Shared_FailedPersonalAchievement"], core.destName, GetAchievementLink(core.achievementIDs[1]), format(L["Shared_DamageFromAbility"], GetSpellLink(57591))),true)
+                            end
                             playersWhoHaveNotFailed = playersWhoHaveNotFailed - 1
                         end
                     end

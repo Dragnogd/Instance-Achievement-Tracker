@@ -181,7 +181,7 @@ function core._2164:TheQueensCourt()
 	--Form Ranks - Salute
 	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 303188 and saluteAnnounce == false then
 		saluteAnnounce = true
-		core:sendMessage(GetSpellLink(303188) .. " " .. format(L["AzsharasEternalPalace_TargetAndPerformEmote"], getNPCName(152910), L["AzsharasEternalPalace_Salute"]), true)
+		core:sendMessage(C_Spell.GetSpellLink(303188) .. " " .. format(L["AzsharasEternalPalace_TargetAndPerformEmote"], getNPCName(152910), L["AzsharasEternalPalace_Salute"]), true)
 		C_Timer.After(20, function()
 			saluteAnnounce = false
 		end)
@@ -189,7 +189,7 @@ function core._2164:TheQueensCourt()
 	--Repeat Performance - Curtsey
 	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 304409 and curtseyAnnounce == false then
 		curtseyAnnounce = true
-		core:sendMessage(GetSpellLink(304409) .. " " .. format(L["AzsharasEternalPalace_TargetAndPerformEmote"], getNPCName(152910), L["AzsharasEternalPalace_Curtsey"]), true)
+		core:sendMessage(C_Spell.GetSpellLink(304409) .. " " .. format(L["AzsharasEternalPalace_TargetAndPerformEmote"], getNPCName(152910), L["AzsharasEternalPalace_Curtsey"]), true)
 		C_Timer.After(20, function()
 			curtseyAnnounce = false
 		end)
@@ -197,7 +197,7 @@ function core._2164:TheQueensCourt()
 	--Deferred Sentance - Grovel
 	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 304128 and grovelAnnounce == false then
 		grovelAnnounce = true
-		core:sendMessage(GetSpellLink(304128) .. " " .. format(L["AzsharasEternalPalace_TargetAndPerformEmote"], getNPCName(152910), L["AzsharasEternalPalace_Grovel"]), true)
+		core:sendMessage(C_Spell.GetSpellLink(304128) .. " " .. format(L["AzsharasEternalPalace_TargetAndPerformEmote"], getNPCName(152910), L["AzsharasEternalPalace_Grovel"]), true)
 		C_Timer.After(20, function()
 			grovelAnnounce = false
 		end)
@@ -205,7 +205,7 @@ function core._2164:TheQueensCourt()
 	--Obey or Suffer - Kneel
 	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 297585 and kneelAnnounce == false then
 		kneelAnnounce = true
-		core:sendMessage(GetSpellLink(297585) .. " " .. format(L["AzsharasEternalPalace_TargetAndPerformEmote"], getNPCName(152910), L["AzsharasEternalPalace_Kneel"]), true)
+		core:sendMessage(C_Spell.GetSpellLink(297585) .. " " .. format(L["AzsharasEternalPalace_TargetAndPerformEmote"], getNPCName(152910), L["AzsharasEternalPalace_Kneel"]), true)
 		C_Timer.After(20, function()
 			kneelAnnounce = false
 		end)
@@ -213,7 +213,7 @@ function core._2164:TheQueensCourt()
 	--Stand Alone - Applause
 	if core.type == "SPELL_AURA_APPLIED" and core.spellId == 297656 and applauseAnnounce == false then
 		applauseAnnounce = true
-		core:sendMessage(GetSpellLink(297656) .. " " .. format(L["AzsharasEternalPalace_TargetAndPerformEmote"], getNPCName(152910), L["AzsharasEternalPalace_Applause"]), true)
+		core:sendMessage(C_Spell.GetSpellLink(297656) .. " " .. format(L["AzsharasEternalPalace_TargetAndPerformEmote"], getNPCName(152910), L["AzsharasEternalPalace_Applause"]), true)
 		C_Timer.After(20, function()
 			applauseAnnounce = false
 		end)
@@ -325,7 +325,7 @@ function core._2164.Events:UNIT_AURA(self, unitID)
 							playersWithFunRun[name] = name
 							InfoFrame_SetPlayerComplete(name)
 							playersCompletedAchievement = playersCompletedAchievement + 1
-							core:sendMessage(core:getAchievement() .. " " .. name .. " " .. L["Shared_HasCompleted"] .. " " .. GetSpellLink(305173) .. " " .. L["Core_Counter"] .. " (" .. playersCompletedAchievement .. "/" .. #core.currentBosses[1].players .. ")",true)
+							core:sendMessage(core:getAchievement() .. " " .. name .. " " .. L["Shared_HasCompleted"] .. " " .. C_Spell.GetSpellLink(305173) .. " " .. L["Core_Counter"] .. " (" .. playersCompletedAchievement .. "/" .. #core.currentBosses[1].players .. ")",true)
 						end
 					end
 				end
@@ -339,7 +339,7 @@ function core._2164.Events:UNIT_AURA(self, unitID)
 						InfoFrame_SetPlayerFailed(name)
 						playersWithFunRun[name] = nil
 						playersCompletedAchievement = playersCompletedAchievement - 1
-						core:sendMessage(core:getAchievement() .. " " .. name .. " " .. L["Shared_HasFailed"] .. " " .. GetSpellLink(305173) .. " " .. L["Core_Counter"] .. " (" .. playersCompletedAchievement .. "/" .. #core.currentBosses[1].players .. ")",true)
+						core:sendMessage(core:getAchievement() .. " " .. name .. " " .. L["Shared_HasFailed"] .. " " .. C_Spell.GetSpellLink(305173) .. " " .. L["Core_Counter"] .. " (" .. playersCompletedAchievement .. "/" .. #core.currentBosses[1].players .. ")",true)
 					end
 				end
 			end
@@ -380,7 +380,7 @@ function core._2164.Events:UNIT_AURA(self, unitID)
 							--Announce player has caught the egg
 							if announceCatch == false then
 								announceCatch = true
-								core:sendMessage(name .. " " .. L["Shared_HasCaught"] .. " " .. GetSpellLink(305322),true)
+								core:sendMessage(name .. " " .. L["Shared_HasCaught"] .. " " .. C_Spell.GetSpellLink(305322),true)
 							end
 							-- core:getAchievementSuccess()
 						end

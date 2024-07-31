@@ -46,7 +46,7 @@ function core._1753:TrackAdditional()
             if crushingDarknessUID[core.spawn_uid_dest_Player] == nil then
                 crushingDarknessUID[core.spawn_uid_dest_Player] = core.spawn_uid_dest_Player
                 crushingDarknessCounter = crushingDarknessCounter + 1
-                core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. GetSpellLink(250821) ..  " (" .. crushingDarknessCounter .. "/" .. core.groupSize .. ")")
+                core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. C_Spell.GetSpellLink(250821) ..  " (" .. crushingDarknessCounter .. "/" .. core.groupSize .. ")")
             end
         end
 
@@ -55,8 +55,8 @@ function core._1753:TrackAdditional()
             if crushingDarknessUID[core.spawn_uid_dest_Player] ~= nil then
             crushingDarknessUID[core.spawn_uid_dest_Player] = nil
                 crushingDarknessCounter = crushingDarknessCounter - 1
-                core:sendMessage(core.destName .. " " .. L["Shared_HasLost"] .. " " .. GetSpellLink(250821) .. " (" .. crushingDarknessCounter .. "/" .. core.groupSize .. ")")
-            end 
+                core:sendMessage(core.destName .. " " .. L["Shared_HasLost"] .. " " .. C_Spell.GetSpellLink(250821) .. " (" .. crushingDarknessCounter .. "/" .. core.groupSize .. ")")
+            end
         end
     end
 end

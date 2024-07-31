@@ -60,13 +60,13 @@ function core._2097:MachinistsGarden()
                 --Detect the reason the player has failed the achievement
                 local reason = ""
                 if core.spellId == 285443 then
-                    reason = format(L["Shared_DamageFromAbility"], GetSpellLink(285443))
+                    reason = format(L["Shared_DamageFromAbility"], C_Spell.GetSpellLink(285443))
                 elseif core.spellId == 294954 then
-                    reason = format(L["Shared_DamageFromAbility"], GetSpellLink(294954))
+                    reason = format(L["Shared_DamageFromAbility"], C_Spell.GetSpellLink(294954))
                 elseif core.spellId == 285460 then
-                    reason = format(L["Shared_DamageFromAbility"], GetSpellLink(285460))
+                    reason = format(L["Shared_DamageFromAbility"], C_Spell.GetSpellLink(285460))
                 elseif core.spellId == 294869 then
-                    reason = format(L["Shared_DamageFromAbility"], GetSpellLink(294869))
+                    reason = format(L["Shared_DamageFromAbility"], C_Spell.GetSpellLink(294869))
                 end
                 if playersHit[core.destName] == nil then
                     --Players has not been hit already

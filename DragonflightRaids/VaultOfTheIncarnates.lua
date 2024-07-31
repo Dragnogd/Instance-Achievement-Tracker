@@ -49,7 +49,7 @@ function core._2522:Eranog()
 
     if (core.type == "SPELL_AURA_REMOVED_DOSE" or core.type == "SPELL_AURA_REMOVED") and core.spellId == 389203 then
         frozenSolidCounter = frozenSolidCounter - 1
-        core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(389203) .. " " .. L["Shared_StacksRemaining"] .. " " .. frozenSolidCounter,true)
+        core:sendMessage(core:getAchievement() .. " " .. C_Spell.GetSpellLink(389203) .. " " .. L["Shared_StacksRemaining"] .. " " .. frozenSolidCounter,true)
     end
 
     if frozenSolidCounter == 0 and frozenBehmeothAnnounce == false then
@@ -110,7 +110,7 @@ function core._2522:DatheaAscended()
         if condensedGaleUID[core.destName] == nil then
             condensedGaleCounter = condensedGaleCounter + 1
             condensedGaleUID[core.destName] = core.destName
-            core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. GetSpellLink(392036) .. " (" .. condensedGaleCounter .. "/8)",true)
+            core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. C_Spell.GetSpellLink(392036) .. " (" .. condensedGaleCounter .. "/8)",true)
         end
     end
 
@@ -232,7 +232,7 @@ end
 function core._2522.Events:UNIT_SPELLCAST_SUCCEEDED(self, unitTarget, castGUID, spellID)
 	if spellID == 389209 then
         local name, realm = UnitName(unitTarget)
-		core:sendMessage(name .. " " .. L["Shared_HasGained"] .. " " .. GetSpellLink(389209),true)
+		core:sendMessage(name .. " " .. L["Shared_HasGained"] .. " " .. C_Spell.GetSpellLink(389209),true)
 	end
 end
 
@@ -246,7 +246,7 @@ function core._2522.Events:UNIT_AURA(self, unitID)
                 if name ~= nil then
                     if auraData ~= nil and auraData.spellId == 393365 and concetratedStormEssencePlayers[name] == nil then
                         --Concentrated Storm Essence
-                        core:sendMessage(name .. " " .. L["Shared_HasGained"] .. " " .. GetSpellLink(393365),true)
+                        core:sendMessage(name .. " " .. L["Shared_HasGained"] .. " " .. C_Spell.GetSpellLink(393365),true)
                         concetratedStormEssencePlayers[name] = true
                     end
                 end

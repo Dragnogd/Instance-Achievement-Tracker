@@ -107,7 +107,7 @@ function core._1009.Events:UNIT_AURA(self, unitID, ...)
 						local auraData = C_UnitAuras.GetDebuffDataByIndex(unitID, i)
 						if auraData ~= nil and auraData.spellId == 125785 then
 							parasiteCounter = parasiteCounter + 1
-							core:sendMessage(UnitName(unitID) .. " " .. L["Shared_HasGained"] .. " " .. GetSpellLink(125785) .. " (" .. parasiteCounter .. "/" .. core.groupSize .. ")")
+							core:sendMessage(UnitName(unitID) .. " " .. L["Shared_HasGained"] .. " " .. C_Spell.GetSpellLink(125785) .. " (" .. parasiteCounter .. "/" .. core.groupSize .. ")")
 							parasitePlayers[spawn_uid_dest] = spawn_uid_dest
 							InfoFrame_SetPlayerComplete(UnitName(unitID))
 						end

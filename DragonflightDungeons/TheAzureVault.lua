@@ -42,7 +42,7 @@ function core._2515:TelashGreywing()
 
     if (core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_APPLIED_DOSE") and core.destID == "197643" and core.spellId == 392417 then
         icyStacksCount = icyStacksCount + 1
-        core:sendMessage(core:getAchievement() .. " " .. GetSpellLink(392417) .. " " .. L["Core_Counter"] .. " (" .. icyStacksCount .. "/12)",true)
+        core:sendMessage(core:getAchievement() .. " " .. C_Spell.GetSpellLink(392417) .. " " .. L["Core_Counter"] .. " (" .. icyStacksCount .. "/12)",true)
     end
 
     if core:getBlizzardTrackingStatus(16445, 1) == true then
@@ -59,7 +59,7 @@ function core._2515:TrackAdditional()
                 local name, realm = UnitName(core.destName)
                 if core:has_value(core.Instances[core.expansion][core.instanceType][core.instance]["boss1"].players, name) == true and core:has_value(hidePlayersFailed, core.destName) == false then
                     table.insert(hidePlayersFailed, core.destName)
-                    core:sendMessage(format(L["Shared_FailedPersonalAchievement"], core.destName, GetAchievementLink(16330), format(L["Shared_DamageFromAbility"], GetSpellLink(386368))),true)
+                    core:sendMessage(format(L["Shared_FailedPersonalAchievement"], core.destName, GetAchievementLink(16330), format(L["Shared_DamageFromAbility"], C_Spell.GetSpellLink(386368))),true)
                 end
 			end
 		end
@@ -70,7 +70,7 @@ function core._2515:TrackAdditional()
 				local name, realm = UnitName(core.destName)
                 if core:has_value(core.Instances[core.expansion][core.instanceType][core.instance]["boss1"].players, name) == true and core:has_value(hidePlayersFailed, core.destName) == false then
                     table.insert(hidePlayersFailed, core.destName)
-                    core:sendMessage(format(L["Shared_FailedPersonalAchievement"], core.destName, GetAchievementLink(16330), format(L["Shared_DamageFromAbility"], GetSpellLink(397726))),true)
+                    core:sendMessage(format(L["Shared_FailedPersonalAchievement"], core.destName, GetAchievementLink(16330), format(L["Shared_DamageFromAbility"], C_Spell.GetSpellLink(397726))),true)
                 end
 			end
 		end

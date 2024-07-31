@@ -162,7 +162,7 @@ function core._1136:ShaOfPride()
 
 	--Last Word
 	if core.type == "UNIT_DIED" and core.destID == "71946" and core.achievementsFailed[1] == false then
-		core:sendMessage("WARNING: Manifestation of Pride has died. If the closest 2 players to the add did not have " .. GetSpellLink(146595) .. " then the achievement has FAILED")
+		core:sendMessage("WARNING: Manifestation of Pride has died. If the closest 2 players to the add did not have " .. C_Spell.GetSpellLink(146595) .. " then the achievement has FAILED")
 	end
 end
 
