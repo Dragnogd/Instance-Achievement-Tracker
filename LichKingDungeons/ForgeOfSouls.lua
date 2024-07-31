@@ -55,5 +55,5 @@ function core._632:ClearVariables()
     ------------------------------------------------------
     ---- Bronjahm
     ------------------------------------------------------
-    acorruptedSoulFragments = 0
+    corruptedSoulFragments = 0
 end
