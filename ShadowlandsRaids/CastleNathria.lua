@@ -390,7 +390,7 @@ function core._2296:StoneLegionGenerals()
             if playersBloomingRose[core.destName] == nil then
                 BloomingFlowersCounter = BloomingFlowersCounter + 1
                 playersBloomingRose[core.destName] = core.destName
-                core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. C_Spell..GetSpellLink(339574) .. " (" .. BloomingFlowersCounter .. "/" .. core.groupSize .. ")",true)
+                core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. C_Spell.GetSpellLink(339574) .. " (" .. BloomingFlowersCounter .. "/" .. core.groupSize .. ")",true)
             end
             InfoFrame_SetPlayerComplete(core.destName)
         end
@@ -418,8 +418,8 @@ function core._2296:StoneLegionGenerals()
                 end
                 BloomingFlowersCounter = BloomingFlowersCounter - 1
                 playersBloomingRose[core.destName] = nil
-                core:sendDebugMessage(core.destName .. " " .. L["Shared_HasLost"] .. " " .. C_Spell..GetSpellLink(339574) .. " (" .. BloomingFlowersCounter .. "/" .. core.groupSize .. ")")
-                --core:sendMessage(core.destName .. " " .. L["Shared_HasLost"] .. " " .. C_Spell..GetSpellLink(339574) .. " (" .. BloomingFlowersCounter .. "/" .. core.groupSize .. ")",true)
+                core:sendDebugMessage(core.destName .. " " .. L["Shared_HasLost"] .. " " .. C_Spell.GetSpellLink(339574) .. " (" .. BloomingFlowersCounter .. "/" .. core.groupSize .. ")")
+                --core:sendMessage(core.destName .. " " .. L["Shared_HasLost"] .. " " .. C_Spell.GetSpellLink(339574) .. " (" .. BloomingFlowersCounter .. "/" .. core.groupSize .. ")",true)
             end
         end
     end
@@ -555,19 +555,19 @@ function core._2296:TrackAdditional()
     --Ardenweald Anima
     if core.type == "SPELL_AURA_APPLIED" and core.spellId == 341186 and overwhelingAnimaCollected1 == false then
         overwhelingAnimaCollected1 = true
-        core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. C_Spell..GetSpellLink(341186),true)
+        core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. C_Spell.GetSpellLink(341186),true)
     end
 
     --Maw Anima
     if core.type == "SPELL_AURA_APPLIED" and core.spellId == 341253 and overwhelingAnimaCollected2 == false then
         overwhelingAnimaCollected2 = true
-        core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. C_Spell..GetSpellLink(341253),true)
+        core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. C_Spell.GetSpellLink(341253),true)
     end
 
     --Maldraxxus Anima
     if core.type == "SPELL_AURA_APPLIED" and core.spellId == 341135 and overwhelingAnimaCollected3 == false then
         overwhelingAnimaCollected3 = true
-        core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. C_Spell..GetSpellLink(341135),true)
+        core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. C_Spell.GetSpellLink(341135),true)
     end
 end
 
@@ -686,15 +686,15 @@ function core._2296.Events:UNIT_AURA(self, unitID)
         if name ~= nil then
             if auraData ~= nil and auraData.spellId == 341209 then
                 --Anima of Ardenweald
-                core:sendMessage(name .. L["Shared_HasGained"] .. " " .. C_Spell..GetSpellLink(341209),true)
+                core:sendMessage(name .. L["Shared_HasGained"] .. " " .. C_Spell.GetSpellLink(341209),true)
                 CurrentAnima = "Ardenweald"
             elseif auraData ~= nil and auraData.spellId == 341142 then
                 --Anima of Maldraxxus
-                core:sendMessage(name .. L["Shared_HasGained"] .. " " .. C_Spell..GetSpellLink(341142),true)
+                core:sendMessage(name .. L["Shared_HasGained"] .. " " .. C_Spell.GetSpellLink(341142),true)
                 CurrentAnima = "Maldraxxus"
             elseif auraData ~= nil and auraData.spellId == 341262 then
                 --Anima of the Maw
-                core:sendMessage(name .. L["Shared_HasGained"] .. " " .. C_Spell..GetSpellLink(341262),true)
+                core:sendMessage(name .. L["Shared_HasGained"] .. " " .. C_Spell.GetSpellLink(341262),true)
                 CurrentAnima = "Maw"
             end
         end

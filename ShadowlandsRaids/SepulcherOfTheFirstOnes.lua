@@ -261,12 +261,12 @@ end
 function core._2481:HalondrusTheReclaimer()
     --Defeat Halondrus the Reclaimer after collecting six strange artifacts and defeating their constructs in the Sepulcher of the First Ones on Normal difficulty or higher.
     InfoFrame_UpdateDynamicPlayerList()
-    InfoFrame_SetHeaderMessage(C_Spell..GetSpellLink(365761) .. " " .. L["Core_Counter"] .. " " .. strangeArtifactCounter)
+    InfoFrame_SetHeaderMessage(C_Spell.GetSpellLink(365761) .. " " .. L["Core_Counter"] .. " " .. strangeArtifactCounter)
 
     --Player has picked up a strange artifact
     if core.type == "SPELL_AURA_APPLIED" and core.spellId == 365761 then
         strangeArtifactCounter = strangeArtifactCounter + 1
-        core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. C_Spell..GetSpellLink(365761) .. " (" .. strangeArtifactCounter .. "/6)",true)
+        core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. C_Spell.GetSpellLink(365761) .. " (" .. strangeArtifactCounter .. "/6)",true)
         InfoFrame_SetDynamicPlayer(core.destName,1)
     end
 
@@ -456,7 +456,7 @@ function core._2481.Events:UNIT_AURA(self, unitID)
         if name ~= nil then
             if auraData ~= nil and auraData.spellId == 366324 and jugglingCoreFound == false then
                 --Juggling Core
-                core:sendMessage(name .. L["Shared_HasGained"] .. " " .. C_Spell..GetSpellLink(366324),true)
+                core:sendMessage(name .. L["Shared_HasGained"] .. " " .. C_Spell.GetSpellLink(366324),true)
                 jugglingCoreFound = true
             end
         end
