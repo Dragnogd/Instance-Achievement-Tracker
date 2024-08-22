@@ -82,10 +82,13 @@ LichKingDungeons\TrialOfTheChampion.lua
 LichKingDungeons\UtgardeKeep.lua
 LichKingDungeons\UtgardePinnacle.lua
 
+Templates.xml
+
 InstancesClassic.lua
 ItemCache.lua
 NPCCache.lua
 InfoFrame.lua
+Options.lua
 GUI.lua
 MobCounter.lua
 emotes.lua

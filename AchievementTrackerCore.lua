@@ -221,8 +221,6 @@ core.achievementIDs = {}						--Stores a list of the achievements to track for t
 core.achievementTrackingEnabled = false			--Whether the user wants to track achievements for the particular instance or not
 core.playersFailedPersonal = {}					--List of players that have failed a personal achievement. Resets when you exit combat
 core.playersSuccessPersonal = {}				--List of players that have successfully completed a personal acheievement. Resets when you exit combat
-core.enableAchievementScanning = true			--Whether the addon is allowed to scan for achievements
-core.addonEnabled = false
 local combatTimerStarted = false				--Used to determine if players in the group are still in combat with a boss
 local lastMessageSent = ""   					--Stores the last message sent to the chat. This is used to prevent the same message being sent more than once in case of an error and to prevent unwanted spam
 local requestToRun = false						--Store whether the current addon sent the request to enable itself or not for achievement tracking
@@ -230,22 +228,16 @@ local electionFinished = false
 local enableDisplayAchievement = true
 local currentBossNums = {}
 local detectBossWait = false
-local announceToRaidWarning = false				--Whether or not to announce messages to Raid Warning or not. Can only be done while in raid & user is raid leader or assist.
 local enableSound = false						--Whether to play a sound when achievement is completed
 local enableSoundFailed = false					--Whether to play a sound when achievement is failed
 local failedSound = nil
 local completedSound = nil
-core.achievementDisplayStatus = "show"			--How achievements should be display within the GUI (Show/Hide/Grey)
 local mobMouseoverCache = {}
 local encounterCache = {}
 local announceMissingAchievements = false
 local versionCheckInitiated = false
-local trackAchievementsInUI = false				--Track achievements in achievements UI upon entering raid
 local trackAchievementInUiTable = {}
-local trackCharacterAchievements = false
 local changeInfoFrameScale = false
-local trackAchievementsNoPrompt = false
-local changeMinimapIcon = false
 
 local sendMessageOnTimer_ProcessMessage = false	--Set when we have message in message queue that needs to be output
 local sendMessageOnTimer_Message = nil			--Message in queue to be outputted
@@ -277,17 +269,13 @@ core.encounterStarted = false
 core.displayAchievements = false
 core.encounterDetected = false
 core.outputTrackingStatus = false
-core.announceTrackedAchievementsToChat = false	--Whether or not the user has chosen for IAT to announce which achievements are currently being tracked to chat
 core.lockDetection = false						--Once an encounter has finished. Stop the encounter being detected again straight away
-core.onlyTrackMissingAchievements = false		--Whether or not the user has chosen to only track missing achievements or not
 core.trackingSupressed = false					--Whether or not tracking is being supressed for the current fight
 core.infoFrameShown = false
 core.infoFrameLock = false
 local automaticBlizzardTracking = true			--By Default blizzard trackers are almost always white (true)
 local automaticBlizzardTrackingInitialCheck = false --Initial check for value at start of each encounter
-local enableCombatLogging = false
 core.syncMessageQueue = {}							--Messages sent from sync to other addons. Used when range is too small for one addon to cover.
-local enableInfoFrame = true					--Whether or not user has Info Frame enabled or not
 core.groupSizeRequiresUpdate = false
 
 --------------------------------------
@@ -498,21 +486,6 @@ function getInstanceAchievements()
 		C_Timer.After(2, function()
 			--Check if the scan is still valid or not
 			if scanCounterloc == scanCounter then
-				--Last player scan was successfully. Check if we need to continue scanning
-				-- if #playersToScan > 0 then
-				-- 	getInstanceAchievements()
-				-- elseif #playersToScan == 0 and rescanNeeded == false then
-				-- 	printMessage("Achievment Scanning Finished (" .. #playersScanned .. "/" .. core.groupSize .. ")")
-				-- 	scanInProgress = false
-				-- 	core.scanFinished = true
-				-- elseif #playersToScan == 0 and rescanNeeded == true then
-				-- 	--print("Achievement Scanning Finished but some players still need scanning. Waiting 20 seconds then trying again (" .. #playersScanned .. "/" .. core.groupSize .. ")")
-				-- 	C_Timer.After(10, function()
-				-- 		scanInProgress = true
-				-- 		getPlayersInGroup()
-				-- 	end)
-				-- end
-
 				--Last player to scan was not successfull
 				--core:sendDebugMessage("Last scan was unsuccessfull: " .. scanCounterloc)
 				rescanNeeded = true
@@ -716,7 +689,7 @@ function getInstanceInfomation()
 							createEnableAchievementTrackingUI()
 						else
 							core:sendDebugMessage("Displaying Tracking UI since it was already created")
-							if trackAchievementsNoPrompt == true then
+							if core.Options.TrackAchievementsAutomatically.get() == true then
 								enableAchievementTracking()
 							else
 								UIConfig.content:SetText(L["Core_EnableAchievementTracking"] .. ": " .. core.instanceNameSpaces);
@@ -729,24 +702,27 @@ function getInstanceInfomation()
 
 					--Switch to correct tab in GUI
 					core:sendDebugMessage("Expansion: " .. core.expansion)
-					if core.expansion == 3 then
-						Tab_OnClick(_G["AchievementTrackerTab9"])
-					elseif core.expansion == 4 then
-						Tab_OnClick(_G["AchievementTrackerTab8"])
-					elseif core.expansion == 5 then
-						Tab_OnClick(_G["AchievementTrackerTab7"])
-					elseif core.expansion == 6 then
-						Tab_OnClick(_G["AchievementTrackerTab6"])
-					elseif core.expansion == 7 then
-						Tab_OnClick(_G["AchievementTrackerTab5"])
-					elseif core.expansion == 8 then
-						Tab_OnClick(_G["AchievementTrackerTab4"])
-					elseif core.expansion == 9 then
-						Tab_OnClick(_G["AchievementTrackerTab3"])
+					for k, data in ipairs(core.Config.tabDataProvider) do
+						if data.ExpansionID == core.expansion then
+							core:sendDebugMessage("Setting to tab".. k)
+							PanelTemplates_SetTab(core.Config.UI, k)
+
+							local tab = _G["AchievementTrackerTab"..k]
+
+							-- Check if the tab has an OnClick handler and call it
+							if tab and tab:GetScript("OnClick") then
+								tab:GetScript("OnClick")(tab)
+							end
+						end
 					end
 
-					--Make sure right instance is selected
-					core.Config:Instance_OnClickAutomatic()
+					local function PredicateFunction(item)
+						return item.id == core.instance
+					end
+
+					local foundItem = core.Config.InstanceListDataProvider:FindElementDataByPredicate(PredicateFunction)
+
+					core.Config:ShowContentForInstance(foundItem)
 				else
 					core:sendDebugMessage("Achievements cannot be earned for the following difficulty " .. core.difficultyID)
 				end
@@ -840,7 +816,7 @@ function createEnableAchievementTrackingUI()
 	--Setup the InfoFrame
 	core.IATInfoFrame:SetupInfoFrame()
 
-	if trackAchievementsNoPrompt == true then
+	if core.Options.TrackAchievementsAutomatically.get() == true then
 		enableAchievementTracking()
 	end
 end
@@ -861,15 +837,10 @@ function enableAchievementTracking(self)
 	events:RegisterEvent("ENCOUNTER_END")						--Used to detect the end of a boss fight
 	events:RegisterEvent("UPDATE_MOUSEOVER_UNIT")				--Used to output achievement for boss and players missing achievements on hoverkk
 
-	--Start the achievement scan
-	if core.enableAchievementScanning == true then
-		getPlayersInGroup()
-	else
-		core:sendDebugMessage("Achievement Scanning Disabled")
-	end
+	getPlayersInGroup()
 
 	--Start the combatlog if applicable
-	if enableCombatLogging == true then
+	if core.Options.EnableAutomaticCombatLogging.get() == true then
 		core:sendDebugMessage("Enable CombatLog")
 		local isLogging = LoggingCombat()
 		if LoggingCombat() ~= true then
@@ -924,7 +895,7 @@ function enableAchievementTracking(self)
 		core.warnCompatible = false
 	end
 
-	if changeMinimapIcon == true then
+	if core.Options.ChangeMinimapIcon.get() == true then
 		_G["LibDBIcon10_InstanceAchievementTracker"].icon:SetVertexColor(0,1,0)
 	end
 end
@@ -934,7 +905,7 @@ function disableAchievementTracking(self)
 	UIConfig:Hide()
 	core.inInstance = false
 
-	if changeMinimapIcon == true then
+	if core.Options.ChangeMinimapIcon.get() == true then
 		_G["LibDBIcon10_InstanceAchievementTracker"].icon:SetVertexColor(1,0,0)
 	end
 end
@@ -1022,9 +993,9 @@ core.commands = {
 			sendDebugMessages = true
 			printMessage("Debug Mode Enabled")
 
-			if core.achievementTrackingEnabled == false and core.addonEnabled == true then
+			if core.achievementTrackingEnabled == false and core.Options.EnableAddon.get() == true then
 				getInstanceInfomation()
-			elseif core.achievementTrackingEnabled == true and core.addonEnabled == true then
+			elseif core.achievementTrackingEnabled == true and core.Options.EnableAddon.get() == true then
 				core.inInstance = false
 
 				if UIConfig ~= nil and core.inInstance == false then
@@ -1040,7 +1011,7 @@ core.commands = {
 				ClearGUITabs()
 
 				getInstanceInfomation()
-			elseif core.addonEnabled == false then
+			elseif core.Options.EnableAddon.get() == false then
 				core:printMessage(L["Core_EnableAddonFirst"])
 			end
 		end
@@ -1048,9 +1019,9 @@ core.commands = {
 
 	[L["Core_Toggle"]] = function()
 		trackAchievementsUIAutomatic = false
-		if core.achievementTrackingEnabled == false and core.addonEnabled == true then
+		if core.achievementTrackingEnabled == false and core.Options.EnableAddon.get() == true then
 			getInstanceInfomation()
-		elseif core.achievementTrackingEnabled == true and core.addonEnabled == true then
+		elseif core.achievementTrackingEnabled == true and core.Options.EnableAddon.get() == true then
 			core.inInstance = false
 
 			if UIConfig ~= nil and core.inInstance == false then
@@ -1066,7 +1037,7 @@ core.commands = {
 			ClearGUITabs()
 
 			getInstanceInfomation()
-		elseif core.addonEnabled == false then
+		elseif core.Options.EnableAddon.get() == false then
 			core:printMessage(L["Core_EnableAddonFirst"])
 		end
 	end,
@@ -1184,209 +1155,27 @@ end
 function events:ADDON_LOADED(event, name)
 	if name ~= "InstanceAchievementTracker" then return end
 
-	--Output IAT version info
 	core:sendDebugMessage("---IAT Runtime---")
 	core:sendDebugMessage("Version: " .. core.Config.majorVersion .. "." .. core.Config.minorVersion .. "." .. core.Config.revisionVersion)
 
-	--Generate Item Cache for tactics
+	--Generate Caches
 	generateItemCache()
-
-	--Generate NPC Cache
 	generateNPCCache()
 
-	--Check if the options have been setup
-
-	--Enable/Disable addon
-	if AchievementTrackerOptions["enableAddon"] == nil then
-		AchievementTrackerOptions["enableAddon"] = true
-	end
-	_G["AchievementTracker_EnableAddon"]:SetChecked(AchievementTrackerOptions["enableAddon"])
-
-	--Show/Hide minimap
-	if AchievementTrackerOptions["showMinimap"] == nil then
-		AchievementTrackerOptions["showMinimap"] = true
-	end
-	_G["AchievementTracker_ToggleMinimapIcon"]:SetChecked(AchievementTrackerOptions["showMinimap"])
-
-	--Announce which achievments are being tracked
-	if AchievementTrackerOptions["announceTrackedAchievements"] == nil then
-		AchievementTrackerOptions["announceTrackedAchievements"] = false --Do not enable by default
-	elseif AchievementTrackerOptions["announceTrackedAchievements"] == true then
-		core.announceTrackedAchievementsToChat = true
-	end
-	_G["AchievementTracker_ToggleAchievementAnnounce"]:SetChecked(AchievementTrackerOptions["announceTrackedAchievements"])
-
-	--Only track missing achievements
-	if AchievementTrackerOptions["onlyTrackMissingAchievements"] == nil then
-		AchievementTrackerOptions["onlyTrackMissingAchievements"] = false --Do not enable by default
-	elseif AchievementTrackerOptions["onlyTrackMissingAchievements"] == true then
-		core:sendDebugMessage("Only Tracking Missing Achievements Enabled")
-		core.onlyTrackMissingAchievements = true
-		core:sendDebugMessage(tostring(core.onlyTrackMissingAchievements))
-	end
-	_G["AchievementTracker_ToggleTrackMissingAchievementsOnly"]:SetChecked(AchievementTrackerOptions["onlyTrackMissingAchievements"])
-
-	--Announce to Raid Warning
-	if AchievementTrackerOptions["announceToRaidWarning"] == nil then
-		AchievementTrackerOptions["announceToRaidWarning"] = true --Enable this by default
-	elseif AchievementTrackerOptions["announceToRaidWarning"] == true then
-		announceToRaidWarning = true
-	end
-	_G["AchievementTracker_ToggleAnnounceToRaidWarning"]:SetChecked(AchievementTrackerOptions["announceToRaidWarning"])
-
-	--Play sound when achievement completed
-	if AchievementTrackerOptions["toggleSound"] == nil then
-		AchievementTrackerOptions["toggleSound"] = false --Do not enable by default
-	elseif AchievementTrackerOptions["toggleSound"] == true then
-		enableSound = true
-
-		--Make sure that there is a sound selected by default. To fix error from earlier version of addon
-		if AchievementTrackerOptions["completedSoundID"] == nil or AchievementTrackerOptions["completedSound"] == nil then
-			AchievementTrackerOptions["completedSound"] = "Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Achievement Completed.ogg"
-			AchievementTrackerOptions["completedSoundID"] = 13
-		end
-	end
-	_G["AchievementTracker_ToggleSound"]:SetChecked(AchievementTrackerOptions["toggleSound"])
-
-	--Play sound when achievement fails
-	if AchievementTrackerOptions["toggleSoundFailed"] == nil then
-		AchievementTrackerOptions["toggleSoundFailed"] = false --Do not enable by default
-	elseif AchievementTrackerOptions["toggleSoundFailed"] == true then
-		enableSoundFailed = true
-
-		--Make sure that there is a sound selected by default. To fix error from earlier version of addon
-		if AchievementTrackerOptions["failedSoundID"] == nil or AchievementTrackerOptions["failedSound"] == nil then
-			AchievementTrackerOptions["failedSound"] = "Interface\\AddOns\\InstanceAchievementTracker\\Sounds\\Achievement Failed.ogg"
-			AchievementTrackerOptions["failedSoundID"] = 11
-		end
-	end
-	_G["AchievementTracker_ToggleSoundFailed"]:SetChecked(AchievementTrackerOptions["toggleSoundFailed"])
-
-	--Sound when achievement is completed
-	if AchievementTrackerOptions["completedSoundID"] ~= nil then
-		--Set the sound if already selected previously
-		MSA_DropDownMenu_SetText(_G["AchievementTracker_SelectSoundDropdownCompleted"], AchievementTrackerOptions["completedSoundID"])
-	end
-	if AchievementTrackerOptions["completedSound"] ~= nil then
-		--Set the source of the completed sound
-		completedSound = AchievementTrackerOptions["completedSound"]
-	end
-
-	--Sound when achievement is failed
-	if AchievementTrackerOptions["failedSoundID"] ~= nil then
-		MSA_DropDownMenu_SetText(_G["AchievementTracker_SelectSoundDropdownFailed"], AchievementTrackerOptions["failedSoundID"])
-	end
-	if AchievementTrackerOptions["failedSound"] ~= nil then
-		--Set the source of the completed sound
-		failedSound = AchievementTrackerOptions["failedSound"]
-	end
-
-	--Hide completed achievements
-	if AchievementTrackerOptions["hideCompletedAchievements"] == nil then
-		AchievementTrackerOptions["hideCompletedAchievements"] = false --Disabled by default
-	elseif AchievementTrackerOptions["hideCompletedAchievements"] == true then
-		core.achievementDisplayStatus = "hide"
-	end
-	_G["AchievementTracker_HideCompletedAchievements"]:SetChecked(AchievementTrackerOptions["hideCompletedAchievements"])
-
-	--Grey out completed achievements
-	if AchievementTrackerOptions["greyOutCompletedAchievements"] == nil then
-		AchievementTrackerOptions["greyOutCompletedAchievements"] = false --Disabled by default
-	elseif AchievementTrackerOptions["greyOutCompletedAchievements"] == true then
-		core.achievementDisplayStatus = "grey"
-	end
-	_G["AchievementTracker_GreyOutCompletedAchievements"]:SetChecked(AchievementTrackerOptions["greyOutCompletedAchievements"])
-
-	--Enable combat logging
-	if AchievementTrackerOptions["enableAutomaticCombatLogging"] == nil then
-		AchievementTrackerOptions["enableAutomaticCombatLogging"] = false --Disabled by default
-		enableCombatLogging = false
-	elseif AchievementTrackerOptions["enableAutomaticCombatLogging"] == true then
-		enableCombatLogging = true
-	end
-	_G["AchievementTracker_EnableAutomaticCombatLogging"]:SetChecked(AchievementTrackerOptions["enableAutomaticCombatLogging"])
-
-	--Enable Info Frame
-	if AchievementTrackerOptions["displayInfoFrame"] == nil then
-		AchievementTrackerOptions["displayInfoFrame"] = true --Enabled by default
-		enableInfoFrame = true
-	elseif AchievementTrackerOptions["displayInfoFrame"] == false then
-		enableInfoFrame = false
-	end
-	_G["AchievementTracker_DisplayInfoFrame"]:SetChecked(AchievementTrackerOptions["displayInfoFrame"])
-
-	--Track achievements in Blizzard UI
-	if AchievementTrackerOptions["trackAchievementsInBlizzardUI"] == nil then
-		AchievementTrackerOptions["trackAchievementsInBlizzardUI"] = false --Disabled by default
-		trackAchievementsInUI = false
-	elseif AchievementTrackerOptions["trackAchievementsInBlizzardUI"] == true then
-		trackAchievementsInUI = true
-	end
-	_G["AchievementTracker_TrackAchievementsInBlizzardUI"]:SetChecked(AchievementTrackerOptions["trackAchievementsInBlizzardUI"])
-
-	--Track Character Achievements
-	if AchievementTrackerOptions["trackCharacterAchievements"] == nil then
-		AchievementTrackerOptions["trackCharacterAchievements"] = false --Disabled by default
-		trackCharacterAchievements = false
-	elseif AchievementTrackerOptions["trackCharacterAchievements"] == true then
-		trackCharacterAchievements = true
-	end
-	_G["AchievementTracker_TrackCharacterAchievements"]:SetChecked(AchievementTrackerOptions["trackCharacterAchievements"])
-
-	--Track achievements Automatically
-	if AchievementTrackerOptions["trackAchievementsAutomatically"] == nil then
-		AchievementTrackerOptions["trackAchievementsAutomatically"] = false --Disabled by default
-		trackAchievementsNoPrompt = false
-	elseif AchievementTrackerOptions["trackAchievementsAutomatically"] == true then
-		trackAchievementsNoPrompt = true
-	end
-	_G["AchievementTracker_TrackAchievementsAutomatically"]:SetChecked(AchievementTrackerOptions["trackAchievementsAutomatically"])
-
-	--Change Miniamp Icon depending on addon state
-	if AchievementTrackerOptions["changeMinimapIcon"] == nil then
-		AchievementTrackerOptions["changeMinimapIcon"] = false --Disabled by default
-		changeMinimapIcon = false
-	elseif AchievementTrackerOptions["changeMinimapIcon"] == true then
-		changeMinimapIcon = true
-	end
-	_G["AchievementTracker_ChangeMinimapIcon"]:SetChecked(AchievementTrackerOptions["changeMinimapIcon"])
+	for i, option in pairs(core.Options) do
+        core.Config.OptionsListDataProvider:Insert(option)
+    end
 
 	SLASH_IAT1 = "/iat";
 	SlashCmdList.IAT = HandleSlashCommands;
 
-	--printMessage("loaded. Version: V" .. core.Config.majorVersion .. "." .. core.Config.minorVersion .. "." .. core.Config.revisionVersion)
-
-	--Load LibWindow
 	core.LibWindow = LibStub("LibWindow-1.1")
 
-	--Set whether addon should be enabled or disabled
-	setAddonEnabled(AchievementTrackerOptions["enableAddon"])
+	core:SetAddonEnabled()
 end
 
-function setChangeMinimapIcon(setChangeMinimapIcon)
-	if setChangeMinimapIcon then
-		changeMinimapIcon = true
-	else
-		changeMinimapIcon = false
-	end
-end
-
-function setTrackAchievementsAutomatically(setTrackAchievementsAutomatically)
-	if setTrackAchievementsAutomatically then
-		trackAchievementsNoPrompt = true
-	else
-		trackAchievementsNoPrompt = false
-	end
-end
-
-function setTrackCharacterAchievements(setTrackCharacterAchievements)
-	if setTrackCharacterAchievements then
-		trackCharacterAchievements = true
-	else
-		trackCharacterAchievements = false
-	end
-
-	if core.achievementTrackingEnabled == true and core.addonEnabled == true then
+function core:SetTrackCharacterAchievements()
+	if core.achievementTrackingEnabled == true and core.Options.EnableAddon.get() == true then
 		core.inInstance = false
 
 		if UIConfig ~= nil and core.inInstance == false then
@@ -1399,77 +1188,15 @@ function setTrackCharacterAchievements(setTrackCharacterAchievements)
 		--Disable achievement tracking if currently tracking
 		checkAndClearInstanceVariables()
 
-		ClearGUITabs()
-
 		getInstanceInfomation()
 	end
 end
 
-function setTrackAchievementsInBlizzardUI(setTrackAchievementsInBlizzardUI)
-	if setTrackAchievementsInBlizzardUI then
-		trackAchievementsInUI = true
-	else
-		trackAchievementsInUI = false
-	end
-end
-
-function setDisplayInfoFrame(setDisplayInfoFrame)
-	if setDisplayInfoFrame then
-		enableInfoFrame = true
-	else
-		enableInfoFrame = false
-	end
-end
-
-function setEnableAutomaticCombatLogging(setEnableAutomaticCombatLogging)
-	if setEnableAutomaticCombatLogging then
-		enableCombatLogging = true
-	else
-		enableCombatLogging = false
-	end
-end
-
-function setHideCompletedAchievements(setHideCompletedAchievements)
-	if setHideCompletedAchievements then
-		core.achievementDisplayStatus = "hide"
-	else
-		core.achievementDisplayStatus = "show"
-	end
-
-	--If grey out completed achievments is true then toggle off
-	if AchievementTrackerOptions["greyOutCompletedAchievements"] == true then
-		AchievementTrackerOptions["greyOutCompletedAchievements"] = false
-		_G["AchievementTracker_GreyOutCompletedAchievements"]:SetChecked(AchievementTrackerOptions["greyOutCompletedAchievements"])
-	end
-
-	ClearGUITabs()
-end
-
-function setGreyOutCompletedAchievements(setGreyOutCompletedAchievements)
-	if setGreyOutCompletedAchievements then
-		core.achievementDisplayStatus = "grey"
-	else
-		core.achievementDisplayStatus = "show"
-	end
-
-	--If hide completed achievements is true then toggle off
-	if AchievementTrackerOptions["hideCompletedAchievements"] == true then
-		AchievementTrackerOptions["hideCompletedAchievements"] = false
-		_G["AchievementTracker_HideCompletedAchievements"]:SetChecked(AchievementTrackerOptions["hideCompletedAchievements"])
-	end
-
-	ClearGUITabs()
-end
-
 function setCompletedSound(setCompletedSound)
-	--print("Setting Completed Sound to...")
-	--print(setCompletedSound)
 	completedSound = setCompletedSound
 end
 
 function setFailedSound(setFailedSound)
-	--print("Setting Failed Sound to...")
-	--print(setFailedSound)
 	failedSound = setFailedSound
 end
 
@@ -1505,17 +1232,8 @@ function setEnableSoundFailed(setEnableSoundFailed)
 	end
 end
 
-function setAnnounceToRaidWarning(setAnnounceToRaidWarning)
-	if setAnnounceToRaidWarning then
-		announceToRaidWarning = true
-	else
-		announceToRaidWarning = false
-	end
-end
-
-function setAddonEnabled(addonEnabled)
-	core.addonEnabled = addonEnabled
-	if addonEnabled then
+function core:SetAddonEnabled()
+	if core.Options.EnableAddon.get() then
 		core:sendDebugMessage("Enabling Addon")
 		events:RegisterEvent("PLAYER_ENTERING_WORLD")				--Used to detect if player is inside an instance when they enter the world
 		events:RegisterEvent("ZONE_CHANGED_NEW_AREA")				--Used to detect if player is inside an instance when they change zone
@@ -1527,7 +1245,7 @@ function setAddonEnabled(addonEnabled)
 		--Attempt to fetch instance information in case player has enabled addon while inside of an instance
 		getInstanceInfomation()
 
-		if changeMinimapIcon == true then
+		if core.Options.ChangeMinimapIcon.get() == true then
 			C_Timer.After(1, function()
 				_G["LibDBIcon10_InstanceAchievementTracker"].icon:SetVertexColor(1,1,1)
 			end)
@@ -1550,37 +1268,11 @@ function setAddonEnabled(addonEnabled)
 		--Disable achievement tracking if currently tracking
 		checkAndClearInstanceVariables()
 
-		ClearGUITabs()
-
-		if changeMinimapIcon == true then
+		if core.Options.ChangeMinimapIcon.get() == true then
 			C_Timer.After(1, function()
 				_G["LibDBIcon10_InstanceAchievementTracker"].icon:SetVertexColor(0.4,0.4,0.4)
 			end)
 		end
-	end
-end
-
-function setOnlyTrackMissingAchievements(setOnlyTrackMissingAchievements)
-	if setOnlyTrackMissingAchievements then
-		core.onlyTrackMissingAchievements = true
-	else
-		core.onlyTrackMissingAchievements = false
-	end
-end
-
-function setAchievementScanEnabled(setAchievementScanEnabled)
-	if setAchievementScanEnabled then
-		core.enableAchievementScanning = true
-	else
-		core.enableAchievementScanning = false
-	end
-end
-
-function setAnnounceTrackedAchievementsToChat(setTrackedAchievements)
-	if setTrackedAchievements then
-		core.announceTrackedAchievementsToChat = true
-	else
-		core.announceTrackedAchievementsToChat = false
 	end
 end
 
@@ -1594,22 +1286,17 @@ end
 function events:GROUP_ROSTER_UPDATE()
 	--When player enters the world in an instance start the achievement scanner. Only start the scanner if the raid size has changed
 	core:sendDebugMessage("Group Roster Update")
-	if core.enableAchievementScanning == true then
-		--Player has enabled acheivement scanning from the option menu
-		core:sendDebugMessage("Achievement Scanning Enabled")
-		if scanInProgress == false then
-			--There is currently no achievement scan in progress, so intiate a new acheivement scan
-			core:sendDebugMessage("Starting Scan")
-			scanInProgress = true
-			getPlayersInGroup()
-		else
-			--There is currently an achievement scan in progress. Ask for a rescan once the current achievement scan has finished
-			core:sendDebugMessage("Scan in progress. Asking for rescan")
-			rescanNeeded = true
-		end
+	--Player has enabled acheivement scanning from the option menu
+	core:sendDebugMessage("Achievement Scanning Enabled")
+	if scanInProgress == false then
+		--There is currently no achievement scan in progress, so intiate a new acheivement scan
+		core:sendDebugMessage("Starting Scan")
+		scanInProgress = true
+		getPlayersInGroup()
 	else
-		--Player has disabled acheivement scanning from the option menu
-		core:sendDebugMessage("Achievement Scanning is disabled")
+		--There is currently an achievement scan in progress. Ask for a rescan once the current achievement scan has finished
+		core:sendDebugMessage("Scan in progress. Asking for rescan")
+		rescanNeeded = true
 	end
 
 	--Update the group size whenever the composition of the group changes
@@ -1630,23 +1317,18 @@ function events:CHAT_MSG_SYSTEM(self, message)
 	local chatStrs = {"joins the party", "joined the instance group", "joined the raid group", "joined a raid group", "leaves the party", "left the instance group", "leaves the party", "left the raid group"}
 	for i = 1, #chatStrs do
 		if string.match(message, chatStrs[i]) then
-			if core.enableAchievementScanning == true then
-				core:sendDebugMessage("CHAT_MSG_SYSTEM: " .. message)
-				--Player has enabled acheivement scanning from the option menu
-				core:sendDebugMessage("Achievement Scanning Enabled 2")
-				if scanInProgress == false then
-					--There is currently no achievement scan in progress, so intiate a new acheivement scan
-					core:sendDebugMessage("Starting Scan")
-					scanInProgress = true
-					getPlayersInGroup()
-				else
-					--There is currently an achievement scan in progress. Ask for a rescan once the current achievement scan has finished
-					core:sendDebugMessage("Scan in progress. Asking for rescan")
-					rescanNeeded = true
-				end
+			core:sendDebugMessage("CHAT_MSG_SYSTEM: " .. message)
+			--Player has enabled acheivement scanning from the option menu
+			core:sendDebugMessage("Achievement Scanning Enabled 2")
+			if scanInProgress == false then
+				--There is currently no achievement scan in progress, so intiate a new acheivement scan
+				core:sendDebugMessage("Starting Scan")
+				scanInProgress = true
+				getPlayersInGroup()
 			else
-				--Player has disabled acheivement scanning from the option menu
-				core:sendDebugMessage("Achievement Scanning is disabled")
+				--There is currently an achievement scan in progress. Ask for a rescan once the current achievement scan has finished
+				core:sendDebugMessage("Scan in progress. Asking for rescan")
+				rescanNeeded = true
 			end
 		end
 	end
@@ -1683,16 +1365,16 @@ function events:ENCOUNTER_START(self, encounterID, encounterName, difficultyID, 
 	if encounterID ~= nil then
 		--Found the boss encounter ID so clear out any other bosses currently stored
 		if core.lockDetection == false then
-			if core.gameVersionMajor >= 4 then
+			if core.gameVersionMajor > 4 then
 				detectBossByEncounterID(encounterID)
-			elseif core.gameVersionMajor == 3 then
+			elseif core.gameVersionMajor == 4 then
 				detectBossByEncounterIDClassic(encounterID)
 			end
 		end
 	end
 
 	--Check if user has combat logging enabled or not
-	if enableCombatLogging == true then
+	if core.Options.EnableAutomaticCombatLogging.get() == true then
 		core:sendDebugMessage("Enable CombatLog")
 		local isLogging = LoggingCombat()
 		if LoggingCombat() ~= true then
@@ -1803,7 +1485,7 @@ function events:INSPECT_ACHIEVEMENT_READY(self, GUID, ...)
 							for boss,_ in pairs(core.Instances[expansion][instanceType][instance]) do
 								if string.match(boss, "boss") then
 									local achievementComplete = false
-									if core.currentComparisonUnit == UnitName("Player") and trackCharacterAchievements == true then
+									if core.currentComparisonUnit == UnitName("Player") and core.Options.TrackCharacterAchievements.get() == true then
 										local id, name, points, completed, month, day, year, description, flags, icon, rewardText, isGuild, wasEarnedByMe, earnedBy = GetAchievementInfo(core.Instances[expansion][instanceType][instance][boss].achievement)
 										if wasEarnedByMe then
 											achievementComplete = true
@@ -1857,9 +1539,6 @@ function events:INSPECT_ACHIEVEMENT_READY(self, GUID, ...)
 				table.insert(playersScanned, playersToScan[1])
 				table.remove(playersToScan, 1)
 
-				--Update the GUI
-				core.Config:Instance_OnClickAutomatic()
-
 				playerCurrentlyScanning = nil
 
 				--Last player scan was successfully. Check if we need to continue scanning
@@ -1891,16 +1570,16 @@ function events:INSPECT_ACHIEVEMENT_READY(self, GUID, ...)
 									achievements = achievements .. GetAchievementLink(core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
 
 									--Add to achievement tracking ui if option enabled by user
-									if trackAchievementsInUI == true then
+									if core.Options.TrackAchievementsInBlizzardUI.get() == true then
 										local numTrackedAchievements = 0
-										if core.gameVersionMajor == 3 or core.gameVersionMajor == 4 then
+										if core.gameVersionMajor == 3 then
 											numTrackedAchievements = GetNumTrackedAchievements()
 										else
 											numTrackedAchievements = #C_ContentTracking.GetTrackedIDs(2)
 										end
 
 										if numTrackedAchievements < 10 then
-											if core.gameVersionMajor == 3 or core.gameVersionMajor == 4 then
+											if core.gameVersionMajor == 3 then
 												AddTrackedAchievement(core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
 											else
 												C_ContentTracking.StartTracking(2, core.Instances[core.expansion][core.instanceType][core.instance][boss].achievement)
@@ -1999,7 +1678,7 @@ function events:ZONE_CHANGED_NEW_AREA()
 end
 
 function checkAndClearInstanceVariables()
-	if (core.inInstance == false or core.addonEnabled == false or IsInInstance() == false) and core.instanceVariablesReset == false then
+	if (core.inInstance == false or core.Options.EnableAddon.get() == false or IsInInstance() == false) and core.instanceVariablesReset == false then
 		core:sendDebugMessage("Clearing Instance Variables")
 		--Update achievement tracking
 		for expansion,_ in pairs(core.Instances) do
@@ -2077,7 +1756,7 @@ function checkAndClearInstanceVariables()
 
 		--Untrack achievements that we tracked
 		for k,v in pairs(trackAchievementInUiTable) do
-			if core.gameVersionMajor == 3 or core.gameVersionMajor == 4 then
+			if core.gameVersionMajor == 3 then
 				RemoveTrackedAchievement(v)
 			else
 				C_ContentTracking.StopTracking(2, v, 2)
@@ -2085,7 +1764,7 @@ function checkAndClearInstanceVariables()
 		end
 
 		--Disable Combatlog if applicable
-		if enableCombatLogging == true then
+		if core.Options.EnableAutomaticCombatLogging.get() == true then
 			if LoggingCombat() ~= nil then
 				LoggingCombat(false)
 				core:printMessage(L["Core_CombatLogDisabled"])
@@ -2110,7 +1789,7 @@ function checkAndClearInstanceVariables()
 			core:sendDebugMessage("InfoFrame was not active")
 		end
 
-		if changeMinimapIcon == true then
+		if core.Options.ChangeMinimapIcon.get() == true then
 			_G["LibDBIcon10_InstanceAchievementTracker"].icon:SetVertexColor(1,1,1)
 		end
 	end
@@ -2611,12 +2290,12 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 		--Start tracking the particular boss if the user has not disabled tracking for that boss
 		for i = 1, #core.currentBosses do
 			if core.currentBosses[i].enabled == true then
-				if core.onlyTrackMissingAchievements == false or (core.onlyTrackMissingAchievements == true and core.currentBosses[i].players[1] ~= L["GUI_NoPlayersNeedAchievement"]) then
+				if core.Options.OnlyTrackMissingAchievements.get() == false or (core.Options.OnlyTrackMissingAchievements.get() == true and core.currentBosses[i].players[1] ~= L["GUI_NoPlayersNeedAchievement"]) then
 					core.currentBosses[i].track()
 
 					--If boss has an info frame then display it
 					if core.currentBosses[i].displayInfoFrame == true and core.infoFrameShown == false then
-						if enableInfoFrame == true then
+						if core.Options.DisplayInfoFrame.get() == true then
 							core:sendDebugMessage("Showing InfoFrame")
 							core.IATInfoFrame:ToggleOn()
 							core.IATInfoFrame:SetHeading(GetAchievementLink(core.currentBosses[i].achievement))
@@ -2625,7 +2304,7 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 					end
 				end
 			elseif core.currentBosses[i].enabled == false and core.currentBosses[i].track == nil then
-				if core.onlyTrackMissingAchievements == false or (core.onlyTrackMissingAchievements == true and core.currentBosses[i].players[1] ~= L["GUI_NoPlayersNeedAchievement"]) then
+				if core.Options.OnlyTrackMissingAchievements.get() == false or (core.Options.OnlyTrackMissingAchievements.get() == true and core.currentBosses[i].players[1] ~= L["GUI_NoPlayersNeedAchievement"]) then
 					--We have detected a boss fight but have no tracking for it. Lets automatically detect blizzard tracking and if something is found ask the user to report to author
 					core:detectBlizzardTrackingAutomatically()
 				end
@@ -2680,11 +2359,11 @@ function events:COMBAT_LOG_EVENT_UNFILTERED(self, ...)
 			--Start tracking the particular boss if the user has not disabled tracking for that boss
 			for i = 1, #core.currentBosses do
 				if core.currentBosses[i].enabled == true then
-					if core.onlyTrackMissingAchievements == false or (core.onlyTrackMissingAchievements == true and core.currentBosses[i].players[1] ~= L["GUI_NoPlayersNeedAchievement"]) then
+					if core.Options.OnlyTrackMissingAchievements.get() == false or (core.Options.OnlyTrackMissingAchievements.get() == true and core.currentBosses[i].players[1] ~= L["GUI_NoPlayersNeedAchievement"]) then
 						core.currentBosses[i].track()
 					end
 				elseif core.currentBosses[i].enabled == false and core.currentBosses[i].track == nil then
-					if core.onlyTrackMissingAchievements == false or (core.onlyTrackMissingAchievements == true and core.currentBosses[i].players[1] ~= L["GUI_NoPlayersNeedAchievement"]) then
+					if core.Options.OnlyTrackMissingAchievements.get() == false or (core.Options.OnlyTrackMissingAchievements.get() == true and core.currentBosses[i].players[1] ~= L["GUI_NoPlayersNeedAchievement"]) then
 						--We have detected a boss fight but have no tracking for it. Lets automatically detect blizzard tracking and if something is found ask the user to report to author
 						core:detectBlizzardTrackingAutomatically()
 					end
@@ -2810,7 +2489,7 @@ function detectBossByEncounterID(id)
 
 	--If encounter is detected but no achievements for the boss have been found then output no achievements to track for this encounter
 	if core.outputTrackingStatus == false then
-		if core.encounterDetected == true and core.onlyTrackMissingAchievements == false then
+		if core.encounterDetected == true and core.Options.OnlyTrackMissingAchievements.get() == false then
 			core:printMessage(L["Core_NoTrackingForInstance"])
 
 			--Announce to chat if enabled
@@ -2897,7 +2576,7 @@ function detectBossByEncounterIDClassic(id)
 
 	--If encounter is detected but no achievements for the boss have been found then output no achievements to track for this encounter
 	if core.outputTrackingStatus == false then
-		if core.encounterDetected == true and core.onlyTrackMissingAchievements == false then
+		if core.encounterDetected == true and core.Options.OnlyTrackMissingAchievements.get() == false then
 			core:printMessage(L["Core_NoTrackingForInstance"])
 
 			--Announce to chat if enabled
@@ -3020,7 +2699,7 @@ function core:getAchievementToTrack()
 				if core.currentBosses[i].partial == false and core.currentBosses[i].enabled == true then
 					--core.currentBosses[i].players = L["No players in the group need this achievement"] --DEBUG ONLY
 
-					if core.onlyTrackMissingAchievements == false or (core.onlyTrackMissingAchievements == true and core.currentBosses[i].players[1] ~= L["GUI_NoPlayersNeedAchievement"]) then
+					if core.Options.OnlyTrackMissingAchievements.get() == false or (core.Options.OnlyTrackMissingAchievements.get() == true and core.currentBosses[i].players[1] ~= L["GUI_NoPlayersNeedAchievement"]) then
 						printMessage(L["GUI_Tracking"] .. ": " .. GetAchievementLink(core.currentBosses[i].achievement))
 					else
 						--User has decided to supress achievement so will get a lower rank in the addon syncing
@@ -3032,8 +2711,8 @@ function core:getAchievementToTrack()
 					core.achievementTrackedMessageShown = true
 
 					--Announce to chat if enabled
-					if core.announceTrackedAchievementsToChat == true then
-						if core.onlyTrackMissingAchievements == false or (core.onlyTrackMissingAchievements == true and core.currentBosses[i].players[1] ~= L["GUI_NoPlayersNeedAchievement"]) then
+					if core.Options.AnnounceTracking.get() == true then
+						if core.Options.OnlyTrackMissingAchievements.get() == false or (core.Options.OnlyTrackMissingAchievements.get() == true and core.currentBosses[i].players[1] ~= L["GUI_NoPlayersNeedAchievement"]) then
 							core:sendMessage(L["GUI_Tracking"] .. ": "  .. GetAchievementLink(core.currentBosses[i].achievement))
 						end
 					end
@@ -3078,12 +2757,12 @@ function core:sendMessage(message, outputToRW, messageType)
 		if debugModeChat == false then
 			if masterAddon == true and electionFinished == true then
 				if message ~= "setup" then
-					if outputToRW == true and core.chatType == "RAID" and announceToRaidWarning == true and (UnitIsGroupAssistant("Player") or UnitIsGroupLeader("Player")) then
+					if outputToRW == true and core.chatType == "RAID" and core.Options.AnnounceMessagesToRaidWarning.get() == true and (UnitIsGroupAssistant("Player") or UnitIsGroupLeader("Player")) then
 						--Important message output to raid warning from user request
 						--print("Outputting to Raid Warning")
 						SendChatMessage("[IAT] " .. message,"RAID_WARNING",DEFAULT_CHAT_FRAME.editBox.languageID)
 						core:logMessage("[IAT] " .. message)
-					elseif outputToRW == true and announceToRaidWarning == true then
+					elseif outputToRW == true and core.Options.AnnounceMessagesToRaidWarning.get() == true then
 						core:logMessage("[IAT] " .. message)
 						if outputToRW == true and relayAddonPlayer ~= nil then
 							message = message:gsub(',', 'IATCOMMA')
@@ -3164,12 +2843,12 @@ function core:sendMessage(message, outputToRW, messageType)
 
 							if message ~= "setup" then
 								core:detectGroupType()
-								if outputToRW == true and core.chatType == "RAID" and announceToRaidWarning == true and (UnitIsGroupAssistant("Player") or UnitIsGroupLeader("Player")) then
+								if outputToRW == true and core.chatType == "RAID" and core.Options.AnnounceMessagesToRaidWarning.get() == true and (UnitIsGroupAssistant("Player") or UnitIsGroupLeader("Player")) then
 									--Important message output to raid warning from user request
 									--print("Outputting to Raid Warning")
 									SendChatMessage("[IAT] " .. message,"RAID_WARNING",DEFAULT_CHAT_FRAME.editBox.languageID)
 									core:logMessage("[IAT] " .. message)
-								elseif outputToRW == true and announceToRaidWarning == true then
+								elseif outputToRW == true and core.Options.AnnounceMessagesToRaidWarning.get() == true then
 									SendChatMessage("[IAT] " .. message,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
 									core:logMessage("[IAT] " .. message)
 									RaidNotice_AddMessage(RaidWarningFrame, "[IAT] " .. message, ChatTypeInfo["RAID_WARNING"])
@@ -3207,12 +2886,12 @@ function core:sendMessage(message, outputToRW, messageType)
 									v = v:gsub('IATCOMMA', ',')
 									-- print("Outputting from Message Queue: " .. v .. outputToRW2)
 									-- print(core.chatType)
-									if outputToRW2 == "true" and core.chatType == "RAID" and announceToRaidWarning == true and (UnitIsGroupAssistant("Player") or UnitIsGroupLeader("Player")) then
+									if outputToRW2 == "true" and core.chatType == "RAID" and core.Options.AnnounceMessagesToRaidWarning.get() == true and (UnitIsGroupAssistant("Player") or UnitIsGroupLeader("Player")) then
 										--Important message output to raid warning from user request
 										-- print("Outputting to Raid Warning")
 										SendChatMessage("[IAT] " .. v,"RAID_WARNING",DEFAULT_CHAT_FRAME.editBox.languageID)
 										core:logMessage("[IAT] " .. v)
-									elseif outputToRW2 == "true" and announceToRaidWarning == true then
+									elseif outputToRW2 == "true" and core.Options.AnnounceMessagesToRaidWarning.get() == true then
 										-- print("Outputting to RaidNotice")
 										SendChatMessage("[IAT] " .. v,core.chatType,DEFAULT_CHAT_FRAME.editBox.languageID)
 										core:logMessage("[IAT] " .. v)
@@ -4010,7 +3689,7 @@ function core:clearVariables()
 	end
 
 	--Check if user has combat logging enabled or not
-	if enableCombatLogging == true then
+	if core.Options.EnableAutomaticCombatLogging.get() == true then
 		-- if LoggingCombat() ~= nil then
 		-- 	LoggingCombat(false)
 		-- 	core:printMessage(L["Core_CombatLogDisabled"])
