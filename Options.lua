@@ -10,6 +10,7 @@ core.Options = {
         desc = L['GUI_EnableAddonDescription'],
         get = function() return AchievementTrackerOptions["enableAddon"] end,
         set = function(value) EnableAddon(value) end,
+        default = true,
     },
     ToggleMinimap = {
         name = L['GUI_ToggleMinimap'],
@@ -17,6 +18,7 @@ core.Options = {
         desc = L['GUI_ShowMimapButtonDescription'],
         get = function() return AchievementTrackerOptions["showMinimap"] end,
         set = function(value) ToggleMinimapIcon(value) end,
+        default = true,
     },
     AnnounceTracking = {
         name = L['GUI_AnnounceTracking'],
@@ -24,6 +26,7 @@ core.Options = {
         desc = L['GUI_AnnounceAchievementsToGroupDescription'],
         get = function() return AchievementTrackerOptions["announceTrackedAchievements"] end,
         set = function(value) AchievementTrackerOptions["announceTrackedAchievements"] = value end,
+        default = false,
     },
     OnlyTrackMissingAchievements = {
         name = L['GUI_OnlyTrackMissingAchievements'],
@@ -31,6 +34,7 @@ core.Options = {
         desc = L['GUI_OnlyTrackMissingAchievementsDescription'],
         get = function() return AchievementTrackerOptions["onlyTrackMissingAchievements"] end,
         set = function(value) AchievementTrackerOptions["onlyTrackMissingAchievements"] = value end,
+        default = false,
     },
     AnnounceMessagesToRaidWarning = {
         name = L['GUI_AnnounceMessagesToRaidWarning'],
@@ -38,6 +42,7 @@ core.Options = {
         desc = L['GUI_AnnounceMessagesToRaidWarningDescription'],
         get = function() return AchievementTrackerOptions["announceToRaidWarning"] end,
         set = function(value) AchievementTrackerOptions["announceToRaidWarning"] = value end,
+        default = true,
     },
     PlaySoundOnSuccess = {
         name = L['GUI_PlaySoundOnSuccess'],
@@ -45,6 +50,7 @@ core.Options = {
         desc = L['GUI_PlaySoundOnCompletionDescription'],
         get = function() return AchievementTrackerOptions["toggleSound"] end,
         set = function(value) end,
+        default = false,
     },
     PlaySoundOnFailed = {
         name = L['GUI_PlaySoundOnFailed'],
@@ -52,6 +58,7 @@ core.Options = {
         desc = L['GUI_PlaySoundOnFailDescription'],
         get = function() return AchievementTrackerOptions["toggleSoundFailed"] end,
         set = function(value) end,
+        default = false,
     },
     HideCompletedAchievements = {
         name = L['GUI_HideCompletedAchievements'],
@@ -59,6 +66,7 @@ core.Options = {
         desc = L['GUI_HideCompletedAchievementsDescription'],
         get = function() return AchievementTrackerOptions["hideCompletedAchievements"] end,
         set = function(value) SetHideCompletedAchievements(value) end,
+        default = false,
     },
     GreyOutCompletedAchievements = {
         name = L['GUI_GreyOutCompletedAchievements'],
@@ -66,6 +74,7 @@ core.Options = {
         desc = L['GUI_GreyOutCompletedAchievementsDescription'],
         get = function() return AchievementTrackerOptions["greyOutCompletedAchievements"] end,
         set = function(value) SetGreyOutCompletedAchievements(value) end,
+        default = false,
     },
     EnableAutomaticCombatLogging = {
         name = L['GUI_EnableAutomaticCombatLogging'],
@@ -73,6 +82,7 @@ core.Options = {
         desc = L['GUI_EnableCombatLogDescription'],
         get = function() return AchievementTrackerOptions["enableAutomaticCombatLogging"] end,
         set = function(value) AchievementTrackerOptions["enableAutomaticCombatLogging"] = value end,
+        default = false,
     },
     DisplayInfoFrame = {
         name = L['GUI_DisplayInfoFrame'],
@@ -80,6 +90,7 @@ core.Options = {
         desc = L['GUI_EnableInfoFrameDescription'],
         get = function() return AchievementTrackerOptions["displayInfoFrame"] end,
         set = function(value) AchievementTrackerOptions["displayInfoFrame"] = value end,
+        default = true,
     },
     TrackAchievementsInBlizzardUI = {
         name = L['GUI_TrackAchievementsInBlizzardUI'],
@@ -87,6 +98,7 @@ core.Options = {
         desc = L['GUI_TrackAchievementsInUIDescription'],
         get = function() return AchievementTrackerOptions["trackAchievementsInBlizzardUI"] end,
         set = function(value) AchievementTrackerOptions["trackAchievementsInBlizzardUI"] = value end,
+        default = false,
     },
     TrackCharacterAchievements = {
         name = L['GUI_TrackCharacterAchievements'],
@@ -94,6 +106,7 @@ core.Options = {
         desc = L['GUI_TrackChararcterAchievementsDescription'],
         get = function() return AchievementTrackerOptions["trackCharacterAchievements"]  end,
         set = function(value) SetTrackCharacterAchievements(value) end,
+        default = false,
     },
     TrackAchievementsAutomatically = {
         name = L['GUI_TrackAchievementsAutomatically'],
@@ -101,6 +114,7 @@ core.Options = {
         desc = L['GUI_TrackAchievementsAutomaticallyDescription'],
         get = function() return AchievementTrackerOptions["trackAchievementsAutomatically"] end,
         set = function(value) AchievementTrackerOptions["trackAchievementsAutomatically"] = value end,
+        default = false,
     },
     ChangeMinimapIcon = {
         name = L['GUI_ChangeMinimapIcon'],
@@ -108,6 +122,7 @@ core.Options = {
         desc = L['GUI_ChangeMinimapIconDescription'],
         get = function() return AchievementTrackerOptions["changeMinimapIcon"] end,
         set = function(value) AchievementTrackerOptions["changeMinimapIcon"] = value end,
+        default = false,
     },
 }
 
@@ -146,10 +161,12 @@ end
 
 function ToggleMinimapIcon(checked)
     AchievementTrackerOptions["showMinimap"] = checked
-    if checked then
-        core.ATButton:Show("InstanceAchievementTracker")
-    else
-        core.ATButton:Hide("InstanceAchievementTracker")
+    if core.ATButton ~= nil then
+        if checked then
+            core.ATButton:Show("InstanceAchievementTracker")
+        else
+            core.ATButton:Hide("InstanceAchievementTracker")
+        end
     end
 end
 

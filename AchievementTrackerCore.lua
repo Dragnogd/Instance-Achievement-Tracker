@@ -1166,6 +1166,14 @@ function events:ADDON_LOADED(event, name)
 	core:sendDebugMessage("---IAT Runtime---")
 	core:sendDebugMessage("Version: " .. core.Config.majorVersion .. "." .. core.Config.minorVersion .. "." .. core.Config.revisionVersion)
 
+	-- Setup options for initial setup or where new options are present
+	-- and a default value is not present in the players saved variables
+	for key, option in pairs(core.Options) do
+		if option.get() == nil then
+			option.set(option.default)
+		end
+	end
+
 	--Generate Caches
 	generateItemCache()
 	generateNPCCache()
