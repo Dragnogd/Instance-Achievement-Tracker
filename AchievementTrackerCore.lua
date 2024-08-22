@@ -404,9 +404,6 @@ function getPlayersInGroup()
 						end
 					end
 
-					--Update the GUI
-					core.Config:Instance_OnClickAutomatic()
-
 					table.remove(playersScanned, i)
 				end
 			end
@@ -1735,9 +1732,6 @@ function checkAndClearInstanceVariables()
 		else
 			core:sendDebugMessage("Function failed, error text: " .. ret1 .. ".")
 		end
-
-		--Update the GUI
-		core.Config:Instance_OnClickAutomatic()
 
 		--If user has left the instance then unregister events if they were registered
 		core:sendDebugMessage("Player has left instance. Unregestering events and resetting variables")
