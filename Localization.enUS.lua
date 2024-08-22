@@ -1033,5 +1033,18 @@ local baseLocale = {
 	["AmirdrassilTheDreamsHope_Smolderon"] = "After opening the bridge to %s, send 6 players back to the start of the instance. Right in front of the instance portal at the start of the raid is this pool of water. Walking into it will give you the buff %s for 10 minutes. Once all 6 people have this buff, proceed to the boss room.\n\n Once in the boss room you'll see the 6 runes on the ground. The people that picked up the water need to take it in turn to walk over a rune and use their extra action button to %s it. The dousing process is an 8 second channel so make sure you're safe before starting as you can't move for the 8 seconds. Once the rune is doused the raid will take ~200k damage from %s, so you'll want to limit it to 1 or 2 runes at a time so no one dies. Once all 6 runes have been doused, you can kill the boss to get this achievement.",
 	["AmirdrassilTheDreamsHope_TindralSageswift"] = "During the dragonriding portion of the fight you'll need to send a total of 6 people towards the tree to fly through and collect the 6 %s hiding among the branches. Any of the 6 whelps can be collected on either of the dragonriding intermissions but given their locations it's much simpler to do some of the further ones during the second one.\n\n Once you fly through a %s you'll get the %s debuff. The debuff will disappear on death so anyone getting a whelp must live for the rest of the fight. After rescusing 6 %s you can kill the boss to get this achievement.",
 	["AmirdrassilTheDreamsHope_FyrakkTheBlazing"] = "Once you're at %s room, you need to send 6 people back down to the lower levels of the raid to collect the 6 %s. 3 are in the entrance area up to %s room and the other 3 are on the way to Council and %s.\n\n After finding them and clicking on them, the 6 players will get the buff %s for 1 hour. This persists through death. Once 6 people have the buff you can pull the boss.\n\n After pulling the boss, during the second phase a named add will spawn one at a time with the batches of %s corrosponding to one of the 6 %s picked up. You must heal each of the named mobs before it reaches the heart. Most of the named adds don't spawn in the same location as the %s\n 1 - %s - Left\n 2 - %s - Right\n 3 - %s - Middle\n 4 - %s - Middle\n 5 - %s - Right\n 6 - %s - Left\n\n You'll want to make sure to kill any of the %s adds spawned by %s breath before the adds reach them, and keep the infernals away from them as well. On most sets this won't be a problem but on the very last add that spawns it will be almost directly after the %s spawn so it's very easy for him to die. \n\n Once all 6 adds are healed up you can push the boss to last phase and kill him to get this achievement.",
+	["NerubarPalace_UlgraxTheDevourer"] = "",
+	["NerubarPalace_TheBloodboundHorror"] = "",
+	["NerubarPalace_Sikran"] = "",
+	["NerubarPalace_Rashanan"] = "",
+	["NerubarPalace_BroodtwisterOvinax"] = "",
+	["NerubarPalace_NexusPrincessKyveza"] = "",
+	["NerubarPalace_TheSilkenCourt"] = "",
+	["NerubarPalace_QueenAnsurek"] = "",
+	["Sporesweeper"] = "",
+	["Delves_ITakeCandle"] = "",
+	["Delves_JustKeepSwimming"] = "",
+	["Delves_SpiderSenses"] = "",
+	["Delves_Daystormer"] = "",
 }
 core:RegisterLocale('enUS', baseLocale)

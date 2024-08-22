@@ -675,11 +675,18 @@ function Config:ShowContentForInstance(data)
                 collapsed = true
             }
 
-            print(data.key)
+            --If we are currently not tracking achievements for the current player then scan the achievements on current tab so we can honor hide/grey achievements option
+            local _, _, _, completed = GetAchievementInfo(data.boss.achievement)
+            local completedAchievement = false
+            if core.Options.HideCompletedAchievements.get() == true and core.achievementTrackingEnabled == false then
+                if completed == true then
+                    completedAchievement = true
+                end
+            end
 
-            table.insert(bossesToSort, data)
-
-            --Config.BossListDataProvider:Insert(data)
+            if core.Options.HideCompletedAchievements.get() == false or (core.Options.HideCompletedAchievements.get() == true and completedAchievement == false) then
+                table.insert(bossesToSort, data)
+            end
         end
     end
 
@@ -726,7 +733,11 @@ function Config:ShowInstancesForTab(tabID)
                             instanceName = ""
                         end
                     else
-                        instanceName = Config:getLocalisedInstanceName(v.name)
+                        if instanceType == "Scenarios" or instanceType == "Delves" then
+                            instanceName = Config:getLocalisedScenarioName(v.name)
+                        else
+                            instanceName = Config:getLocalisedInstanceName(v.name)
+                        end
                     end
                 end
 
@@ -743,7 +754,7 @@ function Config:ShowInstancesForTab(tabID)
     end
 
     -- Define the custom sorting order
-    local order = { Raids = 1, Dungeons = 2, Scenarios = 3 }
+    local order = { Raids = 1, Dungeons = 2, Scenarios = 3, Delves = 4 }
 
     -- Sort the instances based on the custom order and alphabetically by name
     table.sort(instancesToSort, function(a, b)

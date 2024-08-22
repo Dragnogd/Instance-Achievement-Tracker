@@ -643,6 +643,9 @@ function getInstanceInfomation()
 				elseif core.difficultyID == 176 or core.difficultyID == 194 then
 					--legacy25 (wrath classic ulduar)
 					instanceCompatible = true
+				elseif core.difficultyID == 208 then
+					--War Within Delves
+					instanceCompatible = true
 				end
 
 				--Make sure that we haven't enabled any instances present in retail that were refreshed from their classic counterparts

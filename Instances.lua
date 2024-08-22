@@ -1,5 +1,5 @@
 --------------------------------------
--- Last Auto Generated: 22/08/2024 12:02:40
+-- Last Auto Generated: 22/08/2024 15:58:34
 --------------------------------------
 local _, core = ...
 local L = core.L
@@ -103,6 +103,180 @@ core.Instances = {
 		},
 
 		Dungeons = {
+		},
+
+		Delves = {
+			[2664] = { --Fungal Folly
+				name = 2437,
+				boss1 = {
+					name = L["Other"], --Sporesweeper (Fungal Folly)
+					bossIDs = {},
+					achievement = 40445,
+					players = {},
+					tactics = L["Sporesweeper"],
+					enabled = false,
+					track = nil,
+					partial = false,
+				},
+			},
+
+			[2681] = { --Kriegval's Rest
+				name = 2443,
+				boss1 = {
+					name = L["Other"], --I TAKE Candle! (Kriegval's Rest)
+					bossIDs = {},
+					achievement = 40446,
+					players = {},
+					tactics = L["Delves_ITakeCandle"],
+					enabled = false,
+					track = nil,
+					partial = false,
+				},
+			},
+
+			[2683] = { --The Waterworks
+				name = 2500,
+				boss1 = {
+					name = L["Other"], --I TAKE Candle! (The Waterworks)
+					bossIDs = {},
+					achievement = 40446,
+					players = {},
+					tactics = L["Delves_ITakeCandle"],
+					enabled = false,
+					track = nil,
+					partial = false,
+				},
+			},
+
+			[2684] = { --The Dread Pit
+				name = 2507,
+				boss1 = {
+					name = L["Other"], --Spider Senses (The Dread Pit)
+					bossIDs = {},
+					achievement = 40453,
+					players = {},
+					tactics = L["Delves_SpiderSenses"],
+					enabled = false,
+					track = nil,
+					partial = false,
+				},
+			},
+
+			[2686] = { --Nightfall Sanctum
+				name = 2508,
+				boss1 = {
+					name = L["Other"], --Daystormer (Nightfall Sanctum)
+					bossIDs = {},
+					achievement = 40454,
+					players = {},
+					tactics = L["Delves_Daystormer"],
+					enabled = false,
+					track = nil,
+					partial = false,
+				},
+			},
+
+			[2679] = { --Mycomancer Cavern
+				name = 2509,
+				boss1 = {
+					name = L["Other"], --Sporesweeper (Myomancer Cavern)
+					bossIDs = {},
+					achievement = 40445,
+					players = {},
+					tactics = L["Sporesweeper"],
+					enabled = false,
+					track = nil,
+					partial = false,
+				},
+			},
+
+			[2767] = { --The Sinkhole
+				name = 2659,
+				boss1 = {
+					name = L["Other"], --Just Keep Swimming (The Sinkhole)
+					bossIDs = {},
+					achievement = 40452,
+					players = {},
+					tactics = L["Delves_JustKeepSwimming"],
+					enabled = false,
+					track = nil,
+					partial = false,
+				},
+			},
+
+			[2685] = { --Skittering Breach
+				name = 2511,
+				boss1 = {
+					name = L["Other"], --Spider Senses (Skittering Breach)
+					bossIDs = {},
+					achievement = 40453,
+					players = {},
+					tactics = L["Delves_SpiderSenses"],
+					enabled = false,
+					track = nil,
+					partial = false,
+				},
+			},
+
+			[2682] = { --Zekvir's Lair
+				name = 2512,
+			},
+
+			[2768] = { --Tak-Rethan Abyss
+				name = 2660,
+				boss1 = {
+					name = L["Other"], --Just Keep Swimming (Tak-Rethan Abyss)
+					bossIDs = {},
+					achievement = 40452,
+					players = {},
+					tactics = L["Delves_JustKeepSwimming"],
+					enabled = false,
+					track = nil,
+					partial = false,
+				},
+			},
+
+			[2688] = { --The Spiral Weave
+				name = 2514,
+				boss1 = {
+					name = L["Other"], --Spider Senses (The Spiral Weave)
+					bossIDs = {},
+					achievement = 40453,
+					players = {},
+					tactics = L["Delves_SpiderSenses"],
+					enabled = false,
+					track = nil,
+					partial = false,
+				},
+			},
+
+			[2680] = { --Earthcrawl Mines
+				name = 2522,
+				boss1 = {
+					name = L["Other"], --Spider Senses (Earthcrawl Mines)
+					bossIDs = {},
+					achievement = 40453,
+					players = {},
+					tactics = L["Delves_SpiderSenses"],
+					enabled = false,
+					track = nil,
+					partial = false,
+				},
+			},
+
+			[2690] = { --The Underkeep
+				name = 2533,
+				boss1 = {
+					name = L["Other"], --Spider Senses (The Underkeep)
+					bossIDs = {},
+					achievement = 40453,
+					players = {},
+					tactics = L["Delves_SpiderSenses"],
+					enabled = false,
+					track = nil,
+					partial = false,
+				},
+			},
 		},
 	},
 

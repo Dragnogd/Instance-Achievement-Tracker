@@ -294,5 +294,5 @@
 
 	  <Font name="IATTextFontNormal" inherits="IATFont_Large" justifyH="LEFT" virtual="true">
 		<Color r="0.18" g="0.12" b="0.06"/>
-	  </Font>wa
+	  </Font>
 </Ui>
