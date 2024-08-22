@@ -272,15 +272,11 @@ end
 BossContentMixin = {}
 
 function BossContentMixin:OnLoad()
-    print("LOADED")
     self.Highlight:Hide();
 end
 
 function BossContentMixin:OnEnter()
-    print("Entered Frame")
-
     local elementData = self:GetElementData();
-    print(elementData.boss.achievement)
 
     local achievementLink = GetAchievementLink(elementData.boss.achievement)
 
@@ -524,7 +520,6 @@ function Config:CreateUI()
             Config:ShowContentForInstance(data)
         end)
         button:SetText(data.name)
-        print("Setting ID to ", data.id)
         button:SetID(data.id)
         button:SetPoint("TOP", 100, 100)
     end
@@ -554,7 +549,6 @@ function Config:CreateUI()
             local totalHeight = BOSSBUTTON_COLLAPSEDHEIGHT
             totalHeight = totalHeight + elementData.currentHeight
 
-            print(totalHeight)
             return totalHeight
         else
             return BOSSBUTTON_COLLAPSEDHEIGHT
@@ -618,9 +612,7 @@ function Config:CreateUI()
 
         if creatureIcon then
             button.Icon.texture:SetTexture(creatureIcon)
-            print("Texture set to:", creatureIcon)
         else
-            print("Creature icon not found for encounter ID:", data.boss.name)
             button.Icon.texture:SetTexture("Interface\\Icons\\Spell_Misc_HellifrePVPHonorHoldFavor") -- Set default texture
         end
 
