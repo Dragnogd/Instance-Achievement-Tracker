@@ -724,6 +724,7 @@ function getInstanceInfomation()
 						end
 					end
 
+					--Load the relevant instance content automatically after player starts tracking the current instance
 					local function PredicateFunction(item)
 						return item.id == core.instance
 					end

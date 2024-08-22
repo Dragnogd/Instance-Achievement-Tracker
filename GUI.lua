@@ -1229,14 +1229,18 @@ function IAT_DisplayAchievement(achievementID)
     end
 	-- If valid and none of the other 3 are nil, show the tactics
     if valid and lastExpansion and lastInstanceType and lastInstance then
-        IAT_InstanceType = lastInstanceType
-        IAT_InstanceLocation = lastInstance
-        IAT_CurrentTab = lastExpansion
+        --Load the relevant instance content automatically after player starts tracking the current instance
+        -- local function PredicateFunction(item)
+        --     deepdump(item)
+        --     return item.id == core.instance
+        -- end
 
-        Config:Instance_OnClickAPI("API")
+        -- local foundItem = core.Config.InstanceListDataProvider:FindElementDataByPredicate(PredicateFunction)
 
-        Config:ToggleOn()
+        --core.Config:ShowContentForInstance(foundItem)
 	end
+
+    return nil
 end
 
 getGameBuild()
