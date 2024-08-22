@@ -358,7 +358,15 @@ function Config:CreateUI()
     -- Create the main UI frame
     self.UI = CreateFrame("Frame", "AchievementTracker", UIParent, "PortraitFrameTemplate")
     self.UI:SetTitle("Instance Achievement Tracker")
-    --self.UI:SetPortraitToAsset([[Interface\Icons\ACHIEVEMENT_GUILDPERK_MRPOPULARITY]])
+    if LE_EXPANSION_LEVEL_CURRENT ~= LE_EXPANSION_CATACLYSM then
+        --self.UI:SetPortraitToAsset([[Interface\Icons\ACHIEVEMENT_GUILDPERK_MRPOPULARITY]])
+        self.UI:SetPortraitTextureRaw([[Interface\AddOns\InstanceAchievementTracker\Images\logo.png]])
+        self.UI:SetPortraitTextureSizeAndOffset(55, -2, 4)
+    else
+        --Need to set manually for classic
+        deepdump(self.UI.portrait)
+        self.UI.portrait:SetTexture([[Interface\AddOns\InstanceAchievementTracker\Images\logo.png]]);
+    end
     self.UI:SetSize(950, 567)
     self.UI:SetPoint("CENTER")
     self.UI:SetMovable(true)
@@ -754,7 +762,6 @@ end
 
 -- Function to show the options panel
 function Config:ShowOptionsPanel()
-    print("SHowing Options")
     self.UI.ExpansionLayoutContainer:Hide()
     self.UI.OptionsLayoutContainer:Show()
 

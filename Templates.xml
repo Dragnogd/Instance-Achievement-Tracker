@@ -165,7 +165,7 @@
 				<Anchor point="TOPLEFT" relativeKey="$parent.TitleBar" relativePoint="TOPLEFT" x="90" y="-5"/>
 			  </Anchors>
 			</FontString>
-			<FontString parentKey="Description" inherits="MailTextFontNormal">
+			<FontString parentKey="Description" inherits="IATTextFontNormal">
 			  <Size x="0" y="0"/>
 			  <Anchors>
 				<Anchor point="TOPLEFT" x="80" y="-40"/>
@@ -259,7 +259,7 @@
 				<Anchors>
 					<Anchor point="TOPLEFT" relativeKey="$parent.TitleBar" x="20" y="-65" />
 				</Anchors>
-				<FontString inherits="MailTextFontNormal" justifyV="TOP" justifyH="LEFT" />
+				<FontString inherits="IATTextFontNormal" justifyV="TOP" justifyH="LEFT" />
 			</SimpleHTML >
 			<Button name="OutputTactics" parentKey="OutputTactics" inherits="UIPanelButtonTemplate" text="Output Tactics">
 				<Anchors>
@@ -273,4 +273,26 @@
 			</Button>
 		</Frames>
 	  </EventButton>
+
+	  <FontFamily name="IATFont_Large" virtual="true">
+		<Member alphabet="roman">
+		  <Font font="Fonts\FRIZQT__.TTF" height="15"/>
+		</Member>
+		<Member alphabet="korean">
+		  <Font font="Fonts\2002.ttf" height="14" spacing="7"/>
+		</Member>
+		<Member alphabet="simplifiedchinese">
+		  <Font font="Fonts\ARKai_T.ttf" height="15"/>
+		</Member>
+		<Member alphabet="traditionalchinese">
+		  <Font font="Fonts\blei00d.ttf" height="15"/>
+		</Member>
+		<Member alphabet="russian">
+		  <Font font="Fonts\FRIZQT___CYR.TTF" height="15"/>
+		</Member>
+	  </FontFamily>
+
+	  <Font name="IATTextFontNormal" inherits="IATFont_Large" justifyH="LEFT" virtual="true">
+		<Color r="0.18" g="0.12" b="0.06"/>
+	  </Font>wa
 </Ui>
