@@ -645,7 +645,12 @@ function getInstanceInfomation()
 					instanceCompatible = true
 				elseif core.difficultyID == 208 then
 					--War Within Delves
-					instanceCompatible = true
+					--Must be a Tier 8 or higher Delve to track achievements (6183 apparently works for all delves)
+					local delveData = C_UIWidgetManager.GetScenarioHeaderDelvesWidgetVisualizationInfo(6183)
+
+					if delveData ~= nil and tonumber(delveData.tierText) >= 8 then
+						instanceCompatible = true
+					end
 				end
 
 				--Make sure that we haven't enabled any instances present in retail that were refreshed from their classic counterparts
@@ -1241,6 +1246,7 @@ function core:SetAddonEnabled()
 		events:RegisterEvent("PLAYER_ENTERING_WORLD")				--Used to detect if player is inside an instance when they enter the world
 		events:RegisterEvent("ZONE_CHANGED_NEW_AREA")				--Used to detect if player is inside an instance when they change zone
 		events:RegisterEvent("CHAT_MSG_ADDON")						--Allows the addon to communicate with other addons in the same party/raid
+		events:RegisterEvent("WALK_IN_DATA_UPDATE")
 
 		core:sendDebugMessage("Registering CHAT_MSG_ADDON prefix")
 		C_ChatInfo.RegisterAddonMessagePrefix("Whizzey")
@@ -1258,6 +1264,7 @@ function core:SetAddonEnabled()
 		events:UnregisterEvent("PLAYER_ENTERING_WORLD")
 		events:UnregisterEvent("ZONE_CHANGED_NEW_AREA")
 		events:UnregisterEvent("CHAT_MSG_ADDON")
+		events:UnregisterEvent("WALK_IN_DATA_UPDATE")
 
 		core.inInstance = false
 
@@ -1659,6 +1666,12 @@ function events:PLAYER_ENTERING_WORLD()
 			end
 		end
 	end)
+end
+
+--Signaled when the player or a private party member join a new walk-in instance or when the instance is shut down.
+function events:WALK_IN_DATA_UPDATE()
+	core.inInstance = false
+	getInstanceInfomation()
 end
 
 --Fired when the player enters a new zone.
