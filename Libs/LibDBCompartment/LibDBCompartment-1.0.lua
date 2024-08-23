@@ -1,6 +1,6 @@
 -- SPDX-License-Identifier: Unlicense
 
-local LibDBCompartment = LibStub:NewLibrary("LibDBCompartment-1.0", 4);
+local LibDBCompartment = LibStub:NewLibrary("LibDBCompartment-1.0", 5);
 
 if not LibDBCompartment then
     return;
@@ -193,8 +193,12 @@ function LibDBCompartment:OnDataObjectAttributeChanged(_, _, _, _, dataObject)
     end
 end
 
-function LibDBCompartment:OnDropDownButtonClick(dataObject, button, _, _, _, mouseButtonName)
+function LibDBCompartment:OnDropDownButtonClick(dataObject, button, menuInputData, _, _, mouseButtonName)
     local OnClick = dataObject.OnAddonCompartmentClick or dataObject.OnClick;
+
+    if type(menuInputData) == "table" then
+        mouseButtonName = menuInputData.buttonName;
+    end
 
     if OnClick then
         OnClick(button, mouseButtonName);
