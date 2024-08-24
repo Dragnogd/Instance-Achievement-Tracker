@@ -36,6 +36,10 @@ Localization.zhCN.lua
 Localization.zhTW.lua
 Localization.koKR.lua
 
+WarWithinRaids\NerubarPalace.lua
+
+WarWithinDelves\EarthcrawlMines.lua
+
 DragonflightRaids\VaultOfTheIncarnates.lua
 DragonflightRaids\AberrusTheShadowedCrucible.lua
 DragonflightRaids\AmirdrassilTheDreamsHope.lua
@@ -206,5 +210,6 @@ Options.lua
 GUI.lua
 MobCounter.lua
 emotes.lua
+API.lua
 AchievementTrackerCore.lua
 Debug.lua

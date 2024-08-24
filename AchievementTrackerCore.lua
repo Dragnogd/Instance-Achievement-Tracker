@@ -212,6 +212,7 @@ core.currentZoneID = nil						--The ID of the current instance the player is in
 core.playerCount = 0							--The amount of players the instance lock can hold
 core.inCombat = false							--Whether anyone in the current group is in combat with boss/mobs
 core.achievementsFailed = {}					--Set to true when the requirements for a tracked achievement has failed
+core.achievementsFailedGlobal = {}				--Track Delves achievements that are done throughout the instance rather than on a per fight basis
 core.achievementsCompleted = {}					--Set to true when the requrements for a tracked achievement have been met
 core.chatType = nil								--The chat type for the current group (say/party/raid)
 core.achievementTrackedMessageShown = false		--Set to true when the message "Tracking {achievement}" is output to the chat so that it only outputs once per fight
@@ -1757,6 +1758,7 @@ function checkAndClearInstanceVariables()
 		core.currentBosses = {}
 		core.foundBoss = false
 		core.mobCache = {}
+		core.achievementsFailedGlobal = {}
 		core.instanceVariablesReset = true --This is done so we only reset instance variables once, rather than everytime the player changes zone
 		trackAchievementsUIAutomatic = false
 
@@ -2694,7 +2696,7 @@ function detectBoss(id)
 	--If an id is found by not in the database then add to cache to prevent the same ID being checked against the database over and over again
 	if core.foundBoss == true then
 		--Display tracking achievement for that boss if it has not been output yet for the fight. Make sure we are in combat as well before calling this function
-		if core.encounterStarted == true or core.difficultyID == 11 or core.difficultyID == 12 then
+		if core.encounterStarted == true or core.difficultyID == 11 or core.difficultyID == 12 or core.difficultyID == 208 then
 			core:getAchievementToTrack()
 		end
 	else
@@ -3166,7 +3168,7 @@ end
 ------------------------------------------------------
 
 --Display the failed achievement message for achievements
-function core:getAchievementFailed(achievementID)
+function core:getAchievementFailed(achievementID, trackGlobal)
 	local achievementIndex = 1
 
 	if achievementID ~= nil then
@@ -3177,9 +3179,15 @@ function core:getAchievementFailed(achievementID)
 		end
 	end
 
-	if core.achievementsFailed[achievementIndex] == false then
+	if core.achievementsFailed[achievementIndex] == false or dontRequireBoss == true then
 		core:sendMessage(GetAchievementLink(core.achievementIDs[achievementIndex]) .. " " .. L["Core_Failed"],true,"failed")
 		core.achievementsFailed[achievementIndex] = true
+	elseif trackGlobal == true and achievementID ~= nil then
+		--For delves track the achievement for the liftime of the instance as the achievmenets are not done on a specific boss
+		if core.achievementsFailedGlobal[achievementIndex] ~= true then
+			core:sendMessage(GetAchievementLink(achievementID) .. " " .. L["Core_Failed"],true,"failed")
+			core.achievementsFailedGlobal[achievementIndex] = true
+		end
 	end
 end
 
@@ -3202,7 +3210,7 @@ function core:getAchievementFailedWithMessageBefore(message, achievementID)
 end
 
 --Display the failed achievement message for achievements with message after
-function core:getAchievementFailedWithMessageAfter(message, achievementID)
+function core:getAchievementFailedWithMessageAfter(message, achievementID, trackGlobal)
 	local achievementIndex = 1
 
 	if achievementID ~= nil then
@@ -3216,6 +3224,12 @@ function core:getAchievementFailedWithMessageAfter(message, achievementID)
 	if core.achievementsFailed[achievementIndex] == false then
 		core:sendMessage(GetAchievementLink(core.achievementIDs[achievementIndex]) .. " " .. L["Core_Failed"] .. " " .. message,true,"failed")
 		core.achievementsFailed[achievementIndex] = true
+	elseif trackGlobal == true and achievementID ~= nil then
+		--For delves track the achievement for the liftime of the instance as the achievmenets are not done on a specific boss
+		if core.achievementsFailedGlobal[achievementIndex] ~= true then
+			core:sendMessage(GetAchievementLink(achievementID) .. " " .. L["Core_Failed"],true,"failed")
+			core.achievementsFailedGlobal[achievementIndex] = true
+		end
 	end
 end
 

@@ -33,7 +33,7 @@ AchievementTrackerNPCCacheClassic = {}
 
 BOSSBUTTON_COLLAPSEDHEIGHT = 84;
 
-local g_achievementSelectionBehavior = nil;
+core.Config.g_achievementSelectionBehavior = nil;
 local g_achievementSelections = {{},{},{}};
 
 ------------------------------------------------------
@@ -558,7 +558,7 @@ function Config:CreateUI()
     local function BossInitializer(button, data)
         --Allow the button to reveal tactics
         button:SetScript("OnClick", function(self)
-            g_achievementSelectionBehavior:ToggleSelect(self);
+            core.Config.g_achievementSelectionBehavior:ToggleSelect(self);
 
             if self.collapsed == true then
                 button.PlusMinus:SetTexCoord(0, .5, 0, 0.25);
@@ -627,8 +627,8 @@ function Config:CreateUI()
     ScrollView2:SetDataProvider(Config.BossListDataProvider)
     ScrollUtil.InitScrollBoxListWithScrollBar(self.UI.ExpansionLayoutContainer.BossListScrollContainer.ScrollBox, self.UI.ExpansionLayoutContainer.BossListScrollContainer.ScrollBar, ScrollView2)
 
-    g_achievementSelectionBehavior = ScrollUtil.AddSelectionBehavior(self.UI.ExpansionLayoutContainer.BossListScrollContainer.ScrollBox, SelectionBehaviorFlags.Deselectable, SelectionBehaviorFlags.Intrusive)
-    g_achievementSelectionBehavior:RegisterCallback(SelectionBehaviorMixin.Event.OnSelectionChanged, function(o, elementData, selected)
+    core.Config.g_achievementSelectionBehavior = ScrollUtil.AddSelectionBehavior(self.UI.ExpansionLayoutContainer.BossListScrollContainer.ScrollBox, SelectionBehaviorFlags.Deselectable, SelectionBehaviorFlags.Intrusive)
+    core.Config.g_achievementSelectionBehavior:RegisterCallback(SelectionBehaviorMixin.Event.OnSelectionChanged, function(o, elementData, selected)
         local button = self.UI.ExpansionLayoutContainer.BossListScrollContainer.ScrollBox:FindFrame(elementData)
         if button then
             button:SetSelected(selected);
@@ -1191,56 +1191,6 @@ function GetNameFromLocalNpcIDCache()
             end
         end
     end
-end
-
---API
-local lastAchievementID, lastExpansion, lastInstanceType, lastInstance;
-function IAT_HasAchievement(achievementID)
-	lastAchievementID, lastExpansion, lastInstanceType, lastInstance = achievementID, nil, nil, nil
-
-    -- Check if IAT has the achievement
-    for expansion, _ in pairs(core.Instances) do
-        for instanceType, _ in pairs(core.Instances[expansion]) do
-            for instance, _ in pairs(core.Instances[expansion][instanceType]) do
-                for boss, _ in pairs(core.Instances[expansion][instanceType][instance]) do
-                    if string.match(boss, "boss") then
-                        if core.Instances[expansion][instanceType][instance][boss].achievement == achievementID then
-                            -- Achievement found
-                            lastExpansion, lastInstanceType, lastInstance = expansion, instanceType, instance
-                            return true
-                        end
-                    end
-                end
-            end
-        end
-    end
-	-- No achievement with this ID
-
-	return false
-end
-
-function IAT_DisplayAchievement(achievementID)
-    -- Open IAT Gui and display the specific achievement
-
-	-- Check here if IAT_HasAchievement has already been called for the same achievement ID
-    local valid = lastAchievementID == achievementID;
-    if not valid then
-        valid = IAT_HasAchievement(achievementID)
-    end
-	-- If valid and none of the other 3 are nil, show the tactics
-    if valid and lastExpansion and lastInstanceType and lastInstance then
-        --Load the relevant instance content automatically after player starts tracking the current instance
-        -- local function PredicateFunction(item)
-        --     deepdump(item)
-        --     return item.id == core.instance
-        -- end
-
-        -- local foundItem = core.Config.InstanceListDataProvider:FindElementDataByPredicate(PredicateFunction)
-
-        --core.Config:ShowContentForInstance(foundItem)
-	end
-
-    return nil
 end
 
 getGameBuild()
