@@ -1253,7 +1253,11 @@ function core:SetAddonEnabled()
 		events:RegisterEvent("PLAYER_ENTERING_WORLD")				--Used to detect if player is inside an instance when they enter the world
 		events:RegisterEvent("ZONE_CHANGED_NEW_AREA")				--Used to detect if player is inside an instance when they change zone
 		events:RegisterEvent("CHAT_MSG_ADDON")						--Allows the addon to communicate with other addons in the same party/raid
-		events:RegisterEvent("WALK_IN_DATA_UPDATE")
+
+		--Detect when players enters delves. Only avaialbe on retail
+		if core.gameVersionMajor >= 11 then
+			events:RegisterEvent("WALK_IN_DATA_UPDATE")
+		end
 
 		core:sendDebugMessage("Registering CHAT_MSG_ADDON prefix")
 		C_ChatInfo.RegisterAddonMessagePrefix("Whizzey")
@@ -1271,7 +1275,11 @@ function core:SetAddonEnabled()
 		events:UnregisterEvent("PLAYER_ENTERING_WORLD")
 		events:UnregisterEvent("ZONE_CHANGED_NEW_AREA")
 		events:UnregisterEvent("CHAT_MSG_ADDON")
-		events:UnregisterEvent("WALK_IN_DATA_UPDATE")
+
+		--Detect when players enters delves. Only avaialbe on retail
+		if core.gameVersionMajor >= 11 then
+			events:UnregisterEvent("WALK_IN_DATA_UPDATE")
+		end
 
 		core.inInstance = false
 
