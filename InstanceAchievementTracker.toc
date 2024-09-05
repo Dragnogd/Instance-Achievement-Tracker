@@ -39,6 +39,18 @@ Localization.koKR.lua
 WarWithinRaids\NerubarPalace.lua
 
 WarWithinDelves\EarthcrawlMines.lua
+WarWithinDelves\FungalFolly.lua
+WarWithinDelves\KriegvalsRest.lua
+WarWithinDelves\MycomancerCavern.lua
+WarWithinDelves\NightfallSanctum.lua
+WarWithinDelves\SkitteringBreach.lua
+WarWithinDelves\TakrethanAbyss.lua
+WarWithinDelves\TheDreadPit.lua
+WarWithinDelves\TheSinkhole.lua
+WarWithinDelves\TheSpiralWeave.lua
+WarWithinDelves\TheUnderkeep.lua
+WarWithinDelves\TheWaterworks.lua
+
 
 DragonflightRaids\VaultOfTheIncarnates.lua
 DragonflightRaids\AberrusTheShadowedCrucible.lua

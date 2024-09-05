@@ -1,5 +1,5 @@
 --------------------------------------
--- Last Auto Generated: 22/08/2024 15:58:34
+-- Last Auto Generated: 01/09/2024 09:30:52
 --------------------------------------
 local _, core = ...
 local L = core.L
@@ -114,8 +114,8 @@ core.Instances = {
 					achievement = 40445,
 					players = {},
 					tactics = L["Sporesweeper"],
-					enabled = false,
-					track = nil,
+					enabled = true,
+					track = function() end,
 					partial = false,
 				},
 			},
@@ -148,16 +148,16 @@ core.Instances = {
 				},
 			},
 
-			[2684] = { --The Dread Pit
-				name = 2507,
+			[2688] = { --The Spiral Weave
+				name = 2514,
 				boss1 = {
-					name = L["Other"], --Spider Senses (The Dread Pit)
+					name = L["Other"], --Spider Senses (The Spiral Weave )
 					bossIDs = {},
 					achievement = 40453,
 					players = {},
 					tactics = L["Delves_SpiderSenses"],
-					enabled = false,
-					track = nil,
+					enabled = true,
+					track = function() end,
 					partial = false,
 				},
 			},
@@ -184,8 +184,8 @@ core.Instances = {
 					achievement = 40445,
 					players = {},
 					tactics = L["Sporesweeper"],
-					enabled = false,
-					track = nil,
+					enabled = true,
+					track = function() end,
 					partial = false,
 				},
 			},
@@ -204,16 +204,16 @@ core.Instances = {
 				},
 			},
 
-			[2685] = { --Skittering Breach
-				name = 2511,
+			[2684] = { --The Dread Pit
+				name = 2507,
 				boss1 = {
-					name = L["Other"], --Spider Senses (Skittering Breach)
+					name = L["Other"], --Spider Senses (The Dread Pit)
 					bossIDs = {},
 					achievement = 40453,
 					players = {},
 					tactics = L["Delves_SpiderSenses"],
-					enabled = false,
-					track = nil,
+					enabled = true,
+					track = function() end,
 					partial = false,
 				},
 			},
@@ -236,16 +236,16 @@ core.Instances = {
 				},
 			},
 
-			[2688] = { --The Spiral Weave
-				name = 2514,
+			[2685] = { --Skittering Breach
+				name = 2511,
 				boss1 = {
-					name = L["Other"], --Spider Senses (The Spiral Weave)
+					name = L["Other"], --Spider Senses (Skittering Breach)
 					bossIDs = {},
 					achievement = 40453,
 					players = {},
 					tactics = L["Delves_SpiderSenses"],
-					enabled = false,
-					track = nil,
+					enabled = true,
+					track = function() end,
 					partial = false,
 				},
 			},
@@ -272,8 +272,8 @@ core.Instances = {
 					achievement = 40453,
 					players = {},
 					tactics = L["Delves_SpiderSenses"],
-					enabled = false,
-					track = nil,
+					enabled = true,
+					track = function() end,
 					partial = false,
 				},
 			},
