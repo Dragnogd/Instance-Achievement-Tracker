@@ -75,6 +75,7 @@ function core._2657:Sikran()
 
     --Announce success once everyone has had the debuff at some point during the fight
     if riposteCounter == core.groupSize and core:getBlizzardTrackingStatus(40255,1) == true then
+        print(riposteCounter, core.groupSize)
         core:getAchievementSuccess()
         core.achievementsFailed[1] = false
     end
@@ -168,37 +169,41 @@ function core._2657:Rashanan()
     --SPELL_CAST_SUCCESS,Creature-0-2085-2657-25250-214504-00006C9315,"Rasha'nan",0x10a48,0x0,0000000000000000,nil,0x80000000,0x80000000,439789,"Rolling Acid",0x8,Creature-0-2085-2657-25250-214504-00006C9315,0000000000000000,3561245057,7137212500,0,0,42857,0,3,57,100,0,-3058.26,-58.32,2292,5.4978,83
     --SPELL_AURA_APPLIED,Creature-0-2085-2657-25250-214504-00006C96EB,"Rasha'nan",0x10a48,0x0,Player-4184-007B9FA7,"Yccdk-TheseGoToEleven",0x514,0x20,439786,"Rolling Acid",0x8,DEBUFF
 
-    InfoFrame_UpdatePlayersOnInfoFrame()
-    InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],rollingAcidCounter,core.groupSize)
+    -- InfoFrame_UpdatePlayersOnInfoFrame()
+    -- InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],rollingAcidCounter,core.groupSize)
 
-    --Boss casts Rolling Acid
-    if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 439789 then
-        --Reset the rolling acid counter and announce which players did not get hit
-        rollingAcidTrackingNow = true
-        C_Timer.After(10, function()
-            rollingAcidTrackingNow = false
-            rollingAcidCounter = 0
-            rollingAcidUID = {}
+    -- --Boss casts Rolling Acid
+    -- if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 439789 then
+    --     --Reset the rolling acid counter and announce which players did not get hit
+    --     rollingAcidTrackingNow = true
+    --     C_Timer.After(10, function()
+    --         rollingAcidTrackingNow = false
+    --         rollingAcidCounter = 0
+    --         rollingAcidUID = {}
 
-            local playersNotHit = ""
+    --         local playersNotHit = ""
 
-            --Set all InfoFrames back to red ready for next wave
-            for player, status in pairs(core.InfoFrame_PlayersTable) do
-                InfoFrame_SetPlayerFailed(player)
-            end
+    --         --Set all InfoFrames back to red ready for next wave
+    --         for player, status in pairs(core.InfoFrame_PlayersTable) do
+    --             InfoFrame_SetPlayerFailed(player)
+    --         end
 
-            --Announce which players did not get hit by wave
+    --         --Announce which players did not get hit by wave
 
-        end)
-    end
+    --     end)
+    -- end
 
-    --Player has got hit by the Rolling Acid wave as they have the movement speed reduced debuff
-    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 439786 then
-        --Can we track which wave they get hit by? Probably not! So if all players of raid have got hit, we need to make sure tracker has gone white
+    -- --Player has got hit by the Rolling Acid wave as they have the movement speed reduced debuff
+    -- if core.type == "SPELL_AURA_APPLIED" and core.spellId == 439786 then
+    --     --Can we track which wave they get hit by? Probably not! So if all players of raid have got hit, we need to make sure tracker has gone white
 
-        rollingAcidCounter = rollingAcidCounter + 1
-        rollingAcidUID[core.spawn_uid_dest_Player] = core.spawn_uid_dest_Player
-        InfoFrame_SetPlayerComplete(core.destName)
+    --     rollingAcidCounter = rollingAcidCounter + 1
+    --     rollingAcidUID[core.spawn_uid_dest_Player] = core.spawn_uid_dest_Player
+    --     InfoFrame_SetPlayerComplete(core.destName)
+    -- end
+
+    if core:getBlizzardTrackingStatus(40262,1) == true then
+        core:getAchievementSuccess()
     end
 end
 
@@ -248,4 +253,41 @@ function core._2657:TheBloodboundHorror()
     if core:getBlizzardTrackingStatus(40260,1) == true then
         core:getAchievementSuccess()
     end
+end
+
+function core._2657:ClearVariables()
+    ------------------------------------------------------
+    ---- Sikran
+    ------------------------------------------------------
+    riposteCounter = 0
+    riposteUID = {}
+
+    ------------------------------------------------------
+    ---- Broodtwister Ovi'nax
+    ------------------------------------------------------
+    affectionateCounter = 0
+    affectionateUID = {}
+
+    ------------------------------------------------------
+    ---- Rasha'nan
+    ------------------------------------------------------
+    initialSetup = false
+    rollingAcidCounter = 0
+    rollingAcidUID = {}
+    rollingAcidTrackingNow = false
+
+    ------------------------------------------------------
+    ---- The Bloodbound Horror
+    ------------------------------------------------------
+    slimedCounter = 0
+    slimedUID = {}
+    bloodboundHorrorKilled = false
+    volatileOozeFound = false
+
+    ------------------------------------------------------
+    ---- Queen Ansurek
+    ------------------------------------------------------
+    frothingGluttonyActive = false
+    abyssalConduitCounter = 0
+    abyssalConduitUID = {}
 end
