@@ -75,7 +75,6 @@ function core._2657:Sikran()
 
     --Announce success once everyone has had the debuff at some point during the fight
     if riposteCounter == core.groupSize and core:getBlizzardTrackingStatus(40255,1) == true then
-        print(riposteCounter, core.groupSize)
         core:getAchievementSuccess()
         core.achievementsFailed[1] = false
     end
