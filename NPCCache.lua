@@ -798,4 +798,5 @@ core.NPCCacheClassic = {
 	[33136] =33136, --Guardian of Yogg-Saron
 	[34035] =34035, --Feral Defender
 	[33572] =33572, --Steelforged Defender
+	[225423] =225423, --Volatile Ooze
 }

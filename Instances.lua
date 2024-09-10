@@ -1,5 +1,5 @@
 --------------------------------------
--- Last Auto Generated: 01/09/2024 09:30:52
+-- Last Auto Generated: 10/09/2024 19:29:19
 --------------------------------------
 local _, core = ...
 local L = core.L
@@ -17,8 +17,8 @@ core.Instances = {
 					achievement = 40261,
 					players = {},
 					tactics = L["NerubarPalace_UlgraxTheDevourer"],
-					enabled = false,
-					track = nil,
+					enabled = true,
+					track = function() core._2657:UlgraxTheDevourer() end,
 					partial = false,
 					encounterID = 2902,
 				},
@@ -28,10 +28,11 @@ core.Instances = {
 					achievement = 40260,
 					players = {},
 					tactics = L["NerubarPalace_TheBloodboundHorror"],
-					enabled = false,
-					track = nil,
+					enabled = true,
+					track = function() core._2657:TheBloodboundHorror() end,
 					partial = false,
 					encounterID = 2917,
+					displayInfoFrame = true,
 				},
 				boss3 = {
 					name = 2599, --Sikran
@@ -39,10 +40,11 @@ core.Instances = {
 					achievement = 40255,
 					players = {},
 					tactics = L["NerubarPalace_Sikran"],
-					enabled = false,
-					track = nil,
+					enabled = true,
+					track = function() core._2657:Sikran() end,
 					partial = false,
 					encounterID = 2898,
+					displayInfoFrame = true,
 				},
 				boss4 = {
 					name = 2609, --Rasha'nan
@@ -50,10 +52,11 @@ core.Instances = {
 					achievement = 40262,
 					players = {},
 					tactics = L["NerubarPalace_Rashanan"],
-					enabled = false,
-					track = nil,
+					enabled = true,
+					track = function() core._2657:Rashanan() end,
 					partial = false,
 					encounterID = 2918,
+					displayInfoFrame = true,
 				},
 				boss5 = {
 					name = 2612, --Broodtwister Ovi'nax
@@ -61,10 +64,11 @@ core.Instances = {
 					achievement = 40263,
 					players = {},
 					tactics = L["NerubarPalace_BroodtwisterOvinax"],
-					enabled = false,
-					track = nil,
+					enabled = true,
+					track = function() core._2657:BroodtwisterOvinax() end,
 					partial = false,
 					encounterID = 2919,
+					displayInfoFrame = true,
 				},
 				boss6 = {
 					name = 2601, --Nexus-Princess Ky'veza
@@ -72,8 +76,8 @@ core.Instances = {
 					achievement = 40264,
 					players = {},
 					tactics = L["NerubarPalace_NexusPrincessKyveza"],
-					enabled = false,
-					track = nil,
+					enabled = true,
+					track = function() core._2657:NexusPrincessKyveza() end,
 					partial = false,
 					encounterID = 2920,
 				},
@@ -83,8 +87,8 @@ core.Instances = {
 					achievement = 40730,
 					players = {},
 					tactics = L["NerubarPalace_TheSilkenCourt"],
-					enabled = false,
-					track = nil,
+					enabled = true,
+					track = function() core._2657:SilkenCourt() end,
 					partial = false,
 					encounterID = 2921,
 				},
@@ -94,10 +98,11 @@ core.Instances = {
 					achievement = 40266,
 					players = {},
 					tactics = L["NerubarPalace_QueenAnsurek"],
-					enabled = false,
-					track = nil,
+					enabled = true,
+					track = function() core._2657:QueenAnsurek() end,
 					partial = false,
 					encounterID = 2922,
+					displayInfoFrame = true,
 				},
 			},
 		},

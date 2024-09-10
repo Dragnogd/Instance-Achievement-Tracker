@@ -30,6 +30,21 @@ local rollingAcidCounter = 0
 local rollingAcidUID = {}
 local rollingAcidTrackingNow = false
 
+------------------------------------------------------
+---- The Bloodbound Horror
+------------------------------------------------------
+local slimedCounter = 0
+local slimedUID = {}
+local bloodboundHorrorKilled = false
+local volatileOozeFound = false
+
+------------------------------------------------------
+---- Queen Ansurek
+------------------------------------------------------
+local frothingGluttonyActive = false
+local abyssalConduitCounter = 0
+local abyssalConduitUID = {}
+
 function core._2657:UlgraxTheDevourer()
     --Defeat Ulgrax the Devourer while keeping the Spider Silk Grub alive in Nerub-ar Palace on Normal difficulty or higher.
 
@@ -59,7 +74,7 @@ function core._2657:Sikran()
     end
 
     --Announce success once everyone has had the debuff at some point during the fight
-    if riposteCounter == core.groupSize then
+    if riposteCounter == core.groupSize and core:getBlizzardTrackingStatus(40255,1) == true then
         core:getAchievementSuccess()
         core.achievementsFailed[1] = false
     end
@@ -75,7 +90,7 @@ function core._2657:BroodtwisterOvinax()
     InfoFrame_UpdatePlayersOnInfoFrame()
 	InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],affectionateCounter,core.groupSize)
 
-    --Player has gained Riposte
+    --Player has gained Affectionate
     if core.type == "SPELL_AURA_APPLIED" and (core.spellId == 452911 or core.spellId == 452931) then
         if core.destName ~= nil and riposteUID[core.spawn_uid_dest_Player] == nil then
             affectionateCounter = affectionateCounter + 1
@@ -86,7 +101,7 @@ function core._2657:BroodtwisterOvinax()
     end
 
     --Announce success once everyone has had the debuff at some point during the fight
-    if affectionateCounter == core.groupSize then
+    if affectionateCounter == core.groupSize and core:getBlizzardTrackingStatus(40263,1) == true then
         core:getAchievementSuccess()
         core.achievementsFailed[1] = false
     end
@@ -95,11 +110,31 @@ end
 function core._2657:SilkenCourt()
     --Defeat the Silken Court after Anub'arash and Takazj have gained the Bond of Friendship in Nerub-ar Palace on Normal difficulty or higher.
 
-    --TODO: https://www.wowhead.com/spell=458791/bond-of-friendship
+    --https://www.wowhead.com/spell=458791/bond-of-friendship
+
+    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 458791 and core:getBlizzardTrackingStatus(40730,1) == true then
+        core:getAchievementSuccess()
+    end
 end
 
 function core._2657:QueenAnsurek()
     --Defeat Queen Ansurek after all players use Abyssal Conduits to travel underneath her during Frothing Gluttony in Nerub-ar Palace on Normal difficulty or higher.
+
+    InfoFrame_UpdatePlayersOnInfoFrame()
+    InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],rollingAcidCounter,core.groupSize)
+
+    --https://www.wowhead.com/spell=445422/frothing-gluttony?dd=14&ddsize=30
+
+    --Detect the start of Frothing Gluttony
+    --If they use Abyssal conduits before finished, the mark as complete
+    if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 445422 then
+        frothingGluttonyActive = true
+        C_Timer.After(15, function()
+            frothingGluttonyActive = false;
+        end)
+    end
+
+    --TODO: Not sure how to detect when a player has gone into conduit?
 
     --TODO: InfoFrame to keep track of which players use Conduit during Frothing Gluttony
     --TODO: https://www.wowhead.com/spell=443915/abyssal-conduit?dd=14&ddsize=30
@@ -108,9 +143,19 @@ end
 function core._2657:NexusPrincessKyveza()
     --Defeat Nexus-Princess Ky'veza while she has an active Kill Streak in Nerub-ar Palace on Normal difficulty or higher.
 
-    --TODO: https://www.wowhead.com/spell=445943/kill-streak
-    --TODO: https://www.wowhead.com/spell=462139/kill-streak
-    --TODO: Announce when boss can be killed and if then falls off announce "do not kill boss"
+    if core.type == "SPELL_AURA_APPLIED" and (core.spellId == 445943 or core.spellId == 462139) and core:getBlizzardTrackingStatus(40264,1) == true then
+        core:getAchievementSuccess()
+        core.achievementsFailed[1] = false
+    end
+
+    if core.type == "SPELL_AURA_REMOVED" and (core.spellId == 445943 or core.spellId == 462139) then
+        core:getAchievementFailed()
+        core.achievementsCompleted[1] = false
+    end
+
+    --https://www.wowhead.com/spell=445943/kill-streak
+    --https://www.wowhead.com/spell=462139/kill-streak
+    --Announce when boss can be killed and if then falls off announce "do not kill boss"
 end
 
 function core._2657:Rashanan()
@@ -160,8 +205,47 @@ end
 function core._2657:TheBloodboundHorror()
     --Defeat The Bloodbound Horror after all players are Slimed! and then defeat a Volatile Ooze in Nerub-ar Palace on Normal difficulty or higher.
 
-    --TODO: InfoFrame lists all players incomplete
-    --TODO: https://www.wowhead.com/spell=453254/slimed
-    --TODO: https://www.wowhead.com/spell=433068/slimed
-    --TODO: https://www.wowhead.com/npc=225423/volatile-ooze
+    --https://www.wowhead.com/spell=453254/slimed
+    --https://www.wowhead.com/spell=433068/slimed
+    --https://www.wowhead.com/npc=225423/volatile-ooze
+
+    InfoFrame_UpdatePlayersOnInfoFrame()
+    InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],slimedCounter,core.groupSize)
+
+	if core.type == "UNIT_DIED" and core.destID == "214502" then
+        bloodboundHorrorKilled = true
+    end
+
+    if bloodboundHorrorKilled == false then
+        --Player has gained Slimed!
+        if core.type == "SPELL_AURA_APPLIED" and (core.spellId == 433068 or core.spellId == 453254) then
+			if core.destName ~= nil and slimedUID[core.spawn_uid_dest_Player] == nil then
+				slimedCounter = slimedCounter + 1
+				slimedUID[core.spawn_uid_dest_Player] = core.spawn_uid_dest_Player
+				core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. C_Spell.GetSpellLink(433068) .. " (" .. slimedCounter .. "/" .. core.groupSize .. ")",true)
+				InfoFrame_SetPlayerComplete(core.destName)
+			end
+        end
+
+        --Player has lost Slimed!
+        if core.type == "SPELL_AURA_REMOVED" and (core.spellId == 433068 or core.spellId == 453254) then
+			if core.destName ~= nil and slimedUID[core.spawn_uid_dest_Player] ~= nil then
+				slimedCounter = slimedCounter - 1
+				slimedUID[core.spawn_uid_dest_Player] = nil
+				core:sendMessage(core.destName .. " " .. L["Shared_HasLost"] .. " " .. C_Spell.GetSpellLink(433068) .. " (" .. slimedCounter .. "/" .. core.groupSize .. ")",true)
+				InfoFrame_SetPlayerFailed(core.destName)
+			end
+		end
+    end
+
+    --Volatile Ooze spawned
+    if core.destID == "225423" and volatileOozeFound == false then
+        core:sendMessage(format(L["Shared_KillTheAddNow"], getNPCName(225423)),true)
+        volatileOozeFound = true
+    end
+
+    --Achievement tracker white
+    if core:getBlizzardTrackingStatus(40260,1) == true then
+        core:getAchievementSuccess()
+    end
 end
