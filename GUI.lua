@@ -236,9 +236,11 @@ end
 
 function IAT_CheckForEscape(self, key)
     if key == "ESCAPE" then
-        Config:Toggle()
-        Config.UI:SetPropagateKeyboardInput(false)
-    else
+        if not InCombatLockdown() then
+            Config:Toggle()
+            Config.UI:SetPropagateKeyboardInput(false)
+        end
+    elseif not InCombatLockdown() then
         Config.UI:SetPropagateKeyboardInput(true)
     end
 end
