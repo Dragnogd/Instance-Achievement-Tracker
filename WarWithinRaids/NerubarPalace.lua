@@ -21,6 +21,8 @@ local riposteUID = {}
 ------------------------------------------------------
 local affectionateCounter = 0
 local affectionateUID = {}
+local belovedWormFound = false
+local belovedWormAnnounced = false
 
 ------------------------------------------------------
 ---- Rasha'nan
@@ -36,6 +38,7 @@ local rollingAcidTrackingNow = false
 local slimedCounter = 0
 local slimedUID = {}
 local bloodboundHorrorKilled = false
+local volatileOozeAnnounced = false
 local volatileOozeFound = false
 
 ------------------------------------------------------
@@ -81,7 +84,6 @@ function core._2657:Sikran()
     --Announce success once everyone has had the debuff at some point during the fight
     if riposteCounter == core.groupSize and core:getBlizzardTrackingStatus(40255,1) == true then
         core:getAchievementSuccess()
-        core.achievementsFailed[1] = false
     end
 end
 
@@ -110,7 +112,16 @@ function core._2657:BroodtwisterOvinax()
 
     --Announce success once everyone has had the debuff at some point during the fight
     if affectionateCounter == core.groupSize then
-        core:getAchievementSuccess()
+        --Wait for Beloved Worm to spawn
+        if belovedWormAnnounced == false then
+            belovedWormAnnounced = true
+            core:sendMessage(format(L["Shared_WaitForAddToSpawn"], getNPCName(225376)),true)
+        end
+
+        if (core.sourceID == "225376" or core.destID == "225376") and belovedWormFound == false then
+            belovedWormFound = true
+            core:getAchievementSuccess()
+        end
     end
 end
 
@@ -177,12 +188,13 @@ function core._2657:Rashanan()
 
     --SPELL_CAST_SUCCESS,Creature-0-2085-2657-25250-214504-00006C9315,"Rasha'nan",0x10a48,0x0,0000000000000000,nil,0x80000000,0x80000000,439789,"Rolling Acid",0x8,Creature-0-2085-2657-25250-214504-00006C9315,0000000000000000,3561245057,7137212500,0,0,42857,0,3,57,100,0,-3058.26,-58.32,2292,5.4978,83
     --SPELL_AURA_APPLIED,Creature-0-2085-2657-25250-214504-00006C96EB,"Rasha'nan",0x10a48,0x0,Player-4184-007B9FA7,"Yccdk-TheseGoToEleven",0x514,0x20,439786,"Rolling Acid",0x8,DEBUFF
+    --SPELL_AURA_APPLIED,Creature-0-4237-2657-3303-219669-0000E155BB,"Nerubian",0xa48,0x0,Player-633-0AD19526,"Magru-ShatteredHand-EU",0x514,0x0,439790,"Rolling Acid",0x8,DEBUFF
 
     InfoFrame_UpdatePlayersOnInfoFrame()
     InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],rollingAcidCounter,core.groupSize)
 
     --Player has got hit by a wave
-    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 439786 and rollingAcidUID[core.spawn_uid_dest_Player] == nil then
+    if core.type == "SPELL_AURA_APPLIED" and (core.spellId == 439786 or core.spellId == 439790) and rollingAcidUID[core.spawn_uid_dest_Player] == nil then
         --Reset the rolling acid counter and announce which players did not get hit
 
         --Mark them as complete
@@ -195,26 +207,31 @@ function core._2657:Rashanan()
         if rollingAcidTrackingNow == false then
             rollingAcidTrackingNow = true
 
-            C_Timer.After(10, function()
+            C_Timer.After(5, function()
+                --Announce which players did not get hit by wave
+                core:sendMessageSafe(core:getAchievement() .. " " .. L["Shared_PlayersWhoDidNotUse"] .. " " .. C_Spell.GetSpellLink(439786) .. " " .. InfoFrame_GetIncompletePlayers(),false,true)
+
+                if core:getBlizzardTrackingStatus(40262,1) == true then
+                    core:getAchievementSuccess()
+                elseif core:getBlizzardTrackingStatus(40262,1) == false then
+                    core:getAchievementFailed()
+                end
+
+                --Set all InfoFrames back to red ready for next wave as every wave had to be done to not fail achievement
+                --even if currently white
+                for player, status in pairs(core.InfoFrame_PlayersTable) do
+                    InfoFrame_SetPlayerNeutral(player)
+                end
+
                 --Reset ready for next wave
                 rollingAcidTrackingNow = false
                 rollingAcidCounter = 0
                 rollingAcidUID = {}
-
-                --Announce which players did not get hit by wave
-                core:sendMessageSafe(core:getAchievement() .. " " .. L["Shared_PlayersWhoDidNotUse"] .. " " .. C_Spell.GetSpellLink(439786) .. " " .. InfoFrame_GetIncompletePlayers(),true)
-
-                if core:getBlizzardTrackingStatus(40262,1) == true then
-                    core:getAchievementSuccess()
-                else
-                    --Set all InfoFrames back to red ready for next wave
-                    for player, status in pairs(core.InfoFrame_PlayersTable) do
-                        InfoFrame_SetPlayerNeutral(player)
-                    end
-                end
             end)
         end
     end
+
+
 end
 
 function core._2657:TheBloodboundHorror()
@@ -246,25 +263,21 @@ function core._2657:TheBloodboundHorror()
 				InfoFrame_SetPlayerComplete(core.destName)
 			end
         end
+    end
 
-        --Player has lost Slimed!
-        if core.type == "SPELL_AURA_REMOVED" and core.spellId == 453254 then
-			if core.destName ~= nil and slimedUID[core.spawn_uid_dest_Player] ~= nil then
-				slimedCounter = slimedCounter - 1
-				slimedUID[core.spawn_uid_dest_Player] = nil
-				core:sendMessage(core.destName .. " " .. L["Shared_HasLost"] .. " " .. C_Spell.GetSpellLink(453254) .. " (" .. slimedCounter .. "/" .. core.groupSize .. ")",true)
-				InfoFrame_SetPlayerFailed(core.destName)
-			end
-		end
+    --Volatile Ooze wait for spawn
+    if slimedCounter == core.groupSize and volatileOozeAnnounced == false then
+        core:sendMessage(format(L["Shared_WaitForAddToSpawn"], getNPCName(225423)),true)
+        volatileOozeAnnounced = true
     end
 
     --Volatile Ooze spawned
-    if core.destID == "225423" and volatileOozeFound == false then
+    if (core.sourceID == "225423" or core.destID == "225423") and volatileOozeFound == false then
         core:sendMessage(format(L["Shared_KillTheAddNow"], getNPCName(225423)),true)
         volatileOozeFound = true
     end
 
-    --Achievement tracker white
+    --Volatile Ooze killed so tracker will turn white
     if core:getBlizzardTrackingStatus(40260,1) == true then
         core:getAchievementSuccess()
     end
@@ -282,6 +295,8 @@ function core._2657:ClearVariables()
     ------------------------------------------------------
     affectionateCounter = 0
     affectionateUID = {}
+    belovedWormFound = false
+    belovedWormAnnounced = false
 
     ------------------------------------------------------
     ---- Rasha'nan
@@ -297,6 +312,7 @@ function core._2657:ClearVariables()
     slimedCounter = 0
     slimedUID = {}
     bloodboundHorrorKilled = false
+    volatileOozeAnnounced = false
     volatileOozeFound = false
 
     ------------------------------------------------------

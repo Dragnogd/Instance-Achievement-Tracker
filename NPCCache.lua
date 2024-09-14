@@ -799,4 +799,5 @@ core.NPCCacheClassic = {
 	[34035] =34035, --Feral Defender
 	[33572] =33572, --Steelforged Defender
 	[225423] =225423, --Volatile Ooze
+	[225376] =225376, --Beloved Worm
 }
