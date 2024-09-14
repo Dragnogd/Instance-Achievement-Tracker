@@ -739,6 +739,8 @@ core.NPCCache = {
 	[186151] =186151, --Balakar Khan
 	[184018] =184018, --Bromach
 	[2889] =2889, --Stonevault Trogg
+	[225423] =225423, --Volatile Ooze
+	[225376] =225376, --Beloved Worm
 }
 core.NPCCacheClassic = {
 	[29364] =29364, --Void Sentry
@@ -798,6 +800,4 @@ core.NPCCacheClassic = {
 	[33136] =33136, --Guardian of Yogg-Saron
 	[34035] =34035, --Feral Defender
 	[33572] =33572, --Steelforged Defender
-	[225423] =225423, --Volatile Ooze
-	[225376] =225376, --Beloved Worm
 }
