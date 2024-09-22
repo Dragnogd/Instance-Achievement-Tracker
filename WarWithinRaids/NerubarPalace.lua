@@ -31,6 +31,7 @@ local initialSetup = false
 local rollingAcidCounter = 0
 local rollingAcidUID = {}
 local rollingAcidTrackingNow = false
+local cowabungaFailed = false
 
 ------------------------------------------------------
 ---- The Bloodbound Horror
@@ -194,13 +195,13 @@ function core._2657:Rashanan()
     InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],rollingAcidCounter,core.groupSize)
 
     --Player has got hit by a wave
-    if core.type == "SPELL_AURA_APPLIED" and (core.spellId == 439786 or core.spellId == 439790) and rollingAcidUID[core.spawn_uid_dest_Player] == nil then
+    if core.type == "SPELL_AURA_APPLIED" and (core.spellId == 439786 or core.spellId == 439790) and rollingAcidUID[core.spawn_uid_dest_Player] == nil and cowabungaFailed == false then
         --Reset the rolling acid counter and announce which players did not get hit
 
         --Mark them as complete
         rollingAcidCounter = rollingAcidCounter + 1
         rollingAcidUID[core.spawn_uid_dest_Player] = core.spawn_uid_dest_Player
-        core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. C_Spell.GetSpellLink(439786) .. " (" .. rollingAcidCounter .. "/" .. core.groupSize .. ")",true)
+        --core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. C_Spell.GetSpellLink(439786) .. " (" .. rollingAcidCounter .. "/" .. core.groupSize .. ")",true)
         InfoFrame_SetPlayerComplete(core.destName)
 
         --Start a timer to reset InfoFrame once the wave cast has finished as if not all players complete acheievement we need to track for next wave
@@ -209,29 +210,36 @@ function core._2657:Rashanan()
 
             C_Timer.After(5, function()
                 --Announce which players did not get hit by wave
-                core:sendMessageSafe(core:getAchievement() .. " " .. L["Shared_PlayersWhoDidNotUse"] .. " " .. C_Spell.GetSpellLink(439786) .. " " .. InfoFrame_GetIncompletePlayers(),false,true)
 
                 if core:getBlizzardTrackingStatus(40262,1) == true then
                     core:getAchievementSuccess()
                 elseif core:getBlizzardTrackingStatus(40262,1) == false then
-                    core:getAchievementFailed()
+                    if string.len(InfoFrame_GetIncompletePlayers()) > 0 then
+                        --1: A player did not get hit. Announce players to chat
+                        core:getAchievementFailed()
+                        core:sendMessageSafe(InfoFrame_GetIncompletePlayers(),false,true)
+                    else
+                        --2: A player got hit by both waves. This is not possible to track af far as i'm aware so just announce a fail
+                        core:getAchievementFailedWithMessageAfter("(" .. L["Cowabunga_BothWaves"] .. ")")
+                    end
+                    cowabungaFailed = true
                 end
 
                 --Set all InfoFrames back to red ready for next wave as every wave had to be done to not fail achievement
                 --even if currently white
-                for player, status in pairs(core.InfoFrame_PlayersTable) do
-                    InfoFrame_SetPlayerNeutral(player)
-                end
+                if cowabungaFailed == false then
+                    for player, status in pairs(core.InfoFrame_PlayersTable) do
+                        InfoFrame_SetPlayerNeutral(player)
+                    end
 
-                --Reset ready for next wave
-                rollingAcidTrackingNow = false
-                rollingAcidCounter = 0
-                rollingAcidUID = {}
+                    --Reset ready for next wave
+                    rollingAcidTrackingNow = false
+                    rollingAcidCounter = 0
+                    rollingAcidUID = {}
+                end
             end)
         end
     end
-
-
 end
 
 function core._2657:TheBloodboundHorror()
@@ -305,6 +313,7 @@ function core._2657:ClearVariables()
     rollingAcidCounter = 0
     rollingAcidUID = {}
     rollingAcidTrackingNow = false
+    cowabungaFailed = false
 
     ------------------------------------------------------
     ---- The Bloodbound Horror
