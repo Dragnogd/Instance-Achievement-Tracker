@@ -43,6 +43,11 @@ local volatileOozeAnnounced = false
 local volatileOozeFound = false
 
 ------------------------------------------------------
+---- Nexus-Princess Ky'veza
+------------------------------------------------------
+local nexusPrincessKyvezaKilled = false
+
+------------------------------------------------------
 ---- Queen Ansurek
 ------------------------------------------------------
 local frothingGluttonyActive = false
@@ -175,7 +180,11 @@ function core._2657:NexusPrincessKyveza()
     --SPELL_AURA_REFRESH,Creature-0-4237-2657-3303-217748-000061675A,"Nexus-Princess Ky'veza",0x10a48,0x0,Creature-0-4237-2657-3303-217748-000061675A,"Nexus-Princess Ky'veza",0x10a48,0x0,462139,"Kill Streak"
     --SPELL_AURA_APPLIED_DOSE,Creature-0-4237-2657-3303-217748-000061675A,"Nexus-Princess Ky'veza",0x10a48,0x0,Creature-0-4237-2657-3303-217748-000061675A,"Nexus-Princess Ky'veza",0x10a48,0x0,462139,"Kill Streak",0x1,BUFF,7
 
-    if core:getBlizzardTrackingStatus(40264,1) == false then
+    if core.type == "UNIT_DIED" and core.destID == "217748" then
+        nexusPrincessKyvezaKilled = true
+    end
+
+    if core:getBlizzardTrackingStatus(40264,1) == false and nexusPrincessKyvezaKilled == false then
         core:getAchievementFailed()
     end
 end
@@ -323,6 +332,11 @@ function core._2657:ClearVariables()
     bloodboundHorrorKilled = false
     volatileOozeAnnounced = false
     volatileOozeFound = false
+
+    ------------------------------------------------------
+    ---- Nexus-Princess Ky'veza
+    ------------------------------------------------------
+    nexusPrincessKyvezaKilled = false
 
     ------------------------------------------------------
     ---- Queen Ansurek
