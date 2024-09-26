@@ -217,16 +217,37 @@ function core._2657:Rashanan()
         if rollingAcidTrackingNow == false then
             rollingAcidTrackingNow = true
 
-            C_Timer.After(5, function()
+            --Reset InfoFrame upon next wave starting rather than end of last wave
+            for player, status in pairs(core.InfoFrame_PlayersTable) do
+                InfoFrame_SetPlayerNeutral(player)
+            end
+            InfoFrame_SetPlayerComplete(core.destName)
+            rollingAcidCounter = 1
+
+            C_Timer.After(10, function()
                 --Announce which players did not get hit by wave
 
                 if core:getBlizzardTrackingStatus(40262,1) == true then
                     core:getAchievementSuccess()
+
+                    --Game is reporting success. Make sure our InfoFrame reflects then by
+                    --Setting all players to green
+                    for player,status in pairs(core.InfoFrame_PlayersTable) do
+                        InfoFrame_SetPlayerComplete(player)
+                    end
+                    rollingAcidCounter = core.groupSize
                 elseif core:getBlizzardTrackingStatus(40262,1) == false then
                     if string.len(InfoFrame_GetIncompletePlayers()) > 0 then
                         --1: A player did not get hit. Announce players to chat
                         core:getAchievementFailed()
                         core:sendMessageSafe(InfoFrame_GetIncompletePlayers(),false,true)
+
+                        --Set any players who failed to red on the InfoFrame
+                        for player,status in pairs(core.InfoFrame_PlayersTable) do
+                            if core.InfoFrame_PlayersTable[player] == 1 then
+                                InfoFrame_SetPlayerFailed(player)
+                            end
+                        end
                     else
                         --2: A player got hit by both waves. This is not possible to track af far as i'm aware so just announce a fail
                         core:getAchievementFailedWithMessageAfter("(" .. L["Cowabunga_BothWaves"] .. ")")
@@ -237,13 +258,8 @@ function core._2657:Rashanan()
                 --Set all InfoFrames back to red ready for next wave as every wave had to be done to not fail achievement
                 --even if currently white
                 if cowabungaFailed == false then
-                    for player, status in pairs(core.InfoFrame_PlayersTable) do
-                        InfoFrame_SetPlayerNeutral(player)
-                    end
-
                     --Reset ready for next wave
                     rollingAcidTrackingNow = false
-                    rollingAcidCounter = 0
                     rollingAcidUID = {}
                 end
             end)
