@@ -1048,5 +1048,6 @@ local baseLocale = {
 	["Delves_JustKeepSwimming"] = "",
 	["Delves_SpiderSenses"] = "",
 	["Delves_Daystormer"] = "",
+	["Cowabunga_BothWaves"] = "A player was hit by both waves",
 }
 core:RegisterLocale('enUS', baseLocale)
