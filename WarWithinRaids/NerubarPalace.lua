@@ -185,13 +185,13 @@ function core._2657:NexusPrincessKyveza()
         nexusPrincessKyvezaKilled = true
     end
 
-    if core.type == ("SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_APPLIED_DOSE") and core.spellId == 462139 then
+    if core.type == ("SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_APPLIED_DOSE") and (core.spellId == 462139 or core.spellId == 8936) then
         killStreakCounter = killStreakCounter + 1
-        core:sendMessage(core:getAchievement() .. C_Spell.GetSpellLink(462139) .. " " .. L["Core_Counter"] .. " (" .. killStreakCounter .. ")",true)
+        core:sendMessage(core:getAchievement() .. L["Core_Counter"] .. " (" .. killStreakCounter .. ")",true)
     end
 
     if nexusPrincessKyvezaKilled == false then
-        if core.type == "SPELL_AURA_REMOVED" and core.spellId == 462139 then
+        if core.type == "SPELL_AURA_REMOVED" and (core.spellId == 462139 or core.spellId == 8936) then
             core:getAchievementFailed()
         end
 
@@ -204,9 +204,9 @@ end
 function core._2657:Rashanan()
     --Defeat Rasha'nan after all players ride a single wave per cast of Rolling Acid in Nerub-ar Palace on Normal difficulty or higher.
 
-    --TODO: InfoFrame lists all players incomplete
-    --TODO: Reset between each wave and announce who didn't ride wave
-    --TODO: https://www.wowhead.com/spell=439786/rolling-acid Track using the movement speed debuff? as says "touches a wave"
+    --https://www.wowhead.com/spell=439786/rolling-acid Track using the movement speed debuff? as says "touches a wave"
+
+    --It doesn't appear to be possible to track the initial two players who get targetted by wave (439790) as it's marked as a private aura.
 
     --SPELL_CAST_SUCCESS,Creature-0-2085-2657-25250-214504-00006C9315,"Rasha'nan",0x10a48,0x0,0000000000000000,nil,0x80000000,0x80000000,439789,"Rolling Acid",0x8,Creature-0-2085-2657-25250-214504-00006C9315,0000000000000000,3561245057,7137212500,0,0,42857,0,3,57,100,0,-3058.26,-58.32,2292,5.4978,83
     --SPELL_AURA_APPLIED,Creature-0-2085-2657-25250-214504-00006C96EB,"Rasha'nan",0x10a48,0x0,Player-4184-007B9FA7,"Yccdk-TheseGoToEleven",0x514,0x20,439786,"Rolling Acid",0x8,DEBUFF
@@ -216,7 +216,7 @@ function core._2657:Rashanan()
     InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],rollingAcidCounter,core.groupSize)
 
     --Player has got hit by a wave
-    if core.type == "SPELL_AURA_APPLIED" and (core.spellId == 439786 or core.spellId == 439790) and rollingAcidUID[core.spawn_uid_dest_Player] == nil and cowabungaFailed == false then
+    if core.type == "SPELL_AURA_APPLIED" and (core.spellId == 439786 or core.spellId == 439790 or core.spellId == 8936) and rollingAcidUID[core.spawn_uid_dest_Player] == nil and cowabungaFailed == false then
         --Reset the rolling acid counter and announce which players did not get hit
 
         --Mark them as complete
@@ -262,24 +262,26 @@ function core._2657:Rashanan()
     end
 
     --We need to announce fail as soon as it happens as players might kill boss before IAT has announced a failure
-    if core:getBlizzardTrackingStatus(40262,1) == false then
-        cowabungaFailed = true
-        if string.len(InfoFrame_GetIncompletePlayers()) > 0 then
-            --1: A player did not get hit. Announce players to chat
-            core:getAchievementFailed()
-            core:sendMessageSafe(InfoFrame_GetIncompletePlayers(),false,true)
+    C_Timer.After(10, function()
+        if core:getBlizzardTrackingStatus(40262,1) == false or 1==1 then
+            cowabungaFailed = true
+            if string.len(InfoFrame_GetIncompletePlayers()) > 0 then
+                --1: A player did not get hit. Announce players to chat
+                core:getAchievementFailed()
+                core:sendMessageSafe(InfoFrame_GetIncompletePlayers(),false,true)
 
-            --Set any players who failed to red on the InfoFrame
-            for player,status in pairs(core.InfoFrame_PlayersTable) do
-                if core.InfoFrame_PlayersTable[player] == 1 then
-                    InfoFrame_SetPlayerFailed(player)
+                --Set any players who failed to red on the InfoFrame
+                for player,status in pairs(core.InfoFrame_PlayersTable) do
+                    if core.InfoFrame_PlayersTable[player] == 1 then
+                        InfoFrame_SetPlayerFailed(player)
+                    end
                 end
+            else
+                --2: A player got hit by both waves. This is not possible to track af far as i'm aware so just announce a fail
+                core:getAchievementFailedWithMessageAfter("(" .. L["Cowabunga_BothWaves"] .. ")")
             end
-        else
-            --2: A player got hit by both waves. This is not possible to track af far as i'm aware so just announce a fail
-            core:getAchievementFailedWithMessageAfter("(" .. L["Cowabunga_BothWaves"] .. ")")
         end
-    end
+    end)
 end
 
 function core._2657:TheBloodboundHorror()
