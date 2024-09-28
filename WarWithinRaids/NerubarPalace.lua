@@ -46,6 +46,7 @@ local volatileOozeFound = false
 ---- Nexus-Princess Ky'veza
 ------------------------------------------------------
 local nexusPrincessKyvezaKilled = false
+local killStreakCounter = 0
 
 ------------------------------------------------------
 ---- Queen Ansurek
@@ -184,8 +185,19 @@ function core._2657:NexusPrincessKyveza()
         nexusPrincessKyvezaKilled = true
     end
 
-    if core:getBlizzardTrackingStatus(40264,1) == false and nexusPrincessKyvezaKilled == false then
-        core:getAchievementFailed()
+    if core.type == ("SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_APPLIED_DOSE") and core.spellId == 462139 then
+        killStreakCounter = killStreakCounter + 1
+        core:sendMessage(core:getAchievement() .. C_Spell.GetSpellLink(462139) .. " " .. L["Core_Counter"] .. " (" .. killStreakCounter .. ")",true)
+    end
+
+    if nexusPrincessKyvezaKilled == false then
+        if core.type == "SPELL_AURA_REMOVED" and core.spellId == 462139 then
+            core:getAchievementFailed()
+        end
+
+        if core:getBlizzardTrackingStatus(40264,1) == false then
+            core:getAchievementFailed()
+        end
     end
 end
 
@@ -353,6 +365,7 @@ function core._2657:ClearVariables()
     ---- Nexus-Princess Ky'veza
     ------------------------------------------------------
     nexusPrincessKyvezaKilled = false
+    killStreakCounter = 0
 
     ------------------------------------------------------
     ---- Queen Ansurek
