@@ -217,7 +217,7 @@ function core._2657:Rashanan()
     InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],rollingAcidCounter,core.groupSize)
 
     --Player has got hit by a wave
-    if core.type == "SPELL_AURA_APPLIED" and (core.spellId == 439786 or core.spellId == 439790 or core.spellId == 8936) and rollingAcidUID[core.spawn_uid_dest_Player] == nil and cowabungaFailed == false then
+    if core.type == "SPELL_AURA_APPLIED" and (core.spellId == 439786 or core.spellId == 439790) and rollingAcidUID[core.spawn_uid_dest_Player] == nil and cowabungaFailed == false then
         --Reset the rolling acid counter and announce which players did not get hit
 
         --Mark them as complete
