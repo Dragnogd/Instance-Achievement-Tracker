@@ -188,7 +188,7 @@ function core._2657:NexusPrincessKyveza()
 
     if core.type == ("SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_APPLIED_DOSE") and core.spellId == 462139 then
         killStreakCounter = killStreakCounter + 1
-        core:sendMessage(core:getAchievement() .. L["Core_Counter"] .. " (" .. killStreakCounter .. ")",true)
+        core:sendMessage(core:getAchievement() .. " " .. L["Core_Counter"] .. " (" .. killStreakCounter .. ")",true)
     end
 
     if nexusPrincessKyvezaKilled == false then
