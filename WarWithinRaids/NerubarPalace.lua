@@ -248,23 +248,6 @@ function core._2657:Rashanan()
                         InfoFrame_SetPlayerComplete(player)
                     end
                     rollingAcidCounter = core.groupSize
-                elseif core:getBlizzardTrackingStatus(40262,1) == false then
-                    if string.len(InfoFrame_GetIncompletePlayers()) > 0 then
-                        --1: A player did not get hit. Announce players to chat
-                        core:getAchievementFailed()
-                        core:sendMessageSafe(InfoFrame_GetIncompletePlayers(),false,true)
-
-                        --Set any players who failed to red on the InfoFrame
-                        for player,status in pairs(core.InfoFrame_PlayersTable) do
-                            if core.InfoFrame_PlayersTable[player] == 1 then
-                                InfoFrame_SetPlayerFailed(player)
-                            end
-                        end
-                    else
-                        --2: A player got hit by both waves. This is not possible to track af far as i'm aware so just announce a fail
-                        core:getAchievementFailedWithMessageAfter("(" .. L["Cowabunga_BothWaves"] .. ")")
-                    end
-                    cowabungaFailed = true
                 end
 
                 --Set all InfoFrames back to red ready for next wave as every wave had to be done to not fail achievement
@@ -275,6 +258,26 @@ function core._2657:Rashanan()
                     rollingAcidUID = {}
                 end
             end)
+        end
+    end
+
+    --We need to announce fail as soon as it happens as players might kill boss before IAT has announced a failure
+    if core:getBlizzardTrackingStatus(40262,1) == false then
+        cowabungaFailed = true
+        if string.len(InfoFrame_GetIncompletePlayers()) > 0 then
+            --1: A player did not get hit. Announce players to chat
+            core:getAchievementFailed()
+            core:sendMessageSafe(InfoFrame_GetIncompletePlayers(),false,true)
+
+            --Set any players who failed to red on the InfoFrame
+            for player,status in pairs(core.InfoFrame_PlayersTable) do
+                if core.InfoFrame_PlayersTable[player] == 1 then
+                    InfoFrame_SetPlayerFailed(player)
+                end
+            end
+        else
+            --2: A player got hit by both waves. This is not possible to track af far as i'm aware so just announce a fail
+            core:getAchievementFailedWithMessageAfter("(" .. L["Cowabunga_BothWaves"] .. ")")
         end
     end
 end
