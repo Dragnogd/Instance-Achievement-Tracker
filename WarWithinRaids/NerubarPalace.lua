@@ -32,6 +32,7 @@ local rollingAcidCounter = 0
 local rollingAcidUID = {}
 local rollingAcidTrackingNow = false
 local cowabungaFailed = false
+local cowabungaSuccessAnnounced = false
 
 ------------------------------------------------------
 ---- The Bloodbound Horror
@@ -185,13 +186,13 @@ function core._2657:NexusPrincessKyveza()
         nexusPrincessKyvezaKilled = true
     end
 
-    if core.type == ("SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_APPLIED_DOSE") and (core.spellId == 462139 or core.spellId == 8936) then
+    if core.type == ("SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_APPLIED_DOSE") and core.spellId == 462139 then
         killStreakCounter = killStreakCounter + 1
         core:sendMessage(core:getAchievement() .. L["Core_Counter"] .. " (" .. killStreakCounter .. ")",true)
     end
 
     if nexusPrincessKyvezaKilled == false then
-        if core.type == "SPELL_AURA_REMOVED" and (core.spellId == 462139 or core.spellId == 8936) then
+        if core.type == "SPELL_AURA_REMOVED" and core.spellId == 462139 then
             core:getAchievementFailed()
         end
 
@@ -216,7 +217,7 @@ function core._2657:Rashanan()
     InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],rollingAcidCounter,core.groupSize)
 
     --Player has got hit by a wave
-    if core.type == "SPELL_AURA_APPLIED" and (core.spellId == 439786 or core.spellId == 439790) and rollingAcidUID[core.spawn_uid_dest_Player] == nil and cowabungaFailed == false then
+    if core.type == "SPELL_AURA_APPLIED" and (core.spellId == 439786 or core.spellId == 439790 or core.spellId == 8936) and rollingAcidUID[core.spawn_uid_dest_Player] == nil and cowabungaFailed == false then
         --Reset the rolling acid counter and announce which players did not get hit
 
         --Mark them as complete
@@ -236,11 +237,11 @@ function core._2657:Rashanan()
             InfoFrame_SetPlayerComplete(core.destName)
             rollingAcidCounter = 1
 
-            C_Timer.After(10, function()
+            C_Timer.After(5, function()
                 --Announce which players did not get hit by wave
-
                 if core:getBlizzardTrackingStatus(40262,1) == true then
                     core:getAchievementSuccess()
+                    cowabungaSuccessAnnounced = true
 
                     --Game is reporting success. Make sure our InfoFrame reflects then by
                     --Setting all players to green
@@ -248,6 +249,23 @@ function core._2657:Rashanan()
                         InfoFrame_SetPlayerComplete(player)
                     end
                     rollingAcidCounter = core.groupSize
+                elseif core:getBlizzardTrackingStatus(40262,1) == false then
+                    cowabungaFailed = true
+                    if string.len(InfoFrame_GetIncompletePlayers()) > 0 then
+                        --1: A player did not get hit. Announce players to chat
+                        core:getAchievementFailed()
+                        core:sendMessageSafe(InfoFrame_GetIncompletePlayers(),false,true)
+
+                        --Set any players who failed to red on the InfoFrame
+                        for player,status in pairs(core.InfoFrame_PlayersTable) do
+                            if core.InfoFrame_PlayersTable[player] == 1 then
+                                InfoFrame_SetPlayerFailed(player)
+                            end
+                        end
+                    else
+                        --2: A player got hit by both waves. This is not possible to track af far as i'm aware so just announce a fail
+                        core:getAchievementFailedWithMessageAfter("(" .. L["Cowabunga_BothWaves"] .. ")")
+                    end
                 end
 
                 --Set all InfoFrames back to red ready for next wave as every wave had to be done to not fail achievement
@@ -262,26 +280,10 @@ function core._2657:Rashanan()
     end
 
     --We need to announce fail as soon as it happens as players might kill boss before IAT has announced a failure
-    C_Timer.After(10, function()
-        if core:getBlizzardTrackingStatus(40262,1) == false then
-            cowabungaFailed = true
-            if string.len(InfoFrame_GetIncompletePlayers()) > 0 then
-                --1: A player did not get hit. Announce players to chat
-                core:getAchievementFailed()
-                core:sendMessageSafe(InfoFrame_GetIncompletePlayers(),false,true)
-
-                --Set any players who failed to red on the InfoFrame
-                for player,status in pairs(core.InfoFrame_PlayersTable) do
-                    if core.InfoFrame_PlayersTable[player] == 1 then
-                        InfoFrame_SetPlayerFailed(player)
-                    end
-                end
-            else
-                --2: A player got hit by both waves. This is not possible to track af far as i'm aware so just announce a fail
-                core:getAchievementFailedWithMessageAfter("(" .. L["Cowabunga_BothWaves"] .. ")")
-            end
-        end
-    end)
+    --Only do this after tracking has initially turned to success otherwise it would just announce fail on pull
+    if core:getBlizzardTrackingStatus(40262,1) == false and cowabungaSuccessAnnounced == true then
+        core:getAchievementFailed()
+    end
 end
 
 function core._2657:TheBloodboundHorror()
@@ -356,6 +358,7 @@ function core._2657:ClearVariables()
     rollingAcidUID = {}
     rollingAcidTrackingNow = false
     cowabungaFailed = false
+    cowabungaSuccessAnnounced = false
 
     ------------------------------------------------------
     ---- The Bloodbound Horror
