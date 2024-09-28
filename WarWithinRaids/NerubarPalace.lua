@@ -237,7 +237,7 @@ function core._2657:Rashanan()
             InfoFrame_SetPlayerComplete(core.destName)
             rollingAcidCounter = 1
 
-            C_Timer.After(5, function()
+            C_Timer.After(8, function()
                 --Announce which players did not get hit by wave
                 if core:getBlizzardTrackingStatus(40262,1) == true then
                     core:getAchievementSuccess()
