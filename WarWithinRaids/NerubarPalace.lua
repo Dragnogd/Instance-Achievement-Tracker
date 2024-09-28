@@ -278,12 +278,6 @@ function core._2657:Rashanan()
             end)
         end
     end
-
-    --We need to announce fail as soon as it happens as players might kill boss before IAT has announced a failure
-    --Only do this after tracking has initially turned to success otherwise it would just announce fail on pull
-    if core:getBlizzardTrackingStatus(40262,1) == false and cowabungaSuccessAnnounced == true then
-        core:getAchievementFailed()
-    end
 end
 
 function core._2657:TheBloodboundHorror()
