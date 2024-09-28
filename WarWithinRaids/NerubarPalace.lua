@@ -216,7 +216,7 @@ function core._2657:Rashanan()
     InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],rollingAcidCounter,core.groupSize)
 
     --Player has got hit by a wave
-    if core.type == "SPELL_AURA_APPLIED" and (core.spellId == 439786 or core.spellId == 439790 or core.spellId == 8936) and rollingAcidUID[core.spawn_uid_dest_Player] == nil and cowabungaFailed == false then
+    if core.type == "SPELL_AURA_APPLIED" and (core.spellId == 439786 or core.spellId == 439790) and rollingAcidUID[core.spawn_uid_dest_Player] == nil and cowabungaFailed == false then
         --Reset the rolling acid counter and announce which players did not get hit
 
         --Mark them as complete
@@ -263,7 +263,7 @@ function core._2657:Rashanan()
 
     --We need to announce fail as soon as it happens as players might kill boss before IAT has announced a failure
     C_Timer.After(10, function()
-        if core:getBlizzardTrackingStatus(40262,1) == false or 1==1 then
+        if core:getBlizzardTrackingStatus(40262,1) == false then
             cowabungaFailed = true
             if string.len(InfoFrame_GetIncompletePlayers()) > 0 then
                 --1: A player did not get hit. Announce players to chat
