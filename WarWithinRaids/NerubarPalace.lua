@@ -236,8 +236,12 @@ function core._2657:Rashanan()
             end
             InfoFrame_SetPlayerComplete(core.destName)
             rollingAcidCounter = 1
+            core.achievementsCompleted[1] = false
 
-            C_Timer.After(8, function()
+            --Announce tracking status in 6 seconds so do not kill boss yet
+            core:sendMessage(L["Shared_WaitForSuccess"],true)
+
+            C_Timer.After(6, function()
                 --Announce which players did not get hit by wave
                 if core:getBlizzardTrackingStatus(40262,1) == true then
                     core:getAchievementSuccess()
