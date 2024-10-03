@@ -741,6 +741,15 @@ core.NPCCache = {
 	[2889] =2889, --Stonevault Trogg
 	[225423] =225423, --Volatile Ooze
 	[225376] =225376, --Beloved Worm
+	[225880] =225880, --Spider Silk Grub
+	[225335] =225335, --Shifted Oozeling
+	[224610] =224610, --Surekian Weapon Rack
+	[225164] =225164, --Disheartened Worm
+	[217489] =217489, --Anub'arash
+	[228470] =228470, --Nexus-Princess Ky'veza
+	[223781] =223781, --Skeinspinner Takazj
+	[230877] =230877, --Ky'veza's Burn Book
+	[45136] =45136, --Brazier
 }
 core.NPCCacheClassic = {
 	[29364] =29364, --Void Sentry

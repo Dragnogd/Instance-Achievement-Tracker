@@ -147,8 +147,7 @@ local baseLocale = {
 	["Boss_IngvarThePlunderer"] = "劫掠者因格瓦尔",
 	["Boss_InstructorRazuvious"] = "教官拉苏维奥斯",
 	["Boss_Ionar"] = "艾欧纳尔",
-	["Boss_JedogaShadowseeker"] = "耶戈达·觅影者
-",
+	["Boss_JedogaShadowseeker"] = "耶戈达·觅影者",
 	["Boss_KelThuzad"] = "克尔苏加德",
 	["Boss_Keristasza"] = "克莉斯塔萨",
 	["Boss_KingDred"] = "暴龙之王爵德",
