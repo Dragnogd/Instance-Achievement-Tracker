@@ -251,7 +251,7 @@ local trackAchievementsUIAutomatic = false		--Whether the Track Achievement UI w
 -- Current Instance Variables
 --------------------------------------
 core.inInstance = false
-core.expansion = nil							--Current expansion of the particular instance
+core.expansion = 0								--Current expansion of the particular instance
 core.instanceType = nil							--Whether the instance is a dungeon or a raid
 core.instance = nil								--Name of the instance the player is currently in
 core.instanceNameSpaces = nil					--Instance name with spaces
@@ -653,7 +653,7 @@ function getInstanceInfomation()
 
 				--Make sure that we haven't enabled any instances present in retail that were refreshed from their classic counterparts
 				--When running on Classic wow
-				if core.expansion == nil then
+				if core.expansion == 0 then
 					instanceCompatible = false
 				elseif core.gameVersionMajor == 4 and core.expansion > 4 and instanceCompatible == true then
 					core:sendDebugMessage("This instance is not compatible on classic")
@@ -1759,7 +1759,7 @@ function checkAndClearInstanceVariables()
 		core:clearVariables()
 
 		--Reset Instance Variables
-		core.expansion = nil
+		core.expansion = 0
 		core.instanceType = nil
 		core.instance = nil
 		core.instanceNameSpaces = nil
