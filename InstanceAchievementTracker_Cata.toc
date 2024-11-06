@@ -1,4 +1,4 @@
-﻿## Interface: 40400
+﻿## Interface: 40401
 ## Notes: An addon for tracking the completion/faliure of instance achievements.
 ## Title:Instance Achievement Tracker
 ## Author: Whizzey
