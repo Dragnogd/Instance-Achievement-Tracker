@@ -1,5 +1,5 @@
 ﻿## Interface: 110005
-## Interface-Cata: 40400
+## Interface-Cata: 40401
 ## Notes: An addon for tracking the completion/faliure of instance achievements.
 ## Title:Instance Achievement Tracker
 ## Author: Whizzey
