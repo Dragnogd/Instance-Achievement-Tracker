@@ -37,6 +37,7 @@ Localization.zhTW.lua
 Localization.koKR.lua
 
 WarWithinRaids\NerubarPalace.lua
+WarWithinRaids\LiberationOfUndermine.lua
 
 WarWithinDelves\EarthcrawlMines.lua
 WarWithinDelves\FungalFolly.lua

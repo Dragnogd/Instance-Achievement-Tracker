@@ -1050,5 +1050,13 @@ local baseLocale = {
 	["Delves_SpiderSenses"] = "",
 	["Delves_Daystormer"] = "",
 	["Cowabunga_BothWaves"] = "A player was hit by both waves",
+	["LiberationOfUndermine_VexieAndTheGeargrinders"] = "",
+	["LiberationOfUndermine_CauldronOfCarnage"] = "",
+	["LiberationOfUndermine_RikReverb"] = "",
+	["LiberationOfUndermine_StixBunkjunker"] = "",
+	["LiberationOfUndermine_SprocketmongerLockenstock"] = "",
+	["LiberationOfUndermine_TheOneArmedBandit"] = "",
+	["LiberationOfUndermine_MugZeeHeadsOfSecurity"] = "",
+	["LiberationOfUndermine_ChromeKingGallywix"] = "",
 }
 core:RegisterLocale('enUS', baseLocale)
