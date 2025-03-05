@@ -1052,11 +1052,17 @@ local baseLocale = {
 	["Cowabunga_BothWaves"] = "A player was hit by both waves",
 	["LiberationOfUndermine_VexieAndTheGeargrinders"] = "",
 	["LiberationOfUndermine_CauldronOfCarnage"] = "",
+	["LiberationOfUndermine_CauldronOfCarnage2"] = "",
+	["LiberationOfUndermine_CauldronOfCarnage3"] = "",
 	["LiberationOfUndermine_RikReverb"] = "",
 	["LiberationOfUndermine_StixBunkjunker"] = "",
 	["LiberationOfUndermine_SprocketmongerLockenstock"] = "",
 	["LiberationOfUndermine_TheOneArmedBandit"] = "",
+	["LiberationOfUndermine_TheOneArmedBandit2"] = "",
+	["LiberationOfUndermine_TheOneArmedBandit3"] = "",
+	["LiberationOfUndermine_TheOneArmedBandit4"] = "",
 	["LiberationOfUndermine_MugZeeHeadsOfSecurity"] = "",
+	["LiberationOfUndermine_MugZeeHeadsOfSecurity2"] = "",
 	["LiberationOfUndermine_ChromeKingGallywix"] = "",
 }
 core:RegisterLocale('enUS', baseLocale)

@@ -1,5 +1,5 @@
 --------------------------------------
--- Last Auto Generated: 03/03/2025 20:26:39
+-- Last Auto Generated: 05/03/2025 19:57:28
 --------------------------------------
 local _, core = ...
 local L = core.L
@@ -106,7 +106,7 @@ core.Instances = {
 				},
 			},
 
-			[2706] = { --Undermine
+			[2769] = { --Undermine
 				name = 1296,
 				boss1 = {
 					name = 2639, --Vexie and the Geargrinders
@@ -132,17 +132,39 @@ core.Instances = {
 					displayInfoFrame = true,
 				},
 				boss3 = {
+					name = 2640, --Cauldron of Carnage
+					bossIDs = {},
+					achievement = 41694,
+					players = {},
+					tactics = L["LiberationOfUndermine_CauldronOfCarnage2"],
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 3010,
+				},
+				boss4 = {
+					name = 2640, --Cauldron of Carnage
+					bossIDs = {},
+					achievement = 41695,
+					players = {},
+					tactics = L["LiberationOfUndermine_CauldronOfCarnage3"],
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 3010,
+				},
+				boss5 = {
 					name = 2641, --Rik Reverb
 					bossIDs = {},
 					achievement = 41338,
 					players = {},
 					tactics = L["LiberationOfUndermine_RikReverb"],
-					enabled = false,
-					track = nil,
+					enabled = true,
+					track = function() core._2769:RikReverb() end,
 					partial = false,
 					encounterID = 3011,
 				},
-				boss4 = {
+				boss6 = {
 					name = 2642, --Stix Bunkjunker
 					bossIDs = {},
 					achievement = 41596,
@@ -153,7 +175,7 @@ core.Instances = {
 					partial = false,
 					encounterID = 3012,
 				},
-				boss5 = {
+				boss7 = {
 					name = 2640, --Sprocketmonger Lockenstock
 					bossIDs = {},
 					achievement = 41711,
@@ -165,18 +187,51 @@ core.Instances = {
 					encounterID = 3010,
 					displayInfoFrame = true,
 				},
-				boss6 = {
+				boss8 = {
 					name = 2644, --The One-Armed Bandit
 					bossIDs = {},
 					achievement = 41119,
 					players = {},
 					tactics = L["LiberationOfUndermine_TheOneArmedBandit"],
+					enabled = true,
+					track = function() core._2769:OneArmedBandit() end,
+					partial = false,
+					encounterID = 3014,
+				},
+				boss9 = {
+					name = 2644, --The One-Armed Bandit
+					bossIDs = {},
+					achievement = 41120,
+					players = {},
+					tactics = L["LiberationOfUndermine_TheOneArmedBandit2"],
 					enabled = false,
 					track = nil,
 					partial = false,
 					encounterID = 3014,
 				},
-				boss7 = {
+				boss10 = {
+					name = 2644, --The One-Armed Bandit
+					bossIDs = {},
+					achievement = 41121,
+					players = {},
+					tactics = L["LiberationOfUndermine_TheOneArmedBandit3"],
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 3014,
+				},
+				boss11 = {
+					name = 2644, --The One-Armed Bandit
+					bossIDs = {},
+					achievement = 41122,
+					players = {},
+					tactics = L["LiberationOfUndermine_TheOneArmedBandit4"],
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 3014,
+				},
+				boss12 = {
 					name = 2645, --Mug'Zee Heads of Security
 					bossIDs = {},
 					achievement = 41337,
@@ -188,14 +243,25 @@ core.Instances = {
 					encounterID = 3015,
 					displayInfoFrame = true,
 				},
-				boss8 = {
+				boss13 = {
+					name = 2645, --Mug'Zee Heads of Security
+					bossIDs = {},
+					achievement = 41211,
+					players = {},
+					tactics = L["LiberationOfUndermine_MugZeeHeadsOfSecurity2"],
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 3015,
+				},
+				boss14 = {
 					name = 2646, --Chrome King Gallywix
 					bossIDs = {},
 					achievement = 41347,
 					players = {},
 					tactics = L["LiberationOfUndermine_ChromeKingGallywix"],
-					enabled = false,
-					track = nil,
+					enabled = true,
+					track = function() core._2769:ChromeKingGallywix() end,
 					partial = false,
 					encounterID = 3016,
 				},
