@@ -103,7 +103,7 @@ function core._2769:CauldronOfCarnage()
 	end
 
     if hubrisCounter == #core.currentBosses[1].players then
-        core:getAchievementSuccess()
+        core:getAchievementSuccess(41554)
     end
 end
 
@@ -226,12 +226,16 @@ function core._2769:MugZeeHeadsOfSecurity()
 
     --Announce success once everyone has had the debuff at some point during the fight
     if sleptWithTheFishesCounter == core.groupSize and core:getBlizzardTrackingStatus(41337,1) == true then
-        core:getAchievementSuccess()
+        core:getAchievementSuccess(41337)
     end
 end
 
 function core._2769:OneArmedBandit()
     --Defeat the One-Armed Bandit after activating one Chip Defense Machine in Liberation of Undermine on Normal difficulty or higher.
+
+    if core:getBlizzardTrackingStatus(41119) == true then
+        core:getAchievementSuccess(41119)
+    end
 end
 
 function core._2769:RikReverb()
@@ -239,6 +243,10 @@ function core._2769:RikReverb()
 
     --https://www.wowhead.com/ptr-2/spell=1218446/d-i-s-c-o
     --https://www.wowhead.com/ptr-2/spell=1218440/d-i-s-c-o
+
+    if core:getBlizzardTrackingStatus(41338, 1) == true then
+        core:getAchievementSuccess()
+    end
 end
 
 function core._2769:StixBunkjunker()
@@ -253,6 +261,10 @@ function core._2769:ChromeKingGallywix()
     --Defeat Chrome King Gallywix after Giga Bomb Detonation-ing 3 Giga Controls during a single Giga Coils in Liberation of Undermine on Normal difficulty or higher.
 
     --TODO: Not sure. Combat logs inconclusive
+
+    if core:getBlizzardTrackingStatus(41347, 1) == true then
+        core:getAchievementSuccess()
+    end
 end
 
 function core._2769:ClearVariables()
