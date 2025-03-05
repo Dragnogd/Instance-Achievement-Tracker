@@ -132,7 +132,7 @@ function generateNPCCache()
 		end
 
 		generateNPCs = C_Timer.NewTicker(0.01, function()
-			--core:sendDebugMessage("Fetching: " .. tempNPC[count] .. "(" .. count .. "/" .. #tempNPC .. ")")
+			core:sendDebugMessage("Fetching: " .. tempNPC[count] .. "(" .. count .. "/" .. #tempNPC .. ")")
 			GetNameFromNpcIDCache(tempNPC[count])
 			count = count + 1
 
