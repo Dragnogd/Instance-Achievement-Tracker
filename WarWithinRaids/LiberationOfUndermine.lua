@@ -37,6 +37,12 @@ local sleptWithTheFishesCounter = 0
 ------------------------------------------------------
 local hubrisCounter = 0
 
+------------------------------------------------------
+---- Stix Bunkjunker
+------------------------------------------------------
+local electromagneticSortingFirstCast = true
+local electromagneticSortingCompleted = false
+
 function core._2769:VexieAndTheGeargrinders()
     --Defeat Vexie and the Geargrinders after crashing a bike into the following objects in the Liberation of Undermine on Normal difficulty or higher.
 
@@ -214,7 +220,7 @@ function core._2769:MugZeeHeadsOfSecurity()
     InfoFrame_UpdatePlayersOnInfoFrame()
 	InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],sleptWithTheFishesCounter,core.groupSize)
 
-    --Player has gained Riposte
+    --Player has gained Slept With the Fishes
     if core.type == "SPELL_AURA_APPLIED" and core.spellId == 1216669 then
         if core.destName ~= nil and sleptWithTheFishesUID[core.spawn_uid_dest_Player] == nil then
             sleptWithTheFishesCounter = sleptWithTheFishesCounter + 1
@@ -252,9 +258,38 @@ end
 function core._2769:StixBunkjunker()
     --Defeat Stix Bunkjunker after absorbing or incinerating every Garbage Pile created by Electromagnetic Sorting before the next cast of Electromagnetic Sorting in Liberation of Undermine on Normal difficulty or higher.
 
-    --Blizzard tracking?
-    --Can we track how many garabage piles there are. Is it fixed amount or random each time?
-    --Does this reset each time?
+    --Goes red & white with every cast & clear
+    --SPELL_CAST_SUCCESS,Vehicle-0-3771-2769-22301-230322-000048BAF0,"Stix Bunkjunker",0x10a48,0x0,0000000000000000,nil,0x80000000,0x80000000,464399,"Electromagnetic Sorting",0x1,0000000000000000,0000000000000000,0,0,0,0,0,0,0,0,-1,0,0,0,0.00,0.00,2406,0.0000,0
+
+    -- Electromagnetic Sorting
+    if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 464399 then
+        if electromagneticSortingFirstCast == true then
+            -- On the first cast the tracker will be red as the boss needs to cast this in order for playing to start collecting
+            electromagneticSortingFirstCast = false
+        else
+            -- If tracker did not turn green before the next cast of elctromagnetic sorting then the achievement has been failed
+            if electromagneticSortingCompleted == false then
+                -- Confirm our tracking aligns with the blizzard tracker
+                if core:getBlizzardTrackingStatus(41338, 1) == false then
+                    core:getAchievementFailed()
+                end
+            end
+        end
+
+        -- Reset tracking success
+        core.achievementsCompleted[1] = false
+        electromagneticSortingCompleted = false
+
+        -- Announce to players that we are waiting for criteria to be met again and not to kill boss yet
+        core:sendMessage(L["Shared_WaitForSuccess"],true)
+    end
+
+    -- Achievement completed for the latest electromagnetic sorting
+    if core:getBlizzardTrackingStatus(41338, 1) == true and electromagneticSortingCompleted == false then
+        electromagneticSortingCompleted = true
+        core:getAchievementSuccess()
+        core.achievementsFailed[1] = false
+    end
 end
 
 function core._2769:ChromeKingGallywix()
@@ -294,4 +329,10 @@ function core._2769:ClearVariables()
     ---- Cauldron of Carnage
     ------------------------------------------------------
     hubrisCounter = 0
+
+    ------------------------------------------------------
+    ---- Stix Bunkjunker
+    ------------------------------------------------------
+    electromagneticSortingFirstCast = true
+    electromagneticSortingCompleted = false
 end
