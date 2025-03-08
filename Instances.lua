@@ -1,5 +1,5 @@
 --------------------------------------
--- Last Auto Generated: 05/03/2025 19:57:28
+-- Last Auto Generated: 08/03/2025 08:23:32
 --------------------------------------
 local _, core = ...
 local L = core.L
@@ -170,8 +170,8 @@ core.Instances = {
 					achievement = 41596,
 					players = {},
 					tactics = L["LiberationOfUndermine_StixBunkjunker"],
-					enabled = false,
-					track = nil,
+					enabled = true,
+					track = function() core._2769:StixBunkjunker() end,
 					partial = false,
 					encounterID = 3012,
 				},
