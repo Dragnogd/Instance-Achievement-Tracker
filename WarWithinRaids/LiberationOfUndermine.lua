@@ -270,7 +270,7 @@ function core._2769:StixBunkjunker()
             -- If tracker did not turn green before the next cast of elctromagnetic sorting then the achievement has been failed
             if electromagneticSortingCompleted == false then
                 -- Confirm our tracking aligns with the blizzard tracker
-                if core:getBlizzardTrackingStatus(41338, 1) == false then
+                if core:getBlizzardTrackingStatus(41596, 1) == false then
                     core:getAchievementFailed()
                 end
             end
@@ -285,7 +285,7 @@ function core._2769:StixBunkjunker()
     end
 
     -- Achievement completed for the latest electromagnetic sorting
-    if core:getBlizzardTrackingStatus(41338, 1) == true and electromagneticSortingCompleted == false then
+    if core:getBlizzardTrackingStatus(41596, 1) == true and electromagneticSortingCompleted == false then
         electromagneticSortingCompleted = true
         core:getAchievementSuccess()
         core.achievementsFailed[1] = false
