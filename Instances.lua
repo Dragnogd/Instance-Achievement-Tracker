@@ -1,5 +1,5 @@
 --------------------------------------
--- Last Auto Generated: 08/03/2025 08:23:32
+-- Last Auto Generated: 09/03/2025 12:34:39
 --------------------------------------
 local _, core = ...
 local L = core.L
@@ -176,7 +176,7 @@ core.Instances = {
 					encounterID = 3012,
 				},
 				boss7 = {
-					name = 2640, --Sprocketmonger Lockenstock
+					name = 2653, --Sprocketmonger Lockenstock
 					bossIDs = {},
 					achievement = 41711,
 					players = {},
@@ -184,7 +184,7 @@ core.Instances = {
 					enabled = true,
 					track = function() core._2769:SprocketmongerLockenstock() end,
 					partial = false,
-					encounterID = 3010,
+					encounterID = 3013,
 					displayInfoFrame = true,
 				},
 				boss8 = {
