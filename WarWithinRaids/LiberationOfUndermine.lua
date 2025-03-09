@@ -42,6 +42,7 @@ local hubrisCounter = 0
 ------------------------------------------------------
 local electromagneticSortingFirstCast = true
 local electromagneticSortingCompleted = false
+local electromagneticSortingFailed = false
 
 function core._2769:VexieAndTheGeargrinders()
     --Defeat Vexie and the Geargrinders after crashing a bike into the following objects in the Liberation of Undermine on Normal difficulty or higher.
@@ -90,6 +91,7 @@ function core._2769:CauldronOfCarnage()
     --https://www.wowhead.com/ptr-2/item=236413/shockproof-soda
     --TODO: Potions cannot be drunk until you are in combat with the boss
     --TODO: Infoframe for all players who need achievement as says "Survived your own hurbris" so presume personal
+    --TODO: Track both potions to see when players have applied them as they have a minute cooldown
 
     InfoFrame_UpdatePlayersOnInfoFramePersonal()
 	InfoFrame_SetHeaderCounter(L["Shared_PlayersWhoNeedAchievement"],hubrisCounter,#core.currentBosses[1].players)
@@ -264,31 +266,31 @@ function core._2769:StixBunkjunker()
     -- Electromagnetic Sorting
     if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 464399 then
         if electromagneticSortingFirstCast == true then
-            -- On the first cast the tracker will be red as the boss needs to cast this in order for playing to start collecting
+            -- On the first cast the tracker will be red as the boss needs to cast this in order for playing to start collecting garbage the first time round
             electromagneticSortingFirstCast = false
         else
-            -- If tracker did not turn green before the next cast of elctromagnetic sorting then the achievement has been failed
+            -- A new electromagic sorting was cast. Check if we completed in time
             if electromagneticSortingCompleted == false then
-                -- Confirm our tracking aligns with the blizzard tracker
-                if core:getBlizzardTrackingStatus(41596, 1) == false then
-                    core:getAchievementFailed()
-                end
+                -- Not completed in time
+                electromagneticSortingFailed = true
             end
         end
 
         -- Reset tracking success
         core.achievementsCompleted[1] = false
         electromagneticSortingCompleted = false
-
-        -- Announce to players that we are waiting for criteria to be met again and not to kill boss yet
         core:sendMessage(L["Shared_WaitForSuccess"],true)
+    end
+
+    -- Announce fail if sorting was not completed in time
+    if core:getBlizzardTrackingStatus(41596, 1) == false and electromagneticSortingFailed == true then
+        core:getAchievementFailed()
     end
 
     -- Achievement completed for the latest electromagnetic sorting
     if core:getBlizzardTrackingStatus(41596, 1) == true and electromagneticSortingCompleted == false then
         electromagneticSortingCompleted = true
         core:getAchievementSuccess()
-        core.achievementsFailed[1] = false
     end
 end
 
@@ -335,4 +337,5 @@ function core._2769:ClearVariables()
     ------------------------------------------------------
     electromagneticSortingFirstCast = true
     electromagneticSortingCompleted = false
+    electromagneticSortingFailed = false
 end
