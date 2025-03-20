@@ -133,7 +133,7 @@ function core._2769:SprocketmongerLockenstock()
 
     if core.destName ~= nil then
         local name, realm = UnitName(core.destName)
-        if core:has_value(core.Instances[core.expansion][core.instanceType][core.instance]["boss8"].players, name) == true then
+        if core:has_value(core.Instances[core.expansion][core.instanceType][core.instance]["boss7"].players, name) == true then
             --Blazing Beam (Line of fire, stand in to get periodic damage)
             --SPELL_PERIODIC_DAMAGE,Creature-0-5770-2769-2977-230358-000013F63B,"Beam Turret",0xa48,0x0,Player-5764-003F6606,"Quin-Fyrakk-TR",0x512,0x0,1216415,"Blazing Beam",0x4,Player-5764-003F6606,0000000000000000,3231481,9952588,7117,84492,31576,0,0,0,0,2500000,2500000,0,-411.82,876.79,2428,1.6994,644,3440482,4192540,-1,4,0,0,382275,nil,nil,nil,ST
             --https://www.wowhead.com/ptr-2/spell=1216414/blazing-beam
