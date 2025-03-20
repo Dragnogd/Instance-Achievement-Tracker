@@ -276,10 +276,15 @@ function core._2769:StixBunkjunker()
             end
         end
 
-        -- Reset tracking success
-        core.achievementsCompleted[1] = false
-        electromagneticSortingCompleted = false
         core:sendMessage(L["Shared_WaitForSuccess"],true)
+
+        -- Delay checking for achievement success/failure as tracker is slow to update
+        -- This will prevent announcing success as soon as electromagic sorting has started to cast again
+        C_Timer.After(5, function()
+            -- Reset tracking success
+            core.achievementsCompleted[1] = false
+            electromagneticSortingCompleted = false
+        end)
     end
 
     -- Announce fail if sorting was not completed in time
