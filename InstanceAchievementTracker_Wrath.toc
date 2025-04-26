@@ -1,5 +1,5 @@
 ﻿## Interface: 30403
-## Notes: An addon for tracking the completion/faliure of instance achievements.
+## Notes: An addon for tracking the completion/failure of instance achievements.
 ## Title:Instance Achievement Tracker
 ## Author: Whizzey
 ## Version: 4.44.0
