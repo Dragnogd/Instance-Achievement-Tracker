@@ -132,7 +132,7 @@ function generateNPCCache()
 		end
 
 		generateNPCs = C_Timer.NewTicker(0.01, function()
-			core:sendDebugMessage("Fetching: " .. tempNPC[count] .. "(" .. count .. "/" .. #tempNPC .. ")")
+			--core:sendDebugMessage("Fetching: " .. tempNPC[count] .. "(" .. count .. "/" .. #tempNPC .. ")")
 			GetNameFromNpcIDCache(tempNPC[count])
 			count = count + 1
 
@@ -555,12 +555,12 @@ function getInstanceInfomation()
 					if core.difficultyID == 3 or core.difficultyID == 5 then
 						--10 Man
 						core:sendDebugMessage("Detected Legacy 10 man Raid")
-						core.instance = core.instance .. -10
+						core.instance = core.instance .. ".1"
 						core:sendDebugMessage("New Instance Name: " .. core.instance)
 					elseif core.difficultyID == 4 or core.difficultyID == 6 then
 						--25 Man
 						core:sendDebugMessage("Detected Legacy 25 man raid")
-						core.instance = core.instance .. -25
+						core.instance = core.instance .. ".25"
 						core:sendDebugMessage("New Instance Name: " .. core.instance)
 					end
 				end
@@ -570,12 +570,12 @@ function getInstanceInfomation()
 					if core.difficultyID == 175 or core.difficultyID == 193 then
 						--10 Man
 						core:sendDebugMessage("Detected Legacy 10 man Raid (wrath classic ulduar)")
-						core.instance = core.instance .. -10
+						core.instance = core.instance .. ".1"
 						core:sendDebugMessage("New Instance Name: " .. core.instance)
 					elseif core.difficultyID == 176 or core.difficultyID == 194 then
 						--25 Man
 						core:sendDebugMessage("Detected Legacy 25 man raid (wrath classic ulduar)s")
-						core.instance = core.instance .. -25
+						core.instance = core.instance .. ".25"
 						core:sendDebugMessage("New Instance Name: " .. core.instance)
 					end
 				end
@@ -584,7 +584,7 @@ function getInstanceInfomation()
 				for expansion,_ in pairs(core.Instances) do
 					for instanceType,_ in pairs(core.Instances[expansion]) do
 						for instance,_ in pairs(core.Instances[expansion][instanceType]) do
-							if instance == core.instance then
+							if tostring(instance) == tostring(core.instance) then
 								core.expansion = expansion
 								core.instanceType = instanceType
 								core.instance = instance
