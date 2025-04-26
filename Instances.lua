@@ -1,5 +1,5 @@
 --------------------------------------
--- Last Auto Generated: 26/04/2025 12:17:19
+-- Last Auto Generated: 26/04/2025 14:42:37
 --------------------------------------
 local _, core = ...
 local L = core.L
@@ -6171,6 +6171,7 @@ core.Instances = {
 					track = function() core._755:Lockmaw() end,
 					partial = false,
 					encounterID = 1054,
+					displayInfoFrame = true,
 					tacticsClassic = "",
 				},
 				boss2 = {
@@ -6512,7 +6513,7 @@ core.Instances = {
 	--Wrath of the Lich King
 	[3] = {
 		Raids = {
-			["615-10"] = { --Obsidian Sanctum 10 Man
+			[615.10] = { --Obsidian Sanctum 10 Man
 				name = 755,
 				nameLocalised = L["Instance_TheObsidianSanctum"],
 				classicPhase = 1,
@@ -6589,7 +6590,7 @@ core.Instances = {
 				},
 			},
 
-			["615-25"] = { --Obsidian Sanctum 25 Man
+			[615.25] = { --Obsidian Sanctum 25 Man
 				name = 755,
 				nameLocalised = L["Instance_TheObsidianSanctum"],
 				classicPhase = 1,
@@ -6666,7 +6667,7 @@ core.Instances = {
 				},
 			},
 
-			["616-10"] = { --Eye of Eternity 10 Man
+			[616.10] = { --Eye of Eternity 10 Man
 				name = 756,
 				nameLocalised = L["Instance_TheEyeOfEternity"],
 				classicPhase = 1,
@@ -6715,7 +6716,7 @@ core.Instances = {
 				},
 			},
 
-			["616-25"] = { --Eye of Eternity 25 Man
+			[616.25] = { --Eye of Eternity 25 Man
 				name = 756,
 				nameLocalised = L["Instance_TheEyeOfEternity"],
 				classicPhase = 1,
@@ -6763,7 +6764,7 @@ core.Instances = {
 				},
 			},
 
-			["249-10"] = { --Onyxia's Lair 10 Man
+			[249.10] = { --Onyxia's Lair 10 Man
 				name = 760,
 				nameLocalised = L["Instance_OnyxiasLair"],
 				classicPhase = 3,
@@ -6808,7 +6809,7 @@ core.Instances = {
 				},
 			},
 
-			["249-25"] = { --Onyxia's Lair 25 Man
+			[249.25] = { --Onyxia's Lair 25 Man
 				name = 760,
 				nameLocalised = L["Instance_OnyxiasLair"],
 				classicPhase = 3,
@@ -6853,7 +6854,7 @@ core.Instances = {
 				},
 			},
 
-			["649-10"] = { --Trial of the Crusader 10 Man
+			[649.10] = { --Trial of the Crusader 10 Man
 				name = 757,
 				nameLocalised = L["Instance_TrialOfTheCrusader"],
 				classicPhase = 3,
@@ -6938,7 +6939,7 @@ core.Instances = {
 				},
 			},
 
-			["649-25"] = { --Trial of the Crusader 25 Man
+			[649.25] = { --Trial of the Crusader 25 Man
 				name = 757,
 				nameLocalised = L["Instance_TrialOfTheCrusader"],
 				classicPhase = 3,
@@ -7010,7 +7011,7 @@ core.Instances = {
 				},
 			},
 
-			["624-10"] = { --Vault of Archavon 10 Man
+			[624.10] = { --Vault of Archavon 10 Man
 				name = 753,
 				nameLocalised = L["Instance_VaultOfArchavon"],
 				classicPhase = 1,
@@ -7029,7 +7030,7 @@ core.Instances = {
 				},
 			},
 
-			["624-25"] = { --Vault of Archavon 25 Man
+			[624.25] = { --Vault of Archavon 25 Man
 				name = 753,
 				nameLocalised = L["Instance_VaultOfArchavon"],
 				classicPhase = 1,
@@ -7862,7 +7863,7 @@ core.Instances = {
 				},
 			},
 
-			["603-10"] = { --Ulduar 10 Man
+			[603.10] = { --Ulduar 10 Man
 				name = 759,
 				nameLocalised = L["Instance_Ulduar"],
 				classicPhase = 2,
@@ -8731,7 +8732,7 @@ core.Instances = {
 				},
 			},
 
-			["603-25"] = { --Ulduar 25 Man
+			[603.25] = { --Ulduar 25 Man
 				name = 759,
 				nameLocalised = L["Instance_Ulduar"],
 				classicPhase = 2,
@@ -9600,7 +9601,7 @@ core.Instances = {
 				},
 			},
 
-			["533-10"] = { --Naxxramas 10 Man
+			[533.10] = { --Naxxramas 10 Man
 				name = 754,
 				nameLocalised = L["Instance_Naxxramas"],
 				classicPhase = 1,
@@ -9761,7 +9762,7 @@ core.Instances = {
 				},
 			},
 
-			["533-25"] = { --Naxxramas 25 Man
+			[533.25] = { --Naxxramas 25 Man
 				name = 754,
 				nameLocalised = L["Instance_Naxxramas"],
 				classicPhase = 1,
@@ -9922,7 +9923,7 @@ core.Instances = {
 				},
 			},
 
-			["631-10"] = { --Icecrown Citadel 10 Man
+			[631.10] = { --Icecrown Citadel 10 Man
 				name = 758,
 				nameLocalised = L["Instance_IcecrownCitadel"],
 				classicPhase = 4,
@@ -10097,7 +10098,7 @@ core.Instances = {
 				},
 			},
 
-			["631-25"] = { --Icecrown Citadel 25 Man
+			[631.25] = { --Icecrown Citadel 25 Man
 				name = 758,
 				nameLocalised = L["Instance_IcecrownCitadel"],
 				classicPhase = 4,
