@@ -329,6 +329,9 @@ function BossContentMixin:Init(elementData)
     local tactics = elementData.boss.tactics:gsub("%\n", "<br />")
     local tacticsStr = tactics == '' and '' or tactics
 
+    -- Replace color code |cff71d5ff with white color |cffffffff in tacticsStr
+    tacticsStr = tacticsStr:gsub("|cff71d5ff", "|cff00008b")
+
 	self.Tactics:SetText("<html><body><p>" .. tacticsStr .. "</p></body></html>");
 
     self.currentHeight = self.Tactics:GetContentHeight()
