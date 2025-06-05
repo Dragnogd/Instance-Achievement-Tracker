@@ -36,6 +36,11 @@
 				<CheckedTexture atlas="checkmark-minimal" useAtlasSize="true"/>
 				<DisabledCheckedTexture atlas="checkmark-minimal-disabled" useAtlasSize="true"/>
 			</CheckButton>
+			<DropdownButton name="$parentDropdown" parentKey="Dropdown" inherits="WowStyle1DropdownTemplate">
+				<Anchors>
+					<Anchor point="TOPRIGHT" x="0" y="-4"/>
+				</Anchors>
+			</DropdownButton>
 		</Frames>
     </EventButton>
 
@@ -261,6 +266,11 @@
 				</Anchors>
 				<FontString inherits="IATTextFontNormal" justifyV="TOP" justifyH="LEFT" />
 			</SimpleHTML >
+			<DropdownButton name="TacticsSelector" parentKey="TacticsSelector" inherits="WowStyle1DropdownTemplate">
+				<Anchors>
+					<Anchor point="TOPRIGHT" x="-230" y="-4"/>
+				</Anchors>
+			</DropdownButton>
 			<Button name="OutputTactics" parentKey="OutputTactics" inherits="UIPanelButtonTemplate" text="Output Tactics">
 				<Anchors>
 					<Anchor point="TOPRIGHT" x="-4" y="-4" />
