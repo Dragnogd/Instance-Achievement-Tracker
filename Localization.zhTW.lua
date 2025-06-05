@@ -1,14 +1,7 @@
-﻿if(GetLocale() ~= 'zhTW') then return end
+if(GetLocale() ~= 'zhTW') then return end
 
 local _, core = ...
 local baseLocale = {
-	["- Announce to chat players who are missing achievements for certain bosses"] = "- 在聊天視窗通報哪個玩家缺少哪個首領的成就",
-	["- Announce to chat tactics for a certain boss"] = "- 在聊天視窗通報某些首領的成就解法",
-	["- Keeps track of achievements which require you to kill so many mobs within a certain time period. It will announce to chat when enough mobs have spawned and whether they were killed in the time period."] = "- 持續追蹤成就要求你在指定時間內擊殺多少怪物。會在聊天視窗通報已經擊殺足夠數量的怪物以及是否在時間內完成。",
-	["- Scans all players in the group to see which achievements each player is missing for the current instance"] = "- 掃描隊伍中的所有玩家，檢查每個玩家缺少當前副本的哪個成就。",
-	["- Tracks when the criteria of instance achievements has been failed and outputs this to chat"] = "- 追蹤成就的要求失敗時輸出到聊天視窗",
-	["- Tracks when the criteria of instance achievements have been met and output this to chat"] = "- 追蹤達到成就的要求時輸出到聊天視窗",
-	["(Enter instance to start scanning)"] = "(進入副本開始掃描)",
 	["AzsharasEternalPalace_Applause"] = "喝彩",
 	["AzsharasEternalPalace_Curtsey"] = "屈膝",
 	["AzsharasEternalPalace_Grovel"] = "卑微",
@@ -35,7 +28,6 @@ local baseLocale = {
 	["Core_StartingAchievementScan"] = "開始掃描成就",
 	["Core_TrackAchievements"] = "追蹤成就",
 	["Core_Yes"] = "是",
-	["Features"] = "功能",
 	["GUI_Achievement"] = "成就",
 	["GUI_Achievements"] = "成就",
 	["GUI_AchievementsCompletedForInstance"] = "所有成就都已經完成",
@@ -104,15 +96,13 @@ local baseLocale = {
 	["GUI_Translators"] = "翻譯",
 	["GUI_WarlordsOfDraenor"] = "德拉諾之霸",
 	["GUI_WrathOfTheLichKing"] = "巫妖王之怒",
-	["Instance Achievement Tracker"] = "副本成就追蹤",
 	["Instances_Other"] = "其他",
 	["Instances_TrashAfterThirdBoss"] = "第三個首領之後的小怪",
-	["Main"] = "一般",
 	["Shared_AddKillCounter"] = "%s 擊殺數量",
 	["Shared_CompletedBossKill"] = "擊殺首領後即可完成",
 	["Shared_CriteriaHasBeenMet"] = "已達成條件",
 	["Shared_CriteriaHasNotBeenMet"] = "尚未達成條件",
-	["Shared_DamageFromAbility"] = "% 傷害",
+	--["Shared_DamageFromAbility"] = "% 傷害",
 	["Shared_DirectHitFromAbility"] = "%s 直接擊中",
 	["Shared_DoesNotMeetCritera"] = "尚未達成條件",
 	["Shared_Eight"] = "8",
@@ -161,9 +151,7 @@ local baseLocale = {
 	["Shared_Twelve"] = "12",
 	["Shared_Twenty"] = "20",
 	["Shared_Two"] = "2",
-	["Shared_WasKilled"] = "已擊殺"
+	["Shared_WasKilled"] = "已擊殺",
 }
 
 core:RegisterLocale('zhTW', baseLocale)
-
--- core:RegisterLocale('enUS', baseLocale)
