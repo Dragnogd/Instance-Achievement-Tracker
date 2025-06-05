@@ -84,7 +84,7 @@ LichKingDungeons\UtgardePinnacle.lua
 
 Templates.xml
 
-InstancesClassic.lua
+InstancesCataclysm.lua
 ItemCache.lua
 NPCCache.lua
 InfoFrame.lua
