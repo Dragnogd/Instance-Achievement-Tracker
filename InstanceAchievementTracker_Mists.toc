@@ -1,5 +1,4 @@
-﻿## Interface: 110105
-## Interface-Cata: 40402
+﻿## Interface: 50500
 ## Notes: An addon for tracking the completion/faliure of instance achievements.
 ## Title:Instance Achievement Tracker
 ## Author: Whizzey
@@ -34,102 +33,6 @@ Localization.ruRU.lua
 Localization.zhCN.lua
 Localization.zhTW.lua
 Localization.koKR.lua
-
-WarWithinRaids\NerubarPalace.lua
-WarWithinRaids\LiberationOfUndermine.lua
-
-WarWithinDelves\EarthcrawlMines.lua
-WarWithinDelves\FungalFolly.lua
-WarWithinDelves\KriegvalsRest.lua
-WarWithinDelves\MycomancerCavern.lua
-WarWithinDelves\NightfallSanctum.lua
-WarWithinDelves\SkitteringBreach.lua
-WarWithinDelves\TakrethanAbyss.lua
-WarWithinDelves\TheDreadPit.lua
-WarWithinDelves\TheSinkhole.lua
-WarWithinDelves\TheSpiralWeave.lua
-WarWithinDelves\TheUnderkeep.lua
-WarWithinDelves\TheWaterworks.lua
-
-
-DragonflightRaids\VaultOfTheIncarnates.lua
-DragonflightRaids\AberrusTheShadowedCrucible.lua
-DragonflightRaids\AmirdrassilTheDreamsHope.lua
-
-DragonflightDungeons\AlgetharAcademy.lua
-DragonflightDungeons\BrackenhideHollow.lua
-DragonflightDungeons\HallsOfInfusion.lua
-DragonflightDungeons\Neltharus.lua
-DragonflightDungeons\RubyLifePools.lua
-DragonflightDungeons\TheAzureVault.lua
-DragonflightDungeons\TheNokhudOffensive.lua
-DragonflightDungeons\UldamanLegacyOfTyr.lua
-DragonflightDungeons\DawnOfTheInfinite.lua
-
-ShadowlandsRaids\CastleNathria.lua
-ShadowlandsRaids\SanctumOfDomination.lua
-ShadowlandsRaids\SepulcherOfTheFirstOnes.lua
-
-ShadowlandsDungeons\DeOtherSide.lua
-ShadowlandsDungeons\HallsofAtonement.lua
-ShadowlandsDungeons\MistsofTirnaScithe.lua
-ShadowlandsDungeons\Plaguefall.lua
-ShadowlandsDungeons\SanguineDepths.lua
-ShadowlandsDungeons\SpiresofAscension.lua
-ShadowlandsDungeons\TheaterofPain.lua
-ShadowlandsDungeons\TheNecroticWake.lua
-ShadowlandsDungeons\TazaveshTheVeiledMarket.lua
-
-BattleForAzerothRaids\Uldir.lua
-BattleForAzerothRaids\BattleOfDazaralor.lua
-BattleForAzerothRaids\CrucibleOfStorms.lua
-BattleForAzerothRaids\AzsharasEternalPalace.lua
-BattleForAzerothRaids\Nyalotha.lua
-
-BattleForAzerothDungeons\AtalDazar.lua
-BattleForAzerothDungeons\Freehold.lua
-BattleForAzerothDungeons\KingsRest.lua
-BattleForAzerothDungeons\ShrineOfTheStorm.lua
-BattleForAzerothDungeons\SiegeOfBoralus.lua
-BattleForAzerothDungeons\TempleOfSethraliss.lua
-BattleForAzerothDungeons\TheMotherlode.lua
-BattleForAzerothDungeons\TheUnderrot.lua
-BattleForAzerothDungeons\TolDagor.lua
-BattleForAzerothDungeons\WaycrestManor.lua
-BattleForAzerothDungeons\OperationMechagon.lua
-
-LegionRaids\AntorusTheBurningThrone.lua
-LegionRaids\EmeraldNightmare.lua
-LegionRaids\Nighthold.lua
-LegionRaids\TombOfSargeras.lua
-LegionRaids\TrialOfValor.lua
-
-LegionDungeons\AssaultOnVioletHold.lua
-LegionDungeons\BlackRookHold.lua
-LegionDungeons\CathedralOfEternalNight.lua
-LegionDungeons\CourtOfStars.lua
-LegionDungeons\DarkheartThicket.lua
-LegionDungeons\EyeOfAzshara.lua
-LegionDungeons\HallsOfValor.lua
-LegionDungeons\MawOfSouls.lua
-LegionDungeons\NeltharionsLair.lua
-LegionDungeons\ReturnToKarazhan.lua
-LegionDungeons\SeatOfTheTriumvirate.lua
-LegionDungeons\TheArcway.lua
-LegionDungeons\VaultOfTheWardens.lua
-
-DraenorRaids\BlackrockFoundary.lua
-DraenorRaids\HellfireCitadel.lua
-DraenorRaids\Highmaul.lua
-
-DraenorDungeons\Auchindoun.lua
-DraenorDungeons\BloodmaulSlagMines.lua
-DraenorDungeons\GrimrailDepot.lua
-DraenorDungeons\IronDocks.lua
-DraenorDungeons\ShadowmoonBurialGrounds.lua
-DraenorDungeons\Skyreach.lua
-DraenorDungeons\TheEverbloom.lua
-DraenorDungeons\UpperBlackrockSpire.lua
 
 PandariaRaids\TerraceOfEndlessSpring.lua
 PandariaRaids\HeartOfFear.lua
@@ -214,7 +117,7 @@ LichKingDungeons\UtgardePinnacle.lua
 
 Templates.xml
 
-Instances.lua
+InstancesPandaria.lua
 ItemCache.lua
 NPCCache.lua
 InfoFrame.lua
@@ -222,6 +125,5 @@ Options.lua
 GUI.lua
 MobCounter.lua
 emotes.lua
-API.lua
 AchievementTrackerCore.lua
 Debug.lua
