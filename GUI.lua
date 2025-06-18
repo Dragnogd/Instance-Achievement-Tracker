@@ -9,7 +9,7 @@ local Config = core.Config
 local IATInfoFrame = core.IATInfoFrame
 
 Config.majorVersion = 5
-Config.minorVersion = 22
+Config.minorVersion = 23
 Config.revisionVersion = 0
 Config.classicPhase = 7
 
@@ -1004,7 +1004,6 @@ function Config:CreateUI()
     -- Hide the expansion container by default as well as the main UI
     self.UI.ExpansionLayoutContainer:Hide()
     self.UI:Hide()
-    Config:Toggle()
 end
 
 function Config:ShowContentForInstance(data)
