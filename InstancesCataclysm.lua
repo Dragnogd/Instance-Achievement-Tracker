@@ -1,5 +1,5 @@
 --------------------------------------
--- Last Auto Generated: 05/06/2025 20:05:21 using https://github.com/Dragnogd/Instance-Achievement-Tracker-Database-Manager
+-- Last Auto Generated: 08/06/2025 14:40:46 using https://github.com/Dragnogd/Instance-Achievement-Tracker-Database-Manager
 --------------------------------------
 local _, core = ...
 local L = core.L
@@ -11,7 +11,6 @@ core.Instances = {
 		Raids = {
 			[967] = { --Dragon Soul
 				name = 187,
-				classicPhase = 8,
 				boss1 = {
 					name = 311, --Morchok
 					bossIDs = {},
@@ -112,7 +111,6 @@ core.Instances = {
 
 			[669] = { --Blackwing Descent
 				name = 73,
-				classicPhase = 5,
 				boss1 = {
 					name = 170, --Magmaw
 					bossIDs = {41570},
@@ -190,7 +188,6 @@ core.Instances = {
 
 			[671] = { --Bastion of Twilight
 				name = 72,
-				classicPhase = 5,
 				boss1 = {
 					name = 156, --Halfus Wyrmbreaker
 					bossIDs = {44600},
@@ -243,7 +240,6 @@ core.Instances = {
 
 			[754] = { --Throne of the Four Winds
 				name = 74,
-				classicPhase = 5,
 				boss1 = {
 					name = 154, --Conclave of Wind
 					bossIDs = {},
@@ -272,7 +268,6 @@ core.Instances = {
 
 			[720] = { --Firelands
 				name = 78,
-				classicPhase = 7,
 				boss1 = {
 					name = 192, --Beth'tilac
 					bossIDs = {52498},
@@ -363,7 +358,6 @@ core.Instances = {
 		Dungeons = {
 			[645] = { --Blackrock Caverns
 				name = 66,
-				classicPhase = 5,
 				boss1 = {
 					name = 105, --Rom'ogg Bonecrusher
 					bossIDs = {39665},
@@ -416,8 +410,6 @@ core.Instances = {
 
 			[643] = { --Throne of the Tides
 				name = 65,
-				classicPhase = 1,
-				classicOnly = true,
 				boss1 = {
 					name = 101, --Lady Naz'Jar
 					bossIDs = {40586},
@@ -446,7 +438,6 @@ core.Instances = {
 
 			[725] = { --The Stonecore
 				name = 67,
-				classicPhase = 5,
 				boss1 = {
 					name = 113, --High Priestess Azil
 					bossIDs = {42333},
@@ -463,7 +454,6 @@ core.Instances = {
 
 			[657] = { --The Vortex Pinnacle
 				name = 68,
-				classicPhase = 5,
 				boss1 = {
 					name = 116, --Asaad
 					bossIDs = {43875},
@@ -492,7 +482,6 @@ core.Instances = {
 
 			[670] = { --Grim Batol
 				name = 71,
-				classicPhase = 5,
 				boss1 = {
 					name = 131, --General Umbriss
 					bossIDs = {39625},
@@ -521,7 +510,6 @@ core.Instances = {
 
 			[644] = { --Halls of Origination
 				name = 70,
-				classicPhase = 5,
 				boss1 = {
 					name = 124, --Temple Guardian Anhuur
 					bossIDs = {39425},
@@ -574,7 +562,6 @@ core.Instances = {
 
 			[755] = { --Lost City of the Tol'Vir
 				name = 69,
-				classicPhase = 5,
 				boss1 = {
 					name = 118, --Lockmaw
 					bossIDs = {43614},
@@ -616,7 +603,6 @@ core.Instances = {
 
 			[36] = { --Deadmines
 				name = 63,
-				classicPhase = 5,
 				boss1 = {
 					name = 89, --Glubtok
 					bossIDs = {47162},
@@ -693,7 +679,6 @@ core.Instances = {
 
 			[33] = { --Shadowfang Keep
 				name = 64,
-				classicPhase = 5,
 				boss1 = {
 					name = 96, --Baron Ashbury
 					bossIDs = {46962},
@@ -734,7 +719,6 @@ core.Instances = {
 
 			[859] = { --Zul'Gurub
 				name = 76,
-				classicPhase = 6,
 				boss1 = {
 					name = L["Instances_Other"], --Gurubashi Headhunter
 					bossIDs = {},
@@ -799,7 +783,6 @@ core.Instances = {
 
 			[568] = { --Zul'Aman
 				name = 77,
-				classicPhase = 6,
 				boss1 = {
 					name = 189, --Halazzi
 					bossIDs = {23577},
@@ -852,7 +835,6 @@ core.Instances = {
 
 			[938] = { --End Time
 				name = 184,
-				classicPhase = 8,
 				boss1 = {
 					name = 283, --Echo of Tyrande
 					bossIDs = {},
@@ -881,7 +863,6 @@ core.Instances = {
 
 			[939] = { --Well of Eternity
 				name = 185,
-				classicPhase = 8,
 				boss1 = {
 					name = 290, --Peroth'arn
 					bossIDs = {55085},
@@ -910,7 +891,6 @@ core.Instances = {
 
 			[940] = { --Hour of Twilight
 				name = 186,
-				classicPhase = 8,
 				boss1 = {
 					name = 341, --Archbishop Benedictus
 					bossIDs = {54938},
@@ -931,11 +911,9 @@ core.Instances = {
 	[3] = {
 		Raids = {
 			[615.10] = { --Obsidian Sanctum 10 Man
-				name = 755,
-				nameLocalised = L["Instance_TheObsidianSanctum"],
-				classicPhase = 1,
+				name = L["Instance_TheObsidianSanctum"],
 				boss1 = {
-					name = 1616, --Sartharion the Onyx Guardian
+					name = L["Boss_Sartharion"], --Sartharion the Onyx Guardian
 					bossIDs = {},
 					achievement = 624,
 					players = {},
@@ -948,7 +926,7 @@ core.Instances = {
 					nameWrath = L["Boss_Sartharion"],
 				},
 				boss2 = {
-					name = 1616, --Sartharion the Onyx Guardian
+					name = L["Boss_Sartharion"], --Sartharion the Onyx Guardian
 					bossIDs = {},
 					achievement = 2047,
 					players = {},
@@ -962,7 +940,7 @@ core.Instances = {
 					nameWrath = L["Boss_Sartharion"],
 				},
 				boss3 = {
-					name = 1616, --Sartharion the Onyx Guardian
+					name = L["Boss_Sartharion"], --Sartharion the Onyx Guardian
 					bossIDs = {},
 					achievement = 2049,
 					players = {},
@@ -975,7 +953,7 @@ core.Instances = {
 					nameWrath = L["Boss_Sartharion"],
 				},
 				boss4 = {
-					name = 1616, --Sartharion the Onyx Guardian
+					name = L["Boss_Sartharion"], --Sartharion the Onyx Guardian
 					bossIDs = {},
 					achievement = 2050,
 					players = {},
@@ -988,7 +966,7 @@ core.Instances = {
 					nameWrath = L["Boss_Sartharion"],
 				},
 				boss5 = {
-					name = 1616, --Sartharion the Onyx Guardian
+					name = L["Boss_Sartharion"], --Sartharion the Onyx Guardian
 					bossIDs = {},
 					achievement = 2051,
 					players = {},
@@ -1003,11 +981,9 @@ core.Instances = {
 			},
 
 			[615.25] = { --Obsidian Sanctum 25 Man
-				name = 755,
-				nameLocalised = L["Instance_TheObsidianSanctum"],
-				classicPhase = 1,
+				name = L["Instance_TheObsidianSanctum"],
 				boss1 = {
-					name = 1616, --Sartharion the Onyx Guardian
+					name = L["Boss_Sartharion"], --Sartharion the Onyx Guardian
 					bossIDs = {},
 					achievement = 1877,
 					players = {},
@@ -1020,7 +996,7 @@ core.Instances = {
 					nameWrath = L["Boss_Sartharion"],
 				},
 				boss2 = {
-					name = 1616, --Sartharion the Onyx Guardian
+					name = L["Boss_Sartharion"], --Sartharion the Onyx Guardian
 					bossIDs = {},
 					achievement = 2048,
 					players = {},
@@ -1034,7 +1010,7 @@ core.Instances = {
 					nameWrath = L["Boss_Sartharion"],
 				},
 				boss3 = {
-					name = 1616, --Sartharion the Onyx Guardian
+					name = L["Boss_Sartharion"], --Sartharion the Onyx Guardian
 					bossIDs = {},
 					achievement = 2052,
 					players = {},
@@ -1047,7 +1023,7 @@ core.Instances = {
 					nameWrath = L["Boss_Sartharion"],
 				},
 				boss4 = {
-					name = 1616, --Sartharion the Onyx Guardian
+					name = L["Boss_Sartharion"], --Sartharion the Onyx Guardian
 					bossIDs = {},
 					achievement = 2053,
 					players = {},
@@ -1060,7 +1036,7 @@ core.Instances = {
 					nameWrath = L["Boss_Sartharion"],
 				},
 				boss5 = {
-					name = 1616, --Sartharion the Onyx Guardian
+					name = L["Boss_Sartharion"], --Sartharion the Onyx Guardian
 					bossIDs = {},
 					achievement = 2054,
 					players = {},
@@ -1075,11 +1051,9 @@ core.Instances = {
 			},
 
 			[616.10] = { --Eye of Eternity 10 Man
-				name = 756,
-				nameLocalised = L["Instance_TheEyeOfEternity"],
-				classicPhase = 1,
+				name = L["Instance_TheEyeOfEternity"],
 				boss1 = {
-					name = 1617, --Malygos
+					name = L["Boss_Malygos"], --Malygos
 					bossIDs = {28859},
 					achievement = 1874,
 					players = {},
@@ -1093,7 +1067,7 @@ core.Instances = {
 					nameWrath = L["Boss_Malygos"],
 				},
 				boss2 = {
-					name = 1617, --Malygos
+					name = L["Boss_Malygos"], --Malygos
 					bossIDs = {28859},
 					achievement = 1869,
 					players = {},
@@ -1106,7 +1080,7 @@ core.Instances = {
 					nameWrath = L["Boss_Malygos"],
 				},
 				boss3 = {
-					name = 1617, --Malygos
+					name = L["Boss_Malygos"], --Malygos
 					bossIDs = {28859},
 					achievement = 2148,
 					players = {},
@@ -1121,11 +1095,9 @@ core.Instances = {
 			},
 
 			[616.25] = { --Eye of Eternity 25 Man
-				name = 756,
-				nameLocalised = L["Instance_TheEyeOfEternity"],
-				classicPhase = 1,
+				name = L["Instance_TheEyeOfEternity"],
 				boss1 = {
-					name = 1617, --Malygos
+					name = L["Boss_Malygos"], --Malygos
 					bossIDs = {28859},
 					achievement = 1875,
 					players = {},
@@ -1138,7 +1110,7 @@ core.Instances = {
 					nameWrath = L["Boss_Malygos"],
 				},
 				boss2 = {
-					name = 1617, --Malygos
+					name = L["Boss_Malygos"], --Malygos
 					bossIDs = {28859},
 					achievement = 1870,
 					players = {},
@@ -1151,7 +1123,7 @@ core.Instances = {
 					nameWrath = L["Boss_Malygos"],
 				},
 				boss3 = {
-					name = 1617, --Malygos
+					name = L["Boss_Malygos"], --Malygos
 					bossIDs = {28859},
 					achievement = 2149,
 					players = {},
@@ -1166,11 +1138,9 @@ core.Instances = {
 			},
 
 			[249.10] = { --Onyxia's Lair 10 Man
-				name = 760,
-				nameLocalised = L["Instance_OnyxiasLair"],
-				classicPhase = 3,
+				name = L["Instance_OnyxiasLair"],
 				boss1 = {
-					name = 1651, --Onyxia
+					name = L["Boss_Onyxia"], --Onyxia
 					bossIDs = {10184},
 					achievement = 4402,
 					players = {},
@@ -1183,7 +1153,7 @@ core.Instances = {
 					nameWrath = L["Boss_Onyxia"],
 				},
 				boss2 = {
-					name = 1651, --Onyxia
+					name = L["Boss_Onyxia"], --Onyxia
 					bossIDs = {},
 					achievement = 4403,
 					players = {},
@@ -1196,7 +1166,7 @@ core.Instances = {
 					nameWrath = L["Boss_Onyxia"],
 				},
 				boss3 = {
-					name = 1651, --Onyxia
+					name = L["Boss_Onyxia"], --Onyxia
 					bossIDs = {10184},
 					achievement = 4404,
 					players = {},
@@ -1211,11 +1181,9 @@ core.Instances = {
 			},
 
 			[249.25] = { --Onyxia's Lair 25 Man
-				name = 760,
-				nameLocalised = L["Instance_OnyxiasLair"],
-				classicPhase = 3,
+				name = L["Instance_OnyxiasLair"],
 				boss1 = {
-					name = 1651, --Onyxia
+					name = L["Boss_Onyxia"], --Onyxia
 					bossIDs = {10184},
 					achievement = 4405,
 					players = {},
@@ -1228,7 +1196,7 @@ core.Instances = {
 					nameWrath = L["Boss_Onyxia"],
 				},
 				boss2 = {
-					name = 1651, --Onyxia
+					name = L["Boss_Onyxia"], --Onyxia
 					bossIDs = {},
 					achievement = 4406,
 					players = {},
@@ -1241,7 +1209,7 @@ core.Instances = {
 					nameWrath = L["Boss_Onyxia"],
 				},
 				boss3 = {
-					name = 1651, --Onyxia
+					name = L["Boss_Onyxia"], --Onyxia
 					bossIDs = {10184},
 					achievement = 4407,
 					players = {},
@@ -1256,11 +1224,9 @@ core.Instances = {
 			},
 
 			[649.10] = { --Trial of the Crusader 10 Man
-				name = 757,
-				nameLocalised = L["Instance_TrialOfTheCrusader"],
-				classicPhase = 3,
+				name = L["Instance_TrialOfTheCrusader"],
 				boss1 = {
-					name = 1618, --Icehowl
+					name = L["Boss_Icehowl"], --Icehowl
 					bossIDs = {34796},
 					achievement = 3797,
 					players = {},
@@ -1273,7 +1239,7 @@ core.Instances = {
 					nameWrath = L["Boss_Icehowl"],
 				},
 				boss2 = {
-					name = 1618, --Acidmaw and Dreadscale
+					name = L["Boss_AcidmawandDreadscale"], --Acidmaw and Dreadscale
 					bossIDs = {34796,35144,34799},
 					achievement = 3936,
 					players = {},
@@ -1286,7 +1252,7 @@ core.Instances = {
 					nameWrath = L["Boss_AcidmawandDreadscale"],
 				},
 				boss3 = {
-					name = 1619, --Lord Jaraxxus
+					name = L["Boss_LordJaraxxus"], --Lord Jaraxxus
 					bossIDs = {34780},
 					achievement = 3996,
 					players = {},
@@ -1299,7 +1265,7 @@ core.Instances = {
 					nameWrath = L["Boss_LordJaraxxus"],
 				},
 				boss4 = {
-					name = 1621, --Faction Champions
+					name = L["Boss_FactionChampions"], --Faction Champions
 					bossIDs = {34461,34460,34469,34467,34468,34465,34471,34466,34473,34472,34463,34470,34474,34475,34458,34451,34459,34448,34449,34445,34456,34447,34441,34454,34455,34444,34450,34453},
 					achievement = 3798,
 					players = {},
@@ -1312,7 +1278,7 @@ core.Instances = {
 					nameWrath = L["Boss_FactionChampions"],
 				},
 				boss5 = {
-					name = 1622, --Twin Val'kyr
+					name = L["Boss_TwinValkyr"], --Twin Val'kyr
 					bossIDs = {34497,34496},
 					achievement = 3799,
 					players = {},
@@ -1325,7 +1291,7 @@ core.Instances = {
 					nameWrath = L["Boss_TwinValkyr"],
 				},
 				boss6 = {
-					name = 1623, --Anub'arak
+					name = L["Boss_Anubarak"], --Anub'arak
 					bossIDs = {34564},
 					achievement = 3800,
 					players = {},
@@ -1341,11 +1307,9 @@ core.Instances = {
 			},
 
 			[649.25] = { --Trial of the Crusader 25 Man
-				name = 757,
-				nameLocalised = L["Instance_TrialOfTheCrusader"],
-				classicPhase = 3,
+				name = L["Instance_TrialOfTheCrusader"],
 				boss1 = {
-					name = 1618, --Icehowl
+					name = L["Boss_Icehowl"], --Icehowl
 					bossIDs = {34796},
 					achievement = 3813,
 					players = {},
@@ -1358,7 +1322,7 @@ core.Instances = {
 					nameWrath = L["Boss_Icehowl"],
 				},
 				boss2 = {
-					name = 1618, --Acidmaw and Dreadscale
+					name = L["Boss_AcidmawandDreadscale"], --Acidmaw and Dreadscale
 					bossIDs = {34796,35144,34799},
 					achievement = 3937,
 					players = {},
@@ -1371,7 +1335,7 @@ core.Instances = {
 					nameWrath = L["Boss_AcidmawandDreadscale"],
 				},
 				boss3 = {
-					name = 1619, --Lord Jaraxxus
+					name = L["Boss_LordJaraxxus"], --Lord Jaraxxus
 					bossIDs = {34780},
 					achievement = 3997,
 					players = {},
@@ -1384,7 +1348,7 @@ core.Instances = {
 					nameWrath = L["Boss_LordJaraxxus"],
 				},
 				boss4 = {
-					name = 1622, --Twin Val'kyr
+					name = L["Boss_TwinValkyr"], --Twin Val'kyr
 					bossIDs = {34497,34496},
 					achievement = 3815,
 					players = {},
@@ -1397,7 +1361,7 @@ core.Instances = {
 					nameWrath = L["Boss_TwinValkyr"],
 				},
 				boss5 = {
-					name = 1623, --Anub'arak
+					name = L["Boss_Anubarak"], --Anub'arak
 					bossIDs = {34564},
 					achievement = 3816,
 					players = {},
@@ -1413,11 +1377,9 @@ core.Instances = {
 			},
 
 			[624.10] = { --Vault of Archavon 10 Man
-				name = 753,
-				nameLocalised = L["Instance_VaultOfArchavon"],
-				classicPhase = 1,
+				name = L["Instance_VaultOfArchavon"],
 				boss1 = {
-					name = 1597, --Archavon & Emalon & Koralon
+					name = L["Boss_ArchavonTheStoneWatcher"], --Archavon & Emalon & Koralon
 					bossIDs = {},
 					achievement = 4016,
 					players = {},
@@ -1432,11 +1394,9 @@ core.Instances = {
 			},
 
 			[624.25] = { --Vault of Archavon 25 Man
-				name = 753,
-				nameLocalised = L["Instance_VaultOfArchavon"],
-				classicPhase = 1,
+				name = L["Instance_VaultOfArchavon"],
 				boss1 = {
-					name = 1597, --Archavon & Emalon & Koralon
+					name = L["Boss_ArchavonTheStoneWatcher"], --Archavon & Emalon & Koralon
 					bossIDs = {},
 					achievement = 4017,
 					players = {},
@@ -1450,823 +1410,8 @@ core.Instances = {
 				},
 			},
 
-			[603] = { --Ulduar
-				name = 759,
-				nameLocalised = L["Instance_Ulduar"],
-				classicPhase = 2,
-				retailOnly = true,
-				boss1 = {
-					name = L["Instances_Other"], --Dwarfageddon
-					bossIDs = {33572},
-					achievement = 12312,
-					players = {},
-					tactics = {
-					},
-					enabled = true,
-					track = function() core._603:Dwarfageddon(12312) end,
-					partial = true,
-					displayInfoFrame = true,
-					nameWrath = L["Instances_Other"],
-				},
-				boss2 = {
-					name = L["Instances_Other"], --Unbroken
-					bossIDs = {},
-					achievement = 12313,
-					players = {},
-					tactics = {
-					},
-					enabled = true,
-					track = function() end,
-					partial = false,
-					nameWrath = L["Instances_Other"],
-				},
-				boss3 = {
-					name = 1637, --Flame Leviathan (Three Car Garage)
-					bossIDs = {},
-					achievement = 12314,
-					players = {},
-					tactics = {
-					},
-					enabled = false,
-					track = nil,
-					partial = false,
-					encounterID = 1132,
-					nameWrath = L["Boss_FlameLeviathan"],
-				},
-				boss4 = {
-					name = 1637, --Flame Leviathan (Take Out Those Turrets)
-					bossIDs = {},
-					achievement = 12315,
-					players = {},
-					tactics = {
-					},
-					enabled = true,
-					track = function() core._603:FlameLeviathanTakeOutThoseTurrets(12315) end,
-					partial = false,
-					encounterID = 1132,
-					nameWrath = L["Boss_FlameLeviathan"],
-				},
-				boss5 = {
-					name = 1637, --Flame Leviathan (Shutout)
-					bossIDs = {},
-					achievement = 12316,
-					players = {},
-					tactics = {
-					},
-					enabled = true,
-					track = function() core._603:FlameLeviathanShutout(12316) end,
-					partial = false,
-					encounterID = 1132,
-					nameWrath = L["Boss_FlameLeviathan"],
-				},
-				boss6 = {
-					name = 1637, --Flame Leviathan (Orbital Bombardment)
-					bossIDs = {},
-					achievement = 12317,
-					players = {},
-					tactics = {
-					},
-					enabled = false,
-					track = nil,
-					partial = false,
-					encounterID = 1132,
-					nameWrath = L["Boss_FlameLeviathan"],
-				},
-				boss7 = {
-					name = 1637, --Flame Leviathan (Orbital Devastation)
-					bossIDs = {},
-					achievement = 12318,
-					players = {},
-					tactics = {
-					},
-					enabled = false,
-					track = nil,
-					partial = false,
-					encounterID = 1132,
-					nameWrath = L["Boss_FlameLeviathan"],
-				},
-				boss8 = {
-					name = 1637, --Flame Leviathan (Nuked from Orbit)
-					bossIDs = {},
-					achievement = 12319,
-					players = {},
-					tactics = {
-					},
-					enabled = false,
-					track = nil,
-					partial = false,
-					encounterID = 1132,
-					nameWrath = L["Boss_FlameLeviathan"],
-				},
-				boss9 = {
-					name = 1637, --Flame Leviathan (Orbit-uary)
-					bossIDs = {},
-					achievement = 12320,
-					players = {},
-					tactics = {
-					},
-					enabled = false,
-					track = nil,
-					partial = false,
-					encounterID = 1132,
-					nameWrath = L["Boss_FlameLeviathan"],
-				},
-				boss10 = {
-					name = 1639, --Razorscale (A Quick Shave)
-					bossIDs = {},
-					achievement = 12321,
-					players = {},
-					tactics = {
-					},
-					enabled = true,
-					track = function() core._603:RazorscaleAQuickShave(12321) end,
-					partial = false,
-					encounterID = 1139,
-					nameWrath = L["Boss_Razorscale"],
-				},
-				boss11 = {
-					name = 1639, --Razorscale (Iron Dwarf, Medium Rare)
-					bossIDs = {},
-					achievement = 12322,
-					players = {},
-					tactics = {
-					},
-					enabled = true,
-					track = function() core._603:RazorscaleIronDwarfMediumRare(12322) end,
-					partial = false,
-					encounterID = 1139,
-					nameWrath = L["Boss_Razorscale"],
-				},
-				boss12 = {
-					name = 1638, --Ignis the Furnace Master (Shattered)
-					bossIDs = {},
-					achievement = 12323,
-					players = {},
-					tactics = {
-					},
-					enabled = true,
-					track = function() core._603:IgnisTheFurnaceMasterShattered(12323) end,
-					partial = false,
-					encounterID = 1136,
-					nameWrath = L["Boss_IgnisTheFurnaceMaster"],
-				},
-				boss13 = {
-					name = 1638, --Ignis the Furnace Master (Hot Pocket)
-					bossIDs = {},
-					achievement = 12324,
-					players = {},
-					tactics = {
-					},
-					enabled = false,
-					track = nil,
-					partial = false,
-					encounterID = 1136,
-					nameWrath = L["Boss_IgnisTheFurnaceMaster"],
-				},
-				boss14 = {
-					name = 1638, --Ignis the Furnace Master (Stokin' the Furnace)
-					bossIDs = {},
-					achievement = 12325,
-					players = {},
-					tactics = {
-					},
-					enabled = true,
-					track = function() core._603:IgnisTheFurnaceMasterStokinTheFurnace(12325) end,
-					partial = false,
-					encounterID = 1136,
-					nameWrath = L["Boss_IgnisTheFurnaceMaster"],
-				},
-				boss15 = {
-					name = 1640, --XT-002 Deconstructor (Nerf Engineering)
-					bossIDs = {},
-					achievement = 12326,
-					players = {},
-					tactics = {
-					},
-					enabled = true,
-					track = function() core._603:XT002DeconstructorNerfEngineering(12326) end,
-					partial = false,
-					encounterID = 1142,
-					nameWrath = L["Boss_XT-002Deconstructor"],
-				},
-				boss16 = {
-					name = 1640, --XT-002 Deconstructor (Nerf Scrapbots)
-					bossIDs = {},
-					achievement = 12327,
-					players = {},
-					tactics = {
-					},
-					enabled = true,
-					track = function() core._603:XT002DeconstructorNerfScrapbots(12327) end,
-					partial = false,
-					encounterID = 1142,
-					displayInfoFrame = true,
-					nameWrath = L["Boss_XT-002Deconstructor"],
-				},
-				boss17 = {
-					name = 1640, --XT-002 Deconstructor (Nerf Gravity Bombs)
-					bossIDs = {},
-					achievement = 12328,
-					players = {},
-					tactics = {
-					},
-					enabled = true,
-					track = function() core._603:XT002DeconstructorNerfGravityBombs(12328) end,
-					partial = false,
-					encounterID = 1142,
-					nameWrath = L["Boss_XT-002Deconstructor"],
-				},
-				boss18 = {
-					name = 1640, --XT-002 Deconstructor (Must Deconstruct Faster)
-					bossIDs = {},
-					achievement = 12329,
-					players = {},
-					tactics = {
-					},
-					enabled = true,
-					track = function() core._603:XT002DeconstructorMustDeconstructFaster(12329) end,
-					partial = false,
-					encounterID = 1142,
-					nameWrath = L["Boss_XT-002Deconstructor"],
-				},
-				boss19 = {
-					name = 1640, --XT-002 Deconstructor (Heartbreaker)
-					bossIDs = {},
-					achievement = 12330,
-					players = {},
-					tactics = {
-					},
-					enabled = true,
-					track = function() core._603:XT002DeconstructorHeartbreaker(12330) end,
-					partial = false,
-					encounterID = 1142,
-					nameWrath = L["Boss_XT-002Deconstructor"],
-				},
-				boss20 = {
-					name = 1641, --Assembly of Iron (I Choose You, Runemaster Molgeim)
-					bossIDs = {},
-					achievement = 12332,
-					players = {},
-					tactics = {
-					},
-					enabled = true,
-					track = function() core._603:AssemblyOfIronIChooseYouRunemasterMolgeim(12332) end,
-					partial = false,
-					encounterID = 1140,
-					nameWrath = L["Boss_AssemblyOfIron"],
-				},
-				boss21 = {
-					name = 1641, --Assembly of Iron (I Choose You, Stormcaller Brundir)
-					bossIDs = {},
-					achievement = 12333,
-					players = {},
-					tactics = {
-					},
-					enabled = true,
-					track = function() core._603:AssemblyOfIronIChooseYouStormcallerBrundir(12333) end,
-					partial = false,
-					encounterID = 1140,
-					nameWrath = L["Boss_AssemblyOfIron"],
-				},
-				boss22 = {
-					name = 1641, --Assembly of Iron (I Choose You, Steelbreaker)
-					bossIDs = {},
-					achievement = 12334,
-					players = {},
-					tactics = {
-					},
-					enabled = true,
-					track = function() core._603:AssemblyOfIronIChooseYouSteelbreaker(12334) end,
-					partial = false,
-					encounterID = 1140,
-					nameWrath = L["Boss_AssemblyOfIron"],
-				},
-				boss23 = {
-					name = 1641, --Assembly of Iron (But I'm On Your Side)
-					bossIDs = {},
-					achievement = 12335,
-					players = {},
-					tactics = {
-					},
-					enabled = false,
-					track = nil,
-					partial = false,
-					encounterID = 1140,
-					nameWrath = L["Boss_AssemblyOfIron"],
-				},
-				boss24 = {
-					name = 1641, --Assembly of Iron (Can't Do That While Stunned)
-					bossIDs = {},
-					achievement = 12336,
-					players = {},
-					tactics = {
-					},
-					enabled = true,
-					track = function() core._603:AssemblyOfIronCantDoThatWhileStunned(12336) end,
-					partial = false,
-					encounterID = 1140,
-					nameWrath = L["Boss_AssemblyOfIron"],
-				},
-				boss25 = {
-					name = 1642, --Kologarn (With Open Arms)
-					bossIDs = {},
-					achievement = 12337,
-					players = {},
-					tactics = {
-					},
-					enabled = true,
-					track = function() core._603:KologarnWithOpenArms(12337) end,
-					partial = false,
-					encounterID = 1137,
-					nameWrath = L["Boss_Kologarn"],
-				},
-				boss26 = {
-					name = 1642, --Kologarn (Disarmed)
-					bossIDs = {},
-					achievement = 12338,
-					players = {},
-					tactics = {
-					},
-					enabled = false,
-					track = nil,
-					partial = false,
-					encounterID = 1137,
-					nameWrath = L["Boss_Kologarn"],
-				},
-				boss27 = {
-					name = 1642, --Kologarn (If Looks Could Kill)
-					bossIDs = {},
-					achievement = 12339,
-					players = {},
-					tactics = {
-					},
-					enabled = true,
-					track = function() core._603:KologarnIfLooksCouldKill(12339) end,
-					partial = false,
-					encounterID = 1137,
-					nameWrath = L["Boss_Kologarn"],
-				},
-				boss28 = {
-					name = 1642, --Kologarn (Rubble and Roll)
-					bossIDs = {},
-					achievement = 12340,
-					players = {},
-					tactics = {
-					},
-					enabled = true,
-					track = function() core._603:KologarnRubbleAndRoll(12340) end,
-					partial = false,
-					encounterID = 1137,
-					nameWrath = L["Boss_Kologarn"],
-				},
-				boss29 = {
-					name = 1643, --Auriaya (Crazy Cat Lady)
-					bossIDs = {},
-					achievement = 12341,
-					players = {},
-					tactics = {
-					},
-					enabled = true,
-					track = function() core._603:AuriayaCrazyCatLady(12341) end,
-					partial = false,
-					encounterID = 1131,
-					nameWrath = L["Boss_Auriaya"],
-				},
-				boss30 = {
-					name = 1643, --Auriaya (Nine Lives)
-					bossIDs = {},
-					achievement = 12342,
-					players = {},
-					tactics = {
-					},
-					enabled = true,
-					track = function() core._603:AuriayaNineLives(12342) end,
-					partial = false,
-					encounterID = 1131,
-					nameWrath = L["Boss_Auriaya"],
-				},
-				boss31 = {
-					name = 1644, --Hodir (Cheese the Freeze)
-					bossIDs = {},
-					achievement = 12343,
-					players = {},
-					tactics = {
-					},
-					enabled = true,
-					track = function() core._603:HodirCheeseTheFreeze(12343) end,
-					partial = false,
-					encounterID = 1135,
-					nameWrath = L["Boss_Hodir"],
-				},
-				boss32 = {
-					name = 1644, --Hodir (I Have the Coolest Friends)
-					bossIDs = {},
-					achievement = 12344,
-					players = {},
-					tactics = {
-					},
-					enabled = true,
-					track = function() core._603:HodirIHaveTheCoolestFriends(12344) end,
-					partial = false,
-					encounterID = 1135,
-					nameWrath = L["Boss_Hodir"],
-				},
-				boss33 = {
-					name = 1644, --Hodir (Getting Cold in Here)
-					bossIDs = {},
-					achievement = 12345,
-					players = {},
-					tactics = {
-					},
-					enabled = true,
-					track = function() core._603:HodirGettingColdInHere(12345) end,
-					partial = false,
-					encounterID = 1135,
-					nameWrath = L["Boss_Hodir"],
-				},
-				boss34 = {
-					name = 1644, --Hodir (I Could Say That This Cache Was Rare)
-					bossIDs = {},
-					achievement = 12347,
-					players = {},
-					tactics = {
-					},
-					enabled = true,
-					track = function() core._603:HodirICouldSayThatThisCacheWasRare(12347) end,
-					partial = false,
-					encounterID = 1135,
-					nameWrath = L["Boss_Hodir"],
-				},
-				boss35 = {
-					name = 1644, --Hodir (Staying Buffed All Winter)
-					bossIDs = {},
-					achievement = 12346,
-					players = {},
-					tactics = {
-					},
-					enabled = false,
-					track = nil,
-					partial = false,
-					encounterID = 1135,
-					nameWrath = L["Boss_Hodir"],
-				},
-				boss36 = {
-					name = 1645, --Thorim (Getting Cold in Here)
-					bossIDs = {},
-					achievement = 12348,
-					players = {},
-					tactics = {
-					},
-					enabled = true,
-					track = function() core._603:ThorimDontStandInTheLightning(12348) end,
-					partial = false,
-					encounterID = 1141,
-					nameWrath = L["Boss_Thorim"],
-				},
-				boss37 = {
-					name = 1645, --Thorim (I'll Take You All On)
-					bossIDs = {},
-					achievement = 12349,
-					players = {},
-					tactics = {
-					},
-					enabled = false,
-					track = nil,
-					partial = false,
-					encounterID = 1141,
-					nameWrath = L["Boss_Thorim"],
-				},
-				boss38 = {
-					name = 1645, --Thorim (Who Needs Bloodlust?)
-					bossIDs = {},
-					achievement = 12350,
-					players = {},
-					tactics = {
-					},
-					enabled = false,
-					track = nil,
-					partial = false,
-					encounterID = 1141,
-					nameWrath = L["Boss_Thorim"],
-				},
-				boss39 = {
-					name = 1645, --Thorim (Siffed)
-					bossIDs = {},
-					achievement = 12351,
-					players = {},
-					tactics = {
-					},
-					enabled = false,
-					track = nil,
-					partial = false,
-					encounterID = 1141,
-					nameWrath = L["Boss_Thorim"],
-				},
-				boss40 = {
-					name = 1645, --Thorim (Lose Your Illusion)
-					bossIDs = {},
-					achievement = 12352,
-					players = {},
-					tactics = {
-					},
-					enabled = false,
-					track = nil,
-					partial = false,
-					encounterID = 1141,
-					nameWrath = L["Boss_Thorim"],
-				},
-				boss41 = {
-					name = L["Instances_Other"], --Lumberjacked
-					bossIDs = {32914, 32913, 32915},
-					achievement = 12360,
-					players = {},
-					tactics = {
-					},
-					enabled = true,
-					track = function() core._603:FreyaLumberjacked(12360) end,
-					partial = false,
-					nameWrath = L["Instances_Other"],
-				},
-				boss42 = {
-					name = 1646, --Freya (Con-speed-atory)
-					bossIDs = {32906, 33430, 33431, 33528, 33527, 33526, 33525, 32914, 32913, 33354, 33355, 32915},
-					achievement = 12361,
-					players = {},
-					tactics = {
-					},
-					enabled = true,
-					track = function() core._603:FreyaConSpeedAtory(12361) end,
-					partial = false,
-					encounterID = 1133,
-					nameWrath = L["Boss_Freya"],
-				},
-				boss43 = {
-					name = 1646, --Freya (Deforestation)
-					bossIDs = {},
-					achievement = 12362,
-					players = {},
-					tactics = {
-					},
-					enabled = true,
-					track = function() core._603:FreyaDeforestation(12362) end,
-					partial = false,
-					encounterID = 1133,
-					nameWrath = L["Boss_Freya"],
-				},
-				boss44 = {
-					name = 1646, --Freya (Getting Back to Nature)
-					bossIDs = {},
-					achievement = 12363,
-					players = {},
-					tactics = {
-					},
-					enabled = true,
-					track = function() core._603:FreyaGettingBackToNature(12363) end,
-					partial = false,
-					encounterID = 1133,
-					nameWrath = L["Boss_Freya"],
-				},
-				boss45 = {
-					name = 1646, --Freya (Knock on Wood)
-					bossIDs = {},
-					achievement = 12364,
-					players = {},
-					tactics = {
-					},
-					enabled = false,
-					track = nil,
-					partial = false,
-					encounterID = 1133,
-					nameWrath = L["Boss_Freya"],
-				},
-				boss46 = {
-					name = 1646, --Freya (Knock, Knock on Wood)
-					bossIDs = {},
-					achievement = 12365,
-					players = {},
-					tactics = {
-					},
-					enabled = false,
-					track = nil,
-					partial = false,
-					encounterID = 1133,
-					nameWrath = L["Boss_Freya"],
-				},
-				boss47 = {
-					name = 1646, --Freya (Knock, Knock, Knock on Wood)
-					bossIDs = {},
-					achievement = 12366,
-					players = {},
-					tactics = {
-					},
-					enabled = false,
-					track = nil,
-					partial = false,
-					encounterID = 1133,
-					nameWrath = L["Boss_Freya"],
-				},
-				boss48 = {
-					name = 1647, --Mimiron (Set Up Us the Bomb)
-					bossIDs = {},
-					achievement = 12367,
-					players = {},
-					tactics = {
-					},
-					enabled = true,
-					track = function() core._603:MimironSetUpUsTheBomb(12367) end,
-					partial = false,
-					encounterID = 1138,
-					nameWrath = L["Boss_Mimiron"],
-				},
-				boss49 = {
-					name = 1647, --Mimiron (Not-So-Friendly Fire)
-					bossIDs = {},
-					achievement = 12368,
-					players = {},
-					tactics = {
-					},
-					enabled = true,
-					track = function() core._603:MimironNotSoFriendlyFire(12368) end,
-					partial = false,
-					encounterID = 1138,
-					nameWrath = L["Boss_Mimiron"],
-				},
-				boss50 = {
-					name = 1647, --Mimiron (Firefighter)
-					bossIDs = {},
-					achievement = 12369,
-					players = {},
-					tactics = {
-					},
-					enabled = true,
-					track = function() end,
-					partial = false,
-					encounterID = 1138,
-					nameWrath = L["Boss_Mimiron"],
-				},
-				boss51 = {
-					name = 1648, --General Vezax (Shadowdodger)
-					bossIDs = {},
-					achievement = 12372,
-					players = {},
-					tactics = {
-					},
-					enabled = true,
-					track = function() core._603:Shadowdodger(12372) end,
-					partial = false,
-					encounterID = 1134,
-					nameWrath = L["Boss_GeneralVezax"],
-				},
-				boss52 = {
-					name = 1648, --General Vezax (I Love the Smell of Saronite in the Morning)
-					bossIDs = {},
-					achievement = 12373,
-					players = {},
-					tactics = {
-					},
-					enabled = true,
-					track = function() core._603:ILoveTheSmellOfSaroniteInTheMorning(12373) end,
-					partial = false,
-					encounterID = 1134,
-					nameWrath = L["Boss_GeneralVezax"],
-				},
-				boss53 = {
-					name = 1649, --Yogg-Saron 1 (Kiss and Make Up)
-					bossIDs = {},
-					achievement = 12384,
-					players = {},
-					tactics = {
-					},
-					enabled = true,
-					track = function() core._603:KissAndMakeUp(12384) end,
-					partial = false,
-					encounterID = 1143,
-					nameWrath = L["Boss_Yogg-Saron1"],
-				},
-				boss54 = {
-					name = 1649, --Yogg-Saron 2 (Three Lights in the Darkness)
-					bossIDs = {},
-					achievement = 12385,
-					players = {},
-					tactics = {
-					},
-					enabled = false,
-					track = nil,
-					partial = false,
-					encounterID = 1143,
-					nameWrath = L["Boss_Yogg-Saron2"],
-				},
-				boss55 = {
-					name = 1649, --Yogg-Saron 3 (Two Lights in the Darkness)
-					bossIDs = {},
-					achievement = 12386,
-					players = {},
-					tactics = {
-					},
-					enabled = false,
-					track = nil,
-					partial = false,
-					encounterID = 1143,
-					nameWrath = L["Boss_Yogg-Saron3"],
-				},
-				boss56 = {
-					name = 1649, --Yogg-Saron 4 (One Light in the Darkness)
-					bossIDs = {},
-					achievement = 12387,
-					players = {},
-					tactics = {
-					},
-					enabled = false,
-					track = nil,
-					partial = false,
-					encounterID = 1143,
-					nameWrath = L["Boss_Yogg-Saron4"],
-				},
-				boss57 = {
-					name = 1649, --Yogg-Saron 5 (Alone in the Darkness)
-					bossIDs = {},
-					achievement = 12388,
-					players = {},
-					tactics = {
-					},
-					enabled = false,
-					track = nil,
-					partial = false,
-					encounterID = 1143,
-					nameWrath = L["Boss_Yogg-Saron5"],
-				},
-				boss58 = {
-					name = 1649, --Yogg-Saron 6 (Drive Me Crazy)
-					bossIDs = {},
-					achievement = 12395,
-					players = {},
-					tactics = {
-					},
-					enabled = true,
-					track = function() core._603:DriveMeCrazy(12395) end,
-					partial = false,
-					encounterID = 1143,
-					nameWrath = L["Boss_Yogg-Saron6"],
-				},
-				boss59 = {
-					name = 1649, --Yogg-Saron 7 (He's Not Getting Any Older)
-					bossIDs = {},
-					achievement = 12396,
-					players = {},
-					tactics = {
-					},
-					enabled = true,
-					track = function() core._603:HesNotGettingAnyOlder(12396) end,
-					partial = false,
-					encounterID = 1143,
-					nameWrath = L["Boss_Yogg-Saron7"],
-				},
-				boss60 = {
-					name = 1649, --Yogg-Saron 8 (They're Coming Out of the Walls)
-					bossIDs = {},
-					achievement = 12397,
-					players = {},
-					tactics = {
-					},
-					enabled = true,
-					track = function() core._603:TheyreComingOutOfTheWalls(12397) end,
-					partial = false,
-					encounterID = 1143,
-					nameWrath = L["Boss_Yogg-Saron8"],
-				},
-				boss61 = {
-					name = 1649, --Yogg-Saron 9 (In His House He Waits Dreaming)
-					bossIDs = {},
-					achievement = 12398,
-					players = {},
-					tactics = {
-					},
-					enabled = false,
-					track = nil,
-					partial = false,
-					encounterID = 1143,
-					nameWrath = L["Boss_Yogg-Saron9"],
-				},
-				boss62 = {
-					name = 1650, --Algalon the Observer (Supermassive)
-					bossIDs = {},
-					achievement = 12400,
-					players = {},
-					tactics = {
-					},
-					enabled = false,
-					track = nil,
-					partial = false,
-					encounterID = 1130,
-					nameWrath = L["Boss_AlgalonTheObserver"],
-				},
-			},
-
 			[603.10] = { --Ulduar 10 Man
-				name = 759,
-				nameLocalised = L["Instance_Ulduar"],
-				classicPhase = 2,
-				classicOnly = true,
+				name = L["Instance_Ulduar"],
 				boss1 = {
 					name = L["Instances_Other"], --Dwarfageddon 10 Man
 					bossIDs = {33572},
@@ -2293,7 +1438,7 @@ core.Instances = {
 					nameWrath = L["Instances_Other"],
 				},
 				boss3 = {
-					name = 1637, --Flame Leviathan (Three Car Garage) 10 Man
+					name = L["Boss_FlameLeviathan"], --Flame Leviathan (Three Car Garage) 10 Man
 					bossIDs = {},
 					achievement = 2907,
 					players = {},
@@ -2306,7 +1451,7 @@ core.Instances = {
 					nameWrath = L["Boss_FlameLeviathan"],
 				},
 				boss4 = {
-					name = 1637, --Flame Leviathan (Take Out Those Turrets) 10 Man
+					name = L["Boss_FlameLeviathan"], --Flame Leviathan (Take Out Those Turrets) 10 Man
 					bossIDs = {},
 					achievement = 2909,
 					players = {},
@@ -2319,7 +1464,7 @@ core.Instances = {
 					nameWrath = L["Boss_FlameLeviathan"],
 				},
 				boss5 = {
-					name = 1637, --Flame Leviathan (Shutout) 10 Man
+					name = L["Boss_FlameLeviathan"], --Flame Leviathan (Shutout) 10 Man
 					bossIDs = {},
 					achievement = 2911,
 					players = {},
@@ -2332,7 +1477,7 @@ core.Instances = {
 					nameWrath = L["Boss_FlameLeviathan"],
 				},
 				boss6 = {
-					name = 1637, --Flame Leviathan (Orbital Bombardment) 10 Man
+					name = L["Boss_FlameLeviathan"], --Flame Leviathan (Orbital Bombardment) 10 Man
 					bossIDs = {},
 					achievement = 2913,
 					players = {},
@@ -2345,7 +1490,7 @@ core.Instances = {
 					nameWrath = L["Boss_FlameLeviathan"],
 				},
 				boss7 = {
-					name = 1637, --Flame Leviathan (Orbital Devastation) 10 Man
+					name = L["Boss_FlameLeviathan"], --Flame Leviathan (Orbital Devastation) 10 Man
 					bossIDs = {},
 					achievement = 2914,
 					players = {},
@@ -2358,7 +1503,7 @@ core.Instances = {
 					nameWrath = L["Boss_FlameLeviathan"],
 				},
 				boss8 = {
-					name = 1637, --Flame Leviathan (Nuked from Orbit) 10 Man
+					name = L["Boss_FlameLeviathan"], --Flame Leviathan (Nuked from Orbit) 10 Man
 					bossIDs = {},
 					achievement = 2915,
 					players = {},
@@ -2371,7 +1516,7 @@ core.Instances = {
 					nameWrath = L["Boss_FlameLeviathan"],
 				},
 				boss9 = {
-					name = 1637, --Flame Leviathan (Orbit-uary) 10 Man
+					name = L["Boss_FlameLeviathan"], --Flame Leviathan (Orbit-uary) 10 Man
 					bossIDs = {},
 					achievement = 3056,
 					players = {},
@@ -2384,7 +1529,7 @@ core.Instances = {
 					nameWrath = L["Boss_FlameLeviathan"],
 				},
 				boss10 = {
-					name = 1639, --Razorscale (A Quick Shave) 10 Man
+					name = L["Boss_Razorscale"], --Razorscale (A Quick Shave) 10 Man
 					bossIDs = {},
 					achievement = 2919,
 					players = {},
@@ -2397,7 +1542,7 @@ core.Instances = {
 					nameWrath = L["Boss_Razorscale"],
 				},
 				boss11 = {
-					name = 1639, --Razorscale (Iron Dwarf, Medium Rare) 10 Man
+					name = L["Boss_Razorscale"], --Razorscale (Iron Dwarf, Medium Rare) 10 Man
 					bossIDs = {},
 					achievement = 2923,
 					players = {},
@@ -2410,7 +1555,7 @@ core.Instances = {
 					nameWrath = L["Boss_Razorscale"],
 				},
 				boss12 = {
-					name = 1638, --Ignis the Furnace Master (Shattered) 10 Man
+					name = L["Boss_IgnisTheFurnaceMaster"], --Ignis the Furnace Master (Shattered) 10 Man
 					bossIDs = {},
 					achievement = 2925,
 					players = {},
@@ -2423,7 +1568,7 @@ core.Instances = {
 					nameWrath = L["Boss_IgnisTheFurnaceMaster"],
 				},
 				boss13 = {
-					name = 1638, --Ignis the Furnace Master (Hot Pocket) 10 Man
+					name = L["Boss_IgnisTheFurnaceMaster"], --Ignis the Furnace Master (Hot Pocket) 10 Man
 					bossIDs = {},
 					achievement = 2927,
 					players = {},
@@ -2436,7 +1581,7 @@ core.Instances = {
 					nameWrath = L["Boss_IgnisTheFurnaceMaster"],
 				},
 				boss14 = {
-					name = 1638, --Ignis the Furnace Master (Stokin' the Furnace) 10 Man
+					name = L["Boss_IgnisTheFurnaceMaster"], --Ignis the Furnace Master (Stokin' the Furnace) 10 Man
 					bossIDs = {},
 					achievement = 2930,
 					players = {},
@@ -2449,7 +1594,7 @@ core.Instances = {
 					nameWrath = L["Boss_IgnisTheFurnaceMaster"],
 				},
 				boss15 = {
-					name = 1640, --XT-002 Deconstructor (Nerf Engineering) 10 Man
+					name = L["Boss_XT-002Deconstructor"], --XT-002 Deconstructor (Nerf Engineering) 10 Man
 					bossIDs = {},
 					achievement = 2931,
 					players = {},
@@ -2462,7 +1607,7 @@ core.Instances = {
 					nameWrath = L["Boss_XT-002Deconstructor"],
 				},
 				boss16 = {
-					name = 1640, --XT-002 Deconstructor (Nerf Scrapbots) 10 Man
+					name = L["Boss_XT-002Deconstructor"], --XT-002 Deconstructor (Nerf Scrapbots) 10 Man
 					bossIDs = {},
 					achievement = 2933,
 					players = {},
@@ -2476,7 +1621,7 @@ core.Instances = {
 					nameWrath = L["Boss_XT-002Deconstructor"],
 				},
 				boss17 = {
-					name = 1640, --XT-002 Deconstructor (Nerf Gravity Bombs) 10 Man
+					name = L["Boss_XT-002Deconstructor"], --XT-002 Deconstructor (Nerf Gravity Bombs) 10 Man
 					bossIDs = {},
 					achievement = 2934,
 					players = {},
@@ -2489,7 +1634,7 @@ core.Instances = {
 					nameWrath = L["Boss_XT-002Deconstructor"],
 				},
 				boss18 = {
-					name = 1640, --XT-002 Deconstructor (Must Deconstruct Faster) 10 Man
+					name = L["Boss_XT-002Deconstructor"], --XT-002 Deconstructor (Must Deconstruct Faster) 10 Man
 					bossIDs = {},
 					achievement = 2937,
 					players = {},
@@ -2502,7 +1647,7 @@ core.Instances = {
 					nameWrath = L["Boss_XT-002Deconstructor"],
 				},
 				boss19 = {
-					name = 1640, --XT-002 Deconstructor (Heartbreaker) 10 Man
+					name = L["Boss_XT-002Deconstructor"], --XT-002 Deconstructor (Heartbreaker) 10 Man
 					bossIDs = {},
 					achievement = 3058,
 					players = {},
@@ -2515,7 +1660,7 @@ core.Instances = {
 					nameWrath = L["Boss_XT-002Deconstructor"],
 				},
 				boss20 = {
-					name = 1641, --Assembly of Iron (I Choose You, Runemaster Molgeim) 10 Man
+					name = L["Boss_AssemblyOfIron"], --Assembly of Iron (I Choose You, Runemaster Molgeim) 10 Man
 					bossIDs = {},
 					achievement = 2939,
 					players = {},
@@ -2528,7 +1673,7 @@ core.Instances = {
 					nameWrath = L["Boss_AssemblyOfIron"],
 				},
 				boss21 = {
-					name = 1641, --Assembly of Iron (I Choose You, Stormcaller Brundir) 10 Man
+					name = L["Boss_AssemblyOfIron"], --Assembly of Iron (I Choose You, Stormcaller Brundir) 10 Man
 					bossIDs = {},
 					achievement = 2940,
 					players = {},
@@ -2541,7 +1686,7 @@ core.Instances = {
 					nameWrath = L["Boss_AssemblyOfIron"],
 				},
 				boss22 = {
-					name = 1641, --Assembly of Iron (I Choose You, Steelbreaker) 10 Man
+					name = L["Boss_AssemblyOfIron"], --Assembly of Iron (I Choose You, Steelbreaker) 10 Man
 					bossIDs = {},
 					achievement = 2941,
 					players = {},
@@ -2554,7 +1699,7 @@ core.Instances = {
 					nameWrath = L["Boss_AssemblyOfIron"],
 				},
 				boss23 = {
-					name = 1641, --Assembly of Iron (But I'm On Your Side) 10 Man
+					name = L["Boss_AssemblyOfIron"], --Assembly of Iron (But I'm On Your Side) 10 Man
 					bossIDs = {},
 					achievement = 2945,
 					players = {},
@@ -2567,7 +1712,7 @@ core.Instances = {
 					nameWrath = L["Boss_AssemblyOfIron"],
 				},
 				boss24 = {
-					name = 1641, --Assembly of Iron (Can't Do That While Stunned) 10 Man
+					name = L["Boss_AssemblyOfIron"], --Assembly of Iron (Can't Do That While Stunned) 10 Man
 					bossIDs = {},
 					achievement = 2947,
 					players = {},
@@ -2580,7 +1725,7 @@ core.Instances = {
 					nameWrath = L["Boss_AssemblyOfIron"],
 				},
 				boss25 = {
-					name = 1642, --Kologarn (With Open Arms) 10 Man
+					name = L["Boss_Kologarn"], --Kologarn (With Open Arms) 10 Man
 					bossIDs = {},
 					achievement = 2951,
 					players = {},
@@ -2593,7 +1738,7 @@ core.Instances = {
 					nameWrath = L["Boss_Kologarn"],
 				},
 				boss26 = {
-					name = 1642, --Kologarn (Disarmed) 10 Man
+					name = L["Boss_Kologarn"], --Kologarn (Disarmed) 10 Man
 					bossIDs = {},
 					achievement = 2953,
 					players = {},
@@ -2606,7 +1751,7 @@ core.Instances = {
 					nameWrath = L["Boss_Kologarn"],
 				},
 				boss27 = {
-					name = 1642, --Kologarn (If Looks Could Kill) 10 Man
+					name = L["Boss_Kologarn"], --Kologarn (If Looks Could Kill) 10 Man
 					bossIDs = {},
 					achievement = 2955,
 					players = {},
@@ -2619,7 +1764,7 @@ core.Instances = {
 					nameWrath = L["Boss_Kologarn"],
 				},
 				boss28 = {
-					name = 1642, --Kologarn (Rubble and Roll) 10 Man
+					name = L["Boss_Kologarn"], --Kologarn (Rubble and Roll) 10 Man
 					bossIDs = {},
 					achievement = 2959,
 					players = {},
@@ -2632,7 +1777,7 @@ core.Instances = {
 					nameWrath = L["Boss_Kologarn"],
 				},
 				boss29 = {
-					name = 1643, --Auriaya (Crazy Cat Lady) 10 Man
+					name = L["Boss_Auriaya"], --Auriaya (Crazy Cat Lady) 10 Man
 					bossIDs = {},
 					achievement = 3006,
 					players = {},
@@ -2645,7 +1790,7 @@ core.Instances = {
 					nameWrath = L["Boss_Auriaya"],
 				},
 				boss30 = {
-					name = 1643, --Auriaya (Nine Lives) 10 Man
+					name = L["Boss_Auriaya"], --Auriaya (Nine Lives) 10 Man
 					bossIDs = {},
 					achievement = 3076,
 					players = {},
@@ -2658,7 +1803,7 @@ core.Instances = {
 					nameWrath = L["Boss_Auriaya"],
 				},
 				boss31 = {
-					name = 1644, --Hodir (Cheese the Freeze) 10 Man
+					name = L["Boss_Hodir"], --Hodir (Cheese the Freeze) 10 Man
 					bossIDs = {},
 					achievement = 2961,
 					players = {},
@@ -2671,7 +1816,7 @@ core.Instances = {
 					nameWrath = L["Boss_Hodir"],
 				},
 				boss32 = {
-					name = 1644, --Hodir (I Have the Coolest Friends) 10 Man
+					name = L["Boss_Hodir"], --Hodir (I Have the Coolest Friends) 10 Man
 					bossIDs = {},
 					achievement = 2963,
 					players = {},
@@ -2684,7 +1829,7 @@ core.Instances = {
 					nameWrath = L["Boss_Hodir"],
 				},
 				boss33 = {
-					name = 1644, --Hodir (Getting Cold in Here) 10 Man
+					name = L["Boss_Hodir"], --Hodir (Getting Cold in Here) 10 Man
 					bossIDs = {},
 					achievement = 2967,
 					players = {},
@@ -2697,7 +1842,7 @@ core.Instances = {
 					nameWrath = L["Boss_Hodir"],
 				},
 				boss34 = {
-					name = 1644, --Hodir (I Could Say That This Cache Was Rare) 10 Man
+					name = L["Boss_Hodir"], --Hodir (I Could Say That This Cache Was Rare) 10 Man
 					bossIDs = {},
 					achievement = 3182,
 					players = {},
@@ -2710,7 +1855,7 @@ core.Instances = {
 					nameWrath = L["Boss_Hodir"],
 				},
 				boss35 = {
-					name = 1644, --Hodir (Staying Buffed All Winter) 10 Man
+					name = L["Boss_Hodir"], --Hodir (Staying Buffed All Winter) 10 Man
 					bossIDs = {},
 					achievement = 2969,
 					players = {},
@@ -2723,7 +1868,7 @@ core.Instances = {
 					nameWrath = L["Boss_Hodir"],
 				},
 				boss36 = {
-					name = 1645, --Thorim (Don't Stand in the Lightning) 10 Man
+					name = L["Boss_Thorim"], --Thorim (Don't Stand in the Lightning) 10 Man
 					bossIDs = {},
 					achievement = 2971,
 					players = {},
@@ -2736,7 +1881,7 @@ core.Instances = {
 					nameWrath = L["Boss_Thorim"],
 				},
 				boss37 = {
-					name = 1645, --Thorim (I'll Take You All On) 10 Man
+					name = L["Boss_Thorim"], --Thorim (I'll Take You All On) 10 Man
 					bossIDs = {},
 					achievement = 2973,
 					players = {},
@@ -2749,7 +1894,7 @@ core.Instances = {
 					nameWrath = L["Boss_Thorim"],
 				},
 				boss38 = {
-					name = 1645, --Thorim (Who Needs Bloodlust?) 10 Man
+					name = L["Boss_Thorim"], --Thorim (Who Needs Bloodlust?) 10 Man
 					bossIDs = {},
 					achievement = 2975,
 					players = {},
@@ -2762,7 +1907,7 @@ core.Instances = {
 					nameWrath = L["Boss_Thorim"],
 				},
 				boss39 = {
-					name = 1645, --Thorim (Siffed) 10 Man
+					name = L["Boss_Thorim"], --Thorim (Siffed) 10 Man
 					bossIDs = {},
 					achievement = 2977,
 					players = {},
@@ -2775,7 +1920,7 @@ core.Instances = {
 					nameWrath = L["Boss_Thorim"],
 				},
 				boss40 = {
-					name = 1645, --Thorim (Lose Your Illusion) 10 Man
+					name = L["Boss_Thorim"], --Thorim (Lose Your Illusion) 10 Man
 					bossIDs = {},
 					achievement = 3176,
 					players = {},
@@ -2800,7 +1945,7 @@ core.Instances = {
 					nameWrath = L["Instances_Other"],
 				},
 				boss42 = {
-					name = 1646, --Freya (Con-speed-atory) 10 Man
+					name = L["Boss_Freya"], --Freya (Con-speed-atory) 10 Man
 					bossIDs = {32906, 33430, 33431, 33528, 33527, 33526, 33525, 32914, 32913, 33354, 33355, 32915},
 					achievement = 2980,
 					players = {},
@@ -2813,7 +1958,7 @@ core.Instances = {
 					nameWrath = L["Boss_Freya"],
 				},
 				boss43 = {
-					name = 1646, --Freya (Deforestation) 10 Man
+					name = L["Boss_Freya"], --Freya (Deforestation) 10 Man
 					bossIDs = {},
 					achievement = 2985,
 					players = {},
@@ -2826,7 +1971,7 @@ core.Instances = {
 					nameWrath = L["Boss_Freya"],
 				},
 				boss44 = {
-					name = 1646, --Freya (Getting Back to Nature) 10 Man
+					name = L["Boss_Freya"], --Freya (Getting Back to Nature) 10 Man
 					bossIDs = {},
 					achievement = 2982,
 					players = {},
@@ -2839,7 +1984,7 @@ core.Instances = {
 					nameWrath = L["Boss_Freya"],
 				},
 				boss45 = {
-					name = 1646, --Freya (Knock on Wood) 10 Man
+					name = L["Boss_Freya"], --Freya (Knock on Wood) 10 Man
 					bossIDs = {},
 					achievement = 3177,
 					players = {},
@@ -2852,7 +1997,7 @@ core.Instances = {
 					nameWrath = L["Boss_Freya"],
 				},
 				boss46 = {
-					name = 1646, --Freya (Knock, Knock on Wood) 10 Man
+					name = L["Boss_Freya"], --Freya (Knock, Knock on Wood) 10 Man
 					bossIDs = {},
 					achievement = 3178,
 					players = {},
@@ -2865,7 +2010,7 @@ core.Instances = {
 					nameWrath = L["Boss_Freya"],
 				},
 				boss47 = {
-					name = 1646, --Freya (Knock, Knock, Knock on Wood) 10 Man
+					name = L["Boss_Freya"], --Freya (Knock, Knock, Knock on Wood) 10 Man
 					bossIDs = {},
 					achievement = 3179,
 					players = {},
@@ -2878,7 +2023,7 @@ core.Instances = {
 					nameWrath = L["Boss_Freya"],
 				},
 				boss48 = {
-					name = 1647, --Mimiron (Set Up Us the Bomb) 10 Man
+					name = L["Boss_Mimiron"], --Mimiron (Set Up Us the Bomb) 10 Man
 					bossIDs = {},
 					achievement = 2989,
 					players = {},
@@ -2891,7 +2036,7 @@ core.Instances = {
 					nameWrath = L["Boss_Mimiron"],
 				},
 				boss49 = {
-					name = 1647, --Mimiron (Not-So-Friendly Fire) 10 Man
+					name = L["Boss_Mimiron"], --Mimiron (Not-So-Friendly Fire) 10 Man
 					bossIDs = {},
 					achievement = 3138,
 					players = {},
@@ -2904,7 +2049,7 @@ core.Instances = {
 					nameWrath = L["Boss_Mimiron"],
 				},
 				boss50 = {
-					name = 1647, --Mimiron (Firefighter) 10 Man
+					name = L["Boss_Mimiron"], --Mimiron (Firefighter) 10 Man
 					bossIDs = {},
 					achievement = 3180,
 					players = {},
@@ -2917,7 +2062,7 @@ core.Instances = {
 					nameWrath = L["Boss_Mimiron"],
 				},
 				boss51 = {
-					name = 1648, --General Vezax (Shadowdodger) 10 Man
+					name = L["Boss_GeneralVezax"], --General Vezax (Shadowdodger) 10 Man
 					bossIDs = {},
 					achievement = 2996,
 					players = {},
@@ -2930,7 +2075,7 @@ core.Instances = {
 					nameWrath = L["Boss_GeneralVezax"],
 				},
 				boss52 = {
-					name = 1648, --General Vezax (I Love the Smell of Saronite in the Morning) 10 Man
+					name = L["Boss_GeneralVezax"], --General Vezax (I Love the Smell of Saronite in the Morning) 10 Man
 					bossIDs = {},
 					achievement = 3181,
 					players = {},
@@ -2943,7 +2088,7 @@ core.Instances = {
 					nameWrath = L["Boss_GeneralVezax"],
 				},
 				boss53 = {
-					name = 1649, --Yogg-Saron 1 (Kiss and Make Up) 10 Man
+					name = L["Boss_Yogg-Saron1"], --Yogg-Saron 1 (Kiss and Make Up) 10 Man
 					bossIDs = {},
 					achievement = 3009,
 					players = {},
@@ -2956,7 +2101,7 @@ core.Instances = {
 					nameWrath = L["Boss_Yogg-Saron1"],
 				},
 				boss54 = {
-					name = 1649, --Yogg-Saron 2 (Three Lights in the Darkness) 10 Man
+					name = L["Boss_Yogg-Saron2"], --Yogg-Saron 2 (Three Lights in the Darkness) 10 Man
 					bossIDs = {},
 					achievement = 3157,
 					players = {},
@@ -2969,7 +2114,7 @@ core.Instances = {
 					nameWrath = L["Boss_Yogg-Saron2"],
 				},
 				boss55 = {
-					name = 1649, --Yogg-Saron 3 (Two Lights in the Darkness) 10 Man
+					name = L["Boss_Yogg-Saron3"], --Yogg-Saron 3 (Two Lights in the Darkness) 10 Man
 					bossIDs = {},
 					achievement = 3141,
 					players = {},
@@ -2982,7 +2127,7 @@ core.Instances = {
 					nameWrath = L["Boss_Yogg-Saron3"],
 				},
 				boss56 = {
-					name = 1649, --Yogg-Saron 4 (One Light in the Darkness) 10 Man
+					name = L["Boss_Yogg-Saron4"], --Yogg-Saron 4 (One Light in the Darkness) 10 Man
 					bossIDs = {},
 					achievement = 3158,
 					players = {},
@@ -2995,7 +2140,7 @@ core.Instances = {
 					nameWrath = L["Boss_Yogg-Saron4"],
 				},
 				boss57 = {
-					name = 1649, --Yogg-Saron 5 (Alone in the Darkness) 10 Man
+					name = L["Boss_Yogg-Saron5"], --Yogg-Saron 5 (Alone in the Darkness) 10 Man
 					bossIDs = {},
 					achievement = 3159,
 					players = {},
@@ -3008,7 +2153,7 @@ core.Instances = {
 					nameWrath = L["Boss_Yogg-Saron5"],
 				},
 				boss58 = {
-					name = 1649, --Yogg-Saron 6 (Drive Me Crazy) 10 Man
+					name = L["Boss_Yogg-Saron6"], --Yogg-Saron 6 (Drive Me Crazy) 10 Man
 					bossIDs = {},
 					achievement = 3008,
 					players = {},
@@ -3021,7 +2166,7 @@ core.Instances = {
 					nameWrath = L["Boss_Yogg-Saron6"],
 				},
 				boss59 = {
-					name = 1649, --Yogg-Saron 7 (He's Not Getting Any Older) 10 Man
+					name = L["Boss_Yogg-Saron7"], --Yogg-Saron 7 (He's Not Getting Any Older) 10 Man
 					bossIDs = {},
 					achievement = 3012,
 					players = {},
@@ -3034,7 +2179,7 @@ core.Instances = {
 					nameWrath = L["Boss_Yogg-Saron7"],
 				},
 				boss60 = {
-					name = 1649, --Yogg-Saron 8 (They're Coming Out of the Walls) 10 Man
+					name = L["Boss_Yogg-Saron8"], --Yogg-Saron 8 (They're Coming Out of the Walls) 10 Man
 					bossIDs = {},
 					achievement = 3014,
 					players = {},
@@ -3047,7 +2192,7 @@ core.Instances = {
 					nameWrath = L["Boss_Yogg-Saron8"],
 				},
 				boss61 = {
-					name = 1649, --Yogg-Saron 9 (In His House He Waits Dreaming) 10 Man
+					name = L["Boss_Yogg-Saron9"], --Yogg-Saron 9 (In His House He Waits Dreaming) 10 Man
 					bossIDs = {},
 					achievement = 3015,
 					players = {},
@@ -3060,7 +2205,7 @@ core.Instances = {
 					nameWrath = L["Boss_Yogg-Saron9"],
 				},
 				boss62 = {
-					name = 1650, --Algalon the Observer (Supermassive) 10 Man
+					name = L["Boss_AlgalonTheObserver"], --Algalon the Observer (Supermassive) 10 Man
 					bossIDs = {},
 					achievement = 3003,
 					players = {},
@@ -3075,10 +2220,7 @@ core.Instances = {
 			},
 
 			[603.25] = { --Ulduar 25 Man
-				name = 759,
-				nameLocalised = L["Instance_Ulduar"],
-				classicPhase = 2,
-				classicOnly = true,
+				name = L["Instance_Ulduar"],
 				boss1 = {
 					name = L["Instances_Other"], --Dwarfageddon 25 Man
 					bossIDs = {33572},
@@ -3105,7 +2247,7 @@ core.Instances = {
 					nameWrath = L["Instances_Other"],
 				},
 				boss3 = {
-					name = 1637, --Flame Leviathan (Three Car Garage) 25 Man
+					name = L["Boss_FlameLeviathan"], --Flame Leviathan (Three Car Garage) 25 Man
 					bossIDs = {},
 					achievement = 2908,
 					players = {},
@@ -3118,7 +2260,7 @@ core.Instances = {
 					nameWrath = L["Boss_FlameLeviathan"],
 				},
 				boss4 = {
-					name = 1637, --Flame Leviathan (Take Out Those Turrets) 25 Man
+					name = L["Boss_FlameLeviathan"], --Flame Leviathan (Take Out Those Turrets) 25 Man
 					bossIDs = {},
 					achievement = 2910,
 					players = {},
@@ -3131,7 +2273,7 @@ core.Instances = {
 					nameWrath = L["Boss_FlameLeviathan"],
 				},
 				boss5 = {
-					name = 1637, --Flame Leviathan (Shutout) 25 Man
+					name = L["Boss_FlameLeviathan"], --Flame Leviathan (Shutout) 25 Man
 					bossIDs = {},
 					achievement = 2912,
 					players = {},
@@ -3144,7 +2286,7 @@ core.Instances = {
 					nameWrath = L["Boss_FlameLeviathan"],
 				},
 				boss6 = {
-					name = 1637, --Flame Leviathan (Orbital Bombardment) 25 Man
+					name = L["Boss_FlameLeviathan"], --Flame Leviathan (Orbital Bombardment) 25 Man
 					bossIDs = {},
 					achievement = 2918,
 					players = {},
@@ -3157,7 +2299,7 @@ core.Instances = {
 					nameWrath = L["Boss_FlameLeviathan"],
 				},
 				boss7 = {
-					name = 1637, --Flame Leviathan (Orbital Devastation) 25 Man
+					name = L["Boss_FlameLeviathan"], --Flame Leviathan (Orbital Devastation) 25 Man
 					bossIDs = {},
 					achievement = 2916,
 					players = {},
@@ -3170,7 +2312,7 @@ core.Instances = {
 					nameWrath = L["Boss_FlameLeviathan"],
 				},
 				boss8 = {
-					name = 1637, --Flame Leviathan (Nuked from Orbit) 25 Man
+					name = L["Boss_FlameLeviathan"], --Flame Leviathan (Nuked from Orbit) 25 Man
 					bossIDs = {},
 					achievement = 2917,
 					players = {},
@@ -3183,7 +2325,7 @@ core.Instances = {
 					nameWrath = L["Boss_FlameLeviathan"],
 				},
 				boss9 = {
-					name = 1637, --Flame Leviathan (Orbit-uary) 25 Man
+					name = L["Boss_FlameLeviathan"], --Flame Leviathan (Orbit-uary) 25 Man
 					bossIDs = {},
 					achievement = 3057,
 					players = {},
@@ -3196,7 +2338,7 @@ core.Instances = {
 					nameWrath = L["Boss_FlameLeviathan"],
 				},
 				boss10 = {
-					name = 1639, --Razorscale (A Quick Shave) 25 Man
+					name = L["Boss_Razorscale"], --Razorscale (A Quick Shave) 25 Man
 					bossIDs = {},
 					achievement = 2921,
 					players = {},
@@ -3209,7 +2351,7 @@ core.Instances = {
 					nameWrath = L["Boss_Razorscale"],
 				},
 				boss11 = {
-					name = 1639, --Razorscale (Iron Dwarf, Medium Rare) 25 Man
+					name = L["Boss_Razorscale"], --Razorscale (Iron Dwarf, Medium Rare) 25 Man
 					bossIDs = {},
 					achievement = 2924,
 					players = {},
@@ -3222,7 +2364,7 @@ core.Instances = {
 					nameWrath = L["Boss_Razorscale"],
 				},
 				boss12 = {
-					name = 1638, --Ignis the Furnace Master (Shattered) 25 Man
+					name = L["Boss_IgnisTheFurnaceMaster"], --Ignis the Furnace Master (Shattered) 25 Man
 					bossIDs = {},
 					achievement = 2926,
 					players = {},
@@ -3235,7 +2377,7 @@ core.Instances = {
 					nameWrath = L["Boss_IgnisTheFurnaceMaster"],
 				},
 				boss13 = {
-					name = 1638, --Ignis the Furnace Master (Hot Pocket) 25 Man
+					name = L["Boss_IgnisTheFurnaceMaster"], --Ignis the Furnace Master (Hot Pocket) 25 Man
 					bossIDs = {},
 					achievement = 2928,
 					players = {},
@@ -3248,7 +2390,7 @@ core.Instances = {
 					nameWrath = L["Boss_IgnisTheFurnaceMaster"],
 				},
 				boss14 = {
-					name = 1638, --Ignis the Furnace Master (Stokin' the Furnace) 25 Man
+					name = L["Boss_IgnisTheFurnaceMaster"], --Ignis the Furnace Master (Stokin' the Furnace) 25 Man
 					bossIDs = {},
 					achievement = 2929,
 					players = {},
@@ -3261,7 +2403,7 @@ core.Instances = {
 					nameWrath = L["Boss_IgnisTheFurnaceMaster"],
 				},
 				boss15 = {
-					name = 1640, --XT-002 Deconstructor (Nerf Engineering) 25 Man
+					name = L["Boss_XT-002Deconstructor"], --XT-002 Deconstructor (Nerf Engineering) 25 Man
 					bossIDs = {},
 					achievement = 2932,
 					players = {},
@@ -3274,7 +2416,7 @@ core.Instances = {
 					nameWrath = L["Boss_XT-002Deconstructor"],
 				},
 				boss16 = {
-					name = 1640, --XT-002 Deconstructor (Nerf Scrapbots) 25 Man
+					name = L["Boss_XT-002Deconstructor"], --XT-002 Deconstructor (Nerf Scrapbots) 25 Man
 					bossIDs = {},
 					achievement = 2935,
 					players = {},
@@ -3288,7 +2430,7 @@ core.Instances = {
 					nameWrath = L["Boss_XT-002Deconstructor"],
 				},
 				boss17 = {
-					name = 1640, --XT-002 Deconstructor (Nerf Gravity Bombs) 25 Man
+					name = L["Boss_XT-002Deconstructor"], --XT-002 Deconstructor (Nerf Gravity Bombs) 25 Man
 					bossIDs = {},
 					achievement = 2936,
 					players = {},
@@ -3301,7 +2443,7 @@ core.Instances = {
 					nameWrath = L["Boss_XT-002Deconstructor"],
 				},
 				boss18 = {
-					name = 1640, --XT-002 Deconstructor (Must Deconstruct Faster) 25 Man
+					name = L["Boss_XT-002Deconstructor"], --XT-002 Deconstructor (Must Deconstruct Faster) 25 Man
 					bossIDs = {},
 					achievement = 2938,
 					players = {},
@@ -3314,7 +2456,7 @@ core.Instances = {
 					nameWrath = L["Boss_XT-002Deconstructor"],
 				},
 				boss19 = {
-					name = 1640, --XT-002 Deconstructor (Heartbreaker) 25 Man
+					name = L["Boss_XT-002Deconstructor"], --XT-002 Deconstructor (Heartbreaker) 25 Man
 					bossIDs = {},
 					achievement = 3059,
 					players = {},
@@ -3327,7 +2469,7 @@ core.Instances = {
 					nameWrath = L["Boss_XT-002Deconstructor"],
 				},
 				boss20 = {
-					name = 1641, --Assembly of Iron (I Choose You, Runemaster Molgeim) 25 Man
+					name = L["Boss_AssemblyOfIron"], --Assembly of Iron (I Choose You, Runemaster Molgeim) 25 Man
 					bossIDs = {},
 					achievement = 2942,
 					players = {},
@@ -3340,7 +2482,7 @@ core.Instances = {
 					nameWrath = L["Boss_AssemblyOfIron"],
 				},
 				boss21 = {
-					name = 1641, --Assembly of Iron (I Choose You, Stormcaller Brundir) 25 Man
+					name = L["Boss_AssemblyOfIron"], --Assembly of Iron (I Choose You, Stormcaller Brundir) 25 Man
 					bossIDs = {},
 					achievement = 2943,
 					players = {},
@@ -3353,7 +2495,7 @@ core.Instances = {
 					nameWrath = L["Boss_AssemblyOfIron"],
 				},
 				boss22 = {
-					name = 1641, --Assembly of Iron (I Choose You, Steelbreaker) 25 Man
+					name = L["Boss_AssemblyOfIron"], --Assembly of Iron (I Choose You, Steelbreaker) 25 Man
 					bossIDs = {},
 					achievement = 2944,
 					players = {},
@@ -3366,7 +2508,7 @@ core.Instances = {
 					nameWrath = L["Boss_AssemblyOfIron"],
 				},
 				boss23 = {
-					name = 1641, --Assembly of Iron (But I'm On Your Side) 25 Man
+					name = L["Boss_AssemblyOfIron"], --Assembly of Iron (But I'm On Your Side) 25 Man
 					bossIDs = {},
 					achievement = 2946,
 					players = {},
@@ -3379,7 +2521,7 @@ core.Instances = {
 					nameWrath = L["Boss_AssemblyOfIron"],
 				},
 				boss24 = {
-					name = 1641, --Assembly of Iron (Can't Do That While Stunned) 25 Man
+					name = L["Boss_AssemblyOfIron"], --Assembly of Iron (Can't Do That While Stunned) 25 Man
 					bossIDs = {},
 					achievement = 2948,
 					players = {},
@@ -3392,7 +2534,7 @@ core.Instances = {
 					nameWrath = L["Boss_AssemblyOfIron"],
 				},
 				boss25 = {
-					name = 1642, --Kologarn (With Open Arms) 25 Man
+					name = L["Boss_Kologarn"], --Kologarn (With Open Arms) 25 Man
 					bossIDs = {},
 					achievement = 2952,
 					players = {},
@@ -3405,7 +2547,7 @@ core.Instances = {
 					nameWrath = L["Boss_Kologarn"],
 				},
 				boss26 = {
-					name = 1642, --Kologarn (Disarmed) 25 Man
+					name = L["Boss_Kologarn"], --Kologarn (Disarmed) 25 Man
 					bossIDs = {},
 					achievement = 2954,
 					players = {},
@@ -3418,7 +2560,7 @@ core.Instances = {
 					nameWrath = L["Boss_Kologarn"],
 				},
 				boss27 = {
-					name = 1642, --Kologarn (If Looks Could Kill) 25 Man
+					name = L["Boss_Kologarn"], --Kologarn (If Looks Could Kill) 25 Man
 					bossIDs = {},
 					achievement = 2956,
 					players = {},
@@ -3431,7 +2573,7 @@ core.Instances = {
 					nameWrath = L["Boss_Kologarn"],
 				},
 				boss28 = {
-					name = 1642, --Kologarn (Rubble and Roll) 25 Man
+					name = L["Boss_Kologarn"], --Kologarn (Rubble and Roll) 25 Man
 					bossIDs = {},
 					achievement = 2960,
 					players = {},
@@ -3444,7 +2586,7 @@ core.Instances = {
 					nameWrath = L["Boss_Kologarn"],
 				},
 				boss29 = {
-					name = 1643, --Auriaya (Crazy Cat Lady) 25 Man
+					name = L["Boss_Auriaya"], --Auriaya (Crazy Cat Lady) 25 Man
 					bossIDs = {},
 					achievement = 3007,
 					players = {},
@@ -3457,7 +2599,7 @@ core.Instances = {
 					nameWrath = L["Boss_Auriaya"],
 				},
 				boss30 = {
-					name = 1643, --Auriaya (Nine Lives) 25 Man
+					name = L["Boss_Auriaya"], --Auriaya (Nine Lives) 25 Man
 					bossIDs = {},
 					achievement = 3077,
 					players = {},
@@ -3470,7 +2612,7 @@ core.Instances = {
 					nameWrath = L["Boss_Auriaya"],
 				},
 				boss31 = {
-					name = 1644, --Hodir (Cheese the Freeze) 25 Man
+					name = L["Boss_Hodir"], --Hodir (Cheese the Freeze) 25 Man
 					bossIDs = {},
 					achievement = 2962,
 					players = {},
@@ -3483,7 +2625,7 @@ core.Instances = {
 					nameWrath = L["Boss_Hodir"],
 				},
 				boss32 = {
-					name = 1644, --Hodir (I Have the Coolest Friends) 25 Man
+					name = L["Boss_Hodir"], --Hodir (I Have the Coolest Friends) 25 Man
 					bossIDs = {},
 					achievement = 2965,
 					players = {},
@@ -3496,7 +2638,7 @@ core.Instances = {
 					nameWrath = L["Boss_Hodir"],
 				},
 				boss33 = {
-					name = 1644, --Hodir (Getting Cold in Here) 25 Man
+					name = L["Boss_Hodir"], --Hodir (Getting Cold in Here) 25 Man
 					bossIDs = {},
 					achievement = 2968,
 					players = {},
@@ -3509,7 +2651,7 @@ core.Instances = {
 					nameWrath = L["Boss_Hodir"],
 				},
 				boss34 = {
-					name = 1644, --Hodir (I Could Say That This Cache Was Rare) 25 Man
+					name = L["Boss_Hodir"], --Hodir (I Could Say That This Cache Was Rare) 25 Man
 					bossIDs = {},
 					achievement = 3184,
 					players = {},
@@ -3522,7 +2664,7 @@ core.Instances = {
 					nameWrath = L["Boss_Hodir"],
 				},
 				boss35 = {
-					name = 1644, --Hodir (Staying Buffed All Winter) 25 Man
+					name = L["Boss_Hodir"], --Hodir (Staying Buffed All Winter) 25 Man
 					bossIDs = {},
 					achievement = 2970,
 					players = {},
@@ -3535,7 +2677,7 @@ core.Instances = {
 					nameWrath = L["Boss_Hodir"],
 				},
 				boss36 = {
-					name = 1645, --Thorim (Don't Stand in the Lightning) 25 Man
+					name = L["Boss_Thorim"], --Thorim (Don't Stand in the Lightning) 25 Man
 					bossIDs = {},
 					achievement = 2972,
 					players = {},
@@ -3548,7 +2690,7 @@ core.Instances = {
 					nameWrath = L["Boss_Thorim"],
 				},
 				boss37 = {
-					name = 1645, --Thorim (I'll Take You All On) 25 Man
+					name = L["Boss_Thorim"], --Thorim (I'll Take You All On) 25 Man
 					bossIDs = {},
 					achievement = 2974,
 					players = {},
@@ -3561,7 +2703,7 @@ core.Instances = {
 					nameWrath = L["Boss_Thorim"],
 				},
 				boss38 = {
-					name = 1645, --Thorim (Who Needs Bloodlust?) 25 Man
+					name = L["Boss_Thorim"], --Thorim (Who Needs Bloodlust?) 25 Man
 					bossIDs = {},
 					achievement = 2976,
 					players = {},
@@ -3574,7 +2716,7 @@ core.Instances = {
 					nameWrath = L["Boss_Thorim"],
 				},
 				boss39 = {
-					name = 1645, --Thorim (Siffed) 25 Man
+					name = L["Boss_Thorim"], --Thorim (Siffed) 25 Man
 					bossIDs = {},
 					achievement = 2978,
 					players = {},
@@ -3587,7 +2729,7 @@ core.Instances = {
 					nameWrath = L["Boss_Thorim"],
 				},
 				boss40 = {
-					name = 1645, --Thorim (Lose Your Illusion) 25 Man
+					name = L["Boss_Thorim"], --Thorim (Lose Your Illusion) 25 Man
 					bossIDs = {},
 					achievement = 3183,
 					players = {},
@@ -3612,7 +2754,7 @@ core.Instances = {
 					nameWrath = L["Instances_Other"],
 				},
 				boss42 = {
-					name = 1646, --Freya (Con-speed-atory) 25 Man
+					name = L["Boss_Freya"], --Freya (Con-speed-atory) 25 Man
 					bossIDs = {32906, 33430, 33431, 33528, 33527, 33526, 33525, 32914, 32913, 33354, 33355, 32915},
 					achievement = 2981,
 					players = {},
@@ -3625,7 +2767,7 @@ core.Instances = {
 					nameWrath = L["Boss_Freya"],
 				},
 				boss43 = {
-					name = 1646, --Freya (Deforestation) 25 Man
+					name = L["Boss_Freya"], --Freya (Deforestation) 25 Man
 					bossIDs = {},
 					achievement = 2984,
 					players = {},
@@ -3638,7 +2780,7 @@ core.Instances = {
 					nameWrath = L["Boss_Freya"],
 				},
 				boss44 = {
-					name = 1646, --Freya (Getting Back to Nature) 25 Man
+					name = L["Boss_Freya"], --Freya (Getting Back to Nature) 25 Man
 					bossIDs = {},
 					achievement = 2983,
 					players = {},
@@ -3651,7 +2793,7 @@ core.Instances = {
 					nameWrath = L["Boss_Freya"],
 				},
 				boss45 = {
-					name = 1646, --Freya (Knock on Wood) 25 Man
+					name = L["Boss_Freya"], --Freya (Knock on Wood) 25 Man
 					bossIDs = {},
 					achievement = 3185,
 					players = {},
@@ -3664,7 +2806,7 @@ core.Instances = {
 					nameWrath = L["Boss_Freya"],
 				},
 				boss46 = {
-					name = 1646, --Freya (Knock, Knock on Wood) 25 Man
+					name = L["Boss_Freya"], --Freya (Knock, Knock on Wood) 25 Man
 					bossIDs = {},
 					achievement = 3186,
 					players = {},
@@ -3677,7 +2819,7 @@ core.Instances = {
 					nameWrath = L["Boss_Freya"],
 				},
 				boss47 = {
-					name = 1646, --Freya (Knock, Knock, Knock on Wood) 25 Man
+					name = L["Boss_Freya"], --Freya (Knock, Knock, Knock on Wood) 25 Man
 					bossIDs = {},
 					achievement = 3187,
 					players = {},
@@ -3690,7 +2832,7 @@ core.Instances = {
 					nameWrath = L["Boss_Freya"],
 				},
 				boss48 = {
-					name = 1647, --Mimiron (Set Up Us the Bomb) 25 Man
+					name = L["Boss_Mimiron"], --Mimiron (Set Up Us the Bomb) 25 Man
 					bossIDs = {},
 					achievement = 3237,
 					players = {},
@@ -3703,7 +2845,7 @@ core.Instances = {
 					nameWrath = L["Boss_Mimiron"],
 				},
 				boss49 = {
-					name = 1647, --Mimiron (Not-So-Friendly Fire) 25 Man
+					name = L["Boss_Mimiron"], --Mimiron (Not-So-Friendly Fire) 25 Man
 					bossIDs = {},
 					achievement = 2995,
 					players = {},
@@ -3716,7 +2858,7 @@ core.Instances = {
 					nameWrath = L["Boss_Mimiron"],
 				},
 				boss50 = {
-					name = 1647, --Mimiron (Firefighter) 25 Man
+					name = L["Boss_Mimiron"], --Mimiron (Firefighter) 25 Man
 					bossIDs = {},
 					achievement = 3189,
 					players = {},
@@ -3729,7 +2871,7 @@ core.Instances = {
 					nameWrath = L["Boss_Mimiron"],
 				},
 				boss51 = {
-					name = 1648, --General Vezax (Shadowdodger) 25 Man
+					name = L["Boss_GeneralVezax"], --General Vezax (Shadowdodger) 25 Man
 					bossIDs = {},
 					achievement = 2997,
 					players = {},
@@ -3742,7 +2884,7 @@ core.Instances = {
 					nameWrath = L["Boss_GeneralVezax"],
 				},
 				boss52 = {
-					name = 1648, --General Vezax (I Love the Smell of Saronite in the Morning) 25 Man
+					name = L["Boss_GeneralVezax"], --General Vezax (I Love the Smell of Saronite in the Morning) 25 Man
 					bossIDs = {},
 					achievement = 3188,
 					players = {},
@@ -3755,7 +2897,7 @@ core.Instances = {
 					nameWrath = L["Boss_GeneralVezax"],
 				},
 				boss53 = {
-					name = 1649, --Yogg-Saron 1 (Kiss and Make Up) 25 Man
+					name = L["Boss_Yogg-Saron1"], --Yogg-Saron 1 (Kiss and Make Up) 25 Man
 					bossIDs = {},
 					achievement = 3011,
 					players = {},
@@ -3768,7 +2910,7 @@ core.Instances = {
 					nameWrath = L["Boss_Yogg-Saron1"],
 				},
 				boss54 = {
-					name = 1649, --Yogg-Saron 2 (Three Lights in the Darkness) 25 Man
+					name = L["Boss_Yogg-Saron2"], --Yogg-Saron 2 (Three Lights in the Darkness) 25 Man
 					bossIDs = {},
 					achievement = 3161,
 					players = {},
@@ -3781,7 +2923,7 @@ core.Instances = {
 					nameWrath = L["Boss_Yogg-Saron2"],
 				},
 				boss55 = {
-					name = 1649, --Yogg-Saron 3 (Two Lights in the Darkness) 25 Man
+					name = L["Boss_Yogg-Saron3"], --Yogg-Saron 3 (Two Lights in the Darkness) 25 Man
 					bossIDs = {},
 					achievement = 3162,
 					players = {},
@@ -3794,7 +2936,7 @@ core.Instances = {
 					nameWrath = L["Boss_Yogg-Saron3"],
 				},
 				boss56 = {
-					name = 1649, --Yogg-Saron 4 (One Light in the Darkness 25 Man)
+					name = L["Boss_Yogg-Saron4"], --Yogg-Saron 4 (One Light in the Darkness 25 Man)
 					bossIDs = {},
 					achievement = 3163,
 					players = {},
@@ -3807,7 +2949,7 @@ core.Instances = {
 					nameWrath = L["Boss_Yogg-Saron4"],
 				},
 				boss57 = {
-					name = 1649, --Yogg-Saron 5 (Alone in the Darkness) 25 Man
+					name = L["Boss_Yogg-Saron5"], --Yogg-Saron 5 (Alone in the Darkness) 25 Man
 					bossIDs = {},
 					achievement = 3164,
 					players = {},
@@ -3820,7 +2962,7 @@ core.Instances = {
 					nameWrath = L["Boss_Yogg-Saron5"],
 				},
 				boss58 = {
-					name = 1649, --Yogg-Saron 6 (Drive Me Crazy) 25 Man
+					name = L["Boss_Yogg-Saron6"], --Yogg-Saron 6 (Drive Me Crazy) 25 Man
 					bossIDs = {},
 					achievement = 3010,
 					players = {},
@@ -3833,7 +2975,7 @@ core.Instances = {
 					nameWrath = L["Boss_Yogg-Saron6"],
 				},
 				boss59 = {
-					name = 1649, --Yogg-Saron 7 (He's Not Getting Any Older) 25 Man
+					name = L["Boss_Yogg-Saron7"], --Yogg-Saron 7 (He's Not Getting Any Older) 25 Man
 					bossIDs = {},
 					achievement = 3013,
 					players = {},
@@ -3846,7 +2988,7 @@ core.Instances = {
 					nameWrath = L["Boss_Yogg-Saron7"],
 				},
 				boss60 = {
-					name = 1649, --Yogg-Saron 8 (They're Coming Out of the Walls) 25 Man
+					name = L["Boss_Yogg-Saron8"], --Yogg-Saron 8 (They're Coming Out of the Walls) 25 Man
 					bossIDs = {},
 					achievement = 3017,
 					players = {},
@@ -3859,7 +3001,7 @@ core.Instances = {
 					nameWrath = L["Boss_Yogg-Saron8"],
 				},
 				boss61 = {
-					name = 1649, --Yogg-Saron 9 (In His House He Waits Dreaming) 25 Man
+					name = L["Boss_Yogg-Saron9"], --Yogg-Saron 9 (In His House He Waits Dreaming) 25 Man
 					bossIDs = {},
 					achievement = 3016,
 					players = {},
@@ -3872,7 +3014,7 @@ core.Instances = {
 					nameWrath = L["Boss_Yogg-Saron9"],
 				},
 				boss62 = {
-					name = 1650, --Algalon the Observer (Supermassive) 25 Man
+					name = L["Boss_AlgalonTheObserver"], --Algalon the Observer (Supermassive) 25 Man
 					bossIDs = {},
 					achievement = 3002,
 					players = {},
@@ -3887,9 +3029,7 @@ core.Instances = {
 			},
 
 			[533.10] = { --Naxxramas 10 Man
-				name = 754,
-				nameLocalised = L["Instance_Naxxramas"],
-				classicPhase = 1,
+				name = L["Instance_Naxxramas"],
 				boss1 = {
 					name = L["Instances_Other"], --MISSINGNAME70
 					bossIDs = {},
@@ -3906,7 +3046,7 @@ core.Instances = {
 					nameWrath = L["Instances_Other"],
 				},
 				boss2 = {
-					name = 1603, --Maexxna
+					name = L["Boss_Maexxna"], --Maexxna
 					bossIDs = {15956,15952},
 					achievement = 1858,
 					players = {},
@@ -3919,7 +3059,7 @@ core.Instances = {
 					nameWrath = L["Boss_Maexxna"],
 				},
 				boss3 = {
-					name = 1610, --Patchwerk
+					name = L["Boss_Patchwerk"], --Patchwerk
 					bossIDs = {16028},
 					achievement = 1856,
 					players = {},
@@ -3936,7 +3076,7 @@ core.Instances = {
 					nameWrath = L["Boss_Patchwerk"],
 				},
 				boss4 = {
-					name = 1605, --Heigan the Unclean
+					name = L["Boss_HeiganTheUnclean"], --Heigan the Unclean
 					bossIDs = {15936},
 					achievement = 1996,
 					players = {},
@@ -3949,7 +3089,7 @@ core.Instances = {
 					nameWrath = L["Boss_HeiganTheUnclean"],
 				},
 				boss5 = {
-					name = 1602, --Grand Widow Faerlina
+					name = L["Boss_GrandWidowFaerlina"], --Grand Widow Faerlina
 					bossIDs = {15953},
 					achievement = 1997,
 					players = {},
@@ -3962,7 +3102,7 @@ core.Instances = {
 					nameWrath = L["Boss_GrandWidowFaerlina"],
 				},
 				boss6 = {
-					name = 1613, --Thaddius
+					name = L["Boss_Thaddius"], --Thaddius
 					bossIDs = {15928,15930,15929},
 					achievement = 2178,
 					players = {},
@@ -3975,7 +3115,7 @@ core.Instances = {
 					nameWrath = L["Boss_Thaddius"],
 				},
 				boss7 = {
-					name = 1613, --Thaddius
+					name = L["Boss_Thaddius"], --Thaddius
 					bossIDs = {15928,15930,15929},
 					achievement = 2180,
 					players = {},
@@ -3988,7 +3128,7 @@ core.Instances = {
 					nameWrath = L["Boss_Thaddius"],
 				},
 				boss8 = {
-					name = 1606, --Loatheb
+					name = L["Boss_Loatheb"], --Loatheb
 					bossIDs = {16011},
 					achievement = 2182,
 					players = {},
@@ -4001,7 +3141,7 @@ core.Instances = {
 					nameWrath = L["Boss_Loatheb"],
 				},
 				boss9 = {
-					name = 1609, --Four Horsemen
+					name = L["Boss_TheFourHorsemen"], --Four Horsemen
 					bossIDs = {16063,16064,16065,30549},
 					achievement = 2176,
 					players = {},
@@ -4015,7 +3155,7 @@ core.Instances = {
 					nameWrath = L["Boss_TheFourHorsemen"],
 				},
 				boss10 = {
-					name = 1614, --Sapphiron
+					name = L["Boss_Sapphiron"], --Sapphiron
 					bossIDs = {},
 					achievement = 2146,
 					players = {},
@@ -4029,7 +3169,7 @@ core.Instances = {
 					nameWrath = L["Boss_Sapphiron"],
 				},
 				boss11 = {
-					name = 1615, --Kel'Thuzad
+					name = L["Boss_KelThuzad"], --Kel'Thuzad
 					bossIDs = {23562,23563,23561,16427,16429,16428},
 					achievement = 2184,
 					players = {},
@@ -4044,9 +3184,7 @@ core.Instances = {
 			},
 
 			[533.25] = { --Naxxramas 25 Man
-				name = 754,
-				nameLocalised = L["Instance_Naxxramas"],
-				classicPhase = 1,
+				name = L["Instance_Naxxramas"],
 				boss1 = {
 					name = L["Instances_Other"], --MISSINGNAME71
 					bossIDs = {},
@@ -4063,7 +3201,7 @@ core.Instances = {
 					nameWrath = L["Instances_Other"],
 				},
 				boss2 = {
-					name = 1603, --Maexxna
+					name = L["Boss_Maexxna"], --Maexxna
 					bossIDs = {15956,15952},
 					achievement = 1859,
 					players = {},
@@ -4076,7 +3214,7 @@ core.Instances = {
 					nameWrath = L["Boss_Maexxna"],
 				},
 				boss3 = {
-					name = 1610, --Patchwerk
+					name = L["Boss_Patchwerk"], --Patchwerk
 					bossIDs = {16028},
 					achievement = 1857,
 					players = {},
@@ -4093,7 +3231,7 @@ core.Instances = {
 					nameWrath = L["Boss_Patchwerk"],
 				},
 				boss4 = {
-					name = 1605, --Heigan the Unclean
+					name = L["Boss_HeiganTheUnclean"], --Heigan the Unclean
 					bossIDs = {15936},
 					achievement = 2139,
 					players = {},
@@ -4106,7 +3244,7 @@ core.Instances = {
 					nameWrath = L["Boss_HeiganTheUnclean"],
 				},
 				boss5 = {
-					name = 1602, --Grand Widow Faerlina
+					name = L["Boss_GrandWidowFaerlina"], --Grand Widow Faerlina
 					bossIDs = {15953},
 					achievement = 2140,
 					players = {},
@@ -4119,7 +3257,7 @@ core.Instances = {
 					nameWrath = L["Boss_GrandWidowFaerlina"],
 				},
 				boss6 = {
-					name = 1613, --Thaddius
+					name = L["Boss_Thaddius"], --Thaddius
 					bossIDs = {15928,15930,15929},
 					achievement = 2179,
 					players = {},
@@ -4132,7 +3270,7 @@ core.Instances = {
 					nameWrath = L["Boss_Thaddius"],
 				},
 				boss7 = {
-					name = 1613, --Thaddius
+					name = L["Boss_Thaddius"], --Thaddius
 					bossIDs = {15928,15930,15929},
 					achievement = 2181,
 					players = {},
@@ -4145,7 +3283,7 @@ core.Instances = {
 					nameWrath = L["Boss_Thaddius"],
 				},
 				boss8 = {
-					name = 1606, --Loatheb
+					name = L["Boss_Loatheb"], --Loatheb
 					bossIDs = {16011},
 					achievement = 2183,
 					players = {},
@@ -4158,7 +3296,7 @@ core.Instances = {
 					nameWrath = L["Boss_Loatheb"],
 				},
 				boss9 = {
-					name = 1609, --Four Horsemen
+					name = L["Boss_TheFourHorsemen"], --Four Horsemen
 					bossIDs = {16063,16064,16065,30549},
 					achievement = 2177,
 					players = {},
@@ -4172,7 +3310,7 @@ core.Instances = {
 					nameWrath = L["Boss_TheFourHorsemen"],
 				},
 				boss10 = {
-					name = 1614, --Sapphiron
+					name = L["Boss_Sapphiron"], --Sapphiron
 					bossIDs = {},
 					achievement = 2147,
 					players = {},
@@ -4186,7 +3324,7 @@ core.Instances = {
 					nameWrath = L["Boss_Sapphiron"],
 				},
 				boss11 = {
-					name = 1615, --Kel'Thuzad
+					name = L["Boss_KelThuzad"], --Kel'Thuzad
 					bossIDs = {23562,23563,23561,16427,16429,16428},
 					achievement = 2185,
 					players = {},
@@ -4201,11 +3339,9 @@ core.Instances = {
 			},
 
 			[631.10] = { --Icecrown Citadel 10 Man
-				name = 758,
-				nameLocalised = L["Instance_IcecrownCitadel"],
-				classicPhase = 4,
+				name = L["Instance_IcecrownCitadel"],
 				boss1 = {
-					name = 1624, --Lord Marrowgar
+					name = L["Boss_LordMarrowgar"], --Lord Marrowgar
 					bossIDs = {36612},
 					achievement = 4534,
 					players = {},
@@ -4218,7 +3354,7 @@ core.Instances = {
 					nameWrath = L["Boss_LordMarrowgar"],
 				},
 				boss2 = {
-					name = 1625, --Lady Deathwhisper
+					name = L["Boss_LadyDeathwhisper"], --Lady Deathwhisper
 					bossIDs = {36855},
 					achievement = 4535,
 					players = {},
@@ -4231,7 +3367,7 @@ core.Instances = {
 					nameWrath = L["Boss_LadyDeathwhisper"],
 				},
 				boss3 = {
-					name = 1626, --Gunship Battle
+					name = L["Boss_GunshipBattle"], --Gunship Battle
 					bossIDs = {37215},
 					achievement = 4536,
 					players = {},
@@ -4244,7 +3380,7 @@ core.Instances = {
 					nameWrath = L["Boss_GunshipBattle"],
 				},
 				boss4 = {
-					name = 1628, --Deathbringer Saurfang
+					name = L["Boss_DeathbringerSaurfang"], --Deathbringer Saurfang
 					bossIDs = {37813},
 					achievement = 4537,
 					players = {},
@@ -4257,7 +3393,7 @@ core.Instances = {
 					nameWrath = L["Boss_DeathbringerSaurfang"],
 				},
 				boss5 = {
-					name = 1629, --Festergut
+					name = L["Boss_Festergut"], --Festergut
 					bossIDs = {36626},
 					achievement = 4577,
 					players = {},
@@ -4270,7 +3406,7 @@ core.Instances = {
 					nameWrath = L["Boss_Festergut"],
 				},
 				boss6 = {
-					name = 1630, --Rotface
+					name = L["Boss_Rotface"], --Rotface
 					bossIDs = {36627},
 					achievement = 4538,
 					players = {},
@@ -4283,7 +3419,7 @@ core.Instances = {
 					nameWrath = L["Boss_Rotface"],
 				},
 				boss7 = {
-					name = 1631, --Professor Putricide
+					name = L["Boss_PrOfessorPutricide"], --Professor Putricide
 					bossIDs = {36678},
 					achievement = 4578,
 					players = {},
@@ -4296,7 +3432,7 @@ core.Instances = {
 					nameWrath = L["Boss_PrOfessorPutricide"],
 				},
 				boss8 = {
-					name = 1634, --Valithria Dreamwalker
+					name = L["Boss_ValithriaDreamwalker"], --Valithria Dreamwalker
 					bossIDs = {36789},
 					achievement = 4579,
 					players = {},
@@ -4309,7 +3445,7 @@ core.Instances = {
 					nameWrath = L["Boss_ValithriaDreamwalker"],
 				},
 				boss9 = {
-					name = 1635, --Sindragosa
+					name = L["Boss_Sindragosa"], --Sindragosa
 					bossIDs = {36853},
 					achievement = 4580,
 					players = {},
@@ -4322,7 +3458,7 @@ core.Instances = {
 					nameWrath = L["Boss_Sindragosa"],
 				},
 				boss10 = {
-					name = 1632, --Blood Prince Council
+					name = L["Boss_BloodPrinceCouncil"], --Blood Prince Council
 					bossIDs = {37970},
 					achievement = 4582,
 					players = {},
@@ -4335,7 +3471,7 @@ core.Instances = {
 					nameWrath = L["Boss_BloodPrinceCouncil"],
 				},
 				boss11 = {
-					name = 1633, --Blood-Queen Lana'thel
+					name = L["Boss_Blood-QueenLanaThel"], --Blood-Queen Lana'thel
 					bossIDs = {37955},
 					achievement = 4539,
 					players = {},
@@ -4348,7 +3484,7 @@ core.Instances = {
 					nameWrath = L["Boss_Blood-QueenLanaThel"],
 				},
 				boss12 = {
-					name = 1636, --The Lich King
+					name = L["Boss_TheLichKing"], --The Lich King
 					bossIDs = {36597},
 					achievement = 4601,
 					players = {},
@@ -4361,7 +3497,7 @@ core.Instances = {
 					nameWrath = L["Boss_TheLichKing"],
 				},
 				boss13 = {
-					name = 1636, --The Lich King
+					name = L["Boss_TheLichKing"], --The Lich King
 					bossIDs = {},
 					achievement = 4581,
 					players = {},
@@ -4376,11 +3512,9 @@ core.Instances = {
 			},
 
 			[631.25] = { --Icecrown Citadel 25 Man
-				name = 758,
-				nameLocalised = L["Instance_IcecrownCitadel"],
-				classicPhase = 4,
+				name = L["Instance_IcecrownCitadel"],
 				boss1 = {
-					name = 1624, --Lord Marrowgar
+					name = L["Boss_LordMarrowgar"], --Lord Marrowgar
 					bossIDs = {36612},
 					achievement = 4610,
 					players = {},
@@ -4393,7 +3527,7 @@ core.Instances = {
 					nameWrath = L["Boss_LordMarrowgar"],
 				},
 				boss2 = {
-					name = 1625, --Lady Deathwhisper
+					name = L["Boss_LadyDeathwhisper"], --Lady Deathwhisper
 					bossIDs = {36855},
 					achievement = 4611,
 					players = {},
@@ -4406,7 +3540,7 @@ core.Instances = {
 					nameWrath = L["Boss_LadyDeathwhisper"],
 				},
 				boss3 = {
-					name = 1626, --Gunship Battle
+					name = L["Boss_GunshipBattle"], --Gunship Battle
 					bossIDs = {37215},
 					achievement = 4612,
 					players = {},
@@ -4419,7 +3553,7 @@ core.Instances = {
 					nameWrath = L["Boss_GunshipBattle"],
 				},
 				boss4 = {
-					name = 1628, --Deathbringer Saurfang
+					name = L["Boss_DeathbringerSaurfang"], --Deathbringer Saurfang
 					bossIDs = {37813},
 					achievement = 4613,
 					players = {},
@@ -4432,7 +3566,7 @@ core.Instances = {
 					nameWrath = L["Boss_DeathbringerSaurfang"],
 				},
 				boss5 = {
-					name = 1629, --Festergut
+					name = L["Boss_Festergut"], --Festergut
 					bossIDs = {36626},
 					achievement = 4615,
 					players = {},
@@ -4445,7 +3579,7 @@ core.Instances = {
 					nameWrath = L["Boss_Festergut"],
 				},
 				boss6 = {
-					name = 1630, --Rotface
+					name = L["Boss_Rotface"], --Rotface
 					bossIDs = {36627},
 					achievement = 4614,
 					players = {},
@@ -4458,7 +3592,7 @@ core.Instances = {
 					nameWrath = L["Boss_Rotface"],
 				},
 				boss7 = {
-					name = 1631, --Professor Putricide
+					name = L["Boss_PrOfessorPutricide"], --Professor Putricide
 					bossIDs = {36678},
 					achievement = 4616,
 					players = {},
@@ -4471,7 +3605,7 @@ core.Instances = {
 					nameWrath = L["Boss_PrOfessorPutricide"],
 				},
 				boss8 = {
-					name = 1634, --Valithria Dreamwalker
+					name = L["Boss_ValithriaDreamwalker"], --Valithria Dreamwalker
 					bossIDs = {36789},
 					achievement = 4619,
 					players = {},
@@ -4484,7 +3618,7 @@ core.Instances = {
 					nameWrath = L["Boss_ValithriaDreamwalker"],
 				},
 				boss9 = {
-					name = 1635, --Sindragosa
+					name = L["Boss_Sindragosa"], --Sindragosa
 					bossIDs = {36853},
 					achievement = 4620,
 					players = {},
@@ -4497,7 +3631,7 @@ core.Instances = {
 					nameWrath = L["Boss_Sindragosa"],
 				},
 				boss10 = {
-					name = 1632, --Blood Prince Council
+					name = L["Boss_BloodPrinceCouncil"], --Blood Prince Council
 					bossIDs = {37970},
 					achievement = 4617,
 					players = {},
@@ -4510,7 +3644,7 @@ core.Instances = {
 					nameWrath = L["Boss_BloodPrinceCouncil"],
 				},
 				boss11 = {
-					name = 1633, --Blood-Queen Lana'thel
+					name = L["Boss_Blood-QueenLanaThel"], --Blood-Queen Lana'thel
 					bossIDs = {37955},
 					achievement = 4618,
 					players = {},
@@ -4523,7 +3657,7 @@ core.Instances = {
 					nameWrath = L["Boss_Blood-QueenLanaThel"],
 				},
 				boss12 = {
-					name = 1636, --The Lich King
+					name = L["Boss_TheLichKing"], --The Lich King
 					bossIDs = {36597},
 					achievement = 4621,
 					players = {},
@@ -4536,7 +3670,7 @@ core.Instances = {
 					nameWrath = L["Boss_TheLichKing"],
 				},
 				boss13 = {
-					name = 1636, --The Lich King
+					name = L["Boss_TheLichKing"], --The Lich King
 					bossIDs = {},
 					achievement = 4622,
 					players = {},
@@ -4553,17 +3687,15 @@ core.Instances = {
 
 		Dungeons = {
 			[574] = { --Utgarde Keep
-				name = 285,
-				nameLocalised = L["Instance_UtgardeKeep"],
-				classicPhase = 1,
+				name = L["Instance_UtgardeKeep"],
 				boss1 = {
-					name = 638, --Prince Keleseth
+					name = L["Boss_PrinceKeleseth"], --Prince Keleseth
 					bossIDs = {23953},
 					achievement = 1919,
 					players = {},
 					tactics = {
 						[3] = {
-							{ tactic = L["UtgardeKeep_Classic_PrinceKeleseth"] },
+							{ tactic = format(L["UtgardeKeep_Classic_PrinceKeleseth"], "IAT_23953", C_Spell.GetSpellLink(42672), C_Spell.GetSpellLink(42672)) },
 						},
 					},
 					enabled = true,
@@ -4575,17 +3707,15 @@ core.Instances = {
 			},
 
 			[576] = { --The Nexus
-				name = 281,
-				nameLocalised = L["Instance_TheNexus"],
-				classicPhase = 1,
+				name = L["Instance_TheNexus"],
 				boss1 = {
-					name = 618, --Grand Magus Telestra
+					name = L["Boss_GrandMagusTelestra"], --Grand Magus Telestra
 					bossIDs = {26731},
 					achievement = 2150,
 					players = {},
 					tactics = {
 						[3] = {
-							{ tactic = L["TheNexus_Classic_GrandMagusTelestra"] },
+							{ tactic = format(L["TheNexus_Classic_GrandMagusTelestra"], "IAT_26731", C_Spell.GetSpellLink(70421)) },
 						},
 					},
 					enabled = true,
@@ -4594,13 +3724,13 @@ core.Instances = {
 					nameWrath = L["Boss_GrandMagusTelestra"],
 				},
 				boss2 = {
-					name = 619, --Anomalus
+					name = L["Boss_Anomalus"], --Anomalus
 					bossIDs = {26763},
 					achievement = 2037,
 					players = {},
 					tactics = {
 						[3] = {
-							{ tactic = L["TheNexus_Classic_Anomalus"] },
+							{ tactic = format(L["TheNexus_Classic_Anomalus"], "IAT_26918", "IAT_26763", "IAT_26746", "IAT_26918", "IAT_26918") },
 						},
 					},
 					enabled = true,
@@ -4609,13 +3739,13 @@ core.Instances = {
 					nameWrath = L["Boss_Anomalus"],
 				},
 				boss3 = {
-					name = 621, --Keristrasza
+					name = L["Boss_Keristasza"], --Keristrasza
 					bossIDs = {26723},
 					achievement = 2036,
 					players = {},
 					tactics = {
 						[3] = {
-							{ tactic = L["TheNexus_Classic_Keristasza"] },
+							{ tactic = format(L["TheNexus_Classic_Keristasza"], C_Spell.GetSpellLink(48095), "IAT_26206", C_Spell.GetSpellLink(48179), C_Spell.GetSpellLink(32592)) },
 						},
 					},
 					enabled = true,
@@ -4626,9 +3756,7 @@ core.Instances = {
 			},
 
 			[595] = { --The Culling of Stratholme
-				name = 279,
-				nameLocalised = L["Instance_TheCullingOfStratholme"],
-				classicPhase = 1,
+				name = L["Instance_TheCullingOfStratholme"],
 				boss1 = {
 					name = L["Instances_Other"], --MISSINGNAME72
 					bossIDs = {27737},
@@ -4659,17 +3787,15 @@ core.Instances = {
 			},
 
 			[601] = { --Azjol Nerub
-				name = 272,
-				nameLocalised = L["Instance_AzjolNerub"],
-				classicPhase = 1,
+				name = L["Instance_AzjolNerub"],
 				boss1 = {
-					name = 585, --Krik'thir the Gatewatcher
+					name = L["Boss_KrikthirTheGatewatcher"], --Krik'thir the Gatewatcher
 					bossIDs = {},
 					achievement = 1296,
 					players = {},
 					tactics = {
 						[3] = {
-							{ tactic = L["AzjolNerub_Classic_KrikthirTheGatewatcher"] },
+							{ tactic = format(L["AzjolNerub_Classic_KrikthirTheGatewatcher"], "IAT_28730", "IAT_28729", "IAT_28731") },
 						},
 					},
 					enabled = true,
@@ -4679,7 +3805,7 @@ core.Instances = {
 					nameWrath = L["Boss_KrikthirTheGatewatcher"],
 				},
 				boss2 = {
-					name = 586, --Hadronox
+					name = L["Boss_Hadronox"], --Hadronox
 					bossIDs = {},
 					achievement = 1297,
 					players = {},
@@ -4692,7 +3818,7 @@ core.Instances = {
 					nameWrath = L["Boss_Hadronox"],
 				},
 				boss3 = {
-					name = 587, --Anub'arak
+					name = L["Boss_Anubarak"], --Anub'arak
 					bossIDs = {29120},
 					achievement = 1860,
 					players = {},
@@ -4710,17 +3836,15 @@ core.Instances = {
 			},
 
 			[619] = { --Ahn'Kahet The Old Kingdom
-				name = 271,
-				nameLocalised = L["Instance_AhnkahetTheOldKingdom"],
-				classicPhase = 1,
+				name = L["Instance_AhnkahetTheOldKingdom"],
 				boss1 = {
-					name = 580, --Elder Nadox
+					name = L["Boss_ElderNadox"], --Elder Nadox
 					bossIDs = {29309},
 					achievement = 2038,
 					players = {},
 					tactics = {
 						[3] = {
-							{ tactic = L["AhnkahetTheOldKingdom_Classic_ElderNadox"] },
+							{ tactic = format(L["AhnkahetTheOldKingdom_Classic_ElderNadox"], "IAT_30176", C_Spell.GetSpellLink(56153), C_Spell.GetSpellLink(9484)) },
 						},
 					},
 					enabled = true,
@@ -4730,13 +3854,13 @@ core.Instances = {
 					nameWrath = L["Boss_ElderNadox"],
 				},
 				boss2 = {
-					name = 582, --Jedoga Shadowseeker
+					name = L["Boss_JedogaShadowseeker"], --Jedoga Shadowseeker
 					bossIDs = {29310},
 					achievement = 2056,
 					players = {},
 					tactics = {
 						[3] = {
-							{ tactic = L["AhnkahetTheOldKingdom_Classic_JedogaShadowseeker"] },
+							{ tactic = format(L["AhnkahetTheOldKingdom_Classic_JedogaShadowseeker"], "IAT_29310", "IAT_30385", C_Spell.GetSpellLink(56219)) },
 						},
 					},
 					enabled = true,
@@ -4746,13 +3870,13 @@ core.Instances = {
 					nameWrath = L["Boss_JedogaShadowseeker"],
 				},
 				boss3 = {
-					name = 584, --Herald Volazj
+					name = L["Boss_HeraldVolazj"], --Herald Volazj
 					bossIDs = {29311},
 					achievement = 1862,
 					players = {},
 					tactics = {
 						[3] = {
-							{ tactic = L["AhnkahetTheOldKingdom_Classic_HeraldVolazj"] },
+							{ tactic = format(L["AhnkahetTheOldKingdom_Classic_HeraldVolazj"], "IAT_30623") },
 						},
 					},
 					enabled = true,
@@ -4764,17 +3888,15 @@ core.Instances = {
 			},
 
 			[600] = { --Dark Tharon Keep
-				name = 273,
-				nameLocalised = L["Instance_DrakTharonKeep"],
-				classicPhase = 1,
+				name = L["Instance_DrakTharonKeep"],
 				boss1 = {
-					name = 588, --Trollgore
+					name = L["Boss_Trollgore"], --Trollgore
 					bossIDs = {26630},
 					achievement = 2151,
 					players = {},
 					tactics = {
 						[3] = {
-							{ tactic = L["DrakTharonKeep_Classic_Trollgore"] },
+							{ tactic = format(L["DrakTharonKeep_Classic_Trollgore"], "IAT_26630", C_Spell.GetSpellLink(49381), C_Spell.GetSpellLink(49381)) },
 						},
 					},
 					enabled = true,
@@ -4784,7 +3906,7 @@ core.Instances = {
 					nameWrath = L["Boss_Trollgore"],
 				},
 				boss2 = {
-					name = 589, --Novos the Summoner
+					name = L["Boss_NovosTheSummoner"], --Novos the Summoner
 					bossIDs = {},
 					achievement = 2057,
 					players = {},
@@ -4800,7 +3922,7 @@ core.Instances = {
 					nameWrath = L["Boss_NovosTheSummoner"],
 				},
 				boss3 = {
-					name = 590, --King Dred
+					name = L["Boss_KingDred"], --King Dred
 					bossIDs = {27483},
 					achievement = 2039,
 					players = {},
@@ -4818,11 +3940,9 @@ core.Instances = {
 			},
 
 			[608] = { --Violet Hold
-				name = 283,
-				nameLocalised = L["Instance_TheVioletHold"],
-				classicPhase = 1,
+				name = L["Instance_TheVioletHold"],
 				boss1 = {
-					name = 632, --Cyanigosa
+					name = L["Boss_Cyanigosa"], --Cyanigosa
 					bossIDs = {},
 					achievement = 1816,
 					players = {},
@@ -4853,13 +3973,13 @@ core.Instances = {
 					nameWrath = L["Instances_Other"],
 				},
 				boss3 = {
-					name = 628, --Ichoron
+					name = L["Boss_Ichoron"], --Ichoron
 					bossIDs = {},
 					achievement = 2041,
 					players = {},
 					tactics = {
 						[3] = {
-							{ tactic = L["TheVioletHold_Classic_Ichoron"] },
+							{ tactic = format(L["TheVioletHold_Classic_Ichoron"], C_Spell.GetSpellLink(57804), "IAT_29313", "IAT_29313") },
 						},
 					},
 					enabled = false,
@@ -4868,13 +3988,13 @@ core.Instances = {
 					nameWrath = L["Boss_Ichoron"],
 				},
 				boss4 = {
-					name = 631, --Zuramat the Obliterator
+					name = L["Boss_ZuramatTheObliterator"], --Zuramat the Obliterator
 					bossIDs = {29314},
 					achievement = 2153,
 					players = {},
 					tactics = {
 						[3] = {
-							{ tactic = L["TheVioletHold_Classic_ZuramatTheObliterator"] },
+							{ tactic = format(L["TheVioletHold_Classic_ZuramatTheObliterator"], "IAT_29364") },
 						},
 					},
 					enabled = true,
@@ -4885,17 +4005,15 @@ core.Instances = {
 			},
 
 			[604] = { --Gundrak
-				name = 274,
-				nameLocalised = L["Instance_Gundrak"],
-				classicPhase = 1,
+				name = L["Instance_Gundrak"],
 				boss1 = {
-					name = 592, --Slad'ran
+					name = L["Boss_Sladran"], --Slad'ran
 					bossIDs = {29304},
 					achievement = 2058,
 					players = {},
 					tactics = {
 						[3] = {
-							{ tactic = L["Gundrak_Classic_Sladran"] },
+							{ tactic = format(L["Gundrak_Classic_Sladran"], "IAT_29304", "IAT_29713", C_Spell.GetSpellLink(55093), "IAT_29713", C_Spell.GetSpellLink(55093)) },
 						},
 					},
 					enabled = true,
@@ -4905,13 +4023,13 @@ core.Instances = {
 					nameWrath = L["Boss_Sladran"],
 				},
 				boss2 = {
-					name = 594, --Moorabi
+					name = L["Boss_Moorabi"], --Moorabi
 					bossIDs = {29305},
 					achievement = 2040,
 					players = {},
 					tactics = {
 						[3] = {
-							{ tactic = L["Gundrak_Classic_Moorabi"] },
+							{ tactic = format(L["Gundrak_Classic_Moorabi"], "IAT_29305", C_Spell.GetSpellLink(55098), "IAT_29305", C_Spell.GetSpellLink(55163), C_Spell.GetSpellLink(55098)) },
 						},
 					},
 					enabled = true,
@@ -4921,7 +4039,7 @@ core.Instances = {
 					nameWrath = L["Boss_Moorabi"],
 				},
 				boss3 = {
-					name = 596, --Gal'darah
+					name = L["Boss_Galdarah"], --Gal'darah
 					bossIDs = {},
 					achievement = 1864,
 					players = {},
@@ -4937,7 +4055,7 @@ core.Instances = {
 					nameWrath = L["Boss_Galdarah"],
 				},
 				boss4 = {
-					name = 596, --Gal'darah
+					name = L["Boss_Galdarah"], --Gal'darah
 					bossIDs = {29306},
 					achievement = 2152,
 					players = {},
@@ -4955,17 +4073,15 @@ core.Instances = {
 			},
 
 			[599] = { --Halls of Stone
-				name = 277,
-				nameLocalised = L["Instance_HallsOfStone"],
-				classicPhase = 1,
+				name = L["Instance_HallsOfStone"],
 				boss1 = {
-					name = 605, --Maiden of Grief
+					name = L["Boss_MaidenOfGrief"], --Maiden of Grief
 					bossIDs = {27975},
 					achievement = 1866,
 					players = {},
 					tactics = {
 						[3] = {
-							{ tactic = L["HallsOfStone_Classic_MaidenOfGrief"] },
+							{ tactic = format(L["HallsOfStone_Classic_MaidenOfGrief"], "IAT_27975", C_Spell.GetSpellLink(59726)) },
 						},
 					},
 					enabled = true,
@@ -4975,13 +4091,13 @@ core.Instances = {
 					nameWrath = L["Boss_MaidenOfGrief"],
 				},
 				boss2 = {
-					name = 606, --Tribunal of Ages
+					name = L["Boss_TribunalOfAges"], --Tribunal of Ages
 					bossIDs = {27983},
 					achievement = 2154,
 					players = {},
 					tactics = {
 						[3] = {
-							{ tactic = L["HallsOfStone_Classic_TribunalOfAges"] },
+							{ tactic = format(L["HallsOfStone_Classic_TribunalOfAges"], "IAT_29579") },
 						},
 					},
 					enabled = true,
@@ -4991,7 +4107,7 @@ core.Instances = {
 					nameWrath = L["Boss_TribunalOfAges"],
 				},
 				boss3 = {
-					name = 607, --Sjonnir The Ironshaper
+					name = L["Boss_SjonnirTheIronshaper"], --Sjonnir The Ironshaper
 					bossIDs = {27978},
 					achievement = 2155,
 					players = {},
@@ -5009,17 +4125,15 @@ core.Instances = {
 			},
 
 			[602] = { --Halls of Lightning
-				name = 275,
-				nameLocalised = L["Instance_HallsOfLightning"],
-				classicPhase = 1,
+				name = L["Instance_HallsOfLightning"],
 				boss1 = {
-					name = 597, --General Bjarngrim
+					name = L["Boss_GeneralBjarngrim"], --General Bjarngrim
 					bossIDs = {28586},
 					achievement = 1834,
 					players = {},
 					tactics = {
 						[3] = {
-							{ tactic = L["HallsOfLightning_Classic_GeneralBjarngrim"] },
+							{ tactic = format(L["HallsOfLightning_Classic_GeneralBjarngrim"], "IAT_28586", C_Spell.GetSpellLink(52092), "IAT_29240", "IAT_28586", C_Spell.GetSpellLink(52092)) },
 						},
 					},
 					enabled = true,
@@ -5029,13 +4143,13 @@ core.Instances = {
 					nameWrath = L["Boss_GeneralBjarngrim"],
 				},
 				boss2 = {
-					name = 598, --Volkhan
+					name = L["Boss_Volkhan"], --Volkhan
 					bossIDs = {28587},
 					achievement = 2042,
 					players = {},
 					tactics = {
 						[3] = {
-							{ tactic = L["HallsOfLightning_Classic_Volkhan"] },
+							{ tactic = format(L["HallsOfLightning_Classic_Volkhan"], "IAT_28681", "IAT_28681") },
 						},
 					},
 					enabled = true,
@@ -5045,7 +4159,7 @@ core.Instances = {
 					nameWrath = L["Boss_Volkhan"],
 				},
 				boss3 = {
-					name = 600, --Loken
+					name = L["Boss_Loken"], --Loken
 					bossIDs = {28923},
 					achievement = 1867,
 					players = {},
@@ -5063,11 +4177,9 @@ core.Instances = {
 			},
 
 			[578] = { --The Oculus
-				name = 282,
-				nameLocalised = L["Instance_TheOculus"],
-				classicPhase = 1,
+				name = L["Instance_TheOculus"],
 				boss1 = {
-					name = 625, --Ley-Guardian Eregos
+					name = L["Boss_Ley-GuardianEregos"], --Ley-Guardian Eregos
 					bossIDs = {},
 					achievement = 1871,
 					players = {},
@@ -5083,7 +4195,7 @@ core.Instances = {
 					nameWrath = L["Boss_Ley-GuardianEregos"],
 				},
 				boss2 = {
-					name = 625, --Ley-Guardian Eregos
+					name = L["Boss_Ley-GuardianEregos"], --Ley-Guardian Eregos
 					bossIDs = {},
 					achievement = 1868,
 					players = {},
@@ -5096,7 +4208,7 @@ core.Instances = {
 					nameWrath = L["Boss_Ley-GuardianEregos"],
 				},
 				boss3 = {
-					name = 625, --Ley-Guardian Eregos
+					name = L["Boss_Ley-GuardianEregos"], --Ley-Guardian Eregos
 					bossIDs = {},
 					achievement = 2044,
 					players = {},
@@ -5109,7 +4221,7 @@ core.Instances = {
 					nameWrath = L["Boss_Ley-GuardianEregos"],
 				},
 				boss4 = {
-					name = 625, --Ley-Guardian Eregos
+					name = L["Boss_Ley-GuardianEregos"], --Ley-Guardian Eregos
 					bossIDs = {},
 					achievement = 2045,
 					players = {},
@@ -5122,7 +4234,7 @@ core.Instances = {
 					nameWrath = L["Boss_Ley-GuardianEregos"],
 				},
 				boss5 = {
-					name = 625, --Ley-Guardian Eregos
+					name = L["Boss_Ley-GuardianEregos"], --Ley-Guardian Eregos
 					bossIDs = {},
 					achievement = 2046,
 					players = {},
@@ -5137,17 +4249,15 @@ core.Instances = {
 			},
 
 			[575] = { --Utgarde Pinnacle
-				name = 286,
-				nameLocalised = L["Instance_UtgardePinnacle"],
-				classicPhase = 1,
+				name = L["Instance_UtgardePinnacle"],
 				boss1 = {
-					name = 641, --Svala Sorrowgrave
+					name = L["Boss_SvalaSorrowgrave"], --Svala Sorrowgrave
 					bossIDs = {},
 					achievement = 2043,
 					players = {},
 					tactics = {
 						[3] = {
-							{ tactic = L["UtgardePinnacle_Classic_SvalaSorrowgrave"] },
+							{ tactic = format(L["UtgardePinnacle_Classic_SvalaSorrowgrave"], "IAT_26555", "IAT_26555", C_Spell.GetSpellLink(48276), "IAT_26555", "IAT_26555", "IAT_26668", C_Spell.GetSpellLink(48277)) },
 						},
 					},
 					enabled = false,
@@ -5157,13 +4267,13 @@ core.Instances = {
 					nameWrath = L["Boss_SvalaSorrowgrave"],
 				},
 				boss2 = {
-					name = 643, --Skadi the Ruthless
+					name = L["Boss_SkadiTheRuthless"], --Skadi the Ruthless
 					bossIDs = {26690, 26693},
 					achievement = 1873,
 					players = {},
 					tactics = {
 						[3] = {
-							{ tactic = L["UtgardePinnacle_Classic_SkadiTheRuthless"] },
+							{ tactic = format(L["UtgardePinnacle_Classic_SkadiTheRuthless"], "IAT_26693") },
 						},
 					},
 					enabled = true,
@@ -5173,13 +4283,13 @@ core.Instances = {
 					nameWrath = L["Boss_SkadiTheRuthless"],
 				},
 				boss3 = {
-					name = 643, --Skadi the Ruthless
+					name = L["Boss_SkadiTheRuthless"], --Skadi the Ruthless
 					bossIDs = {},
 					achievement = 2156,
 					players = {},
 					tactics = {
 						[3] = {
-							{ tactic = L["UtgardePinnacle_Classic_SkadiTheRuthless2"] },
+							{ tactic = format(L["UtgardePinnacle_Classic_SkadiTheRuthless2"], "IAT_26893", "IAT_26693") },
 						},
 					},
 					enabled = false,
@@ -5189,13 +4299,13 @@ core.Instances = {
 					nameWrath = L["Boss_SkadiTheRuthless"],
 				},
 				boss4 = {
-					name = 644, --King Ymiron
+					name = L["Boss_KingYmiron"], --King Ymiron
 					bossIDs = {26861},
 					achievement = 2157,
 					players = {},
 					tactics = {
 						[3] = {
-							{ tactic = L["UtgardePinnacle_Classic_KingYmiron"] },
+							{ tactic = format(L["UtgardePinnacle_Classic_KingYmiron"], "IAT_26861", C_Spell.GetSpellLink(48294), "IAT_26861") },
 						},
 					},
 					enabled = true,
@@ -5207,11 +4317,9 @@ core.Instances = {
 			},
 
 			[650] = { --Trial of the Champion
-				name = 284,
-				nameLocalised = L["Instance_TrialOfTheChampion"],
-				classicPhase = 3,
+				name = L["Instance_TrialOfTheChampion"],
 				boss1 = {
-					name = 636, --Argent Confessor Paletress
+					name = L["Boss_ArgentConfessorPaletress"], --Argent Confessor Paletress
 					bossIDs = {},
 					achievement = 3802,
 					players = {},
@@ -5223,7 +4331,7 @@ core.Instances = {
 					nameWrath = L["Boss_ArgentConfessorPaletress"],
 				},
 				boss2 = {
-					name = 635, --Eadric the Pure
+					name = L["Boss_EadricThePure"], --Eadric the Pure
 					bossIDs = {},
 					achievement = 3803,
 					players = {},
@@ -5235,7 +4343,7 @@ core.Instances = {
 					nameWrath = L["Boss_EadricThePure"],
 				},
 				boss3 = {
-					name = 637, --The Black Knight
+					name = L["Boss_TheBlackKnight"], --The Black Knight
 					bossIDs = {35451},
 					achievement = 3804,
 					players = {},
@@ -5250,11 +4358,9 @@ core.Instances = {
 			},
 
 			[632] = { --The Forge of Souls
-				name = 280,
-				nameLocalised = L["Instance_TheForgeOfSouls"],
-				classicPhase = 4,
+				name = L["Instance_TheForgeOfSouls"],
 				boss1 = {
-					name = 615, --Bronjahm
+					name = L["Boss_Bronjahm"], --Bronjahm
 					bossIDs = {36497},
 					achievement = 4522,
 					players = {},
@@ -5267,7 +4373,7 @@ core.Instances = {
 					nameWrath = L["Boss_Bronjahm"],
 				},
 				boss2 = {
-					name = 616, --Devourer of Souls
+					name = L["Boss_DevourerOfSouls"], --Devourer of Souls
 					bossIDs = {36502},
 					achievement = 4523,
 					players = {},
@@ -5282,11 +4388,9 @@ core.Instances = {
 			},
 
 			[658] = { --Pit of Saron
-				name = 278,
-				nameLocalised = L["Instance_PitOfSaron"],
-				classicPhase = 4,
+				name = L["Instance_PitOfSaron"],
 				boss1 = {
-					name = 608, --Forgemaster Garfrost
+					name = L["Boss_ForgemasterGarfrost"], --Forgemaster Garfrost
 					bossIDs = {36494},
 					achievement = 4524,
 					players = {},
@@ -5313,11 +4417,9 @@ core.Instances = {
 			},
 
 			[668] = { --Halls of Reflection
-				name = 276,
-				nameLocalised = L["Instance_HallsOfReflection"],
-				classicPhase = 4,
+				name = L["Instance_HallsOfReflection"],
 				boss1 = {
-					name = 603, --MISSINGNAME76
+					name = L["Boss_MISSINGNAME76"], --MISSINGNAME76
 					bossIDs = {},
 					achievement = 4526,
 					players = {},

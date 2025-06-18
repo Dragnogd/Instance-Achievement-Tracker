@@ -11,8 +11,6 @@ local debugMode = false
 local debugModeChat = false
 local sendDebugMessages = false
 
-local ptrVersion = "9.0.1"
-
 --------------------------------
 -- Saved Variables tables
 --------------------------------
@@ -22,155 +20,7 @@ AchievementTrackerDebug = {}
 events:RegisterEvent("ADDON_LOADED")							--This is the first event that is called as soon as the addon loaded. Does Initial Setup
 events:RegisterEvent("GET_ITEM_INFO_RECEIVED")					--Get Item Information after the game has loaded to finish loading tactics
 events:RegisterEvent("PLAYER_LOGIN")							--Fired just before login has finished
-
-function generateItemCache()									--The Item Cache can only be generated once the game has loaded
-	for i,v in pairs(core.ItemCache) do							--We need to first get information about the item to load into the cache
-		--If item does not return nil then add to tactics now as GET_ITEM_INFO_RECEIVED only fires if items are not in the cache
-		local itemName, itemLink = C_Item.GetItemInfo(core.ItemCache[v])
-		if itemLink ~= nil then
-			for expansion, _ in pairs(core.Instances) do
-				for instanceType, _ in pairs(core.Instances[expansion]) do
-					for instance, _ in pairs(core.Instances[expansion][instanceType]) do
-						for boss, _ in pairs(core.Instances[expansion][instanceType][instance]) do
-							if string.match(boss, "boss") then
-								if type(core.Instances[expansion][instanceType][instance][boss].tactics) == "table" then
-									if UnitFactionGroup("player") == "Alliance" then
-										if string.find(core.Instances[expansion][instanceType][instance][boss].tactics[1], ("IAT_" .. core.ItemCache[v])) then
-											core.Instances[expansion][instanceType][instance][boss].tactics[1] = string.gsub(core.Instances[expansion][instanceType][instance][boss].tactics[1], ("IAT_" .. core.ItemCache[v]), itemLink)
-										end
-									else
-										if string.find(core.Instances[expansion][instanceType][instance][boss].tactics[2], ("IAT_" .. core.ItemCache[v])) then
-											core.Instances[expansion][instanceType][instance][boss].tactics[2] = string.gsub(core.Instances[expansion][instanceType][instance][boss].tactics[2], ("IAT_" .. core.ItemCache[v]), itemLink)
-										end
-									end
-								else
-									if string.find(core.Instances[expansion][instanceType][instance][boss].tactics, ("IAT_" .. core.ItemCache[v])) then
-										core.Instances[expansion][instanceType][instance][boss].tactics = string.gsub(core.Instances[expansion][instanceType][instance][boss].tactics, ("IAT_" .. core.ItemCache[v]), itemLink)
-									end
-								end
-							end
-						end
-					end
-				end
-			end
-		end
-	end
-end
-
-function events:GET_ITEM_INFO_RECEIVED(self, arg1)
-	if core:has_value2(core.ItemCache, arg1) then
-		--Update table with updated info
-		for expansion, _ in pairs(core.Instances) do
-			for instanceType, _ in pairs(core.Instances[expansion]) do
-				for instance, _ in pairs(core.Instances[expansion][instanceType]) do
-					for boss, _ in pairs(core.Instances[expansion][instanceType][instance]) do
-						if string.match(boss, "boss") then
-							if type(core.Instances[expansion][instanceType][instance][boss].tactics) == "table" then
-								if UnitFactionGroup("player") == "Alliance" then
-									if string.find(core.Instances[expansion][instanceType][instance][boss].tactics[1], ("IAT_" .. arg1)) then
-										local itemName, itemLink = C_Item.GetItemInfo(arg1)
-										if itemLink ~= nil then
-											core.Instances[expansion][instanceType][instance][boss].tactics[1] = string.gsub(core.Instances[expansion][instanceType][instance][boss].tactics[1], ("IAT_" .. arg1), itemLink)
-										end
-									end
-								else
-									if string.find(core.Instances[expansion][instanceType][instance][boss].tactics[2], ("IAT_" .. arg1)) then
-										local itemName, itemLink = C_Item.GetItemInfo(arg1)
-										if itemLink ~= nil then
-											core.Instances[expansion][instanceType][instance][boss].tactics[2] = string.gsub(core.Instances[expansion][instanceType][instance][boss].tactics[2], ("IAT_" .. arg1), itemLink)
-										end
-									end
-								end
-							else
-								if string.find(core.Instances[expansion][instanceType][instance][boss].tactics, ("IAT_" .. arg1)) then
-									local itemName, itemLink = C_Item.GetItemInfo(arg1)
-									if itemLink ~= nil then
-										core.Instances[expansion][instanceType][instance][boss].tactics = string.gsub(core.Instances[expansion][instanceType][instance][boss].tactics, ("IAT_" .. arg1), itemLink)
-									end
-								end
-							end
-						end
-					end
-				end
-			end
-		end
-	end
-end
-
-function generateNPCCache()
-	if core.gameVersionMajor > 4 then
-		core:sendDebugMessage("Attempting to load from local NPC Cache")
-		GetNameFromLocalNpcIDCache()
-
-		core:sendDebugMessage("Generating NPC Cache...")
-		local count = 1
-		local tempNPC = {}
-		for i,v in pairs(core.NPCCache) do
-			--GetNameFromNpcIDCache(core.NPCCache[v])
-			table.insert(tempNPC, core.NPCCache[v])
-		end
-
-		generateNPCs = C_Timer.NewTicker(0.01, function()
-			--core:sendDebugMessage("Fetching: " .. tempNPC[count] .. "(" .. count .. "/" .. #tempNPC .. ")")
-			GetNameFromNpcIDCache(tempNPC[count])
-			count = count + 1
-
-			if generateNPCs._remainingIterations == 1 then
-				core:sendDebugMessage("NPC cache generated")
-			end
-		end, #tempNPC)
-	else
-		core:sendDebugMessage("Attempting to load from local NPC Cache classic")
-		GetNameFromLocalNpcIDCache()
-
-		core:sendDebugMessage("Generating NPC Cache Classic...")
-		local count = 1
-		local tempNPC = {}
-		for i,v in pairs(core.NPCCacheClassic) do
-			--GetNameFromNpcIDCache(core.NPCCache[v])
-			table.insert(tempNPC, core.NPCCacheClassic[v])
-		end
-
-		generateNPCs = C_Timer.NewTicker(0.01, function()
-			--core:sendDebugMessage("Fetching: " .. tempNPC[count] .. "(" .. count .. "/" .. #tempNPC .. ")")
-			GetNameFromNpcIDCache(tempNPC[count])
-			count = count + 1
-
-			if generateNPCs._remainingIterations == 1 then
-				core:sendDebugMessage("NPC cache classic generated")
-			end
-		end, #tempNPC)
-	end
-end
-
-function getNPCName(npcID)
-	if core.gameVersionMajor == 4 then
-		--Look in the Classic Cache
-		if not tonumber(core.NPCCacheClassic[npcID]) then
-			return core.NPCCacheClassic[npcID]
-		else
-			GetNameFromNpcIDCache(npcID)
-			return ""
-		end
-	else
-		--Look in the Retail Cache
-		if not tonumber(core.NPCCache[npcID]) then
-			return core.NPCCache[npcID]
-		else
-			GetNameFromNpcIDCache(npcID)
-			return ""
-		end
-	end
-end
-
-function getNPCNameClassic(npcID)
-	if not tonumber(core.NPCCacheClassic[npcID]) then
-		return core.NPCCacheClassic[npcID]
-	else
-		GetNameFromNpcIDCache(npcID)
-		return ""
-	end
-end
+events:RegisterEvent("TOOLTIP_DATA_UPDATE")						--Fired when the tooltip data has been updated. Used to get the name of a mob when hovering over it
 
 events:SetScript("OnEvent", function(self, event, ...)
     return self[event] and self[event](self, event, ...) 	--Allow event arguments to be called from seperate functions
@@ -304,6 +154,18 @@ local newRequestRecieved = false
 core.manualCountMaxSize = 0
 core.manualCountCurrentSize = 0
 core.manualCountSetup = false
+
+function getNPCName(npcID)
+    local name = AchievementTrackerNPCCache[npcID]
+
+    if name and name ~= "" and name ~= "Unknown NPC" then
+        return name
+    else
+        -- Start background cache if not already cached
+        core.Config:CacheNPCByID(npcID)
+        return ""
+    end
+end
 
 --Get the current size of the group
 function core:getGroupSize()
@@ -1173,13 +1035,21 @@ function events:ADDON_LOADED(event, name)
 		end
 	end
 
-	--Generate Caches
-	generateItemCache()
-	generateNPCCache()
+	-- Sort and insert options based on the 'order' key
+	local sortedOptions = {}
+	for _, option in pairs(core.Options) do
+		table.insert(sortedOptions, option)
+	end
 
-	for i, option in pairs(core.Options) do
-        core.Config.OptionsListDataProvider:Insert(option)
-    end
+	-- Sort options by their 'order' value
+	table.sort(sortedOptions, function(a, b)
+		return (a.order or 0) < (b.order or 0)
+	end)
+
+	-- Insert sorted options into the data provider
+	for _, option in ipairs(sortedOptions) do
+		core.Config.OptionsListDataProvider:Insert(option)
+	end
 
 	SLASH_IAT1 = "/iat";
 	SlashCmdList.IAT = HandleSlashCommands;
@@ -1187,6 +1057,8 @@ function events:ADDON_LOADED(event, name)
 	core.LibWindow = LibStub("LibWindow-1.1")
 
 	core:SetAddonEnabled()
+
+	core.Config.Toggle()
 end
 
 function core:SetTrackCharacterAchievements()

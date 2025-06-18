@@ -1,5 +1,5 @@
 --------------------------------------
--- Last Auto Generated: 05/06/2025 20:05:20 using https://github.com/Dragnogd/Instance-Achievement-Tracker-Database-Manager
+-- Last Auto Generated: 08/06/2025 14:40:40 using https://github.com/Dragnogd/Instance-Achievement-Tracker-Database-Manager
 --------------------------------------
 local _, core = ...
 local L = core.L
@@ -7516,7 +7516,6 @@ core.Instances = {
 		Raids = {
 			[967] = { --Dragon Soul
 				name = 187,
-				classicPhase = 8,
 				boss1 = {
 					name = 311, --Morchok
 					bossIDs = {},
@@ -7641,7 +7640,6 @@ core.Instances = {
 
 			[669] = { --Blackwing Descent
 				name = 73,
-				classicPhase = 5,
 				boss1 = {
 					name = 170, --Magmaw
 					bossIDs = {41570},
@@ -7737,7 +7735,6 @@ core.Instances = {
 
 			[671] = { --Bastion of Twilight
 				name = 72,
-				classicPhase = 5,
 				boss1 = {
 					name = 156, --Halfus Wyrmbreaker
 					bossIDs = {44600},
@@ -7802,7 +7799,6 @@ core.Instances = {
 
 			[754] = { --Throne of the Four Winds
 				name = 74,
-				classicPhase = 5,
 				boss1 = {
 					name = 154, --Conclave of Wind
 					bossIDs = {},
@@ -7837,7 +7833,6 @@ core.Instances = {
 
 			[720] = { --Firelands
 				name = 78,
-				classicPhase = 7,
 				boss1 = {
 					name = 192, --Beth'tilac
 					bossIDs = {52498},
@@ -7949,7 +7944,6 @@ core.Instances = {
 		Dungeons = {
 			[645] = { --Blackrock Caverns
 				name = 66,
-				classicPhase = 5,
 				boss1 = {
 					name = 105, --Rom'ogg Bonecrusher
 					bossIDs = {39665},
@@ -8012,45 +8006,8 @@ core.Instances = {
 				},
 			},
 
-			[643] = { --Throne of the Tides
-				name = 65,
-				classicPhase = 1,
-				classicOnly = true,
-				boss1 = {
-					name = 101, --Lady Naz'Jar
-					bossIDs = {40586},
-					achievement = 5285,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = format(L["ThroneOfTheTides_LadyNazJar"], "IAT_43468", "IAT_40634", "IAT_44530", "IAT_44530", "IAT_44530") },
-						},
-					},
-					enabled = true,
-					track = function() core._643:LadyNazjar() end,
-					partial = false,
-					encounterID = 1045,
-				},
-				boss2 = {
-					name = 104, --Ozumat
-					bossIDs = {44658, 44715, 44648},
-					achievement = 5286,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = L["ThroneOfTheTides_Ozumat"] },
-						},
-					},
-					enabled = true,
-					track = function() core._643:Ozumat() end,
-					partial = false,
-					encounterID = 1047,
-				},
-			},
-
 			[725] = { --The Stonecore
 				name = 67,
-				classicPhase = 5,
 				boss1 = {
 					name = 113, --High Priestess Azil
 					bossIDs = {42333},
@@ -8070,7 +8027,6 @@ core.Instances = {
 
 			[657] = { --The Vortex Pinnacle
 				name = 68,
-				classicPhase = 5,
 				boss1 = {
 					name = 116, --Asaad
 					bossIDs = {43875},
@@ -8105,7 +8061,6 @@ core.Instances = {
 
 			[670] = { --Grim Batol
 				name = 71,
-				classicPhase = 5,
 				boss1 = {
 					name = 131, --General Umbriss
 					bossIDs = {39625},
@@ -8140,7 +8095,6 @@ core.Instances = {
 
 			[644] = { --Halls of Origination
 				name = 70,
-				classicPhase = 5,
 				boss1 = {
 					name = 124, --Temple Guardian Anhuur
 					bossIDs = {39425},
@@ -8205,7 +8159,6 @@ core.Instances = {
 
 			[755] = { --Lost City of the Tol'Vir
 				name = 69,
-				classicPhase = 5,
 				boss1 = {
 					name = 118, --Lockmaw
 					bossIDs = {43614},
@@ -8256,7 +8209,6 @@ core.Instances = {
 
 			[36] = { --Deadmines
 				name = 63,
-				classicPhase = 5,
 				boss1 = {
 					name = 89, --Glubtok
 					bossIDs = {47162},
@@ -8351,7 +8303,6 @@ core.Instances = {
 
 			[33] = { --Shadowfang Keep
 				name = 64,
-				classicPhase = 5,
 				boss1 = {
 					name = 96, --Baron Ashbury
 					bossIDs = {46962},
@@ -8401,7 +8352,6 @@ core.Instances = {
 
 			[859] = { --Zul'Gurub
 				name = 76,
-				classicPhase = 6,
 				boss1 = {
 					name = L["Instances_Other"], --Gurubashi Headhunter
 					bossIDs = {},
@@ -8481,7 +8431,6 @@ core.Instances = {
 
 			[568] = { --Zul'Aman
 				name = 77,
-				classicPhase = 6,
 				boss1 = {
 					name = 189, --Halazzi
 					bossIDs = {23577},
@@ -8546,7 +8495,6 @@ core.Instances = {
 
 			[938] = { --End Time
 				name = 184,
-				classicPhase = 8,
 				boss1 = {
 					name = 283, --Echo of Tyrande
 					bossIDs = {},
@@ -8581,7 +8529,6 @@ core.Instances = {
 
 			[939] = { --Well of Eternity
 				name = 185,
-				classicPhase = 8,
 				boss1 = {
 					name = 290, --Peroth'arn
 					bossIDs = {55085},
@@ -8616,7 +8563,6 @@ core.Instances = {
 
 			[940] = { --Hour of Twilight
 				name = 186,
-				classicPhase = 8,
 				boss1 = {
 					name = 341, --Archbishop Benedictus
 					bossIDs = {54938},
@@ -8641,8 +8587,6 @@ core.Instances = {
 		Raids = {
 			[615.10] = { --Obsidian Sanctum 10 Man
 				name = 755,
-				nameLocalised = L["Instance_TheObsidianSanctum"],
-				classicPhase = 1,
 				boss1 = {
 					name = 1616, --Sartharion the Onyx Guardian
 					bossIDs = {},
@@ -8728,8 +8672,6 @@ core.Instances = {
 
 			[615.25] = { --Obsidian Sanctum 25 Man
 				name = 755,
-				nameLocalised = L["Instance_TheObsidianSanctum"],
-				classicPhase = 1,
 				boss1 = {
 					name = 1616, --Sartharion the Onyx Guardian
 					bossIDs = {},
@@ -8815,8 +8757,6 @@ core.Instances = {
 
 			[616.10] = { --Eye of Eternity 10 Man
 				name = 756,
-				nameLocalised = L["Instance_TheEyeOfEternity"],
-				classicPhase = 1,
 				boss1 = {
 					name = 1617, --Malygos
 					bossIDs = {28859},
@@ -8870,8 +8810,6 @@ core.Instances = {
 
 			[616.25] = { --Eye of Eternity 25 Man
 				name = 756,
-				nameLocalised = L["Instance_TheEyeOfEternity"],
-				classicPhase = 1,
 				boss1 = {
 					name = 1617, --Malygos
 					bossIDs = {28859},
@@ -8924,8 +8862,6 @@ core.Instances = {
 
 			[249.10] = { --Onyxia's Lair 10 Man
 				name = 760,
-				nameLocalised = L["Instance_OnyxiasLair"],
-				classicPhase = 3,
 				boss1 = {
 					name = 1651, --Onyxia
 					bossIDs = {10184},
@@ -8978,8 +8914,6 @@ core.Instances = {
 
 			[249.25] = { --Onyxia's Lair 25 Man
 				name = 760,
-				nameLocalised = L["Instance_OnyxiasLair"],
-				classicPhase = 3,
 				boss1 = {
 					name = 1651, --Onyxia
 					bossIDs = {10184},
@@ -9032,8 +8966,6 @@ core.Instances = {
 
 			[649.10] = { --Trial of the Crusader 10 Man
 				name = 757,
-				nameLocalised = L["Instance_TrialOfTheCrusader"],
-				classicPhase = 3,
 				boss1 = {
 					name = 1618, --Icehowl
 					bossIDs = {34796},
@@ -9135,8 +9067,6 @@ core.Instances = {
 
 			[649.25] = { --Trial of the Crusader 25 Man
 				name = 757,
-				nameLocalised = L["Instance_TrialOfTheCrusader"],
-				classicPhase = 3,
 				boss1 = {
 					name = 1618, --Icehowl
 					bossIDs = {34796},
@@ -9222,8 +9152,6 @@ core.Instances = {
 
 			[624.10] = { --Vault of Archavon 10 Man
 				name = 753,
-				nameLocalised = L["Instance_VaultOfArchavon"],
-				classicPhase = 1,
 				boss1 = {
 					name = 1597, --Archavon & Emalon & Koralon
 					bossIDs = {},
@@ -9244,8 +9172,6 @@ core.Instances = {
 
 			[624.25] = { --Vault of Archavon 25 Man
 				name = 753,
-				nameLocalised = L["Instance_VaultOfArchavon"],
-				classicPhase = 1,
 				boss1 = {
 					name = 1597, --Archavon & Emalon & Koralon
 					bossIDs = {},
@@ -9266,9 +9192,6 @@ core.Instances = {
 
 			[603] = { --Ulduar
 				name = 759,
-				nameLocalised = L["Instance_Ulduar"],
-				classicPhase = 2,
-				retailOnly = true,
 				boss1 = {
 					name = L["Instances_Other"], --Dwarfageddon
 					bossIDs = {33572},
@@ -10262,2006 +10185,8 @@ core.Instances = {
 				},
 			},
 
-			[603.10] = { --Ulduar 10 Man
-				name = 759,
-				nameLocalised = L["Instance_Ulduar"],
-				classicPhase = 2,
-				classicOnly = true,
-				boss1 = {
-					name = L["Instances_Other"], --Dwarfageddon 10 Man
-					bossIDs = {33572},
-					achievement = 3097,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = format(L["Ulduar_Other1"], "IAT_33572", "IAT_33572") },
-						},
-					},
-					enabled = true,
-					track = function() core._603:Dwarfageddon(3097) end,
-					partial = true,
-					displayInfoFrame = true,
-					nameWrath = L["Instances_Other"],
-				},
-				boss2 = {
-					name = L["Instances_Other"], --Unbroken 10 Man
-					bossIDs = {},
-					achievement = 2905,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = L["Ulduar_Other2"] },
-						},
-					},
-					enabled = true,
-					track = function() end,
-					partial = false,
-					nameWrath = L["Instances_Other"],
-				},
-				boss3 = {
-					name = 1637, --Flame Leviathan (Three Car Garage) 10 Man
-					bossIDs = {},
-					achievement = 2907,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = L["Ulduar_FlameLeviathan1"] },
-						},
-					},
-					enabled = false,
-					track = nil,
-					partial = false,
-					encounterID = 1132,
-					nameWrath = L["Boss_FlameLeviathan"],
-				},
-				boss4 = {
-					name = 1637, --Flame Leviathan (Take Out Those Turrets) 10 Man
-					bossIDs = {},
-					achievement = 2909,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = format(L["Ulduar_FlameLeviathan2"], C_Spell.GetSpellLink(64414), "IAT_33113", C_Spell.GetSpellLink(62324), "IAT_33113") },
-						},
-					},
-					enabled = true,
-					track = function() core._603:FlameLeviathanTakeOutThoseTurrets(2909) end,
-					partial = false,
-					encounterID = 1132,
-					nameWrath = L["Boss_FlameLeviathan"],
-				},
-				boss5 = {
-					name = 1637, --Flame Leviathan (Shutout) 10 Man
-					bossIDs = {},
-					achievement = 2911,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = L["Shared_JustKillBoss"] },
-						},
-					},
-					enabled = true,
-					track = function() core._603:FlameLeviathanShutout(2911) end,
-					partial = false,
-					encounterID = 1132,
-					nameWrath = L["Boss_FlameLeviathan"],
-				},
-				boss6 = {
-					name = 1637, --Flame Leviathan (Orbital Bombardment) 10 Man
-					bossIDs = {},
-					achievement = 2913,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = format(L["Ulduar_FlameLeviathan3"], "IAT_33113", "IAT_33686") },
-						},
-					},
-					enabled = false,
-					track = nil,
-					partial = false,
-					encounterID = 1132,
-					nameWrath = L["Boss_FlameLeviathan"],
-				},
-				boss7 = {
-					name = 1637, --Flame Leviathan (Orbital Devastation) 10 Man
-					bossIDs = {},
-					achievement = 2914,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = format(L["Ulduar_FlameLeviathan3"], "IAT_33113", "IAT_33686") },
-						},
-					},
-					enabled = false,
-					track = nil,
-					partial = false,
-					encounterID = 1132,
-					nameWrath = L["Boss_FlameLeviathan"],
-				},
-				boss8 = {
-					name = 1637, --Flame Leviathan (Nuked from Orbit) 10 Man
-					bossIDs = {},
-					achievement = 2915,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = format(L["Ulduar_FlameLeviathan3"], "IAT_33113", "IAT_33686") },
-						},
-					},
-					enabled = false,
-					track = nil,
-					partial = false,
-					encounterID = 1132,
-					nameWrath = L["Boss_FlameLeviathan"],
-				},
-				boss9 = {
-					name = 1637, --Flame Leviathan (Orbit-uary) 10 Man
-					bossIDs = {},
-					achievement = 3056,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = format(L["Ulduar_FlameLeviathan3"], "IAT_33113", "IAT_33686") },
-						},
-					},
-					enabled = false,
-					track = nil,
-					partial = false,
-					encounterID = 1132,
-					nameWrath = L["Boss_FlameLeviathan"],
-				},
-				boss10 = {
-					name = 1639, --Razorscale (A Quick Shave) 10 Man
-					bossIDs = {},
-					achievement = 2919,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = L["Shared_JustKillBoss"] },
-						},
-					},
-					enabled = true,
-					track = function() core._603:RazorscaleAQuickShave(2919) end,
-					partial = false,
-					encounterID = 1139,
-					nameWrath = L["Boss_Razorscale"],
-				},
-				boss11 = {
-					name = 1639, --Razorscale (Iron Dwarf, Medium Rare) 10 Man
-					bossIDs = {},
-					achievement = 2923,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = format(L["Ulduar_Razorscale"], "IAT_33186", "IAT_109674", "IAT_33186", "IAT_33186", "IAT_109674", C_Spell.GetSpellLink(64021), "IAT_109674") },
-						},
-					},
-					enabled = true,
-					track = function() core._603:RazorscaleIronDwarfMediumRare(2923) end,
-					partial = false,
-					encounterID = 1139,
-					nameWrath = L["Boss_Razorscale"],
-				},
-				boss12 = {
-					name = 1638, --Ignis the Furnace Master (Shattered) 10 Man
-					bossIDs = {},
-					achievement = 2925,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = format(L["Ulduar_IgnisTheFurnaceMaster1"], "IAT_33118", "IAT_33121", "IAT_33121", "IAT_33118", C_Spell.GetSpellLink(65667), C_Spell.GetSpellLink(62373), C_Spell.GetSpellLink(62382), "IAT_33121") },
-						},
-					},
-					enabled = true,
-					track = function() core._603:IgnisTheFurnaceMasterShattered(2925) end,
-					partial = false,
-					encounterID = 1136,
-					nameWrath = L["Boss_IgnisTheFurnaceMaster"],
-				},
-				boss13 = {
-					name = 1638, --Ignis the Furnace Master (Hot Pocket) 10 Man
-					bossIDs = {},
-					achievement = 2927,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = format(L["Ulduar_IgnisTheFurnaceMaster2"], C_Spell.GetSpellLink(62717), C_Spell.GetSpellLink(62717), C_Spell.GetSpellLink(62717)) },
-						},
-					},
-					enabled = false,
-					track = nil,
-					partial = false,
-					encounterID = 1136,
-					nameWrath = L["Boss_IgnisTheFurnaceMaster"],
-				},
-				boss14 = {
-					name = 1638, --Ignis the Furnace Master (Stokin' the Furnace) 10 Man
-					bossIDs = {},
-					achievement = 2930,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = L["Shared_JustKillBoss"] },
-						},
-					},
-					enabled = true,
-					track = function() core._603:IgnisTheFurnaceMasterStokinTheFurnace(2930) end,
-					partial = false,
-					encounterID = 1136,
-					nameWrath = L["Boss_IgnisTheFurnaceMaster"],
-				},
-				boss15 = {
-					name = 1640, --XT-002 Deconstructor (Nerf Engineering) 10 Man
-					bossIDs = {},
-					achievement = 2931,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = L["Shared_JustKillBoss"] },
-						},
-					},
-					enabled = true,
-					track = function() core._603:XT002DeconstructorNerfEngineering(2931) end,
-					partial = false,
-					encounterID = 1142,
-					nameWrath = L["Boss_XT-002Deconstructor"],
-				},
-				boss16 = {
-					name = 1640, --XT-002 Deconstructor (Nerf Scrapbots) 10 Man
-					bossIDs = {},
-					achievement = 2933,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = L["Ulduar_XTDeconstructor1"] },
-						},
-					},
-					enabled = true,
-					track = function() core._603:XT002DeconstructorNerfScrapbots(2933) end,
-					partial = false,
-					encounterID = 1142,
-					displayInfoFrame = true,
-					nameWrath = L["Boss_XT-002Deconstructor"],
-				},
-				boss17 = {
-					name = 1640, --XT-002 Deconstructor (Nerf Gravity Bombs) 10 Man
-					bossIDs = {},
-					achievement = 2934,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = L["Shared_JustKillBoss"] },
-						},
-					},
-					enabled = true,
-					track = function() core._603:XT002DeconstructorNerfGravityBombs(2934) end,
-					partial = false,
-					encounterID = 1142,
-					nameWrath = L["Boss_XT-002Deconstructor"],
-				},
-				boss18 = {
-					name = 1640, --XT-002 Deconstructor (Must Deconstruct Faster) 10 Man
-					bossIDs = {},
-					achievement = 2937,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = L["Shared_JustKillBoss"] },
-						},
-					},
-					enabled = true,
-					track = function() core._603:XT002DeconstructorMustDeconstructFaster(2937) end,
-					partial = false,
-					encounterID = 1142,
-					nameWrath = L["Boss_XT-002Deconstructor"],
-				},
-				boss19 = {
-					name = 1640, --XT-002 Deconstructor (Heartbreaker) 10 Man
-					bossIDs = {},
-					achievement = 3058,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = format(L["Ulduar_XTDeconstructor2"], C_Spell.GetSpellLink(63849)) },
-						},
-					},
-					enabled = true,
-					track = function() core._603:XT002DeconstructorHeartbreaker(3058) end,
-					partial = false,
-					encounterID = 1142,
-					nameWrath = L["Boss_XT-002Deconstructor"],
-				},
-				boss20 = {
-					name = 1641, --Assembly of Iron (I Choose You, Runemaster Molgeim) 10 Man
-					bossIDs = {},
-					achievement = 2939,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = format(L["Ulduar_AssemblyOfIron1"], "IAT_32927") },
-						},
-					},
-					enabled = true,
-					track = function() core._603:AssemblyOfIronIChooseYouRunemasterMolgeim(2939) end,
-					partial = false,
-					encounterID = 1140,
-					nameWrath = L["Boss_AssemblyOfIron"],
-				},
-				boss21 = {
-					name = 1641, --Assembly of Iron (I Choose You, Stormcaller Brundir) 10 Man
-					bossIDs = {},
-					achievement = 2940,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = format(L["Ulduar_AssemblyOfIron1"], "IAT_32857") },
-						},
-					},
-					enabled = true,
-					track = function() core._603:AssemblyOfIronIChooseYouStormcallerBrundir(2940) end,
-					partial = false,
-					encounterID = 1140,
-					nameWrath = L["Boss_AssemblyOfIron"],
-				},
-				boss22 = {
-					name = 1641, --Assembly of Iron (I Choose You, Steelbreaker) 10 Man
-					bossIDs = {},
-					achievement = 2941,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = format(L["Ulduar_AssemblyOfIron1"], "IAT_32867") },
-						},
-					},
-					enabled = true,
-					track = function() core._603:AssemblyOfIronIChooseYouSteelbreaker(2941) end,
-					partial = false,
-					encounterID = 1140,
-					nameWrath = L["Boss_AssemblyOfIron"],
-				},
-				boss23 = {
-					name = 1641, --Assembly of Iron (But I'm On Your Side) 10 Man
-					bossIDs = {},
-					achievement = 2945,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = format(L["Ulduar_AssemblyOfIron4"], "IAT_43499", "IAT_30472", "IAT_42780") },
-						},
-					},
-					enabled = false,
-					track = nil,
-					partial = false,
-					encounterID = 1140,
-					nameWrath = L["Boss_AssemblyOfIron"],
-				},
-				boss24 = {
-					name = 1641, --Assembly of Iron (Can't Do That While Stunned) 10 Man
-					bossIDs = {},
-					achievement = 2947,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = format(L["Ulduar_AssemblyOfIron5"], C_Spell.GetSpellLink(63479), "IAT_32857", C_Spell.GetSpellLink(63479), "IAT_32857", "IAT_32867", "IAT_32927") },
-						},
-					},
-					enabled = true,
-					track = function() core._603:AssemblyOfIronCantDoThatWhileStunned(2947) end,
-					partial = false,
-					encounterID = 1140,
-					nameWrath = L["Boss_AssemblyOfIron"],
-				},
-				boss25 = {
-					name = 1642, --Kologarn (With Open Arms) 10 Man
-					bossIDs = {},
-					achievement = 2951,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = format(L["Ulduar_Kologarn1"], "IAT_32930") },
-						},
-					},
-					enabled = true,
-					track = function() core._603:KologarnWithOpenArms(2951) end,
-					partial = false,
-					encounterID = 1137,
-					nameWrath = L["Boss_Kologarn"],
-				},
-				boss26 = {
-					name = 1642, --Kologarn (Disarmed) 10 Man
-					bossIDs = {},
-					achievement = 2953,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = L["Ulduar_Kologarn2"] },
-						},
-					},
-					enabled = false,
-					track = nil,
-					partial = false,
-					encounterID = 1137,
-					nameWrath = L["Boss_Kologarn"],
-				},
-				boss27 = {
-					name = 1642, --Kologarn (If Looks Could Kill) 10 Man
-					bossIDs = {},
-					achievement = 2955,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = L["Shared_JustKillBoss"] },
-						},
-					},
-					enabled = true,
-					track = function() core._603:KologarnIfLooksCouldKill(2955) end,
-					partial = false,
-					encounterID = 1137,
-					nameWrath = L["Boss_Kologarn"],
-				},
-				boss28 = {
-					name = 1642, --Kologarn (Rubble and Roll) 10 Man
-					bossIDs = {},
-					achievement = 2959,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = format(L["Ulduar_Kologarn3"], "IAT_32930", "IAT_33768", "IAT_33768", "IAT_32930", "IAT_33768") },
-						},
-					},
-					enabled = true,
-					track = function() core._603:KologarnRubbleAndRoll(2959) end,
-					partial = false,
-					encounterID = 1137,
-					nameWrath = L["Boss_Kologarn"],
-				},
-				boss29 = {
-					name = 1643, --Auriaya (Crazy Cat Lady) 10 Man
-					bossIDs = {},
-					achievement = 3006,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = L["Shared_JustKillBossSingleTarget"] },
-						},
-					},
-					enabled = true,
-					track = function() core._603:AuriayaCrazyCatLady(3006) end,
-					partial = false,
-					encounterID = 1131,
-					nameWrath = L["Boss_Auriaya"],
-				},
-				boss30 = {
-					name = 1643, --Auriaya (Nine Lives) 10 Man
-					bossIDs = {},
-					achievement = 3076,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = format(L["Ulduar_Auriaya2"], "IAT_34035", "IAT_34035", "IAT_34035") },
-						},
-					},
-					enabled = true,
-					track = function() core._603:AuriayaNineLives(3076) end,
-					partial = false,
-					encounterID = 1131,
-					nameWrath = L["Boss_Auriaya"],
-				},
-				boss31 = {
-					name = 1644, --Hodir (Cheese the Freeze) 10 Man
-					bossIDs = {},
-					achievement = 2961,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = L["Shared_JustKillBoss"] },
-						},
-					},
-					enabled = true,
-					track = function() core._603:HodirCheeseTheFreeze(2961) end,
-					partial = false,
-					encounterID = 1135,
-					nameWrath = L["Boss_Hodir"],
-				},
-				boss32 = {
-					name = 1644, --Hodir (I Have the Coolest Friends) 10 Man
-					bossIDs = {},
-					achievement = 2963,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = format(L["Ulduar_Hodir1"], "IAT_111941", "IAT_111941") },
-						},
-					},
-					enabled = true,
-					track = function() core._603:HodirIHaveTheCoolestFriends(2963) end,
-					partial = false,
-					encounterID = 1135,
-					nameWrath = L["Boss_Hodir"],
-				},
-				boss33 = {
-					name = 1644, --Hodir (Getting Cold in Here) 10 Man
-					bossIDs = {},
-					achievement = 2967,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = L["Shared_JustKillBoss"] },
-						},
-					},
-					enabled = true,
-					track = function() core._603:HodirGettingColdInHere(2967) end,
-					partial = false,
-					encounterID = 1135,
-					nameWrath = L["Boss_Hodir"],
-				},
-				boss34 = {
-					name = 1644, --Hodir (I Could Say That This Cache Was Rare) 10 Man
-					bossIDs = {},
-					achievement = 3182,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = L["Shared_JustKillBoss"] },
-						},
-					},
-					enabled = true,
-					track = function() core._603:HodirICouldSayThatThisCacheWasRare(3182) end,
-					partial = false,
-					encounterID = 1135,
-					nameWrath = L["Boss_Hodir"],
-				},
-				boss35 = {
-					name = 1644, --Hodir (Staying Buffed All Winter) 10 Man
-					bossIDs = {},
-					achievement = 2969,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = L["Ulduar_Hodir2"] },
-						},
-					},
-					enabled = false,
-					track = nil,
-					partial = false,
-					encounterID = 1135,
-					nameWrath = L["Boss_Hodir"],
-				},
-				boss36 = {
-					name = 1645, --Thorim (Don't Stand in the Lightning) 10 Man
-					bossIDs = {},
-					achievement = 2971,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = L["Shared_JustKillBoss"] },
-						},
-					},
-					enabled = true,
-					track = function() core._603:ThorimDontStandInTheLightning(2971) end,
-					partial = false,
-					encounterID = 1141,
-					nameWrath = L["Boss_Thorim"],
-				},
-				boss37 = {
-					name = 1645, --Thorim (I'll Take You All On) 10 Man
-					bossIDs = {},
-					achievement = 2973,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = L["Ulduar_Thorim1"] },
-						},
-					},
-					enabled = false,
-					track = nil,
-					partial = false,
-					encounterID = 1141,
-					nameWrath = L["Boss_Thorim"],
-				},
-				boss38 = {
-					name = 1645, --Thorim (Who Needs Bloodlust?) 10 Man
-					bossIDs = {},
-					achievement = 2975,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = L["Ulduar_Thorim2"] },
-						},
-					},
-					enabled = false,
-					track = nil,
-					partial = false,
-					encounterID = 1141,
-					nameWrath = L["Boss_Thorim"],
-				},
-				boss39 = {
-					name = 1645, --Thorim (Siffed) 10 Man
-					bossIDs = {},
-					achievement = 2977,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = L["Shared_JustKillBoss"] },
-						},
-					},
-					enabled = false,
-					track = nil,
-					partial = false,
-					encounterID = 1141,
-					nameWrath = L["Boss_Thorim"],
-				},
-				boss40 = {
-					name = 1645, --Thorim (Lose Your Illusion) 10 Man
-					bossIDs = {},
-					achievement = 3176,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = L["Shared_JustKillBoss"] },
-						},
-					},
-					enabled = false,
-					track = nil,
-					partial = false,
-					encounterID = 1141,
-					nameWrath = L["Boss_Thorim"],
-				},
-				boss41 = {
-					name = L["Instances_Other"], --Lumberjacked 10 Man
-					bossIDs = {32914, 32913, 32915},
-					achievement = 2979,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = format(L["Ulduar_FreyaMiniBosses"], "IAT_32915", "IAT_32913", "IAT_32914", "IAT_33241", "IAT_33241") },
-						},
-					},
-					enabled = true,
-					track = function() core._603:FreyaLumberjacked(12360) end,
-					partial = false,
-					nameWrath = L["Instances_Other"],
-				},
-				boss42 = {
-					name = 1646, --Freya (Con-speed-atory) 10 Man
-					bossIDs = {32906, 33430, 33431, 33528, 33527, 33526, 33525, 32914, 32913, 33354, 33355, 32915},
-					achievement = 2980,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = L["Shared_JustKillBoss"] },
-						},
-					},
-					enabled = true,
-					track = function() core._603:FreyaConSpeedAtory(753) end,
-					partial = false,
-					encounterID = 1133,
-					nameWrath = L["Boss_Freya"],
-				},
-				boss43 = {
-					name = 1646, --Freya (Deforestation) 10 Man
-					bossIDs = {},
-					achievement = 2985,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = format(L["Ulduar_Freya1"], "IAT_33202", "IAT_32919", "IAT_115143") },
-						},
-					},
-					enabled = true,
-					track = function() core._603:FreyaDeforestation(2985) end,
-					partial = false,
-					encounterID = 1133,
-					nameWrath = L["Boss_Freya"],
-				},
-				boss44 = {
-					name = 1646, --Freya (Getting Back to Nature) 10 Man
-					bossIDs = {},
-					achievement = 2982,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = L["Shared_JustKillBoss"] },
-						},
-					},
-					enabled = true,
-					track = function() core._603:FreyaGettingBackToNature(2982) end,
-					partial = false,
-					encounterID = 1133,
-					nameWrath = L["Boss_Freya"],
-				},
-				boss45 = {
-					name = 1646, --Freya (Knock on Wood) 10 Man
-					bossIDs = {},
-					achievement = 3177,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = format(L["Ulduar_Freya2"], "IAT_33241", "IAT_32915", "IAT_32913", "IAT_32914") },
-						},
-					},
-					enabled = false,
-					track = nil,
-					partial = false,
-					encounterID = 1133,
-					nameWrath = L["Boss_Freya"],
-				},
-				boss46 = {
-					name = 1646, --Freya (Knock, Knock on Wood) 10 Man
-					bossIDs = {},
-					achievement = 3178,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = format(L["Ulduar_Freya2"], "IAT_33241", "IAT_32915", "IAT_32913", "IAT_32914") },
-						},
-					},
-					enabled = false,
-					track = nil,
-					partial = false,
-					encounterID = 1133,
-					nameWrath = L["Boss_Freya"],
-				},
-				boss47 = {
-					name = 1646, --Freya (Knock, Knock, Knock on Wood) 10 Man
-					bossIDs = {},
-					achievement = 3179,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = format(L["Ulduar_Freya2"], "IAT_33241", "IAT_32915", "IAT_32913", "IAT_32914") },
-						},
-					},
-					enabled = false,
-					track = nil,
-					partial = false,
-					encounterID = 1133,
-					nameWrath = L["Boss_Freya"],
-				},
-				boss48 = {
-					name = 1647, --Mimiron (Set Up Us the Bomb) 10 Man
-					bossIDs = {},
-					achievement = 2989,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = L["Shared_JustKillBoss"] },
-						},
-					},
-					enabled = true,
-					track = function() core._603:MimironSetUpUsTheBomb(2989) end,
-					partial = false,
-					encounterID = 1138,
-					nameWrath = L["Boss_Mimiron"],
-				},
-				boss49 = {
-					name = 1647, --Mimiron (Not-So-Friendly Fire) 10 Man
-					bossIDs = {},
-					achievement = 3138,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = format(L["Ulduar_Mimiron1"], "IAT_33244", "IAT_34057", "IAT_34057", "IAT_33244", "IAT_34057", C_Spell.GetSpellLink(63041), "IAT_34057") },
-						},
-					},
-					enabled = true,
-					track = function() core._603:MimironNotSoFriendlyFire(3138) end,
-					partial = false,
-					encounterID = 1138,
-					nameWrath = L["Boss_Mimiron"],
-				},
-				boss50 = {
-					name = 1647, --Mimiron (Firefighter) 10 Man
-					bossIDs = {},
-					achievement = 3180,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = format(L["Ulduar_Mimiron2"], "IAT_150995") },
-						},
-					},
-					enabled = true,
-					track = function() end,
-					partial = false,
-					encounterID = 1138,
-					nameWrath = L["Boss_Mimiron"],
-				},
-				boss51 = {
-					name = 1648, --General Vezax (Shadowdodger) 10 Man
-					bossIDs = {},
-					achievement = 2996,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = L["Shared_JustKillBoss"] },
-						},
-					},
-					enabled = true,
-					track = function() core._603:Shadowdodger(2996) end,
-					partial = false,
-					encounterID = 1134,
-					nameWrath = L["Boss_GeneralVezax"],
-				},
-				boss52 = {
-					name = 1648, --General Vezax (I Love the Smell of Saronite in the Morning) 10 Man
-					bossIDs = {},
-					achievement = 3181,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = format(L["Ulduar_GeneralVezax"], "IAT_33524", "IAT_109450", "IAT_33524", "IAT_33524", "IAT_33524") },
-						},
-					},
-					enabled = true,
-					track = function() core._603:ILoveTheSmellOfSaroniteInTheMorning(3181) end,
-					partial = false,
-					encounterID = 1134,
-					nameWrath = L["Boss_GeneralVezax"],
-				},
-				boss53 = {
-					name = 1649, --Yogg-Saron 1 (Kiss and Make Up) 10 Man
-					bossIDs = {},
-					achievement = 3009,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = format(L["Ulduar_YoggSaron1"], "IAT_33134", "IAT_33136", "IAT_33134") },
-						},
-					},
-					enabled = true,
-					track = function() core._603:KissAndMakeUp(3009) end,
-					partial = false,
-					encounterID = 1143,
-					nameWrath = L["Boss_Yogg-Saron1"],
-				},
-				boss54 = {
-					name = 1649, --Yogg-Saron 2 (Three Lights in the Darkness) 10 Man
-					bossIDs = {},
-					achievement = 3157,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = L["Shared_JustKillBoss"] },
-						},
-					},
-					enabled = false,
-					track = nil,
-					partial = false,
-					encounterID = 1143,
-					nameWrath = L["Boss_Yogg-Saron2"],
-				},
-				boss55 = {
-					name = 1649, --Yogg-Saron 3 (Two Lights in the Darkness) 10 Man
-					bossIDs = {},
-					achievement = 3141,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = L["Shared_JustKillBoss"] },
-						},
-					},
-					enabled = false,
-					track = nil,
-					partial = false,
-					encounterID = 1143,
-					nameWrath = L["Boss_Yogg-Saron3"],
-				},
-				boss56 = {
-					name = 1649, --Yogg-Saron 4 (One Light in the Darkness) 10 Man
-					bossIDs = {},
-					achievement = 3158,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = L["Shared_JustKillBoss"] },
-						},
-					},
-					enabled = false,
-					track = nil,
-					partial = false,
-					encounterID = 1143,
-					nameWrath = L["Boss_Yogg-Saron4"],
-				},
-				boss57 = {
-					name = 1649, --Yogg-Saron 5 (Alone in the Darkness) 10 Man
-					bossIDs = {},
-					achievement = 3159,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = L["Shared_JustKillBoss"] },
-						},
-					},
-					enabled = false,
-					track = nil,
-					partial = false,
-					encounterID = 1143,
-					nameWrath = L["Boss_Yogg-Saron5"],
-				},
-				boss58 = {
-					name = 1649, --Yogg-Saron 6 (Drive Me Crazy) 10 Man
-					bossIDs = {},
-					achievement = 3008,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = L["Shared_JustKillBoss"] },
-						},
-					},
-					enabled = true,
-					track = function() core._603:DriveMeCrazy(3008) end,
-					partial = false,
-					encounterID = 1143,
-					nameWrath = L["Boss_Yogg-Saron6"],
-				},
-				boss59 = {
-					name = 1649, --Yogg-Saron 7 (He's Not Getting Any Older) 10 Man
-					bossIDs = {},
-					achievement = 3012,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = L["Shared_JustKillBoss"] },
-						},
-					},
-					enabled = true,
-					track = function() core._603:HesNotGettingAnyOlder(3012) end,
-					partial = false,
-					encounterID = 1143,
-					nameWrath = L["Boss_Yogg-Saron7"],
-				},
-				boss60 = {
-					name = 1649, --Yogg-Saron 8 (They're Coming Out of the Walls) 10 Man
-					bossIDs = {},
-					achievement = 3014,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = format(L["Ulduar_YoggSaron2"], "IAT_33136", "IAT_33136", "IAT_33552") },
-						},
-					},
-					enabled = true,
-					track = function() core._603:TheyreComingOutOfTheWalls(3014) end,
-					partial = false,
-					encounterID = 1143,
-					nameWrath = L["Boss_Yogg-Saron8"],
-				},
-				boss61 = {
-					name = 1649, --Yogg-Saron 9 (In His House He Waits Dreaming) 10 Man
-					bossIDs = {},
-					achievement = 3015,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = format(L["Ulduar_YoggSaron3"], "IAT_33552", "IAT_33134", "IAT_33552") },
-						},
-					},
-					enabled = false,
-					track = nil,
-					partial = false,
-					encounterID = 1143,
-					nameWrath = L["Boss_Yogg-Saron9"],
-				},
-				boss62 = {
-					name = 1650, --Algalon the Observer (Supermassive) 10 Man
-					bossIDs = {},
-					achievement = 3003,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = L["Ulduar_AlgalonTheObserver"] },
-						},
-					},
-					enabled = false,
-					track = nil,
-					partial = false,
-					encounterID = 1130,
-					nameWrath = L["Boss_AlgalonTheObserver"],
-				},
-			},
-
-			[603.25] = { --Ulduar 25 Man
-				name = 759,
-				nameLocalised = L["Instance_Ulduar"],
-				classicPhase = 2,
-				classicOnly = true,
-				boss1 = {
-					name = L["Instances_Other"], --Dwarfageddon 25 Man
-					bossIDs = {33572},
-					achievement = 3098,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = format(L["Ulduar_Other1"], "IAT_33572", "IAT_33572") },
-						},
-					},
-					enabled = true,
-					track = function() core._603:Dwarfageddon(3098) end,
-					partial = true,
-					displayInfoFrame = true,
-					nameWrath = L["Instances_Other"],
-				},
-				boss2 = {
-					name = L["Instances_Other"], --Unbroken 25 Man
-					bossIDs = {},
-					achievement = 2906,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = L["Ulduar_Other2"] },
-						},
-					},
-					enabled = true,
-					track = function() end,
-					partial = false,
-					nameWrath = L["Instances_Other"],
-				},
-				boss3 = {
-					name = 1637, --Flame Leviathan (Three Car Garage) 25 Man
-					bossIDs = {},
-					achievement = 2908,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = L["Ulduar_FlameLeviathan1"] },
-						},
-					},
-					enabled = false,
-					track = nil,
-					partial = false,
-					encounterID = 1132,
-					nameWrath = L["Boss_FlameLeviathan"],
-				},
-				boss4 = {
-					name = 1637, --Flame Leviathan (Take Out Those Turrets) 25 Man
-					bossIDs = {},
-					achievement = 2910,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = format(L["Ulduar_FlameLeviathan2"], C_Spell.GetSpellLink(64414), "IAT_33113", C_Spell.GetSpellLink(62324), "IAT_33113") },
-						},
-					},
-					enabled = true,
-					track = function() core._603:FlameLeviathanTakeOutThoseTurrets(2910) end,
-					partial = false,
-					encounterID = 1132,
-					nameWrath = L["Boss_FlameLeviathan"],
-				},
-				boss5 = {
-					name = 1637, --Flame Leviathan (Shutout) 25 Man
-					bossIDs = {},
-					achievement = 2912,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = L["Shared_JustKillBoss"] },
-						},
-					},
-					enabled = true,
-					track = function() core._603:FlameLeviathanShutout(2912) end,
-					partial = false,
-					encounterID = 1132,
-					nameWrath = L["Boss_FlameLeviathan"],
-				},
-				boss6 = {
-					name = 1637, --Flame Leviathan (Orbital Bombardment) 25 Man
-					bossIDs = {},
-					achievement = 2918,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = format(L["Ulduar_FlameLeviathan3"], "IAT_33113", "IAT_33686") },
-						},
-					},
-					enabled = false,
-					track = nil,
-					partial = false,
-					encounterID = 1132,
-					nameWrath = L["Boss_FlameLeviathan"],
-				},
-				boss7 = {
-					name = 1637, --Flame Leviathan (Orbital Devastation) 25 Man
-					bossIDs = {},
-					achievement = 2916,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = format(L["Ulduar_FlameLeviathan3"], "IAT_33113", "IAT_33686") },
-						},
-					},
-					enabled = false,
-					track = nil,
-					partial = false,
-					encounterID = 1132,
-					nameWrath = L["Boss_FlameLeviathan"],
-				},
-				boss8 = {
-					name = 1637, --Flame Leviathan (Nuked from Orbit) 25 Man
-					bossIDs = {},
-					achievement = 2917,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = format(L["Ulduar_FlameLeviathan3"], "IAT_33113", "IAT_33686") },
-						},
-					},
-					enabled = false,
-					track = nil,
-					partial = false,
-					encounterID = 1132,
-					nameWrath = L["Boss_FlameLeviathan"],
-				},
-				boss9 = {
-					name = 1637, --Flame Leviathan (Orbit-uary) 25 Man
-					bossIDs = {},
-					achievement = 3057,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = format(L["Ulduar_FlameLeviathan3"], "IAT_33113", "IAT_33686") },
-						},
-					},
-					enabled = false,
-					track = nil,
-					partial = false,
-					encounterID = 1132,
-					nameWrath = L["Boss_FlameLeviathan"],
-				},
-				boss10 = {
-					name = 1639, --Razorscale (A Quick Shave) 25 Man
-					bossIDs = {},
-					achievement = 2921,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = L["Shared_JustKillBoss"] },
-						},
-					},
-					enabled = true,
-					track = function() core._603:RazorscaleAQuickShave(2921) end,
-					partial = false,
-					encounterID = 1139,
-					nameWrath = L["Boss_Razorscale"],
-				},
-				boss11 = {
-					name = 1639, --Razorscale (Iron Dwarf, Medium Rare) 25 Man
-					bossIDs = {},
-					achievement = 2924,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = format(L["Ulduar_Razorscale"], "IAT_33186", "IAT_109674", "IAT_33186", "IAT_33186", "IAT_109674", C_Spell.GetSpellLink(64021), "IAT_109674") },
-						},
-					},
-					enabled = true,
-					track = function() core._603:RazorscaleIronDwarfMediumRare(2924) end,
-					partial = false,
-					encounterID = 1139,
-					nameWrath = L["Boss_Razorscale"],
-				},
-				boss12 = {
-					name = 1638, --Ignis the Furnace Master (Shattered) 25 Man
-					bossIDs = {},
-					achievement = 2926,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = format(L["Ulduar_IgnisTheFurnaceMaster1"], "IAT_33118", "IAT_33121", "IAT_33121", "IAT_33118", C_Spell.GetSpellLink(65667), C_Spell.GetSpellLink(62373), C_Spell.GetSpellLink(62382), "IAT_33121") },
-						},
-					},
-					enabled = true,
-					track = function() core._603:IgnisTheFurnaceMasterShattered(2926) end,
-					partial = false,
-					encounterID = 1136,
-					nameWrath = L["Boss_IgnisTheFurnaceMaster"],
-				},
-				boss13 = {
-					name = 1638, --Ignis the Furnace Master (Hot Pocket) 25 Man
-					bossIDs = {},
-					achievement = 2928,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = format(L["Ulduar_IgnisTheFurnaceMaster2"], C_Spell.GetSpellLink(62717), C_Spell.GetSpellLink(62717), C_Spell.GetSpellLink(62717)) },
-						},
-					},
-					enabled = false,
-					track = nil,
-					partial = false,
-					encounterID = 1136,
-					nameWrath = L["Boss_IgnisTheFurnaceMaster"],
-				},
-				boss14 = {
-					name = 1638, --Ignis the Furnace Master (Stokin' the Furnace) 25 Man
-					bossIDs = {},
-					achievement = 2929,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = L["Shared_JustKillBoss"] },
-						},
-					},
-					enabled = true,
-					track = function() core._603:IgnisTheFurnaceMasterStokinTheFurnace(2929) end,
-					partial = false,
-					encounterID = 1136,
-					nameWrath = L["Boss_IgnisTheFurnaceMaster"],
-				},
-				boss15 = {
-					name = 1640, --XT-002 Deconstructor (Nerf Engineering) 25 Man
-					bossIDs = {},
-					achievement = 2932,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = L["Shared_JustKillBoss"] },
-						},
-					},
-					enabled = true,
-					track = function() core._603:XT002DeconstructorNerfEngineering(2932) end,
-					partial = false,
-					encounterID = 1142,
-					nameWrath = L["Boss_XT-002Deconstructor"],
-				},
-				boss16 = {
-					name = 1640, --XT-002 Deconstructor (Nerf Scrapbots) 25 Man
-					bossIDs = {},
-					achievement = 2935,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = L["Ulduar_XTDeconstructor1"] },
-						},
-					},
-					enabled = true,
-					track = function() core._603:XT002DeconstructorNerfScrapbots(2935) end,
-					partial = false,
-					encounterID = 1142,
-					displayInfoFrame = true,
-					nameWrath = L["Boss_XT-002Deconstructor"],
-				},
-				boss17 = {
-					name = 1640, --XT-002 Deconstructor (Nerf Gravity Bombs) 25 Man
-					bossIDs = {},
-					achievement = 2936,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = L["Shared_JustKillBoss"] },
-						},
-					},
-					enabled = true,
-					track = function() core._603:XT002DeconstructorNerfGravityBombs(2936) end,
-					partial = false,
-					encounterID = 1142,
-					nameWrath = L["Boss_XT-002Deconstructor"],
-				},
-				boss18 = {
-					name = 1640, --XT-002 Deconstructor (Must Deconstruct Faster) 25 Man
-					bossIDs = {},
-					achievement = 2938,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = L["Shared_JustKillBoss"] },
-						},
-					},
-					enabled = true,
-					track = function() core._603:XT002DeconstructorMustDeconstructFaster(2938) end,
-					partial = false,
-					encounterID = 1142,
-					nameWrath = L["Boss_XT-002Deconstructor"],
-				},
-				boss19 = {
-					name = 1640, --XT-002 Deconstructor (Heartbreaker) 25 Man
-					bossIDs = {},
-					achievement = 3059,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = format(L["Ulduar_XTDeconstructor2"], C_Spell.GetSpellLink(63849)) },
-						},
-					},
-					enabled = true,
-					track = function() core._603:XT002DeconstructorHeartbreaker(3059) end,
-					partial = false,
-					encounterID = 1142,
-					nameWrath = L["Boss_XT-002Deconstructor"],
-				},
-				boss20 = {
-					name = 1641, --Assembly of Iron (I Choose You, Runemaster Molgeim) 25 Man
-					bossIDs = {},
-					achievement = 2942,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = format(L["Ulduar_AssemblyOfIron1"], "IAT_32927") },
-						},
-					},
-					enabled = true,
-					track = function() core._603:AssemblyOfIronIChooseYouRunemasterMolgeim(2942) end,
-					partial = false,
-					encounterID = 1140,
-					nameWrath = L["Boss_AssemblyOfIron"],
-				},
-				boss21 = {
-					name = 1641, --Assembly of Iron (I Choose You, Stormcaller Brundir) 25 Man
-					bossIDs = {},
-					achievement = 2943,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = format(L["Ulduar_AssemblyOfIron1"], "IAT_32857") },
-						},
-					},
-					enabled = true,
-					track = function() core._603:AssemblyOfIronIChooseYouStormcallerBrundir(2943) end,
-					partial = false,
-					encounterID = 1140,
-					nameWrath = L["Boss_AssemblyOfIron"],
-				},
-				boss22 = {
-					name = 1641, --Assembly of Iron (I Choose You, Steelbreaker) 25 Man
-					bossIDs = {},
-					achievement = 2944,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = format(L["Ulduar_AssemblyOfIron1"], "IAT_32867") },
-						},
-					},
-					enabled = true,
-					track = function() core._603:AssemblyOfIronIChooseYouSteelbreaker(2944) end,
-					partial = false,
-					encounterID = 1140,
-					nameWrath = L["Boss_AssemblyOfIron"],
-				},
-				boss23 = {
-					name = 1641, --Assembly of Iron (But I'm On Your Side) 25 Man
-					bossIDs = {},
-					achievement = 2946,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = format(L["Ulduar_AssemblyOfIron4"], "IAT_43499", "IAT_30472", "IAT_42780") },
-						},
-					},
-					enabled = false,
-					track = nil,
-					partial = false,
-					encounterID = 1140,
-					nameWrath = L["Boss_AssemblyOfIron"],
-				},
-				boss24 = {
-					name = 1641, --Assembly of Iron (Can't Do That While Stunned) 25 Man
-					bossIDs = {},
-					achievement = 2948,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = format(L["Ulduar_AssemblyOfIron5"], C_Spell.GetSpellLink(63479), "IAT_32857", C_Spell.GetSpellLink(63479), "IAT_32857", "IAT_32867", "IAT_32927") },
-						},
-					},
-					enabled = true,
-					track = function() core._603:AssemblyOfIronCantDoThatWhileStunned(2948) end,
-					partial = false,
-					encounterID = 1140,
-					nameWrath = L["Boss_AssemblyOfIron"],
-				},
-				boss25 = {
-					name = 1642, --Kologarn (With Open Arms) 25 Man
-					bossIDs = {},
-					achievement = 2952,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = format(L["Ulduar_Kologarn1"], "IAT_32930") },
-						},
-					},
-					enabled = true,
-					track = function() core._603:KologarnWithOpenArms(2952) end,
-					partial = false,
-					encounterID = 1137,
-					nameWrath = L["Boss_Kologarn"],
-				},
-				boss26 = {
-					name = 1642, --Kologarn (Disarmed) 25 Man
-					bossIDs = {},
-					achievement = 2954,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = L["Ulduar_Kologarn2"] },
-						},
-					},
-					enabled = false,
-					track = nil,
-					partial = false,
-					encounterID = 1137,
-					nameWrath = L["Boss_Kologarn"],
-				},
-				boss27 = {
-					name = 1642, --Kologarn (If Looks Could Kill) 25 Man
-					bossIDs = {},
-					achievement = 2956,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = L["Shared_JustKillBoss"] },
-						},
-					},
-					enabled = true,
-					track = function() core._603:KologarnIfLooksCouldKill(2956) end,
-					partial = false,
-					encounterID = 1137,
-					nameWrath = L["Boss_Kologarn"],
-				},
-				boss28 = {
-					name = 1642, --Kologarn (Rubble and Roll) 25 Man
-					bossIDs = {},
-					achievement = 2960,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = format(L["Ulduar_Kologarn3"], "IAT_32930", "IAT_33768", "IAT_33768", "IAT_32930", "IAT_33768") },
-						},
-					},
-					enabled = true,
-					track = function() core._603:KologarnRubbleAndRoll(2960) end,
-					partial = false,
-					encounterID = 1137,
-					nameWrath = L["Boss_Kologarn"],
-				},
-				boss29 = {
-					name = 1643, --Auriaya (Crazy Cat Lady) 25 Man
-					bossIDs = {},
-					achievement = 3007,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = L["Shared_JustKillBossSingleTarget"] },
-						},
-					},
-					enabled = true,
-					track = function() core._603:AuriayaCrazyCatLady(3007) end,
-					partial = false,
-					encounterID = 1131,
-					nameWrath = L["Boss_Auriaya"],
-				},
-				boss30 = {
-					name = 1643, --Auriaya (Nine Lives) 25 Man
-					bossIDs = {},
-					achievement = 3077,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = format(L["Ulduar_Auriaya2"], "IAT_34035", "IAT_34035", "IAT_34035") },
-						},
-					},
-					enabled = true,
-					track = function() core._603:AuriayaNineLives(3077) end,
-					partial = false,
-					encounterID = 1131,
-					nameWrath = L["Boss_Auriaya"],
-				},
-				boss31 = {
-					name = 1644, --Hodir (Cheese the Freeze) 25 Man
-					bossIDs = {},
-					achievement = 2962,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = L["Shared_JustKillBoss"] },
-						},
-					},
-					enabled = true,
-					track = function() core._603:HodirCheeseTheFreeze(2962) end,
-					partial = false,
-					encounterID = 1135,
-					nameWrath = L["Boss_Hodir"],
-				},
-				boss32 = {
-					name = 1644, --Hodir (I Have the Coolest Friends) 25 Man
-					bossIDs = {},
-					achievement = 2965,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = format(L["Ulduar_Hodir1"], "IAT_111941", "IAT_111941") },
-						},
-					},
-					enabled = true,
-					track = function() core._603:HodirIHaveTheCoolestFriends(2965) end,
-					partial = false,
-					encounterID = 1135,
-					nameWrath = L["Boss_Hodir"],
-				},
-				boss33 = {
-					name = 1644, --Hodir (Getting Cold in Here) 25 Man
-					bossIDs = {},
-					achievement = 2968,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = L["Shared_JustKillBoss"] },
-						},
-					},
-					enabled = true,
-					track = function() core._603:HodirGettingColdInHere(2968) end,
-					partial = false,
-					encounterID = 1135,
-					nameWrath = L["Boss_Hodir"],
-				},
-				boss34 = {
-					name = 1644, --Hodir (I Could Say That This Cache Was Rare) 25 Man
-					bossIDs = {},
-					achievement = 3184,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = L["Shared_JustKillBoss"] },
-						},
-					},
-					enabled = true,
-					track = function() core._603:HodirICouldSayThatThisCacheWasRare(3184) end,
-					partial = false,
-					encounterID = 1135,
-					nameWrath = L["Boss_Hodir"],
-				},
-				boss35 = {
-					name = 1644, --Hodir (Staying Buffed All Winter) 25 Man
-					bossIDs = {},
-					achievement = 2970,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = L["Ulduar_Hodir2"] },
-						},
-					},
-					enabled = false,
-					track = nil,
-					partial = false,
-					encounterID = 1135,
-					nameWrath = L["Boss_Hodir"],
-				},
-				boss36 = {
-					name = 1645, --Thorim (Don't Stand in the Lightning) 25 Man
-					bossIDs = {},
-					achievement = 2972,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = L["Shared_JustKillBoss"] },
-						},
-					},
-					enabled = true,
-					track = function() core._603:ThorimDontStandInTheLightning(2972) end,
-					partial = false,
-					encounterID = 1141,
-					nameWrath = L["Boss_Thorim"],
-				},
-				boss37 = {
-					name = 1645, --Thorim (I'll Take You All On) 25 Man
-					bossIDs = {},
-					achievement = 2974,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = L["Ulduar_Thorim1"] },
-						},
-					},
-					enabled = false,
-					track = nil,
-					partial = false,
-					encounterID = 1141,
-					nameWrath = L["Boss_Thorim"],
-				},
-				boss38 = {
-					name = 1645, --Thorim (Who Needs Bloodlust?) 25 Man
-					bossIDs = {},
-					achievement = 2976,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = L["Ulduar_Thorim2"] },
-						},
-					},
-					enabled = false,
-					track = nil,
-					partial = false,
-					encounterID = 1141,
-					nameWrath = L["Boss_Thorim"],
-				},
-				boss39 = {
-					name = 1645, --Thorim (Siffed) 25 Man
-					bossIDs = {},
-					achievement = 2978,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = L["Shared_JustKillBoss"] },
-						},
-					},
-					enabled = false,
-					track = nil,
-					partial = false,
-					encounterID = 1141,
-					nameWrath = L["Boss_Thorim"],
-				},
-				boss40 = {
-					name = 1645, --Thorim (Lose Your Illusion) 25 Man
-					bossIDs = {},
-					achievement = 3183,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = L["Shared_JustKillBoss"] },
-						},
-					},
-					enabled = false,
-					track = nil,
-					partial = false,
-					encounterID = 1141,
-					nameWrath = L["Boss_Thorim"],
-				},
-				boss41 = {
-					name = L["Instances_Other"], --Lumberjacked 25 Man
-					bossIDs = {32914, 32913, 32915},
-					achievement = 3118,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = format(L["Ulduar_FreyaMiniBosses"], "IAT_32915", "IAT_32913", "IAT_32914", "IAT_33241", "IAT_33241") },
-						},
-					},
-					enabled = true,
-					track = function() core._603:FreyaLumberjacked(12360) end,
-					partial = false,
-					nameWrath = L["Instances_Other"],
-				},
-				boss42 = {
-					name = 1646, --Freya (Con-speed-atory) 25 Man
-					bossIDs = {32906, 33430, 33431, 33528, 33527, 33526, 33525, 32914, 32913, 33354, 33355, 32915},
-					achievement = 2981,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = L["Shared_JustKillBoss"] },
-						},
-					},
-					enabled = true,
-					track = function() core._603:FreyaConSpeedAtory(753) end,
-					partial = false,
-					encounterID = 1133,
-					nameWrath = L["Boss_Freya"],
-				},
-				boss43 = {
-					name = 1646, --Freya (Deforestation) 25 Man
-					bossIDs = {},
-					achievement = 2984,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = format(L["Ulduar_Freya1"], "IAT_33202", "IAT_32919", "IAT_115143") },
-						},
-					},
-					enabled = true,
-					track = function() core._603:FreyaDeforestation(2984) end,
-					partial = false,
-					encounterID = 1133,
-					nameWrath = L["Boss_Freya"],
-				},
-				boss44 = {
-					name = 1646, --Freya (Getting Back to Nature) 25 Man
-					bossIDs = {},
-					achievement = 2983,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = L["Shared_JustKillBoss"] },
-						},
-					},
-					enabled = true,
-					track = function() core._603:FreyaGettingBackToNature(2983) end,
-					partial = false,
-					encounterID = 1133,
-					nameWrath = L["Boss_Freya"],
-				},
-				boss45 = {
-					name = 1646, --Freya (Knock on Wood) 25 Man
-					bossIDs = {},
-					achievement = 3185,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = format(L["Ulduar_Freya2"], "IAT_33241", "IAT_32915", "IAT_32913", "IAT_32914") },
-						},
-					},
-					enabled = false,
-					track = nil,
-					partial = false,
-					encounterID = 1133,
-					nameWrath = L["Boss_Freya"],
-				},
-				boss46 = {
-					name = 1646, --Freya (Knock, Knock on Wood) 25 Man
-					bossIDs = {},
-					achievement = 3186,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = format(L["Ulduar_Freya2"], "IAT_33241", "IAT_32915", "IAT_32913", "IAT_32914") },
-						},
-					},
-					enabled = false,
-					track = nil,
-					partial = false,
-					encounterID = 1133,
-					nameWrath = L["Boss_Freya"],
-				},
-				boss47 = {
-					name = 1646, --Freya (Knock, Knock, Knock on Wood) 25 Man
-					bossIDs = {},
-					achievement = 3187,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = format(L["Ulduar_Freya2"], "IAT_33241", "IAT_32915", "IAT_32913", "IAT_32914") },
-						},
-					},
-					enabled = false,
-					track = nil,
-					partial = false,
-					encounterID = 1133,
-					nameWrath = L["Boss_Freya"],
-				},
-				boss48 = {
-					name = 1647, --Mimiron (Set Up Us the Bomb) 25 Man
-					bossIDs = {},
-					achievement = 3237,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = L["Shared_JustKillBoss"] },
-						},
-					},
-					enabled = true,
-					track = function() core._603:MimironSetUpUsTheBomb(3237) end,
-					partial = false,
-					encounterID = 1138,
-					nameWrath = L["Boss_Mimiron"],
-				},
-				boss49 = {
-					name = 1647, --Mimiron (Not-So-Friendly Fire) 25 Man
-					bossIDs = {},
-					achievement = 2995,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = format(L["Ulduar_Mimiron1"], "IAT_33244", "IAT_34057", "IAT_34057", "IAT_33244", "IAT_34057", C_Spell.GetSpellLink(63041), "IAT_34057") },
-						},
-					},
-					enabled = true,
-					track = function() core._603:MimironNotSoFriendlyFire(2995) end,
-					partial = false,
-					encounterID = 1138,
-					nameWrath = L["Boss_Mimiron"],
-				},
-				boss50 = {
-					name = 1647, --Mimiron (Firefighter) 25 Man
-					bossIDs = {},
-					achievement = 3189,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = format(L["Ulduar_Mimiron2"], "IAT_150995") },
-						},
-					},
-					enabled = true,
-					track = function() end,
-					partial = false,
-					encounterID = 1138,
-					nameWrath = L["Boss_Mimiron"],
-				},
-				boss51 = {
-					name = 1648, --General Vezax (Shadowdodger) 25 Man
-					bossIDs = {},
-					achievement = 2997,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = L["Shared_JustKillBoss"] },
-						},
-					},
-					enabled = true,
-					track = function() core._603:Shadowdodger(2997) end,
-					partial = false,
-					encounterID = 1134,
-					nameWrath = L["Boss_GeneralVezax"],
-				},
-				boss52 = {
-					name = 1648, --General Vezax (I Love the Smell of Saronite in the Morning) 25 Man
-					bossIDs = {},
-					achievement = 3188,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = format(L["Ulduar_GeneralVezax"], "IAT_33524", "IAT_109450", "IAT_33524", "IAT_33524", "IAT_33524") },
-						},
-					},
-					enabled = true,
-					track = function() core._603:ILoveTheSmellOfSaroniteInTheMorning(3188) end,
-					partial = false,
-					encounterID = 1134,
-					nameWrath = L["Boss_GeneralVezax"],
-				},
-				boss53 = {
-					name = 1649, --Yogg-Saron 1 (Kiss and Make Up) 25 Man
-					bossIDs = {},
-					achievement = 3011,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = format(L["Ulduar_YoggSaron1"], "IAT_33134", "IAT_33136", "IAT_33134") },
-						},
-					},
-					enabled = true,
-					track = function() core._603:KissAndMakeUp(3011) end,
-					partial = false,
-					encounterID = 1143,
-					nameWrath = L["Boss_Yogg-Saron1"],
-				},
-				boss54 = {
-					name = 1649, --Yogg-Saron 2 (Three Lights in the Darkness) 25 Man
-					bossIDs = {},
-					achievement = 3161,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = L["Shared_JustKillBoss"] },
-						},
-					},
-					enabled = false,
-					track = nil,
-					partial = false,
-					encounterID = 1143,
-					nameWrath = L["Boss_Yogg-Saron2"],
-				},
-				boss55 = {
-					name = 1649, --Yogg-Saron 3 (Two Lights in the Darkness) 25 Man
-					bossIDs = {},
-					achievement = 3162,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = L["Shared_JustKillBoss"] },
-						},
-					},
-					enabled = false,
-					track = nil,
-					partial = false,
-					encounterID = 1143,
-					nameWrath = L["Boss_Yogg-Saron3"],
-				},
-				boss56 = {
-					name = 1649, --Yogg-Saron 4 (One Light in the Darkness 25 Man)
-					bossIDs = {},
-					achievement = 3163,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = L["Shared_JustKillBoss"] },
-						},
-					},
-					enabled = false,
-					track = nil,
-					partial = false,
-					encounterID = 1143,
-					nameWrath = L["Boss_Yogg-Saron4"],
-				},
-				boss57 = {
-					name = 1649, --Yogg-Saron 5 (Alone in the Darkness) 25 Man
-					bossIDs = {},
-					achievement = 3164,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = L["Shared_JustKillBoss"] },
-						},
-					},
-					enabled = false,
-					track = nil,
-					partial = false,
-					encounterID = 1143,
-					nameWrath = L["Boss_Yogg-Saron5"],
-				},
-				boss58 = {
-					name = 1649, --Yogg-Saron 6 (Drive Me Crazy) 25 Man
-					bossIDs = {},
-					achievement = 3010,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = L["Shared_JustKillBoss"] },
-						},
-					},
-					enabled = true,
-					track = function() core._603:DriveMeCrazy(3010) end,
-					partial = false,
-					encounterID = 1143,
-					nameWrath = L["Boss_Yogg-Saron6"],
-				},
-				boss59 = {
-					name = 1649, --Yogg-Saron 7 (He's Not Getting Any Older) 25 Man
-					bossIDs = {},
-					achievement = 3013,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = L["Shared_JustKillBoss"] },
-						},
-					},
-					enabled = true,
-					track = function() core._603:HesNotGettingAnyOlder(3013) end,
-					partial = false,
-					encounterID = 1143,
-					nameWrath = L["Boss_Yogg-Saron7"],
-				},
-				boss60 = {
-					name = 1649, --Yogg-Saron 8 (They're Coming Out of the Walls) 25 Man
-					bossIDs = {},
-					achievement = 3017,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = format(L["Ulduar_YoggSaron2"], "IAT_33136", "IAT_33136", "IAT_33552") },
-						},
-					},
-					enabled = true,
-					track = function() core._603:TheyreComingOutOfTheWalls(3017) end,
-					partial = false,
-					encounterID = 1143,
-					nameWrath = L["Boss_Yogg-Saron8"],
-				},
-				boss61 = {
-					name = 1649, --Yogg-Saron 9 (In His House He Waits Dreaming) 25 Man
-					bossIDs = {},
-					achievement = 3016,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = format(L["Ulduar_YoggSaron3"], "IAT_33552", "IAT_33134", "IAT_33552") },
-						},
-					},
-					enabled = false,
-					track = nil,
-					partial = false,
-					encounterID = 1143,
-					nameWrath = L["Boss_Yogg-Saron9"],
-				},
-				boss62 = {
-					name = 1650, --Algalon the Observer (Supermassive) 25 Man
-					bossIDs = {},
-					achievement = 3002,
-					players = {},
-					tactics = {
-						[11] = {
-							{ tactic = L["Ulduar_AlgalonTheObserver"] },
-						},
-					},
-					enabled = false,
-					track = nil,
-					partial = false,
-					encounterID = 1130,
-					nameWrath = L["Boss_AlgalonTheObserver"],
-				},
-			},
-
 			[533.10] = { --Naxxramas 10 Man
 				name = 754,
-				nameLocalised = L["Instance_Naxxramas"],
-				classicPhase = 1,
 				boss1 = {
 					name = L["Instances_Other"], --MISSINGNAME70
 					bossIDs = {},
@@ -12450,8 +10375,6 @@ core.Instances = {
 
 			[533.25] = { --Naxxramas 25 Man
 				name = 754,
-				nameLocalised = L["Instance_Naxxramas"],
-				classicPhase = 1,
 				boss1 = {
 					name = L["Instances_Other"], --MISSINGNAME71
 					bossIDs = {},
@@ -12640,8 +10563,6 @@ core.Instances = {
 
 			[631.10] = { --Icecrown Citadel 10 Man
 				name = 758,
-				nameLocalised = L["Instance_IcecrownCitadel"],
-				classicPhase = 4,
 				boss1 = {
 					name = 1624, --Lord Marrowgar
 					bossIDs = {36612},
@@ -12854,8 +10775,6 @@ core.Instances = {
 
 			[631.25] = { --Icecrown Citadel 25 Man
 				name = 758,
-				nameLocalised = L["Instance_IcecrownCitadel"],
-				classicPhase = 4,
 				boss1 = {
 					name = 1624, --Lord Marrowgar
 					bossIDs = {36612},
@@ -13070,8 +10989,6 @@ core.Instances = {
 		Dungeons = {
 			[574] = { --Utgarde Keep
 				name = 285,
-				nameLocalised = L["Instance_UtgardeKeep"],
-				classicPhase = 1,
 				boss1 = {
 					name = 638, --Prince Keleseth
 					bossIDs = {23953},
@@ -13079,7 +10996,7 @@ core.Instances = {
 					players = {},
 					tactics = {
 						[3] = {
-							{ tactic = L["UtgardeKeep_Classic_PrinceKeleseth"] },
+							{ tactic = format(L["UtgardeKeep_Classic_PrinceKeleseth"], "IAT_23953", C_Spell.GetSpellLink(42672), C_Spell.GetSpellLink(42672)) },
 						},
 						[11] = {
 							{ tactic = L["Shared_JustKillBoss"] },
@@ -13095,8 +11012,6 @@ core.Instances = {
 
 			[576] = { --The Nexus
 				name = 281,
-				nameLocalised = L["Instance_TheNexus"],
-				classicPhase = 1,
 				boss1 = {
 					name = 618, --Grand Magus Telestra
 					bossIDs = {26731},
@@ -13104,7 +11019,7 @@ core.Instances = {
 					players = {},
 					tactics = {
 						[3] = {
-							{ tactic = L["TheNexus_Classic_GrandMagusTelestra"] },
+							{ tactic = format(L["TheNexus_Classic_GrandMagusTelestra"], "IAT_26731", C_Spell.GetSpellLink(70421)) },
 						},
 						[11] = {
 							{ tactic = L["Shared_JustKillBoss"] },
@@ -13122,7 +11037,7 @@ core.Instances = {
 					players = {},
 					tactics = {
 						[3] = {
-							{ tactic = L["TheNexus_Classic_Anomalus"] },
+							{ tactic = format(L["TheNexus_Classic_Anomalus"], "IAT_26918", "IAT_26763", "IAT_26746", "IAT_26918", "IAT_26918") },
 						},
 						[11] = {
 							{ tactic = L["Shared_JustKillBoss"] },
@@ -13140,7 +11055,7 @@ core.Instances = {
 					players = {},
 					tactics = {
 						[3] = {
-							{ tactic = L["TheNexus_Classic_Keristasza"] },
+							{ tactic = format(L["TheNexus_Classic_Keristasza"], C_Spell.GetSpellLink(48095), "IAT_26206", C_Spell.GetSpellLink(48179), C_Spell.GetSpellLink(32592)) },
 						},
 						[11] = {
 							{ tactic = L["Shared_JustKillBoss"] },
@@ -13155,8 +11070,6 @@ core.Instances = {
 
 			[595] = { --The Culling of Stratholme
 				name = 279,
-				nameLocalised = L["Instance_TheCullingOfStratholme"],
-				classicPhase = 1,
 				boss1 = {
 					name = L["Instances_Other"], --MISSINGNAME72
 					bossIDs = {27737},
@@ -13194,8 +11107,6 @@ core.Instances = {
 
 			[601] = { --Azjol Nerub
 				name = 272,
-				nameLocalised = L["Instance_AzjolNerub"],
-				classicPhase = 1,
 				boss1 = {
 					name = 585, --Krik'thir the Gatewatcher
 					bossIDs = {},
@@ -13203,7 +11114,7 @@ core.Instances = {
 					players = {},
 					tactics = {
 						[3] = {
-							{ tactic = L["AzjolNerub_Classic_KrikthirTheGatewatcher"] },
+							{ tactic = format(L["AzjolNerub_Classic_KrikthirTheGatewatcher"], "IAT_28730", "IAT_28729", "IAT_28731") },
 						},
 						[11] = {
 							{ tactic = L["Shared_JustKillBossSingleTarget"] },
@@ -13254,8 +11165,6 @@ core.Instances = {
 
 			[619] = { --Ahn'Kahet The Old Kingdom
 				name = 271,
-				nameLocalised = L["Instance_AhnkahetTheOldKingdom"],
-				classicPhase = 1,
 				boss1 = {
 					name = 580, --Elder Nadox
 					bossIDs = {29309},
@@ -13263,7 +11172,7 @@ core.Instances = {
 					players = {},
 					tactics = {
 						[3] = {
-							{ tactic = L["AhnkahetTheOldKingdom_Classic_ElderNadox"] },
+							{ tactic = format(L["AhnkahetTheOldKingdom_Classic_ElderNadox"], "IAT_30176", C_Spell.GetSpellLink(56153), C_Spell.GetSpellLink(9484)) },
 						},
 						[11] = {
 							{ tactic = L["Shared_JustKillBoss"] },
@@ -13282,7 +11191,7 @@ core.Instances = {
 					players = {},
 					tactics = {
 						[3] = {
-							{ tactic = L["AhnkahetTheOldKingdom_Classic_JedogaShadowseeker"] },
+							{ tactic = format(L["AhnkahetTheOldKingdom_Classic_JedogaShadowseeker"], "IAT_29310", "IAT_30385", C_Spell.GetSpellLink(56219)) },
 						},
 						[11] = {
 							{ tactic = L["Shared_JustKillBoss"] },
@@ -13301,7 +11210,7 @@ core.Instances = {
 					players = {},
 					tactics = {
 						[3] = {
-							{ tactic = L["AhnkahetTheOldKingdom_Classic_HeraldVolazj"] },
+							{ tactic = format(L["AhnkahetTheOldKingdom_Classic_HeraldVolazj"], "IAT_30623") },
 						},
 						[11] = {
 							{ tactic = L["Shared_JustKillBoss"] },
@@ -13317,8 +11226,6 @@ core.Instances = {
 
 			[600] = { --Dark Tharon Keep
 				name = 273,
-				nameLocalised = L["Instance_DrakTharonKeep"],
-				classicPhase = 1,
 				boss1 = {
 					name = 588, --Trollgore
 					bossIDs = {26630},
@@ -13326,7 +11233,7 @@ core.Instances = {
 					players = {},
 					tactics = {
 						[3] = {
-							{ tactic = L["DrakTharonKeep_Classic_Trollgore"] },
+							{ tactic = format(L["DrakTharonKeep_Classic_Trollgore"], "IAT_26630", C_Spell.GetSpellLink(49381), C_Spell.GetSpellLink(49381)) },
 						},
 						[11] = {
 							{ tactic = L["Shared_JustKillBoss"] },
@@ -13380,8 +11287,6 @@ core.Instances = {
 
 			[608] = { --Violet Hold
 				name = 283,
-				nameLocalised = L["Instance_TheVioletHold"],
-				classicPhase = 1,
 				boss1 = {
 					name = 632, --Cyanigosa
 					bossIDs = {},
@@ -13426,7 +11331,7 @@ core.Instances = {
 					players = {},
 					tactics = {
 						[3] = {
-							{ tactic = L["TheVioletHold_Classic_Ichoron"] },
+							{ tactic = format(L["TheVioletHold_Classic_Ichoron"], C_Spell.GetSpellLink(57804), "IAT_29313", "IAT_29313") },
 						},
 						[11] = {
 							{ tactic = L["Shared_JustKillBoss"] },
@@ -13444,7 +11349,7 @@ core.Instances = {
 					players = {},
 					tactics = {
 						[3] = {
-							{ tactic = L["TheVioletHold_Classic_ZuramatTheObliterator"] },
+							{ tactic = format(L["TheVioletHold_Classic_ZuramatTheObliterator"], "IAT_29364") },
 						},
 						[11] = {
 							{ tactic = L["Shared_JustKillBoss"] },
@@ -13459,8 +11364,6 @@ core.Instances = {
 
 			[604] = { --Gundrak
 				name = 274,
-				nameLocalised = L["Instance_Gundrak"],
-				classicPhase = 1,
 				boss1 = {
 					name = 592, --Slad'ran
 					bossIDs = {29304},
@@ -13468,7 +11371,7 @@ core.Instances = {
 					players = {},
 					tactics = {
 						[3] = {
-							{ tactic = L["Gundrak_Classic_Sladran"] },
+							{ tactic = format(L["Gundrak_Classic_Sladran"], "IAT_29304", "IAT_29713", C_Spell.GetSpellLink(55093), "IAT_29713", C_Spell.GetSpellLink(55093)) },
 						},
 						[11] = {
 							{ tactic = L["Shared_JustKillBoss"] },
@@ -13487,7 +11390,7 @@ core.Instances = {
 					players = {},
 					tactics = {
 						[3] = {
-							{ tactic = L["Gundrak_Classic_Moorabi"] },
+							{ tactic = format(L["Gundrak_Classic_Moorabi"], "IAT_29305", C_Spell.GetSpellLink(55098), "IAT_29305", C_Spell.GetSpellLink(55163), C_Spell.GetSpellLink(55098)) },
 						},
 						[11] = {
 							{ tactic = L["Shared_JustKillBoss"] },
@@ -13541,8 +11444,6 @@ core.Instances = {
 
 			[599] = { --Halls of Stone
 				name = 277,
-				nameLocalised = L["Instance_HallsOfStone"],
-				classicPhase = 1,
 				boss1 = {
 					name = 605, --Maiden of Grief
 					bossIDs = {27975},
@@ -13550,7 +11451,7 @@ core.Instances = {
 					players = {},
 					tactics = {
 						[3] = {
-							{ tactic = L["HallsOfStone_Classic_MaidenOfGrief"] },
+							{ tactic = format(L["HallsOfStone_Classic_MaidenOfGrief"], "IAT_27975", C_Spell.GetSpellLink(59726)) },
 						},
 						[11] = {
 							{ tactic = L["Shared_JustKillBoss"] },
@@ -13569,7 +11470,7 @@ core.Instances = {
 					players = {},
 					tactics = {
 						[3] = {
-							{ tactic = L["HallsOfStone_Classic_TribunalOfAges"] },
+							{ tactic = format(L["HallsOfStone_Classic_TribunalOfAges"], "IAT_29579") },
 						},
 						[11] = {
 							{ tactic = L["Shared_JustKillBoss"] },
@@ -13604,8 +11505,6 @@ core.Instances = {
 
 			[602] = { --Halls of Lightning
 				name = 275,
-				nameLocalised = L["Instance_HallsOfLightning"],
-				classicPhase = 1,
 				boss1 = {
 					name = 597, --General Bjarngrim
 					bossIDs = {28586},
@@ -13613,7 +11512,7 @@ core.Instances = {
 					players = {},
 					tactics = {
 						[3] = {
-							{ tactic = L["HallsOfLightning_Classic_GeneralBjarngrim"] },
+							{ tactic = format(L["HallsOfLightning_Classic_GeneralBjarngrim"], "IAT_28586", C_Spell.GetSpellLink(52092), "IAT_29240", "IAT_28586", C_Spell.GetSpellLink(52092)) },
 						},
 						[11] = {
 							{ tactic = L["HallsOfLightning_GeneralBjarngrim"] },
@@ -13632,7 +11531,7 @@ core.Instances = {
 					players = {},
 					tactics = {
 						[3] = {
-							{ tactic = L["HallsOfLightning_Classic_Volkhan"] },
+							{ tactic = format(L["HallsOfLightning_Classic_Volkhan"], "IAT_28681", "IAT_28681") },
 						},
 						[11] = {
 							{ tactic = L["Shared_JustKillBoss"] },
@@ -13667,8 +11566,6 @@ core.Instances = {
 
 			[578] = { --The Oculus
 				name = 282,
-				nameLocalised = L["Instance_TheOculus"],
-				classicPhase = 1,
 				boss1 = {
 					name = 625, --Ley-Guardian Eregos
 					bossIDs = {},
@@ -13756,8 +11653,6 @@ core.Instances = {
 
 			[575] = { --Utgarde Pinnacle
 				name = 286,
-				nameLocalised = L["Instance_UtgardePinnacle"],
-				classicPhase = 1,
 				boss1 = {
 					name = 641, --Svala Sorrowgrave
 					bossIDs = {},
@@ -13765,7 +11660,7 @@ core.Instances = {
 					players = {},
 					tactics = {
 						[3] = {
-							{ tactic = L["UtgardePinnacle_Classic_SvalaSorrowgrave"] },
+							{ tactic = format(L["UtgardePinnacle_Classic_SvalaSorrowgrave"], "IAT_26555", "IAT_26555", C_Spell.GetSpellLink(48276), "IAT_26555", "IAT_26555", "IAT_26668", C_Spell.GetSpellLink(48277)) },
 						},
 						[11] = {
 							{ tactic = L["UtgardePinnacle_SvalaSorrowgrave"] },
@@ -13784,7 +11679,7 @@ core.Instances = {
 					players = {},
 					tactics = {
 						[3] = {
-							{ tactic = L["UtgardePinnacle_Classic_SkadiTheRuthless"] },
+							{ tactic = format(L["UtgardePinnacle_Classic_SkadiTheRuthless"], "IAT_26693") },
 						},
 						[11] = {
 							{ tactic = L["Shared_JustKillBoss"] },
@@ -13803,7 +11698,7 @@ core.Instances = {
 					players = {},
 					tactics = {
 						[3] = {
-							{ tactic = L["UtgardePinnacle_Classic_SkadiTheRuthless2"] },
+							{ tactic = format(L["UtgardePinnacle_Classic_SkadiTheRuthless2"], "IAT_26893", "IAT_26693") },
 						},
 						[11] = {
 							{ tactic = L["UtgardePinnacle_SkadiTheRuthless"] },
@@ -13822,7 +11717,7 @@ core.Instances = {
 					players = {},
 					tactics = {
 						[3] = {
-							{ tactic = L["UtgardePinnacle_Classic_KingYmiron"] },
+							{ tactic = format(L["UtgardePinnacle_Classic_KingYmiron"], "IAT_26861", C_Spell.GetSpellLink(48294), "IAT_26861") },
 						},
 						[11] = {
 							{ tactic = L["Shared_JustKillBoss"] },
@@ -13838,8 +11733,6 @@ core.Instances = {
 
 			[650] = { --Trial of the Champion
 				name = 284,
-				nameLocalised = L["Instance_TrialOfTheChampion"],
-				classicPhase = 3,
 				boss1 = {
 					name = 636, --Argent Confessor Paletress
 					bossIDs = {},
@@ -13890,8 +11783,6 @@ core.Instances = {
 
 			[632] = { --The Forge of Souls
 				name = 280,
-				nameLocalised = L["Instance_TheForgeOfSouls"],
-				classicPhase = 4,
 				boss1 = {
 					name = 615, --Bronjahm
 					bossIDs = {36497},
@@ -13928,8 +11819,6 @@ core.Instances = {
 
 			[658] = { --Pit of Saron
 				name = 278,
-				nameLocalised = L["Instance_PitOfSaron"],
-				classicPhase = 4,
 				boss1 = {
 					name = 608, --Forgemaster Garfrost
 					bossIDs = {36494},
@@ -13965,8 +11854,6 @@ core.Instances = {
 
 			[668] = { --Halls of Reflection
 				name = 276,
-				nameLocalised = L["Instance_HallsOfReflection"],
-				classicPhase = 4,
 				boss1 = {
 					name = 603, --MISSINGNAME76
 					bossIDs = {},

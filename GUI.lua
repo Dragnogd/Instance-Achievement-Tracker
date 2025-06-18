@@ -3,6 +3,7 @@ local L = core.L
 core.Config = {}
 core.IATInfoFrame = {}
 local InfoFrame
+local events = CreateFrame("Frame")
 
 local Config = core.Config
 local IATInfoFrame = core.IATInfoFrame
@@ -21,6 +22,8 @@ local InfoFrameTestBarsActive = false
 local IAT_InstanceLocation = nil
 local IAT_InstanceType = nil
 local IAT_CurrentTab = nil
+
+local tip = myTooltipFromTemplate or CreateFrame("GAMETOOLTIP", "myTooltipFromTemplate",nil,"GameTooltipTemplate")
 
 Config.currentTab = nil
 Config.currentInstance = nil
@@ -71,10 +74,12 @@ end
 
 function Config:getLocalisedInstanceName(instanceID)
     if instanceID ~= nil then
-        if core.gameVersionMajor > 3 then
-            return EJ_GetInstanceInfo(instanceID)
+        -- If it a string, then its a localised strng so just return
+        if type(instanceID) == "string" then
+            return instanceID
         else
-            return ""
+            -- Fetch from Encounter Journal
+            return EJ_GetInstanceInfo(instanceID)
         end
     end
 end
@@ -117,6 +122,11 @@ function Config:Toggle()
     local GUI = Config.UI or Config:CreateUI()
     GUI:SetShown(not GUI:IsShown())
     GameTooltip:Hide()
+
+    -- If the GUI is being shown, we need to update the cache
+    if GUI:IsShown() then
+        Config:PreloadNPCCache()
+    end
 end
 
 function Config:ToggleOn()
@@ -248,7 +258,7 @@ end
 local function CreateTab(parent, id, data)
     local tab
 
-    if LE_EXPANSION_LEVEL_CURRENT == LE_EXPANSION_CATACLYSM then
+    if LE_EXPANSION_LEVEL_CURRENT == (LE_EXPANSION_MISTS_OF_PANDARIA or LE_EXPANSION_CATACLYSM) then
         --New style tab templates does not render correctly on cata wow so load old style tabs which look slightly better
         tab = CreateFrame("Button", parent:GetName().."Tab"..id, parent, "CharacterFrameTabButtonTemplate")
     else
@@ -320,33 +330,210 @@ end
 function BossContentMixin:Init(elementData)
 	self.index = elementData.index;
 	self.id = elementData.id;
+    self.elementData = elementData
 
 	self.Label:SetText(elementData.name);
 
+    -- Ensure the achievement link is processed correctly
     local achievementLink = GetAchievementLink(elementData.boss.achievement)
     achievementLink = achievementLink:gsub("&", "&amp;"); -- & in the achievement name would resolve the html syntax wrong
 
-    local tactics = elementData.boss.tactics:gsub("%\n", "<br />")
-    local tacticsStr = tactics == '' and '' or tactics
+    -- Set default text for the tactics
+    self:UpdateTacticsContent(elementData.defaultTacticText)
 
-    -- Replace color code |cff71d5ff with white color |cffffffff in tacticsStr
-    tacticsStr = tacticsStr:gsub("|cff71d5ff", "|cff00008b")
+    -- Set the plus/minus texture
+    self.PlusMinus:SetTexCoord(0, .5, 0, 0.25);
+end
 
-	self.Tactics:SetText("<html><body><p>" .. tacticsStr .. "</p></body></html>");
+function Config:PreloadNPCCache()
+    local uncached = {}
 
+    -- Build list of NPCs not yet cached
+    for npcID, expansionID in pairs(core.NPCCache) do
+        if expansionID <= core.gameVersionMajor then
+            if not AchievementTrackerNPCCache[npcID] then
+                table.insert(uncached, npcID)
+            end
+        end
+    end
+
+    local index = 1
+    local delay = 0.01
+
+    local triggerLoad, readData
+
+    -- Second pass: actually read the names from the now-loaded tooltip data
+    readData = function()
+        if index > #uncached then return end
+
+        local npcID = uncached[index]
+        local hyperlink = format("unit:Creature-0-0-0-0-%d-0000000000", npcID)
+        local name = nil
+
+        if C_TooltipInfo and C_TooltipInfo.GetHyperlinkTooltipInfo then
+            -- RETAIL
+            C_TooltipInfo.GetHyperlinkTooltipInfo(hyperlink)
+            local tooltipData = C_TooltipInfo.GetHyperlink(hyperlink)
+            name = tooltipData and tooltipData.lines and tooltipData.lines[1] and tooltipData.lines[1].leftText
+        else
+            -- CLASSIC
+            tip:SetOwner(WorldFrame, "ANCHOR_NONE")
+            tip:SetHyperlink(hyperlink)
+            if tip:NumLines() > 0 then
+                name = myTooltipFromTemplateTextLeft1:GetText()
+                tip:Hide()
+            end
+        end
+
+        if name and name ~= "" then
+            AchievementTrackerNPCCache[npcID] = name
+        else
+            AchievementTrackerNPCCache[npcID] = "Unknown NPC"
+        end
+
+        index = index + 1
+        C_Timer.After(delay, readData)
+    end
+
+    -- First pass: trigger background loads
+    triggerLoad = function()
+        if index > #uncached then
+            index = 1
+            C_Timer.After(0.5, readData) -- delay before 2nd pass
+            return
+        end
+
+        local npcID = uncached[index]
+        local hyperlink = format("unit:Creature-0-0-0-0-%d-0000000000", npcID)
+
+        if C_TooltipInfo and C_TooltipInfo.GetHyperlinkTooltipInfo then
+            -- RETAIL
+            C_TooltipInfo.GetHyperlinkTooltipInfo(hyperlink)
+        else
+            -- CLASSIC
+            tip:SetOwner(WorldFrame, "ANCHOR_NONE")
+            tip:SetHyperlink(hyperlink)
+        end
+
+        index = index + 1
+        C_Timer.After(delay, triggerLoad)
+    end
+
+    -- Begin first pass
+    triggerLoad()
+end
+
+function Config:CacheNPCByID(npcID)
+    if AchievementTrackerNPCCache[npcID] then
+        return
+    end
+
+    local hyperlink = format("unit:Creature-0-0-0-0-%d-0000000000", npcID)
+
+    -- First pass: trigger background load
+    if C_TooltipInfo and C_TooltipInfo.GetHyperlinkTooltipInfo then
+        -- RETAIL
+        C_TooltipInfo.GetHyperlinkTooltipInfo(hyperlink)
+    else
+        -- CLASSIC
+        tip:SetOwner(WorldFrame, "ANCHOR_NONE")
+        tip:SetHyperlink(hyperlink)
+    end
+
+    -- Second pass: read data after a short delay
+    C_Timer.After(0.2, function()
+        local name = nil
+
+        if C_TooltipInfo and C_TooltipInfo.GetHyperlink then
+            -- RETAIL
+            local tooltipData = C_TooltipInfo.GetHyperlink(hyperlink)
+            name = tooltipData and tooltipData.lines and tooltipData.lines[1] and tooltipData.lines[1].leftText
+        else
+            -- CLASSIC
+            if tip:NumLines() > 0 then
+                name = myTooltipFromTemplateTextLeft1:GetText()
+                tip:Hide()
+            end
+        end
+
+        if name and name ~= "" then
+            AchievementTrackerNPCCache[npcID] = name
+        else
+            AchievementTrackerNPCCache[npcID] = "Unknown NPC"
+        end
+    end)
+end
+
+-- Synchronous NPC name fetch function
+function BossContentMixin:FetchNPCNameSync(npcID)
+    if AchievementTrackerNPCCache[npcID] then
+        return AchievementTrackerNPCCache[npcID]
+    end
+
+    local hyperlink = format("unit:Creature-0-0-0-0-%d-0000000000", npcID)
+    C_TooltipInfo.GetHyperlink(hyperlink)
+
+    -- Wait a short time and try to grab it again
+    C_Timer.After(0.1, function()
+        local tooltipData = C_TooltipInfo.GetHyperlink(hyperlink)
+        if tooltipData and tooltipData.lines and tooltipData.lines[1] then
+            local name = tooltipData.lines[1].leftText
+            if name and name ~= "" then
+                AchievementTrackerNPCCache[npcID] = name
+            end
+        end
+    end)
+
+    return "Unknown NPC"
+end
+
+function BossContentMixin:UpdateTacticsContent(tacticText)
+    -- Ensure we have valid data
+    local elementData = self:GetElementData()
+    if not elementData or not elementData.boss.tactics then return end
+
+    -- Get the tactics for the selected expansion if tacticstext is not nil otherwise get first tactic
+    local tactics = tacticText
+    local tacticText = ""
+
+    if tactics then
+        -- Replace newline with HTML break and color codes
+        tacticText = tactics:gsub("%\n", "<br />"):gsub("|cff71d5ff", "|cff00008b")
+    end
+
+    -- Collect all NPC IDs (IAT_12345) in the tactics
+    local npcIDs = {}
+    for npcID in tacticText:gmatch("IAT_(%d+)") do
+        npcID = tonumber(npcID)
+        if npcID then
+            table.insert(npcIDs, npcID)
+        end
+    end
+
+    -- Fetch all NPC names synchronously
+    for _, npcID in ipairs(npcIDs) do
+        local name = self:FetchNPCNameSync(npcID)
+        tacticText = tacticText:gsub("IAT_" .. npcID, name or "Unknown NPC")
+    end
+
+    -- Save tactics text to mixin so we can fetch later for ouptutting tactics etc
+    self:GetElementData().boss.tacticsRaw = tacticText
+
+    -- Update the tactics display text
+    self.Tactics:SetText("<html><body><p>" .. tacticText .. "</p></body></html>")
+
+    -- Calculate and update the height
     self.currentHeight = self.Tactics:GetContentHeight()
-
     local index = Config.BossListDataProvider:FindIndex(elementData)
     Config.BossListDataProvider.collection[index].currentHeight = self.currentHeight
 
-	if SelectionBehaviorMixin.IsElementDataIntrusiveSelected(elementData) then
-		local height = self.Tactics:GetContentHeight() + BOSSBUTTON_COLLAPSEDHEIGHT
-		self:Expand(height);
-	else
-		self:Collapse()
-	end
-
-    self.PlusMinus:SetTexCoord(0, .5, 0, 0.25);
+    -- Expand or collapse based on selection
+    if SelectionBehaviorMixin.IsElementDataIntrusiveSelected(elementData) then
+        local height = self.currentHeight + BOSSBUTTON_COLLAPSEDHEIGHT
+        self:Expand(height)
+    else
+        self:Collapse()
+    end
 end
 
 function BossContentMixin:SetSelected(selected)
@@ -355,19 +542,21 @@ function BossContentMixin:SetSelected(selected)
 end
 
 function Config:CreateUI()
-    --Main Frame
     -- Create the main UI frame
     self.UI = CreateFrame("Frame", "AchievementTracker", UIParent, "PortraitFrameTemplate")
     self.UI:SetTitle("Instance Achievement Tracker")
+
+    -- Set the frame logo in the top right corner
     if LE_EXPANSION_LEVEL_CURRENT ~= LE_EXPANSION_CATACLYSM then
         --self.UI:SetPortraitToAsset([[Interface\Icons\ACHIEVEMENT_GUILDPERK_MRPOPULARITY]])
         self.UI:SetPortraitTextureRaw([[Interface\AddOns\InstanceAchievementTracker\Images\logo.png]])
         self.UI:SetPortraitTextureSizeAndOffset(55, -2, 4)
     else
         --Need to set manually for classic
-        deepdump(self.UI.portrait)
         self.UI.portrait:SetTexture([[Interface\AddOns\InstanceAchievementTracker\Images\logo.png]]);
     end
+
+    -- Setup variables properties and scripts on the main UI frame
     self.UI:SetSize(950, 567)
     self.UI:SetPoint("CENTER")
     self.UI:SetMovable(true)
@@ -379,6 +568,7 @@ function Config:CreateUI()
     self.UI:SetScript("OnDragStart", self.UI.StartMoving)
     self.UI:SetScript("OnDragStop", self.UI.StopMovingOrSizing)
 
+    -- List of tabs
     Config.tabDataProvider = {
         [1] = {Title = L["GUI_Options"], ExpansionID = 0},
         [2] = {Title = L["GUI_TheWarWithin"], ExpansionID = 11},
@@ -392,6 +582,7 @@ function Config:CreateUI()
         [10] = {Title = L["GUI_WrathOfTheLichKing"], ExpansionID = 3}
     }
 
+    -- Create the tabs
     local tabs = {}
     local lastIndex = 0
     for k, data in ipairs(Config.tabDataProvider) do
@@ -455,6 +646,8 @@ function Config:CreateUI()
 
     local function OptionsInitalizer(frame, data)
         frame.Text:SetText(data.name)
+
+        -- Set the checkbox to the correct state
         if data.get() == nil then
             data.set(false)
         else
@@ -468,6 +661,46 @@ function Config:CreateUI()
                 end
             end)
         end
+
+        -- Setup the dropdown menu if needed
+        if data.choices then
+            frame.Dropdown:Show()
+
+            -- Setup the dropdown menu
+            frame.Dropdown:SetupMenu(function(dropdown, rootDescription)
+                rootDescription:CreateTitle(L["GUI_SelectSound"])
+
+                for key, choice in ipairs(data.choices) do
+                    rootDescription:CreateButton(choice, function()
+                        data.setChoice(key)
+                        dropdown:GenerateMenu()
+                    end)
+                end
+
+                -- Set the dropdown selection text
+                dropdown:SetSelectionText(function()
+                    local choiceIndex = data.getChoice()
+                    return data.choices[choiceIndex] or L["GUI_SelectSound"]
+                end)
+            end)
+
+            -- Position the dropdown to the right of the text
+            frame.Dropdown:SetWidth(80) -- Set a standard width for the dropdown
+        else
+            frame.Dropdown:Hide()
+        end
+
+        -- Set the tooltip
+        frame.Checkbox:SetScript("OnEnter", function()
+            GameTooltip:SetOwner(frame, "ANCHOR_CURSOR_RIGHT")
+            GameTooltip:SetText(data.name, 1, 1, 1)
+            GameTooltip:AddLine(data.desc, nil, nil, nil, true)
+            GameTooltip:Show()
+        end)
+
+        frame.Checkbox:SetScript("OnLeave", function()
+            GameTooltip:Hide()
+        end)
     end
 
     ScrollView3:SetElementInitializer("IATOptionsFrameOption", OptionsInitalizer)
@@ -572,19 +805,124 @@ function Config:CreateUI()
             end
         end)
 
+        -- Selected Tactic
+        local selectedTactic = nil
+
+        -- Set up the dropdown menu and define button actions
+        button.TacticsSelector:SetupMenu(function(dropdown, rootDescription)
+            -- Create the title for the dropdown menu
+            rootDescription:CreateTitle("Select Tactic")
+
+            -- Track the first button to set as selected
+            local firstTactic = nil
+
+            -- Collect all expansions in a sorted array
+            local expansionKeys = {}
+            for expansion in pairs(data.boss.tactics) do
+                table.insert(expansionKeys, expansion)
+            end
+
+            -- Sort the expansions in descending order
+            table.sort(expansionKeys, function(a, b) return tonumber(a) > tonumber(b) end)
+
+            -- Iterate over the sorted expansions
+            for _, expansion in ipairs(expansionKeys) do
+                -- Get the tactics for the expansion
+                local tactics = data.boss.tactics[expansion]
+
+                -- Get expansion name
+                local expansionName
+                for _, tabData in ipairs(Config.tabDataProvider) do
+                    if tabData.ExpansionID == expansion then
+                        expansionName = tabData.Title
+                    end
+                end
+
+                -- Iterate over the tactics for the selected expansion
+                for index, tacticData in ipairs(tactics) do
+                    -- Create a button for each tactic
+
+                    local buttonDescription = rootDescription:CreateButton(expansionName, function()
+                        -- Set the selected tactic
+                        selectedTactic = expansionName
+
+                        -- Refresh the dropdown to show the selected text
+                        dropdown:GenerateMenu()
+
+                        -- Update the tactics text on ui
+                        button:UpdateTacticsContent(tacticData.tactic)
+                    end)
+
+                    -- Store the first tactic (from the highest expansion) if not already set
+                    if not firstTactic then
+                        firstTactic = expansionName
+                        data.defaultTacticText = tacticData.tactic
+                    end
+                end
+            end
+
+            -- Automatically select the first tactic if nothing is selected
+            if not selectedTactic and firstTactic then
+                selectedTactic = firstTactic
+            end
+
+            -- Set the dropdown selection text
+            dropdown:SetSelectionText(function()
+                return selectedTactic or "Select Tactic"
+            end)
+        end)
+
         --Button to announce the selected achievement tactics to the in-game chat
         button.OutputTactics:SetScript("OnClick", function(self)
+            -- Make sure we output to the rigt chat channel
             core:detectGroupType()
-            if core.gameVersionMajor > 4 then
-                core:sendMessageSafe(GetAchievementLink(data.boss.achievement) .. " " .. data.boss.tactics)
-            else
-                core:sendMessageSafe(GetAchievementLink(data.boss.achievement) .. " " .. data.boss.tacticsClassic)
-            end
+
+            -- Reveal the tactics in the UI that are we going to output
+            button:Click()
+
+            -- Output the tactics to the chat
+            core:sendMessageSafe(GetAchievementLink(data.boss.achievement) .. " " .. data.boss.tacticsRaw)
         end)
+
+        -- Enable or disable the output tactics button based on the selected tactic
+        if (data.defaultTacticText ~= nil and #data.defaultTacticText == 0) or data.defaultTacticText == nil then
+            button.PlusMinus:Hide()
+            button.OutputTactics:SetEnabled(false)
+        else
+            button.PlusMinus:Show()
+            button.OutputTactics:SetEnabled(true)
+        end
 
         --Button to announce to chat which players are missing the selected achievement
         button.OutputPlayers:SetScript("OnClick", function(self)
+            core:detectGroupType()
+            local players
+            if core.inInstance == true then
+                if data.boss.players[1] == "(" .. L["GUI_NoPlayersNeedAchievement"] .. ")" then
+                    if core.scanFinished == true then
+                        players = GetAchievementLink(data.boss.achievement) .. " " .. L["GUI_NoPlayersNeedAchievement"]
+                    else
+                        players = GetAchievementLink(data.boss.achievement) .. " " .. L["GUI_NoPlayersNeedAchievement"] .. " (" .. L["scan still in progress"] .. ")"
+                    end
+                elseif data.boss.players[1] == L["GUI_EnterInstanceToStartScanning"] then
+                    players = GetAchievementLink(data.boss.achievement)
+                else
+                    players = GetAchievementLink(data.boss.achievement) .. " " .. L["GUI_PlayersWhoNeedAchievement"] .. ": "
 
+                    for i = 1, #data.boss.players do
+                        players = players .. data.boss.players[i] .. ", "
+                    end
+
+                    if core.scanFinished == false then
+                        players = players .. " (" .. L["GUI_ScanInProgress"] .. ")"
+                    end
+                end
+            else
+                players = GetAchievementLink(data.boss.achievement)
+            end
+
+            --Send message to chat
+            core:sendMessageSafe(players)
         end)
 
         --Allow item links to show/hide their relevant tooltip
@@ -602,13 +940,29 @@ function Config:CreateUI()
 
         button.Label:SetText(data.name)
         button.Tactics:Hide()
-        button.OutputTactics:SetWidth(110)
         button.OutputPlayers:SetWidth(110)
+        button.OutputTactics:SetWidth(110)
+        button.TacticsSelector:SetWidth(110)
 
-        if string.len(data.boss.tactics) > 0 then
-            button.PlusMinus:Show()
+        -- Grey out achievement if achievement completed and option is enabled
+        if data.completedAchievement == true then
+            -- Remove glow
+            button.Glow:Hide()
+            -- Set background texture to greyed out
+            button.Background:SetTexture("Interface\\AchievementFrame\\UI-Achievement-Background")
+            -- Set text to greyed out
+            button.Label:SetTextColor(0.5, 0.5, 0.5)
+            -- Set the text color to white so easier to read
+            --button.Description:SetTextColor("p", 1, 1, 1)
         else
-            button.PlusMinus:Hide()
+            -- Show glow
+            button.Glow:Show()
+            -- Set background texture to normal
+            button.Background:SetTexture("Interface\\AddOns\\InstanceAchievementTracker\\Images\\UI-MailFrameBG.png")
+            -- Set text to normal
+            button.Label:SetTextColor(1, 1, 1)
+            -- Set text color to default
+            --button.Description:SetTextColor("p", 0.18, 0.12, 0.06)
         end
 
         -- Get creature info
@@ -642,13 +996,15 @@ function Config:CreateUI()
 
     ScrollUtil.AddResizableChildrenBehavior(self.UI.ExpansionLayoutContainer.BossListScrollContainer.ScrollBox);
 
-    -- Set the first tab as selected
+    -- Set the first tap (options) as the default tab to show
     PanelTemplates_SetNumTabs(self.UI, #tabs)
     PanelTemplates_SetTab(self.UI, 1)
     Config:ShowOptionsPanel()
 
+    -- Hide the expansion container by default as well as the main UI
     self.UI.ExpansionLayoutContainer:Hide()
     self.UI:Hide()
+    Config:Toggle()
 end
 
 function Config:ShowContentForInstance(data)
@@ -681,6 +1037,12 @@ function Config:ShowContentForInstance(data)
                 end
             end
 
+            -- If the Grey out achievements option is enabled, add to the list but add extra attribute to let us know we need to grey it out when rendering
+            if core.Options.GreyOutCompletedAchievements.get() == true and core.achievementTrackingEnabled == false then
+               -- Add additional attribute to the data table
+                data.completedAchievement = completed
+            end
+
             if core.Options.HideCompletedAchievements.get() == false or (core.Options.HideCompletedAchievements.get() == true and completedAchievement == false) then
                 table.insert(bossesToSort, data)
             end
@@ -700,52 +1062,34 @@ end
 function Config:ShowInstancesForTab(tabID)
     local data = Config.tabDataProvider[tabID]
 
+    -- Hide options tab and show expansion tab
     self.UI.ExpansionLayoutContainer:Show()
     self.UI.OptionsLayoutContainer:Hide()
 
+    -- Remove any existing data from the DataProvider
     Config.InstanceListDataProvider:Flush()
     Config.BossListDataProvider:Flush()
 
     local instancesToSort = {}
 
+    -- Iterate through the instances for the selected expansion
     for instanceType, instances in pairs(core.Instances[data.ExpansionID]) do
         for instance, v in pairs(instances) do
             local instanceName
 
-            if (core.gameVersionMajor > 4 and v.classicOnly ~= true) or (core.gameVersionMajor == 4 and v.retailOnly ~= true) then
-                -- Do not load classic only instance on retail and vice versa
+            if instanceType == "Scenarios" or instanceType == "Delves" then
+                instanceName = Config:getLocalisedScenarioName(v.name)
+            else
+                instanceName = Config:getLocalisedInstanceName(v.name)
+            end
 
-                if (core.gameVersionMajor == 3 and data.ExpansionID == 3) or (core.gameVersionMajor == 4 and data.ExpansionID == 3) then
-                    -- For wrath we must fetch the localized names as the encounter journal is not available
-                    if v.classicPhase <= Config.classicPhase then
-                        instanceName = v.nameLocalised
-                    end
-                else
-                    -- All other expansions have the encounter journal so pass the ID to fetch from API
-                    -- In classic cata only cata is in encounter journal
-                    if core.gameVersionMajor == 4 then
-                        if data.ExpansionID == 4 then
-                            instanceName = Config:getLocalisedInstanceName(v.name)
-                        else
-                            instanceName = ""
-                        end
-                    else
-                        if instanceType == "Scenarios" or instanceType == "Delves" then
-                            instanceName = Config:getLocalisedScenarioName(v.name)
-                        else
-                            instanceName = Config:getLocalisedInstanceName(v.name)
-                        end
-                    end
-                end
-
-                if instanceName ~= nil then
-                    table.insert(instancesToSort, {
-                        name = instanceName,
-                        id = instance,
-                        ExpansionID = data.ExpansionID,
-                        InstanceType = instanceType
-                    })
-                end
+            if instanceName ~= nil then
+                table.insert(instancesToSort, {
+                    name = instanceName,
+                    id = instance,
+                    ExpansionID = data.ExpansionID,
+                    InstanceType = instanceType
+                })
             end
         end
     end
@@ -800,20 +1144,8 @@ function Config:ShowOptionsPanel()
     self.UI.OptionsLayoutContainer.RightDisplay.Version:SetPoint("BOTTOMRIGHT", self.UI.OptionsLayoutContainer.RightDisplay, "BOTTOMRIGHT", 0, 0)
     self.UI.OptionsLayoutContainer.RightDisplay.Version:SetText("v" .. Config.majorVersion .. "." .. Config.minorVersion .. "." .. Config.revisionVersion)
 
-    self.UI.OptionsLayoutContainer.RightDisplay.Tracking = self.UI.OptionsLayoutContainer:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
-    self.UI.OptionsLayoutContainer.RightDisplay.Tracking:SetPoint("TOPLEFT", self.UI.OptionsLayoutContainer.RightDisplay.Logo, "BOTTOMLEFT", 0, -5)
-    self.UI.OptionsLayoutContainer.RightDisplay.Tracking:SetText(L["GUI_TrackingNumber"] .. ":")
-
-    self.UI.OptionsLayoutContainer.RightDisplay.TrackingAchievements = self.UI.OptionsLayoutContainer:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
-    self.UI.OptionsLayoutContainer.RightDisplay.TrackingAchievements:SetPoint("TOPLEFT", self.UI.OptionsLayoutContainer.RightDisplay.Tracking, "BOTTOMLEFT", 0, -5)
-    self.UI.OptionsLayoutContainer.RightDisplay.TrackingAchievements:SetText(L["GUI_Achievements"] .. " (?%)")
-
-    self.UI.OptionsLayoutContainer.RightDisplay.TrackingTactics = self.UI.OptionsLayoutContainer:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
-    self.UI.OptionsLayoutContainer.RightDisplay.TrackingTactics:SetPoint("TOPLEFT", self.UI.OptionsLayoutContainer.RightDisplay.TrackingAchievements, "BOTTOMLEFT", 0, -5)
-    self.UI.OptionsLayoutContainer.RightDisplay.TrackingTactics:SetText(L["GUI_Tactics"] .. " (?%)")
-
     self.UI.OptionsLayoutContainer.RightDisplay.DiscordTitle = self.UI.OptionsLayoutContainer:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
-    self.UI.OptionsLayoutContainer.RightDisplay.DiscordTitle:SetPoint("TOPLEFT", self.UI.OptionsLayoutContainer.RightDisplay.TrackingTactics, "BOTTOMLEFT", 0, -15)
+    self.UI.OptionsLayoutContainer.RightDisplay.DiscordTitle:SetPoint("TOPLEFT", self.UI.OptionsLayoutContainer.RightDisplay.Logo, "BOTTOMLEFT", 0, -5)
     self.UI.OptionsLayoutContainer.RightDisplay.DiscordTitle:SetText(L["GUI_AchievementsDiscordTitle"] .. ":")
 
     self.UI.OptionsLayoutContainer.RightDisplay.DiscordURL = self.UI.OptionsLayoutContainer:CreateFontString(nil, "OVERLAY", "GameFontNormal")
@@ -828,49 +1160,6 @@ function Config:ShowOptionsPanel()
 end
 
 function Config:Instance_OnClickAPI()
-end
-
-function Player_OnClick(self)
-    core:detectGroupType()
-	for expansion,_ in pairs(core.Instances) do
-		for instanceType,_ in pairs(core.Instances[expansion]) do
-			for instance,_ in pairs(core.Instances[expansion][instanceType]) do
-                for boss,_ in pairs(core.Instances[expansion][instanceType][instance]) do
-                    if string.match(boss, "boss") then
-                        if core.Instances[expansion][instanceType][instance][boss].generatedID == self:GetID() then
-                            local players
-                            if core.inInstance == true then
-                                if core.Instances[expansion][instanceType][instance][boss].players[1] == "(" .. L["GUI_NoPlayersNeedAchievement"] .. ")" then
-                                    if core.scanFinished == true then
-                                        players = GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " " .. L["GUI_NoPlayersNeedAchievement"]
-                                    else
-                                        players = GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " " .. L["GUI_NoPlayersNeedAchievement"] .. " (" .. L["scan still in progress"] .. ")"
-                                    end
-                                elseif core.Instances[expansion][instanceType][instance][boss].players[1] == L["GUI_EnterInstanceToStartScanning"] then
-                                    players = GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement)
-                                else
-                                    players = GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement) .. " " .. L["GUI_PlayersWhoNeedAchievement"] .. ": "
-
-                                    for i = 1, #core.Instances[expansion][instanceType][instance][boss].players do
-                                        players = players .. core.Instances[expansion][instanceType][instance][boss].players[i] .. ", "
-                                    end
-
-                                    if core.scanFinished == false then
-                                        players = players .. " (" .. L["GUI_ScanInProgress"] .. ")"
-                                    end
-                                end
-                            else
-                                players = GetAchievementLink(core.Instances[expansion][instanceType][instance][boss].achievement)
-                            end
-
-                            --Send message to chat
-                            core:sendMessageSafe(players)
-                        end
-                    end
-                end
-			end
-		end
-	end
 end
 
 function Enabled_OnClick(self)
@@ -992,7 +1281,6 @@ end
 function IATInfoFrame:SetPosition(x,y,scaleFactor)
     InfoFrame:ClearAllPoints()
     InfoFrame:SetPoint("TOPLEFT",x/scaleFactor,y/scaleFactor)
-    --print(AchievementTrackerOptions["infoFrameXPos"], AchievementTrackerOptions["infoFrameYPos"])
 end
 
 function IATInfoFrame:ChangeScale(scaleFactor)
@@ -1030,172 +1318,6 @@ function IATInfoFrame:Reset()
     core.InfoFrame_PlayersTable = {}
     core.InfoFrame_DynamicTable = {}
     core:sendDebugMessage("InfoFrame has been reset")
-end
-
-local tip = myTooltipFromTemplate or CreateFrame("GAMETOOLTIP", "myTooltipFromTemplate",nil,"GameTooltipTemplate")
-
--- takes an npcID and returns the name of the npc
-function GetNameFromNpcIDCache(npcID)
-    tip:SetOwner(WorldFrame, "ANCHOR_NONE")
-    tip:SetHyperlink(format("unit:Creature-0-0-0-0-%d-0000000000",npcID))
-    if tip:NumLines()>0 then
-        local name = myTooltipFromTemplateTextLeft1:GetText()
-        tip:Hide()
-        if core.gameVersionMajor > 4 then
-            core.NPCCache[npcID] = name
-        else
-            core.NPCCacheClassic[npcID] = name
-        end
-
-        --print(name)
-		for expansion, _ in pairs(core.Instances) do
-			for instanceType, _ in pairs(core.Instances[expansion]) do
-				for instance, _ in pairs(core.Instances[expansion][instanceType]) do
-					for boss, _ in pairs(core.Instances[expansion][instanceType][instance]) do
-                        if string.match(boss, "boss") then
-                            if type(core.Instances[expansion][instanceType][instance][boss].tactics) == "table" then
-                                if UnitFactionGroup("player") == "Alliance" then
-                                    if string.find(core.Instances[expansion][instanceType][instance][boss].tactics[1], ("IAT_" .. npcID)) then
-                                        core.Instances[expansion][instanceType][instance][boss].tactics[1] = string.gsub(core.Instances[expansion][instanceType][instance][boss].tactics[1], ("IAT_" .. npcID), name)
-                                    end
-                                else
-                                    if string.find(core.Instances[expansion][instanceType][instance][boss].tactics[2], ("IAT_" .. npcID)) then
-                                        core.Instances[expansion][instanceType][instance][boss].tactics[2] = string.gsub(core.Instances[expansion][instanceType][instance][boss].tactics[2], ("IAT_" .. npcID), name)
-                                    end
-                                end
-                            else
-                                if string.find(core.Instances[expansion][instanceType][instance][boss].tactics, ("IAT_" .. npcID)) then
-                                    core.Instances[expansion][instanceType][instance][boss].tactics = string.gsub(core.Instances[expansion][instanceType][instance][boss].tactics, ("IAT_" .. npcID), name)
-                                end
-                            end
-						end
-					end
-				end
-			end
-        end
-
-        --Add NPC to NPCCache
-        if core.gameVersionMajor > 4 then
-            AchievementTrackerNPCCache[npcID] = name
-        else
-            AchievementTrackerNPCCacheClassic[npcID] = name
-        end
-    else
-        C_Timer.After(0.1, function()
-            if tip:NumLines()>0 then
-                local name = myTooltipFromTemplateTextLeft1:GetText()
-                tip:Hide()
-                if core.gameVersionMajor > 4 then
-                    core.NPCCache[npcID] = name
-                else
-                    core.NPCCacheClassic[npcID] = name
-                end
-                for expansion, _ in pairs(core.Instances) do
-                    for instanceType, _ in pairs(core.Instances[expansion]) do
-                        for instance, _ in pairs(core.Instances[expansion][instanceType]) do
-                            for boss, _ in pairs(core.Instances[expansion][instanceType][instance]) do
-                                if string.match(boss, "boss") then
-                                    if string.find(core.Instances[expansion][instanceType][instance][boss].tactics, ("IAT_" .. npcID)) then
-                                        core.Instances[expansion][instanceType][instance][boss].tactics = string.gsub(core.Instances[expansion][instanceType][instance][boss].tactics, ("IAT_" .. npcID), name)
-                                    end
-                                end
-                            end
-                        end
-                    end
-                end
-
-                --Add NPC to NPCCache
-                if core.gameVersionMajor > 4 then
-                    AchievementTrackerNPCCache[npcID] = name
-                else
-                    AchievementTrackerNPCCacheClassic[npcID] = name
-                end
-            else
-                GetNameFromNpcIDCache(npcID)
-            end
-        end)
-    end
-end
-
-function GetNameFromLocalNpcIDCache()
-    --Attempt to fetch NPC name from local cache if it exists
-    if core.gameVersionMajor > 4 then
-        if AchievementTrackerNPCCache ~= nil then
-            tmpSortedTable = {}
-            for k in pairs(AchievementTrackerNPCCache) do table.insert(tmpSortedTable, k) end
-            table.sort(tmpSortedTable)
-
-            for i = #tmpSortedTable, 1, -1 do
-                if tmpSortedTable[i] ~= nil then
-                    npcID = tmpSortedTable[i]
-                    for expansion, _ in pairs(core.Instances) do
-                        for instanceType, _ in pairs(core.Instances[expansion]) do
-                            for instance, _ in pairs(core.Instances[expansion][instanceType]) do
-                                for boss, _ in pairs(core.Instances[expansion][instanceType][instance]) do
-                                    if string.match(boss, "boss") then
-                                        if type(core.Instances[expansion][instanceType][instance][boss].tactics) == "table" then
-                                            if UnitFactionGroup("player") == "Alliance" then
-                                                if string.find(core.Instances[expansion][instanceType][instance][boss].tactics[1], ("IAT_" .. npcID)) then
-                                                    core.Instances[expansion][instanceType][instance][boss].tactics[1] = string.gsub(core.Instances[expansion][instanceType][instance][boss].tactics[1], ("IAT_" .. npcID), AchievementTrackerNPCCache[npcID])
-                                                end
-                                            else
-                                                if string.find(core.Instances[expansion][instanceType][instance][boss].tactics[2], ("IAT_" .. npcID)) then
-                                                    core.Instances[expansion][instanceType][instance][boss].tactics[2] = string.gsub(core.Instances[expansion][instanceType][instance][boss].tactics[2], ("IAT_" .. npcID), AchievementTrackerNPCCache[npcID])
-                                                end
-                                            end
-                                        else
-                                            if string.find(core.Instances[expansion][instanceType][instance][boss].tactics, ("IAT_" .. npcID)) then
-                                                core.Instances[expansion][instanceType][instance][boss].tactics = string.gsub(core.Instances[expansion][instanceType][instance][boss].tactics, ("IAT_" .. npcID), AchievementTrackerNPCCache[npcID])
-                                            end
-                                        end
-                                    end
-                                end
-                            end
-                        end
-                    end
-                end
-            end
-        end
-    else
-        if AchievementTrackerNPCCacheClassic ~= nil then
-            tmpSortedTable = {}
-            for k in pairs(AchievementTrackerNPCCacheClassic) do table.insert(tmpSortedTable, k) end
-            table.sort(tmpSortedTable)
-
-            for i = #tmpSortedTable, 1, -1 do
-                if tmpSortedTable[i] ~= nil then
-                    npcID = tmpSortedTable[i]
-                    for expansion, _ in pairs(core.Instances) do
-                        if expansion == 3 then
-                            for instanceType, _ in pairs(core.Instances[expansion]) do
-                                for instance, _ in pairs(core.Instances[expansion][instanceType]) do
-                                    for boss, _ in pairs(core.Instances[expansion][instanceType][instance]) do
-                                        if string.match(boss, "boss") then
-                                            if type(core.Instances[expansion][instanceType][instance][boss].tacticsClassic) == "table" then
-                                                if UnitFactionGroup("player") == "Alliance" then
-                                                    if string.find(core.Instances[expansion][instanceType][instance][boss].tacticsClassic[1], ("IAT_" .. npcID)) then
-                                                        core.Instances[expansion][instanceType][instance][boss].tacticsClassic[1] = string.gsub(core.Instances[expansion][instanceType][instance][boss].tacticsClassic[1], ("IAT_" .. npcID), AchievementTrackerNPCCacheClassic[npcID])
-                                                    end
-                                                else
-                                                    if string.find(core.Instances[expansion][instanceType][instance][boss].tacticsClassic[2], ("IAT_" .. npcID)) then
-                                                        core.Instances[expansion][instanceType][instance][boss].tacticsClassic[2] = string.gsub(core.Instances[expansion][instanceType][instance][boss].tacticsClassic[2], ("IAT_" .. npcID), AchievementTrackerNPCCacheClassic[npcID])
-                                                    end
-                                                end
-                                            else
-                                                if string.find(core.Instances[expansion][instanceType][instance][boss].tacticsClassic, ("IAT_" .. npcID)) then
-                                                    core.Instances[expansion][instanceType][instance][boss].tacticsClassic = string.gsub(core.Instances[expansion][instanceType][instance][boss].tacticsClassic, ("IAT_" .. npcID), AchievementTrackerNPCCacheClassic[npcID])
-                                                end
-                                            end
-                                        end
-                                    end
-                                end
-                            end
-                        end
-                    end
-                end
-            end
-        end
-    end
 end
 
 getGameBuild()
