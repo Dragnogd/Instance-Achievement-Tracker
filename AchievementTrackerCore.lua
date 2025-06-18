@@ -706,6 +706,9 @@ function enableAchievementTracking(self)
 	events:RegisterEvent("ENCOUNTER_END")						--Used to detect the end of a boss fight
 	events:RegisterEvent("UPDATE_MOUSEOVER_UNIT")				--Used to output achievement for boss and players missing achievements on hoverkk
 
+	-- Make sure NPC Cahce is loaded
+	core.Config:PreloadNPCCache()
+
 	getPlayersInGroup()
 
 	--Start the combatlog if applicable
