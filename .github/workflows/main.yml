@@ -43,4 +43,4 @@ jobs:
       - name: Package and release
         uses: BigWigsMods/packager@master
         with:
-          args: -g cata
+          args: -g mists
