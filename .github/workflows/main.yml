@@ -39,6 +39,13 @@ jobs:
         with:
           args: -g retail
 
+
+      # once cloned, we just run the GitHub Action for the packager project
+      - name: Package and release
+        uses: BigWigsMods/packager@master
+        with:
+          args: -g cata
+
       # once cloned, we just run the GitHub Action for the packager project
       - name: Package and release
         uses: BigWigsMods/packager@master
