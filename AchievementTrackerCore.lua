@@ -3729,7 +3729,7 @@ function core:detectBlizzardTrackingAutomatically()
 			core:getAchievementFailed()
 
 			--Send a message to user asking them to report tracking to user
-			core:printMessage("has detected that " .. core:getAchievement() .. " (" .. core.achievementIDs[1] .. ") can be tracked for faliure. Please report this to the Instance Achievement Tracker author")
+			core:printMessage("has detected that " .. core:getAchievement() .. " (" .. core.achievementIDs[1] .. ") can be tracked for failure. Please report this to the Instance Achievement Tracker author")
 		end
 		automaticBlizzardTracking = core:getBlizzardTrackingStatus(core.achievementIDs[1])
 	end
