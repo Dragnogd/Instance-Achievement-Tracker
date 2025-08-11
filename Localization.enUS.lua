@@ -1064,5 +1064,13 @@ local baseLocale = {
 	["LiberationOfUndermine_MugZeeHeadsOfSecurity"] = "Before pulling the boss, find the red teleport pad to the left of the entrance. Clicking on the teleport pad will take you to the Aquarium. Swim down and destroy the Cement Block to free %s. Swim back up and talk to %s before starting the fight. If the raid wipes or resets, you must free him again. \n\n During the boss fight, %s will throw %s into the boss room. Pop the bubble around each fish, then stand close and use /sleep to get the %s debuff. When every player has the debuff you can kill the boss to earn the achievement.\n\n Note: Each player will need to wait for their own fish to spawn in order to get the debuff",
 	["LiberationOfUndermine_MugZeeHeadsOfSecurity2"] = "To complete this achievement, you must stack the whole raid ontop of the purple coin in the casino room. Do not click on the coin as this is for the 'Best in Class' achievement. Next, wait for the splash animation from the fountain to land on the group. At the point all players in the raid will gain a buff %s which will last for 20 minutes.\n\n You must now defeat %s and %s without anybody in the raid dying. The achievement will be awarded upon killing %s if these requirements have been met. \n\n Note: It is recommended to clear trash around the purple chip and up to %s before getting the %s buff to reduce the risk of players dying.",
 	["LiberationOfUndermine_ChromeKingGallywix"] = "For this achievement, you need to activate three different Giga Controls during a single Giga Coil phase.\n\n When the intermission phase starts, have three players each pick up a bomb and run it to a separate control to activate it. Once three controls have been activated within a single phase, you can kill the boss to get this achievment.",
+	["ManaforgeOmega_PlexusSentinel"] = "",
+	["ManaforgeOmega_Loomithar"] = "",
+	["ManaforgeOmega_SoulbinderNaazindhri"] = "",
+	["ManaforgeOmega_ForgeweaverAraz"] = "",
+	["ManaforgeOmega_SoulHunters"] = "",
+	["ManaforgeOmega_Fractillus"] = "",
+	["ManaforgeOmega_NexusKingSalhadaar"] = "",
+	["ManaforgeOmega_DimensiusTheAllDevouring"] = "",
 }
 core:RegisterLocale('enUS', baseLocale)
