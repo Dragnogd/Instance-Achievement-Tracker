@@ -1,5 +1,5 @@
 --------------------------------------
--- Last Auto Generated: 08/06/2025 14:40:40 using https://github.com/Dragnogd/Instance-Achievement-Tracker-Database-Manager
+-- Last Auto Generated: 11/08/2025 19:09:33 using https://github.com/Dragnogd/Instance-Achievement-Tracker-Database-Manager
 --------------------------------------
 local _, core = ...
 local L = core.L
@@ -352,6 +352,130 @@ core.Instances = {
 					track = function() core._2769:ChromeKingGallywix() end,
 					partial = false,
 					encounterID = 3016,
+				},
+			},
+
+			[2810] = { --Manaforge Omega
+				name = 1302,
+				boss1 = {
+					name = 2684, --Plexus Sentinel
+					bossIDs = {},
+					achievement = 42118,
+					players = {},
+					tactics = {
+						[11] = {
+							{ tactic = L["ManaforgeOmega_PlexusSentinel"] },
+						},
+					},
+					enabled = true,
+					track = function() core._2810:PlexusSentinel() end,
+					partial = false,
+					encounterID = 3129,
+				},
+				boss2 = {
+					name = 2686, --Loom'ithar
+					bossIDs = {},
+					achievement = 41613,
+					players = {},
+					tactics = {
+						[11] = {
+							{ tactic = L["ManaforgeOmega_Loomithar"] },
+						},
+					},
+					enabled = true,
+					track = function() core._2810:Loomithar() end,
+					partial = false,
+					encounterID = 3131,
+				},
+				boss3 = {
+					name = 2685, --Soulbinder Naazindhri
+					bossIDs = {},
+					achievement = 41614,
+					players = {},
+					tactics = {
+						[11] = {
+							{ tactic = L["ManaforgeOmega_SoulbinderNaazindhri"] },
+						},
+					},
+					enabled = true,
+					track = function() core._2810:SoulbinderNaazindhri() end,
+					partial = false,
+					encounterID = 3130,
+				},
+				boss4 = {
+					name = 2687, --Forgeweaver Araz
+					bossIDs = {},
+					achievement = 41615,
+					players = {},
+					tactics = {
+						[11] = {
+							{ tactic = L["ManaforgeOmega_ForgeweaverAraz"] },
+						},
+					},
+					enabled = true,
+					track = function() core._2810:ForgeweaverAraz() end,
+					partial = false,
+					encounterID = 3132,
+				},
+				boss5 = {
+					name = 2688, --The Soul Hunters
+					bossIDs = {},
+					achievement = 41616,
+					players = {},
+					tactics = {
+						[11] = {
+							{ tactic = L["ManaforgeOmega_SoulHunters"] },
+						},
+					},
+					enabled = true,
+					track = function() core._2810:SoulHunters() end,
+					partial = false,
+					encounterID = 3122,
+				},
+				boss6 = {
+					name = 2747, --Fractillus
+					bossIDs = {},
+					achievement = 41617,
+					players = {},
+					tactics = {
+						[11] = {
+							{ tactic = L["ManaforgeOmega_Fractillus"] },
+						},
+					},
+					enabled = true,
+					track = function() core._2810:Fractillus() end ,
+					partial = false,
+					encounterID = 3133,
+				},
+				boss7 = {
+					name = 2690, --Nexus-King Salhadaar
+					bossIDs = {},
+					achievement = 41618,
+					players = {},
+					tactics = {
+						[11] = {
+							{ tactic = L["ManaforgeOmega_NexusKingSalhadaar"] },
+						},
+					},
+					enabled = true,
+					track = function() core._2810:NexusKingSalhadaar() end,
+					partial = false,
+					encounterID = 3134,
+				},
+				boss8 = {
+					name = 2691, --Dimensius, the All-Devouring
+					bossIDs = {},
+					achievement = 41619,
+					players = {},
+					tactics = {
+						[11] = {
+							{ tactic = L["ManaforgeOmega_DimensiusTheAllDevouring"] },
+						},
+					},
+					enabled = true,
+					track = function() core._2810:DimensiusTheAllDevouring() end,
+					partial = false,
+					encounterID = 3135,
 				},
 			},
 		},
