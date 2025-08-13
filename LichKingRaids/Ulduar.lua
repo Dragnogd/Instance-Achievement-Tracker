@@ -46,6 +46,12 @@ local brittleTargetsKilled = 0
 local timer
 
 ------------------------------------------------------
+---- Hot Pocket
+------------------------------------------------------
+local hotPocketPlayersUID = {}
+local hotPocketCounter = 0
+
+------------------------------------------------------
 ---- Must Deconstruct Faster
 ------------------------------------------------------
 local timer2
@@ -221,6 +227,41 @@ function core._603:IgnisTheFurnaceMasterStokinTheFurnace(id)
     end
 end
 
+function core._603:IgnisTheFurnaceMasterHotPocket(id)
+    --Survive being thrown into Ignis the Furnace Master's Slag Pot in Ulduar.
+
+    for i = 1, #core.currentBosses do
+        if core.currentBosses[i].achievement == id then
+            InfoFrame_UpdatePlayersOnInfoFramePersonal()
+            InfoFrame_SetHeaderCounter(L["Shared_PlayersWhoNeedAchievement"],hotPocketCounter,#core.currentBosses[i].players)
+
+            --Player has been thrown into the Slag Pot
+            local slagPotIDs = {65723, 62717, 65722, 65720, 65723}
+            if core.type == "SPELL_AURA_APPLIED" and core:has_value(slagPotIDs, core.spellId) and core.destName ~= nil then
+                local name, realm = UnitName(core.destName)
+                if core:has_value(core.Instances[core.expansion][core.instanceType][core.instance]["boss13"].players, name) == true then
+                    if hotPocketPlayersUID[core.destName] == nil then
+                        hotPocketCounter = hotPocketCounter + 1
+                        hotPocketPlayersUID[core.destName] = core.destName
+                        if core.gameVersionMajor > 4 then
+                            core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. C_Spell.GetSpellLink(65723) .. " (" .. hotPocketCounter .. "/" .. #core.currentBosses[1].players .. ")",true)
+                        else
+                            core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. GetSpellLink(65723) .. " (" .. hotPocketCounter .. "/" .. #core.currentBosses[1].players .. ")",true)
+                        end
+                        InfoFrame_SetPlayerComplete(core.destName)
+                    end
+                end
+            end
+
+            --Achievement Completed
+            if hotPocketPlayersUID == #core.currentBosses[i].players then
+                core:getAchievementSuccess()
+                core.achievementsFailed[1] = false
+            end
+        end
+    end
+end
+
 function core._603:XT002DeconstructorNerfEngineering(id)
     --Defeat XT-002 Deconstructor in Ulduar without allowing him to recover any health from XS-013 Scrapbots.
 
@@ -321,19 +362,31 @@ function core._603:MimironSetUpUsTheBomb(id)
     --Proximity Mine
     if (core.type == "SPELL_DAMAGE" or core.type == "SPELL_MISSED") and core.spellId == 63009 and proximityMineFailed == false then
         proximityMineFailed = true
-        core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ") " .. format(L["Shared_DamageFromAbility"], GetSpellLink(63009)), id)
+        if core.gameVersionMajor > 4 then
+            core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ") " .. format(L["Shared_DamageFromAbility"], C_Spell.GetSpellLink(63009)), id)
+        else
+            core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ") " .. format(L["Shared_DamageFromAbility"], GetSpellLink(63009)), id)
+        end
     end
 
     --Rocket Strike
     if (core.type == "SPELL_DAMAGE" or core.type == "SPELL_MISSED") and core.spellId == 63041 and rocketstrikeFailed ~= true then
         rocketstrikeFailed = true
-        core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ") " .. format(L["Shared_DamageFromAbility"], GetSpellLink(63041)), id)
+        if core.gameVersionMajor > 4 then
+            core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ") " .. format(L["Shared_DamageFromAbility"], C_Spell.GetSpellLink(63041)), id)
+        else
+            core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ") " .. format(L["Shared_DamageFromAbility"], GetSpellLink(63041)), id)
+        end
     end
 
     --Bomb Bot
     if (core.type == "SPELL_DAMAGE" or core.type == "SPELL_MISSED") and core.spellId == 63801 and bombBotFailed == false then
         bombBotFailed = true
-        core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ") " .. format(L["Shared_DamageFromAbility"], GetSpellLink(63801)), id)
+        if core.gameVersionMajor > 4 then
+            core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ") " .. format(L["Shared_DamageFromAbility"], C_Spell.GetSpellLink(63801)), id)
+        else
+            core:getAchievementFailedWithMessageAfter("(" .. core.destName .. ") " .. format(L["Shared_DamageFromAbility"], GetSpellLink(63801)), id)
+        end
     end
 end
 
@@ -643,6 +696,12 @@ function core._603:ClearVariables()
     end
 
     ------------------------------------------------------
+    ---- Hot Pocket
+    ------------------------------------------------------
+    hotPocketPlayersUID = {}
+    hotPocketCounter = 0
+
+    ------------------------------------------------------
     ---- Must Deconstruct Faster
     ------------------------------------------------------
     if timer2 ~= nil then
@@ -722,9 +781,9 @@ end)
 function core._603.Events:UNIT_AURA(self, unitID, ...)
     if core.Instances[core.expansion][core.instanceType][core.instance]["boss2"].enabled == true then
         for i=1,40 do
-            local _, _, _, _, _, _, _, _, _, spellId = UnitBuff(unitID, i)
-            if spellId == 62705 and repairedAnnounced == false then
-                core:getAchievementFailed(core.Instances[core.expansion][core.instanceType][core.instance]["boss2"].achievement)
+            local auraData = C_UnitAuras.GetBuffDataByIndex(unitID, i)
+            if auraData ~= nil and auraData.spellId == 62705 and repairedAnnounced == false then
+                core:sendMessage(GetAchievementLink(core.Instances[core.expansion][core.instanceType][core.instance]["boss2"].achievement) .. " " .. L["Core_Failed"],true,"failed")
                 repairedAnnounced = true
             end
         end
