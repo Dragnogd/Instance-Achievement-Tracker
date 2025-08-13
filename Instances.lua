@@ -1,5 +1,5 @@
 --------------------------------------
--- Last Auto Generated: 11/08/2025 19:09:33 using https://github.com/Dragnogd/Instance-Achievement-Tracker-Database-Manager
+-- Last Auto Generated: 13/08/2025 21:02:54 using https://github.com/Dragnogd/Instance-Achievement-Tracker-Database-Manager
 --------------------------------------
 local _, core = ...
 local L = core.L
@@ -371,6 +371,7 @@ core.Instances = {
 					track = function() core._2810:PlexusSentinel() end,
 					partial = false,
 					encounterID = 3129,
+					displayInfoFrame = true,
 				},
 				boss2 = {
 					name = 2686, --Loom'ithar
@@ -386,6 +387,7 @@ core.Instances = {
 					track = function() core._2810:Loomithar() end,
 					partial = false,
 					encounterID = 3131,
+					displayInfoFrame = true,
 				},
 				boss3 = {
 					name = 2685, --Soulbinder Naazindhri
@@ -431,6 +433,7 @@ core.Instances = {
 					track = function() core._2810:SoulHunters() end,
 					partial = false,
 					encounterID = 3122,
+					displayInfoFrame = true,
 				},
 				boss6 = {
 					name = 2747, --Fractillus
@@ -476,6 +479,7 @@ core.Instances = {
 					track = function() core._2810:DimensiusTheAllDevouring() end,
 					partial = false,
 					encounterID = 3135,
+					displayInfoFrame = true,
 				},
 			},
 		},
