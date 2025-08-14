@@ -36,6 +36,7 @@ Localization.zhCN.lua
 Localization.zhTW.lua
 Localization.koKR.lua
 
+WarWithinRaids\ManaforgeOmega.lua
 WarWithinRaids\NerubarPalace.lua
 WarWithinRaids\LiberationOfUndermine.lua
 
