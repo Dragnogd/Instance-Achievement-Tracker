@@ -126,7 +126,6 @@ function core._2810:SoulbinderNaazindhri()
     -- Defeat Soulbinder Naazindhri after defeating all Little Unbound Souls in Manaforge Omega on Normal difficulty or higher.
 
     -- Detect when all 4 Little Unbound Souls are defeated
-    -- TODO: Add Little Unbound Souls to NPC DB
     if core.type == "UNIT_DIED" and core.destID == 248707 then
         if littleUnboundSoulsUID[core.spawn_uid_dest] == nil then
             littleUnboundSoulsUID[core.spawn_uid_dest] = core.spawn_uid_dest
@@ -154,22 +153,31 @@ end
 function core._2810:SoulHunters()
     -- Defeat the Soul Hunters after all players have worn Adarus' spare blindfold at least 1 time in Manaforge Omega on Normal difficulty or higher.
 
-    -- TODO: Track if all players have picked up the blindfold too?
-    -- TODO: Do you need to wear for the full minute for it to count?
-
-    InfoFrame_UpdatePlayersOnInfoFrame()
+    InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
     InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],blindfoldCounter,core.groupSize)
 
     --https://www.wowhead.com/spell=1247656/adarus-spare-blindfold
     --https://www.wowhead.com/ptr-2/spell=1246980/blindfolded
 
-    -- Player is holding a mouse
-    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 1246980 then
+    -- Player has put on the blindfold
+    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 1246980 then --1246980
         if core.destName ~= nil and blindfoldUID[core.spawn_uid_dest_Player] == nil then
             blindfoldCounter = holdingMouseCounter + 1
             blindfoldUID[core.spawn_uid_dest_Player] = core.spawn_uid_dest_Player
             core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. C_Spell.GetSpellLink(1246980) .. " (" .. blindfoldCounter .. "/" .. core.groupSize .. ")",true)
-            InfoFrame_SetPlayerComplete(core.destName)
+
+            -- We need to track that it was worn for the full duration otherwise it won't count towards the achievment
+            -- InfoFrame show white with additional text with countdown on how long is left
+            -- Only go green once they have worn for full minute
+            local playerDestName = core.destName
+            local playerTimeRemaining = 59
+            InfoFrame_SetPlayerNeutralWithMessage(core.destName, playerTimeRemaining)
+
+            C_Timer.NewTicker(1, function()
+                -- Check if player is still wearing the blindfold
+                playerTimeRemaining = playerTimeRemaining - 1
+                InfoFrame_SetPlayerNeutralWithMessage(playerDestName, playerTimeRemaining)
+            end, playerTimeRemaining)
         end
     end
 
@@ -201,7 +209,7 @@ function core._2810:DimensiusTheAllDevouring()
     InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],reverseGravityCounter,core.groupSize)
 
     -- Player hit by Reverse Gravity
-    if core.type == "SPELL_AURA_APPLIED" and (core.spellId == 1243577 or core.spellId == 1243581) then
+    if (core.type == "SPELL_AURA_APPLIED") and (core.spellId == 1243577) or (core.type == "SPELL_DAMAGE" and core.spellId == 1243581) then
         if core.destName ~= nil and reverseGravityUID[core.spawn_uid_dest_Player] == nil then
             reverseGravityCounter = reverseGravityCounter + 1
             reverseGravityUID[core.spawn_uid_dest_Player] = core.spawn_uid_dest_Player
@@ -264,7 +272,7 @@ function core._2810:TrackAdditional()
     end
 end
 
-function core._2657:ClearVariables()
+function core._2810:ClearVariables()
     ------------------------------------------------------
     ---- Plexus Sentinel
     ------------------------------------------------------
