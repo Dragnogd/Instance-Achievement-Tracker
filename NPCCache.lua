@@ -789,4 +789,6 @@ core.NPCCache = {
 	[238110] = 11, --Sleepy Fish
 	[238586] = 11, --Flaming Megafan
 	[238587] = 11, --Thundering Megafan
+	[243803] = 11, --Sieve Mouse
+	[248707] = 11, --Little Unbound Soul
 }
