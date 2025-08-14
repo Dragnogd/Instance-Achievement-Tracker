@@ -15,6 +15,10 @@ core._2810.Events = CreateFrame("Frame")
 ------------------------------------------------------
 local holdingMouseCounter = 0
 local holdingMouseUID = {}
+local intermissionStarted = false
+local miceSpawnedCounter = 0
+local miceSpawnedUID = {}
+local collectedMiceDuringIntermissionCounter = 0
 
 ------------------------------------------------------
 ---- Loomithar
@@ -44,18 +48,58 @@ function core._2810:PlexusSentinel()
     -- Defeat the Plexus Sentinel after saving all mice from atomization in Manaforge Omega on Normal difficuty or higher.
 
     -- https://www.wowhead.com/spell=1233449/holding-a-mouse
+    -- SPELL_AURA_APPLIED,Creature-0-1631-2810-18952-233814-00001D8D51,"Plexus Sentinel",0x10a48,0x80000000,Player-3674-09C540DB,"Carmentta-TwistingNether-EU",0x514,0x80000000,1220610,"Protocol: Purge",0x1,DEBUFF
+    -- SPELL_SUMMON,Creature-0-1631-2810-18952-233814-00001D8D51,"Plexus Sentinel",0x10a48,0x80000000,Creature-0-1631-2810-18952-243803-00001D8DD0,"Sieve Mouse",0xa28,0x80000000,1233439,"Summon Mice",0x1
+    -- SPELL_AURA_REMOVED,Creature-0-1631-2810-18952-233814-00001D8D51,"Plexus Sentinel",0x10a48,0x80000000,Creature-0-1631-2810-18952-163366-00001D8DCC,"Magus of the Dead",0x2114,0x80000000,1220610,"Protocol: Purge",0x1,DEBUFF
 
     InfoFrame_UpdatePlayersOnInfoFrame()
 	InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],holdingMouseCounter,core.groupSize)
 
-    -- Player is holding a mouse
+    -- Detect start of intermission (Protocol: Purge) and announce to pickup mice
+    if core.type == "SPELL_AURA_APPLIED" and (core.spellId == 1220618 or core.spellId == 1220981 or core.spellId == 1220982) then
+        if intermissionStarted == false then
+            intermissionStarted = true
+            core:sendMessage(format(L["Shared_CollectNow"], getNPCName(243803)),true)
+        end
+    end
+
+    -- Detect how many mice have spawned
+    if core.type == "SPELL_SUMMON" and core.spellId == 1233439 then
+        if core.destName ~= nil and holdingMouseUID[core.spawn_uid_dest] == nil then
+            miceSpawnedCounter = miceSpawnedCounter + 1
+            miceSpawnedUID[core.spawn_uid_dest] = core.spawn_uid_dest
+
+            -- Start a time then after 2 seconds announce how many mice have spawned
+            C_Timer.After(2, function()
+                core:sendMessage(L["Shared_MiceSpawned"] .. " " .. miceSpawnedCounter .. "/" .. core.groupSize, true) --TODO: Localisation
+            end)
+        end
+    end
+
+    -- Player as collected a mouse
     if core.type == "SPELL_AURA_APPLIED" and core.spellId == 1233449 then
         if core.destName ~= nil and holdingMouseUID[core.spawn_uid_dest_Player] == nil then
             holdingMouseCounter = holdingMouseCounter + 1
+            collectedMiceDuringIntermissionCounter = collectedMiceDuringIntermissionCounter + 1
             holdingMouseUID[core.spawn_uid_dest_Player] = core.spawn_uid_dest_Player
-            core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. C_Spell.GetSpellLink(1233449) .. " (" .. holdingMouseCounter .. "/" .. core.groupSize .. ")",true)
+            core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. C_Spell.GetSpellLink(1233449) .. " (" .. collectedMiceDuringIntermissionCounter .. "/" .. miceSpawnedCounter .. ") (" .. holdingMouseCounter .. "/" .. core.groupSize .. ")",true)
             InfoFrame_SetPlayerComplete(core.destName)
         end
+    end
+
+    -- Detect end of intermission and and check if all mice have been picked up in time
+    -- If they have not then announce fail
+    if core.type == "SPELL_AURA_REMOVED" and (core.spellId == 1220618 or core.spellId == 1220981 or core.spellId == 1220982) then
+        -- If not all mice have been collected then fail the achievement
+        if collectedMiceDuringIntermissionCounter < miceSpawnedCounter then
+            core:getAchievementFailed()
+        end
+
+        -- Reset intermission variables reading for next intermission
+        intermissionStarted = false
+        miceSpawnedCounter = 0
+        miceSpawnedUID = {}
+        collectedMiceDuringIntermissionCounter = 0
     end
 
     --Announce success once everyone is holding a mouse at some point throughout the fight
@@ -226,6 +270,10 @@ function core._2657:ClearVariables()
     ------------------------------------------------------
     holdingMouseCounter = 0
     holdingMouseUID = {}
+    intermissionStarted = false
+    miceSpawnedCounter = 0
+    miceSpawnedUID = {}
+    collectedMiceDuringIntermissionCounter = 0
 
     ------------------------------------------------------
     ---- Loomithar
