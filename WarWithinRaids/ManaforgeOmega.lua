@@ -35,6 +35,8 @@ local littleUnboundSoulsUID = {}
 ------------------------------------------------------
 ---- The Soul Hunters
 ------------------------------------------------------
+local blindfoldData = {}
+local blindfoldTicker
 local blindfoldCounter = 0
 local blindfoldUID = {}
 
@@ -153,34 +155,73 @@ end
 function core._2810:SoulHunters()
     -- Defeat the Soul Hunters after all players have worn Adarus' spare blindfold at least 1 time in Manaforge Omega on Normal difficulty or higher.
 
+    -- Update header each tick
     InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
-    InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],blindfoldCounter,core.groupSize)
+    InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"], blindfoldCounter, core.groupSize)
 
-    --https://www.wowhead.com/spell=1247656/adarus-spare-blindfold
-    --https://www.wowhead.com/ptr-2/spell=1246980/blindfolded
+    -- Blindfold applied
+    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 1246980 then
+        local uid = core.spawn_uid_dest_Player
+        if core.destName and not blindfoldUID[uid] then
+            -- Count & record player
+            blindfoldCounter = blindfoldCounter + 1
+            blindfoldUID[uid] = uid
 
-    -- Player has put on the blindfold
-    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 1246980 then --1246980
-        if core.destName ~= nil and blindfoldUID[core.spawn_uid_dest_Player] == nil then
-            blindfoldCounter = holdingMouseCounter + 1
-            blindfoldUID[core.spawn_uid_dest_Player] = core.spawn_uid_dest_Player
-            core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. C_Spell.GetSpellLink(1246980) .. " (" .. blindfoldCounter .. "/" .. core.groupSize .. ")",true)
+            -- Store tracking info
+            blindfoldData[uid] = {
+                startTime = GetTime(),
+                duration = 60, -- full duration in seconds
+                destName = core.destName,
+                completed = false
+            }
 
-            -- We need to track that it was worn for the full duration otherwise it won't count towards the achievment
-            -- InfoFrame show white with additional text with countdown on how long is left
-            -- Only go green once they have worn for full minute
-            local playerDestName = core.destName
-            local playerTimeRemaining = 59
-            InfoFrame_SetPlayerNeutralWithMessage(core.destName, playerTimeRemaining)
+            -- Set initial neutral info in frame
+            InfoFrame_SetPlayerNeutralWithMessage(core.destName, 59)
 
-            C_Timer.NewTicker(1, function()
-                -- Check if player is still wearing the blindfold
-                playerTimeRemaining = playerTimeRemaining - 1
-                InfoFrame_SetPlayerNeutralWithMessage(playerDestName, playerTimeRemaining)
-            end, playerTimeRemaining)
+            -- Start single global ticker if not running
+            if not blindfoldTicker then
+                blindfoldTicker = C_Timer.NewTicker(1, function()
+                    local now = GetTime()
+                    for puid, data in pairs(blindfoldData) do
+                        if not data.completed then
+                            local elapsed = now - data.startTime
+                            local remaining = math.ceil(data.duration - elapsed)
+
+                            InfoFrame_SetPlayerNeutralWithMessage(data.destName, remaining)
+                        end
+                    end
+
+                    -- Stop ticker if no active players left
+                    if next(blindfoldData) == nil then
+                        blindfoldTicker:Cancel()
+                        blindfoldTicker = nil
+                    end
+                end)
+            end
         end
     end
 
+    -- Blindfold removed
+    if core.type == "SPELL_AURA_REMOVED" and core.spellId == 1246980 then
+        local uid = core.spawn_uid_dest_Player
+        local data = blindfoldData[uid]
+        if data then
+            local elapsed = GetTime() - data.startTime
+            local margin = 0.2
+
+            if elapsed >= data.duration - margin then
+                core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. C_Spell.GetSpellLink(1246980) .. " (" .. blindfoldCounter .. "/" .. core.groupSize .. ")", true)
+                InfoFrame_SetPlayerComplete(data.destName)
+                data.completed = true
+            elseif not data.completed then
+                -- Fail only if they never completed
+                InfoFrame_SetPlayerFailedWithMessage(data.destName, 60)
+                blindfoldData[uid] = nil
+            end
+        end
+    end
+
+    -- Achievement complete check
     if core:getBlizzardTrackingStatus(41616, 1) == true then
         core:getAchievementSuccess()
     end
@@ -272,6 +313,39 @@ function core._2810:TrackAdditional()
     end
 end
 
+function core._2810:InstanceCleanup()
+    core._2810.Events:UnregisterEvent("UNIT_AURA")
+end
+
+core._2810.Events:SetScript("OnEvent", function(self, event, ...)
+    return self[event] and self[event](self, event, ...)
+end)
+
+function core._2810:InitialSetup()
+    core._2810.Events:RegisterEvent("UNIT_AURA")
+end
+
+function core._2164.Events:UNIT_AURA(self, unitID)
+	if next(core.currentBosses) ~= nil then
+		if core.currentBosses[1].encounterID == 3122 then
+			-- I See... Absolutely Nothing
+			local name, realm = UnitName(unitID)
+
+            local aura = C_UnitAuras.GetBuffDataBySpellName(unitID, "Blindfolded")
+            if aura then
+                if name ~= nil then
+                    if blindfoldUID[name] == nil and core.InfoFrame_PlayersTable[name] ~= nil then
+                        blindfoldUID[name] = name
+                        blindfoldCounter = blindfoldCounter + 1
+                        core:sendMessage(name .. " " .. L["Shared_HasGained"] .. " " .. C_Spell.GetSpellLink(1246980) .. " (" .. blindfoldCounter .. "/" .. core.groupSize .. ")", true)
+                        InfoFrame_SetPlayerComplete(name)
+                    end
+                end
+            end
+		end
+	end
+end
+
 function core._2810:ClearVariables()
     ------------------------------------------------------
     ---- Plexus Sentinel
@@ -298,6 +372,11 @@ function core._2810:ClearVariables()
     ------------------------------------------------------
     ---- The Soul Hunters
     ------------------------------------------------------
+    blindfoldData = {}
+    if blindfoldTicker then
+        blindfoldTicker:Cancel()
+        blindfoldTicker = nil
+    end
     blindfoldCounter = 0
     blindfoldUID = {}
 
