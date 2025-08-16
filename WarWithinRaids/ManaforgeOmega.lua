@@ -154,6 +154,12 @@ function core._2810:ForgeweaverAraz()
     -- https://www.wowhead.com/spell=1244502/forged-echo
     -- https://www.wowhead.com/spell=1248816/void-forged-echo
 
+    --SPELL_AURA_APPLIED,Creature-0-1631-2810-18952-241923-00001DA34E,"Arcane Echo",0xa48,0x80000000,Creature-0-1631-2810-18952-241923-00001DA34E,"Arcane Echo",0xa48,0x80000000,1248816,"Void Forged Echo",0x20,BUFF
+
+    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 1248816 then
+        core:sendMessage(format(L["Shared_KillTheAddNow"], getNPCName(241923)),true)
+    end
+
     if core:getBlizzardTrackingStatus(41615, 1) == true then
         core:getAchievementSuccess()
     end
