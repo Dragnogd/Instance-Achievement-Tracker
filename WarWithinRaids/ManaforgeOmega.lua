@@ -126,6 +126,8 @@ function core._2810:Loomithar()
 
     if core:getBlizzardTrackingStatus(41613, 1) == true then
         core:getAchievementSuccess()
+    else
+        core:getAchievementFailed()
     end
 end
 
@@ -246,7 +248,6 @@ end
 
 function core._2810:TrackAdditional()
     -- Loom'ithar - Voted
-    -- TODO: Track what players have voted for on info frame
     if (core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_REMOVED") and core.spellId == 1246718 then
         core.IATInfoFrame:ToggleOn()
         core.IATInfoFrame:SetHeading(GetAchievementLink(41613))
@@ -257,33 +258,26 @@ function core._2810:TrackAdditional()
         for player2, status in pairs(core.InfoFrame_PlayersTable) do
             local buffFound = false
             local _, _, player_UID2 = strsplit("-", UnitGUID(player2))
-            for i=1,40 do
-                local auraData = C_UnitAuras.GetDebuffDataByIndex(player2, i)
-                if auraData ~= nil and auraData.spellId == 1246718 then
+
+            local spellInfo = C_Spell.GetSpellInfo(1246718)
+            if spellInfo ~= nil then
+                local aura = C_UnitAuras.GetAuraDataBySpellName(player2, spellInfo.name)
+                if aura then
                     buffFound = true
                 end
             end
+
             if buffFound == true then
                 InfoFrame_SetPlayerComplete(player2)
                 if votedUID[player_UID2] == nil then
                     votedUID[player_UID2] = player_UID2
                     votedCounter = votedCounter + 1
                 end
-            else
-                if core.encounterStarted == true then
-                    core:getAchievementFailedWithMessageAfter("(" .. player2 .. ")")
-                end
-
-                InfoFrame_SetPlayerFailed(player2)
-                if votedUID[player_UID2] ~= nil then
-                    votedUID[player_UID2] = nil
-                    votedCounter = votedCounter - 1
-                end
             end
         end
 
         --Update with any changes
-        InfoFrame_SetHeaderCounter(C_Spell.GetSpellLink(356731) .. " " .. L["Core_Counter"],votedCounter,core.groupSize)
+        InfoFrame_SetHeaderCounter(C_Spell.GetSpellLink(1246718) .. " " .. L["Core_Counter"],votedCounter,core.groupSize)
         InfoFrame_UpdatePlayersOnInfoFrame()
 
         --Hide if no one has the debuff anymore
