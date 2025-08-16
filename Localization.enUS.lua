@@ -1072,5 +1072,8 @@ local baseLocale = {
 	["ManaforgeOmega_Fractillus"] = "",
 	["ManaforgeOmega_NexusKingSalhadaar"] = "",
 	["ManaforgeOmega_DimensiusTheAllDevouring"] = "",
+	["Shared_CollectNow"] = "Collect %s NOW!",
+	["Shared_Intermission"] = "Intermission",
+	["Shared_Total"] = "Total",
 }
 core:RegisterLocale('enUS', baseLocale)
