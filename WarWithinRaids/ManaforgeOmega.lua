@@ -159,24 +159,22 @@ function core._2810:SoulHunters()
     InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
     InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"], blindfoldCounter, core.groupSize)
 
-    -- Blindfold applied
-    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 1246980 then
+    -- Blindfold applied or refreshed
+    if (core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_REFRESH") and core.spellId == 1246980 then
         local uid = core.spawn_uid_dest_Player
-        if core.destName and not blindfoldUID[uid] then
-            -- Count & record player
-            blindfoldCounter = blindfoldCounter + 1
-            blindfoldUID[uid] = uid
-
-            -- Store tracking info
+        if core.destName then
+            -- Always reset tracking info on refresh
             blindfoldData[uid] = {
                 startTime = GetTime(),
-                duration = 60, -- full duration in seconds
+                duration = 59, -- full duration in seconds
                 destName = core.destName,
-                completed = false
+                uid = core.spawn_uid_dest_Player,
             }
 
-            -- Set initial neutral info in frame
-            InfoFrame_SetPlayerNeutralWithMessage(core.destName, 59)
+            if blindfoldUID[uid] == nil then
+                -- Update frame immediately to reset countdown
+                InfoFrame_SetPlayerNeutralWithMessage(core.destName, 59)
+            end
 
             -- Start single global ticker if not running
             if not blindfoldTicker then
@@ -187,36 +185,13 @@ function core._2810:SoulHunters()
                             local elapsed = now - data.startTime
                             local remaining = math.ceil(data.duration - elapsed)
 
-                            InfoFrame_SetPlayerNeutralWithMessage(data.destName, remaining)
+                            if remaining >= 0 and blindfoldUID[data.uid] == nil then
+                                -- Update info frame with remaining time
+                                InfoFrame_SetPlayerNeutralWithMessage(data.destName, remaining)
+                            end
                         end
                     end
-
-                    -- Stop ticker if no active players left
-                    if next(blindfoldData) == nil then
-                        blindfoldTicker:Cancel()
-                        blindfoldTicker = nil
-                    end
                 end)
-            end
-        end
-    end
-
-    -- Blindfold removed
-    if core.type == "SPELL_AURA_REMOVED" and core.spellId == 1246980 then
-        local uid = core.spawn_uid_dest_Player
-        local data = blindfoldData[uid]
-        if data then
-            local elapsed = GetTime() - data.startTime
-            local margin = 0.2
-
-            if elapsed >= data.duration - margin then
-                core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. C_Spell.GetSpellLink(1246980) .. " (" .. blindfoldCounter .. "/" .. core.groupSize .. ")", true)
-                InfoFrame_SetPlayerComplete(data.destName)
-                data.completed = true
-            elseif not data.completed then
-                -- Fail only if they never completed
-                InfoFrame_SetPlayerFailedWithMessage(data.destName, 60)
-                blindfoldData[uid] = nil
             end
         end
     end
@@ -325,20 +300,25 @@ function core._2810:InitialSetup()
     core._2810.Events:RegisterEvent("UNIT_AURA")
 end
 
-function core._2164.Events:UNIT_AURA(self, unitID)
+function core._2810.Events:UNIT_AURA(self, unitID)
 	if next(core.currentBosses) ~= nil then
-		if core.currentBosses[1].encounterID == 3122 then
+        if core.currentBosses[1].encounterID == 3122 then
 			-- I See... Absolutely Nothing
 			local name, realm = UnitName(unitID)
+            local unitType, destID, spawn_uid_dest = strsplit("-",UnitGUID(unitID));
 
-            local aura = C_UnitAuras.GetBuffDataBySpellName(unitID, "Blindfolded")
-            if aura then
-                if name ~= nil then
-                    if blindfoldUID[name] == nil and core.InfoFrame_PlayersTable[name] ~= nil then
-                        blindfoldUID[name] = name
-                        blindfoldCounter = blindfoldCounter + 1
-                        core:sendMessage(name .. " " .. L["Shared_HasGained"] .. " " .. C_Spell.GetSpellLink(1246980) .. " (" .. blindfoldCounter .. "/" .. core.groupSize .. ")", true)
-                        InfoFrame_SetPlayerComplete(name)
+            local spellInfo = C_Spell.GetSpellInfo(1247671)
+
+            if spellInfo ~= nil then
+                local aura = C_UnitAuras.GetAuraDataBySpellName(unitID, spellInfo.name)
+                if aura then
+                    if name ~= nil then
+                        if blindfoldUID[spawn_uid_dest] == nil then
+                            blindfoldUID[spawn_uid_dest] = spawn_uid_dest
+                            blindfoldCounter = blindfoldCounter + 1
+                            core:sendMessage(name .. " " .. L["Shared_HasGained"] .. " " .. C_Spell.GetSpellLink(1247671) .. " (" .. blindfoldCounter .. "/" .. core.groupSize .. ")", true)
+                            InfoFrame_SetPlayerCompleteWithMessage(name, "")
+                        end
                     end
                 end
             end
