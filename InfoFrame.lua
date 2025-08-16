@@ -460,6 +460,20 @@ function InfoFrame_GetPlayerFailed(player)
     end
 end
 
+function InfoFrame_GetPlayerFailedWithMessage(player)
+    --Make sure we remove realm info from player before checking name
+    if string.find(player, "-") then
+        local name, realm = strsplit("-", player)
+        player = name
+    end
+
+    if core.InfoFrame_PlayersTable[player][1] == 3 then
+        return true
+    else
+        return false
+    end
+end
+
 function InfoFrame_GetPlayerComplete(player)
     --Make sure we remove realm info from player before checking name
     if string.find(player, "-") then
