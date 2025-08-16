@@ -19,6 +19,7 @@ local intermissionStarted = false
 local miceSpawnedCounter = 0
 local miceSpawnedUID = {}
 local collectedMiceDuringIntermissionCounter = 0
+local announceMiceSpawned = false
 
 ------------------------------------------------------
 ---- Loomithar
@@ -67,14 +68,18 @@ function core._2810:PlexusSentinel()
 
     -- Detect how many mice have spawned
     if core.type == "SPELL_SUMMON" and core.spellId == 1233439 then
-        if core.destName ~= nil and holdingMouseUID[core.spawn_uid_dest] == nil then
+        if core.destName ~= nil and miceSpawnedUID[core.spawn_uid_dest] == nil then
             miceSpawnedCounter = miceSpawnedCounter + 1
             miceSpawnedUID[core.spawn_uid_dest] = core.spawn_uid_dest
 
             -- Start a time then after 2 seconds announce how many mice have spawned
-            C_Timer.After(2, function()
-                core:sendMessage(L["Shared_MiceSpawned"] .. " " .. miceSpawnedCounter .. "/" .. core.groupSize, true) --TODO: Localisation
-            end)
+            if announceMiceSpawned == false then
+                announceMiceSpawned = true
+                C_Timer.After(2, function()
+                    core:sendMessage(format(L["Shared_HasSpawned2"], miceSpawnedCounter .. " " .. getNPCName(243803)), true)
+                    announceMiceSpawned = false
+                end)
+            end
         end
     end
 
@@ -84,7 +89,7 @@ function core._2810:PlexusSentinel()
             holdingMouseCounter = holdingMouseCounter + 1
             collectedMiceDuringIntermissionCounter = collectedMiceDuringIntermissionCounter + 1
             holdingMouseUID[core.spawn_uid_dest_Player] = core.spawn_uid_dest_Player
-            core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. C_Spell.GetSpellLink(1233449) .. " (" .. collectedMiceDuringIntermissionCounter .. "/" .. miceSpawnedCounter .. ") (" .. holdingMouseCounter .. "/" .. core.groupSize .. ")",true)
+            core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. C_Spell.GetSpellLink(1233449) .. " " .. L["Shared_Intermission"] .. " (" .. collectedMiceDuringIntermissionCounter .. "/" .. miceSpawnedCounter .. ") " .. L["Shared_Total"] .. " (" .. holdingMouseCounter .. "/" .. core.groupSize .. ")",true)
             InfoFrame_SetPlayerComplete(core.destName)
         end
     end
@@ -94,7 +99,7 @@ function core._2810:PlexusSentinel()
     if core.type == "SPELL_AURA_REMOVED" and (core.spellId == 1220618 or core.spellId == 1220981 or core.spellId == 1220982) then
         -- If not all mice have been collected then fail the achievement
         if collectedMiceDuringIntermissionCounter < miceSpawnedCounter then
-            core:getAchievementFailed()
+            core:getAchievementFailedWithMessageAfter("(" .. L["Shared_Intermission"] .. " " .. collectedMiceDuringIntermissionCounter .. "/" .. miceSpawnedCounter .. ")" )
         end
 
         -- Reset intermission variables reading for next intermission
@@ -336,6 +341,7 @@ function core._2810:ClearVariables()
     miceSpawnedCounter = 0
     miceSpawnedUID = {}
     collectedMiceDuringIntermissionCounter = 0
+    announceMiceSpawned = false
 
     ------------------------------------------------------
     ---- Loomithar
