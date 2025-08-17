@@ -238,7 +238,7 @@ function core._2810:DimensiusTheAllDevouring()
     InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],reverseGravityCounter,core.groupSize)
 
     -- Player hit by Reverse Gravity
-    if (core.type == "SPELL_AURA_APPLIED" and core.spellId == 1243577) or (core.type == "SPELL_DAMAGE" and core.spellId == 1243581) then
+    if (core.type == "SPELL_AURA_APPLIED" and core.spellId == 1243577) or ((core.type == "SPELL_DAMAGE" or core.type == "SPELL_ABSORBED") and core.spellId == 1243581) then
         if core.destName ~= nil and reverseGravityUID[core.spawn_uid_dest_Player] == nil then
             reverseGravityCounter = reverseGravityCounter + 1
             reverseGravityUID[core.spawn_uid_dest_Player] = core.spawn_uid_dest_Player
