@@ -135,7 +135,7 @@ function core._2810:SoulbinderNaazindhri()
     -- Defeat Soulbinder Naazindhri after defeating all Little Unbound Souls in Manaforge Omega on Normal difficulty or higher.
 
     -- Detect when all 4 Little Unbound Souls are defeated
-    if core.type == "UNIT_DIED" and core.destID == 248707 then
+    if core.type == "UNIT_DIED" and core.destID == "248707" then
         if littleUnboundSoulsUID[core.spawn_uid_dest] == nil then
             littleUnboundSoulsUID[core.spawn_uid_dest] = core.spawn_uid_dest
             littleUnboundSouls = littleUnboundSouls + 1
