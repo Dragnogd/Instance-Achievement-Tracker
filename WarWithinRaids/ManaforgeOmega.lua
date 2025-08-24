@@ -42,6 +42,21 @@ local blindfoldCounter = 0
 local blindfoldUID = {}
 
 ------------------------------------------------------
+---- Fractillus
+------------------------------------------------------
+local columACounter = 0
+local columBCounter = 0
+local columCCounter = 0
+local columDCounter = 0
+local columECounter = 0
+local columFCounter = 0
+local wallSpawnUID = {}
+local wallBreakUID = {}
+local wallBrokenUID = {}
+local playerLanes = {}
+local fourthWallsBroken = 0
+
+------------------------------------------------------
 ---- Dimensius The All Devouring
 ------------------------------------------------------
 local reverseGravityCounter = 0
@@ -218,6 +233,44 @@ end
 function core._2810:Fractillus()
     -- Defeat Fractillus after destroying a fourth wall 18 times in Manaforge Omega on Normal difficulty or higher.
 
+    InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
+    InfoFrame_SetHeaderMessage("A: " .. columACounter .. " B: " .. columBCounter .. " C: " .. columCCounter .. " D: " .. columDCounter .. " E: " .. columECounter .. " F: " .. columFCounter .. "\n")
+
+    -- Player is going to spawn a wall
+    -- https://www.wowhead.com/spell=1233411/crystalline-shockwave
+    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 1233411 then
+        if core.destName ~= nil and wallSpawnUID[core.spawn_uid_dest_Player] == nil then
+            wallSpawnUID[core.spawn_uid_dest_Player] = core.spawn_uid_dest_Player
+            core:sendDebugMessage("Wall spawn detected for " .. core.destName)
+
+            -- Mark player on infoframe as spawning
+            InfoFrame_SetPlayerCompleteWithMessage(core.destName, L["Shared_Spawn"])
+        end
+    end
+
+    -- Player is going to break a wall
+    -- https://www.wowhead.com/spell=1227373/shattershell
+    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 1227373 then
+        if core.destName ~= nil and wallBreakUID[core.spawn_uid_dest_Player] == nil then
+            wallBreakUID[core.spawn_uid_dest_Player] = core.spawn_uid_dest_Player
+            core:sendDebugMessage("Wall break detected for " .. core.destName)
+
+            -- Mark player on infoframe as breaking
+            InfoFrame_SetPlayerCompleteWithMessage(core.destName, L["Shared_Break"])
+        end
+    end
+
+    -- Player has broken a wall
+    if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 1233416 then --SPELL_CAST_SUCCESS
+        -- A wall has been broken so we need to mark this as pending so when the next wall aura is detected we know its for a break
+        if core.destName ~= nil and wallBrokenUID[core.spawn_uid_dest_Player] == nil then
+            wallBrokenUID[core.spawn_uid_dest_Player] = core.spawn_uid_dest_Player
+            wallBreakUID[core.spawn_uid_dest_Player] = nil
+            core:sendDebugMessage("Wall broken detected for " .. core.destName)
+        end
+    end
+
+
     if core:getBlizzardTrackingStatus(41617) == true then
         core:getAchievementSuccess()
     end
@@ -295,6 +348,8 @@ end
 
 function core._2810:InstanceCleanup()
     core._2810.Events:UnregisterEvent("UNIT_AURA")
+    core._2810.Events:UnregisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+    core._2810.Events:UnregisterEvent("UNIT_SPELLCAST_START")
 end
 
 core._2810.Events:SetScript("OnEvent", function(self, event, ...)
@@ -303,6 +358,135 @@ end)
 
 function core._2810:InitialSetup()
     core._2810.Events:RegisterEvent("UNIT_AURA")
+    core._2810.Events:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+    core._2810.Events:RegisterEvent("UNIT_SPELLCAST_START")
+end
+
+function core._2810.Events:UNIT_SPELLCAST_SUCCEEDED(self, unitTarget, castGUID, spellID)
+	--"<13.04 21:01:51> [UNIT_SPELLCAST_SUCCEEDED] PLAYER_SPELL{秋怜} -Column A Aura- [[raid5:Cast-3-5773-2810-3675-1223483-0030716DAF:1223483]]",
+    --"<32.63 21:02:10> [UNIT_SPELLCAST_SUCCEEDED] PLAYER_SPELL{季夜} -Column B Aura- [[party2:Cast-3-5773-2810-3675-1223484-0062F16DC2:1223484]]",
+    --"<34.71 21:02:13> [UNIT_SPELLCAST_SUCCEEDED] PLAYER_SPELL{Snowfive} -Column C Aura- [[raid8:Cast-3-5773-2810-3675-1223485-0052F16DC4:1223485]]",
+    --"<37.72 21:02:16> [UNIT_SPELLCAST_SUCCEEDED] PLAYER_SPELL{Gigitti} -Column D Aura- [[raid2:Cast-3-5773-2810-3675-1223486-0064716DC7:1223486]]",
+    --"<43.54 21:02:21> [UNIT_SPELLCAST_SUCCEEDED] PLAYER_SPELL{Gigitti} -Column E Aura- [[raid2:Cast-3-5773-2810-3675-1223489-0058F16DCD:1223489]]",
+    --"<47.41 21:02:25> [UNIT_SPELLCAST_SUCCEEDED] PLAYER_SPELL{Mal} -Column F Aura- [[raid6:Cast-3-5773-2810-3675-1223493-003B716DD1:1223493]]",
+
+    -- When we receive a spell cast success for one of the column auras we need to get the guid of the player then check which UID table they are in
+    if spellID == 1223483 or spellID == 1223484 or spellID == 1223485 or spellID == 1223486 or spellID == 1223489 or spellID == 1223493 then
+        -- Get player guid
+        local unitType, destID, spawn_uid_dest = strsplit("-",UnitGUID(unitTarget))
+        local name, realm = UnitName(unitTarget)
+
+        core:sendDebugMessage("Wall aura detected for " .. unitTarget .. " with spellID " .. spellID .. " and UID " .. spawn_uid_dest)
+
+        -- If the player is in the spawn table
+        if wallSpawnUID[spawn_uid_dest] ~= nil then
+            if spellID == 1223483 then
+                columACounter = columACounter + 1
+                core:sendDebugMessage("Wall spawned for " .. unitTarget .. " in column A" .. columACounter)
+            elseif spellID == 1223484 then
+                columBCounter = columBCounter + 1
+                core:sendDebugMessage("Wall spawned for " .. unitTarget .. " in column B" .. columBCounter)
+            elseif spellID == 1223485 then
+                columCCounter = columCCounter + 1
+                core:sendDebugMessage("Wall spawned for " .. unitTarget .. " in column C" .. columCCounter)
+            elseif spellID == 1223486 then
+                columDCounter = columDCounter + 1
+                core:sendDebugMessage("Wall spawned for " .. unitTarget .. " in column D" .. columDCounter)
+            elseif spellID == 1223489 then
+                columECounter = columECounter + 1
+                core:sendDebugMessage("Wall spawned for " .. unitTarget .. " in column E" .. columECounter)
+            elseif spellID == 1223493 then
+                columFCounter = columFCounter + 1
+                core:sendDebugMessage("Wall spawned for " .. unitTarget .. " in column F" .. columFCounter)
+            end
+
+            -- Clear them from the spawn table as they have now spawned a
+            core:sendDebugMessage("Clearing " .. unitTarget .. " from spawn table")
+            wallSpawnUID[spawn_uid_dest] = nil
+
+            -- Clear infoframe for player
+            InfoFrame_SetPlayerNeutralWithMessage(name, "")
+        elseif wallBrokenUID[spawn_uid_dest] ~= nil then
+            -- If the player is in the break table
+            -- Check player survived the break
+            C_Timer.After(0.2, function()
+                if UnitIsDead(unitTarget) == true then
+                    core:sendDebugMessage(unitTarget .. " died when breaking wall so not counting")
+                else
+                    core:sendDebugMessage("Wall broken for " .. unitTarget .. " in column with spellID " .. spellID)
+                    if spellID == 1223483 then
+                        if columACounter >= 4  then
+                            fourthWallsBroken = fourthWallsBroken + 1
+                            core:sendMessage(L["Shared_WallBroken"] .. " (" .. fourthWallsBroken .. "/18)", true)
+                        end
+                        core:sendDebugMessage("Wall broken for " .. unitTarget .. " in column A" .. columACounter)
+                        columACounter = columACounter - 1
+                    elseif spellID == 1223484 then
+                        if columBCounter >= 4 then
+                            fourthWallsBroken = fourthWallsBroken + 1
+                            core:sendMessage(L["Shared_WallBroken"] .. " (" .. fourthWallsBroken .. "/18)", true)
+                        end
+                        core:sendDebugMessage("Wall broken for " .. unitTarget .. " in column B" .. columBCounter)
+                        columBCounter = columBCounter - 1
+                    elseif spellID == 1223485 then
+                        if columCCounter >= 4 then
+                            fourthWallsBroken = fourthWallsBroken + 1
+                            core:sendMessage(L["Shared_WallBroken"] .. " (" .. fourthWallsBroken .. "/18)", true)
+                        end
+                        core:sendDebugMessage("Wall broken for " .. unitTarget .. " in column C" .. columCCounter)
+                        columCCounter = columCCounter - 1
+                    elseif spellID == 1223486 then
+                        if columDCounter >= 4 then
+                            fourthWallsBroken = fourthWallsBroken + 1
+                            core:sendMessage(L["Shared_WallBroken"] .. " (" .. fourthWallsBroken .. "/18)", true)
+                        end
+                        core:sendDebugMessage("Wall broken for " .. unitTarget .. " in column D" .. columDCounter)
+                        columDCounter = columDCounter - 1
+                    elseif spellID == 1223489 then
+                        if columECounter >= 4 then
+                            fourthWallsBroken = fourthWallsBroken + 1
+                            core:sendMessage(L["Shared_WallBroken"] .. " (" .. fourthWallsBroken .. "/18)", true)
+                        end
+                        core:sendDebugMessage("Wall broken for " .. unitTarget .. " in column E" .. columECounter)
+                        columECounter = columECounter - 1
+                    elseif spellID == 1223493 then
+                        if columFCounter >= 4 then
+                            fourthWallsBroken = fourthWallsBroken + 1
+                            core:sendMessage(L["Shared_WallBroken"] .. " (" .. fourthWallsBroken .. "/18)", true)
+                        end
+                        core:sendDebugMessage("Wall broken for " .. unitTarget .. " in column F" .. columFCounter)
+                        columFCounter = columFCounter - 1
+                    end
+                end
+
+                -- Clear them from the break table as they have now broken a wall
+                core:sendDebugMessage("Clearing " .. unitTarget .. " from break table")
+                wallBrokenUID[spawn_uid_dest] = nil
+
+                -- Clear infoframe for player
+                InfoFrame_SetPlayerNeutralWithMessage(name, "")
+            end)
+        end
+
+        -- Update info frame
+        core:sendDebugMessage("Column A: " .. columACounter .. " Column B: " .. columBCounter .. " Column C: " .. columCCounter .. " Column D: " .. columDCounter .. " Column E: " .. columECounter .. " Column F: " .. columFCounter)
+    end
+end
+
+function core._2810.Events:UNIT_SPELLCAST_START(self, unitTarget, castGUID, spellID)
+    if spellID == 1231871 then
+        -- Tank is going to be spawn a wall
+        local unitType, destID, spawn_uid_dest = strsplit("-",UnitGUID(unitTarget))
+        local name, realm = UnitName(unitTarget)
+        core:sendDebugMessage("Wall spawn detected for " .. unitTarget .. " with spellID " .. spellID .. " and UID " .. spawn_uid_dest)
+        if name ~= nil and wallSpawnUID[spawn_uid_dest] == nil then
+            wallSpawnUID[spawn_uid_dest] = spawn_uid_dest
+            core:sendDebugMessage("Wall spawn started for " .. unitTarget)
+
+            -- Mark player on infoframe as spawning
+            InfoFrame_SetPlayerCompleteWithMessage(name, L["Shared_Spawn"])
+        end
+    end
 end
 
 function core._2810.Events:UNIT_AURA(self, unitID)
@@ -371,4 +555,18 @@ function core._2810:ClearVariables()
     ------------------------------------------------------
     reverseGravityCounter = 0
     reverseGravityUID = {}
+
+    ------------------------------------------------------
+    ---- Fractillus
+    ------------------------------------------------------
+    columACounter = 0
+    columBCounter = 0
+    columCCounter = 0
+    columDCounter = 0
+    columECounter = 0
+    columFCounter = 0
+    wallSpawnUID = {}
+    wallBreakUID = {}
+    wallBrokenUID = {}
+    fourthWallsBroken = 0
 end
