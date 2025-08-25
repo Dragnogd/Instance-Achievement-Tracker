@@ -607,9 +607,9 @@ function core._2810.Events:UNIT_SPELLCAST_SUCCEEDED(self, unitTarget, castGUID, 
         local name, realm = UnitName(unitTarget)
 
         -- Mark sure they are on InfoFrame if they join late as InfoFrame does not reset properly here due to always being shown for boss
-        if core.InfoFrame_PlayersTable[player] == nil then
-            core.InfoFrame_PlayersTable[player] = {1,""}
-        end
+        -- if core.InfoFrame_PlayersTable[player] == nil then
+        --     core.InfoFrame_PlayersTable[player] = {1,""}
+        -- end
 
         --core:sendDebugMessage("Wall aura detected for " .. unitTarget .. " with spellID " .. spellID .. " and UID " .. spawn_uid_dest)
 
