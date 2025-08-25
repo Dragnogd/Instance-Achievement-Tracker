@@ -1,5 +1,5 @@
 --------------------------------------
--- Last Auto Generated: 16/08/2025 16:43:32 using https://github.com/Dragnogd/Instance-Achievement-Tracker-Database-Manager
+-- Last Auto Generated: 17/08/2025 16:03:30 using https://github.com/Dragnogd/Instance-Achievement-Tracker-Database-Manager
 --------------------------------------
 local _, core = ...
 local L = core.L
@@ -364,7 +364,7 @@ core.Instances = {
 					players = {},
 					tactics = {
 						[11] = {
-							{ tactic = L["ManaforgeOmega_PlexusSentinel"] },
+							{ tactic = format(L["ManaforgeOmega_PlexusSentinel"], "IAT_243803", C_Spell.GetSpellLink(1220489), "IAT_243803", "IAT_243803", C_Spell.GetSpellLink(1233449), "IAT_243803") },
 						},
 					},
 					enabled = true,
@@ -380,7 +380,7 @@ core.Instances = {
 					players = {},
 					tactics = {
 						[11] = {
-							{ tactic = L["ManaforgeOmega_Loomithar"] },
+							{ tactic = format(L["ManaforgeOmega_Loomithar"], C_Spell.GetSpellLink(1246713), C_Spell.GetSpellLink(1246711), C_Spell.GetSpellLink(1246718)) },
 						},
 					},
 					enabled = true,
@@ -396,7 +396,7 @@ core.Instances = {
 					players = {},
 					tactics = {
 						[11] = {
-							{ tactic = L["ManaforgeOmega_SoulbinderNaazindhri"] },
+							{ tactic = format(L["ManaforgeOmega_SoulbinderNaazindhri"], "IAT_248704", "IAT_248707", "IAT_248707") },
 						},
 					},
 					enabled = true,
@@ -411,7 +411,7 @@ core.Instances = {
 					players = {},
 					tactics = {
 						[11] = {
-							{ tactic = L["ManaforgeOmega_ForgeweaverAraz"] },
+							{ tactic = format(L["ManaforgeOmega_ForgeweaverAraz"], "IAT_241923", "IAT_241923", "IAT_241923", "IAT_241923", "IAT_242589", "IAT_242589") },
 						},
 					},
 					enabled = true,
@@ -426,7 +426,7 @@ core.Instances = {
 					players = {},
 					tactics = {
 						[11] = {
-							{ tactic = L["ManaforgeOmega_SoulHunters"] },
+							{ tactic = format(L["ManaforgeOmega_SoulHunters"], C_Spell.GetSpellLink(1247656), C_Spell.GetSpellLink(1246980)) },
 						},
 					},
 					enabled = true,
@@ -449,6 +449,7 @@ core.Instances = {
 					track = function() core._2810:Fractillus() end ,
 					partial = false,
 					encounterID = 3133,
+					displayInfoFrame = true,
 				},
 				boss7 = {
 					name = 2690, --Nexus-King Salhadaar
@@ -457,7 +458,7 @@ core.Instances = {
 					players = {},
 					tactics = {
 						[11] = {
-							{ tactic = L["ManaforgeOmega_NexusKingSalhadaar"] },
+							{ tactic = format(L["ManaforgeOmega_NexusKingSalhadaar"], "IAT_228470", "IAT_228470") },
 						},
 					},
 					enabled = true,
@@ -472,7 +473,7 @@ core.Instances = {
 					players = {},
 					tactics = {
 						[11] = {
-							{ tactic = L["ManaforgeOmega_DimensiusTheAllDevouring"] },
+							{ tactic = format(L["ManaforgeOmega_DimensiusTheAllDevouring"], C_Spell.GetSpellLink(1243577), "IAT_242587", C_Spell.GetSpellLink(1228206), C_Spell.GetSpellLink(1243577), C_Spell.GetSpellLink(1228206), C_Spell.GetSpellLink(1228206), C_Spell.GetSpellLink(1243577), C_Spell.GetSpellLink(1243577)) },
 						},
 					},
 					enabled = true,
