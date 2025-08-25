@@ -96,6 +96,37 @@ function InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
     end
 end
 
+function InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfoCustomData(customData)
+    --This will update list of players on the info frame
+    if next(core.InfoFrame_PlayersTable) == nil then
+        --If table is empty then generate players and place to store additional message
+        core:sendDebugMessage("Setting up InfoFrame with Additional Info")
+        for k,player in pairs(core:getPlayersInGroupForAchievement()) do
+            core.InfoFrame_PlayersTable[player] = {1,""}
+        end
+    else
+        --Update Info Frame with values from table
+        local messageStr = ""
+        for player, status in pairs(core.InfoFrame_PlayersTable) do
+            --1 = incomplete, 2 = complete, 3 = failed
+            if status[1] == 1 then
+                --Player has not completed the requirements for the achievement yet
+                messageStr = messageStr .. colourWhite .. player .. " (" .. status[2] .. ")|r\n"
+            elseif status[1] == 2 then
+                --Player has completed the requirements for the achievement
+                messageStr = messageStr .. colourGreen .. player .. " (" .. status[2] .. ")|r\n"
+            elseif status[1] == 4 then
+                --Player requirements are currently in progress
+                messageStr = messageStr .. colourOrange .. player .. " (" .. status[2] .. ")|r\n"
+            elseif status[1] then
+                --Player had completed the requirements for the achievement but has since failed it
+                messageStr = messageStr .. colourRed .. player .. " (" .. status[2] .. ")|r\n"
+            end
+        end
+        core.IATInfoFrame:SetText1(messageStr .. "\n\n" .. customData)
+    end
+end
+
 function InfoFrame_GetHighestDynamicPlayer()
     local highCounter = 0
     local highPlayer = ""
@@ -688,6 +719,10 @@ function InfoFrame_SetHeaderWithColour(message,colour)
     else
         core.IATInfoFrame:SetSubHeading1(message)
     end
+end
+
+function InfoFrame_GetIcon(iconIndex)
+    return "|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_" .. iconIndex .. ":0|t"
 end
 
 function InfoFrame_SetupManualCounter(totalCount)
