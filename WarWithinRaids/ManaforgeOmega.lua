@@ -231,8 +231,14 @@ function core._2810:Fractillus()
     -- Defeat Fractillus after destroying a fourth wall 18 times in Manaforge Omega on Normal difficulty or higher.
 
     InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
-    InfoFrame_SetHeaderMessage("A: " .. columACounter .. " B: " .. columBCounter .. " C: " .. columCCounter .. " D: " .. columDCounter .. " E: " .. columECounter .. " F: " .. columFCounter .. "\n")
-
+    InfoFrame_SetHeaderMessage(
+        InfoFrame_GetIcon(1) .. " : " .. columACounter .. " " ..
+        InfoFrame_GetIcon(2) .. " : " .. columBCounter .. " " ..
+        InfoFrame_GetIcon(3) .. " : " .. columCCounter .. " " ..
+        InfoFrame_GetIcon(4) .. " : " .. columDCounter .. " " ..
+        InfoFrame_GetIcon(7) .. " : " .. columECounter .. " " ..
+        InfoFrame_GetIcon(6) .. " : " .. columFCounter .. "\n"
+    )
     -- Wall spawning
 
     -- Player (SPELL_AURA_APPLIED) or Tank (SPELL_CAST_START) is marked to spawn a wall
@@ -254,27 +260,29 @@ function core._2810:Fractillus()
             if playerLanes[core.spawn_uid_dest_Player] == "A" then
                 columACounter = columACounter + 1
                 core:sendDebugMessage("Column A counter is now " .. columACounter .. " after wall spawned by " .. core.destName)
+                InfoFrame_SetPlayerNeutralWithMessage(core.destName, InfoFrame_GetIcon(6))
             elseif playerLanes[core.spawn_uid_dest_Player] == "B" then
                 columBCounter = columBCounter + 1
                 core:sendDebugMessage("Column B counter is now " .. columBCounter .. " after wall spawned by " .. core.destName)
+                InfoFrame_SetPlayerNeutralWithMessage(core.destName, InfoFrame_GetIcon(7))
             elseif playerLanes[core.spawn_uid_dest_Player] == "C" then
                 columCCounter = columCCounter + 1
                 core:sendDebugMessage("Column C counter is now " .. columCCounter .. " after wall spawned by " .. core.destName)
+                InfoFrame_SetPlayerNeutralWithMessage(core.destName, InfoFrame_GetIcon(4))
             elseif playerLanes[core.spawn_uid_dest_Player] == "D" then
                 columDCounter = columDCounter + 1
                 core:sendDebugMessage("Column D counter is now " .. columDCounter .. " after wall spawned by " .. core.destName)
+                InfoFrame_SetPlayerNeutralWithMessage(core.destName, InfoFrame_GetIcon(3))
             elseif playerLanes[core.spawn_uid_dest_Player] == "E" then
                 columECounter = columECounter + 1
                 core:sendDebugMessage("Column E counter is now " .. columECounter .. " after wall spawned by " .. core.destName)
+                InfoFrame_SetPlayerNeutralWithMessage(core.destName, InfoFrame_GetIcon(2))
             elseif playerLanes[core.spawn_uid_dest_Player] == "F" then
                 columFCounter = columFCounter + 1
                 core:sendDebugMessage("Column F counter is now " .. columFCounter .. " after wall spawned by " .. core.destName)
+                InfoFrame_SetPlayerNeutralWithMessage(core.destName, InfoFrame_GetIcon(1))
             end
 
-            -- Mark player on infoframe as neutral again now the wall has spawned
-            InfoFrame_SetPlayerNeutralWithMessage(core.destName, playerLanes[core.spawn_uid_dest_Player])
-
-            --core:sendDebugMessage("Wall spawned detected for " .. core.destName .. " in lane " .. (playerLanes[core.spawn_uid_dest_Player] or "Unknown") )
         end
     end
 
@@ -296,33 +304,48 @@ function core._2810:Fractillus()
         -- A wall has been spawned. We need to increment the counter for the lane the player is in
         if core.destName ~= nil then
             -- If any counters are at 4 then increment the fourth wall broken counter
-            if columACounter >= 4 or columBCounter >= 4 or columCCounter >= 4 or columDCounter >= 4 or columECounter >= 4 or columFCounter >= 4 then
+            if columACounter >= 2 or columBCounter >= 2 or columCCounter >= 2 or columDCounter >= 2 or columECounter >= 2 or columFCounter >= 2 then
                 fourthWallsBroken = fourthWallsBroken + 1
                 core:sendMessage(core:getAchievement() .. " " .. L["Shared_WallBroken"] .. " (" .. fourthWallsBroken .. "/18)",true)
             end
 
             if playerLanes[core.spawn_uid_dest_Player] == "A" then
-                columACounter = columACounter - 1
+                if columACounter > 0 then
+                    columACounter = columACounter - 1
+                end
                 core:sendDebugMessage("Column A counter is now " .. columACounter .. " after wall broken by " .. core.destName)
+                InfoFrame_SetPlayerNeutralWithMessage(core.destName, InfoFrame_GetIcon(6))
             elseif playerLanes[core.spawn_uid_dest_Player] == "B" then
-                columBCounter = columBCounter - 1
+                if columBCounter > 0 then
+                    columBCounter = columBCounter - 1
+                end
                 core:sendDebugMessage("Column B counter is now " .. columBCounter .. " after wall broken by " .. core.destName)
+                InfoFrame_SetPlayerNeutralWithMessage(core.destName, InfoFrame_GetIcon(7))
             elseif playerLanes[core.spawn_uid_dest_Player] == "C" then
-                columCCounter = columCCounter - 1
+                if columCCounter > 0 then
+                    columCCounter = columCCounter - 1
+                end
                 core:sendDebugMessage("Column C counter is now " .. columCCounter .. " after wall broken by " .. core.destName)
+                InfoFrame_SetPlayerNeutralWithMessage(core.destName, InfoFrame_GetIcon(4))
             elseif playerLanes[core.spawn_uid_dest_Player] == "D" then
-                columDCounter = columDCounter - 1
+                if columDCounter > 0 then
+                    columDCounter = columDCounter - 1
+                end
                 core:sendDebugMessage("Column D counter is now " .. columDCounter .. " after wall broken by " .. core.destName)
+                InfoFrame_SetPlayerNeutralWithMessage(core.destName, InfoFrame_GetIcon(3))
             elseif playerLanes[core.spawn_uid_dest_Player] == "E" then
-                columECounter = columECounter - 1
+                if columECounter > 0 then
+                    columECounter = columECounter - 1
+                end
                 core:sendDebugMessage("Column E counter is now " .. columECounter .. " after wall broken by " .. core.destName)
+                InfoFrame_SetPlayerNeutralWithMessage(core.destName, InfoFrame_GetIcon(2))
             elseif playerLanes[core.spawn_uid_dest_Player] == "F" then
-                columFCounter = columFCounter - 1
+                if columFCounter > 0 then
+                    columFCounter = columFCounter - 1
+                end
                 core:sendDebugMessage("Column F counter is now " .. columFCounter .. " after wall broken by " .. core.destName)
+                InfoFrame_SetPlayerNeutralWithMessage(core.destName, InfoFrame_GetIcon(1))
             end
-
-            -- Mark player on infoframe as neutral again now the wall has spawned
-            InfoFrame_SetPlayerNeutralWithMessage(core.destName, playerLanes[core.spawn_uid_dest_Player])
 
             --core:sendDebugMessage("Wall break soon detected for " .. core.destName .. " in lane " .. (playerLanes[core.spawn_uid_dest_Player] or "Unknown") )
         end
@@ -427,6 +450,18 @@ function core._2810.Events:UNIT_SPELLCAST_SUCCEEDED(self, unitTarget, castGUID, 
 
     -- When we receive a spell cast success for one of the column auras we need to get the guid of the player then check which UID table they are in
     if spellID == 1223483 or spellID == 1223484 or spellID == 1223485 or spellID == 1223486 or spellID == 1223489 or spellID == 1223493 then
+        core.IATInfoFrame:ToggleOn()
+        core.IATInfoFrame:SetHeading(GetAchievementLink(41617))
+        InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
+
+       InfoFrame_SetHeaderMessage(
+            InfoFrame_GetIcon(1) .. " : " .. columACounter .. " " ..
+            InfoFrame_GetIcon(2) .. " : " .. columBCounter .. " " ..
+            InfoFrame_GetIcon(3) .. " : " .. columCCounter .. " " ..
+            InfoFrame_GetIcon(4) .. " : " .. columDCounter .. " " ..
+            InfoFrame_GetIcon(7) .. " : " .. columECounter .. " " ..
+            InfoFrame_GetIcon(6) .. " : " .. columFCounter .. "\n"
+        )
         -- Get player guid
         local unitType, destID, spawn_uid_dest = strsplit("-",UnitGUID(unitTarget))
         local name, realm = UnitName(unitTarget)
@@ -437,25 +472,30 @@ function core._2810.Events:UNIT_SPELLCAST_SUCCEEDED(self, unitTarget, castGUID, 
         if spellID == 1223483 then
             playerLanes[spawn_uid_dest] = "A"
             core:sendDebugMessage("Player " .. unitTarget .. " is in lane A")
+            InfoFrame_SetPlayerNeutralWithMessage(name, InfoFrame_GetIcon(6))
         elseif spellID == 1223484 then
             playerLanes[spawn_uid_dest] = "B"
             core:sendDebugMessage("Player " .. unitTarget .. " is in lane B")
+            InfoFrame_SetPlayerNeutralWithMessage(name, InfoFrame_GetIcon(7))
         elseif spellID == 1223485 then
             playerLanes[spawn_uid_dest] = "C"
             core:sendDebugMessage("Player " .. unitTarget .. " is in lane C")
+            InfoFrame_SetPlayerNeutralWithMessage(name, InfoFrame_GetIcon(4))
         elseif spellID == 1223486 then
             playerLanes[spawn_uid_dest] = "D"
             core:sendDebugMessage("Player " .. unitTarget .. " is in lane D")
+            InfoFrame_SetPlayerNeutralWithMessage(name, InfoFrame_GetIcon(3))
         elseif spellID == 1223489 then
             playerLanes[spawn_uid_dest] = "E"
             core:sendDebugMessage("Player " .. unitTarget .. " is in lane E")
+            InfoFrame_SetPlayerNeutralWithMessage(name, InfoFrame_GetIcon(2))
         elseif spellID == 1223493 then
             playerLanes[spawn_uid_dest] = "F"
             core:sendDebugMessage("Player " .. unitTarget .. " is in lane F")
+            InfoFrame_SetPlayerNeutralWithMessage(name, InfoFrame_GetIcon(1))
         end
 
-        -- Show which lane the player is in on info frame
-        InfoFrame_SetPlayerNeutralWithMessage(name, playerLanes[spawn_uid_dest])
+
     end
 end
 
