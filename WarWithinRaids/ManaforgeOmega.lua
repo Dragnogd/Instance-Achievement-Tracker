@@ -248,6 +248,8 @@ function core._2810:Fractillus()
             core:sendMessageSafe(playersNotInLane,true)
         end
 
+        core:sendMessage(L["ManaforgeOmega_AccurateTracking"],true)
+
         initialMessageAnnounced = true
     end
 
@@ -268,7 +270,7 @@ function core._2810:Fractillus()
     -- Player (SPELL_AURA_APPLIED) or Tank (SPELL_CAST_START) is marked to spawn a wall
     -- https://www.wowhead.com/spell=1233411/crystalline-shockwave
     if (core.type == "SPELL_AURA_APPLIED" and core.spellId == 1233411) or (core.type == "SPELL_CAST_START" and core.spellId == 1231871) then
-        if core.destName ~= nil then
+        if core.destName ~= nil and playerLanes[core.spawn_uid_dest_Player] ~= nil then
             --core:sendDebugMessage("Wall spawn soon detected for " .. core.destName)
 
             -- Mark player on infoframe as spawning
@@ -313,6 +315,9 @@ function core._2810:Fractillus()
 
             -- Add to spawn table
             playersSpawnUID[core.destName] = core.destName
+        elseif playerLanes[core.spawn_uid_dest_Player] == nil then
+            -- Warn tracking will not be accurate
+            core:sendMessage(L["ManaforgeOmega_CannotDetectWallLocation"] .. " " .. core.destName,true)
         end
     end
 
@@ -320,7 +325,7 @@ function core._2810:Fractillus()
     if (core.type == "SPELL_AURA_REMOVED" and core.spellId == 1233411) or (core.type == "SPELL_CAST_SUCCESS" and core.spellId == 1231871) then
         --core:sendDebugMessage("Wall spawn detected event for " .. core.destName .. core.type .. " " .. core.spellId)
         -- A wall has been spawned. We need to increment the counter for the lane the player is in
-        if core.destName ~= nil then
+        if core.destName ~= nil and playerLanes[core.spawn_uid_dest_Player] ~= nil then
             if playerLanes[core.spawn_uid_dest_Player] == "A" then
                 columACounter = columACounter + 1
                 --core:sendDebugMessage("Column A counter is now " .. columACounter .. " after wall spawned by " .. core.destName)
@@ -351,6 +356,9 @@ function core._2810:Fractillus()
             if playersSpawnUID[core.destName] ~= nil then
                 playersSpawnUID[core.destName] = nil
             end
+        elseif playerLanes[core.spawn_uid_dest_Player] == nil then
+            -- Warn tracking will not be accurate
+            core:sendMessage(L["ManaforgeOmega_CannotDetectWallLocation"] .. " " .. core.destName,true)
         end
     end
 
@@ -358,7 +366,7 @@ function core._2810:Fractillus()
 
     -- Player is going to break a wall
     if core.type == "SPELL_AURA_APPLIED" and core.spellId == 1227373 then
-        if core.destName ~= nil then
+        if core.destName ~= nil and playerLanes[core.spawn_uid_dest_Player] ~= nil then
             --core:sendDebugMessage("Wall break soon detected for " .. core.destName)
 
             -- Mark Infoframe failed if player are breaking a lane with less than four walls
@@ -402,6 +410,9 @@ function core._2810:Fractillus()
 
             -- Add to break table
             playersbreakUID[core.destName] = core.destName
+        elseif playerLanes[core.spawn_uid_dest_Player] == nil then
+            -- Warn tracking will not be accurate
+            core:sendMessage(L["ManaforgeOmega_CannotDetectWallLocation"] .. " " .. core.destName,true)
         end
     end
 
@@ -409,21 +420,21 @@ function core._2810:Fractillus()
     -- https://www.wowhead.com/spell=1227373/shattershell
     if core.type == "SPELL_AURA_REMOVED" and core.spellId == 1227373 then
         -- A wall has been spawned. We need to increment the counter for the lane the player is in
-        if core.destName ~= nil then
+        if core.destName ~= nil and playerLanes[core.spawn_uid_dest_Player] ~= nil then
             local currentName = core.destName
             local currentSpawnUIDDestPlayer = core.spawn_uid_dest_Player
             -- We need to wait a moment to see if the player is dead or not
             C_Timer.After(0.5, function()
                 if UnitIsDeadOrGhost(currentName) == false then
                     -- If any counters are at 4 then increment the fourth wall broken counter
-                    if columACounter >= 4 or columBCounter >= 4 or columCCounter >= 4 or columDCounter >= 4 or columECounter >= 4 or columFCounter >= 4 then
+                    if columACounter == 4 or columBCounter == 4 or columCCounter == 4 or columDCounter == 4 or columECounter == 4 or columFCounter == 4 then
                         fourthWallsBroken = fourthWallsBroken + 1
                         core:sendMessage(core:getAchievement() .. " " .. L["Shared_WallBroken"] .. " (" .. fourthWallsBroken .. "/18)",true)
                     end
 
                     if playerLanes[currentSpawnUIDDestPlayer] == "A" then
-                        if columACounter < 4 then
-                            core:sendMessage("(" .. currentName .. " " .. L["ManaforgeOmega_PlayerBrokeWrongWall"] .. ")", true)
+                        if columACounter ~= 4 then
+                            core:sendMessage(currentName .. " " .. L["ManaforgeOmega_PlayerBrokeWrongWall"], true)
                         end
                         if columACounter > 0 then
                             columACounter = columACounter - 1
@@ -431,8 +442,8 @@ function core._2810:Fractillus()
                         --core:sendDebugMessage("Column A counter is now " .. columACounter .. " after wall broken by " .. currentName)
                         InfoFrame_SetPlayerNeutralWithMessage(currentName, InfoFrame_GetIcon(6))
                     elseif playerLanes[currentSpawnUIDDestPlayer] == "B" then
-                        if columBCounter < 4 then
-                            core:sendMessage("(" .. currentName .. " " .. L["ManaforgeOmega_PlayerBrokeWrongWall"] .. ")", true)
+                        if columBCounter ~= 4 then
+                            core:sendMessage(currentName .. " " .. L["ManaforgeOmega_PlayerBrokeWrongWall"], true)
                         end
                         if columBCounter > 0 then
                             columBCounter = columBCounter - 1
@@ -440,8 +451,8 @@ function core._2810:Fractillus()
                         --core:sendDebugMessage("Column B counter is now " .. columBCounter .. " after wall broken by " .. currentName)
                         InfoFrame_SetPlayerNeutralWithMessage(currentName, InfoFrame_GetIcon(7))
                     elseif playerLanes[currentSpawnUIDDestPlayer] == "C" then
-                        if columCCounter < 4 then
-                            core:sendMessage("(" .. currentName .. " " .. L["ManaforgeOmega_PlayerBrokeWrongWall"] .. ")", true)
+                        if columCCounter ~= 4 then
+                            core:sendMessage(currentName .. " " .. L["ManaforgeOmega_PlayerBrokeWrongWall"], true)
                         end
                         if columCCounter > 0 then
                             columCCounter = columCCounter - 1
@@ -449,8 +460,8 @@ function core._2810:Fractillus()
                         --core:sendDebugMessage("Column C counter is now " .. columCCounter .. " after wall broken by " .. currentName)
                         InfoFrame_SetPlayerNeutralWithMessage(currentName, InfoFrame_GetIcon(4))
                     elseif playerLanes[currentSpawnUIDDestPlayer] == "D" then
-                        if columDCounter < 4 then
-                            core:sendMessage("(" .. currentName .. " " .. L["ManaforgeOmega_PlayerBrokeWrongWall"] .. ")", true)
+                        if columDCounter ~= 4 then
+                            core:sendMessage(currentName .. " " .. L["ManaforgeOmega_PlayerBrokeWrongWall"], true)
                         end
                         if columDCounter > 0 then
                             columDCounter = columDCounter - 1
@@ -458,8 +469,8 @@ function core._2810:Fractillus()
                         --core:sendDebugMessage("Column D counter is now " .. columDCounter .. " after wall broken by " .. currentName)
                         InfoFrame_SetPlayerNeutralWithMessage(currentName, InfoFrame_GetIcon(3))
                     elseif playerLanes[currentSpawnUIDDestPlayer] == "E" then
-                        if columECounter < 4 then
-                            core:sendMessage("(" .. currentName .. " " .. L["ManaforgeOmega_PlayerBrokeWrongWall"] .. ")", true)
+                        if columECounter ~= 4 then
+                            core:sendMessage(currentName .. " " .. L["ManaforgeOmega_PlayerBrokeWrongWall"], true)
                         end
                         if columECounter > 0 then
                             columECounter = columECounter - 1
@@ -467,8 +478,8 @@ function core._2810:Fractillus()
                         --core:sendDebugMessage("Column E counter is now " .. columECounter .. " after wall broken by " .. currentName)
                         InfoFrame_SetPlayerNeutralWithMessage(currentName, InfoFrame_GetIcon(2))
                     elseif playerLanes[currentSpawnUIDDestPlayer] == "F" then
-                        if columFCounter < 4 then
-                            core:sendMessage("(" .. currentName .. " " .. L["ManaforgeOmega_PlayerBrokeWrongWall"] .. ")", true)
+                        if columFCounter ~= 4 then
+                            core:sendMessage(currentName .. " " .. L["ManaforgeOmega_PlayerBrokeWrongWall"], true)
                         end
                         if columFCounter > 0 then
                             columFCounter = columFCounter - 1
@@ -484,6 +495,8 @@ function core._2810:Fractillus()
                     playersbreakUID[currentName] = nil
                 end
             end)
+        elseif playerLanes[core.spawn_uid_dest_Player] == nil then
+            core:sendMessage(L["ManaforgeOmega_CannotDetectWallLocation"] .. " " .. core.destName,true)
         end
     end
 
@@ -607,9 +620,9 @@ function core._2810.Events:UNIT_SPELLCAST_SUCCEEDED(self, unitTarget, castGUID, 
         local name, realm = UnitName(unitTarget)
 
         -- Mark sure they are on InfoFrame if they join late as InfoFrame does not reset properly here due to always being shown for boss
-        -- if core.InfoFrame_PlayersTable[player] == nil then
-        --     core.InfoFrame_PlayersTable[player] = {1,""}
-        -- end
+        if core.InfoFrame_PlayersTable[name] == nil then
+            core.InfoFrame_PlayersTable[name] = {1,""}
+        end
 
         --core:sendDebugMessage("Wall aura detected for " .. unitTarget .. " with spellID " .. spellID .. " and UID " .. spawn_uid_dest)
 
