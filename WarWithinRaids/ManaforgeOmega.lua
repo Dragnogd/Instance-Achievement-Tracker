@@ -506,7 +506,7 @@ function core._2810:Fractillus()
         fourthWallCompleteCheck = true
         -- Wait 1 second then check blizzard tracker
         C_Timer.After(1, function()
-            if core:getBlizzardTrackingStatus(41617, 1) == false then
+            if core:getBlizzardTrackingStatus(41617) == false then
                 core:sendMessage(L["Core_WaitForTrackerToConfirm"],true)
             end
         end)
