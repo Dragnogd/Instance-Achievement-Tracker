@@ -57,6 +57,8 @@ local initialMessageAnnounced = false
 local playersSpawnUID = {}
 local playersbreakUID = {}
 local fourthWallCompleteCheck = false
+local pendingWallBreaks = {}
+local wallbreakLocked = false
 
 ------------------------------------------------------
 ---- Dimensius The All Devouring
@@ -428,9 +430,18 @@ function core._2810:Fractillus()
             C_Timer.After(0.5, function()
                 if UnitIsDeadOrGhost(currentName) == false then
                     -- If any counters are at 4 then increment the fourth wall broken counter
-                    if columACounter == 4 or columBCounter == 4 or columCCounter == 4 or columDCounter == 4 or columECounter == 4 or columFCounter == 4 then
-                        fourthWallsBroken = fourthWallsBroken + 1
-                        core:sendMessage(core:getAchievement() .. " " .. L["Shared_WallBroken"] .. " (" .. fourthWallsBroken .. "/18)",true)
+                    if columACounter == 4 then
+                        pendingWallBreaks["A"] = true
+                    elseif columBCounter == 4 then
+                        pendingWallBreaks["B"] = true
+                    elseif columCCounter == 4 then
+                        pendingWallBreaks["C"] = true
+                    elseif columDCounter == 4 then
+                        pendingWallBreaks["D"] = true
+                    elseif columECounter == 4 then
+                        pendingWallBreaks["E"] = true
+                    elseif columFCounter == 4 then
+                        pendingWallBreaks["F"] = true
                     end
 
                     if playerLanes[currentSpawnUIDDestPlayer] == "A" then
@@ -498,6 +509,21 @@ function core._2810:Fractillus()
             end)
         elseif core.destName ~= nil and playerLanes[core.spawn_uid_dest_Player] == nil then
             core:sendMessage(L["ManaforgeOmega_CannotDetectWallLocation"] .. " " .. core.destName,true)
+        end
+
+        if wallbreakLocked == false then
+            wallbreakLocked = true
+            -- Wait a moment to see if any other walls are being broken at the same time
+            C_Timer.After(3, function()
+                for lane,_ in pairs(pendingWallBreaks) do
+                    if pendingWallBreaks[lane] == true then
+                        fourthWallsBroken = fourthWallsBroken + 1
+                        pendingWallBreaks[lane] = nil
+                        core:sendMessage(core:getAchievement() .. " " .. L["Shared_WallBroken"] .. " (" .. fourthWallsBroken .. "/18)",true)
+                    end
+                end
+                wallbreakLocked = false
+            end)
         end
     end
 
@@ -800,4 +826,6 @@ function core._2810:ClearVariables()
     playersSpawnUID = {}
     playersbreakUID = {}
     fourthWallCompleteCheck = false
+    pendingWallBreaks = {}
+    wallbreakLocked = false
 end
