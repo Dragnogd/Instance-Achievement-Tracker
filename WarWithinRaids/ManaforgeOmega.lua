@@ -56,6 +56,7 @@ local fourthWallsBroken = 0
 local initialMessageAnnounced = false
 local playersSpawnUID = {}
 local playersbreakUID = {}
+local fourthWallCompleteCheck = false
 
 ------------------------------------------------------
 ---- Dimensius The All Devouring
@@ -500,6 +501,17 @@ function core._2810:Fractillus()
         end
     end
 
+    -- If the fourth wall counte equals 18, and the blizzard tracker is not complete we need to warn players not to kill boss as something has gone wrong
+    if fourthWallsBroken == 18 and fourthWallCompleteCheck == false then
+        fourthWallCompleteCheck = true
+        -- Wait 1 second then check blizzard tracker
+        C_Timer.After(1, function()
+            if core:getBlizzardTrackingStatus(41617, 1) == false then
+                core:sendMessage(L["Core_WaitForTrackerToConfirm"],true)
+            end
+        end)
+    end
+
     if core:getBlizzardTrackingStatus(41617) == true then
         -- If our fourth wall broken counter is less than 18 then announce achievement is successfull but our tracker has encounted an error
         core:getAchievementSuccess()
@@ -787,4 +799,5 @@ function core._2810:ClearVariables()
     initialMessageAnnounced = false
     playersSpawnUID = {}
     playersbreakUID = {}
+    fourthWallCompleteCheck = false
 end

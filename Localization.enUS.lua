@@ -72,7 +72,7 @@ local baseLocale = {
 	["Core_Reason"] = "Reason",
 	["Core_CriteriaMet"] = "Criteria has been met. Boss can now be killed!",
 	["Core_CriteriaMetManual"] = "Criteria has been met. Boss can now be killed! Warning: This tracker has used data manually collected by players.",
-	["Core_WaitForTrackerToConfirm"] = "Waiting for tracker to confirm success",
+	["Core_WaitForTrackerToConfirm"] = "Tracker error. Waiting for blizzard tracker to confirm success. DO NOT KILL BOSS",
 	["Core_Counter"] = "Counter",
 	["Core_CombatLogEnabled"] = "Combat Logging enabled",
 	["Core_CombatLogDisabled"] = "Combat Logging disabled",
@@ -1078,7 +1078,10 @@ local baseLocale = {
 	["Shared_WallBroken"] = "Walls broken",
 	["Shared_Break"] = "Break",
 	["Shared_Spawn"] = "Spawn",
-	["ManaforgeOmega_TrackingLanes"] = "To use the InfoFrame tracking for this achievement, place the world markers for the lanes in the following order as shown above:",
+	["ManaforgeOmega_TrackingLanes"] = "Before pulling the boss, place the raid world markers from left to right (when facing boss) for each of the lanes as shown at the top of the InfoFrame",
 	["ManaforgeOmega_PlayersNotInLane"] = "The following players lane not detected. Move to a different lane to update status: Tracking may not be accurate unless all player lanes are detected: ",
+	["ManaforgeOmega_PlayerBrokeWrongWall"] = "has broken the wrong wall",
+	["ManaforgeOmega_CannotDetectWallLocation"] = "Cannot detect players current wall location. Tracking may not be accurate",
+	["ManaforgeOmega_AccurateTracking"] = "To ensure accurate tracking. It is advised all players move to a different lane and back upon pulling boss so IAT can detect all players lanes",
 }
 core:RegisterLocale('enUS', baseLocale)
