@@ -315,7 +315,7 @@ function core._2810:Fractillus()
             end
 
             -- Add to spawn table
-            playersSpawnUID[core.destName] = core.destName
+            playersSpawnUID[core.spawn_uid_dest_Player] = core.spawn_uid_dest_Player
         elseif core.destName ~= nil and playerLanes[core.spawn_uid_dest_Player] == nil then
             -- Warn tracking will not be accurate
             core:sendMessage(L["ManaforgeOmega_CannotDetectWallLocation"] .. " " .. core.destName,true)
@@ -354,8 +354,8 @@ function core._2810:Fractillus()
             end
 
             -- Remove from spawn table
-            if playersSpawnUID[core.destName] ~= nil then
-                playersSpawnUID[core.destName] = nil
+            if playersSpawnUID[core.spawn_uid_dest_Player] ~= nil then
+                playersSpawnUID[core.spawn_uid_dest_Player] = nil
             end
         elseif core.destName ~= nil and playerLanes[core.spawn_uid_dest_Player] == nil then
             -- Warn tracking will not be accurate
@@ -410,7 +410,7 @@ function core._2810:Fractillus()
             end
 
             -- Add to break table
-            playersbreakUID[core.destName] = core.destName
+            playersbreakUID[core.spawn_uid_dest_Player] = core.spawn_uid_dest_Player
         elseif core.destName ~= nil and playerLanes[core.spawn_uid_dest_Player] == nil then
             -- Warn tracking will not be accurate
             core:sendMessage(L["ManaforgeOmega_CannotDetectWallLocation"] .. " " .. core.destName,true)
@@ -492,8 +492,8 @@ function core._2810:Fractillus()
                 end
 
                 -- Remove from break table
-                if playersbreakUID[currentName] ~= nil then
-                    playersbreakUID[currentName] = nil
+                if playersbreakUID[currentSpawnUIDDestPlayer] ~= nil then
+                    playersbreakUID[currentSpawnUIDDestPlayer] = nil
                 end
             end)
         elseif core.destName ~= nil and playerLanes[core.spawn_uid_dest_Player] == nil then
@@ -642,41 +642,41 @@ function core._2810.Events:UNIT_SPELLCAST_SUCCEEDED(self, unitTarget, castGUID, 
         if spellID == 1223483 then
             playerLanes[spawn_uid_dest] = "A"
             --core:sendDebugMessage("Player " .. unitTarget .. " is in lane A")
-            core._2810:UpdatePlayerLane(name, 6, "A")
+            core._2810:UpdatePlayerLane(name, 6, "A", spawn_uid_dest)
         elseif spellID == 1223484 then
             playerLanes[spawn_uid_dest] = "B"
             --core:sendDebugMessage("Player " .. unitTarget .. " is in lane B")
-            core._2810:UpdatePlayerLane(name, 7, "B")
+            core._2810:UpdatePlayerLane(name, 7, "B", spawn_uid_dest)
         elseif spellID == 1223485 then
             playerLanes[spawn_uid_dest] = "C"
             --core:sendDebugMessage("Player " .. unitTarget .. " is in lane C")
-            core._2810:UpdatePlayerLane(name, 4, "C")
+            core._2810:UpdatePlayerLane(name, 4, "C", spawn_uid_dest)
         elseif spellID == 1223486 then
             playerLanes[spawn_uid_dest] = "D"
             --core:sendDebugMessage("Player " .. unitTarget .. " is in lane D")
-            core._2810:UpdatePlayerLane(name, 3, "D")
+            core._2810:UpdatePlayerLane(name, 3, "D", spawn_uid_dest)
         elseif spellID == 1223489 then
             playerLanes[spawn_uid_dest] = "E"
             --core:sendDebugMessage("Player " .. unitTarget .. " is in lane E")
-            core._2810:UpdatePlayerLane(name, 2, "E")
+            core._2810:UpdatePlayerLane(name, 2, "E", spawn_uid_dest)
         elseif spellID == 1223493 then
             playerLanes[spawn_uid_dest] = "F"
             --core:sendDebugMessage("Player " .. unitTarget .. " is in lane F")
-            core._2810:UpdatePlayerLane(name, 1, "F")
+            core._2810:UpdatePlayerLane(name, 1, "F", spawn_uid_dest)
         end
 
         playersInAnyLane[name] = name
     end
 end
 
-function core._2810:UpdatePlayerLane(name, icon, lane)
+function core._2810:UpdatePlayerLane(name, icon, lane, spawn_uid_dest)
     local currentStatus = InfoFrame_GetPlayerStatusWithMessage(name)
 
     if currentStatus == 2 or currentStatus == 3 then
         -- Green or Red
 
         -- Check which table they are in and update accordingly
-        if playersSpawnUID[name] ~= nil then
+        if playersSpawnUID[spawn_uid_dest] ~= nil then
             -- Check if the lane they are in has 5 walls already spawned
             if lane == "A" and columACounter == 5 then
                 InfoFrame_SetPlayerFailedWithMessage(name, InfoFrame_GetIcon(icon) .. " " .. L["Shared_Spawn"])
@@ -693,7 +693,7 @@ function core._2810:UpdatePlayerLane(name, icon, lane)
             else
                 InfoFrame_SetPlayerCompleteWithMessage(name, InfoFrame_GetIcon(icon) .. " " .. L["Shared_Spawn"])
             end
-        elseif playersbreakUID[name] ~= nil then
+        elseif playersbreakUID[spawn_uid_dest] ~= nil then
             -- Check if the lane they are has 4 walls spawned
             if lane == "A" and columACounter ~= 4 then
                 InfoFrame_SetPlayerFailedWithMessage(name, InfoFrame_GetIcon(icon) .. " " .. L["Shared_Break"])
