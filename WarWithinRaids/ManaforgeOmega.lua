@@ -14,7 +14,6 @@ core._2810.Events = CreateFrame("Frame")
 ---- Plexus Sentinel
 ------------------------------------------------------
 local holdingMouseCounter = 0
-local holdingMouseUID = {}
 local intermissionStarted = false
 local miceSpawnedCounter = 0
 local miceSpawnedUID = {}
@@ -104,10 +103,10 @@ function core._2810:PlexusSentinel()
 
     -- Player as collected a mouse
     if core.type == "SPELL_AURA_APPLIED" and core.spellId == 1233449 then
-        if core.destName ~= nil and holdingMouseUID[core.spawn_uid_dest_Player] == nil then
+        if core.destName ~= nil then
+            -- The achievement somtimes bugs and allows players to collect multiple mice so don't limit 1 per player
             holdingMouseCounter = holdingMouseCounter + 1
             collectedMiceDuringIntermissionCounter = collectedMiceDuringIntermissionCounter + 1
-            holdingMouseUID[core.spawn_uid_dest_Player] = core.spawn_uid_dest_Player
             core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. C_Spell.GetSpellLink(1233449) .. " " .. L["Shared_Intermission"] .. " (" .. collectedMiceDuringIntermissionCounter .. "/" .. miceSpawnedCounter .. ") " .. L["Shared_Total"] .. " (" .. holdingMouseCounter .. "/" .. core.groupSize .. ")",true)
             InfoFrame_SetPlayerComplete(core.destName)
         end
@@ -778,7 +777,6 @@ function core._2810:ClearVariables()
     ---- Plexus Sentinel
     ------------------------------------------------------
     holdingMouseCounter = 0
-    holdingMouseUID = {}
     intermissionStarted = false
     miceSpawnedCounter = 0
     miceSpawnedUID = {}
