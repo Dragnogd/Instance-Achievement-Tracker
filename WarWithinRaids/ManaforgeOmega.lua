@@ -118,7 +118,6 @@ function core._2810:PlexusSentinel()
             if core.destName ~= nil then
                 if UnitIsDeadOrGhost(core.destName) == false then
                     holdingMouseCounter = holdingMouseCounter - 1
-                    core:sendMessage(core.destName .. " " .. L["Shared_HasLost"] .. " " .. C_Spell.GetSpellLink(1233449) .. " " .. L["Shared_Intermission"] .. " (" .. collectedMiceDuringIntermissionCounter .. "/" .. miceSpawnedCounter .. ") " .. L["Shared_Total"] .. " (" .. holdingMouseCounter .. "/" .. core.groupSize .. ")",true)
                     InfoFrame_SetPlayerIncomplete(core.destName)
                     core:getAchievementFailedWithMessageAfter(core.destName .. L["Shared_HasLost"] .. " " .. C_Spell.GetSpellLink(1233449))
                 end
