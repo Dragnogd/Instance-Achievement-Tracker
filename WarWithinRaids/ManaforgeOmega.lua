@@ -258,12 +258,12 @@ function core._2810:Fractillus()
 
     InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
     InfoFrame_SetHeaderMessage(
-        InfoFrame_GetIcon(1) .. " : " .. columFCounter .. " " ..
-        InfoFrame_GetIcon(2) .. " : " .. columECounter .. " " ..
-        InfoFrame_GetIcon(3) .. " : " .. columDCounter .. " " ..
-        InfoFrame_GetIcon(4) .. " : " .. columCCounter .. " " ..
-        InfoFrame_GetIcon(7) .. " : " .. columBCounter .. " " ..
-        InfoFrame_GetIcon(6) .. " : " .. columACounter .. "\n"
+        InfoFrame_GetIcon(1) .. ": " .. columFCounter .. " " ..
+        InfoFrame_GetIcon(2) .. ": " .. columECounter .. " " ..
+        InfoFrame_GetIcon(3) .. ": " .. columDCounter .. " " ..
+        InfoFrame_GetIcon(4) .. ": " .. columCCounter .. " " ..
+        InfoFrame_GetIcon(7) .. ": " .. columBCounter .. " " ..
+        InfoFrame_GetIcon(6) .. ": " .. columACounter .. "\n"
     )
     core.IATInfoFrame:SetSubHeading2(L["Shared_Notes"])
     core.IATInfoFrame:SetText2(L["ManaforgeOmega_TrackingLanes"] .."\n\n", 200)
@@ -499,7 +499,9 @@ function core._2810:Fractillus()
                         --core:sendDebugMessage("Column F counter is now " .. columFCounter .. " after wall broken by " .. currentName)
                         InfoFrame_SetPlayerNeutralWithMessage(currentName, InfoFrame_GetIcon(1))
                     end
-
+                else
+                    -- If the player died then set them back to neutral on Infoframe
+                    InfoFrame_SetPlayerNeutralWithMessage(currentName, "")
                 end
 
                 -- Remove from break table
@@ -643,12 +645,12 @@ function core._2810.Events:UNIT_SPELLCAST_SUCCEEDED(self, unitTarget, castGUID, 
         InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
 
        InfoFrame_SetHeaderMessage(
-            InfoFrame_GetIcon(1) .. " : " .. columFCounter .. " " ..
-            InfoFrame_GetIcon(2) .. " : " .. columECounter .. " " ..
-            InfoFrame_GetIcon(3) .. " : " .. columDCounter .. " " ..
-            InfoFrame_GetIcon(4) .. " : " .. columCCounter .. " " ..
-            InfoFrame_GetIcon(7) .. " : " .. columBCounter .. " " ..
-            InfoFrame_GetIcon(6) .. " : " .. columACounter .. "\n"
+            InfoFrame_GetIcon(1) .. ": " .. columFCounter .. " " ..
+            InfoFrame_GetIcon(2) .. ": " .. columECounter .. " " ..
+            InfoFrame_GetIcon(3) .. ": " .. columDCounter .. " " ..
+            InfoFrame_GetIcon(4) .. ": " .. columCCounter .. " " ..
+            InfoFrame_GetIcon(7) .. ": " .. columBCounter .. " " ..
+            InfoFrame_GetIcon(6) .. ": " .. columACounter .. "\n"
         )
         core.IATInfoFrame:SetSubHeading2(L["Shared_Notes"])
         core.IATInfoFrame:SetText2(L["ManaforgeOmega_TrackingLanes"] .."\n\n", 200)
