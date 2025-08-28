@@ -270,12 +270,12 @@ function core._2810:Fractillus()
 
     InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
     InfoFrame_SetHeaderMessage(
-        InfoFrame_GetIcon(1) .. ": " .. columFCounter .. " " ..
-        InfoFrame_GetIcon(2) .. ": " .. columECounter .. " " ..
-        InfoFrame_GetIcon(3) .. ": " .. columDCounter .. " " ..
-        InfoFrame_GetIcon(4) .. ": " .. columCCounter .. " " ..
-        InfoFrame_GetIcon(7) .. ": " .. columBCounter .. " " ..
-        InfoFrame_GetIcon(6) .. ": " .. columACounter .. "\n"
+        InfoFrame_GetIcon(1) .. ":" .. columFCounter .. " " ..
+        InfoFrame_GetIcon(2) .. ":" .. columECounter .. " " ..
+        InfoFrame_GetIcon(3) .. ":" .. columDCounter .. " " ..
+        InfoFrame_GetIcon(4) .. ":" .. columCCounter .. " " ..
+        InfoFrame_GetIcon(7) .. ":" .. columBCounter .. " " ..
+        InfoFrame_GetIcon(6) .. ":" .. columACounter .. "\n"
     )
     core.IATInfoFrame:SetSubHeading2(L["Shared_Notes"])
     core.IATInfoFrame:SetText2(L["ManaforgeOmega_TrackingLanes"] .."\n\n", 200)
@@ -616,12 +616,12 @@ function core._2810.Events:UNIT_SPELLCAST_SUCCEEDED(self, unitTarget, castGUID, 
         InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
 
        InfoFrame_SetHeaderMessage(
-            InfoFrame_GetIcon(1) .. ": " .. columFCounter .. " " ..
-            InfoFrame_GetIcon(2) .. ": " .. columECounter .. " " ..
-            InfoFrame_GetIcon(3) .. ": " .. columDCounter .. " " ..
-            InfoFrame_GetIcon(4) .. ": " .. columCCounter .. " " ..
-            InfoFrame_GetIcon(7) .. ": " .. columBCounter .. " " ..
-            InfoFrame_GetIcon(6) .. ": " .. columACounter .. "\n"
+            InfoFrame_GetIcon(1) .. ":" .. columFCounter .. " " ..
+            InfoFrame_GetIcon(2) .. ":" .. columECounter .. " " ..
+            InfoFrame_GetIcon(3) .. ":" .. columDCounter .. " " ..
+            InfoFrame_GetIcon(4) .. ":" .. columCCounter .. " " ..
+            InfoFrame_GetIcon(7) .. ":" .. columBCounter .. " " ..
+            InfoFrame_GetIcon(6) .. ":" .. columACounter .. "\n"
         )
         core.IATInfoFrame:SetSubHeading2(L["Shared_Notes"])
         core.IATInfoFrame:SetText2(L["ManaforgeOmega_TrackingLanes"] .."\n\n", 200)
@@ -744,7 +744,7 @@ function core._2810.Events:UNIT_AURA(self, unitID)
     end
 
     -- Loom'ithar - Voted
-    if core.type == ("SPELL_AURA_APPLIED" or "SPELL_AURA_REMOVED") and core.spellId == 1246718 then
+    if (core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_REMOVED") and core.spellId == 1246718 then
         core.IATInfoFrame:ToggleOn()
         core.IATInfoFrame:SetHeading(GetAchievementLink(41613))
         InfoFrame_SetHeaderCounter(C_Spell.GetSpellLink(1246718) .. " " .. L["Core_Counter"],votedCounter,core.groupSize)
