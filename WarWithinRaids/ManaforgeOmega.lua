@@ -129,7 +129,7 @@ function core._2810:PlexusSentinel()
     end
 
     --Announce success once everyone is holding a mouse at some point throughout the fight
-    if holdingMouseCounter == core.groupSize and core:getBlizzardTrackingStatus(42118, 1) == true then
+    if core:getBlizzardTrackingStatus(42118, 1) == true then
         core:getAchievementSuccess()
     end
 end
