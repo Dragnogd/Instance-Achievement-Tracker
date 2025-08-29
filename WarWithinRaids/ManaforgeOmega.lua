@@ -59,6 +59,7 @@ local playersbreakUID = {}
 local fourthWallCompleteCheck = false
 local pendingWallBreaks = {}
 local wallbreakLocked = false
+local fractillusDead = false
 
 ------------------------------------------------------
 ---- Dimensius The All Devouring
@@ -598,6 +599,11 @@ function core._2810:Fractillus()
         end
     end
 
+    -- Check if Fractllius is dead
+    if core.type == "UNIT_DIED" and core.destID == "237861" then
+        fractillusDead = true
+    end
+
     -- If the fourth wall counte equals 18, and the blizzard tracker is not complete we need to warn players not to kill boss as something has gone wrong
     if fourthWallsBroken == 18 and fourthWallCompleteCheck == false then
         fourthWallCompleteCheck = true
@@ -647,6 +653,8 @@ end
 function core._2810:InstanceCleanup()
     core._2810.Events:UnregisterEvent("UNIT_AURA")
     core._2810.Events:UnregisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+
+    fractillusDead = false
 end
 
 core._2810.Events:SetScript("OnEvent", function(self, event, ...)
@@ -667,7 +675,7 @@ function core._2810.Events:UNIT_SPELLCAST_SUCCEEDED(self, unitTarget, castGUID, 
     --"<47.41 21:02:25> [UNIT_SPELLCAST_SUCCEEDED] PLAYER_SPELL{Mal} -Column F Aura- [[raid6:Cast-3-5773-2810-3675-1223493-003B716DD1:1223493]]",
 
     -- When we receive a spell cast success for one of the column auras we need to get the guid of the player then check which UID table they are in
-    if spellID == 1223483 or spellID == 1223484 or spellID == 1223485 or spellID == 1223486 or spellID == 1223489 or spellID == 1223493 then
+    if fractillusDead == false and (spellID == 1223483 or spellID == 1223484 or spellID == 1223485 or spellID == 1223486 or spellID == 1223489 or spellID == 1223493) then
         core.IATInfoFrame:ToggleOn()
         core.IATInfoFrame:SetHeading(GetAchievementLink(41617))
         InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
