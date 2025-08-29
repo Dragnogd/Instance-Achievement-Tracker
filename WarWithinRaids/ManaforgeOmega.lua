@@ -116,9 +116,10 @@ function core._2810:PlexusSentinel()
     -- Player has lost the mouse
     if core.type == "SPELL_AURA_REMOVED" and core.spellId == 1233449 then
         local playerLostMouse = core.destName
+        local playerLostMouseGUID = core.spawn_uid_dest_Player
         C_Timer.After(0.5, function()
             if playerLostMouse ~= nil then
-                if UnitIsDeadOrGhost(playerLostMouse) == false then
+                if UnitIsDeadOrGhost(UnitTokenFromGUID(playerLostMouseGUID)) == false then
                     holdingMouseCounter = holdingMouseCounter - 1
                     InfoFrame_SetPlayerIncomplete(playerLostMouse)
                     core:getAchievementFailedWithMessageAfter(playerLostMouse .. L["Shared_HasLost"] .. " " .. C_Spell.GetSpellLink(1233449))
