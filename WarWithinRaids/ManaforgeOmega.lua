@@ -126,6 +126,14 @@ function core._2810:PlexusSentinel()
         end)
     end
 
+    -- Player died before collecting a mouse
+    if core.type == "UNIT_DIED" and core.destName ~= nil then
+        if InfoFrame_GetPlayerComplete(core.destName) == false then
+            InfoFrame_SetPlayerIncomplete(core.destName)
+            core:getAchievementFailedWithMessageAfter(core.destName .. L["Shared_DiedWithoutBuff"])
+        end
+    end
+
     -- Detect end of intermission and and check if all mice have been picked up in time
     -- If they have not then announce fail
     if core.type == "SPELL_AURA_REMOVED" and (core.spellId == 1220618 or core.spellId == 1220981 or core.spellId == 1220982) then
