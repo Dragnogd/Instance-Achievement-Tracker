@@ -19,6 +19,7 @@ local miceSpawnedCounter = 0
 local miceSpawnedUID = {}
 local collectedMiceDuringIntermissionCounter = 0
 local announceMiceSpawned = false
+local announceUnknownFail = false
 
 ------------------------------------------------------
 ---- Loomithar
@@ -147,6 +148,17 @@ function core._2810:PlexusSentinel()
         miceSpawnedCounter = 0
         miceSpawnedUID = {}
         collectedMiceDuringIntermissionCounter = 0
+    end
+
+    -- If the tracker has not gone white then we need to inform group
+    if holdingMouseCounter == core.groupSize and announceUnknownFail == false then
+        announceUnknownFail = true
+        -- Wait 1 second then check blizzard tracker
+        C_Timer.After(2, function()
+            if core:getBlizzardTrackingStatus(42118, 1) == false then
+                core:getAchievementFailedWithMessageAfter(L["Shared_BlizzardTrackerNotWhite"])
+            end
+        end)
     end
 
     --Announce success once everyone is holding a mouse at some point throughout the fight
@@ -846,6 +858,7 @@ function core._2810:ClearVariables()
     miceSpawnedUID = {}
     collectedMiceDuringIntermissionCounter = 0
     announceMiceSpawned = false
+    announceUnknownFail = false
 
     ------------------------------------------------------
     ---- Loomithar
