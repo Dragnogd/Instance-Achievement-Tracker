@@ -464,8 +464,8 @@ function core._2810:Fractillus()
             -- We need to wait a moment to see if the player is dead or not
             C_Timer.After(0.5, function()
                 if UnitIsDeadOrGhost(currentName) == false then
-                    -- Increment pendingWallbreaks for lane hit
-                    pendingWallBreaks[playerLanes[currentSpawnUIDDestPlayer]] = (pendingWallBreaks[playerLanes[currentSpawnUIDDestPlayer]] or 0) + 1
+                    -- Increment pendingWallbreaks for lane
+                    table.insert(pendingWallBreaks, playerLanes[currentSpawnUIDDestPlayer])
 
                     if playerLanes[currentSpawnUIDDestPlayer] == "A" then
                         if columACounter ~= 4 and fourthWallsBroken > 0 then
@@ -551,48 +551,50 @@ function core._2810:Fractillus()
                 core:sendDebugMessage("Wall break check results: A=" .. aTemp .. ", B=" .. bTemp .. ", C=" .. cTemp .. ", D=" .. dTemp .. ", E=" .. eTemp .. ", F=" .. fTemp)
                 for lane,_ in pairs(pendingWallBreaks) do
                     -- if the lane has walls broken greater than 0
-                    if pendingWallBreaks[lane] > 0 then
-                        -- Add 1 to the temp counter for current lane
-                        core:sendDebugMessage("Wall break detected in lane " .. lane)
-                        if lane == "A" then
-                            aTemp = aTemp + 1
-                        elseif lane == "B" then
-                            bTemp = bTemp + 1
-                        elseif lane == "C" then
-                            cTemp = cTemp + 1
-                        elseif lane == "D" then
-                            dTemp = dTemp + 1
-                        elseif lane == "E" then
-                            eTemp = eTemp + 1
-                        elseif lane == "F" then
-                            fTemp = fTemp + 1
-                        end
+                    -- Add 1 to the temp counter for current lane
+                    core:sendDebugMessage("Wall break detected in lane " .. lane)
+                    if lane == "A" then
+                        aTemp = aTemp + 1
+                    elseif lane == "B" then
+                        bTemp = bTemp + 1
+                    elseif lane == "C" then
+                        cTemp = cTemp + 1
+                    elseif lane == "D" then
+                        dTemp = dTemp + 1
+                    elseif lane == "E" then
+                        eTemp = eTemp + 1
+                    elseif lane == "F" then
+                        fTemp = fTemp + 1
+                    end
 
-                        -- Now check if it meets four for the current lane
-                        local wallFound = false
-                        if lane == "A" and aTemp == 4 then
-                            wallFound = true
-                        elseif lane == "B" and bTemp == 4 then
-                            wallFound = true
-                        elseif lane == "C" and cTemp == 4 then
-                            wallFound = true
-                        elseif lane == "D" and dTemp == 4 then
-                            wallFound = true
-                        elseif lane == "E" and eTemp == 4 then
-                            wallFound = true
-                        elseif lane == "F" and fTemp == 4 then
-                            wallFound = true
-                        end
-                        core:sendDebugMessage("Wall break lane " .. lane .. " check is " .. tostring(wallFound) .. " (A=" .. aTemp .. ", B=" .. bTemp .. ", C=" .. cTemp .. ", D=" .. dTemp .. ", E=" .. eTemp .. ", F=" .. fTemp .. ")")
+                    -- Now check if it meets four for the current lane
+                    local wallFound = false
+                    if lane == "A" and aTemp == 4 then
+                        wallFound = true
+                    elseif lane == "B" and bTemp == 4 then
+                        wallFound = true
+                    elseif lane == "C" and cTemp == 4 then
+                        wallFound = true
+                    elseif lane == "D" and dTemp == 4 then
+                        wallFound = true
+                    elseif lane == "E" and eTemp == 4 then
+                        wallFound = true
+                    elseif lane == "F" and fTemp == 4 then
+                        wallFound = true
+                    end
+                    core:sendDebugMessage("Wall break lane " .. lane .. " check is " .. tostring(wallFound) .. " (A=" .. aTemp .. ", B=" .. bTemp .. ", C=" .. cTemp .. ", D=" .. dTemp .. ", E=" .. eTemp .. ", F=" .. fTemp .. ")")
 
-                        if wallFound == true then
-                            core:sendDebugMessage("Fourth wall broken in lane " .. lane)
-                            fourthWallsBroken = fourthWallsBroken + 1
-                            pendingWallBreaks[lane] = nil
-                            core:sendMessage(core:getAchievement() .. " " .. L["Shared_WallBroken"] .. " (" .. fourthWallsBroken .. "/18)",true)
-                        end
+                    if wallFound == true then
+                        core:sendDebugMessage("Fourth wall broken in lane " .. lane)
+                        fourthWallsBroken = fourthWallsBroken + 1
+                        pendingWallBreaks[lane] = nil
+                        core:sendMessage(core:getAchievement() .. " " .. L["Shared_WallBroken"] .. " (" .. fourthWallsBroken .. "/18)",true)
                     end
                 end
+
+                -- Clear table
+                pendingWallBreaks = {}
+
                 core:sendDebugMessage("Wall break check complete. Unlocked")
                 wallbreakLocked = false
             end)
