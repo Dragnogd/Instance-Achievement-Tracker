@@ -117,7 +117,7 @@ function core._2810:PlexusSentinel()
     -- Player has lost the mouse
     if core.type == "SPELL_AURA_REMOVED" and core.spellId == 1233449 then
         local playerLostMouse = core.destName
-        local playerLostMouseGUID = core.spawn_uid_dest_Player
+        local playerLostMouseGUID = core.destGUID
         C_Timer.After(0.5, function()
             if playerLostMouse ~= nil then
                 if UnitIsDeadOrGhost(UnitTokenFromGUID(playerLostMouseGUID)) == false then
@@ -130,10 +130,10 @@ function core._2810:PlexusSentinel()
     end
 
     -- Player died before collecting a mouse
-    if core.type == "UNIT_DIED" and core.destName ~= nil then
+    if core.type == "UNIT_DIED" and core.destName ~= nil and core.currentUnit == "Player" then
         if InfoFrame_GetPlayerComplete(core.destName) == false then
             InfoFrame_SetPlayerIncomplete(core.destName)
-            core:getAchievementFailedWithMessageAfter(core.destName .. L["Shared_DiedWithoutBuff"])
+            core:getAchievementFailedWithMessageAfter(core.destName .. " " .. L["Shared_DiedWithoutBuff"])
         end
     end
 
