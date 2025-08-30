@@ -549,7 +549,7 @@ function core._2810:Fractillus()
                 local eTemp = columECounter
                 local fTemp = columFCounter
                 core:sendDebugMessage("Wall break check results: A=" .. aTemp .. ", B=" .. bTemp .. ", C=" .. cTemp .. ", D=" .. dTemp .. ", E=" .. eTemp .. ", F=" .. fTemp)
-                for lane,_ in pairs(pendingWallBreaks) do
+                for i, lane in ipairs(pendingWallBreaks) do
                     -- if the lane has walls broken greater than 0
                     -- Add 1 to the temp counter for current lane
                     core:sendDebugMessage("Wall break detected in lane " .. lane)
@@ -587,7 +587,6 @@ function core._2810:Fractillus()
                     if wallFound == true then
                         core:sendDebugMessage("Fourth wall broken in lane " .. lane)
                         fourthWallsBroken = fourthWallsBroken + 1
-                        pendingWallBreaks[lane] = nil
                         core:sendMessage(core:getAchievement() .. " " .. L["Shared_WallBroken"] .. " (" .. fourthWallsBroken .. "/18)",true)
                     end
                 end
