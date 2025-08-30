@@ -1083,5 +1083,7 @@ local baseLocale = {
 	["ManaforgeOmega_PlayerBrokeWrongWall"] = "has broken the wrong wall",
 	["ManaforgeOmega_CannotDetectWallLocation"] = "Cannot detect players current wall location. Tracking may not be accurate",
 	["ManaforgeOmega_AccurateTracking"] = "To ensure accurate tracking. It is advised all players move to a different lane and back upon pulling boss so IAT can detect all players lanes",
+	["Shared_DiedWithoutBuff"] = "died without holding a mouse",
+	["Shared_BlizzardTrackerNotWhite"] = "In game tracker is not reporting success. DO NOT KILL BOSS."
 }
 core:RegisterLocale('enUS', baseLocale)
