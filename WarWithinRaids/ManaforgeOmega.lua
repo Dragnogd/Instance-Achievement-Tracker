@@ -810,52 +810,52 @@ function core._2810.Events:UNIT_AURA(self, unitID)
     end
 
     -- Loom'ithar - Voted
-    if (core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_REMOVED") and core.spellId == 1246718 then
-        core.IATInfoFrame:ToggleOn()
-        core.IATInfoFrame:SetHeading(GetAchievementLink(41613))
-        InfoFrame_SetHeaderCounter(C_Spell.GetSpellLink(1246718) .. " " .. L["Core_Counter"],votedCounter,core.groupSize)
-        InfoFrame_UpdatePlayersOnInfoFrame()
+    -- if (core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_REMOVED") and core.spellId == 1246718 then
+    --     core.IATInfoFrame:ToggleOn()
+    --     core.IATInfoFrame:SetHeading(GetAchievementLink(41613))
+    --     InfoFrame_SetHeaderCounter(C_Spell.GetSpellLink(1246718) .. " " .. L["Core_Counter"],votedCounter,core.groupSize)
+    --     InfoFrame_UpdatePlayersOnInfoFrame()
 
-        local name, realm = UnitName(unitID)
-        local unitType, destID, spawn_uid_dest = strsplit("-",UnitGUID(unitID));
+    --     local name, realm = UnitName(unitID)
+    --     local unitType, destID, spawn_uid_dest = strsplit("-",UnitGUID(unitID));
 
-        local spellInfo = C_Spell.GetSpellInfo(1246718)
+    --     local spellInfo = C_Spell.GetSpellInfo(1246718)
 
-        if spellInfo ~= nil then
-            local aura = C_UnitAuras.GetAuraDataBySpellName(unitID, spellInfo.name)
-            if aura then
-                if name ~= nil then
-                    if votedUID[spawn_uid_dest] == nil then
-                        votedUID[spawn_uid_dest] = spawn_uid_dest
-                        votedCounter = votedCounter + 1
-                        core:sendMessage(name .. " " .. L["Shared_HasGained"] .. " " .. C_Spell.GetSpellLink(1246718) .. " (" .. votedCounter .. "/" .. core.groupSize .. ")", true)
-                        InfoFrame_SetPlayerComplete(name)
-                    end
-                end
-            end
+    --     if spellInfo ~= nil then
+    --         local aura = C_UnitAuras.GetAuraDataBySpellName(unitID, spellInfo.name)
+    --         if aura then
+    --             if name ~= nil then
+    --                 if votedUID[spawn_uid_dest] == nil then
+    --                     votedUID[spawn_uid_dest] = spawn_uid_dest
+    --                     votedCounter = votedCounter + 1
+    --                     core:sendMessage(name .. " " .. L["Shared_HasGained"] .. " " .. C_Spell.GetSpellLink(1246718) .. " (" .. votedCounter .. "/" .. core.groupSize .. ")", true)
+    --                     InfoFrame_SetPlayerComplete(name)
+    --                 end
+    --             end
+    --         end
 
-            -- If aura is not found
-            if aura == nil then
-                if name ~= nil then
-                    if votedUID[spawn_uid_dest] ~= nil then
-                        votedUID[spawn_uid_dest] = nil
-                        if votedCounter > 0 then
-                            votedCounter = votedCounter - 1
-                        end
-                        InfoFrame_SetPlayerNeutral(name)
-                    end
-                end
-            end
-        end
+    --         -- If aura is not found
+    --         if aura == nil then
+    --             if name ~= nil then
+    --                 if votedUID[spawn_uid_dest] ~= nil then
+    --                     votedUID[spawn_uid_dest] = nil
+    --                     if votedCounter > 0 then
+    --                         votedCounter = votedCounter - 1
+    --                     end
+    --                     InfoFrame_SetPlayerNeutral(name)
+    --                 end
+    --             end
+    --         end
+    --     end
 
-        --Update with any changes
-        InfoFrame_UpdatePlayersOnInfoFrame()
+    --     --Update with any changes
+    --     InfoFrame_UpdatePlayersOnInfoFrame()
 
-        --Hide if no one has the debuff anymore
-        if votedCounter == 0 then
-            core.IATInfoFrame:ToggleOff()
-        end
-    end
+    --     --Hide if no one has the debuff anymore
+    --     if votedCounter == 0 then
+    --         core.IATInfoFrame:ToggleOff()
+    --     end
+    -- end
 end
 
 function core._2810:ClearVariables()
