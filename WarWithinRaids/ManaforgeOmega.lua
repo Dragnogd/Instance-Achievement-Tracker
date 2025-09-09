@@ -25,6 +25,7 @@ local intermissionCounter = 0
 local multipleMousePlayers = {}
 local immunityPlayers = {}
 local playersRessedAfterDeath = {}
+local achievementCompletedAnnounced = false
 
 ------------------------------------------------------
 ---- Loomithar
@@ -234,6 +235,12 @@ function core._2810:PlexusSentinel()
     --Announce success once everyone is holding a mouse at some point throughout the fight
     if core:getBlizzardTrackingStatus(42118, 1) == true then
         core:getAchievementSuccess()
+        achievementCompletedAnnounced = true
+    end
+
+    -- Failed after success
+    if achievementCompletedAnnounced == true and core:getBlizzardTrackingStatus(42118, 1) == false then
+        core:getAchievementFailed()
     end
 end
 
@@ -924,6 +931,7 @@ function core._2810:ClearVariables()
     multipleMousePlayers = {}
     immunityPlayers = {}
     playersRessedAfterDeath = {}
+    achievementCompletedAnnounced = false
 
     ------------------------------------------------------
     ---- Loomithar
