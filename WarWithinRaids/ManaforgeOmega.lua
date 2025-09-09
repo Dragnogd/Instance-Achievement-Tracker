@@ -116,11 +116,13 @@ function core._2810:PlexusSentinel()
             holdingMouseCounter = holdingMouseCounter + 1
             holdingMouseUID[core.spawn_uid_dest_Player] = core.spawn_uid_dest_Player
             collectedMiceDuringIntermissionCounter = collectedMiceDuringIntermissionCounter + 1
-            core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. C_Spell.GetSpellLink(1233449) .. " " .. L["Shared_Intermission"] .. " (" .. collectedMiceDuringIntermissionCounter .. "/" .. miceSpawnedCounter .. ") " .. L["Shared_Total"] .. " (" .. holdingMouseCounter .. "/" .. core.groupSize .. ")",true)
+            core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. C_Spell.GetSpellLink(1233449) .. " " .. L["Shared_Intermission"] .. " (" .. collectedMiceDuringIntermissionCounter .. "/" .. miceSpawnedCounter .. ") ",true)
             InfoFrame_SetPlayerComplete(core.destName)
         elseif core.destName ~= nil and holdingMouseUID[core.spawn_uid_dest_Player] ~= nil then
             -- Player has picked up another mouse when they should only be able to pick up 1
             core:sendMessage(core.destName .. " " .. L["ManaforgeOmega_CollectedMultipleMice"], true)
+            -- Still count for intermission as technically they have picked up a mouse
+            collectedMiceDuringIntermissionCounter = collectedMiceDuringIntermissionCounter + 1
             table.insert(multipleMousePlayers, core.destName)
         end
     end
