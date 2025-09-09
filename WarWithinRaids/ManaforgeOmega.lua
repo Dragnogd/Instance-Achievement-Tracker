@@ -20,6 +20,11 @@ local miceSpawnedUID = {}
 local collectedMiceDuringIntermissionCounter = 0
 local announceMiceSpawned = false
 local announceUnknownFail = false
+local holdingMouseUID = {}
+local intermissionCounter = 0
+local multipleMousePlayers = {}
+local immunityPlayers = {}
+local playersRessedAfterDeath = {}
 
 ------------------------------------------------------
 ---- Loomithar
@@ -105,12 +110,17 @@ function core._2810:PlexusSentinel()
 
     -- Player as collected a mouse
     if core.type == "SPELL_AURA_APPLIED" and core.spellId == 1233449 then
-        if core.destName ~= nil then
+        if core.destName ~= nil and holdingMouseUID[core.spawn_uid_dest_Player] == nil then
             -- The achievement somtimes bugs and allows players to collect multiple mice so don't limit 1 per player
             holdingMouseCounter = holdingMouseCounter + 1
+            holdingMouseUID[core.spawn_uid_dest_Player] = core.spawn_uid_dest_Player
             collectedMiceDuringIntermissionCounter = collectedMiceDuringIntermissionCounter + 1
             core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. C_Spell.GetSpellLink(1233449) .. " " .. L["Shared_Intermission"] .. " (" .. collectedMiceDuringIntermissionCounter .. "/" .. miceSpawnedCounter .. ") " .. L["Shared_Total"] .. " (" .. holdingMouseCounter .. "/" .. core.groupSize .. ")",true)
             InfoFrame_SetPlayerComplete(core.destName)
+        elseif core.destName ~= nil and holdingMouseUID[core.spawn_uid_dest_Player] ~= nil then
+            -- Player has picked up another mouse when they should only be able to pick up 1
+            core:sendMessage(core.destName .. " " .. L["ManaforgeOmega_CollectedMultipleMice"], true)
+            table.insert(multipleMousePlayers, core.destName)
         end
     end
 
@@ -124,6 +134,7 @@ function core._2810:PlexusSentinel()
                     holdingMouseCounter = holdingMouseCounter - 1
                     InfoFrame_SetPlayerIncomplete(playerLostMouse)
                     core:getAchievementFailedWithMessageAfter(playerLostMouse .. L["Shared_HasLost"] .. " " .. C_Spell.GetSpellLink(1233449))
+                    table.insert(immunityPlayers, playerLostMouse)
                 end
             end
         end)
@@ -133,7 +144,37 @@ function core._2810:PlexusSentinel()
     if core.type == "UNIT_DIED" and core.destName ~= nil and core.currentUnit == "Player" then
         if InfoFrame_GetPlayerComplete(core.destName) == false then
             InfoFrame_SetPlayerIncomplete(core.destName)
-            core:getAchievementFailedWithMessageAfter(core.destName .. " " .. L["Shared_DiedWithoutBuff"])
+            core:sendMessage(core.destName .. " " .. L["Shared_DiedWithoutBuff"])
+        end
+    end
+
+    -- Mouse has been killed by barrier
+    if core.type == "UNIT_DIED" and core.destID == "243803" then
+        core:getAchievementFailedWithMessageAfter(core.destName .. " " .. L["Shared_HasBeenKilled"])
+    end
+
+    -- Player was ressed after collecting a mouse
+    if core.type == "SPELL_RESURRECT" and core.destName ~= nil and holdingMouseUID[core.spawn_uid_dest_Player] ~= nil then
+        -- Check if the player has collected a mouse already via infoframe
+            if InfoFrame_GetPlayerComplete(core.destName) == true then
+            -- Spell Resurrect only confirms that a res has been started. We need to wait a moment to see if the player actually accepted the ress
+            -- Loop a ticker that keeps checking if the player is dead or not
+            local currentName = core.destName
+            C_Timer.NewTicker(1, function(ticker)
+                if UnitIsDeadOrGhost(currentName) == false then
+                    -- Player has accepted the ress
+                    holdingMouseCounter = holdingMouseCounter - 1
+                    InfoFrame_SetPlayerIncomplete(currentName)
+                    core:sendMessage(currentName .. " " .. L["ManaforgeOmega_RessedAfterCollectingMice"])
+                    table.insert(playersRessedAfterDeath, currentName)
+                    ticker:Cancel()
+                end
+
+                -- If current intermission is back to 0 then the group has wiped so stopped ticker
+                if intermissionStarted == false then
+                    ticker:Cancel()
+                end
+            end, 20) -- Check up to 20 seconds
         end
     end
 
@@ -141,9 +182,36 @@ function core._2810:PlexusSentinel()
     -- If they have not then announce fail
     if core.type == "SPELL_AURA_REMOVED" and (core.spellId == 1220618 or core.spellId == 1220981 or core.spellId == 1220982) then
         -- If not all mice have been collected then fail the achievement
+        intermissionCounter = intermissionCounter + 1
+
+        -- Fail if not all mie were collected during the intermission
         if collectedMiceDuringIntermissionCounter < miceSpawnedCounter then
             core:getAchievementFailedWithMessageAfter("(" .. L["Shared_Intermission"] .. " " .. collectedMiceDuringIntermissionCounter .. "/" .. miceSpawnedCounter .. ")" )
         end
+
+        -- If tracker is not white after the 3rd intermission then something has gone wrong
+        if intermissionCounter == 3 and core:getBlizzardTrackingStatus(42118, 1) == false then
+            -- 1. A player has picked up multiple mice
+            if #multipleMousePlayers > 0 then
+                local players = table.concat(multipleMousePlayers, ", ")
+                core:sendMessage(L["ManaforgeOmega_FailedMultipleMice"] .. " " .. players)
+            end
+
+            -- 2. A player lost the debuff from an immunity
+            if #immunityPlayers > 0 then
+                local players = table.concat(immunityPlayers, ", ")
+                core:sendMessage(L["ManaforgeOmega_FailedImmunity"] .. " " .. players)
+            end
+
+            -- 3. A player was ressed after dying and already having picked up a mouse
+            if #playersRessedAfterDeath > 0 then
+                local players = table.concat(playersRessedAfterDeath, ", ")
+                core:sendMessage(L["ManaforgeOmega_FailedRessed"] .. " " .. players .. ". ")
+            end
+
+            core:getAchievementFailed()
+        end
+
 
         -- Reset intermission variables reading for next intermission
         intermissionStarted = false
@@ -158,7 +226,7 @@ function core._2810:PlexusSentinel()
         -- Wait 1 second then check blizzard tracker
         C_Timer.After(2, function()
             if core:getBlizzardTrackingStatus(42118, 1) == false then
-                core:getAchievementFailedWithMessageAfter(L["Shared_BlizzardTrackerNotWhite"])
+                core:sendMessage(L["Shared_BlizzardTrackerNotWhite"])
             end
         end)
     end
@@ -869,6 +937,11 @@ function core._2810:ClearVariables()
     collectedMiceDuringIntermissionCounter = 0
     announceMiceSpawned = false
     announceUnknownFail = false
+    holdingMouseUID = {}
+    intermissionCounter = 0
+    multipleMousePlayers = {}
+    immunityPlayers = {}
+    playersRessedAfterDeath = {}
 
     ------------------------------------------------------
     ---- Loomithar
