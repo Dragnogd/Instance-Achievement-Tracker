@@ -536,54 +536,36 @@ function core._2810:Fractillus()
                     table.insert(pendingWallBreaks, playerLanes[currentSpawnUIDDestPlayer])
 
                     if playerLanes[currentSpawnUIDDestPlayer] == "A" then
-                        if columACounter ~= 4 and fourthWallsBroken > 0 then
-                            core:sendMessage(currentName .. " " .. L["ManaforgeOmega_PlayerBrokeWrongWall"], true)
-                        end
                         if columACounter > 0 then
                             columACounter = columACounter - 1
                         end
                         --core:sendDebugMessage("Column A counter is now " .. columACounter .. " after wall broken by " .. currentName)
                         InfoFrame_SetPlayerNeutralWithMessage(currentName, InfoFrame_GetIcon(6))
                     elseif playerLanes[currentSpawnUIDDestPlayer] == "B" then
-                        if columBCounter ~= 4 and fourthWallsBroken > 0 then
-                            core:sendMessage(currentName .. " " .. L["ManaforgeOmega_PlayerBrokeWrongWall"], true)
-                        end
                         if columBCounter > 0 then
                             columBCounter = columBCounter - 1
                         end
                         --core:sendDebugMessage("Column B counter is now " .. columBCounter .. " after wall broken by " .. currentName)
                         InfoFrame_SetPlayerNeutralWithMessage(currentName, InfoFrame_GetIcon(7))
                     elseif playerLanes[currentSpawnUIDDestPlayer] == "C" then
-                        if columCCounter ~= 4 and fourthWallsBroken > 0 then
-                            core:sendMessage(currentName .. " " .. L["ManaforgeOmega_PlayerBrokeWrongWall"], true)
-                        end
                         if columCCounter > 0 then
                             columCCounter = columCCounter - 1
                         end
                         --core:sendDebugMessage("Column C counter is now " .. columCCounter .. " after wall broken by " .. currentName)
                         InfoFrame_SetPlayerNeutralWithMessage(currentName, InfoFrame_GetIcon(4))
                     elseif playerLanes[currentSpawnUIDDestPlayer] == "D" then
-                        if columDCounter ~= 4 and fourthWallsBroken > 0 then
-                            core:sendMessage(currentName .. " " .. L["ManaforgeOmega_PlayerBrokeWrongWall"], true)
-                        end
                         if columDCounter > 0 then
                             columDCounter = columDCounter - 1
                         end
                         --core:sendDebugMessage("Column D counter is now " .. columDCounter .. " after wall broken by " .. currentName)
                         InfoFrame_SetPlayerNeutralWithMessage(currentName, InfoFrame_GetIcon(3))
                     elseif playerLanes[currentSpawnUIDDestPlayer] == "E" then
-                        if columECounter ~= 4 and fourthWallsBroken > 0 then
-                            core:sendMessage(currentName .. " " .. L["ManaforgeOmega_PlayerBrokeWrongWall"], true)
-                        end
                         if columECounter > 0 then
                             columECounter = columECounter - 1
                         end
                         --core:sendDebugMessage("Column E counter is now " .. columECounter .. " after wall broken by " .. currentName)
                         InfoFrame_SetPlayerNeutralWithMessage(currentName, InfoFrame_GetIcon(2))
                     elseif playerLanes[currentSpawnUIDDestPlayer] == "F" then
-                        if columFCounter ~= 4 and fourthWallsBroken > 0 then
-                            core:sendMessage(currentName .. " " .. L["ManaforgeOmega_PlayerBrokeWrongWall"], true)
-                        end
                         if columFCounter > 0 then
                             columFCounter = columFCounter - 1
                         end
