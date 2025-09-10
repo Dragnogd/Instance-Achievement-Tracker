@@ -871,7 +871,7 @@ function core._2810:TrackAdditional()
         end
 
         --Update with any changes
-        InfoFrame_SetHeaderCounter(C_Spell.GetSpellLink(356731) .. " " .. L["Core_Counter"],blindFoldPickupCounter,core.groupSize)
+        InfoFrame_SetHeaderCounter(C_Spell.GetSpellLink(1247724) .. " " .. L["Core_Counter"],blindFoldPickupCounter,core.groupSize)
         InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
     end
 end
