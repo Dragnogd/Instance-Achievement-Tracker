@@ -1083,7 +1083,14 @@ local baseLocale = {
 	["ManaforgeOmega_PlayerBrokeWrongWall"] = "has broken the wrong wall",
 	["ManaforgeOmega_CannotDetectWallLocation"] = "Cannot detect players current wall location. Tracking may not be accurate",
 	["ManaforgeOmega_AccurateTracking"] = "To ensure accurate tracking. It is advised all players move to a different lane and back upon pulling boss so IAT can detect all players lanes",
-	["Shared_DiedWithoutBuff"] = "died without holding a mouse",
-	["Shared_BlizzardTrackerNotWhite"] = "In game tracker is not reporting success. DO NOT KILL BOSS."
+	["Shared_DiedWithoutBuff"] = "died without holding a mouse. This may bug the achievement.",
+	["Shared_BlizzardTrackerNotWhite"] = "In game tracker is not reporting success. DO NOT KILL BOSS.",
+	["ManaforgeOmega_CollectedMultipleMice"] = "has collected multiple mice. This may bug the achievement.",
+	["ManaforgeOmega_UsedImmunity"] = "has used an immunity and lost the mice. This may bug the achievement.",
+	["ManaforgeOmega_RessedAfterCollectingMice"] = "has been ressed after collecting a mouse. This may bug the achievement.",
+	["ManaforgeOmega_FailedMultipleMice"] = "multiple mice",
+	["ManaforgeOmega_FailedRessed"] = "Ressed after collecting",
+	["ManaforgeOmega_FailedImmunity"] = "used immunity",
+	["Shared_HasBeenKilled"] = "has been killed",
 }
 core:RegisterLocale('enUS', baseLocale)
