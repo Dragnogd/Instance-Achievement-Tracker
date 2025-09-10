@@ -857,7 +857,7 @@ end
 
 function core._2810:TrackAdditional()
     --Soulrender Dormazain -- Hellscream's Burden
-    if (core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_REMOVED") and core.spellId == 1247724 and core.destName ~= nil and core.encounterStarted == false then
+    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 1247724 and core.destName ~= nil and core.encounterStarted == false then
         core.IATInfoFrame:ToggleOn()
         core.IATInfoFrame:SetHeading(GetAchievementLink(41616))
         InfoFrame_SetHeaderCounter(C_Spell.GetSpellLink(1247724) .. " " .. L["Core_Counter"],blindFoldPickupCounter,core.groupSize)
