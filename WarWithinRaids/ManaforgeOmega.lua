@@ -31,8 +31,6 @@ local achievementCompletedAnnounced = false
 ------------------------------------------------------
 ---- Loomithar
 ------------------------------------------------------
-local votedCounter = 0
-local votedUID = {}
 
 ------------------------------------------------------
 ---- Soulbinder Naazindhri
@@ -47,6 +45,9 @@ local blindfoldData = {}
 local blindfoldTicker
 local blindfoldCounter = 0
 local blindfoldUID = {}
+local blindFoldPickupCounter = 0
+local blindFoldPickupUID = {}
+local initialSoulHunterSetup = false
 
 ------------------------------------------------------
 ---- Fractillus
@@ -83,7 +84,7 @@ function core._2810:PlexusSentinel()
     -- SPELL_AURA_REMOVED,Creature-0-1631-2810-18952-233814-00001D8D51,"Plexus Sentinel",0x10a48,0x80000000,Creature-0-1631-2810-18952-163366-00001D8DCC,"Magus of the Dead",0x2114,0x80000000,1220610,"Protocol: Purge",0x1,DEBUFF
 
     InfoFrame_UpdatePlayersOnInfoFrame()
-	InfoFrame_SetHeaderCounterWithAdditionalMessage(L["Shared_PlayersWithBuff"],holdingMouseCounter,core.groupSize,L["Shared_Total"] .. totalMouseCounter)
+	InfoFrame_SetHeaderCounterWithAdditionalMessage(L["Shared_PlayersWithBuff"],holdingMouseCounter,core.groupSize,L["Shared_Total"] .. " " .. totalMouseCounter)
 
     -- Detect start of intermission (Protocol: Purge) and announce to pickup mice
     if core.type == "SPELL_AURA_APPLIED" and (core.spellId == 1220618 or core.spellId == 1220981 or core.spellId == 1220982) then
@@ -306,6 +307,13 @@ function core._2810:SoulHunters()
     -- Update header each tick
     InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
     InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"], blindfoldCounter, core.groupSize)
+
+    if initialSoulHunterSetup == false then
+        initialSoulHunterSetup = true
+		for player,status in pairs(core.InfoFrame_PlayersTable) do
+            InfoFrame_SetPlayerNeutralWithMessage(player, "")
+		end
+    end
 
     -- Blindfold applied or refreshed
     if (core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_REFRESH") and core.spellId == 1246980 then
@@ -847,6 +855,27 @@ function core._2810:UpdatePlayerLane(name, icon, lane, spawn_uid_dest)
     end
 end
 
+function core._2810:TrackAdditional()
+    --Soulrender Dormazain -- Hellscream's Burden
+    if (core.type == "SPELL_AURA_APPLIED" or core.type == "SPELL_AURA_REMOVED") and core.spellId == 1247724 and core.destName ~= nil and core.encounterStarted == false then
+        core.IATInfoFrame:ToggleOn()
+        core.IATInfoFrame:SetHeading(GetAchievementLink(41616))
+        InfoFrame_SetHeaderCounter(C_Spell.GetSpellLink(1247724) .. " " .. L["Core_Counter"],blindFoldPickupCounter,core.groupSize)
+        InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
+
+        if blindFoldPickupUID[core.spawn_uid_dest_Player] == nil then
+            blindFoldPickupUID[core.spawn_uid_dest_Player] = core.spawn_uid_dest_Player
+            blindFoldPickupCounter = blindFoldPickupCounter + 1
+            core:sendMessage(core.destName .. " " .. L["Shared_HasGained"] .. " " .. C_Spell.GetSpellLink(1247724) .. " (" .. blindFoldPickupCounter .. "/" .. core.groupSize .. ")", true)
+            InfoFrame_SetPlayerCompleteWithMessage(core.destName, "")
+        end
+
+        --Update with any changes
+        InfoFrame_SetHeaderCounter(C_Spell.GetSpellLink(356731) .. " " .. L["Core_Counter"],blindFoldPickupCounter,core.groupSize)
+        InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
+    end
+end
+
 function core._2810.Events:UNIT_AURA(self, unitID)
 	if next(core.currentBosses) ~= nil then
         if core.currentBosses[1].encounterID == 3122 then
@@ -943,8 +972,6 @@ function core._2810:ClearVariables()
     ------------------------------------------------------
     ---- Loomithar
     ------------------------------------------------------
-    votedCounter = 0
-    votedUID = {}
 
     ------------------------------------------------------
     ---- Soulbinder Naazindhri
@@ -962,6 +989,9 @@ function core._2810:ClearVariables()
     end
     blindfoldCounter = 0
     blindfoldUID = {}
+    blindFoldPickupCounter = 0
+    blindFoldPickupUID = {}
+    initialSoulHunterSetup = false
 
     ------------------------------------------------------
     ---- Dimensius The All Devouring
