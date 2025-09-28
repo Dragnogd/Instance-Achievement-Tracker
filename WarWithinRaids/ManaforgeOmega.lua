@@ -122,7 +122,7 @@ function core._2810:PlexusSentinel()
             InfoFrame_SetPlayerComplete(core.destName)
         elseif core.destName ~= nil and holdingMouseUID[core.spawn_uid_dest_Player] ~= nil then
             -- Player has picked up another mouse when they should only be able to pick up 1
-            core:sendMessage(core.destName .. " " .. L["ManaforgeOmega_CollectedMultipleMice"], true)
+            --core:sendMessage(core.destName .. " " .. L["ManaforgeOmega_CollectedMultipleMice"], true)
             -- Still count for intermission as technically they have picked up a mouse
             collectedMiceDuringIntermissionCounter = collectedMiceDuringIntermissionCounter + 1
             totalMouseCounter = totalMouseCounter + 1
@@ -139,7 +139,7 @@ function core._2810:PlexusSentinel()
                 if UnitIsDeadOrGhost(UnitTokenFromGUID(playerLostMouseGUID)) == false then
                     holdingMouseCounter = holdingMouseCounter - 1
                     InfoFrame_SetPlayerIncomplete(playerLostMouse)
-                    core:sendMessage(playerLostMouse .. " " .. L["ManaforgeOmega_UsedImmunity"],true)
+                    --core:sendMessage(playerLostMouse .. " " .. L["ManaforgeOmega_UsedImmunity"],true)
                     table.insert(immunityPlayers, playerLostMouse)
                 end
             end
@@ -150,7 +150,8 @@ function core._2810:PlexusSentinel()
     if core.type == "UNIT_DIED" and core.destName ~= nil and core.currentUnit == "Player" then
         if InfoFrame_GetPlayerComplete(core.destName) == false then
             InfoFrame_SetPlayerIncomplete(core.destName)
-            core:sendMessage(core.destName .. " " .. L["Shared_DiedWithoutBuff"],true)
+
+            --core:sendMessage(core.destName .. " " .. L["Shared_DiedWithoutBuff"],true)
         end
     end
 
@@ -171,7 +172,7 @@ function core._2810:PlexusSentinel()
                     -- Player has accepted the ress
                     holdingMouseCounter = holdingMouseCounter - 1
                     InfoFrame_SetPlayerIncomplete(currentName)
-                    core:sendMessage(currentName .. " " .. L["ManaforgeOmega_RessedAfterCollectingMice"],true)
+                    --core:sendMessage(currentName .. " " .. L["ManaforgeOmega_RessedAfterCollectingMice"],true)
                     table.insert(playersRessedAfterDeath, currentName)
                     ticker:Cancel()
                 end
