@@ -640,7 +640,6 @@ function Config:CreateUI()
     Config.OptionsListDataProvider = CreateDataProvider()
     local ScrollView3 = CreateScrollBoxListLinearView()
 
-    ScrollView3:SetDataProvider(Config.OptionsListDataProvider)
 
     ScrollUtil.InitScrollBoxListWithScrollBar(self.UI.OptionsLayoutContainer.OptionsListScrollContainer.ScrollBox, self.UI.OptionsLayoutContainer.OptionsListScrollContainer.ScrollBar, ScrollView3)
 
@@ -704,6 +703,7 @@ function Config:CreateUI()
     end
 
     ScrollView3:SetElementInitializer("IATOptionsFrameOption", OptionsInitalizer)
+    ScrollView3:SetDataProvider(Config.OptionsListDataProvider)
 
     --Set a container to store the layout for the expansion tabs
     self.UI.ExpansionLayoutContainer = CreateFrame("FRAME", "ExpansionTabContainer", self.UI)
@@ -749,7 +749,6 @@ function Config:CreateUI()
 
     Config.InstanceListDataProvider = CreateDataProvider()
     local ScrollView = CreateScrollBoxListLinearView()
-    ScrollView:SetDataProvider(Config.InstanceListDataProvider)
 
     ScrollUtil.InitScrollBoxListWithScrollBar(self.UI.ExpansionLayoutContainer.InstanceListScrollContainer.ScrollBox, self.UI.ExpansionLayoutContainer.InstanceListScrollContainer.ScrollBar, ScrollView)
 
@@ -763,6 +762,7 @@ function Config:CreateUI()
     end
 
     ScrollView:SetElementInitializer("UIPanelButtonTemplate", InstanceInitalizer)
+    ScrollView:SetDataProvider(Config.InstanceListDataProvider)
 
     self.UI.ExpansionLayoutContainer.BossListScrollContainer = CreateFrame("Frame", "BossListScrollContainer", self.UI.ExpansionLayoutContainer)
     self.UI.ExpansionLayoutContainer.BossListScrollContainer:SetSize(690, 419)
