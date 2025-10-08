@@ -1,4 +1,4 @@
-﻿## Interface: 110200
+﻿## Interface: 110205
 ## Interface-Cata: 40402
 ## Interface-Mists: 50501
 ## Notes: An addon for tracking the completion/faliure of instance achievements.
