@@ -4,7 +4,6 @@
 local _, core = ...
 local L = core.L
 
-local rc = LibStub("LibRangeCheck-3.0")
 core.InfoFrame = {}
 core.InfoFrame.Events = CreateFrame("Frame")
 
@@ -410,22 +409,6 @@ function InfoFrame_UpdatePlayersOnInfoFramePersonal2(boss, checkForAllPlayers)
             end
         end
         core.IATInfoFrame:SetText1(messageStr)
-    end
-end
-
-function InfoFrame_GetRangeCheck(range)
-    local maxChecker = rc:GetFriendChecker(range)
-    if maxChecker ~= nil then
-        for player, status in pairs(core.InfoFrame_PlayersTable) do
-            if not maxChecker(player) then
-                --print(player .. " is not in range")
-                if core.InfoFrame_PlayersTable[player] ~= 2 then
-                    core.InfoFrame_PlayersTable[player] = 4
-                end
-            elseif core.InfoFrame_PlayersTable[player] ~= 2 then
-                core.InfoFrame_PlayersTable[player] = 1
-            end
-        end
     end
 end
 

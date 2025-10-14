@@ -313,13 +313,6 @@ function core._2070:Opulence()
 	if core:has_value(core.currentBosses[1].players, L["GUI_NoPlayersNeedAchievement"]) == false then
 		InfoFrame_UpdatePlayersOnInfoFramePersonal()
         InfoFrame_SetHeaderCounter(L["Shared_PlayersWhoNeedAchievement"],playersCompletedAchievement,#core.currentBosses[1].players)
-        -- if rangeCheckCooldown == false then
-        --     InfoFrame_GetRangeCheck(25)
-        --     rangeCheckCooldown = true
-        --     C_Timer.After(3, function()
-        --         rangeCheckCooldown = false
-        --     end)
-        -- end
 	else
 		InfoFrame_SetHeaderCounter(L["Shared_PlayersWhoNeedAchievement"],playersCompletedAchievement,0)
 		core.IATInfoFrame:SetText1(L["GUI_NoPlayersNeedAchievement"])
