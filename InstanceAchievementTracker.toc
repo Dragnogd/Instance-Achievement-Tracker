@@ -1,10 +1,10 @@
-﻿## Interface: 110205
+﻿## Interface: 110207
 ## Interface-Cata: 40402
-## Interface-Mists: 50501
+## Interface-Mists: 50502
 ## Notes: An addon for tracking the completion/faliure of instance achievements.
 ## Title:Instance Achievement Tracker
 ## Author: Whizzey
-## Version: 5.39.0
+## Version: 5.41.0
 ## IconTexture: Interface/AddOns/InstanceAchievementTracker/Images/icon.jpg
 ## OptionalDeps: LibStub, CallbackHandler-1.0, LibDBIcon-1.0, LibInspect, LibWindow-1.1
 ## SavedVariables: AchievementTrackerOptions, AchievementTrackerDebug, AchievementTrackerNPCCache, AchievementTrackerNPCCacheClassic
