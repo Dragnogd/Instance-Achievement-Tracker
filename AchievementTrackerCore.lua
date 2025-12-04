@@ -701,7 +701,9 @@ function enableAchievementTracking(self)
 	events:RegisterEvent("CHAT_MSG_SYSTEM")						--Used to find out when players join group to intiate an achievement scan of the group
 	events:RegisterEvent("PLAYER_REGEN_DISABLED")				--Used to detect when the player has entered combat and to reset tracked variables for bosses
 	events:RegisterEvent("PLAYER_REGEN_ENABLED")				--Used to track when the player has left combat
-	events:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")			--Used to track the completion/failiure of achievements
+	if core.gameVersionMajor < 12 then
+		events:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")			--Used to track the completion/failiure of achievements
+	end
 	events:RegisterEvent("ENCOUNTER_START")						--Used to detect the start of a boss fight
 	events:RegisterEvent("ENCOUNTER_END")						--Used to detect the end of a boss fight
 	events:RegisterEvent("UPDATE_MOUSEOVER_UNIT")				--Used to output achievement for boss and players missing achievements on hoverkk
