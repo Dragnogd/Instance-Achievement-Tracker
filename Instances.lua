@@ -1,5 +1,5 @@
 --------------------------------------
--- Last Auto Generated: 17/08/2025 16:03:30 using https://github.com/Dragnogd/Instance-Achievement-Tracker-Database-Manager
+-- Last Auto Generated: 04/01/2026 11:26:56 using https://github.com/Dragnogd/Instance-Achievement-Tracker-Database-Manager
 --------------------------------------
 local _, core = ...
 local L = core.L
@@ -11998,6 +11998,23 @@ core.Instances = {
 					partial = false,
 					nameWrath = L["Boss_MISSINGNAME76"],
 				},
+			},
+		},
+	},
+
+	--Midnight
+	[12] = {
+		Raids = {
+			[2939] = { --The Dreanrift
+				name = 1314,
+			},
+
+			[2912] = { --The Voidspire
+				name = 1307,
+			},
+
+			[2913] = { --March on Quel'Danas
+				name = 1308,
 			},
 		},
 	},
