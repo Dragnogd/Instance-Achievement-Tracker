@@ -29,6 +29,7 @@ Config.currentTab = nil
 Config.currentInstance = nil
 
 AchievementTrackerOptions = {}
+IATTrackedAchievements = {}
 
 -- Purpose:         Stores NPC names
 AchievementTrackerNPCCache = {}
@@ -36,7 +37,6 @@ AchievementTrackerNPCCacheClassic = {}
 
 BOSSBUTTON_COLLAPSEDHEIGHT = 84;
 
-core.Config.g_achievementSelectionBehavior = nil;
 local g_achievementSelections = {{},{},{}};
 
 ------------------------------------------------------
@@ -273,6 +273,9 @@ local function CreateTab(parent, id, data)
         if self:GetID() == 1 then
             --Options
             Config:ShowOptionsPanel()
+        elseif self:GetID() == 2 then
+            --Today
+            Config:ShowTodayPanel(self:GetID())
         else
             --Expansions
             Config:ShowInstancesForTab(self:GetID())
@@ -282,6 +285,9 @@ local function CreateTab(parent, id, data)
 end
 
 BossContentMixin = {}
+AchievementContentMixin = {}
+-- Add a small pool to reuse fontstrings (more efficient than creating new ones)
+local criteriaPool = {}
 
 function BossContentMixin:OnLoad()
     self.Highlight:Hide();
@@ -344,6 +350,71 @@ function BossContentMixin:Init(elementData)
     -- Set the plus/minus texture
     self.PlusMinus:SetTexCoord(0, .5, 0, 0.25);
 end
+
+function AchievementContentMixin:OnLoad()
+    self.Highlight:Hide();
+end
+
+function AchievementContentMixin:OnEnter()
+    local elementData = self:GetElementData();
+
+    local achievementLink = GetAchievementLink(elementData.boss.i)
+
+    GameTooltip:SetOwner(Config.UI, "ANCHOR_TOPRIGHT")
+    GameTooltip:SetHyperlink(achievementLink)
+    GameTooltip:Show()
+
+    self.Highlight:Show();
+end
+
+function AchievementContentMixin:IsSelected()
+	return SelectionBehaviorMixin.IsIntrusiveSelected(self);
+end
+
+function AchievementContentMixin:OnLeave()
+    GameTooltip:Hide()
+    self.Highlight:Hide();
+end
+
+function AchievementContentMixin:Expand(height)
+	if ( not self.collapsed and self:GetHeight() == height ) then
+		return;
+	end
+	self.collapsed = nil;
+	self:SetHeight(height);
+	self:GetHeight(); -- debug check
+	self.Tactics:Show();
+	self.Criteria:Show();
+end
+
+function AchievementContentMixin:Collapse()
+	if ( self.collapsed ) then
+		return;
+	end
+	self.collapsed = true;
+	self:SetHeight(BOSSBUTTON_COLLAPSEDHEIGHT);
+	self.Tactics:Hide();
+    self.Criteria:Hide();
+end
+
+function AchievementContentMixin:Init(elementData)
+	self.index = elementData.index;
+	self.id = elementData.id;
+    self.elementData = elementData
+
+	self.Label:SetText(elementData.name);
+
+    -- Ensure the achievement link is processed correctly
+    local achievementLink = GetAchievementLink(elementData.key)
+    achievementLink = achievementLink:gsub("&", "&amp;"); -- & in the achievement name would resolve the html syntax wrong
+
+    -- Set default text for the tactics
+    self:UpdateTacticsContent(elementData.defaultTacticText)
+
+    -- Set the plus/minus texture
+    self.PlusMinus:SetTexCoord(0, .5, 0, 0.25);
+end
+
 
 function Config:PreloadNPCCache()
     local uncached = {}
@@ -541,6 +612,119 @@ function BossContentMixin:SetSelected(selected)
 	SetFocusedAchievement(self.id);
 end
 
+function AchievementContentMixin:UpdateTacticsContent(tacticText, highlightCriteriaID)
+    -- Ensure we have valid data
+    local elementData = self:GetElementData()
+    if not elementData or not elementData.tactics then return end
+
+    -- Get the tactics for the selected expansion if tacticstext is not nil otherwise get first tactic
+    local tactics = tacticText
+    local tacticText = ""
+
+    if tactics then
+        -- Replace newline with HTML break and color codes
+        tacticText = tactics:gsub("%\n", "<br />"):gsub("|cff71d5ff", "|cff00008b")
+    end
+
+    -- Collect all NPC IDs (IAT_12345) in the tactics
+    local npcIDs = {}
+    for npcID in tacticText:gmatch("IAT_(%d+)") do
+        npcID = tonumber(npcID)
+        if npcID then
+            table.insert(npcIDs, npcID)
+        end
+    end
+
+    -- Fetch all NPC names synchronously
+    -- for _, npcID in ipairs(npcIDs) do
+    --     local name = self:FetchNPCNameSync(npcID)
+    --     tacticText = tacticText:gsub("IAT_" .. npcID, name or "Unknown NPC")
+    -- end
+
+    -- Save tactics text to mixin so we can fetch later for ouptutting tactics etc
+    self:GetElementData().tacticsRaw = tacticText
+
+    -- Show critiera
+    local html = core.Tracker:GetAchievementCriteriaHTML(elementData.key, highlightCriteriaID)
+    self.Criteria:SetText("<html><body><p>" .. html .. "</p></body></html>")
+
+    -- Update the tactics display text
+    self.Tactics:SetText("<html><body><p>" .. tacticText .. "</p></body></html>")
+
+    -- Calculate and update the height
+    if self.Tactics:GetContentHeight() > self.Criteria:GetContentHeight() then
+        self.currentHeight = self.Tactics:GetContentHeight()
+    else
+        self.currentHeight = self.Criteria:GetContentHeight()
+    end
+
+    local index = Config.AchievementListDataProvider:FindIndex(elementData)
+    Config.AchievementListDataProvider.collection[index].currentHeight = self.currentHeight
+
+    -- Expand or collapse based on selection
+    if SelectionBehaviorMixin.IsElementDataIntrusiveSelected(elementData) then
+        local height = self.currentHeight + BOSSBUTTON_COLLAPSEDHEIGHT
+        self:Expand(height)
+    else
+        self:Collapse()
+    end
+end
+
+function AchievementContentMixin:SetSelected(selected)
+	self:Init(self:GetElementData());
+	SetFocusedAchievement(self.id);
+end
+
+function core.Tracker:GetAchievementCriteriaHTML(achievementID, highlightCriteriaID)
+    local numCriteria = GetAchievementNumCriteria(achievementID)
+    if not numCriteria or numCriteria == 0 then
+        return ""
+    end
+
+    local lines = {}
+
+    for i = 1, numCriteria do
+        local criteriaString, criteriaType, completed, quantity, reqQuantity, charName, flags, assetID, quantityString, criteriaID, eligible, duration, elapsed = GetAchievementCriteriaInfo(achievementID, i)
+
+        if criteriaString and criteriaString ~= "" and not completed then
+            -- Default to white
+            local color = "FFFFFFFF" -- AA=FF for full opacity, then RRGGBB
+
+            local requirementsMet = core.Tracker:CheckCriteriaRequirements(achievementID, criteriaID)
+
+            if requirementsMet == false then
+                color = "FFFF0000" -- Red if requirements not met
+            elseif requirementsMet == nil then
+                -- Greyed out if no data
+                color = "FF808080"
+            end
+
+            -- Highlight if this is the criteria currently being focused
+            if tonumber(criteriaID) == tonumber(highlightCriteriaID) then
+                -- Highlight blue
+                color = "FF0000FF"
+                -- Highlight game yellow
+                color = "FFFFFF00"
+            end
+
+            -- Wrap with WoW color + hyperlink
+            local link = string.format(
+                "|c%s|Hiacriteria:%d:%d|h- %s|h|r<br/>",
+                color,
+                achievementID,
+                criteriaID,
+                criteriaString
+            )
+
+            table.insert(lines, link)
+        end
+    end
+
+    return table.concat(lines, "")
+end
+
+
+
 function Config:CreateUI()
     -- Create the main UI frame
     self.UI = CreateFrame("Frame", "AchievementTracker", UIParent, "PortraitFrameTemplate")
@@ -557,7 +741,7 @@ function Config:CreateUI()
     end
 
     -- Setup variables properties and scripts on the main UI frame
-    self.UI:SetSize(950, 567)
+    self.UI:SetSize(1025, 567)
     self.UI:SetPoint("CENTER")
     self.UI:SetMovable(true)
     self.UI:EnableMouse(true)
@@ -571,15 +755,17 @@ function Config:CreateUI()
     -- List of tabs
     Config.tabDataProvider = {
         [1] = {Title = L["GUI_Options"], ExpansionID = 0},
-        [2] = {Title = L["GUI_TheWarWithin"], ExpansionID = 11},
-        [3] = {Title = L["GUI_Dragonflight"], ExpansionID = 10},
-        [4] = {Title = L["GUI_Shadowlands"], ExpansionID = 9},
-        [5] = {Title = L["GUI_BattleForAzeroth"], ExpansionID = 8},
-        [6] = {Title = L["GUI_Legion"], ExpansionID = 7},
-        [7] = {Title = L["GUI_WarlordsOfDraenor"], ExpansionID = 6},
-        [8] = {Title = L["GUI_MistsOfPandaria"], ExpansionID = 5},
-        [9] = {Title = L["GUI_Cataclysm"], ExpansionID = 4},
-        [10] = {Title = L["GUI_WrathOfTheLichKing"], ExpansionID = 3}
+        [2] = {Title = L["GUI_Tody"], ExpansionID = 0},
+        [3] = {Title = L["GUI_Midnight"], ExpansionID = 12},
+        [4] = {Title = L["GUI_TheWarWithin"], ExpansionID = 11},
+        [5] = {Title = L["GUI_Dragonflight"], ExpansionID = 10},
+        [6] = {Title = L["GUI_Shadowlands"], ExpansionID = 9},
+        [7] = {Title = L["GUI_BattleForAzeroth"], ExpansionID = 8},
+        [8] = {Title = L["GUI_Legion"], ExpansionID = 7},
+        [9] = {Title = L["GUI_WarlordsOfDraenor"], ExpansionID = 6},
+        [10] = {Title = L["GUI_MistsOfPandaria"], ExpansionID = 5},
+        [11] = {Title = L["GUI_Cataclysm"], ExpansionID = 4},
+        [12] = {Title = L["GUI_WrathOfTheLichKing"], ExpansionID = 3},
     }
 
     -- Create the tabs
@@ -596,6 +782,10 @@ function Config:CreateUI()
             lastIndex = k
         end
     end
+
+    --- -------------------------------
+    --- Options Tab Layout
+    --- -------------------------------
 
     --Set a container to store the layout for the option tab
     self.UI.OptionsLayoutContainer = CreateFrame("FRAME", "OptionsTabContainer", self.UI)
@@ -639,7 +829,6 @@ function Config:CreateUI()
 
     Config.OptionsListDataProvider = CreateDataProvider()
     local ScrollView3 = CreateScrollBoxListLinearView()
-
 
     ScrollUtil.InitScrollBoxListWithScrollBar(self.UI.OptionsLayoutContainer.OptionsListScrollContainer.ScrollBox, self.UI.OptionsLayoutContainer.OptionsListScrollContainer.ScrollBar, ScrollView3)
 
@@ -705,6 +894,10 @@ function Config:CreateUI()
     ScrollView3:SetElementInitializer("IATOptionsFrameOption", OptionsInitalizer)
     ScrollView3:SetDataProvider(Config.OptionsListDataProvider)
 
+    --- -------------------------------
+    --- Expansions Tabs Layout
+    --- -------------------------------
+
     --Set a container to store the layout for the expansion tabs
     self.UI.ExpansionLayoutContainer = CreateFrame("FRAME", "ExpansionTabContainer", self.UI)
     self.UI.ExpansionLayoutContainer:SetPoint("TOPLEFT")
@@ -765,7 +958,7 @@ function Config:CreateUI()
     ScrollView:SetDataProvider(Config.InstanceListDataProvider)
 
     self.UI.ExpansionLayoutContainer.BossListScrollContainer = CreateFrame("Frame", "BossListScrollContainer", self.UI.ExpansionLayoutContainer)
-    self.UI.ExpansionLayoutContainer.BossListScrollContainer:SetSize(690, 419)
+    self.UI.ExpansionLayoutContainer.BossListScrollContainer:SetSize(760, 419)
     self.UI.ExpansionLayoutContainer.BossListScrollContainer:SetPoint("TOPLEFT", self.UI.ExpansionLayoutContainer.RightInset, "TOPLEFT", 0, -3)
     self.UI.ExpansionLayoutContainer.BossListScrollContainer:SetPoint("BOTTOMLEFT", self.UI.ExpansionLayoutContainer.RightInset, "BOTTOMRIGHT", 0, 3)
 
@@ -796,7 +989,7 @@ function Config:CreateUI()
     local function BossInitializer(button, data)
         --Allow the button to reveal tactics
         button:SetScript("OnClick", function(self)
-            core.Config.g_achievementSelectionBehavior:ToggleSelect(self);
+            core.Config.bossSelectionBehavior:ToggleSelect(self);
 
             if self.collapsed == true then
                 button.PlusMinus:SetTexCoord(0, .5, 0, 0.25);
@@ -986,8 +1179,8 @@ function Config:CreateUI()
     ScrollView2:SetDataProvider(Config.BossListDataProvider)
     ScrollUtil.InitScrollBoxListWithScrollBar(self.UI.ExpansionLayoutContainer.BossListScrollContainer.ScrollBox, self.UI.ExpansionLayoutContainer.BossListScrollContainer.ScrollBar, ScrollView2)
 
-    core.Config.g_achievementSelectionBehavior = ScrollUtil.AddSelectionBehavior(self.UI.ExpansionLayoutContainer.BossListScrollContainer.ScrollBox, SelectionBehaviorFlags.Deselectable, SelectionBehaviorFlags.Intrusive)
-    core.Config.g_achievementSelectionBehavior:RegisterCallback(SelectionBehaviorMixin.Event.OnSelectionChanged, function(o, elementData, selected)
+    core.Config.bossSelectionBehavior = ScrollUtil.AddSelectionBehavior(self.UI.ExpansionLayoutContainer.BossListScrollContainer.ScrollBox, SelectionBehaviorFlags.Deselectable, SelectionBehaviorFlags.Intrusive)
+    core.Config.bossSelectionBehavior:RegisterCallback(SelectionBehaviorMixin.Event.OnSelectionChanged, function(o, elementData, selected)
         local button = self.UI.ExpansionLayoutContainer.BossListScrollContainer.ScrollBox:FindFrame(elementData)
         if button then
             button:SetSelected(selected);
@@ -996,6 +1189,332 @@ function Config:CreateUI()
 
     ScrollUtil.AddResizableChildrenBehavior(self.UI.ExpansionLayoutContainer.BossListScrollContainer.ScrollBox);
 
+    --- -------------------------------
+    --- Today Tab Layout
+    --- -------------------------------
+
+    --Set a container to store the layout for the today tab
+    self.UI.TodayLayoutContainer = CreateFrame("FRAME", "TodayTabContainer", self.UI)
+    self.UI.TodayLayoutContainer:SetPoint("TOPLEFT")
+    self.UI.TodayLayoutContainer:SetPoint("BOTTOMRIGHT")
+
+    -- Create Left Inset
+    self.UI.TodayLayoutContainer.LeftInset = CreateFrame("Frame", "LeftInset", self.UI.TodayLayoutContainer)
+    self.UI.TodayLayoutContainer.LeftInset:SetPoint("TOPLEFT", 4, -40)
+    self.UI.TodayLayoutContainer.LeftInset:SetPoint("BOTTOMLEFT", 4, 6)
+    self.UI.TodayLayoutContainer.LeftInset:SetSize(237, 526)
+
+    -- Create Right Inset
+    self.UI.TodayLayoutContainer.RightInset = CreateFrame("Frame", "RightInset", self.UI.TodayLayoutContainer)
+    self.UI.TodayLayoutContainer.RightInset:SetPoint("TOPRIGHT", -6, -40)
+    self.UI.TodayLayoutContainer.RightInset:SetPoint("BOTTOMLEFT", self.UI.TodayLayoutContainer.LeftInset, "BOTTOMRIGHT", 2, 0)
+
+    -- Create Left Display
+    self.UI.TodayLayoutContainer.LeftDisplay = CreateFrame("Frame", "LeftDisplay", self.UI.TodayLayoutContainer)
+    self.UI.TodayLayoutContainer.LeftDisplay:SetPoint("TOPLEFT", self.UI.TodayLayoutContainer.LeftInset, "TOPLEFT", 3, -3)
+    self.UI.TodayLayoutContainer.LeftDisplay:SetPoint("BOTTOMRIGHT", self.UI.TodayLayoutContainer.LeftInset, "BOTTOMRIGHT", -3, 3)
+    local LeftDisplayTexture = self.UI.TodayLayoutContainer.LeftDisplay:CreateTexture(nil, "BACKGROUND", "store-category-bg")
+    LeftDisplayTexture:SetAllPoints(self.UI.TodayLayoutContainer.LeftDisplay)
+
+    -- Create Right Display
+    self.UI.TodayLayoutContainer.RightDisplay = CreateFrame("Frame", "RightDisplay", self.UI.TodayLayoutContainer)
+    self.UI.TodayLayoutContainer.RightDisplay:SetPoint("TOPLEFT", self.UI.TodayLayoutContainer.RightInset, "TOPLEFT", 3, -3)
+    self.UI.TodayLayoutContainer.RightDisplay:SetPoint("BOTTOMRIGHT", self.UI.TodayLayoutContainer.RightInset, "BOTTOMRIGHT", -3, 3)
+
+    self.UI.TodayLayoutContainer.CategoryListScrollContainer = CreateFrame("Frame", "CategoryListScrollContainer", self.UI.TodayLayoutContainer)
+    self.UI.TodayLayoutContainer.CategoryListScrollContainer:SetSize(210, 419)
+    self.UI.TodayLayoutContainer.CategoryListScrollContainer:SetPoint("TOPLEFT", self.UI.TodayLayoutContainer.LeftInset, "TOPLEFT", 6, -8)
+    self.UI.TodayLayoutContainer.CategoryListScrollContainer:SetPoint("BOTTOMLEFT", self.UI.TodayLayoutContainer.LeftInset, "BOTTOMRIGHT", 6, 5)
+
+    --Create the ScrollBox Frame
+    self.UI.TodayLayoutContainer.CategoryListScrollContainer.ScrollBox = CreateFrame("Frame", "ScrollBox", self.UI.TodayLayoutContainer.CategoryListScrollContainer, "WowScrollBoxList")
+    self.UI.TodayLayoutContainer.CategoryListScrollContainer.ScrollBox:SetPoint("TOPLEFT", 0, 0)
+    self.UI.TodayLayoutContainer.CategoryListScrollContainer.ScrollBox:SetPoint("BOTTOMRIGHT", 0, 0)
+
+    self.UI.TodayLayoutContainer.CategoryListScrollContainer.ScrollBar = CreateFrame("EventFrame", "ScrollBar", self.UI.TodayLayoutContainer.CategoryListScrollContainer, "MinimalScrollBar")
+    self.UI.TodayLayoutContainer.CategoryListScrollContainer.ScrollBar:SetPoint("TOPLEFT", self.UI.TodayLayoutContainer.CategoryListScrollContainer.ScrollBox, "TOPRIGHT", 3, 0)
+    self.UI.TodayLayoutContainer.CategoryListScrollContainer.ScrollBar:SetPoint("BOTTOMLEFT", self.UI.TodayLayoutContainer.CategoryListScrollContainer.ScrollBox, "BOTTOMRIGHT", 3, 0)
+
+    Config.CategoryListDataProvider = CreateDataProvider()
+    local ScrollViewTodayTab = CreateScrollBoxListLinearView()
+
+    ScrollUtil.InitScrollBoxListWithScrollBar(self.UI.TodayLayoutContainer.CategoryListScrollContainer.ScrollBox, self.UI.TodayLayoutContainer.CategoryListScrollContainer.ScrollBar, ScrollViewTodayTab)
+
+    local function AchievementCategoryInitializer(button, data)
+        button:SetScript("OnClick", function()
+            Config:ShowContentForCategory(data)
+        end)
+        button:SetText(data.name)
+        button:SetID(data.id)
+        button:SetPoint("TOP", 100, 100)
+    end
+
+    ScrollViewTodayTab:SetElementInitializer("UIPanelButtonTemplate", AchievementCategoryInitializer)
+    ScrollViewTodayTab:SetDataProvider(Config.CategoryListDataProvider)
+
+    self.UI.TodayLayoutContainer.AchievementListScrollContainer = CreateFrame("Frame", "AchievementListScrollContainer", self.UI.TodayLayoutContainer)
+    self.UI.TodayLayoutContainer.AchievementListScrollContainer:SetSize(760, 419)
+    self.UI.TodayLayoutContainer.AchievementListScrollContainer:SetPoint("TOPLEFT", self.UI.TodayLayoutContainer.RightInset, "TOPLEFT", 0, -3)
+    self.UI.TodayLayoutContainer.AchievementListScrollContainer:SetPoint("BOTTOMLEFT", self.UI.TodayLayoutContainer.RightInset, "BOTTOMRIGHT", 0, 3)
+
+    --Create the ScrollBox Frame
+    self.UI.TodayLayoutContainer.AchievementListScrollContainer.ScrollBox = CreateFrame("Frame", "ScrollBox", self.UI.TodayLayoutContainer.AchievementListScrollContainer, "WowScrollBoxList")
+    self.UI.TodayLayoutContainer.AchievementListScrollContainer.ScrollBox:SetPoint("TOPLEFT", 0, 0)
+    self.UI.TodayLayoutContainer.AchievementListScrollContainer.ScrollBox:SetPoint("BOTTOMRIGHT", 0, 0)
+
+    self.UI.TodayLayoutContainer.AchievementListScrollContainer.ScrollBar = CreateFrame("EventFrame", "ScrollBar", self.UI.TodayLayoutContainer.AchievementListScrollContainer, "MinimalScrollBar")
+    self.UI.TodayLayoutContainer.AchievementListScrollContainer.ScrollBar:SetPoint("TOPLEFT", self.UI.TodayLayoutContainer.AchievementListScrollContainer.ScrollBox, "TOPRIGHT", 3, 0)
+    self.UI.TodayLayoutContainer.AchievementListScrollContainer.ScrollBar:SetPoint("BOTTOMLEFT", self.UI.TodayLayoutContainer.AchievementListScrollContainer.ScrollBox, "BOTTOMRIGHT", 3, 0)
+    Mixin(self.UI.TodayLayoutContainer.AchievementListScrollContainer, AchievementContentMixin)
+
+    Config.AchievementListDataProvider = CreateDataProvider()
+    local ScrollView2TodayTab = CreateScrollBoxListLinearView()
+
+    ScrollView2TodayTab:SetElementExtentCalculator(function(dataIndex, elementData)
+        if SelectionBehaviorMixin.IsElementDataIntrusiveSelected(elementData) then
+            local totalHeight = BOSSBUTTON_COLLAPSEDHEIGHT
+            totalHeight = totalHeight + elementData.currentHeight
+
+            return totalHeight
+        else
+            return BOSSBUTTON_COLLAPSEDHEIGHT
+        end
+    end)
+
+    local function AchievementInitializer(button, data)
+        --Allow the button to reveal tactics
+        button:SetScript("OnClick", function(self)
+            core.Config.achievementSelectionBehavior:ToggleSelect(self);
+
+            if self.collapsed == true then
+                button.PlusMinus:SetTexCoord(0, .5, 0, 0.25);
+            else
+                button.PlusMinus:SetTexCoord(0, .5, 0.25, 0.50);
+            end
+        end)
+
+        -- Selected Tactic
+        local selectedTactic = nil
+
+        -- Set up the dropdown menu and define button actions
+        button.TacticsSelector:SetupMenu(function(dropdown, rootDescription)
+            -- Create the title for the dropdown menu
+            rootDescription:CreateTitle("Select Tactic")
+
+            -- Track the first button to set as selected
+            local firstTactic = nil
+
+            -- Collect all expansions in a sorted array
+            local expansionKeys = {}
+            -- Check if we have tactics to show
+           if data.tactics and next(data.tactics) ~= nil then
+                for expansion in pairs(data.tactics) do
+                    table.insert(expansionKeys, expansion)
+                end
+            end
+
+            -- Sort the expansions in descending order
+            table.sort(expansionKeys, function(a, b) return tonumber(a) > tonumber(b) end)
+
+            -- Iterate over the sorted expansions
+            if expansionKeys then
+                for _, expansion in ipairs(expansionKeys) do
+                    -- Get the tactics for the expansion
+                    local tactics = data.tactics[expansion]
+
+                    -- Get expansion name
+                    local expansionName
+                    for _, tabData in ipairs(Config.tabDataProvider) do
+                        if tabData.ExpansionID == expansion then
+                            expansionName = tabData.Title
+                        end
+                    end
+
+                    -- Iterate over the tactics for the selected expansion
+                    for index, tacticData in ipairs(tactics) do
+                        -- Create a button for each tactic
+
+                        local buttonDescription = rootDescription:CreateButton(expansionName, function()
+                            -- Set the selected tactic
+                            selectedTactic = expansionName
+
+                            -- Refresh the dropdown to show the selected text
+                            dropdown:GenerateMenu()
+
+                            -- Update the tactics text on ui
+                            button:UpdateTacticsContent(tacticData.tactic)
+                        end)
+
+                        -- Store the first tactic (from the highest expansion) if not already set
+                        if not firstTactic then
+                            firstTactic = expansionName
+                            data.defaultTacticText = tacticData.tactic
+                        end
+                    end
+                end
+            end
+
+            -- Automatically select the first tactic if nothing is selected
+            if not selectedTactic and firstTactic then
+                selectedTactic = firstTactic
+            end
+
+            -- Set the dropdown selection text
+            dropdown:SetSelectionText(function()
+                return selectedTactic or "Select Tactic"
+            end)
+        end)
+
+        --Button to announce the selected achievement tactics to the in-game chat
+        button.OutputTactics:SetScript("OnClick", function(self)
+            -- Make sure we output to the rigt chat channel
+            core:detectGroupType()
+
+            -- Reveal the tactics in the UI that are we going to output
+            button:Click()
+
+            -- Output the tactics to the chat
+            core:sendMessageSafe(GetAchievementLink(data.boss.achievement) .. " " .. data.boss.tacticsRaw)
+        end)
+
+        --Button to announce the selected achievement tactics to the in-game chat
+        button.TrackAchievement:SetScript("OnClick", function(self)
+            -- Make sure we output to the rigt chat channel
+
+            table.insert(IATTrackedAchievements, data.key)
+        end)
+
+        -- Enable or disable the output tactics button based on the selected tactic
+        if (data.defaultTacticText ~= nil and #data.defaultTacticText == 0) or data.defaultTacticText == nil then
+            button.PlusMinus:Hide()
+            button.OutputTactics:SetEnabled(false)
+        else
+            button.PlusMinus:Show()
+            button.OutputTactics:SetEnabled(true)
+        end
+
+        --Allow item links to show/hide their relevant tooltip
+        button.Tactics:SetScript("OnHyperlinkEnter", function(abc, linkData, link, button)
+            GameTooltip:SetOwner(self.UI, "ANCHOR_TOPRIGHT")
+            GameTooltip:SetHyperlink(linkData)
+            GameTooltip:Show()
+        end)
+        button.Tactics:SetScript("OnHyperlinkLeave", function(self, linkData, link, button)
+            GameTooltip:Hide()
+        end)
+
+        -- Allow criteria links to show/hide their relevant tooltip
+        button.Criteria:SetScript("OnHyperlinkEnter", function(frame, linkData, link)
+            local linkType, achievementID, criteriaID = strsplit(":", linkData)
+            local criteriaString, criteriaType, completed, quantity, reqQuantity, charName, flags, assetID, quantityString, criteriaID, eligible, duration, elapsed = GetAchievementCriteriaInfoByID(tonumber(achievementID), tonumber(criteriaID))
+
+            local databaseCriteriaData = nil
+            local achievementID = tonumber(achievementID)
+            local criteriaID = tonumber(criteriaID)
+            local exists = core.db.a[achievementID] and core.db.a[achievementID].cr and core.db.a[achievementID].cr[criteriaID] ~= nil
+            if exists then
+                databaseCriteriaData = core.db.a[achievementID].cr[criteriaID]
+            end
+
+            GameTooltip:SetOwner(self.UI, "ANCHOR_TOPRIGHT")
+            GameTooltip:ClearLines()
+
+            -- Criteria title
+            GameTooltip:AddLine(criteriaString, 1, 0.82, 0)
+            GameTooltip:AddLine(" ", 1, 0.82, 0, true)
+            GameTooltip:AddLine("Prerequisites:", 1, 1, 1, true)
+
+            -- Criteria requirements if avaliable
+            if databaseCriteriaData ~= nil then
+                -- Quest requirement
+                if databaseCriteriaData.q ~= nil then
+                    local questTitle = C_QuestLog.GetTitleForQuestID(databaseCriteriaData.q)
+
+                    GameTooltip:AddLine("Quest: " .. questTitle, 0, 1, 0, true)
+                end
+
+                -- Coordinates if avaliable
+                if databaseCriteriaData.x ~= nil then
+                    GameTooltip:AddLine(" ", 1, 1, 1, true)
+                    GameTooltip:AddLine("Coordinates:", 1, 1, 1, true)
+                    GameTooltip:AddLine(databaseCriteriaData.x .. ", " .. databaseCriteriaData.y, 1, 1, 1, true)
+                end
+
+                -- Zone if avaliable
+                if databaseCriteriaData.m ~= nil then
+                    local info = C_Map.GetMapInfo(databaseCriteriaData.m)
+                    GameTooltip:AddLine(" ", 1, 1, 1, true)
+                    GameTooltip:AddLine("Zone:", 1, 1, 1, true)
+                    GameTooltip:AddLine(info.name, 1, 1, 1, true)
+                end
+            end
+
+            --GameTooltip:AddLine(linkData, 1, 0.82, 0)
+
+            local elementData = button:GetElementData()
+
+            button:UpdateTacticsContent(elementData.defaultTacticText, criteriaID)
+
+            GameTooltip:Show()
+        end)
+
+        button.Criteria:SetScript("OnHyperlinkLeave", function()
+            GameTooltip:Hide()
+        end)
+
+        -- Reset tactics and criteria text when reusing the button
+        button.Tactics:SetText("")
+        button.Criteria:SetText("")
+
+        --Show the achievement for the
+        button.Description:SetText("You have everything you need to complete this achievement! Click to view instructions")
+
+        button.Label:SetText(data.name)
+        button.Tactics:Show()
+        button.TrackAchievement:SetWidth(110)
+        button.OutputTactics:SetWidth(110)
+        button.TacticsSelector:SetWidth(110)
+
+        -- Grey out achievement if achievement completed and option is enabled
+        if data.completedAchievement == true then
+            -- Remove glow
+            button.Glow:Hide()
+            -- Set background texture to greyed out
+            button.Background:SetTexture("Interface\\AchievementFrame\\UI-Achievement-Background")
+            -- Set text to greyed out
+            button.Label:SetTextColor(0.5, 0.5, 0.5)
+            -- Set the text color to white so easier to read
+            --button.Description:SetTextColor("p", 1, 1, 1)
+        else
+            -- Show glow
+            button.Glow:Show()
+            -- Set background texture to normal
+            button.Background:SetTexture("Interface\\AddOns\\InstanceAchievementTracker\\Images\\UI-MailFrameBG.png")
+            -- Set text to normal
+            button.Label:SetTextColor(1, 1, 1)
+            -- Set text color to default
+            --button.Description:SetTextColor("p", 0.18, 0.12, 0.06)
+        end
+
+        if data.icon then
+            button.Icon.texture:SetTexture(data.icon)
+        end
+    end
+
+    ScrollView2TodayTab:SetElementInitializer("IATAchievementFrameTemplate", AchievementInitializer)
+    ScrollView2TodayTab:SetDataProvider(Config.AchievementListDataProvider)
+    ScrollUtil.InitScrollBoxListWithScrollBar(self.UI.TodayLayoutContainer.AchievementListScrollContainer.ScrollBox, self.UI.TodayLayoutContainer.AchievementListScrollContainer.ScrollBar, ScrollView2TodayTab)
+
+    core.Config.achievementSelectionBehavior = ScrollUtil.AddSelectionBehavior(self.UI.TodayLayoutContainer.AchievementListScrollContainer.ScrollBox, SelectionBehaviorFlags.Deselectable, SelectionBehaviorFlags.Intrusive)
+    core.Config.achievementSelectionBehavior:RegisterCallback(SelectionBehaviorMixin.Event.OnSelectionChanged, function(o, elementData, selected)
+        local button = self.UI.TodayLayoutContainer.AchievementListScrollContainer.ScrollBox:FindFrame(elementData)
+        if button then
+            button:SetSelected(selected);
+        end
+    end, self)
+
+    ScrollUtil.AddResizableChildrenBehavior(self.UI.TodayLayoutContainer.AchievementListScrollContainer.ScrollBox);
+
     -- Set the first tap (options) as the default tab to show
     PanelTemplates_SetNumTabs(self.UI, #tabs)
     PanelTemplates_SetTab(self.UI, 1)
@@ -1003,7 +1522,14 @@ function Config:CreateUI()
 
     -- Hide the expansion container by default as well as the main UI
     self.UI.ExpansionLayoutContainer:Hide()
+    self.UI.TodayLayoutContainer:Hide()
     self.UI:Hide()
+
+    -- Debug Show
+    --self.UI:Show()
+
+    -- Show InfoFrame
+    --core.InfoFramev2:CreateUI()
 end
 
 function Config:ShowContentForInstance(data)
@@ -1057,6 +1583,89 @@ function Config:ShowContentForInstance(data)
     end
 end
 
+function Config:ShowContentForCategory(button)
+    Config.AchievementListDataProvider:Flush()
+    Config.InfoFrameDataProvider:Flush()
+    self.UI.TodayLayoutContainer.AchievementListScrollContainer.ScrollBox:FullUpdate(ScrollBoxConstants.UpdateImmediately);
+
+    -- Get best map for unit
+    local uiMapID = C_Map.GetBestMapForUnit("player")
+
+    local achievementsToSort = {}
+    local count = 0
+    for index, achievement in pairs(core.db.a) do
+        local id, name, points, completed, month, day, year, description, flags, icon, rewardText, isGuild, wasEarnedByMe, earnedBy, isStatistic = GetAchievementInfo(achievement.i)
+
+        local data = {
+            key = achievement.i,
+            name = name or "Unknown Achievement",
+            tactics = achievement.tactics or {},
+            tracking = false,
+            icon = icon,
+            currentHeight = BOSSBUTTON_COLLAPSEDHEIGHT,
+            boss = achievement,
+            Expanded = true,
+            collapsed = true
+        }
+
+        -- TODO: Apply filtering based on category (Today, Current Zone, Tracked)
+        -- Fornow, just add achievements we have adding tracking for
+        if achievement.cr and next(achievement.cr) then
+            -- Loop through each cr value
+            for criteriaID, criteriaData in pairs(achievement.cr) do
+                if button.id == 0 then
+                    -- Today
+                    table.insert(achievementsToSort, data)
+                    break
+                elseif button.id == 1 then
+                    -- Current Zone
+
+                    -- If achievement is in the current zone
+                    if criteriaData.m ~= nil then
+                        --print("Comparing achievement map " .. tostring(criteriaData.m) .. " to current map " .. tostring(uiMapID))
+                        if criteriaData.m == uiMapID then
+                            table.insert(achievementsToSort, data)
+                            break
+                        end
+                    end
+                elseif button.id == 2 then
+                    -- Tracked
+                    if core:has_value(IATTrackedAchievements, achievement.i) then
+                        if core:has_value(achievementsToSort, data) == false then
+                            --print("Adding tracked achievement " .. achievement.i .. " to the list")
+                            table.insert(achievementsToSort, data)
+                        end
+
+                        -- Add tomtom waypoint
+                        if criteriaData.x ~= nil and criteriaData.y ~= nil and criteriaData.m ~= nil then
+                            local criteriaString, criteriaType, completed, quantity, reqQuantity, charName, flags, assetID, quantityString, criteriaID, eligible, duration, elapsed = GetAchievementCriteriaInfoByID(id, criteriaID)
+
+                            -- Add to core.NavigationWaypoints
+                            table.insert(core.Navigation.Waypoints, {
+                                title = criteriaString,
+                                mapID = criteriaData.m,
+                                x = criteriaData.x,
+                                y = criteriaData.y,
+                            })
+
+
+                        else
+                            --print("Criteria has NO coordinates")
+                        end
+                    end
+                end
+            end
+        end
+
+        count = count + 1
+    end
+
+    for i, achievement in ipairs(achievementsToSort) do
+        Config.AchievementListDataProvider:Insert(achievement)
+        Config.InfoFrameDataProvider:Insert(achievement)
+    end
+end
+
 -- Function to show instances for a given tab
 function Config:ShowInstancesForTab(tabID)
     local data = Config.tabDataProvider[tabID]
@@ -1064,6 +1673,7 @@ function Config:ShowInstancesForTab(tabID)
     -- Hide options tab and show expansion tab
     self.UI.ExpansionLayoutContainer:Show()
     self.UI.OptionsLayoutContainer:Hide()
+    self.UI.TodayLayoutContainer:Hide()
 
     -- Remove any existing data from the DataProvider
     Config.InstanceListDataProvider:Flush()
@@ -1111,9 +1721,48 @@ function Config:ShowInstancesForTab(tabID)
     end
 end
 
+-- Function to show instances for a given tab
+function Config:ShowTodayPanel(tabID)
+    local data = Config.tabDataProvider[tabID]
+
+    -- Hide options tab and show expansion tab
+    self.UI.ExpansionLayoutContainer:Hide()
+    self.UI.OptionsLayoutContainer:Hide()
+    self.UI.TodayLayoutContainer:Show()
+
+    -- Remove any existing data from the DataProvider
+    Config.CategoryListDataProvider:Flush()
+    Config.AchievementListDataProvider:Flush()
+
+    local categoriesToSort = {}
+
+    -- Iterate through the instances for the selected expansion
+    table.insert(categoriesToSort, {
+        name = "Trackable",
+        id = 0,
+    })
+    table.insert(categoriesToSort, {
+        name = "Current Zone",
+        id = 1,
+    })
+    table.insert(categoriesToSort, {
+        name = "Currently Tracked",
+        id = 2,
+    })
+
+    -- Insert the sorted instances into the DataProvider
+    for _, instance in ipairs(categoriesToSort) do
+        Config.CategoryListDataProvider:Insert(instance)
+    end
+
+    -- Temp: show today content by default
+    --Config:ShowContentForCategory(categoriesToSort[0])
+end
+
 -- Function to show the options panel
 function Config:ShowOptionsPanel()
     self.UI.ExpansionLayoutContainer:Hide()
+    self.UI.TodayLayoutContainer:Hide()
     self.UI.OptionsLayoutContainer:Show()
 
     -- Create the texture
@@ -1145,6 +1794,20 @@ function Config:ShowOptionsPanel()
 
     self.UI.OptionsLayoutContainer.RightDisplay.DiscordTitle = self.UI.OptionsLayoutContainer:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
     self.UI.OptionsLayoutContainer.RightDisplay.DiscordTitle:SetPoint("TOPLEFT", self.UI.OptionsLayoutContainer.RightDisplay.Logo, "BOTTOMLEFT", 0, -5)
+    self.UI.OptionsLayoutContainer.RightDisplay.DiscordTitle:SetText(L["GUI_IATDiscordTitle"] .. ":")
+
+    self.UI.OptionsLayoutContainer.RightDisplay.DiscordURL = self.UI.OptionsLayoutContainer:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+    self.UI.OptionsLayoutContainer.RightDisplay.DiscordURL:SetPoint("TOPLEFT", self.UI.OptionsLayoutContainer.RightDisplay.DiscordTitle, "BOTTOMLEFT", 0, -5)
+    self.UI.OptionsLayoutContainer.RightDisplay.DiscordURL:SetText("https://discord.gg/BE8VB86T")
+
+    self.UI.OptionsLayoutContainer.RightDisplay.DiscordDescription = self.UI.OptionsLayoutContainer:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
+    self.UI.OptionsLayoutContainer.RightDisplay.DiscordDescription:SetPoint("TOPLEFT", self.UI.OptionsLayoutContainer.RightDisplay.DiscordURL, "BOTTOMLEFT", 0, -5)
+    self.UI.OptionsLayoutContainer.RightDisplay.DiscordDescription:SetText(L["GUI_IATDiscordDescription"])
+    self.UI.OptionsLayoutContainer.RightDisplay.DiscordDescription:SetWidth(400)
+    self.UI.OptionsLayoutContainer.RightDisplay.DiscordDescription:SetJustifyH("LEFT")
+
+    self.UI.OptionsLayoutContainer.RightDisplay.DiscordTitle = self.UI.OptionsLayoutContainer:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
+    self.UI.OptionsLayoutContainer.RightDisplay.DiscordTitle:SetPoint("TOPLEFT", self.UI.OptionsLayoutContainer.RightDisplay.DiscordDescription, "BOTTOMLEFT", 0, -5)
     self.UI.OptionsLayoutContainer.RightDisplay.DiscordTitle:SetText(L["GUI_AchievementsDiscordTitle"] .. ":")
 
     self.UI.OptionsLayoutContainer.RightDisplay.DiscordURL = self.UI.OptionsLayoutContainer:CreateFontString(nil, "OVERLAY", "GameFontNormal")
