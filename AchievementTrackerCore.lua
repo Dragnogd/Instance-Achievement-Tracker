@@ -9,7 +9,7 @@ local UIConfig													--UIConfig is used to make a display asking the user 
 local UICreated = false											--To enable achievement tracking when they enter an instances
 local debugMode = false
 local debugModeChat = false
-local sendDebugMessages = true
+local sendDebugMessages = false
 
 --------------------------------
 -- Saved Variables tables
@@ -2715,7 +2715,10 @@ function core:getAchievementToTrack()
 						core.trackingSupressed = true
 					end
 
-					core:sendMessage("setup") --This is sent at the start of the encounter to elect a leader rather than waiting for the first message to output
+					-- We only need to elect a leader for versions below midnight as we cannot output to chat in midnight and above
+					if core.gameVersionMajor < 12 then
+						core:sendMessage("setup") --This is sent at the start of the encounter to elect a leader rather than waiting for the first message to output
+					end
 					core.achievementTrackedMessageShown = true
 
 					--Announce to chat if enabled
@@ -2762,13 +2765,9 @@ end
 --Output messages to the chat. All messages get sent this function for easy management
 function core:sendMessage(message, outputToRW, messageType)
 	if core.gameVersionMajor >= 12 then
-		print("Detected midnight version or higher")
 		-- Midnight onwards we can longer access the chat so we output directly to the RaidNotice frame
 		if message ~= lastMessageSent then
-			print("Message is different to last message sent")
 			if debugModeChat == false then
-				print("Outputting to Raid Notice Frame")
-				print(message)
 				RaidNotice_AddMessage(RaidWarningFrame, "[IAT] " .. message, ChatTypeInfo["RAID_WARNING"])
 
 				if enableSound == true and messageType == "completed" then
