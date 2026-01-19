@@ -74,7 +74,7 @@
 		</Layers>
 		<Scripts>
 		</Scripts>
-	  </Frame>
+	</Frame>
 
 	<EventButton name="IATBossFrameTemplate" mixin="BossContentMixin" inherits="TooltipBorderBackdropTemplate" virtual="true"> <!-- inherits="TooltipBorderBackdropTemplate" -->
 		<Size x="434" y="142"/>
@@ -282,27 +282,318 @@
 				</Anchors>
 			</Button>
 		</Frames>
-	  </EventButton>
+	</EventButton>
 
-	  <FontFamily name="IATFont_Large" virtual="true">
-		<Member alphabet="roman">
-		  <Font font="Fonts\FRIZQT__.TTF" height="15"/>
-		</Member>
-		<Member alphabet="korean">
-		  <Font font="Fonts\2002.ttf" height="14" spacing="7"/>
-		</Member>
-		<Member alphabet="simplifiedchinese">
-		  <Font font="Fonts\ARKai_T.ttf" height="15"/>
-		</Member>
-		<Member alphabet="traditionalchinese">
-		  <Font font="Fonts\blei00d.ttf" height="15"/>
-		</Member>
-		<Member alphabet="russian">
-		  <Font font="Fonts\FRIZQT___CYR.TTF" height="15"/>
-		</Member>
-	  </FontFamily>
+	<EventButton name="IATAchievementFrameTemplate" mixin="AchievementContentMixin" inherits="TooltipBorderBackdropTemplate" virtual="true"> <!-- inherits="TooltipBorderBackdropTemplate" -->
+		<Size x="434" y="142"/>
+		<Layers>
+		  <Layer level="BACKGROUND">
+			<Texture name="$parentBackground" parentKey="Background" file="Interface\AddOns\InstanceAchievementTracker\Images\UI-MailFrameBG.png">
+				<Anchors>
+				<Anchor point="TOPLEFT" x="3" y="-3"/>
+				<Anchor point="BOTTOMRIGHT" x="-3" y="3"/>
+			  </Anchors>
+			</Texture>
+		  </Layer>
+		  <Layer level="BORDER">
+			<Texture parentKey="BottomLeftTsunami" file="Interface\AchievementFrame\UI-Achievement-Tsunami-Corners">
+			  <Size x="32" y="32"/>
+			  <Anchors>
+				<Anchor point="BOTTOMLEFT" x="-2" y="-2"/>
+			  </Anchors>
+			  <Color r="1" g="1" b="1" a=".2"/>
+			  <TexCoords left="0" right=".5" top="0" bottom="1"/>
+			</Texture>
+			<Texture parentKey="BottomRightTsunami" file="Interface\AchievementFrame\UI-Achievement-Tsunami-Corners">
+			  <Size x="32" y="32"/>
+			  <Anchors>
+				<Anchor point="BOTTOMRIGHT" x="2" y="-2"/>
+			  </Anchors>
+			  <Color r="1" g="1" b="1" a=".2"/>
+			  <TexCoords left=".5" right="1" top="0" bottom="1"/>
+			</Texture>
+			<Texture parentKey="TopLeftTsunami" file="Interface\AchievementFrame\UI-Achievement-Tsunami-Corners">
+			  <Size x="32" y="32"/>
+			  <Anchors>
+				<Anchor point="TOPLEFT" x="-2" y="-20"/>
+			  </Anchors>
+			  <Color r="1" g="1" b="1" a=".1"/>
+			  <TexCoords left="1" right=".5" top="1" bottom="0"/>
+			</Texture>
+			<Texture parentKey="TopRightTsunami" file="Interface\AchievementFrame\UI-Achievement-Tsunami-Corners">
+			  <Size x="32" y="32"/>
+			  <Anchors>
+				<Anchor point="TOPRIGHT" x="2" y="-20"/>
+			  </Anchors>
+			  <Color r="1" g="1" b="1" a=".1"/>
+			  <TexCoords left=".5" right="0" top="1" bottom="0"/>
+			</Texture>
+			<Texture parentKey="BottomTsunami1" file="Interface\AchievementFrame\UI-Achievement-Borders">
+			  <Size x="370" y="16"/>
+			  <Anchors>
+				<Anchor point="BOTTOMLEFT" relativeKey="$parent.BottomLeftTsunami" relativePoint="BOTTOMRIGHT" x="0" y="3"/>
+				<Anchor point="BOTTOMRIGHT" relativeKey="$parent.BottomRightTsunami" relativePoint="BOTTOMLEFT"/>
+			  </Anchors>
+			  <Color r="1" g="1" b="1" a=".35"/>
+			  <TexCoords left="0" right="0.72265" top="0.51953125" bottom="0.58203125"/>
+			</Texture>
+			<Texture parentKey="TopTsunami1" file="Interface\AchievementFrame\UI-Achievement-Borders">
+			  <Size x="370" y="16"/>
+			  <Anchors>
+				<Anchor point="TOPLEFT" relativeKey="$parent.TopLeftTsunami" relativePoint="TOPRIGHT" x="0" y="-3"/>
+				<Anchor point="TOPRIGHT" relativeKey="$parent.TopRightTsunami" relativePoint="TOPLEFT"/>
+			  </Anchors>
+			  <Color r="1" g="1" b="1" a="0.3"/>
+			  <TexCoords left="0.72265" right="0" top="0.58203125" bottom="0.51953125"/>
+			</Texture>
+		  </Layer>
+		  <Layer level="ARTWORK">
+			<Texture parentKey="TitleBar" file="Interface\AchievementFrame\UI-Achievement-Borders">
+			  <Size x="0" y="24"/>
+			  <Anchors>
+				<Anchor point="TOPLEFT" x="5" y="-4"/>
+				<Anchor point="TOPRIGHT" x="-5" y="-4"/>
+			  </Anchors>
+			  <TexCoords left="0" right="0.9765625" top="0.66015625" bottom="0.73828125"/>
+			  <Color r="1" g="1" b="1" a=".8"/>
+			</Texture>
+			<Texture parentKey="Glow" file="Interface\AchievementFrame\UI-Achievement-Borders">
+			  <Size x="10" y="64"/>
+			  <Anchors>
+				<Anchor point="TOPLEFT" relativeKey="$parent.TitleBar" relativePoint="BOTTOMLEFT" x="0" y="4"/>
+				<Anchor point="RIGHT" x="0" y="4"/>
+			  </Anchors>
+			  <TexCoords left="0" right="1" top="0.00390625" bottom="0.25390625"/>
+			</Texture>
+		  </Layer>
+		  <Layer level="OVERLAY">
+			<FontString parentKey="Trackable" inherits="GameFontHighlightMedium" text="Trackable" hidden="true">
+				<Size x="100" y="20"/>
+				<Anchors>
+				  <Anchor point="TOPRIGHT" x="0" y="-40"/>
+				</Anchors>
+			</FontString>
+			<FontString parentKey="Label" inherits="GameFontHighlightMedium" text="Wrathion, the Black Emperor">
+			  <Anchors>
+				<Anchor point="TOPLEFT" relativeKey="$parent.TitleBar" relativePoint="TOPLEFT" x="90" y="-5"/>
+			  </Anchors>
+			</FontString>
+			<FontString parentKey="Description" inherits="IATTextFontNormal">
+			  <Size x="0" y="0"/>
+			  <Anchors>
+				<Anchor point="TOPLEFT" x="80" y="-40"/>
+			  </Anchors>
+			</FontString>
+			<Texture parentKey="PlusMinus" file="Interface\AchievementFrame\UI-Achievement-PlusMinus" hidden="true">
+			  <Size x="15" y="15"/>
+			  <Anchors>
+				<Anchor point="TOPLEFT" x="72" y="-9"/>
+			  </Anchors>
+			  <TexCoords left="0" right=".5" top="0" bottom=".25"/>
+			</Texture>
+		  </Layer>
+		</Layers>
+		<Scripts>
+		  <OnLoad inherit="prepend" method="OnLoad"/>
+		  <OnEnter method="OnEnter"/>
+		  <OnLeave method="OnLeave"/>
+		</Scripts>
+		<Frames>
+			<Frame parentKey="Highlight" setAllPoints="true" hidden="true" enableMouse="false">
+				<Layers>
+					<Layer level="OVERLAY">
+						<Texture parentKey="TopLeft" file="Interface\PaperDollInfoFrame\UI-Character-ReputationBar-Highlight" alphaMode="ADD">
+					  		<Size x="16" y="16"/>
+					  		<Anchors>
+								<Anchor point="TOPLEFT" x="-1" y="2"/>
+					  		</Anchors>
+					  		<TexCoords left="0.06640625" right="0" top="0.4375" bottom="0.65625"/>
+							</Texture>
+							<Texture parentKey="BottomLeft" file="Interface\PaperDollInfoFrame\UI-Character-ReputationBar-Highlight" alphaMode="ADD">
+					  		<Size x="16" y="16"/>
+					  		<Anchors>
+						<Anchor point="BOTTOMLEFT" x="-1" y="-2"/>
+					  </Anchors>
+					  <TexCoords left="0.06640625" right="0" top="0.65625" bottom="0.4375"/>
+					</Texture>
+					<Texture parentKey="TopRight" file="Interface\PaperDollInfoFrame\UI-Character-ReputationBar-Highlight" alphaMode="ADD">
+					  <Size x="16" y="16"/>
+					  <Anchors>
+						<Anchor point="TOPRIGHT" x="1" y="2"/>
+					  </Anchors>
+					  <TexCoords left="0" right="0.06640625" top="0.4375" bottom="0.65625"/>
+					</Texture>
+					<Texture parentKey="BottomRight" file="Interface\PaperDollInfoFrame\UI-Character-ReputationBar-Highlight" alphaMode="ADD">
+					  <Size x="16" y="16"/>
+					  <Anchors>
+						<Anchor point="BOTTOMRIGHT" x="1" y="-2"/>
+					  </Anchors>
+					  <TexCoords left="0" right="0.06640625" top="0.65625" bottom="0.4375"/>
+					</Texture>
+					<Texture parentKey="Top" file="Interface\PaperDollInfoFrame\UI-Character-ReputationBar-Highlight" alphaMode="ADD">
+					  <Anchors>
+						<Anchor point="TOPLEFT" relativeKey="$parent.TopLeft" relativePoint="TOPRIGHT"/>
+						<Anchor point="BOTTOMRIGHT" relativeKey="$parent.TopRight" relativePoint="BOTTOMLEFT"/>
+					  </Anchors>
+					  <TexCoords left="0" right="0.015" top="0.4375" bottom="0.65625"/>
+					</Texture>
+					<Texture parentKey="Bottom" file="Interface\PaperDollInfoFrame\UI-Character-ReputationBar-Highlight" alphaMode="ADD">
+					  <Anchors>
+						<Anchor point="TOPLEFT" relativeKey="$parent.BottomLeft" relativePoint="TOPRIGHT"/>
+						<Anchor point="BOTTOMRIGHT" relativeKey="$parent.BottomRight" relativePoint="BOTTOMLEFT"/>
+					  </Anchors>
+					  <TexCoords left="0" right="0.015" top="0.65625" bottom="0.4375"/>
+					</Texture>
+					<Texture parentKey="Left" file="Interface\PaperDollInfoFrame\UI-Character-ReputationBar-Highlight" alphaMode="ADD">
+					  <Anchors>
+						<Anchor point="TOPLEFT" relativeKey="$parent.TopLeft" relativePoint="BOTTOMLEFT"/>
+						<Anchor point="BOTTOMRIGHT" relativeKey="$parent.BottomLeft" relativePoint="TOPRIGHT"/>
+					  </Anchors>
+					  <TexCoords left="0.06640625" right="0" top="0.65625" bottom="0.6"/>
+					</Texture>
+					<Texture parentKey="Right" file="Interface\PaperDollInfoFrame\UI-Character-ReputationBar-Highlight" alphaMode="ADD">
+					  <Anchors>
+						<Anchor point="TOPLEFT" relativeKey="$parent.TopRight" relativePoint="BOTTOMLEFT"/>
+						<Anchor point="BOTTOMRIGHT" relativeKey="$parent.BottomRight" relativePoint="TOPRIGHT"/>
+					  </Anchors>
+					  <TexCoords left="0" right="0.06640625" top="0.65625" bottom="0.6"/>
+					</Texture>
+				  </Layer>
+				</Layers>
+			</Frame>
+			<Frame parentKey="Icon" inherits="IconFrameTemplate">
+				<Size x="60" y="60"/>
+				<Anchors>
+				  <Anchor point="TOPLEFT" x="8" y="-9"/>
+				</Anchors>
+			</Frame>
+			<SimpleHTML parentKey="Criteria">
+				<Size x="325" y="400" />
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeKey="$parent.TitleBar" x="345" y="-65" />
+				</Anchors>
+				<FontString inherits="IATTextFontNormal" justifyV="TOP" justifyH="LEFT" />
+			</SimpleHTML >
+			<SimpleHTML parentKey="Tactics">
+				<Size x="325" y="400" />
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeKey="$parent.TitleBar" x="20" y="-65" />
+				</Anchors>
+				<FontString inherits="IATTextFontNormal" justifyV="TOP" justifyH="LEFT" />
+			</SimpleHTML >
+			<DropdownButton name="TacticsSelector" parentKey="TacticsSelector" inherits="WowStyle1DropdownTemplate">
+				<Anchors>
+					<Anchor point="TOPRIGHT" x="-230" y="-4"/>
+				</Anchors>
+			</DropdownButton>
+			<Button name="OutputTactics" parentKey="OutputTactics" inherits="UIPanelButtonTemplate" text="Output Tactics">
+				<Anchors>
+					<Anchor point="TOPRIGHT" x="-4" y="-4" />
+				</Anchors>
+			</Button>
+			<Button parentKey="TrackAchievement" inherits="UIPanelButtonTemplate" text="Track">
+				<Anchors>
+					<Anchor point="TOPRIGHT" x="-114" y="-4" />
+				</Anchors>
+			</Button>
+		</Frames>
+	</EventButton>
 
-	  <Font name="IATTextFontNormal" inherits="IATFont_Large" justifyH="LEFT" virtual="true">
-		<Color r="0.18" g="0.12" b="0.06"/>
-	  </Font>
+	<EventButton name="IATInfoFrameTemplate" mixin="InfoFrameContentMixin" inherits="TooltipBorderBackdropTemplate" virtual="true"> <!-- inherits="TooltipBorderBackdropTemplate" -->
+		<Size x="434" y="25"/>
+		<Layers>
+		  <Layer level="BACKGROUND">
+		  </Layer>
+		  <Layer level="BORDER">
+		  </Layer>
+		  <Layer level="ARTWORK">
+			<Texture parentKey="TitleBar" atlas="QuestLog-tab" setAllPoints="true">
+			  <Size x="0" y="20"/>
+			  <Anchors>
+				<Anchor point="TOPLEFT" x="2" y="-2"/>
+				<Anchor point="TOPRIGHT" x="-3" y="-4"/>
+			  </Anchors>
+			</Texture>
+		  </Layer>
+		  <Layer level="OVERLAY">
+			<FontString parentKey="Label" inherits="GameFontHighlightMedium" text="Wrathion, the Black Emperor">
+			  <Anchors>
+				<Anchor point="TOPLEFT" relativeKey="$parent.TitleBar" relativePoint="TOPLEFT" x="10" y="-2"/>
+			  </Anchors>
+			</FontString>
+			<Texture parentKey="PlusMinus" atlas="QuestLog-icon-Expand" setAllPoints="true" hidden="true">
+			  <Size x="15" y="15"/>
+			  <Anchors>
+				<Anchor point="TOPLEFT" x="230" y="-4"/>
+			  </Anchors>
+			</Texture>
+		  </Layer>
+		</Layers>
+		<Scripts>
+		  <OnLoad inherit="prepend" method="OnLoad"/>
+		  <OnEnter method="OnEnter"/>
+		  <OnLeave method="OnLeave"/>
+		</Scripts>
+		<Frames>
+			<Frame parentKey="Highlight" setAllPoints="true" hidden="true" enableMouse="false">
+			</Frame>
+			<SimpleHTML parentKey="Criteria">
+				<Size x="325" y="400" />
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeKey="$parent.TitleBar" x="10" y="-25" />
+				</Anchors>
+				<FontString inherits="GameFontNormal" justifyV="TOP" justifyH="LEFT" />
+			</SimpleHTML >
+		</Frames>
+	</EventButton>
+
+	<FontFamily name="IATFont_Large" virtual="true">
+	<Member alphabet="roman">
+		<Font font="Fonts\FRIZQT__.TTF" height="15"/>
+	</Member>
+	<Member alphabet="korean">
+		<Font font="Fonts\2002.ttf" height="14" spacing="7"/>
+	</Member>
+	<Member alphabet="simplifiedchinese">
+		<Font font="Fonts\ARKai_T.ttf" height="15"/>
+	</Member>
+	<Member alphabet="traditionalchinese">
+		<Font font="Fonts\blei00d.ttf" height="15"/>
+	</Member>
+	<Member alphabet="russian">
+		<Font font="Fonts\FRIZQT___CYR.TTF" height="15"/>
+	</Member>
+	</FontFamily>
+
+	<Font name="IATTextFontNormal" inherits="IATFont_Large" justifyH="LEFT" virtual="true">
+	<Color r="0.18" g="0.12" b="0.06"/>
+	</Font>
+
+	<Frame name="IAT_MainFrameRetail" virtual="true">
+		<Frames>
+			<Frame parentKey="Bg" name="IAT_MainFrameRetail.Bg" useParentLevel="true" inherits="FlatPanelBackgroundTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT" x="7" y="-18"/>
+					<Anchor point="BOTTOMRIGHT" x="-3" y="3"/>
+				</Anchors>
+			</Frame>
+			<Frame parentKey="NineSlice" name="IAT_MainFrameRetail.NineSlice" useParentLevel="true" inherits="NineSlicePanelTemplate">
+				<KeyValues>
+					<KeyValue key="layoutType" value="ButtonFrameTemplateNoPortrait" type="string"/>
+				</KeyValues>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString name="IATTitleText" parentKey="TitleText" inherits="GameFontNormal"/>
+					</Layer>
+				</Layers>
+			</Frame>
+			<Button parentKey="CloseButton" inherits="UIPanelCloseButtonDefaultAnchors">
+				<Scripts>
+					<OnClick>
+						self:GetParent():Hide()
+					</OnClick>
+				</Scripts>
+			</Button>
+		</Frames>
+	</Frame>
 </Ui>
