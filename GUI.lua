@@ -755,8 +755,8 @@ function Config:CreateUI()
     -- List of tabs
     Config.tabDataProvider = {
         [1] = {Title = L["GUI_Options"], ExpansionID = 0},
-        [2] = {Title = L["GUI_Tody"], ExpansionID = 0},
-        [3] = {Title = L["GUI_Midnight"], ExpansionID = 12},
+        [2] = {Title = L["GUI_Today"], ExpansionID = 0},
+        [3] = {Title = L["GUI_Midnight"], ExpansionID = 11},
         [4] = {Title = L["GUI_TheWarWithin"], ExpansionID = 11},
         [5] = {Title = L["GUI_Dragonflight"], ExpansionID = 10},
         [6] = {Title = L["GUI_Shadowlands"], ExpansionID = 9},
