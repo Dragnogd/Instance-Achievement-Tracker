@@ -128,6 +128,7 @@ local automaticBlizzardTracking = true			--By Default blizzard trackers are almo
 local automaticBlizzardTrackingInitialCheck = false --Initial check for value at start of each encounter
 core.syncMessageQueue = {}							--Messages sent from sync to other addons. Used when range is too small for one addon to cover.
 core.groupSizeRequiresUpdate = false
+local encounterTimer = nil						--Timer used to detect Success/Failure of encounter achievements in midnight and above
 
 --------------------------------------
 -- Addon Syncing
@@ -1293,7 +1294,7 @@ function events:ENCOUNTER_START(self, encounterID, encounterName, difficultyID, 
 		end
 	end
 
-	C_Timer.NewTicker(1, function()
+	encounterTimer = C_Timer.NewTicker(1, function()
 		--Boss Detection!
 		if core.foundBoss == true then
 			--Start tracking the particular boss if the user has not disabled tracking for that boss
@@ -1408,6 +1409,12 @@ function events:ENCOUNTER_END()
 	if core.groupSizeRequiresUpdate == true then
 		core:getGroupSize()
 		core.groupSizeRequiresUpdate = false
+	end
+
+	-- Cancel encounter timer for midnight and above
+	if encounterTimer ~= nil and encounterTimer:IsCancelled() == false then
+		encounterTimer:Cancel()
+		encounterTimer = nil
 	end
 end
 
