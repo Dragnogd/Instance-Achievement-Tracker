@@ -1734,7 +1734,7 @@ function checkAndClearInstanceVariables()
 		events:UnregisterEvent("CHAT_MSG_SYSTEM")
 		events:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		events:UnregisterEvent("PLAYER_REGEN_ENABLED")
-		if core.gameVersionMajor >= 12 then
+		if core.gameVersionMajor < 12 then
 			events:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 		end
 		events:UnregisterEvent("INSPECT_ACHIEVEMENT_READY")
