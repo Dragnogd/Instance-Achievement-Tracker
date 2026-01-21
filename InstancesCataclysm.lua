@@ -1,5 +1,5 @@
 --------------------------------------
--- Last Auto Generated: 04/01/2026 11:26:57 using https://github.com/Dragnogd/Instance-Achievement-Tracker-Database-Manager
+-- Last Auto Generated: 21/01/2026 20:05:16 using https://github.com/Dragnogd/Instance-Achievement-Tracker-Database-Manager
 --------------------------------------
 local _, core = ...
 local L = core.L

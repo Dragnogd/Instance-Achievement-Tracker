@@ -1,11 +1,148 @@
 --------------------------------------
--- Last Auto Generated: 04/01/2026 11:26:56 using https://github.com/Dragnogd/Instance-Achievement-Tracker-Database-Manager
+-- Last Auto Generated: 21/01/2026 20:05:15 using https://github.com/Dragnogd/Instance-Achievement-Tracker-Database-Manager
 --------------------------------------
 local _, core = ...
 local L = core.L
 local instances = {}
 
 core.Instances = {
+	--Midnight
+	[12] = {
+		Raids = {
+			[2939] = { --The Dreanrift
+				name = 1314,
+				boss1 = {
+					name = 2795, --Chimaerus the Undreamt God
+					bossIDs = {},
+					achievement = 61454,
+					players = {},
+					tactics = {
+						[12] = {
+							{ tactic = L["TheDreanrift_ChimaerustheUndreamtGod_1"] },
+						},
+					},
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 3306,
+				},
+			},
+
+			[2912] = { --The Voidspire
+				name = 1307,
+				boss1 = {
+					name = 2733, --Imperator Averzian
+					bossIDs = {},
+					achievement = 62106,
+					players = {},
+					tactics = {
+						[12] = {
+							{ tactic = L["TheVoidspire_ImperatorAverzian_1"] },
+						},
+					},
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 3176,
+				},
+				boss2 = {
+					name = 2734, --Vorasius
+					bossIDs = {},
+					achievement = 62058,
+					players = {},
+					tactics = {
+						[12] = {
+							{ tactic = L["TheVoidspire_Vorasius_1"] },
+						},
+					},
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 3177,
+				},
+				boss3 = {
+					name = 2736, --Fallen-King Salhadaar
+					bossIDs = {},
+					achievement = 61514,
+					players = {},
+					tactics = {
+						[12] = {
+							{ tactic = L["TheVoidspire_FallenKingSalhadaar_1"] },
+						},
+					},
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 3179,
+				},
+				boss4 = {
+					name = 2735, --Vaelgor & Ezzorak
+					bossIDs = {},
+					achievement = 61911,
+					players = {},
+					tactics = {
+						[12] = {
+							{ tactic = L["TheVoidspire_VaelgorEzzorak_1"] },
+						},
+					},
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 3178,
+				},
+				boss5 = {
+					name = 2737, --Lightblinded Vanguard
+					bossIDs = {},
+					achievement = 61936,
+					players = {},
+					tactics = {
+						[12] = {
+							{ tactic = L["TheVoidspire_LightblindedVanguard_1"] },
+						},
+					},
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 3180,
+				},
+				boss6 = {
+					name = 2738, --Crown of the Cosmos
+					bossIDs = {},
+					achievement = 61346,
+					players = {},
+					tactics = {
+						[12] = {
+							{ tactic = L["TheVoidspire_CrownoftheCosmos_1"] },
+						},
+					},
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 3181,
+				},
+			},
+
+			[2913] = { --March on Quel'Danas
+				name = 1308,
+				boss1 = {
+					name = 2739, --Belo'ren, Child of Al'ar
+					bossIDs = {},
+					achievement = 61381,
+					players = {},
+					tactics = {
+						[12] = {
+							{ tactic = L["MarchonQuelDanas_BelorenChildofAlar_1"] },
+						},
+					},
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 3182,
+				},
+			},
+		},
+	},
+
 	--The War Within
 	[11] = {
 		Raids = {
@@ -11998,23 +12135,6 @@ core.Instances = {
 					partial = false,
 					nameWrath = L["Boss_MISSINGNAME76"],
 				},
-			},
-		},
-	},
-
-	--Midnight
-	[12] = {
-		Raids = {
-			[2939] = { --The Dreanrift
-				name = 1314,
-			},
-
-			[2912] = { --The Voidspire
-				name = 1307,
-			},
-
-			[2913] = { --March on Quel'Danas
-				name = 1308,
 			},
 		},
 	},
