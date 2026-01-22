@@ -178,7 +178,7 @@ function core._2481:Xymox()
     end
 
     --Achievement tracker white
-    if core:getBlizzardTrackingStatus(15398,1) == true and pilferedArtifactCounter == core.groupSize then
+    if core:getBlizzardTrackingStatus(15398,1) == true then
         core:getAchievementSuccess()
     end
 end
@@ -238,7 +238,7 @@ function core._2481:PrototypePantheon()
 	end
 
     --Achievement tracker white
-    if core:getBlizzardTrackingStatus(15400, 1) == true and lickedCounter == core.groupSize then
+    if core:getBlizzardTrackingStatus(15400, 1) == true then
         core:getAchievementSuccess()
     end
 end
