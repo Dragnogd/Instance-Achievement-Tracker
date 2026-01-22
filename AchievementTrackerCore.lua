@@ -3794,6 +3794,13 @@ end
 
 --Check whether a table contains a certain value
 function core:has_value(tab, val)
+	-- In midnight onwards check if the value we recieve is not a secret
+	if core.gameVersionMajor >= 12 then
+		if issecretvalue(val) then
+			return false
+		end
+	end
+
     for index, value in ipairs(tab) do
         if value == val then
             return true
@@ -3804,6 +3811,13 @@ function core:has_value(tab, val)
 end
 
 function core:has_value2(tab, val)
+	-- In midnight onwards check if the value we recieve is not a secret
+	if core.gameVersionMajor >= 12 then
+		if issecretvalue(val) then
+			return false
+		end
+	end
+
     for index, value in pairs(tab) do
         if value == val then
             return true
