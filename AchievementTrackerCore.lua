@@ -1215,6 +1215,10 @@ function events:GROUP_ROSTER_UPDATE()
 end
 
 function events:CHAT_MSG_SYSTEM(self, message)
+	if core.gameVersionMajor >= 12 and issecretvalue(message) then
+		return
+	end
+
 	local chatStrs = {"joins the party", "joined the instance group", "joined the raid group", "joined a raid group", "leaves the party", "left the instance group", "leaves the party", "left the raid group"}
 	for i = 1, #chatStrs do
 		if string.match(message, chatStrs[i]) then
@@ -1455,7 +1459,8 @@ function events:UPDATE_MOUSEOVER_UNIT()
 					else
 						while EJ_GetCreatureInfo(counter, core.Instances[core.expansion][core.instanceType][core.instance][boss].name) ~= nil do
 							local _, name, _, _, _ = EJ_GetCreatureInfo(counter, core.Instances[core.expansion][core.instanceType][core.instance][boss].name)
-							if currentMouseoverTarget == name and core:has_value(encounterCache, core.Instances[core.expansion][core.instanceType][core.instance][boss].name) == false then
+
+							if (core.gameVersionMajor >= 12 and issecretvalue(currentMouseoverTarget) == false) and (currentMouseoverTarget == name and core:has_value(encounterCache, core.Instances[core.expansion][core.instanceType][core.instance][boss].name) == false) then
 								bossFound = true
 								local players = L["GUI_PlayersWhoNeedAchievement"] .. ": "
 								for i = 1, #core.Instances[core.expansion][core.instanceType][core.instance][boss].players do
@@ -1467,8 +1472,6 @@ function events:UPDATE_MOUSEOVER_UNIT()
 							counter = counter + 1
 						end
 					end
-
-
 				end
 			end
 			if bossFound == false then
