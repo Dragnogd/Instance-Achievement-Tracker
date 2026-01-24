@@ -4122,3 +4122,13 @@ function core:hasDebuff(player,spellId)
 	end
 	return found
 end
+
+function core:issecret(val)
+	-- Secret values only exist in game version 12 and above
+	if core.gameVersionMajor < 12 then
+		return false
+	end
+
+	-- Check if val is a secret value
+	return issecretvalue(val)
+end
