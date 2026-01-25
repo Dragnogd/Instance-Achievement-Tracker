@@ -294,6 +294,15 @@ function core._2217:Vexiona()
 			end
 		end)
 	end
+
+	-- The tracker is a bit buggy here which is why we had other checks as sometime would fire before all players had enough buffs
+	-- With restrictions we just check if tracker is white
+	if core:checkRestrictions() then
+		if core:getBlizzardTrackingStatus(14139) == true then
+			--Blizzard tracking gone white so achievement completed
+			core:getAchievementSuccess()
+		end
+	end
 end
 
 function core._2217:Maut()
