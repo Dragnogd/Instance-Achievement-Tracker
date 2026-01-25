@@ -54,6 +54,8 @@ function core._2070:ChampionOfTheLight()
 
     --On initial pull lets make sure everyone in the group has the Jani Favor debuff otherwise achievement cannot be completed
     if inititalDebuffScan == false then
+        if core:checkRestrictions() then return end
+
         inititalDebuffScan = true
         core:sendDebugMessage("Starting Initital Scan For Debuff")
         if core.groupSize > 1 then
@@ -423,6 +425,8 @@ end
 
 function core._2070.Events:CHAT_MSG_TEXT_EMOTE(self, message, sender, lineID, senderGUID)
     if core.Instances[core.expansion][core.instanceType][core.instance]["boss4"].enabled == true then
+        if core:checkRestrictions() then return end
+
         --Lets get the target they praised
         if UnitIsPlayer(sender) then
             if sender == UnitName("Player") then
