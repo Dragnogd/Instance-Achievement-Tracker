@@ -1215,7 +1215,7 @@ function events:GROUP_ROSTER_UPDATE()
 end
 
 function events:CHAT_MSG_SYSTEM(self, message)
-	if core.gameVersionMajor >= 12 and issecretvalue(message) then
+	if core.gameVersionMajor >= 12 then
 		return
 	end
 
@@ -1299,6 +1299,8 @@ function events:ENCOUNTER_START(self, encounterID, encounterName, difficultyID, 
 	end
 
 	encounterTimer = C_Timer.NewTicker(1, function()
+		--core:detectBlizzardTrackingAutomatically()
+
 		--Boss Detection!
 		if core.foundBoss == true then
 			--Start tracking the particular boss if the user has not disabled tracking for that boss
@@ -3873,7 +3875,6 @@ end
 
 --Automatically detect blizzard tracking for new instances and ask user to report.
 function core:detectBlizzardTrackingAutomatically()
-	--score:sendDebugMessage(tostring(core:getBlizzardTrackingStatus(core.achievementIDs[1])))
 	if automaticBlizzardTrackingInitialCheck == false then
 		automaticBlizzardTracking = core:getBlizzardTrackingStatus(core.achievementIDs[1])
 		core:sendDebugMessage("Automatic Blizzard Tracking set to: " .. tostring(automaticBlizzardTracking))
@@ -4131,4 +4132,12 @@ function core:issecret(val)
 
 	-- Check if val is a secret value
 	return issecretvalue(val)
+end
+
+function core:checkRestrictions()
+	if core.gameVersionMajor >= 12 then
+		return true
+	else
+		return false
+	end
 end
