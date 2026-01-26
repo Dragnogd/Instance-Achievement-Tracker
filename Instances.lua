@@ -1,5 +1,5 @@
 --------------------------------------
--- Last Auto Generated: 21/01/2026 20:05:15 using https://github.com/Dragnogd/Instance-Achievement-Tracker-Database-Manager
+-- Last Auto Generated: 26/01/2026 21:25:09 using https://github.com/Dragnogd/Instance-Achievement-Tracker-Database-Manager
 --------------------------------------
 local _, core = ...
 local L = core.L
@@ -155,7 +155,7 @@ core.Instances = {
 					players = {},
 					tactics = {
 						[11] = {
-							{ tactic = format(L["NerubarPalace_UlgraxTheDevourer"], "IAT_225880", "IAT_225880", C_Spell.GetSpellLink(436217)) },
+							{ tactic = format(L["NerubarPalace_UlgraxTheDevourer"], "IAT_225880", "IAT_225880") },
 						},
 					},
 					enabled = true,
@@ -2889,6 +2889,7 @@ core.Instances = {
 					track = function() core._2070:JadefireMasters() end,
 					partial = false,
 					encounterID = 2266,
+					restrictions = true,
 				},
 				boss3 = {
 					name = 2340, --Grong
@@ -2905,6 +2906,7 @@ core.Instances = {
 					track = function() core._2070:Grong() end,
 					partial = false,
 					encounterID = 2263,
+					restrictions = true,
 				},
 				boss4 = {
 					name = 2342, --Opulence
@@ -2921,6 +2923,7 @@ core.Instances = {
 					partial = false,
 					encounterID = 2271,
 					displayInfoFrame = true,
+					restrictions = true,
 				},
 				boss5 = {
 					name = 2330, --Conclave of the Chosen
@@ -2996,6 +2999,38 @@ core.Instances = {
 					track = function() core._2070:JainaProudmoore() end,
 					partial = false,
 					encounterID = 2281,
+				},
+				boss1 = {
+					name = 2333, --Champion of the Light
+					bossIDs = {},
+					achievement = 13316,
+					players = {},
+					tactics = {
+						[8] = {
+							{ tactic = L["BattleofDazaralor_ChampionoftheLight_1"] },
+						},
+					},
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 2265,
+					restrictions = true,
+				},
+				boss3 = {
+					name = 2325, --Grong, the Jungle Lord
+					bossIDs = {},
+					achievement = 13383,
+					players = {},
+					tactics = {
+						[8] = {
+							{ tactic = L["BattleofDazaralor_GrongtheJungleLord_1"] },
+						},
+					},
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 2263,
+					restrictions = true,
 				},
 			},
 
@@ -3207,6 +3242,7 @@ core.Instances = {
 					track = function() core._2217:ProphetSkitra() end,
 					partial = false,
 					encounterID = 2334,
+					restrictions = true,
 				},
 				boss4 = {
 					name = 2377, --Dark Inquisitor Xanesh
@@ -3222,6 +3258,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 2328,
+					restrictions = true,
 				},
 				boss5 = {
 					name = 2372, --The Hivemind
@@ -3237,6 +3274,7 @@ core.Instances = {
 					track = function() core._2217:Hivemind() end,
 					partial = false,
 					encounterID = 2333,
+					restrictions = true,
 				},
 				boss6 = {
 					name = 2367, --Shad'har the Insatiable
@@ -3253,6 +3291,7 @@ core.Instances = {
 					partial = false,
 					encounterID = 2335,
 					displayInfoFrame = true,
+					restrictions = true,
 				},
 				boss7 = {
 					name = 2373, --Drest'agath
@@ -3315,6 +3354,7 @@ core.Instances = {
 					partial = false,
 					encounterID = 2345,
 					displayInfoFrame = true,
+					restrictions = true,
 				},
 				boss11 = {
 					name = 2366, --Carapace of N'Zoth
@@ -3346,6 +3386,7 @@ core.Instances = {
 					partial = false,
 					encounterID = 2344,
 					displayInfoFrame = true,
+					restrictions = true,
 				},
 			},
 		},
