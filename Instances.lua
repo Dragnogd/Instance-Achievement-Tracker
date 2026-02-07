@@ -1,5 +1,5 @@
 --------------------------------------
--- Last Auto Generated: 26/01/2026 21:25:09 using https://github.com/Dragnogd/Instance-Achievement-Tracker-Database-Manager
+-- Last Auto Generated: 07/02/2026 11:54:48 using https://github.com/Dragnogd/Instance-Achievement-Tracker-Database-Manager
 --------------------------------------
 local _, core = ...
 local L = core.L
@@ -226,6 +226,7 @@ core.Instances = {
 					partial = false,
 					encounterID = 2919,
 					displayInfoFrame = true,
+					restrictions = true,
 				},
 				boss6 = {
 					name = 2601, --Nexus-Princess Ky'veza
