@@ -114,7 +114,7 @@ function core._2522:DatheaAscended()
         end
     end
 
-    if core:getBlizzardTrackingStatus(16458, 1) == true and condensedGaleCounter >= 8 then
+    if core:getBlizzardTrackingStatus(16458, 1) == true then
 		core:getAchievementSuccess()
 	end
 end
@@ -216,8 +216,10 @@ function core._2522:ClearVariables()
 end
 
 function core._2522:InstanceCleanup()
-    core._2522.Events:UnregisterEvent("UNIT_AURA")
-    core._2522.Events:UnregisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+    if core.gameVersionMajor < 12 then
+        core._2522.Events:UnregisterEvent("UNIT_AURA")
+        core._2522.Events:UnregisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+    end
 end
 
 core._2522.Events:SetScript("OnEvent", function(self, event, ...)
@@ -225,8 +227,10 @@ core._2522.Events:SetScript("OnEvent", function(self, event, ...)
 end)
 
 function core._2522:InitialSetup()
-    core._2522.Events:RegisterEvent("UNIT_AURA")
-    core._2522.Events:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+    if core.gameVersionMajor < 12 then
+        core._2522.Events:RegisterEvent("UNIT_AURA")
+        core._2522.Events:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+    end
 end
 
 function core._2522.Events:UNIT_SPELLCAST_SUCCEEDED(self, unitTarget, castGUID, spellID)
