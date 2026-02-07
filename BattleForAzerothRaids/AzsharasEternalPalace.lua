@@ -219,8 +219,10 @@ function core._2164:TheQueensCourt()
 		end)
 	end
 
-	InfoFrame_UpdatePlayersOnInfoFramePersonal()
-	InfoFrame_SetHeaderCounter(L["Shared_PlayersWhoNeedAchievement"],playersCompletedAchievement,#core.currentBosses[1].players)
+	if core:IsNotRestricted() then
+		InfoFrame_UpdatePlayersOnInfoFramePersonal()
+		InfoFrame_SetHeaderCounter(L["Shared_PlayersWhoNeedAchievement"],playersCompletedAchievement,#core.currentBosses[1].players)
+	end
 
 	--Make sure we remove realm info from player before checking name
 	local name = nil
@@ -297,8 +299,9 @@ function core._2164:ClearVariables()
 end
 
 function core._2164:InstanceCleanup()
-    core._2164.Events:UnregisterEvent("UNIT_AURA")
-    core._2164.Events:UnregisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+	if core:IsNotRestricted() then
+		core._2164.Events:UnregisterEvent("UNIT_AURA")
+    end
 end
 
 core._2164.Events:SetScript("OnEvent", function(self, event, ...)
@@ -306,8 +309,9 @@ core._2164.Events:SetScript("OnEvent", function(self, event, ...)
 end)
 
 function core._2164:InitialSetup()
-    core._2164.Events:RegisterEvent("UNIT_AURA")
-    core._2164.Events:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+	if core:IsNotRestricted() then
+    	core._2164.Events:RegisterEvent("UNIT_AURA")
+	end
 end
 
 function core._2164.Events:UNIT_AURA(self, unitID)
@@ -393,13 +397,5 @@ function core._2164.Events:UNIT_AURA(self, unitID)
 				core:getAchievementFailed()
 			end
 		end
-	end
-end
-
-function core._2164.Events:UNIT_SPELLCAST_SUCCEEDED(self, unitTarget, castGUID, spellID)
-	if spellID == 302005 then
-		core:sendDebugMessage("IN UNIT SPELLCAST SUCEDDED")
-		core:sendDebugMessage(spellID)
-		core:sendDebugMessage(castGUID)
 	end
 end
