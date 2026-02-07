@@ -55,7 +55,7 @@ end
 
 function core._36:FoeReaper5000()
     if achievementAnnounced == false then
-        core:sendMessage("Tracking: "  .. GetAchievementLink(core.achievementIDs[i]))
+        core:sendMessage("Tracking: "  .. GetAchievementLink(5368))
         achievementAnnounced = true
     end
 
