@@ -180,14 +180,20 @@ end
 
 function core._720:InstanceCleanup()
     core._720.Events:UnregisterEvent("UNIT_POWER_UPDATE")
-	core._720.Events:UnregisterEvent("UNIT_AURA")
+
+	if core:IsNotRestricted() then
+		core._720.Events:UnregisterEvent("UNIT_AURA")
+	end
 
 	onlyThePenitentFailed = false
 end
 
 function core._720:InitialSetup()
 	core._720.Events:RegisterEvent("UNIT_POWER_UPDATE")
-    core._720.Events:RegisterEvent("UNIT_AURA")
+
+	if core:IsNotRestricted() then
+		core._720.Events:RegisterEvent("UNIT_AURA")
+	end
 end
 
 core._720.Events:SetScript("OnEvent", function(self, event, ...)

@@ -56,7 +56,7 @@ function core._967:WarlordZonozz()
 	end
 
 	if pingPongCounter == 10 then
-		core:getAchievementSuccess()	
+		core:getAchievementSuccess()
 	end
 end
 
@@ -88,7 +88,7 @@ function core._967:YorsahjTheUnsleeping()
 		core:sendMessage("Red and Green combination found for " .. GetAchievementLink(core.achievementIDs[1]) .. " (" .. combinationsFound .. "/4)")
 		redGreenFound = true
 	end
-	
+
 	if blackFound == true and blueFound == true and blackBlueFound == false then
 		combinationsFound = combinationsFound + 1
 		core:sendMessage("Black and Blue combination found for " .. GetAchievementLink(core.achievementIDs[1]) .. " (" .. combinationsFound .. "/4)")
@@ -116,7 +116,7 @@ function core._967:YorsahjTheUnsleeping()
 			purpleFound = false
 			blueFound = false
 			timerStarted = false
-		end)		
+		end)
 	end
 
 end
@@ -175,7 +175,7 @@ function core._967:ClearVariables()
 	------------------------------------------------------
 	lastRole = nil
 	rolesPerformed = 0
-	
+
 	------------------------------------------------------
 	---- Deathwing
 	------------------------------------------------------
@@ -183,11 +183,16 @@ function core._967:ClearVariables()
 end
 
 function core._967:InstanceCleanup()
-    core._967.Events:UnregisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
+	if core:IsNotRestricted() then
+	    core._967.Events:UnregisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
+	end
+
 end
 
 function core._967:InitialSetup()
-    core._967.Events:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
+	if core:IsNotRestricted() then
+		core._967.Events:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
+	end
 end
 
 core._967.Events:SetScript("OnEvent", function(self, event, ...)
@@ -218,14 +223,14 @@ function core._967.Events:CHAT_MSG_RAID_BOSS_EMOTE(self, message, sender, langua
 			if lastRole == "right" or lastRole == nil then
 				rolesPerformed = 0
 				core:sendMessage("(This Achievement Can be Attempted Again)")
-				C_Timer.After(4, function() 
-					core:sendMessage("Roll the boss LEFT now! (" .. rolesPerformed .. "/4)")				
+				C_Timer.After(4, function()
+					core:sendMessage("Roll the boss LEFT now! (" .. rolesPerformed .. "/4)")
 				end)
 				lastRole = nil
 			elseif lastRole == "left" then
 				rolesPerformed = rolesPerformed + 1
-				C_Timer.After(4, function() 
-					core:sendMessage("Roll the boss LEFT now! (" .. rolesPerformed .. "/4)")				
+				C_Timer.After(4, function()
+					core:sendMessage("Roll the boss LEFT now! (" .. rolesPerformed .. "/4)")
 				end)
 				lastRole = "right"
 			end
@@ -239,15 +244,15 @@ function core._967.Events:CHAT_MSG_RAID_BOSS_EMOTE(self, message, sender, langua
 			elseif lastRole == "left" then
 				rolesPerformed = 1
 				core:sendMessage("(This Achievement Can be Attempted Again)")
-				C_Timer.After(4, function() 
-					core:sendMessage("Roll the boss RIGHT now! (" .. rolesPerformed .. "/4)")				
+				C_Timer.After(4, function()
+					core:sendMessage("Roll the boss RIGHT now! (" .. rolesPerformed .. "/4)")
 				end)
 				lastRole = "left"
 			elseif lastRole == "right" then
 				rolesPerformed = rolesPerformed + 1
-				C_Timer.After(4, function() 
-					core:sendMessage("Roll the boss RIGHT now! (" .. rolesPerformed .. "/4)")				
-				end)				
+				C_Timer.After(4, function()
+					core:sendMessage("Roll the boss RIGHT now! (" .. rolesPerformed .. "/4)")
+				end)
 				lastRole = "left"
 			end
 		end

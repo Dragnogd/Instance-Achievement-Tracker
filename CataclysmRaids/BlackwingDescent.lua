@@ -52,6 +52,20 @@ function core._669:Magmaw()
 end
 
 function core._669:OminitronDefenseSystem()
+	--Achievement Requirements Met
+    if core:getBlizzardTrackingStatus(5307, 1) == false then
+        core:getAchievementFailedWithMessageAfter(GetAchievementCriteriaInfo(5307,1))
+    end
+    if core:getBlizzardTrackingStatus(5307, 2) == false then
+        core:getAchievementFailedWithMessageAfter(GetAchievementCriteriaInfo(5307,2))
+    end
+    if core:getBlizzardTrackingStatus(5307, 3) == false then
+        core:getAchievementFailedWithMessageAfter(GetAchievementCriteriaInfo(5307,3))
+    end
+	if core:getBlizzardTrackingStatus(5307, 4) == false then
+        core:getAchievementFailedWithMessageAfter(GetAchievementCriteriaInfo(5307,4))
+    end
+
 	--Arcane Annihilator
 	if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 79710 and arcaneAnnihilatorFailed == false then
 		core:getAchievementFailedWithMessageAfter("(" .. L["Core_Reason"] .. ": " .. core.spellName)
@@ -230,11 +244,11 @@ end)
 -- end
 
 function core._669.Events:UNIT_POWER_UPDATE(self, unit, powerType)
-    if core.Instances[core.expansion][core.instanceType][core.instance]["boss4"].enabled == true then
-		if powerType == "ALTERNATE" then
-			if UnitPower(unit, ALTERNATE_POWER_INDEX) > 50 then
-				core:getAchievementFailedWithMessageAfter("(" .. UnitName(unit) .. ")")
-			end
-		end
-    end
+    -- if core.Instances[core.expansion][core.instanceType][core.instance]["boss4"].enabled == true then
+	-- 	if powerType == "ALTERNATE" then
+	-- 		if UnitPower(unit, ALTERNATE_POWER_INDEX) > 50 then
+	-- 			core:getAchievementFailedWithMessageAfter("(" .. UnitName(unit) .. ")")
+	-- 		end
+	-- 	end
+    -- end
 end
