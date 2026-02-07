@@ -42,39 +42,41 @@ end
 function core._2526:OvergrownAncient()
     --Defeat the Overgrown Ancient while all party members have a Well-Fed Duckling on their head in Algeth'ar Academy on Mythic difficulty.
 
-	InfoFrame_UpdatePlayersOnInfoFrame()
-	InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],wellFedDucklingCounter,core.groupSize)
+	if core:IsNotRestricted() then
+		InfoFrame_UpdatePlayersOnInfoFrame()
+		InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],wellFedDucklingCounter,core.groupSize)
 
-	--Check if all players have got the Duckling
-    if ducklingCheck == false then
-        ducklingCheck = true
+		--Check if all players have got the Duckling
+		if ducklingCheck == false then
+			ducklingCheck = true
 
-        local playersWithoutBuff = ""
-        local playersFailed = false
+			local playersWithoutBuff = ""
+			local playersFailed = false
 
-		for player,status in pairs(core.InfoFrame_PlayersTable) do
-			local debuffFound = false
-			for i=1,40 do
-				local auraData = C_UnitAuras.GetBuffDataByIndex(player, i)
-				if auraData ~= nil and auraData.spellId == 392005 then
-					debuffFound = true
+			for player,status in pairs(core.InfoFrame_PlayersTable) do
+				local debuffFound = false
+				for i=1,40 do
+					local auraData = C_UnitAuras.GetBuffDataByIndex(player, i)
+					if auraData ~= nil and auraData.spellId == 392005 then
+						debuffFound = true
+					end
+				end
+				if debuffFound == false then
+					playersWithoutBuff = playersWithoutBuff .. player .. ", "
+					playersFailed = true
+					InfoFrame_SetPlayerFailed(player)
+				else
+					InfoFrame_SetPlayerComplete(player)
+					wellFedDucklingCounter = wellFedDucklingCounter + 1
 				end
 			end
-			if debuffFound == false then
-				playersWithoutBuff = playersWithoutBuff .. player .. ", "
-				playersFailed = true
-				InfoFrame_SetPlayerFailed(player)
-			else
-				InfoFrame_SetPlayerComplete(player)
-				wellFedDucklingCounter = wellFedDucklingCounter + 1
+
+			if playersFailed == true then
+				core:getAchievementFailed()
+				core:sendMessageSafe(playersWithoutBuff,nil,true)
 			end
 		end
-
-		if playersFailed == true then
-			core:getAchievementFailed()
-			core:sendMessageSafe(playersWithoutBuff,nil,true)
-		end
-    end
+	end
 
 	if core.type == "UNIT_DIED" and core.destID == "196482" then
         overgrownAncientKilled = true

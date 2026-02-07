@@ -308,13 +308,17 @@ function core._1448:ClearVariables()
 end
 
 function core._1448:InstanceCleanup()
-    core._1448.Events:UnregisterEvent("UNIT_HEALTH")
-    core._1448.Events:UnregisterEvent("CHAT_MSG_MONSTER_YELL")
+	if core:IsNotRestricted() then
+	    core._1448.Events:UnregisterEvent("UNIT_HEALTH")
+	    core._1448.Events:UnregisterEvent("CHAT_MSG_MONSTER_YELL")
+	end
 end
 
 function core._1448:InitialSetup()
-	core._1448.Events:RegisterEvent("UNIT_HEALTH")
-	core._1448.Events:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+	if core:IsNotRestricted() then
+		core._1448.Events:RegisterEvent("UNIT_HEALTH")
+		core._1448.Events:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+	end
 end
 
 core._1448.Events:SetScript("OnEvent", function(self, event, ...)

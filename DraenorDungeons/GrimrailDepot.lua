@@ -24,11 +24,15 @@ function core._1208:ClearVariables()
 end
 
 function core._1208:InstanceCleanup()
-    core._1208.Events:UnregisterEvent("CHAT_MSG_MONSTER_YELL")
+    if core:IsNotRestricted() then
+        core._1208.Events:UnregisterEvent("CHAT_MSG_MONSTER_YELL")
+     end
 end
 
 function core._1208:InitialSetup()
-    core._1208.Events:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+    if core:IsNotRestricted() then
+        core._1208.Events:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+    end
 end
 
 core._1208.Events:SetScript("OnEvent", function(self, event, ...)

@@ -37,7 +37,7 @@ function core._2516:TeeraAndMaruuk()
         teeraAndMaruukKilled = true
     end
 
-	if core:getBlizzardTrackingStatus(16456, 1) == false and teeraAndMaruukKilled == false then
+	if core:getBlizzardTrackingStatus(16456, 1) == false then
 		core:getAchievementFailed()
 	end
 end

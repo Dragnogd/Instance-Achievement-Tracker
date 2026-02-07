@@ -103,21 +103,23 @@ function core._2519:Magmatusk()
     --TODO: Check if this has blizzard tracking
 
     --On boss pull check if we have all the required stacks, otherwise announce fail
-    if magmaTentacleCheck == false then
-        magmaTentacleCheck = true
-        local buffFound = false
+    if core:IsNotRestricted() then
+        if magmaTentacleCheck == false then
+            magmaTentacleCheck = true
+            local buffFound = false
 
-        for i = 1, 40 do
-            local auraData = C_UnitAuras.GetBuffDataByIndex(bossUnit, i)
-            if auraData ~= nil and auraData.spellId == 374410 and auraData.applications == 5 then
-                buffFound = true
+            for i = 1, 40 do
+                local auraData = C_UnitAuras.GetBuffDataByIndex(bossUnit, i)
+                if auraData ~= nil and auraData.spellId == 374410 and auraData.applications == 5 then
+                    buffFound = true
+                end
             end
-        end
 
-        if buffFound then
-            core:getAchievementSuccess()
-        else
-            core:getAchievementFailed()
+            if buffFound then
+                core:getAchievementSuccess()
+            else
+                core:getAchievementFailed()
+            end
         end
     end
 end
