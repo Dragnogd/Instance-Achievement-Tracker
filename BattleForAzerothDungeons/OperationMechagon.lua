@@ -49,8 +49,10 @@ function core._2097:MachinistsGarden()
     --Discom-BOMB-ulator (285460)
     --Roaring Flame (294869)
 
-    InfoFrame_UpdatePlayersOnInfoFramePersonal()
-    InfoFrame_SetHeaderCounter(L["Shared_PlayersWhoNeedAchievement"],#core.currentBosses[1].players,#core.currentBosses[1].players)
+    if core:IsNotRestricted() then
+        InfoFrame_UpdatePlayersOnInfoFramePersonal()
+        InfoFrame_SetHeaderCounter(L["Shared_PlayersWhoNeedAchievement"],#core.currentBosses[1].players,#core.currentBosses[1].players)
+    end
 
     if (core.type == "SPELL_AURA_APPLIED" and core.spellId == 285443) or ((core.type == "SPELL_DAMAGE" or core.type == "SPELL_MISSED") and core.spellId == 294954) or (core.type == "SPELL_AURA_APPLIED" and core.spellId == 285460) or ((core.type == "SPELL_DAMAGE" or core.type == "SPELL_MISSED") and core.spellId == 294869) then
         --If someone gets hit by the ability, check if they need the achievement or not
