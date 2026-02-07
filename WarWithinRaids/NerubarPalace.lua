@@ -76,8 +76,10 @@ function core._2657:Sikran()
     --SPELL_AURA_APPLIED,Creature-0-4237-2657-3303-214503-0000614DB0,"Sikran",0x10a48,0x0,Player-1084-05D23D2C,"A-EU",0x512,0x0,451759,"Riposte",0x1,DEBUFF
     --Flags: 451759 persists through death
 
-    InfoFrame_UpdatePlayersOnInfoFrame()
-	InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],riposteCounter,core.groupSize)
+    if core.gameVersionMajor < 12 then
+        InfoFrame_UpdatePlayersOnInfoFrame()
+	    InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],riposteCounter,core.groupSize)
+    end
 
     --Player has gained Riposte
     if core.type == "SPELL_AURA_APPLIED" and core.spellId == 451759 then
@@ -148,8 +150,8 @@ end
 function core._2657:QueenAnsurek()
     --Defeat Queen Ansurek after all players use Abyssal Conduits to travel underneath her during Frothing Gluttony in Nerub-ar Palace on Normal difficulty or higher.
 
-    InfoFrame_UpdatePlayersOnInfoFrame()
-    InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],rollingAcidCounter,core.groupSize)
+    -- InfoFrame_UpdatePlayersOnInfoFrame()
+    -- InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],rollingAcidCounter,core.groupSize)
 
     --https://www.wowhead.com/spell=445422/frothing-gluttony?dd=14&ddsize=30
     --SPELL_DAMAGE,0000000000000000,nil,0xa48,0x0,Player-1084-092D79FD,"T-TarrenMill-EU",0x514,0x0,444456,"Abyssal Conduit",0x20,Player-1084-092D79FD,0000000000000000,4617465,5065042,56777,14907,28428,0,2,100,100,0,-3681.75,564.25,2296,2.2696,589,313957,331026,-1,32,0,0,0,nil,nil,nil
@@ -200,6 +202,11 @@ function core._2657:NexusPrincessKyveza()
             core:getAchievementFailed()
         end
     end
+
+    -- For 12.0.0
+    if core:getBlizzardTrackingStatus(40264,1) == false then
+        core:getAchievementFailed()
+    end
 end
 
 function core._2657:Rashanan()
@@ -213,8 +220,10 @@ function core._2657:Rashanan()
     --SPELL_AURA_APPLIED,Creature-0-2085-2657-25250-214504-00006C96EB,"Rasha'nan",0x10a48,0x0,Player-4184-007B9FA7,"Yccdk-TheseGoToEleven",0x514,0x20,439786,"Rolling Acid",0x8,DEBUFF
     --SPELL_AURA_APPLIED,Creature-0-4237-2657-3303-219669-0000E155BB,"Nerubian",0xa48,0x0,Player-633-0AD19526,"Magru-ShatteredHand-EU",0x514,0x0,439790,"Rolling Acid",0x8,DEBUFF
 
-    InfoFrame_UpdatePlayersOnInfoFrame()
-    InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],rollingAcidCounter,core.groupSize)
+    if core.gameVersionMajor < 12 then
+        InfoFrame_UpdatePlayersOnInfoFrame()
+        InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],rollingAcidCounter,core.groupSize)
+    end
 
     --Player has got hit by a wave
     if core.type == "SPELL_AURA_APPLIED" and (core.spellId == 439786 or core.spellId == 439790) and rollingAcidUID[core.spawn_uid_dest_Player] == nil and cowabungaFailed == false then
