@@ -154,47 +154,57 @@ function core._1861:MythraxTheUnraveler()
 
     --Blizzard Tracker has gone red so achievement failed
     if core:getBlizzardTrackingStatus(12836) == false then
-        core:getAchievementFailedWithMessageAfter("(" .. lastPlayerToAbsorbOrb .. ")")
+        if core:IsNotRestricted() then
+            core:getAchievementFailedWithMessageAfter("(" .. lastPlayerToAbsorbOrb .. ")")
+        else
+            core:getAchievementFailed()
+        end
     end
 end
 
 function core._1861:Ghuun()
     --Blizzard Tracker has gone red so achievement failed
-    if core:getBlizzardTrackingStatus(12551) == false and achievementRedForAttempt == false then
-        --Find the player who currently has the power matrix
-        if core.groupSize > 1 then
-            for i = 1, core.groupSize do
-                local unit = nil
-                if core.chatType == "PARTY" then
-                    if i < core.groupSize then
-                        unit = "party" .. i
-                    else
-                        unit = "player"
+    if core:IsNotRestricted() then
+        if core:getBlizzardTrackingStatus(12551) == false then
+            core:getAchievementFailed()
+        end
+    else
+        if core:getBlizzardTrackingStatus(12551) == false and achievementRedForAttempt == false then
+            --Find the player who currently has the power matrix
+            if core.groupSize > 1 then
+                for i = 1, core.groupSize do
+                    local unit = nil
+                    if core.chatType == "PARTY" then
+                        if i < core.groupSize then
+                            unit = "party" .. i
+                        else
+                            unit = "player"
+                        end
+                    elseif core.chatType == "RAID" then
+                        unit = "raid" .. i
                     end
-                elseif core.chatType == "RAID" then
-                    unit = "raid" .. i
-                end
 
-                if unit ~= nil then
-                    local unitType, destID, spawn_uid_dest = strsplit("-",UnitGUID(unit));
-                    for i=1,40 do
-                        local auraData = C_UnitAuras.GetDebuffDataByIndex(unit, i)
-                        if auraData ~= nil and auraData.spellId == 263420 then
-                            core:getAchievementFailedWithMessageAfter("(" .. UnitName(unit) .. ")")
+                    if unit ~= nil then
+                        local unitType, destID, spawn_uid_dest = strsplit("-",UnitGUID(unit));
+                        for i=1,40 do
+                            local auraData = C_UnitAuras.GetDebuffDataByIndex(unit, i)
+                            if auraData ~= nil and auraData.spellId == 263420 then
+                                core:getAchievementFailedWithMessageAfter("(" .. UnitName(unit) .. ")")
+                            end
                         end
                     end
                 end
-            end
-        else
-            --Player is not in a group
-            local unitType, destID, spawn_uid_dest = strsplit("-",UnitGUID("Player"));
-            for i=1,40 do
-                local auraData = C_UnitAuras.GetDebuffDataByIndex("Player", i)
-                if auraData ~= nil and auraData.spellId == 263420 then
-                    core:getAchievementFailedWithMessageAfter("(" .. UnitName("Player") .. ")")
+            else
+                --Player is not in a group
+                local unitType, destID, spawn_uid_dest = strsplit("-",UnitGUID("Player"));
+                for i=1,40 do
+                    local auraData = C_UnitAuras.GetDebuffDataByIndex("Player", i)
+                    if auraData ~= nil and auraData.spellId == 263420 then
+                        core:getAchievementFailedWithMessageAfter("(" .. UnitName("Player") .. ")")
 
-                    --Stop tracker for working for remainder of fight to reduce lag
-                    achievementRedForAttempt = true
+                        --Stop tracker for working for remainder of fight to reduce lag
+                        achievementRedForAttempt = true
+                    end
                 end
             end
         end
