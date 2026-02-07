@@ -90,7 +90,7 @@ function core._2657:Sikran()
     end
 
     --Announce success once everyone has had the debuff at some point during the fight
-    if riposteCounter == core.groupSize and core:getBlizzardTrackingStatus(40255,1) == true then
+    if core:getBlizzardTrackingStatus(40255,1) == true then
         core:getAchievementSuccess()
     end
 end
