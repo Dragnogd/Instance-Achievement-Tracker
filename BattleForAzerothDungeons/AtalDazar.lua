@@ -25,43 +25,45 @@ function core._1763:PriestessAlunza()
     end
 
     --Spirit of gold has 8 stacks of Tainted Blood
-    if core.groupSize > 1 then
-        --If player is in a group
-		for i = 1, core.groupSize do
-			local unit = nil
-			if core.chatType == "PARTY" then
-				if i < core.groupSize then
-					unit = "party" .. i
-				else
-					unit = "player"
-			end
-			elseif core.chatType == "RAID" then
-				unit = "raid" .. i
-			end
+    if core:IsNotRestricted() then
+        if core.groupSize > 1 then
+            --If player is in a group
+            for i = 1, core.groupSize do
+                local unit = nil
+                if core.chatType == "PARTY" then
+                    if i < core.groupSize then
+                        unit = "party" .. i
+                    else
+                        unit = "player"
+                end
+                elseif core.chatType == "RAID" then
+                    unit = "raid" .. i
+                end
 
-			if unit ~= nil then
-                local unitType, destID, spawn_uid_dest = strsplit("-",UnitGUID(unit));
-                for i=1,40 do
-                    local auraData = C_UnitAuras.GetDebuffDataByIndex(unit, i)
-                    if auraData ~= nil and auraData.spellId == 255558 and destID == "131009" then
-                        core:sendDebugMessage("Count: " .. auraData.applications)
+                if unit ~= nil then
+                    local unitType, destID, spawn_uid_dest = strsplit("-",UnitGUID(unit));
+                    for i=1,40 do
+                        local auraData = C_UnitAuras.GetDebuffDataByIndex(unit, i)
+                        if auraData ~= nil and auraData.spellId == 255558 and destID == "131009" then
+                            core:sendDebugMessage("Count: " .. auraData.applications)
+                        end
+                        if auraData ~= nil and auraData.spellId == 255558 and destID == "131009" and auraData.applications == 8 then
+                            core:sendMessage(core:getAchievement() .. format(L["Shared_KillTheAddNow"], getNPCName(131009)))
+                        end
                     end
-                    if auraData ~= nil and auraData.spellId == 255558 and destID == "131009" and auraData.applications == 8 then
-                        core:sendMessage(core:getAchievement() .. format(L["Shared_KillTheAddNow"], getNPCName(131009)))
-					end
-				end
-			end
-		end
-	else
-		--Player is not in a group
-        local unitType, destID, spawn_uid_dest = strsplit("-",UnitGUID("Player"));
-        for i=1,40 do
-            local auraData = C_UnitAuras.GetDebuffDataByIndex("Player", i)
-            if auraData ~= nil and auraData.spellId == 255558 and destID == "131009" and auraData.applications >= 8 then
-                core:sendMessage(core:getAchievement() .. format(L["Shared_KillTheAddNow"], getNPCName(131009)))
+                end
+            end
+        else
+            --Player is not in a group
+            local unitType, destID, spawn_uid_dest = strsplit("-",UnitGUID("Player"));
+            for i=1,40 do
+                local auraData = C_UnitAuras.GetDebuffDataByIndex("Player", i)
+                if auraData ~= nil and auraData.spellId == 255558 and destID == "131009" and auraData.applications >= 8 then
+                    core:sendMessage(core:getAchievement() .. format(L["Shared_KillTheAddNow"], getNPCName(131009)))
+                end
             end
         end
-	end
+    end
 
     --Achievment Complete
     if core.type == "UNIT_DIED" and core.destID == "131140" then
@@ -79,38 +81,40 @@ function core._1763:BringingHexyBack()
     end
 
     --1 Player in group must be hexed at each boss on kill.
-    if UnitGUID("boss1") ~= nil then
-        local unitType, _, _, _, _, destID, spawn_uid_dest = strsplit("-", UnitGUID("boss1"))
+    if core:IsNotRestricted() then
+        if UnitGUID("boss1") ~= nil then
+            local unitType, _, _, _, _, destID, spawn_uid_dest = strsplit("-", UnitGUID("boss1"))
 
-        if destID == "122965" or destID == "122963" or destID == "122967" or destID == "122968" then
-            if core.type == "SPELL_AURA_APPLIED" and core.spellId == 252781 then
-                core:sendDebugMessage(core.destName .. " Hexed")
-            end
-
-            --Check if boss is less than 50% health to give people a chance to cc adds / reduce spam
-            if core:getHealthPercent("boss1") <= 50 then
-                 --If player is hexed, complete the achievement.
+            if destID == "122965" or destID == "122963" or destID == "122967" or destID == "122968" then
                 if core.type == "SPELL_AURA_APPLIED" and core.spellId == 252781 then
-                    if playerHexed == false then
-                        playerHexed = true
-                        core.achievementsFailed[1] = false
-                        if destID == "122967" then
-                            core:getAchievementSuccess(2) --Take into account gold fever tracking too
-                        else
-                            core:getAchievementSuccess()
-                        end
-                    end
+                    core:sendDebugMessage(core.destName .. " Hexed")
                 end
 
-                --If player hex is removed, wait 2 second. If no one else is hexed fail achievement
-                if core.type == "SPELL_AURA_REMOVED" and core.spellId == 252781 then
-                    playerHexed = false
-                    C_Timer.After(2000, function()
+                --Check if boss is less than 50% health to give people a chance to cc adds / reduce spam
+                if core:getHealthPercent("boss1") <= 50 then
+                    --If player is hexed, complete the achievement.
+                    if core.type == "SPELL_AURA_APPLIED" and core.spellId == 252781 then
                         if playerHexed == false then
-                            core.achievementsCompleted[1] = false
-                            core:getAchievementFailedWithMessageAfter(L["AtalDazar_BringingHexyBack_Hex"])
+                            playerHexed = true
+                            core.achievementsFailed[1] = false
+                            if destID == "122967" then
+                                core:getAchievementSuccess(2) --Take into account gold fever tracking too
+                            else
+                                core:getAchievementSuccess()
+                            end
                         end
-                    end)
+                    end
+
+                    --If player hex is removed, wait 2 second. If no one else is hexed fail achievement
+                    if core.type == "SPELL_AURA_REMOVED" and core.spellId == 252781 then
+                        playerHexed = false
+                        C_Timer.After(2000, function()
+                            if playerHexed == false then
+                                core.achievementsCompleted[1] = false
+                                core:getAchievementFailedWithMessageAfter(L["AtalDazar_BringingHexyBack_Hex"])
+                            end
+                        end)
+                    end
                 end
             end
         end
