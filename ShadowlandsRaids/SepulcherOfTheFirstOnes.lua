@@ -143,10 +143,13 @@ end
 
 function core._2481:Xymox()
     --Defeat Xy'mox with all players under the effects of pilfered artifacts in the Sepulcher of the First Ones on Normal difficulty or higher.
-	InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
-    InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],pilferedArtifactCounter,core.groupSize)
 
-    if initialSetup == false then
+    if core:IsNotRestricted() then
+        InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
+        InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],pilferedArtifactCounter,core.groupSize)
+    end
+
+    if initialSetup == false and core:IsNotRestricted() then
         --Set up a table with every player to track which debuffs they have
 		initialSetup = true
 		for player,status in pairs(core.InfoFrame_PlayersTable) do
@@ -200,10 +203,12 @@ end
 
 function core._2481:PrototypePantheon()
     --Defeat the Prototype Pantheon after each player has petted 5 Corgis during Wild Stampede in the Sepulcher of the First Ones on Normal difficulty or higher.
-	InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
-    InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],lickedCounter,core.groupSize)
+    if core:IsNotRestricted() then
+        InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
+        InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],lickedCounter,core.groupSize)
+    end
 
-	if inititalPrototypeSetup == false then
+	if inititalPrototypeSetup == false and core:IsNotRestricted() then
 		inititalPrototypeSetup = true
 		for player,status in pairs(core.InfoFrame_PlayersTable) do
 			if playerLickedStacks[player] == nil then
@@ -260,8 +265,11 @@ end
 
 function core._2481:HalondrusTheReclaimer()
     --Defeat Halondrus the Reclaimer after collecting six strange artifacts and defeating their constructs in the Sepulcher of the First Ones on Normal difficulty or higher.
-    InfoFrame_UpdateDynamicPlayerList()
-    InfoFrame_SetHeaderMessage(C_Spell.GetSpellLink(365761) .. " " .. L["Core_Counter"] .. " " .. strangeArtifactCounter)
+
+    if core:IsNotRestricted() then
+        InfoFrame_UpdateDynamicPlayerList()
+        InfoFrame_SetHeaderMessage(C_Spell.GetSpellLink(365761) .. " " .. L["Core_Counter"] .. " " .. strangeArtifactCounter)
+    end
 
     --Player has picked up a strange artifact
     if core.type == "SPELL_AURA_APPLIED" and core.spellId == 365761 then
@@ -318,8 +326,10 @@ end
 
 function core._2481:Rygelon()
     --Defeat Rygelon with all players under the effects of Herald of the Cosmos in the Sepulcher of the First Ones on Normal Difficulty or higher.
-    InfoFrame_UpdatePlayersOnInfoFrame()
-    InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],heraldOfTheCosmosCounter,core.groupSize)
+    if core:IsNotRestricted() then
+        InfoFrame_UpdatePlayersOnInfoFrame()
+        InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],heraldOfTheCosmosCounter,core.groupSize)
+    end
 
     --Achievement Criteria White
     if core:getBlizzardTrackingStatus(15396, 1) == true then
@@ -334,7 +344,7 @@ function core._2481:Rygelon()
 
     --Check if all players have got the Herlad of the Cosmos debuff on boss pull.
     --If any player is missing, this is a fail and the raid will need to wipe and try again
-    if heraldOfTheCosmosCheck == false then
+    if heraldOfTheCosmosCheck == false and core:IsNotRestricted() then
         heraldOfTheCosmosCheck = true
 
         local playersWithoutBuff = ""
@@ -438,7 +448,9 @@ function core._2481:ClearVariables()
 end
 
 function core._2481:InstanceCleanup()
-    core._2481.Events:UnregisterEvent("UNIT_AURA")
+    if core:IsNotRestricted() then
+        core._2481.Events:UnregisterEvent("UNIT_AURA")
+    end
 end
 
 core._2481.Events:SetScript("OnEvent", function(self, event, ...)
@@ -446,7 +458,9 @@ core._2481.Events:SetScript("OnEvent", function(self, event, ...)
 end)
 
 function core._2481:InitialSetup()
-    core._2481.Events:RegisterEvent("UNIT_AURA")
+    if core:IsNotRestricted() then
+        core._2481.Events:RegisterEvent("UNIT_AURA")
+    end
 end
 
 function core._2481.Events:UNIT_AURA(self, unitID)

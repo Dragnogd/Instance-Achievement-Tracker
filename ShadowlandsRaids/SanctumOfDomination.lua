@@ -77,8 +77,10 @@ end
 
 function core._2450:TheNine()
     --Defeat The Nine after forming a Shard of Destiny from 9 or more Fragments of Destiny in the Sanctum of Domination on Normal difficulty or higher.
-    InfoFrame_UpdateDynamicPlayerList()
-    InfoFrame_SetHeaderMessage(C_Spell.GetSpellLink(350542) .. " " .. L["Core_Counter"] .. " " .. fragmentsOfDestinyCounter)
+    if core:IsNotRestricted() then
+        InfoFrame_UpdateDynamicPlayerList()
+        InfoFrame_SetHeaderMessage(C_Spell.GetSpellLink(350542) .. " " .. L["Core_Counter"] .. " " .. fragmentsOfDestinyCounter)
+    end
 
     --Fragments of Destiny Spawned
     if core.type == "SPELL_AURA_APPLIED" and core.spellId == 350542 and core.destName ~= nil then
@@ -157,6 +159,11 @@ function core._2450:EyeOfTheJailer()
     end
 
     if allPlayersPhotoFlash == true and bossPhotoFlash == true then
+        core:getAchievementSuccess()
+    end
+
+    -- For 12.0.0
+    if core:getBlizzardTrackingStatus(15065, 1) == true and core:getBlizzardTrackingStatus(15065, 2) == true then
         core:getAchievementSuccess()
     end
 end
@@ -294,13 +301,13 @@ function core._2450:SylvanasWindrunner()
     if sylvanasSetup == false then
         sylvanasSetup = true
         --Kyrian
-        KyrianName = GetSpellInfo(321076)
+        KyrianName = C_Spell.GetSpellInfo(321076).name
         --Venthyr
-        VenthyrName = GetSpellInfo(321079)
+        VenthyrName = C_Spell.GetSpellInfo(321079).name
         --Necrolord
-        NecrolordName = GetSpellInfo(321078)
+        NecrolordName = C_Spell.GetSpellInfo(321078).name
         --Night Fae
-        NightFaeName = GetSpellInfo(321077)
+        NightFaeName = C_Spell.GetSpellInfo(321077).name
     end
 
     InfoFrame_SetHeaderMessage(getNPCName(180658))
@@ -466,12 +473,17 @@ end)
 
 function core._2450:InstanceCleanup()
     core._2450.Events:UnregisterEvent("UNIT_SPELLCAST_SUCCEEDED")
-    core._2450.Events:UnregisterEvent("CHAT_MSG_MONSTER_EMOTE")
+
+    if core:IsNotRestricted() then
+        core._2450.Events:UnregisterEvent("CHAT_MSG_MONSTER_EMOTE")
+    end
 end
 
 function core._2450:InitialSetup()
     core._2450.Events:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
-    core._2450.Events:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
+    if core:IsNotRestricted() then
+        core._2450.Events:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
+    end
 end
 
 function core._2450.Events:UNIT_SPELLCAST_SUCCEEDED(self, unitTarget, castGUID, spellID)

@@ -316,8 +316,10 @@ end
 
 function core._2296:StoneLegionGenerals()
     --Defeat the Stone Legion Generals while all players are carrying a Bouquet of Blooming Sanguine Roses in Castle Nathria on Normal difficulty or higher.
-    InfoFrame_UpdatePlayersOnInfoFrame()
-    InfoFrame_SetHeaderCounterWithAdditionalMessage(L["Shared_PlayersMetCriteria"],BloomingFlowersCounter,core.groupSize,L["CastleNathria_OrbTimer"] .. ": " .. wiltedMasterTimer .. " (" .. wiltedMasterPlayer .. ")\n" .. L["CastleNathria_KillTimer"] .. ": " .. bloomingMasterTimer)
+    if core:IsNotRestricted() then
+        InfoFrame_UpdatePlayersOnInfoFrame()
+        InfoFrame_SetHeaderCounterWithAdditionalMessage(L["Shared_PlayersMetCriteria"],BloomingFlowersCounter,core.groupSize,L["CastleNathria_OrbTimer"] .. ": " .. wiltedMasterTimer .. " (" .. wiltedMasterPlayer .. ")\n" .. L["CastleNathria_KillTimer"] .. ": " .. bloomingMasterTimer)
+    end
 
     if core.type == "UNIT_DIED" and core.destID == "168113" then
         stoneLegionGeneralGeneralGrashaalKilled = true
@@ -325,7 +327,7 @@ function core._2296:StoneLegionGenerals()
         stoneLegionGeneralKaaelKilled = true
     end
 
-    if initialStoneLegionSetup == false then
+    if initialStoneLegionSetup == false and core:IsNotRestricted() then
         initialStoneLegionSetup = true
         playerFailedAchievement = false
         local playersWithoutBuff = ""
@@ -479,6 +481,11 @@ function core._2296:SireDenathrius()
                 core:getAchievementFailed()
             end
         end)
+    end
+
+    -- For 12.0.0
+    if core:getBlizzardTrackingStatus(14610, 1) == true then
+        core:getAchievementSuccess()
     end
 end
 
@@ -666,7 +673,10 @@ function core._2296:ClearVariables()
 end
 
 function core._2296:InstanceCleanup()
-    core._2296.Events:UnregisterEvent("UNIT_AURA")
+    if core:IsNotRestricted() then
+        core._2296.Events:UnregisterEvent("UNIT_AURA")
+    end
+
     stoneLegionGeneralKaaelKilled = false
     stoneLegionGeneralGeneralGrashaalKilled = false
 end
@@ -676,7 +686,9 @@ core._2296.Events:SetScript("OnEvent", function(self, event, ...)
 end)
 
 function core._2296:InitialSetup()
-    core._2296.Events:RegisterEvent("UNIT_AURA")
+    if core:IsNotRestricted() then
+        core._2296.Events:RegisterEvent("UNIT_AURA")
+    end
 end
 
 function core._2296.Events:UNIT_AURA(self, unitID)

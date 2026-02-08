@@ -109,7 +109,7 @@ function core._2291:TrackAdditional()
         InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
     end
 
-    if initialSetup == true then
+    if initialSetup == true and core:IsNotRestricted() then
         --InfoFrame_RefreshPlayersOnInfoFrameTable()
         if timerStarted == false then
             timerStarted = true

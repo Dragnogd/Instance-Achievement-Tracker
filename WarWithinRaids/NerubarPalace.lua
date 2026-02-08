@@ -76,7 +76,7 @@ function core._2657:Sikran()
     --SPELL_AURA_APPLIED,Creature-0-4237-2657-3303-214503-0000614DB0,"Sikran",0x10a48,0x0,Player-1084-05D23D2C,"A-EU",0x512,0x0,451759,"Riposte",0x1,DEBUFF
     --Flags: 451759 persists through death
 
-    if core.gameVersionMajor < 12 then
+    if core:IsNotRestricted() then
         InfoFrame_UpdatePlayersOnInfoFrame()
 	    InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],riposteCounter,core.groupSize)
     end

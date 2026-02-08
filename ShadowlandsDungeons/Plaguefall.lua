@@ -66,10 +66,6 @@ function core._2289:DoctorIckus()
 end
 
 function core._2289:InstanceCleanup()
-    playersCompletedAchievement = 0
-end
-
-function core._2289:InstanceCleanup()
     initialSetup = false
     playersCompletedAchievement = 0
     timerStarted = false
@@ -134,7 +130,7 @@ function core._2289:TrackAdditional()
         end
     end
 
-    if initialSetup == true and timerStarted == false and playersCompletedAchievement > 0 then
+    if initialSetup == true and timerStarted == false and playersCompletedAchievement > 0 and core:IsNotRestricted() then
         timerStarted = true
         C_Timer.After(1, function()
             local updatePerformed = false

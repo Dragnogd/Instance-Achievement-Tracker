@@ -29,10 +29,8 @@ end
 function core._1001:ArmsmasterHarlan()
     if core.type == "SPELL_AURA_APPLIED" and core.destID ~= "58632" and core.spellId == 112955 then
         bladesOfLightCounter = bladesOfLightCounter + 1
-        print(bladesOfLightCounter)
     elseif core.type == "SPELL_AURA_REMOVED" and core.destID ~= "58632" and core.spellId == 112955 then
         bladesOfLightCounter = bladesOfLightCounter - 1
-        print(bladesOfLightCounter)
     end
 
     if bladesOfLightCounter >= 8 then
