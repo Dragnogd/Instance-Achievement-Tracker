@@ -1,5 +1,5 @@
 --------------------------------------
--- Last Auto Generated: 07/02/2026 11:54:48 using https://github.com/Dragnogd/Instance-Achievement-Tracker-Database-Manager
+-- Last Auto Generated: 08/02/2026 21:38:59 using https://github.com/Dragnogd/Instance-Achievement-Tracker-Database-Manager
 --------------------------------------
 local _, core = ...
 local L = core.L
@@ -895,6 +895,7 @@ core.Instances = {
 					track = function() core._2522:Terros() end,
 					partial = false,
 					encounterID = 2639,
+					restrictions = true,
 				},
 				boss3 = {
 					name = 2486, --The Primal Council
@@ -1006,6 +1007,7 @@ core.Instances = {
 					partial = false,
 					encounterID = 2688,
 					displayInfoFrame = true,
+					restrictions = true,
 				},
 				boss2 = {
 					name = 2529, --The Amalgamation Chamber
@@ -1128,6 +1130,7 @@ core.Instances = {
 					partial = false,
 					encounterID = 2685,
 					displayInfoFrame = true,
+					restrictions = true,
 				},
 			},
 
@@ -1399,6 +1402,7 @@ core.Instances = {
 					partial = false,
 					encounterID = 2563,
 					displayInfoFrame = true,
+					restrictions = true,
 				},
 			},
 
@@ -1531,6 +1535,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 2612,
+					restrictions = true,
 				},
 				boss3 = {
 					name = 2494, --Magmatusk
@@ -1546,6 +1551,7 @@ core.Instances = {
 					track = function() core._2519:Magmatusk() end,
 					partial = false,
 					encounterID = 2610,
+					restrictions = true,
 				},
 			},
 
@@ -1987,6 +1993,7 @@ core.Instances = {
 					track = function() core._2296:ArtificerXymox() end,
 					partial = false,
 					encounterID = 2405,
+					restrictions = true,
 				},
 				boss5 = {
 					name = 2428, --Hungering Destroyer
@@ -2288,6 +2295,7 @@ core.Instances = {
 					track = function() core._2291:TheManastorms() end,
 					partial = false,
 					encounterID = 2394,
+					restrictions = true,
 				},
 				boss3 = {
 					name = 2398, --Dealer Xy'exa
@@ -2500,6 +2508,7 @@ core.Instances = {
 					track = function() core._2284:GeneralKaal() end,
 					partial = false,
 					encounterID = 2363,
+					restrictions = true,
 				},
 			},
 
@@ -2567,6 +2576,7 @@ core.Instances = {
 					track = function() core._2293:AffrontOfChallengers() end,
 					partial = false,
 					encounterID = 2391,
+					restrictions = true,
 				},
 				boss2 = {
 					name = 2401, --Gorechop
@@ -2647,6 +2657,7 @@ core.Instances = {
 					partial = false,
 					encounterID = 2390,
 					displayInfoFrame = true,
+					restrictions = true,
 				},
 			},
 
@@ -2749,6 +2760,7 @@ core.Instances = {
 					track = function() core._1861:Taloc() end,
 					partial = false,
 					encounterID = 2144,
+					restrictions = true,
 				},
 				boss2 = {
 					name = 2167, --MOTHER
@@ -2780,6 +2792,7 @@ core.Instances = {
 					partial = false,
 					encounterID = 2128,
 					displayInfoFrame = true,
+					restrictions = true,
 				},
 				boss4 = {
 					name = 2169, --Zek'voz
@@ -2795,6 +2808,7 @@ core.Instances = {
 					track = function() core._1861:Zekvoz() end,
 					partial = false,
 					encounterID = 2136,
+					restrictions = true,
 				},
 				boss5 = {
 					name = 2166, --Vectis
@@ -2810,6 +2824,7 @@ core.Instances = {
 					track = function() core._1861:Vectis() end,
 					partial = false,
 					encounterID = 2134,
+					restrictions = true,
 				},
 				boss6 = {
 					name = 2195, --Zul Reborn
@@ -3067,6 +3082,7 @@ core.Instances = {
 					partial = false,
 					encounterID = 2273,
 					displayInfoFrame = true,
+					restrictions = true,
 				},
 			},
 
@@ -3102,6 +3118,7 @@ core.Instances = {
 					partial = false,
 					encounterID = 2289,
 					displayInfoFrame = true,
+					restrictions = true,
 				},
 				boss3 = {
 					name = 2353, --Radiance of Azshara
@@ -3118,6 +3135,7 @@ core.Instances = {
 					partial = false,
 					encounterID = 2305,
 					displayInfoFrame = true,
+					restrictions = true,
 				},
 				boss4 = {
 					name = 2354, --Lady Ashvane
@@ -3148,6 +3166,7 @@ core.Instances = {
 					track = function() core._2164:Orgozoa() end,
 					partial = false,
 					encounterID = 2303,
+					restrictions = true,
 				},
 				boss6 = {
 					name = 2359, --The Queen's Court
@@ -3164,6 +3183,7 @@ core.Instances = {
 					partial = false,
 					encounterID = 2311,
 					displayInfoFrame = true,
+					restrictions = true,
 				},
 				boss7 = {
 					name = 2349, --Za'qui, Harbinger of Ny'alotha
@@ -3402,7 +3422,7 @@ core.Instances = {
 					players = {},
 					tactics = {
 						[11] = {
-							{ tactic = format(L["AtalDazar_Other"], C_Spell.GetSpellLink(279118), C_Spell.GetSpellLink(115078), C_Spell.GetSpellLink(187650), C_Spell.GetSpellLink(118), C_Spell.GetSpellLink(279118)) },
+							{ tactic = format(L["AtalDazar_Other"], C_Spell.GetSpellLink(187650)) },
 						},
 					},
 					enabled = true,
@@ -3425,6 +3445,7 @@ core.Instances = {
 					track = function() core._1763:PriestessAlunza() end,
 					partial = false,
 					encounterID = 2084,
+					restrictions = true,
 				},
 				boss3 = {
 					name = 2030, --Yazma
@@ -3452,13 +3473,14 @@ core.Instances = {
 					players = {},
 					tactics = {
 						[11] = {
-							{ tactic = format(L["Freehold_SkycapNKragg"], "IAT_119210") },
+							{ tactic = format(L["Freehold_SkycapNKragg"], "IAT_138314") },
 						},
 					},
 					enabled = true,
 					track = function() core._1754:SkycapnKragg() end,
 					partial = false,
 					encounterID = 2093,
+					restrictions = true,
 				},
 				boss2 = {
 					name = 2094, --Ring of Booty
@@ -3489,6 +3511,7 @@ core.Instances = {
 					track = function() core._1754:HarlanSweete() end,
 					partial = false,
 					encounterID = 2096,
+					restrictions = true,
 				},
 			},
 
@@ -3523,6 +3546,7 @@ core.Instances = {
 					track = function() core._1762:MchimbaTheEmbalmer() end,
 					partial = false,
 					encounterID = 2142,
+					restrictions = true,
 				},
 				boss3 = {
 					name = 2172, --Dazar, The First King
@@ -3571,6 +3595,7 @@ core.Instances = {
 					track = function() core._1864:LordStormsong() end,
 					partial = false,
 					encounterID = 2132,
+					restrictions = true,
 				},
 				boss3 = {
 					name = 2156, --Vol'zith
@@ -3586,6 +3611,7 @@ core.Instances = {
 					track = function() core._1864:VolzithTheWhisperer() end,
 					partial = false,
 					encounterID = 2133,
+					restrictions = true,
 				},
 			},
 
@@ -3654,6 +3680,7 @@ core.Instances = {
 					track = function() core._1877:Merektha() end,
 					partial = false,
 					encounterID = 2125,
+					restrictions = true,
 				},
 				boss2 = {
 					name = 2145, --Avatar of Sethraliss
@@ -3669,6 +3696,7 @@ core.Instances = {
 					track = function() core._1877:AvatarOfSethraliss() end,
 					partial = false,
 					encounterID = 2127,
+					restrictions = true,
 				},
 				boss3 = {
 					name = L["Instances_TrashAfterThirdBoss"], --MISSINGNAME5
@@ -3703,6 +3731,7 @@ core.Instances = {
 					track = function() core._1594:CoinOperatedCrowdPummeler() end,
 					partial = false,
 					encounterID = 2105,
+					restrictions = true,
 				},
 				boss2 = {
 					name = 2116, --Mogul Razdunk
@@ -3718,6 +3747,7 @@ core.Instances = {
 					track = function() core._1594:MogulRazdunk() end,
 					partial = false,
 					encounterID = 2108,
+					restrictions = true,
 				},
 			},
 
@@ -3737,6 +3767,7 @@ core.Instances = {
 					track = function() core._1841:ElderLeaxa() end,
 					partial = false,
 					encounterID = 2111,
+					restrictions = true,
 				},
 				boss2 = {
 					name = 2130, --Sporecaller Zancha
@@ -3767,6 +3798,7 @@ core.Instances = {
 					track = function() core._1841:UnboundAbomination() end,
 					partial = false,
 					encounterID = 2123,
+					restrictions = true,
 				},
 			},
 
@@ -3801,6 +3833,7 @@ core.Instances = {
 					track = function() core._1771:OverseerKorgus() end,
 					partial = false,
 					encounterID = 2104,
+					restrictions = true,
 				},
 			},
 
@@ -3813,13 +3846,14 @@ core.Instances = {
 					players = {},
 					tactics = {
 						[11] = {
-							{ tactic = format(L["WaycrestManor_SoulboundGoliath"], "IAT_131667", C_Spell.GetSpellLink(260512), C_Spell.GetSpellLink(260570), C_Spell.GetSpellLink(260512)) },
+							{ tactic = format(L["WaycrestManor_SoulboundGoliath"], "IAT_131667") },
 						},
 					},
 					enabled = true,
 					track = function() core._1862:SoulboundGoliath() end,
 					partial = false,
 					encounterID = 2114,
+					restrictions = true,
 				},
 				boss2 = {
 					name = 2129, --Gorak Tul
@@ -3884,6 +3918,7 @@ core.Instances = {
 					track = function() core._2097:Gunker() end,
 					partial = false,
 					encounterID = 2292,
+					restrictions = true,
 				},
 				boss3 = {
 					name = 2336, --Tussle Tonks
@@ -3899,6 +3934,7 @@ core.Instances = {
 					track = function() core._2097:TussleTonks() end,
 					partial = false,
 					encounterID = 2257,
+					restrictions = true,
 				},
 				boss4 = {
 					name = 2348, --Machinist's Garden
@@ -3914,6 +3950,7 @@ core.Instances = {
 					track = function() core._2097:MachinistsGarden() end,
 					partial = false,
 					encounterID = 2259,
+					restrictions = true,
 				},
 				boss5 = {
 					name = L["Instances_Other"], --King Mechagon
@@ -3969,6 +4006,7 @@ core.Instances = {
 					track = function() core._1520:Ursoc() end,
 					partial = false,
 					encounterID = 1841,
+					restrictions = true,
 				},
 				boss3 = {
 					name = 1704, --Dragons of Nightmare
@@ -3985,6 +4023,7 @@ core.Instances = {
 					partial = false,
 					encounterID = 1854,
 					displayInfoFrame = true,
+					restrictions = true,
 				},
 				boss4 = {
 					name = 1744, --Elerethe Renferal
@@ -4015,6 +4054,7 @@ core.Instances = {
 					track = function() core._1520:Ilgynoth() end,
 					partial = false,
 					encounterID = 1873,
+					restrictions = true,
 				},
 				boss6 = {
 					name = 1750, --Cenarius
@@ -4045,6 +4085,7 @@ core.Instances = {
 					track = function() core._1520:Xavius() end,
 					partial = false,
 					encounterID = 1864,
+					restrictions = true,
 				},
 			},
 
@@ -4064,6 +4105,7 @@ core.Instances = {
 					track = function() core._1648:Odyn() end,
 					partial = false,
 					encounterID = 1958,
+					restrictions = true,
 				},
 				boss2 = {
 					name = 1830, --Guarm
@@ -4143,6 +4185,7 @@ core.Instances = {
 					track = function() core._1530:Trilliax() end,
 					partial = false,
 					encounterID = 1867,
+					restrictions = true,
 				},
 				boss4 = {
 					name = 1751, --Spellblade Aluriel
@@ -4173,6 +4216,7 @@ core.Instances = {
 					track = function() core._1530:StarAugurEtraeus() end,
 					partial = false,
 					encounterID = 1863,
+					restrictions = true,
 				},
 				boss6 = {
 					name = 1761, --High Botanist Tel'arn
@@ -4283,6 +4327,7 @@ core.Instances = {
 					partial = false,
 					encounterID = 2048,
 					displayInfoFrame = true,
+					restrictions = true,
 				},
 				boss3 = {
 					name = 1856, --Harjatan
@@ -4298,6 +4343,7 @@ core.Instances = {
 					track = function() core._1676:Harjatan() end,
 					partial = false,
 					encounterID = 2036,
+					restrictions = true,
 				},
 				boss4 = {
 					name = 1861, --Mistress Sassz'ine
@@ -4328,6 +4374,7 @@ core.Instances = {
 					track = function() core._1676:SistersOfTheMoon() end,
 					partial = false,
 					encounterID = 2050,
+					restrictions = true,
 				},
 				boss6 = {
 					name = 1896, --The Desolate Host
@@ -4388,6 +4435,7 @@ core.Instances = {
 					track = function() core._1676:Kiljaeden() end,
 					partial = false,
 					encounterID = 2051,
+					restrictions = true,
 				},
 			},
 
@@ -4578,6 +4626,7 @@ core.Instances = {
 					track = function() core._1753:ZuraalTheAscended() end,
 					partial = false,
 					encounterID = 2065,
+					restrictions = true,
 				},
 				boss2 = {
 					name = 1980, --Saprish
@@ -4642,6 +4691,7 @@ core.Instances = {
 					track = function() core._1544:Festerface() end,
 					partial = false,
 					encounterID = 1848,
+					restrictions = true,
 				},
 			},
 
@@ -4661,6 +4711,7 @@ core.Instances = {
 					track = function() core._1456:WarlordParjesh() end,
 					partial = false,
 					encounterID = 1810,
+					restrictions = true,
 				},
 				boss2 = {
 					name = 1490, --Lady Hatecoil
@@ -4676,6 +4727,7 @@ core.Instances = {
 					track = function() core._1456:LadyHatecoil() end,
 					partial = false,
 					encounterID = 1811,
+					restrictions = true,
 				},
 				boss3 = {
 					name = 1492, --Wrath of Azshara
@@ -4691,6 +4743,7 @@ core.Instances = {
 					track = function() core._1456:WrathOfAzshara() end,
 					partial = false,
 					encounterID = 1814,
+					restrictions = true,
 				},
 			},
 
@@ -4710,6 +4763,7 @@ core.Instances = {
 					track = function() core._1466:Dresaron() end,
 					partial = false,
 					encounterID = 1838,
+					restrictions = true,
 				},
 				boss2 = {
 					name = 1657, --Shade of Xavius
@@ -4725,6 +4779,7 @@ core.Instances = {
 					track = function() core._1466:ShadeOfXavius() end,
 					partial = false,
 					encounterID = 1839,
+					restrictions = true,
 				},
 			},
 
@@ -4744,6 +4799,7 @@ core.Instances = {
 					track = function() core._1477:StagParty() end,
 					partial = false,
 					nameWrath = L["Instances_Other"],
+					restrictions = true,
 				},
 				boss2 = {
 					name = L["Instances_Other"], --MISSINGNAME8
@@ -4759,6 +4815,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					nameWrath = L["Instances_Other"],
+					restrictions = true,
 				},
 				boss3 = {
 					name = 1489, --Odyn
@@ -4774,6 +4831,7 @@ core.Instances = {
 					track = function() core._1477:Odyn() end,
 					partial = false,
 					encounterID = 1809,
+					restrictions = true,
 				},
 			},
 
@@ -4808,6 +4866,7 @@ core.Instances = {
 					track = function() core._1458:Naraxas() end,
 					partial = false,
 					encounterID = 1792,
+					restrictions = true,
 				},
 			},
 
@@ -4827,6 +4886,7 @@ core.Instances = {
 					track = function() core._1493:AshGolm() end,
 					partial = false,
 					encounterID = 1816,
+					restrictions = true,
 				},
 				boss2 = {
 					name = 1470, --Cordana
@@ -4842,6 +4902,7 @@ core.Instances = {
 					track = function() core._1493:Cordana() end,
 					partial = false,
 					encounterID = 1818,
+					restrictions = true,
 				},
 				boss3 = {
 					name = L["Instances_Other"], --MISSINGNAME10
@@ -4857,6 +4918,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					nameWrath = L["Instances_Other"],
+					restrictions = true,
 				},
 			},
 
@@ -4891,6 +4953,7 @@ core.Instances = {
 					track = function() core._1501:AmalgamOfSouls() end,
 					partial = false,
 					encounterID = 1832,
+					restrictions = true,
 				},
 				boss3 = {
 					name = 1653, --Ilysanna Ravencrest
@@ -4906,6 +4969,7 @@ core.Instances = {
 					track = function() core._1501:IllysannaRavencrest() end,
 					partial = false,
 					encounterID = 1833,
+					restrictions = true,
 				},
 			},
 
@@ -4925,6 +4989,7 @@ core.Instances = {
 					track = function() core._1492:Ymiron() end,
 					partial = false,
 					encounterID = 1822,
+					restrictions = true,
 				},
 				boss2 = {
 					name = 1486, --Helya (Maw of Souls)
@@ -4974,6 +5039,7 @@ core.Instances = {
 					track = function() core._1516:Ivanyr() end,
 					partial = false,
 					encounterID = 1827,
+					restrictions = true,
 				},
 				boss2 = {
 					name = 1498, --Corstilax
@@ -4989,6 +5055,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 1825,
+					restrictions = true,
 				},
 				boss3 = {
 					name = 1501, --Advisor Vandros
@@ -5004,6 +5071,7 @@ core.Instances = {
 					track = function() core._1516:AdvisorVandros() end,
 					partial = false,
 					encounterID = 1829,
+					restrictions = true,
 				},
 			},
 
@@ -5102,6 +5170,7 @@ core.Instances = {
 					track = function() core._1651:ShadeOfMedivh() end,
 					partial = false,
 					encounterID = 1965,
+					restrictions = true,
 				},
 				boss5 = {
 					name = 1818, --Mana Devourer
@@ -5166,6 +5235,7 @@ core.Instances = {
 					track = function() core._1677:ThrashbiteTheScornful() end,
 					partial = false,
 					encounterID = 2057,
+					restrictions = true,
 				},
 				boss3 = {
 					name = 1878, --Mephistroth
@@ -5205,6 +5275,7 @@ core.Instances = {
 					track = function() core._1228:KargathBladefist() end,
 					partial = false,
 					encounterID = 1721,
+					restrictions = true,
 				},
 				boss2 = {
 					name = 971, --The Butcher
@@ -5220,6 +5291,7 @@ core.Instances = {
 					track = function() core._1228:TheButcher() end,
 					partial = false,
 					encounterID = 1706,
+					restrictions = true,
 				},
 				boss3 = {
 					name = 1195, --Tectus
@@ -5250,6 +5322,7 @@ core.Instances = {
 					track = function() core._1228:Brackenspore() end,
 					partial = false,
 					encounterID = 1720,
+					restrictions = true,
 				},
 				boss5 = {
 					name = 1148, --Twin Ogron
@@ -5280,6 +5353,7 @@ core.Instances = {
 					track = function() core._1228:Koragh() end,
 					partial = false,
 					encounterID = 1723,
+					restrictions = true,
 				},
 				boss7 = {
 					name = 1197, --Imperator Mar'gok
@@ -5314,6 +5388,7 @@ core.Instances = {
 					track = function() core._1205:BeastlordDarmac() end,
 					partial = false,
 					encounterID = 1694,
+					restrictions = true,
 				},
 				boss2 = {
 					name = 1147, --Operator Thogar
@@ -5329,6 +5404,7 @@ core.Instances = {
 					track = function() core._1205:OperatorThogar() end,
 					partial = false,
 					encounterID = 1692,
+					restrictions = true,
 				},
 				boss3 = {
 					name = 1203, --Iron Maidens
@@ -5344,6 +5420,7 @@ core.Instances = {
 					track = function() core._1205:TheIronMaidens() end,
 					partial = false,
 					encounterID = 1695,
+					restrictions = true,
 				},
 				boss4 = {
 					name = 1155, --Hans'gar & Franzok
@@ -5359,6 +5436,7 @@ core.Instances = {
 					track = function() core._1205:HansgarFranzok() end,
 					partial = false,
 					encounterID = 1693,
+					restrictions = true,
 				},
 				boss5 = {
 					name = 1123, --Flamebender Ka'graz
@@ -5374,6 +5452,7 @@ core.Instances = {
 					track = function() core._1205:FlamebenderKagraz() end,
 					partial = false,
 					encounterID = 1689,
+					restrictions = true,
 				},
 				boss6 = {
 					name = 1162, --Kromog
@@ -5389,6 +5468,7 @@ core.Instances = {
 					track = function() core._1205:Kromog() end,
 					partial = false,
 					encounterID = 1713,
+					restrictions = true,
 				},
 				boss7 = {
 					name = 1161, --Gruul
@@ -5434,6 +5514,7 @@ core.Instances = {
 					track = function() core._1205:BlastFurnace() end,
 					partial = false,
 					encounterID = 1690,
+					restrictions = true,
 				},
 				boss10 = {
 					name = 959, --Blackhand
@@ -5449,6 +5530,7 @@ core.Instances = {
 					track = function() core._1205:Blackhand() end,
 					partial = false,
 					encounterID = 1704,
+					restrictions = true,
 				},
 			},
 
@@ -5468,6 +5550,7 @@ core.Instances = {
 					track = function() end,
 					partial = false,
 					encounterID = 1778,
+					restrictions = true,
 				},
 				boss2 = {
 					name = 1425, --Iron Reaver
@@ -5483,6 +5566,7 @@ core.Instances = {
 					track = function() core._1448:IronReaver() end,
 					partial = false,
 					encounterID = 1785,
+					restrictions = true,
 				},
 				boss3 = {
 					name = 1392, --Kormrok
@@ -5498,6 +5582,7 @@ core.Instances = {
 					track = function() core._1448:Kormrok() end,
 					partial = false,
 					encounterID = 1787,
+					restrictions = true,
 				},
 				boss4 = {
 					name = 1432, --Hellfire High Council
@@ -5513,6 +5598,7 @@ core.Instances = {
 					track = function() core._1448:HellfireHighCouncil() end,
 					partial = false,
 					encounterID = 1798,
+					restrictions = true,
 				},
 				boss5 = {
 					name = 1396, --Kilrogg Deadeye
@@ -5528,6 +5614,7 @@ core.Instances = {
 					track = function() end,
 					partial = false,
 					encounterID = 1786,
+					restrictions = true,
 				},
 				boss6 = {
 					name = 1372, --Gorefiend
@@ -5543,6 +5630,7 @@ core.Instances = {
 					track = function() core._1448:Gorefiend() end,
 					partial = false,
 					encounterID = 1783,
+					restrictions = true,
 				},
 				boss7 = {
 					name = 1433, --Shadow-Lord Iskar
@@ -5558,6 +5646,7 @@ core.Instances = {
 					track = function() core._1448:ShadowLordIskar() end,
 					partial = false,
 					encounterID = 1788,
+					restrictions = true,
 				},
 				boss8 = {
 					name = 1427, --Socrethar the Eternal
@@ -5573,6 +5662,7 @@ core.Instances = {
 					track = function() core._1448:SocretharTheEternal() end,
 					partial = false,
 					encounterID = 1794,
+					restrictions = true,
 				},
 				boss9 = {
 					name = 1394, --Tyrant Velhari
@@ -5588,6 +5678,7 @@ core.Instances = {
 					track = function() core._1448:TyrantVelhari() end,
 					partial = false,
 					encounterID = 1784,
+					restrictions = true,
 				},
 				boss10 = {
 					name = 1391, --Fel Lord Zakuun
@@ -5603,6 +5694,7 @@ core.Instances = {
 					track = function() core._1448:FelLordZakuun() end,
 					partial = false,
 					encounterID = 1777,
+					restrictions = true,
 				},
 				boss11 = {
 					name = 1447, --Xhul'horac
@@ -5618,6 +5710,7 @@ core.Instances = {
 					track = function() core._1448:Xhulhorac() end,
 					partial = false,
 					encounterID = 1800,
+					restrictions = true,
 				},
 				boss12 = {
 					name = 1395, --Mannoroth
@@ -5633,6 +5726,7 @@ core.Instances = {
 					track = function() core._1448:Mannoroth() end,
 					partial = false,
 					encounterID = 1795,
+					restrictions = true,
 				},
 				boss13 = {
 					name = 1438, --Archimonde
@@ -5648,6 +5742,7 @@ core.Instances = {
 					track = function() core._1448:Archimonde() end,
 					partial = false,
 					encounterID = 1799,
+					restrictions = true,
 				},
 			},
 		},
@@ -5669,6 +5764,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 1653,
+					restrictions = true,
 				},
 				boss2 = {
 					name = 893, --Magmolatus
@@ -5684,6 +5780,7 @@ core.Instances = {
 					track = function() core._1175:Magmolatus() end,
 					partial = false,
 					encounterID = 1655,
+					restrictions = true,
 				},
 				boss3 = {
 					name = 889, --Gug'rokk
@@ -5699,6 +5796,7 @@ core.Instances = {
 					track = function() core._1175:Gugrokk() end,
 					partial = false,
 					encounterID = 1654,
+					restrictions = true,
 				},
 			},
 
@@ -5718,6 +5816,7 @@ core.Instances = {
 					track = function() core._1195:FleshrenderNokgar() end,
 					partial = false,
 					encounterID = 1749,
+					restrictions = true,
 				},
 				boss2 = {
 					name = L["Instances_Other"], --MISSINGNAME16
@@ -5748,6 +5847,7 @@ core.Instances = {
 					track = function() core._1195:Skulloc() end,
 					partial = false,
 					encounterID = 1754,
+					restrictions = true,
 				},
 			},
 
@@ -5816,6 +5916,7 @@ core.Instances = {
 					track = function() core._1209:Ranjit() end,
 					partial = false,
 					encounterID = 1698,
+					restrictions = true,
 				},
 				boss2 = {
 					name = 967, --Rukhran
@@ -5846,6 +5947,7 @@ core.Instances = {
 					track = function() core._1209:HighSageViryx() end,
 					partial = false,
 					encounterID = 1701,
+					restrictions = true,
 				},
 				boss4 = {
 					name = 968, --High Sage Viryx
@@ -5880,6 +5982,7 @@ core.Instances = {
 					track = function() core._1208:RocketsparkAndBorka() end,
 					partial = false,
 					encounterID = 1715,
+					restrictions = true,
 				},
 				boss2 = {
 					name = 1163, --Nitrogg Thundertower
@@ -5895,6 +5998,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 1732,
+					restrictions = true,
 				},
 			},
 
@@ -5914,6 +6018,7 @@ core.Instances = {
 					track = function() core._1279:Witherbark() end,
 					partial = false,
 					encounterID = 1746,
+					restrictions = true,
 				},
 				boss2 = {
 					name = 1210, --Yalnu
@@ -5963,6 +6068,7 @@ core.Instances = {
 					track = function() core._1176:Bonemaw() end,
 					partial = true,
 					encounterID = 1679,
+					restrictions = true,
 				},
 				boss3 = {
 					name = 1160, --Ner'zhul
@@ -5978,6 +6084,7 @@ core.Instances = {
 					track = function() core._1176:Nerzhul() end,
 					partial = false,
 					encounterID = 1682,
+					restrictions = true,
 				},
 			},
 
@@ -5997,6 +6104,7 @@ core.Instances = {
 					track = function() core._1358:OrebenderGorashan() end,
 					partial = false,
 					encounterID = 1761,
+					restrictions = true,
 				},
 				boss2 = {
 					name = L["Instances_Other"], --MISSINGNAME17
@@ -6027,6 +6135,7 @@ core.Instances = {
 					track = function() core._1358:RagewingTheUntamed() end,
 					partial = false,
 					encounterID = 1760,
+					restrictions = true,
 				},
 				boss4 = {
 					name = 1234, --Warlord Zaela
@@ -6042,6 +6151,7 @@ core.Instances = {
 					track = function() core._1358:WarlordZaela() end,
 					partial = false,
 					encounterID = 1762,
+					restrictions = true,
 				},
 			},
 		},
@@ -6531,6 +6641,7 @@ core.Instances = {
 					partial = false,
 					encounterID = 1507,
 					displayInfoFrame = true,
+					restrictions = true,
 				},
 				boss2 = {
 					name = 744, --Blade Lord Ta'yak
@@ -6561,6 +6672,7 @@ core.Instances = {
 					track = function() core._1009:Garalon() end,
 					partial = false,
 					encounterID = 1463,
+					restrictions = true,
 				},
 				boss4 = {
 					name = 741, --Wind Lord Mel'jarak
@@ -6606,6 +6718,7 @@ core.Instances = {
 					track = function() core._1009:GrandEmpressShekzeer() end,
 					partial = false,
 					encounterID = 1501,
+					restrictions = true,
 				},
 			},
 
@@ -6640,6 +6753,7 @@ core.Instances = {
 					track = function() core._1008:FengTheAccursed() end,
 					partial = false,
 					encounterID = 1390,
+					restrictions = true,
 				},
 				boss3 = {
 					name = 682, --Gara'jal the Spiritbinder
@@ -6701,6 +6815,7 @@ core.Instances = {
 					track = function() core._1008:Elegon() end,
 					partial = false,
 					encounterID = 1500,
+					restrictions = true,
 				},
 				boss7 = {
 					name = 677, --Will of the Emperor
@@ -6717,6 +6832,7 @@ core.Instances = {
 					partial = false,
 					encounterID = 1407,
 					displayInfoFrame = true,
+					restrictions = true,
 				},
 			},
 		},
@@ -6802,6 +6918,7 @@ core.Instances = {
 					track = function() core._1001:HoundmasterBraun() end,
 					partial = true,
 					encounterID = 1422,
+					restrictions = true,
 				},
 				boss2 = {
 					name = 654, --Armsmaster Harlan
@@ -6817,6 +6934,7 @@ core.Instances = {
 					track = function() core._1001:ArmsmasterHarlan() end,
 					partial = false,
 					encounterID = 1421,
+					restrictions = true,
 				},
 			},
 
@@ -6836,6 +6954,7 @@ core.Instances = {
 					track = function() core._1004:ThalnosTheSoulrender() end,
 					partial = false,
 					encounterID = 1423,
+					restrictions = true,
 				},
 				boss2 = {
 					name = 671, --Brother Korloff
@@ -6866,6 +6985,7 @@ core.Instances = {
 					track = function() core._1004:HighInquisitorWhitemane() end,
 					partial = false,
 					encounterID = 1425,
+					restrictions = true,
 				},
 			},
 
@@ -6885,6 +7005,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 1427,
+					restrictions = true,
 				},
 				boss2 = {
 					name = 665, --Rattlegore
@@ -6900,6 +7021,7 @@ core.Instances = {
 					track = function() core._1007:Rattlegore() end,
 					partial = false,
 					encounterID = 1428,
+					restrictions = true,
 				},
 				boss3 = {
 					name = L["Instances_Other"], --MISSINGNAME20
@@ -6915,6 +7037,7 @@ core.Instances = {
 					track = function() core._1007:Sanguinarian() end,
 					partial = true,
 					nameWrath = L["Instances_Other"],
+					restrictions = true,
 				},
 				boss4 = {
 					name = 684, --Darkmaster Gandling
@@ -6929,6 +7052,7 @@ core.Instances = {
 					enabled = false,
 					track = nil,
 					partial = false,
+					restrictions = true,
 				},
 				boss5 = {
 					name = L["Instances_Other"], --MISSINGNAME21
@@ -6944,6 +7068,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					nameWrath = L["Instances_Other"],
+					restrictions = true,
 				},
 			},
 
@@ -6963,6 +7088,7 @@ core.Instances = {
 					track = function() core._960:WiseMari() end,
 					partial = false,
 					encounterID = 1418,
+					restrictions = true,
 				},
 				boss2 = {
 					name = 335, --Sha of Doubt
@@ -6978,6 +7104,7 @@ core.Instances = {
 					track = function() core._960:ShaOfDoubt() end,
 					partial = false,
 					encounterID = 1439,
+					restrictions = true,
 				},
 				boss3 = {
 					name = 335, --Sha of Doubt
@@ -6993,6 +7120,7 @@ core.Instances = {
 					track = function() core._960:ShaOfDoubt2() end,
 					partial = false,
 					encounterID = 1439,
+					restrictions = true,
 				},
 			},
 
@@ -7026,6 +7154,7 @@ core.Instances = {
 					track = function() core._994.XinTheWeaponmaster() end,
 					partial = false,
 					encounterID = 1441,
+					restrictions = true,
 				},
 				boss3 = {
 					name = L["Instances_Other"], --MISSINGNAME22
@@ -7075,6 +7204,7 @@ core.Instances = {
 					track = function() core._959:ShaOfViolence() end,
 					partial = false,
 					encounterID = 1305,
+					restrictions = true,
 				},
 				boss3 = {
 					name = 686, --Taran Zhu
@@ -7090,6 +7220,7 @@ core.Instances = {
 					track = function() core._959:TaranZhu() end,
 					partial = false,
 					encounterID = 1306,
+					restrictions = true,
 				},
 			},
 
@@ -7109,6 +7240,7 @@ core.Instances = {
 					track = function() core._1011:CommanderVojak() end,
 					partial = true,
 					encounterID = 1502,
+					restrictions = true,
 				},
 				boss2 = {
 					name = 692, --General Pa'valak
@@ -7124,6 +7256,7 @@ core.Instances = {
 					track = function() core._1011:GeneralPaValak() end,
 					partial = false,
 					encounterID = 1447,
+					restrictions = true,
 				},
 				boss3 = {
 					name = 727, --Wing Leader Ner'onok
@@ -7139,6 +7272,7 @@ core.Instances = {
 					track = function() core._1011:WingLeaderNeronok() end,
 					partial = false,
 					encounterID = 1464,
+					restrictions = true,
 				},
 			},
 
@@ -7158,6 +7292,7 @@ core.Instances = {
 					track = function() core._962:SaboteurKiptilak() end,
 					partial = false,
 					encounterID = 1397,
+					restrictions = true,
 				},
 				boss2 = {
 					name = L["Instances_Other"], --MISSINGNAME23
@@ -7173,6 +7308,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					nameWrath = L["Instances_Other"],
+					restrictions = true,
 				},
 				boss3 = {
 					name = 649, --Raigonn
@@ -7188,6 +7324,7 @@ core.Instances = {
 					track = function() core._962:Raigonn() end,
 					partial = false,
 					encounterID = 1419,
+					restrictions = true,
 				},
 			},
 		},
@@ -7838,6 +7975,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 1292,
+					restrictions = true,
 				},
 				boss2 = {
 					name = 324, --Warlord Zon'ozz
@@ -7853,6 +7991,7 @@ core.Instances = {
 					track = function() core._967:WarlordZonozz() end,
 					partial = false,
 					encounterID = 1294,
+					restrictions = true,
 				},
 				boss3 = {
 					name = 325, --Yor'sahj the Unsleeping
@@ -7868,6 +8007,7 @@ core.Instances = {
 					track = function() core._967:YorsahjTheUnsleeping() end,
 					partial = false,
 					encounterID = 1295,
+					restrictions = true,
 				},
 				boss4 = {
 					name = 317, --Hagara the Stormbinder
@@ -7883,6 +8023,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					encounterID = 1296,
+					restrictions = true,
 				},
 				boss5 = {
 					name = 331, --Ultraxion
@@ -7898,6 +8039,7 @@ core.Instances = {
 					track = function() core._967:Ultraxion() end,
 					partial = false,
 					encounterID = 1297,
+					restrictions = true,
 				},
 				boss6 = {
 					name = 332, --Warmaster Blackhorn
@@ -7913,6 +8055,7 @@ core.Instances = {
 					track = function() core._967:Skyfire() end,
 					partial = false,
 					encounterID = 1298,
+					restrictions = true,
 				},
 				boss7 = {
 					name = 318, --Spine of Deathwing
@@ -7928,6 +8071,7 @@ core.Instances = {
 					track = function() core._967:SpineOfDeathwing() end,
 					partial = false,
 					encounterID = 1291,
+					restrictions = true,
 				},
 				boss8 = {
 					name = 333, --Madness of Deathwing
@@ -7943,6 +8087,7 @@ core.Instances = {
 					track = function() end,
 					partial = false,
 					encounterID = 1299,
+					restrictions = true,
 				},
 			},
 
@@ -7993,6 +8138,7 @@ core.Instances = {
 					partial = false,
 					encounterID = 1025,
 					displayInfoFrame = true,
+					restrictions = true,
 				},
 				boss4 = {
 					name = 171, --Atramedes
@@ -8023,6 +8169,7 @@ core.Instances = {
 					track = function() core._669:Chimaeron() end,
 					partial = false,
 					encounterID = 1023,
+					restrictions = true,
 				},
 				boss6 = {
 					name = 174, --Nefarian
@@ -8057,6 +8204,7 @@ core.Instances = {
 					track = function() core._671:HalfusWyrmbreaker() end,
 					partial = false,
 					encounterID = 1030,
+					restrictions = true,
 				},
 				boss2 = {
 					name = 157, --Valiona And Theralion
@@ -8155,6 +8303,7 @@ core.Instances = {
 					track = function() core._720:Bethtilac() end,
 					partial = false,
 					encounterID = 1197,
+					restrictions = true,
 				},
 				boss2 = {
 					name = 193, --Lord Rhyolith
@@ -8185,6 +8334,7 @@ core.Instances = {
 					track = function() core._720:Alysrazor() end,
 					partial = false,
 					encounterID = 1206,
+					restrictions = true,
 				},
 				boss4 = {
 					name = 195, --Shannox
@@ -8215,6 +8365,7 @@ core.Instances = {
 					track = function() core._720:Baleroc() end,
 					partial = false,
 					encounterID = 1200,
+					restrictions = true,
 				},
 				boss6 = {
 					name = 197, --Majordomo Staghelm
@@ -8266,6 +8417,7 @@ core.Instances = {
 					track = function() core._645:RomoggBonecrusher() end,
 					partial = false,
 					encounterID = 1040,
+					restrictions = true,
 				},
 				boss2 = {
 					name = 106, --Corla
@@ -8281,6 +8433,7 @@ core.Instances = {
 					track = function() core._645:Corla() end,
 					partial = false,
 					encounterID = 1038,
+					restrictions = true,
 				},
 				boss3 = {
 					name = 107, --Karsh Steelbender
@@ -8296,6 +8449,7 @@ core.Instances = {
 					track = function() core._645:KarshSteelbender() end,
 					partial = false,
 					encounterID = 1039,
+					restrictions = true,
 				},
 				boss4 = {
 					name = 109, --Ascendant Lord Obsidius
@@ -8311,6 +8465,7 @@ core.Instances = {
 					track = function() core._645:AscendantLordObsidius() end,
 					partial = false,
 					encounterID = 1036,
+					restrictions = true,
 				},
 			},
 
@@ -8330,6 +8485,7 @@ core.Instances = {
 					track = function() core._725:HighPriestessAzil() end,
 					partial = false,
 					encounterID = 1057,
+					restrictions = true,
 				},
 			},
 
@@ -8349,6 +8505,7 @@ core.Instances = {
 					track = function() core._657:Asaad() end,
 					partial = false,
 					encounterID = 1042,
+					restrictions = true,
 				},
 				boss2 = {
 					name = L["Instances_Other"], --MISSINGNAME62
@@ -8399,6 +8556,38 @@ core.Instances = {
 					partial = false,
 					encounterID = 1049,
 				},
+				boss2 = {
+					name = 2617, --General Umbriss
+					bossIDs = {},
+					achievement = 5297,
+					players = {},
+					tactics = {
+						[4] = {
+							{ tactic = L["GrimBatol_GeneralUmbriss_1"] },
+						},
+					},
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 1051,
+					restrictions = true,
+				},
+				boss5 = {
+					name = 2619, --Erudax, the Duke of Below
+					bossIDs = {},
+					achievement = 0,
+					players = {},
+					tactics = {
+						[4] = {
+							{ tactic = L["GrimBatol_ErudaxtheDukeofBelow_1"] },
+						},
+					},
+					enabled = false,
+					track = nil,
+					partial = false,
+					encounterID = 1049,
+					restrictions = true,
+				},
 			},
 
 			[644] = { --Halls of Origination
@@ -8417,6 +8606,7 @@ core.Instances = {
 					track = function() core._644:TempleGuardianAnhuur() end,
 					partial = false,
 					encounterID = 1080,
+					restrictions = true,
 				},
 				boss2 = {
 					name = 125, --Earthrager Ptah
@@ -8462,6 +8652,7 @@ core.Instances = {
 					track = function() core._644:Rajh() end,
 					partial = false,
 					encounterID = 1078,
+					restrictions = true,
 				},
 			},
 
@@ -8482,6 +8673,7 @@ core.Instances = {
 					partial = false,
 					encounterID = 1054,
 					displayInfoFrame = true,
+					restrictions = true,
 				},
 				boss2 = {
 					name = 119, --High Prophet Barim
@@ -8497,6 +8689,7 @@ core.Instances = {
 					track = function() core._755:HighProphetBarim() end,
 					partial = false,
 					encounterID = 1053,
+					restrictions = true,
 				},
 				boss3 = {
 					name = 122, --Siamat
@@ -8512,6 +8705,7 @@ core.Instances = {
 					track = function() core._755:Siamat() end,
 					partial = false,
 					encounterID = 1055,
+					restrictions = true,
 				},
 			},
 
@@ -8531,6 +8725,7 @@ core.Instances = {
 					track = function() core._36:Glubtok() end,
 					partial = false,
 					encounterID = 1064,
+					restrictions = true,
 				},
 				boss2 = {
 					name = 90, --Helix Gearbreaker
@@ -8546,6 +8741,7 @@ core.Instances = {
 					track = function() core._36:HelixGearbreaker() end,
 					partial = false,
 					encounterID = 1065,
+					restrictions = true,
 				},
 				boss3 = {
 					name = 91, --Foe Reaper 5000
@@ -8561,6 +8757,7 @@ core.Instances = {
 					track = nil,
 					partial = true,
 					encounterID = 1063,
+					restrictions = true,
 				},
 				boss4 = {
 					name = 92, --Admiral Ripsnarl
@@ -8576,6 +8773,7 @@ core.Instances = {
 					track = function() core._36:AdmiralRipsnarl() end,
 					partial = false,
 					encounterID = 1062,
+					restrictions = true,
 				},
 				boss5 = {
 					name = 93, --'Captain' Cookie
@@ -8606,6 +8804,7 @@ core.Instances = {
 					track = function() core._36:VanessaVanCleef() end,
 					partial = false,
 					encounterID = 1081,
+					restrictions = true,
 				},
 			},
 
@@ -8625,6 +8824,7 @@ core.Instances = {
 					track = function() core._33:BaronAshbury() end,
 					partial = false,
 					encounterID = 1069,
+					restrictions = true,
 				},
 				boss2 = {
 					name = 98, --Commander Springvale
@@ -8640,6 +8840,7 @@ core.Instances = {
 					track = function() core._33:CommanderSpringvale() end,
 					partial = false,
 					encounterID = 1071,
+					restrictions = true,
 				},
 				boss3 = {
 					name = 100, --Lord Godfrey
@@ -8655,6 +8856,7 @@ core.Instances = {
 					track = function() core._33:LordGodfrey() end,
 					partial = false,
 					encounterID = 1072,
+					restrictions = true,
 				},
 			},
 
@@ -8704,6 +8906,7 @@ core.Instances = {
 					track = function() core._859:BloodlordMandokir() end,
 					partial = false,
 					encounterID = 1179,
+					restrictions = true,
 				},
 				boss4 = {
 					name = 181, --High Priestess Kilnara
@@ -8719,6 +8922,7 @@ core.Instances = {
 					track = function() core._859:HighPriestessKilnara() end,
 					partial = false,
 					encounterID = 1180,
+					restrictions = true,
 				},
 				boss5 = {
 					name = 185, --Jin'do
@@ -8734,6 +8938,7 @@ core.Instances = {
 					track = function() core._859:Jindo() end,
 					partial = false,
 					encounterID = 1182,
+					restrictions = true,
 				},
 			},
 
@@ -8753,6 +8958,7 @@ core.Instances = {
 					track = function() core._568:Halazzi() end,
 					partial = false,
 					encounterID = 1192,
+					restrictions = true,
 				},
 				boss2 = {
 					name = L["Instances_Other"], --MISSINGNAME65
@@ -8832,6 +9038,7 @@ core.Instances = {
 					track = function() core._938:EchoOfSylvanas() end,
 					partial = false,
 					encounterID = 1882,
+					restrictions = true,
 				},
 			},
 
@@ -8866,6 +9073,7 @@ core.Instances = {
 					track = function() core._939:Mannoroth() end,
 					partial = false,
 					encounterID = 1274,
+					restrictions = true,
 				},
 			},
 
@@ -8885,6 +9093,7 @@ core.Instances = {
 					track = function() core._940:ArchbishopBenedictus() end,
 					partial = false,
 					encounterID = 1339,
+					restrictions = true,
 				},
 			},
 		},
@@ -11315,6 +11524,7 @@ core.Instances = {
 					partial = false,
 					encounterID = 2026,
 					nameWrath = L["Boss_PrinceKeleseth"],
+					restrictions = true,
 				},
 			},
 
@@ -11337,6 +11547,7 @@ core.Instances = {
 					track = function() core._576:GrandMagusTelestra() end,
 					partial = false,
 					nameWrath = L["Boss_GrandMagusTelestra"],
+					restrictions = true,
 				},
 				boss2 = {
 					name = 619, --Anomalus
@@ -11355,6 +11566,7 @@ core.Instances = {
 					track = function() core._576:Anomalus() end,
 					partial = false,
 					nameWrath = L["Boss_Anomalus"],
+					restrictions = true,
 				},
 				boss3 = {
 					name = 621, --Keristrasza
@@ -11373,6 +11585,7 @@ core.Instances = {
 					track = function() core._576:Keristrasza() end,
 					partial = false,
 					nameWrath = L["Boss_Keristasza"],
+					restrictions = true,
 				},
 			},
 
@@ -11392,6 +11605,7 @@ core.Instances = {
 					track = function() core._595:ZombieFest() end,
 					partial = false,
 					nameWrath = L["Instances_Other"],
+					restrictions = true,
 				},
 				boss2 = {
 					name = L["Instances_Other"], --MISSINGNAME73
@@ -11410,6 +11624,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					nameWrath = L["Instances_Other"],
+					restrictions = true,
 				},
 			},
 
@@ -11468,6 +11683,7 @@ core.Instances = {
 					partial = false,
 					encounterID = 1973,
 					nameWrath = L["Boss_Anubarak"],
+					restrictions = true,
 				},
 			},
 
@@ -11491,6 +11707,7 @@ core.Instances = {
 					partial = false,
 					encounterID = 1969,
 					nameWrath = L["Boss_ElderNadox"],
+					restrictions = true,
 				},
 				boss2 = {
 					name = 582, --Jedoga Shadowseeker
@@ -11510,6 +11727,7 @@ core.Instances = {
 					partial = false,
 					encounterID = 1967,
 					nameWrath = L["Boss_JedogaShadowseeker"],
+					restrictions = true,
 				},
 				boss3 = {
 					name = 584, --Herald Volazj
@@ -11529,6 +11747,7 @@ core.Instances = {
 					partial = false,
 					encounterID = 1968,
 					nameWrath = L["Boss_HeraldVolazj"],
+					restrictions = true,
 				},
 			},
 
@@ -11690,6 +11909,7 @@ core.Instances = {
 					partial = false,
 					encounterID = 1978,
 					nameWrath = L["Boss_Sladran"],
+					restrictions = true,
 				},
 				boss2 = {
 					name = 594, --Moorabi
@@ -11709,6 +11929,7 @@ core.Instances = {
 					partial = false,
 					encounterID = 1980,
 					nameWrath = L["Boss_Moorabi"],
+					restrictions = true,
 				},
 				boss3 = {
 					name = 596, --Gal'darah
@@ -11728,6 +11949,7 @@ core.Instances = {
 					partial = false,
 					encounterID = 1981,
 					nameWrath = L["Boss_Galdarah"],
+					restrictions = true,
 				},
 				boss4 = {
 					name = 596, --Gal'darah
@@ -11747,6 +11969,7 @@ core.Instances = {
 					partial = false,
 					encounterID = 1981,
 					nameWrath = L["Boss_Galdarah"],
+					restrictions = true,
 				},
 			},
 
@@ -11770,6 +11993,7 @@ core.Instances = {
 					partial = false,
 					encounterID = 1996,
 					nameWrath = L["Boss_MaidenOfGrief"],
+					restrictions = true,
 				},
 				boss2 = {
 					name = 606, --Tribunal of Ages
@@ -11789,6 +12013,7 @@ core.Instances = {
 					partial = false,
 					encounterID = 1995,
 					nameWrath = L["Boss_TribunalOfAges"],
+					restrictions = true,
 				},
 				boss3 = {
 					name = 607, --Sjonnir The Ironshaper
@@ -11808,6 +12033,7 @@ core.Instances = {
 					partial = false,
 					encounterID = 1998,
 					nameWrath = L["Boss_SjonnirTheIronshaper"],
+					restrictions = true,
 				},
 			},
 
@@ -11831,6 +12057,7 @@ core.Instances = {
 					partial = false,
 					encounterID = 1987,
 					nameWrath = L["Boss_GeneralBjarngrim"],
+					restrictions = true,
 				},
 				boss2 = {
 					name = 598, --Volkhan
@@ -11850,6 +12077,7 @@ core.Instances = {
 					partial = false,
 					encounterID = 1985,
 					nameWrath = L["Boss_Volkhan"],
+					restrictions = true,
 				},
 				boss3 = {
 					name = 600, --Loken
@@ -11869,6 +12097,7 @@ core.Instances = {
 					partial = false,
 					encounterID = 1986,
 					nameWrath = L["Boss_Loken"],
+					restrictions = true,
 				},
 			},
 
@@ -11892,6 +12121,7 @@ core.Instances = {
 					partial = false,
 					encounterID = 2013,
 					nameWrath = L["Boss_Ley-GuardianEregos"],
+					restrictions = true,
 				},
 				boss2 = {
 					name = 625, --Ley-Guardian Eregos
@@ -11908,6 +12138,7 @@ core.Instances = {
 					partial = false,
 					encounterID = 2013,
 					nameWrath = L["Boss_Ley-GuardianEregos"],
+					restrictions = true,
 				},
 				boss3 = {
 					name = 625, --Ley-Guardian Eregos
@@ -11924,6 +12155,7 @@ core.Instances = {
 					partial = false,
 					encounterID = 2013,
 					nameWrath = L["Boss_Ley-GuardianEregos"],
+					restrictions = true,
 				},
 				boss4 = {
 					name = 625, --Ley-Guardian Eregos
@@ -11940,6 +12172,7 @@ core.Instances = {
 					partial = false,
 					encounterID = 2013,
 					nameWrath = L["Boss_Ley-GuardianEregos"],
+					restrictions = true,
 				},
 				boss5 = {
 					name = 625, --Ley-Guardian Eregos
@@ -11956,6 +12189,7 @@ core.Instances = {
 					partial = false,
 					encounterID = 2013,
 					nameWrath = L["Boss_Ley-GuardianEregos"],
+					restrictions = true,
 				},
 			},
 
@@ -11979,6 +12213,7 @@ core.Instances = {
 					partial = false,
 					encounterID = 2030,
 					nameWrath = L["Boss_SvalaSorrowgrave"],
+					restrictions = true,
 				},
 				boss2 = {
 					name = 643, --Skadi the Ruthless
@@ -11998,6 +12233,7 @@ core.Instances = {
 					partial = false,
 					encounterID = 2029,
 					nameWrath = L["Boss_SkadiTheRuthless"],
+					restrictions = true,
 				},
 				boss3 = {
 					name = 643, --Skadi the Ruthless
@@ -12017,6 +12253,7 @@ core.Instances = {
 					partial = false,
 					encounterID = 2029,
 					nameWrath = L["Boss_SkadiTheRuthless"],
+					restrictions = true,
 				},
 				boss4 = {
 					name = 644, --King Ymiron
@@ -12036,6 +12273,7 @@ core.Instances = {
 					partial = false,
 					encounterID = 2028,
 					nameWrath = L["Boss_KingYmiron"],
+					restrictions = true,
 				},
 			},
 
@@ -12055,6 +12293,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					nameWrath = L["Boss_ArgentConfessorPaletress"],
+					restrictions = true,
 				},
 				boss2 = {
 					name = 635, --Eadric the Pure
@@ -12070,6 +12309,7 @@ core.Instances = {
 					track = nil,
 					partial = false,
 					nameWrath = L["Boss_EadricThePure"],
+					restrictions = true,
 				},
 				boss3 = {
 					name = 637, --The Black Knight
@@ -12086,6 +12326,7 @@ core.Instances = {
 					partial = false,
 					encounterID = 2021,
 					nameWrath = L["Boss_TheBlackKnight"],
+					restrictions = true,
 				},
 			},
 
@@ -12106,6 +12347,7 @@ core.Instances = {
 					partial = false,
 					encounterID = 2006,
 					nameWrath = L["Boss_Bronjahm"],
+					restrictions = true,
 				},
 				boss2 = {
 					name = 616, --Devourer of Souls
@@ -12122,6 +12364,7 @@ core.Instances = {
 					partial = false,
 					encounterID = 2007,
 					nameWrath = L["Boss_DevourerOfSouls"],
+					restrictions = true,
 				},
 			},
 
@@ -12142,6 +12385,7 @@ core.Instances = {
 					partial = false,
 					encounterID = 1999,
 					nameWrath = L["Boss_ForgemasterGarfrost"],
+					restrictions = true,
 				},
 				boss2 = {
 					name = L["Instances_Other"], --MISSINGNAME75
@@ -12157,6 +12401,7 @@ core.Instances = {
 					track = function() end,
 					partial = false,
 					nameWrath = L["Instances_Other"],
+					restrictions = true,
 				},
 			},
 

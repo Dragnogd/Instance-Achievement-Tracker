@@ -111,7 +111,7 @@ function InfoFrameContentMixin:UpdateTacticsContent(tacticText, highlightCriteri
 end
 
 function core.InfoFramev2:CreateUI()
-    self.UI = CreateFrame("Frame", "IAT_InfoFrameV2", UIParent, "NysTDL_MainFrameRetail")
+    self.UI = CreateFrame("Frame", "IAT_InfoFrameV2", UIParent, "IAT_MainFrameRetail")
     self.UI:SetSize(300, 400)
     self.UI:SetPoint("CENTER")
     self.UI:SetMovable(true)
