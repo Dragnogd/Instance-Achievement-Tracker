@@ -23,8 +23,10 @@ local timerStarted = false
 local reaversKilled = 0
 
 function core._1009:ImperialVizierZorlok()
-	InfoFrame_UpdatePlayersOnInfoFrame()
-	InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],parasiteCounter,core.groupSize)
+	if core:IsNotRestricted() then
+		InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
+		InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],parasiteCounter,core.groupSize)
+	end
 
 	if parasiteCounter == core.groupSize then
 		core:getAchievementSuccess()
@@ -83,11 +85,15 @@ function core._1009:ClearVariables()
 end
 
 function core._1009:IATInstanceCleanup()
-    core._1009.Events:UnregisterEvent("UNIT_AURA")
+	if core:IsNotRestricted() then
+	    core._1009.Events:UnregisterEvent("UNIT_AURA")
+	end
 end
 
 function core._1009:InitialSetup()
-	core._1009.Events:RegisterEvent("UNIT_AURA")
+	if core:IsNotRestricted() then
+	    core._1009.Events:RegisterEvent("UNIT_AURA")
+	end
 end
 
 core._1009.Events:SetScript("OnEvent", function(self, event, ...)

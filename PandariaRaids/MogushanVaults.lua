@@ -119,10 +119,12 @@ function core._1008:TheSpiritKings()
 	--Compare 2 arrays once timer has finished. If they dance at the correct time and got hit by pillaged at the end they executed the move at the correct time
 	--Announce in chat who did not dance in time.
 
-	InfoFrame_UpdatePlayersOnInfoFrame()
-	InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],playersDancing,core.maxPlayers)
-	core.IATInfoFrame:SetSubHeading2(L["Shared_Notes"])
-	core.IATInfoFrame:SetText2(L["Shared_PlayersTwentyFiveyards"],200)
+	if core:IsNotRestricted() then
+		InfoFrame_UpdatePlayersOnInfoFrame()
+		InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],playersDancing,core.maxPlayers)
+		core.IATInfoFrame:SetSubHeading2(L["Shared_Notes"])
+		core.IATInfoFrame:SetText2(L["Shared_PlayersTwentyFiveyards"],200)
+	end
 
 	--Pillage started
 	if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 118049 and GettingHotComplete == false then
@@ -193,10 +195,14 @@ function core._1008:ClearVariables()
 end
 
 function core._1008:InstanceCleanup()
-    core._1008.Events:UnregisterEvent("UPDATE_MOUSEOVER_UNIT")
+	if core:IsNotRestricted() then
+		core._1008.Events:UnregisterEvent("CHAT_MSG_TEXT_EMOTE")
+	end
+
+	core._1008.Events:UnregisterEvent("UPDATE_MOUSEOVER_UNIT")
+
     core._1008.Events:UnregisterEvent("ZONE_CHANGED_INDOORS")
 	core._1008.Events:UnregisterEvent("UNIT_SPELLCAST_SUCCEEDED")
-	core._1008.Events:UnregisterEvent("CHAT_MSG_TEXT_EMOTE")
 
 	------------------------------------------------------
 	---- The Stone Guard
@@ -218,10 +224,15 @@ core._1008.Events:SetScript("OnEvent", function(self, event, ...)
 end)
 
 function core._1008:InitialSetup()
-    core._1008.Events:RegisterEvent("UPDATE_MOUSEOVER_UNIT")
+	if core:IsNotRestricted() then
+		core._1008.Events:RegisterEvent("CHAT_MSG_TEXT_EMOTE")
+	end
+
+	core._1008.Events:RegisterEvent("UPDATE_MOUSEOVER_UNIT")
+
+
 	core._1008.Events:RegisterEvent("ZONE_CHANGED_INDOORS")
 	core._1008.Events:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
-	core._1008.Events:RegisterEvent("CHAT_MSG_TEXT_EMOTE")
 
 	if C_Map.GetBestMapForUnit("Player") == 471 and C_EncounterJournal.IsEncounterComplete(679) == false then
 		showStoneGuardInfoFrame = true
@@ -428,8 +439,10 @@ end
 --If counter equals 10 or 25 then complete achievement
 
 function core._1008:WillOfTheEmperor()
-	InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
-	InfoFrame_SetHeaderCounter(C_Spell.GetSpellLink(116809) .. " " .. L["Core_Counter"],playerExecutedStrikeDisplay,core.maxPlayers)
+	if core:IsNotRestricted() then
+		InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
+		InfoFrame_SetHeaderCounter(C_Spell.GetSpellLink(116809) .. " " .. L["Core_Counter"],playerExecutedStrikeDisplay,core.maxPlayers)
+	end
 
 	if inititalFailSetup == false then
 		inititalFailSetup = true
