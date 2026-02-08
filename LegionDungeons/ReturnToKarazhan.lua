@@ -2,6 +2,7 @@
 -- Namespaces
 --------------------------------------
 local _, core = ...
+local L = core.L
 
 ------------------------------------------------------
 ---- Return To Karazhan Bosses
@@ -37,31 +38,33 @@ function core._1651:ShadeOfMedivh()
 	end
 
 	--If player is in a group
-	if core.groupSize > 1 then
-		for i = 1, core.groupSize do
-			local unit = nil
-			if core.chatType == "PARTY" then
-				if i < core.groupSize then
-					unit = "party" .. i
-				else
-					unit = "player"
-			end
-			elseif core.chatType == "RAID" then
-				unit = "raid" .. i
-			end
+    if core:IsNotRestricted() then
+        if core.groupSize > 1 then
+            for i = 1, core.groupSize do
+                local unit = nil
+                if core.chatType == "PARTY" then
+                    if i < core.groupSize then
+                        unit = "party" .. i
+                    else
+                        unit = "player"
+                end
+                elseif core.chatType == "RAID" then
+                    unit = "raid" .. i
+                end
 
-			if unit ~= nil then
-                local unitType, destID, spawn_uid_dest = strsplit("-",UnitGUID(unit));
-                for i=1,40 do
-					local auraData = C_UnitAuras.GetDebuffDataByIndex(unit, i)
-					if auraData ~= nil and auraData.spellId == 232658 and paranoidPlayers[spawn_uid_dest] == nil then
-                        paranoidCounter = paranoidCounter + 1
-                        core:sendMessage(UnitName(unit) .. " " .. L["Shared_HasGained"] .. " " .. C_Spell.GetSpellLink(232658) .. " (" .. paranoidCounter .. "/5)")
-                        paranoidPlayers[spawn_uid_dest] = spawn_uid_dest
-					end
-				end
-			end
-		end
+                if unit ~= nil then
+                    local unitType, destID, spawn_uid_dest = strsplit("-",UnitGUID(unit));
+                    for i=1,40 do
+                        local auraData = C_UnitAuras.GetDebuffDataByIndex(unit, i)
+                        if auraData ~= nil and auraData.spellId == 232658 and paranoidPlayers[spawn_uid_dest] == nil then
+                            paranoidCounter = paranoidCounter + 1
+                            core:sendMessage(UnitName(unit) .. " " .. L["Shared_HasGained"] .. " " .. C_Spell.GetSpellLink(232658) .. " (" .. paranoidCounter .. "/5)")
+                            paranoidPlayers[spawn_uid_dest] = spawn_uid_dest
+                        end
+                    end
+                end
+            end
+        end
     end
 
 	if paranoidCounter == 5 then --Can only be earned in a group of 5 players

@@ -193,10 +193,8 @@ function core._2569:TheForgottenExperiments()
         core:sendMessage(core:getAchievement() .. " " .. C_Spell.GetSpellLink(411118) .. " " .. L["Core_Counter"] .. " (" .. singedCounter .. "/3)",true)
     end
 
-    if rendedCounter == 3 and slimedCounter == 3 and singedCounter == 3 then
-        if core:getBlizzardTrackingStatus(18173, 1) == true and core:getBlizzardTrackingStatus(18173, 2) == true and core:getBlizzardTrackingStatus(18173, 3) == true then
-            core:getAchievementSuccess()
-        end
+    if core:getBlizzardTrackingStatus(18173, 1) == true and core:getBlizzardTrackingStatus(18173, 2) == true and core:getBlizzardTrackingStatus(18173, 3) == true then
+        core:getAchievementSuccess()
     end
 end
 
@@ -280,8 +278,10 @@ end
 function core._2569:Magmorax()
     --Defeat Magmorax after feeding him 20 Spicy Lava Snails in Aberrus, the Shadowed Crucible on Normal difficulty or higher.
 
-    InfoFrame_UpdatePlayersOnInfoFrame()
-    InfoFrame_SetHeaderCounter(C_Spell.GetSpellLink(411367) .. " " .. L["Core_Counter"],playersHoldingSnailCounter,20)
+    if core:IsNotRestricted() then
+        InfoFrame_UpdatePlayersOnInfoFrame()
+        InfoFrame_SetHeaderCounter(C_Spell.GetSpellLink(411367) .. " " .. L["Core_Counter"],playersHoldingSnailCounter,20)
+    end
 
     --Picked up snail (Handled in UNIT_AURA due to room size)
     --5/10 12:22:40.763  SPELL_AURA_APPLIED,0000000000000000,nil,0x514,0x0,Player-1084-05D22E7D,"Ouaa-TarrenMill",0x514,0x0,411367,"Spicy Lava Snail",0x4,DEBUFF
@@ -314,7 +314,7 @@ function core._2569:Magmorax()
         escargorgedFound = true
     end
 
-    if core:getBlizzardTrackingStatus(18172, 1) == true and spicyLavaSnailsCounter >= 19 and escargorgedFound == true then
+    if core:getBlizzardTrackingStatus(18172, 1) == true then
 		core:getAchievementSuccess()
 	end
 end
@@ -354,7 +354,7 @@ function core._2569:EchoOfNeltharion()
         core:sendMessage(core:getAchievement() .. " " .. getNPCName(205343) .. " " .. L["Shared_Completed"] .. " (" .. partsCompleted .. "/4)",true)
     end
 
-    if core:getBlizzardTrackingStatus(18149, 1) == true and partsCompleted == 4 then
+    if core:getBlizzardTrackingStatus(18149, 1) == true then
         core:getAchievementSuccess()
     end
 end
@@ -522,7 +522,10 @@ function core._2569:TrackAdditional()
 end
 
 function core._2569:InstanceCleanup()
-    core._2569.Events:UnregisterEvent("UNIT_AURA")
+    if core:IsNotRestricted() then
+        core._2569.Events:UnregisterEvent("UNIT_AURA")
+    end
+
     core._2569.Events:UnregisterEvent("UNIT_SPELLCAST_SUCCEEDED")
 end
 
@@ -531,7 +534,9 @@ core._2569.Events:SetScript("OnEvent", function(self, event, ...)
 end)
 
 function core._2569:InitialSetup()
-    core._2569.Events:RegisterEvent("UNIT_AURA")
+    if core:IsNotRestricted() then
+        core._2569.Events:RegisterEvent("UNIT_AURA")
+    end
     core._2569.Events:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
 end
 

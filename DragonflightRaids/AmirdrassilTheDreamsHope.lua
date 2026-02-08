@@ -120,9 +120,10 @@ end
 function core._2549:CouncilOfDreams()
     --Defeat the Council of Dreams after recruiting Sergeant Quackers to join the cause in Amirdrassil, the Dream's Hope on Normal difficulty or higher.
 
-    InfoFrame_UpdatePlayersOnInfoFrame()
-    InfoFrame_SetHeaderCounter(C_Spell.GetSpellLink(425410) .. " " .. L["Core_Counter"],polymorphBombCounter,core.groupSize)
-
+    if core:IsNotRestricted() then
+        InfoFrame_UpdatePlayersOnInfoFrame()
+        InfoFrame_SetHeaderCounter(C_Spell.GetSpellLink(425410) .. " " .. L["Core_Counter"],polymorphBombCounter,core.groupSize)
+    end
     --When player casts preen, check who has been turned in ducks
     --SPELL_CAST_SUCCESS,Player-3676-0E0171A2,"Chrusvoker-Area52",0x514,0x1,0000000000000000,nil,0x80000000,0x80000000,422372,"Preen",0x1,Player-3676-0E0171A2,0000000000000000,642977,723760,3688,14301,10747,0,0,250000,250000,0,4070.15,12620.02,2240,1.9152,462
     -- if core.type == "SPELL_CAST_SUCCESS" and core.spellId == 8936 then --422372
@@ -259,7 +260,7 @@ function core._2549:TindralSageswift()
     end
 
     --Tracking seems to do success and fail, so need to change this
-    if core:getBlizzardTrackingStatus(19393) == true and rescuedWhelpCounter == 6 then
+    if core:getBlizzardTrackingStatus(19393) == true then
 		core:getAchievementSuccess()
 	end
 end
@@ -333,7 +334,10 @@ end
 
 function core._2549:InstanceCleanup()
     core._2549.Events:UnregisterEvent("UNIT_SPELLCAST_SUCCEEDED")
-    core._2549.Events:UnregisterEvent("UNIT_AURA")
+
+    if core:IsNotRestricted() then
+        core._2549.Events:UnregisterEvent("UNIT_AURA")
+    end
 end
 
 core._2549.Events:SetScript("OnEvent", function(self, event, ...)
@@ -342,7 +346,10 @@ end)
 
 function core._2549:InitialSetup()
     core._2549.Events:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
-    core._2549.Events:RegisterEvent("UNIT_AURA")
+
+    if core:IsNotRestricted() then
+        core._2549.Events:RegisterEvent("UNIT_AURA")
+    end
 end
 
 function core._2549.Events:UNIT_SPELLCAST_SUCCEEDED(self, unitID, lineID, spellID, ...)

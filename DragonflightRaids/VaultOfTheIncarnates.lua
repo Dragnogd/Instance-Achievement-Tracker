@@ -216,7 +216,7 @@ function core._2522:ClearVariables()
 end
 
 function core._2522:InstanceCleanup()
-    if core.gameVersionMajor < 12 then
+    if core:IsNotRestricted() then
         core._2522.Events:UnregisterEvent("UNIT_AURA")
         core._2522.Events:UnregisterEvent("UNIT_SPELLCAST_SUCCEEDED")
     end
@@ -227,7 +227,7 @@ core._2522.Events:SetScript("OnEvent", function(self, event, ...)
 end)
 
 function core._2522:InitialSetup()
-    if core.gameVersionMajor < 12 then
+    if core:IsNotRestricted() then
         core._2522.Events:RegisterEvent("UNIT_AURA")
         core._2522.Events:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
     end

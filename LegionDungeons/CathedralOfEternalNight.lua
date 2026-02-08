@@ -22,8 +22,10 @@ function core._1677:ThrashbiteTheScornful()
     --Volume 1: 121776 Voume 2: 121783 Volume 3: 121784 Voume 4: 121785
     --Buff 1: 243256 Buff 2: 243258 Buff 3: 243259 Buff 4: 243261
 
-    InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
-    InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],buff4Counter,5)
+    if core:IsNotRestricted() then
+        InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
+        InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],buff4Counter,5)
+    end
 
     --Check if all players in group have read books
     if core.destName ~= nil then
