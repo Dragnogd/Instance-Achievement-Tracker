@@ -3833,10 +3833,12 @@ function core:has_value2(tab, val)
 end
 
 function core:getHealthPercent(boss)
-	if UnitExists(boss) then
-		return (UnitHealth(boss) / UnitHealthMax(boss)) * 100
-	else
-		return 0
+	if core:issecret(boss) == false then
+		if UnitExists(boss) then
+			return (UnitHealth(boss) / UnitHealthMax(boss)) * 100
+		else
+			return 0
+		end
 	end
 end
 
@@ -4138,6 +4140,16 @@ function core:checkRestrictions()
 	if core.gameVersionMajor >= 12 then
 		return true
 	else
+		return false
+	end
+end
+
+function core:IsNotRestricted()
+	if core.gameVersionMajor < 12 then
+		-- Not in the restricted environment
+		return true
+	else
+		-- In the restricted environment
 		return false
 	end
 end
