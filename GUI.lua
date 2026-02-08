@@ -9,7 +9,7 @@ local Config = core.Config
 local IATInfoFrame = core.IATInfoFrame
 
 Config.majorVersion = 6
-Config.minorVersion = 3
+Config.minorVersion = 4
 Config.revisionVersion = 0
 Config.classicPhase = 7
 
