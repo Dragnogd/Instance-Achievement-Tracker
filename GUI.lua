@@ -1556,14 +1556,14 @@ function Config:ShowContentForInstance(data)
             --If we are currently not tracking achievements for the current player then scan the achievements on current tab so we can honor hide/grey achievements option
             local _, _, _, completed = GetAchievementInfo(data.boss.achievement)
             local completedAchievement = false
-            if core.Options.HideCompletedAchievements.get() == true and core.achievementTrackingEnabled == false then
+            if core.Options.HideCompletedAchievements.get() == true then
                 if completed == true then
                     completedAchievement = true
                 end
             end
 
             -- If the Grey out achievements option is enabled, add to the list but add extra attribute to let us know we need to grey it out when rendering
-            if core.Options.GreyOutCompletedAchievements.get() == true and core.achievementTrackingEnabled == false then
+            if core.Options.GreyOutCompletedAchievements.get() == true then
                -- Add additional attribute to the data table
                 data.completedAchievement = completed
             end
