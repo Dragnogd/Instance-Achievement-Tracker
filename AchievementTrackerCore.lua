@@ -1299,7 +1299,9 @@ function events:ENCOUNTER_START(self, encounterID, encounterName, difficultyID, 
 	end
 
 	encounterTimer = C_Timer.NewTicker(1, function()
-		--core:detectBlizzardTrackingAutomatically()
+		if core.restrictions == true then
+			core:detectBlizzardTrackingAutomatically()
+		end
 
 		--Boss Detection!
 		if core.foundBoss == true then
@@ -2473,6 +2475,11 @@ function detectBossByEncounterID(id)
 								end
 								if core.Instances[core.expansion][core.instanceType][core.instance][boss].enabled == true then
 									core.outputTrackingStatus = true
+
+									-- Check if we are restricted from tracking the achievement
+									if core.Instances[core.expansion][core.instanceType][core.instance][boss].restrictions == true then
+										core.restrictions = true
+									end
 								end
 								core.foundBoss = true
 							end
@@ -2500,6 +2507,11 @@ function detectBossByEncounterID(id)
 						end
 						if core.Instances[core.expansion][core.instanceType][core.instance][boss].enabled == true then
 							core.outputTrackingStatus = true
+
+							-- Check if we are restricted from tracking the achievement
+							if core.Instances[core.expansion][core.instanceType][core.instance][boss].restrictions == true then
+								core.restrictions = true
+							end
 						end
 						core.foundBoss = true
 					end
@@ -2517,6 +2529,11 @@ function detectBossByEncounterID(id)
 			--Announce to chat if enabled
 			core:sendMessage(L["Core_NoTrackingForInstance"],true)
 		end
+	elseif core.restrictions == true then
+		core:printMessage(L["Core_RestrictionsForAchievement"])
+
+		--Announce to chat if enabled
+		core:sendMessage(L["Core_RestrictionsForAchievement"],true)
 	end
 
 	if core.foundBoss == true then
@@ -2738,7 +2755,9 @@ function core:getAchievementToTrack()
 					--Announce to chat if enabled
 					if core.Options.AnnounceTracking.get() == true then
 						if core.Options.OnlyTrackMissingAchievements.get() == false or (core.Options.OnlyTrackMissingAchievements.get() == true and core.currentBosses[i].players[1] ~= L["GUI_NoPlayersNeedAchievement"]) then
-							core:sendMessage(L["GUI_Tracking"] .. ": "  .. GetAchievementLink(core.currentBosses[i].achievement))
+							if core.restrictions ~= true then
+								core:sendMessage(L["GUI_Tracking"] .. ": "  .. GetAchievementLink(core.currentBosses[i].achievement))
+							end
 						end
 					end
 				end
