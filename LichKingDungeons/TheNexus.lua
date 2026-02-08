@@ -36,7 +36,7 @@ function core._576:GrandMagusTelestra()
 
             if imageCounter >= 1 and timerStarted == false then
                 timerStarted = true
-                C_Timer.After(5, function() 
+                C_Timer.After(5, function()
                     if imageCounter == 3 then
                         core:getAchievementSuccess()
                     else
@@ -63,7 +63,7 @@ end
 
 function core._576:Keristrasza()
     if core.type == "SPELL_AURA_APPLIED_DOSE" and core.amount > 2 then
-        core:getAchievementFailedPersonal()    
+        core:getAchievementFailedPersonal()
     end
 end
 

@@ -109,7 +109,7 @@ function core._2519:Magmatusk()
             local buffFound = false
 
             for i = 1, 40 do
-                local auraData = C_UnitAuras.GetBuffDataByIndex(bossUnit, i)
+                local auraData = C_UnitAuras.GetBuffDataByIndex("boss", i)
                 if auraData ~= nil and auraData.spellId == 374410 and auraData.applications == 5 then
                     buffFound = true
                 end

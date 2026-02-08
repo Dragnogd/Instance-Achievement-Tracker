@@ -46,12 +46,14 @@ function core._1648:Odyn()
 end
 
 function core._1648:Helya()
-    if core.groupSize > 1 then
-        InfoFrame_UpdatePlayersOnInfoFrame()
-        InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],fetidcount,core.groupSize - 1)
-    else
-        InfoFrame_UpdatePlayersOnInfoFrame()
-        InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],fetidcount,0)
+    if core:IsNotRestricted() then
+        if core.groupSize > 1 then
+            InfoFrame_UpdatePlayersOnInfoFrame()
+            InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],fetidcount,core.groupSize - 1)
+        else
+            InfoFrame_UpdatePlayersOnInfoFrame()
+            InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],fetidcount,0)
+        end
     end
 
     --Gained Debuff
@@ -91,13 +93,17 @@ function core._1648:Helya()
 end
 
 function core._1648:InstanceCleanup()
-    core._1648.Events:UnregisterEvent("UNIT_AURA")
+    if core:IsNotRestricted() then
+        core._1648.Events:UnregisterEvent("UNIT_AURA")
+    end
     odynKilled = false
 end
 
 function core._1648:InitialSetup()
     odynKilled = false
-    core._1648.Events:RegisterEvent("UNIT_AURA")
+    if core:IsNotRestricted() then
+        core._1648.Events:RegisterEvent("UNIT_AURA")
+    end
 end
 
 function core._1648:ClearVariables()

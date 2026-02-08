@@ -201,8 +201,11 @@ function core._1530:SpellbladeAluriel()
 end
 
 function core._1530:InitialSetup()
-    core._1530.Events:RegisterEvent("UNIT_AURA")
-    core._1530.Events:RegisterEvent("UNIT_TARGETABLE_CHANGED")
+    if core:IsNotRestricted() then
+        core._1530.Events:RegisterEvent("UNIT_AURA")
+        core._1530.Events:RegisterEvent("UNIT_TARGETABLE_CHANGED")
+    end
+
     core._1530.Events:RegisterEvent("ZONE_CHANGED_INDOORS")
     core._1530.Events:RegisterEvent("ZONE_CHANGED")
 
@@ -217,8 +220,11 @@ function core._1530:InitialSetup()
 end
 
 function core._1530:IATInstanceCleanup()
-    core._1530.Events:UnregisterEvent("UNIT_AURA")
-    core._1530.Events:UnregisterEvent("UNIT_TARGETABLE_CHANGED")
+    if core:IsNotRestricted() then
+        core._1530.Events:UnregisterEvent("UNIT_AURA")
+        core._1530.Events:UnregisterEvent("UNIT_TARGETABLE_CHANGED")
+    end
+
     core._1530.Events:UnregisterEvent("ZONE_CHANGED_INDOORS")
     core._1530.Events:UnregisterEvent("ZONE_CHANGED")
     burningEmbersKilledByPlayersUID = {}

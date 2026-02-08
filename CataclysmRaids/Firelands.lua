@@ -211,18 +211,18 @@ function core._720.Events:UNIT_POWER_UPDATE(self, unit, powerType)
 end
 
 function core._720.Events:UNIT_AURA(self, unitID)
-	for i=1,40 do
-		local auraData = C_UnitAuras.GetDebuffDataByIndex(unitID, i)
-		if auraData ~= nil and auraData.spellId == 100048 then
-			--Add the mob to an array to say that it is currently ontop of the nest
-			if spellID2 ~= nil then
-				local unitType, _, _, _, _, destID2, spawn_uid_dest = strsplit("-", UnitGUID(unitID));
-				if spawn_uid_dest ~= nil then
-					cinderwebDroneList[spawn_uid_dest] = spawn_uid_dest
-				end
-			end
-		end
-	end
+	-- for i=1,40 do
+	-- 	local auraData = C_UnitAuras.GetDebuffDataByIndex(unitID, i)
+	-- 	if auraData ~= nil and auraData.spellId == 100048 then
+	-- 		--Add the mob to an array to say that it is currently ontop of the nest
+	-- 		if spellID2 ~= nil then
+	-- 			local unitType, _, _, _, _, destID2, spawn_uid_dest = strsplit("-", UnitGUID(unitID));
+	-- 			if spawn_uid_dest ~= nil then
+	-- 				cinderwebDroneList[spawn_uid_dest] = spawn_uid_dest
+	-- 			end
+	-- 		end
+	-- 	end
+	-- end
 end
 
 function core._720:TrackAdditional()

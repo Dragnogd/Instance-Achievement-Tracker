@@ -103,8 +103,10 @@ function core._1520:Xavius()
 end
 
 function core._1520:DragonsOfNightmare()
-    InfoFrame_UpdatePlayersOnInfoFrame()
-    InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],playersBuffCounter,core.groupSize)
+    if core:IsNotRestricted() then
+        InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
+        InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],playersBuffCounter,core.groupSize)
+    end
 end
 
 function core._1520:ClearVariables()
@@ -137,13 +139,18 @@ end
 
 function core._1520:InstanceCleanup()
     core._1520.Events:UnregisterEvent("UNIT_SPELLCAST_SUCCEEDED")
-    core._1520.Events:UnregisterEvent("UNIT_AURA")
+
+    if core:IsNotRestricted() then
+        core._1520.Events:UnregisterEvent("UNIT_AURA")
+    end
     dragonsKilled = false
 end
 
 function core._1520:InitialSetup()
 	core._1520.Events:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
-	core._1520.Events:RegisterEvent("UNIT_AURA")
+    if core:IsNotRestricted() then
+	    core._1520.Events:RegisterEvent("UNIT_AURA")
+    end
 end
 
 core._1520.Events:SetScript("OnEvent", function(self, event, ...)

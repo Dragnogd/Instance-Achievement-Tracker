@@ -47,8 +47,10 @@ function core._1676:Goroth()
 end
 
 function core._1676:DemonicInquisition()
-    InfoFrame_UpdatePlayersOnInfoFrame()
-    InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],playersTorment,core.groupSize)
+    if core:IsNotRestricted() then
+        InfoFrame_UpdatePlayersOnInfoFrameWithAdditionalInfo()
+        InfoFrame_SetHeaderCounter(L["Shared_PlayersWithBuff"],playersTorment,core.groupSize)
+    end
 
     if core.type == "UNIT_DIED" and (core.destID == "116689" or core.destID == "116691") then
         demonicInquisitionKilled = true

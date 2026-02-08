@@ -2,6 +2,7 @@
 -- Namespaces
 --------------------------------------
 local _, core = ...
+local L = core.L
 
 ------------------------------------------------------
 ---- Eye of Eternity Bosses
@@ -13,6 +14,11 @@ core._616 = {}
 ------------------------------------------------------
 local timer
 local timerStarted = false
+
+------------------------------------------------------
+---- A poke in the Eye
+------------------------------------------------------
+local wrongConfigAnnounced = false
 
 function core._616:YouDontHaveAnEternity()
     --Defeat Malygos in 6 minutes or less-Defeat Malygos in 6 minutes or less
@@ -28,8 +34,8 @@ function core._616:YouDontHaveAnEternity()
 end
 
 function core._616:APokeInTheEye()
-    if subtractionFailWarningAnnounced == false then
-        subtractionFailWarningAnnounced = true
+    if wrongConfigAnnounced == false then
+        wrongConfigAnnounced = true
         if core.difficultyID == 3 then
             --10 Man
             if core.groupSize > 9 then
@@ -55,4 +61,9 @@ function core._616:ClearVariables()
     ---- You Don't Have an Eternity
     ------------------------------------------------------
     timerStarted = false
+
+    ------------------------------------------------------
+    ---- A poke in the Eye
+    ------------------------------------------------------
+    wrongConfigAnnounced = false
 end

@@ -45,11 +45,15 @@ function core._575:ClearVariables()
 end
 
 function core._575:InstanceCleanup()
-    core._575.Events:UnregisterEvent("CHAT_MSG_MONSTER_YELL")
+    if core:IsNotRestricted() then
+        core._575.Events:UnregisterEvent("CHAT_MSG_MONSTER_YELL")
+    end
 end
 
 function core._575:InitialSetup()
-    core._575.Events:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+    if core:IsNotRestricted() then
+        core._575.Events:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+    end
     --core._575.Events:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
     --core._575.Events:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
 end
@@ -60,7 +64,7 @@ end)
 
 function core._575.Events:CHAT_MSG_MONSTER_YELL(self, message, sender, language, channelString, target, flags, unknown, channelNumber, channelName, unknown, counter, ...)
     if string.match(message, "What mongrels dare intrude here") then
-        timer = C_Timer.NewTimer(180, function() 
+        timer = C_Timer.NewTimer(180, function()
             core:getAchievementFailed()
         end)
     end
