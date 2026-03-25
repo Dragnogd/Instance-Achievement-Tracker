@@ -179,20 +179,20 @@ function core._720:ClearVariables()
 end
 
 function core._720:InstanceCleanup()
-    core._720.Events:UnregisterEvent("UNIT_POWER_UPDATE")
-
 	if core:IsNotRestricted() then
 		core._720.Events:UnregisterEvent("UNIT_AURA")
+		core._720.Events:UnregisterEvent("UNIT_POWER_UPDATE")
 	end
 
 	onlyThePenitentFailed = false
 end
 
 function core._720:InitialSetup()
-	core._720.Events:RegisterEvent("UNIT_POWER_UPDATE")
+
 
 	if core:IsNotRestricted() then
 		core._720.Events:RegisterEvent("UNIT_AURA")
+		core._720.Events:RegisterEvent("UNIT_POWER_UPDATE")
 	end
 end
 
