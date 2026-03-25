@@ -246,13 +246,13 @@ function core._1098:ClearVariables()
 end
 
 function core._1098:InstanceCleanup()
-    core._1098.Events:UnregisterEvent("UNIT_HEALTH")
-    core._1098.Events:UnregisterEvent("UNIT_POWER_UPDATE")
+    --core._1098.Events:UnregisterEvent("UNIT_HEALTH")
+    --core._1098.Events:UnregisterEvent("UNIT_POWER_UPDATE")
 end
 
 function core._1098:InitialSetup()
-	core._1098.Events:RegisterEvent("UNIT_HEALTH")
-	core._1098.Events:RegisterEvent("UNIT_POWER_UPDATE")
+	--core._1098.Events:RegisterEvent("UNIT_HEALTH")
+	--core._1098.Events:RegisterEvent("UNIT_POWER_UPDATE")
 end
 
 core._1098.Events:SetScript("OnEvent", function(self, event, ...)
