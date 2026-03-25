@@ -267,7 +267,9 @@ function core._631:ProfessorPutricide()
 end
 
 function core._631:InstanceCleanup()
-    core._631.Events:UnregisterEvent("UNIT_AURA")
+    if core:IsNotRestricted() then
+        core._631.Events:UnregisterEvent("UNIT_AURA")
+    end
 end
 
 core._631.Events:SetScript("OnEvent", function(self, event, ...)
@@ -275,7 +277,9 @@ core._631.Events:SetScript("OnEvent", function(self, event, ...)
 end)
 
 function core._631:InitialSetup()
-    core._631.Events:RegisterEvent("UNIT_AURA")
+    if core:IsNotRestricted() then
+        core._631.Events:RegisterEvent("UNIT_AURA")
+    end
 end
 
 function core._631.Events:UNIT_AURA(self, unitID)
