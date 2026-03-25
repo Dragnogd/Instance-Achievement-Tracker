@@ -1339,8 +1339,9 @@ function events:ENCOUNTER_START(self, encounterID, encounterName, difficultyID, 
 				core[core.instanceClear]:TrackAdditional()
 			end
 		else
-			if core.lockDetection == false then
+			if core.lockDetection == false and core:IsNotRestricted() then
 				--Check if any of the 5 nameplates have caches boss ID and whether source and dest GUID have been stored or not
+				-- Cannot do this on 12.0.0 or higher due to restrictions.
 				local doNotTrack = false
 				for i = 1, 5 do
 					if UnitGUID("boss" .. i) ~= nil and UnitIsDead("boss" .. i) == false and UnitIsEnemy("Player", "boss" .. i) == true then
