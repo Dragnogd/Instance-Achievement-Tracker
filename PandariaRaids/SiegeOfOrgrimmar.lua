@@ -363,17 +363,22 @@ function core._1136:TrackAdditional()
 end
 
 function core._1136:InstanceCleanup()
-    core._1136.Events:UnregisterEvent("UNIT_TARGET")
-    core._1136.Events:UnregisterEvent("UNIT_SPELLCAST_SUCCEEDED")
-    core._1136.Events:UnregisterEvent("UNIT_AURA")
-    core._1136.Events:UnregisterEvent("UNIT_HEALTH")
+	if core:IsNotRestricted() then
+		core._1136.Events:UnregisterEvent("UNIT_TARGET")
+		core._1136.Events:UnregisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+		core._1136.Events:UnregisterEvent("UNIT_AURA")
+		core._1136.Events:UnregisterEvent("UNIT_HEALTH")
+	end
+
 end
 
 function core._1136:InitialSetup()
-    core._1136.Events:RegisterEvent("UNIT_TARGET")
-    core._1136.Events:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
-    core._1136.Events:RegisterEvent("UNIT_AURA")
-    core._1136.Events:RegisterEvent("UNIT_HEALTH")
+	if core:IsNotRestricted() then
+		core._1136.Events:RegisterEvent("UNIT_TARGET")
+		core._1136.Events:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+		core._1136.Events:RegisterEvent("UNIT_AURA")
+		core._1136.Events:RegisterEvent("UNIT_HEALTH")
+	end
 end
 
 core._1136.Events:SetScript("OnEvent", function(self, event, ...)
