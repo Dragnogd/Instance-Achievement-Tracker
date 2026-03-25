@@ -80,20 +80,20 @@ function core._1209:InitialSetup()
 end
 
 function core._1209.Events:UNIT_SPELLCAST_SUCCEEDED(self, unit, castGUID, spellID)
-    if spellID == 153828 then
-        if lastTime == nil or lastTime == GetTime() then
-            birdCounter = birdCounter + 1
-        else
-            birdCounter = 1
-        end
-        lastTime = GetTime()
-    end
+    -- if spellID == 153828 then
+    --     if lastTime == nil or lastTime == GetTime() then
+    --         birdCounter = birdCounter + 1
+    --     else
+    --         birdCounter = 1
+    --     end
+    --     lastTime = GetTime()
+    -- end
 
-    if birdCounter >= 3 then
-        C_Timer.After(1, function()
-            core:getAchievementSuccess()
-        end)
-    end
+    -- if birdCounter >= 3 then
+    --     C_Timer.After(1, function()
+    --         core:getAchievementSuccess()
+    --     end)
+    -- end
 end
 
 function core._1209:ClearVariables()
