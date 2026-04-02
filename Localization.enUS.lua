@@ -276,7 +276,7 @@ local baseLocale = {
 	["AtalDazar_Priestess_AlunZa"] = "Boss will summon an add by casting %s. This add will move to any %s puddles and soak them, and when there are no puddles up, it will turn to attack the players. At this point, you should cc the add in order to prevent excessive damage. The add will have to soak 8 puddles of %s in order to turn into a IAT_131140.",
 	["Atal_Dazar_Yazma"] = "In order to lite the Shadowflame Sconces, everyone in the group except the tank will have to spread and stay near one of them when the boss casts %s. The sconces will stay lit up for about 25 seconds, so you should do this when the boss is low on health around 5 to 10%%.",
 	["AtalDazar_BringingHexyBack_Hex"] = "Atleast one players needs to be hexed on boss kill!",
-	["Freehold_SkycapNKragg"] = "To summon %s you have to place a 119210 before you pull the boss.",
+	["Freehold_SkycapNKragg"] = "To summon %s you have to place a Hearthstone Board before you pull the boss.",
 	["Freehold_RingOfBooty"] = "For this achievement you will have to pick up 3 items throughout the instance. %s spawns in the nest at the first boss after you defeat it, %s is found on top of a platform in The Rum Quarter, and %s is found near Sharkbait after the third boss.",
 	["Freehold_HarlanSweete"] = "%s will target a random player for %s, which will have to position near one of the chests, so that they will end up being destroyed.",
 	["KingsRest_Other"] = "The first trinket is in the first room of the dungeon, behind the sarcophagus, underneath the baskets.\n The second trinket is in the first boss hallway, at the end of the platform, behind the last set of stairs.\n The third trinket - (Check out the Glory of the Wartorn Hero Achievement Guide for details on WowHead)\n The fourth trinket is located before the final boss room, at the bottom of the strairs, at the top of the right pillar.",
@@ -1109,5 +1109,6 @@ local baseLocale = {
 	["GrimBatol_GeneralUmbriss_1"] = "",
 	["GrimBatol_ErudaxtheDukeofBelow_1"] = "",
 	["Core_RestrictionsForAchievement"] = "Automatic tracking is limited for this encounter; using in-game tracking if possible",
+	["MarchonQuelDanas_MidnightFalls_1"] = "",
 }
 core:RegisterLocale('enUS', baseLocale)
