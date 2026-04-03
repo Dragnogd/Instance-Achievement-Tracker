@@ -14,6 +14,7 @@ core._2912.Events = CreateFrame("Frame")
 ---- Vaelgor & Ezzorak
 ------------------------------------------------------
 local firstTetherBroken = false
+local checkForFail = false
 
 function core._2912:DevouringHost()
     -- Get consumed by the Devouring Host in The Voidspire or March on Quel'Danas.
@@ -56,13 +57,15 @@ function core._2912:VaelgorEzzorak()
     -- If trackers goes red after first success then we are nullzone tehter phase
     -- Wait three seconds
     if core:getBlizzardTrackingStatus(61911,1) == false then
-        if firstTetherBroken == true then
+        if firstTetherBroken == true and checkForFail == false then
+            checkForFail = true
             C_Timer.After(4, function()
                 -- If tracker is still red then tethers were not broken within 3 seconds
                 -- Hence achievement has failed
                 if core:getBlizzardTrackingStatus(61911,1) == false then
                     core:getAchievementFailed()
                 end
+                checkForFail = false
             end)
         end
     end
@@ -89,4 +92,5 @@ function core._2912:ClearVariables()
     ---- Vaelgor & Ezzorak
     ------------------------------------------------------
     firstTetherBroken = false
+    checkForFail = false
 end
