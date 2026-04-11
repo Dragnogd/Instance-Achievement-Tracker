@@ -59,7 +59,7 @@ function core._2912:VaelgorEzzorak()
     if core:getBlizzardTrackingStatus(61911,1) == false then
         if firstTetherBroken == true and checkForFail == false then
             checkForFail = true
-            C_Timer.After(4, function()
+            C_Timer.After(10, function()
                 -- If tracker is still red then tethers were not broken within 3 seconds
                 -- Hence achievement has failed
                 if core:getBlizzardTrackingStatus(61911,1) == false then
