@@ -1,6 +1,6 @@
 ﻿## Interface: 120007
 ## Interface-Cata: 40402
-## Interface-Mists: 50502
+## Interface-Mists: 50504
 ## Notes: An addon for tracking the completion/faliure of instance achievements.
 ## Title:Instance Achievement Tracker
 ## Author: Whizzey
@@ -11,6 +11,17 @@
 ## X-Curse-Project-ID: 286675
 ## X-WoWI-ID: 24756
 ## X-Wago-ID: RBKpXaKE
+## Category: Dungeons & Raids
+## Category-deDE: Dungeons & Schlachtzüge
+## Category-esES: Mazmorras y bandas
+## Category-esMX: Calabozos y bandas
+## Category-frFR: Donjons et raids
+## Category-itIT: Spedizioni e incursioni
+## Category-koKR: 던전 및 공격대
+## Category-ptBR: Masmorras e Raides
+## Category-ruRU: Подземелья и рейды
+## Category-zhCN: 地下城和团队副本
+## Category-zhTW: 地城與團隊
 
 Libs\LibStub\LibStub.lua
 Libs\CallbackHandler-1.0\CallbackHandler-1.0.lua
