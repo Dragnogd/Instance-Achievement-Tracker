@@ -68,7 +68,7 @@ function IAT_DisplayAchievement(achievementID)
             if elementData ~= nil then
                 local button = core.Config.UI.ExpansionLayoutContainer.BossListScrollContainer.ScrollBox:FindFrame(elementData)
                 if button then
-                    core.Config.g_achievementSelectionBehavior:ToggleSelect(button);
+                    core.Config.bossSelectionBehavior:ToggleSelect(button);
                 end
             end
         end
