@@ -50,6 +50,7 @@ Localization.koKR.lua
 MidnightRaids\Voidspire.lua
 MidnightRaids\Dreamrift.lua
 MidnightRaids\MarchOnQuelDanas.lua
+MidnightRaids\TheVenomousAbyss.lua
 
 WarWithinRaids\ManaforgeOmega.lua
 WarWithinRaids\NerubarPalace.lua

@@ -9,6 +9,130 @@ core.Instances = {
 	--Midnight
 	[12] = {
 		Raids = {
+			[3004] = { --The Venomous Abyss
+				name = 1320,
+				boss1 = {
+					name = 2888, --Nek'zali the Soulcoiler
+					bossIDs = {},
+					achievement = 63418,
+					players = {},
+					tactics = {
+						[12] = {
+							{ tactic = L["TheVenomousAbyss_NekzaliTheSoulcoiler_1"] },
+						},
+					},
+					enabled = true,
+					track = function() core._3004:NekzaliTheSoulcoiler() end,
+					partial = false,
+					encounterID = 3470,
+				},
+				boss2 = {
+					name = 2874, --Entombed Sentinels
+					bossIDs = {},
+					achievement = 63250,
+					players = {},
+					tactics = {
+						[12] = {
+							{ tactic = L["TheVenomousAbyss_EntombedSentinels_1"] },
+						},
+					},
+					enabled = true,
+					track = function() core._3004:EntombedSentinels() end,
+					partial = false,
+					encounterID = 3445,
+				},
+				boss3 = {
+					name = 2894, --The Lost Explorers
+					bossIDs = {},
+					achievement = 63645,
+					players = {},
+					tactics = {
+						[12] = {
+							{ tactic = L["TheVenomousAbyss_TheLostExplorers_1"] },
+						},
+					},
+					enabled = true,
+					track = function() core._3004:TheLostExplorers() end,
+					partial = false,
+					encounterID = 3497,
+				},
+				boss4 = {
+					name = 2882, --Vashnik the Malignant
+					bossIDs = {},
+					achievement = 63397,
+					players = {},
+					tactics = {
+						[12] = {
+							{ tactic = L["TheVenomousAbyss_VashnikTheMalignant_1"] },
+						},
+					},
+					enabled = true,
+					track = function() core._3004:VashnikTheMalignant() end,
+					partial = false,
+					encounterID = 3455,
+				},
+				boss5 = {
+					name = 2871, --Sszorak
+					bossIDs = {},
+					achievement = 63391,
+					players = {},
+					tactics = {
+						[12] = {
+							{ tactic = L["TheVenomousAbyss_Sszorak_1"] },
+						},
+					},
+					enabled = true,
+					track = function() core._3004:Sszorak() end,
+					partial = false,
+					encounterID = 3420,
+				},
+				boss6 = {
+					name = 2887, --The Twin Fangs
+					bossIDs = {},
+					achievement = 63656,
+					players = {},
+					tactics = {
+						[12] = {
+							{ tactic = L["TheVenomousAbyss_TheTwinFangs_1"] },
+						},
+					},
+					enabled = true,
+					track = function() core._3004:TheTwinFangs() end,
+					partial = false,
+					encounterID = 3421,
+				},
+				boss7 = {
+					name = 2883, --The Coiled Altar
+					bossIDs = {},
+					achievement = 63669,
+					players = {},
+					tactics = {
+						[12] = {
+							{ tactic = L["TheVenomousAbyss_TheCoiledAltar_1"] },
+						},
+					},
+					enabled = true,
+					track = function() core._3004:TheCoiledAltar() end,
+					partial = false,
+					encounterID = 3429,
+				},
+				boss8 = {
+					name = 2895, --Ula'tek
+					bossIDs = {},
+					achievement = 63609,
+					players = {},
+					tactics = {
+						[12] = {
+							{ tactic = L["TheVenomousAbyss_Ulatek_1"] },
+						},
+					},
+					enabled = true,
+					track = function() core._3004:UlaTek() end,
+					partial = false,
+					encounterID = 3492,
+				},
+			},
+
 			[2939] = { --The Dreanrift
 				name = 1314,
 				boss1 = {
