@@ -526,7 +526,8 @@ function core._2569:InstanceCleanup()
         core._2569.Events:UnregisterEvent("UNIT_AURA")
     end
 
-    core._2569.Events:UnregisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+    --UNIT_SPELLCAST_SUCCEEDED spellID is a secret value on this client and cannot be compared so the handler is disabled
+    --core._2569.Events:UnregisterEvent("UNIT_SPELLCAST_SUCCEEDED")
 end
 
 core._2569.Events:SetScript("OnEvent", function(self, event, ...)
@@ -537,33 +538,35 @@ function core._2569:InitialSetup()
     if core:IsNotRestricted() then
         core._2569.Events:RegisterEvent("UNIT_AURA")
     end
-    core._2569.Events:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+    --UNIT_SPELLCAST_SUCCEEDED spellID is a secret value on this client and cannot be compared so the handler is disabled
+    --core._2569.Events:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
 end
 
-function core._2569.Events:UNIT_SPELLCAST_SUCCEEDED(self, unitID, lineID, spellID, ...)
-    if core.Instances[core.expansion][core.instanceType][core.instance]["boss8"].enabled then
-        local name, realm = UnitName(unitID)
-
-        --Echo of Neltharion (Carrying Artifact)
-        if spellID == 411075 then
-            core:sendMessage(name .. " " .. L["Shared_HasGained"] .. " " .. C_Spell.GetSpellLink(411075),true)
-        end
-
-        --Magmorax (Feed Magmorax)
-        if spellID == 411368 then
-            if InfoFrame_GetPlayerComplete(name) then
-                --Player has successfully tossed the snail to the boss
-                InfoFrame_SetPlayerNeutral(name)
-
-                --Wait 1 second before unlocking spicy lava snail so not re-applied immediately
-                local spicyName = name
-                C_Timer.After(1, function()
-                    spicyLavaPlayers[spicyName] = nil
-                end)
-            end
-        end
-    end
-end
+--UNIT_SPELLCAST_SUCCEEDED spellID is a secret value on this client and cannot be compared so this handler is disabled
+--function core._2569.Events:UNIT_SPELLCAST_SUCCEEDED(self, unitID, lineID, spellID, ...)
+--    if core.Instances[core.expansion][core.instanceType][core.instance]["boss8"].enabled then
+--        local name, realm = UnitName(unitID)
+--
+--        --Echo of Neltharion (Carrying Artifact)
+--        if spellID == 411075 then
+--            core:sendMessage(name .. " " .. L["Shared_HasGained"] .. " " .. C_Spell.GetSpellLink(411075),true)
+--        end
+--
+--        --Magmorax (Feed Magmorax)
+--        if spellID == 411368 then
+--            if InfoFrame_GetPlayerComplete(name) then
+--                --Player has successfully tossed the snail to the boss
+--                InfoFrame_SetPlayerNeutral(name)
+--
+--                --Wait 1 second before unlocking spicy lava snail so not re-applied immediately
+--                local spicyName = name
+--                C_Timer.After(1, function()
+--                    spicyLavaPlayers[spicyName] = nil
+--                end)
+--            end
+--        end
+--    end
+--end
 
 function core._2569.Events:UNIT_AURA(self, unitID)
     --Magmorax (Spicy Lava Snail)
