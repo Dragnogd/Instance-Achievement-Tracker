@@ -140,5 +140,6 @@ Options.lua
 GUI.lua
 MobCounter.lua
 emotes.lua
+API.lua
 AchievementTrackerCore.lua
 Debug.lua
