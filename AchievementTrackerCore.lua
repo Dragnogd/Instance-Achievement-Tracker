@@ -306,9 +306,9 @@ function getPlayersInGroup()
 				end
 
 				if foundAchievement == false then
-					core:printMessage(L["Core_CompletedAllAchievements"] .. " " .. achievements)
+					core:printMessage(L["Core_CompletedAllAchievements"])
 				else
-					core:printMessage(L["Core_IncompletedAchievements"])
+					core:printMessage(L["Core_IncompletedAchievements"] .. " " .. achievements)
 				end
 			end
 		end
@@ -3885,7 +3885,15 @@ end
 
 --Check if Blizzard Achievement Tracking has completed/failed
 function core:getBlizzardTrackingStatus(achievementID, index)
+	-- Encounter ticks can run before a boss achievement is known. A nil id makes
+	-- IsAchievementEligible throw "Usage: IsAchievementEligible(achievementID)".
+	if type(achievementID) ~= "number" then
+		return nil
+	end
 	if index ~= nil then
+		if type(index) ~= "number" then
+			return nil
+		end
 		--Achievement has a criteria so we need to select that criteria to see if it has been completed/failed
 		local _, _, _, _, _, _, _, _, _, _, eligible, _, _ = GetAchievementCriteriaInfo(achievementID, index);
 		return eligible
@@ -3897,11 +3905,15 @@ end
 
 --Automatically detect blizzard tracking for new instances and ask user to report.
 function core:detectBlizzardTrackingAutomatically()
+	local achievementID = core.achievementIDs[1]
+	if type(achievementID) ~= "number" then
+		return
+	end
 	if automaticBlizzardTrackingInitialCheck == false then
-		automaticBlizzardTracking = core:getBlizzardTrackingStatus(core.achievementIDs[1])
+		automaticBlizzardTracking = core:getBlizzardTrackingStatus(achievementID)
 		core:sendDebugMessage("Automatic Blizzard Tracking set to: " .. tostring(automaticBlizzardTracking))
 		automaticBlizzardTrackingInitialCheck = true
-	elseif automaticBlizzardTrackingInitialCheck == true and core:getBlizzardTrackingStatus(core.achievementIDs[1]) ~= automaticBlizzardTracking then
+	elseif automaticBlizzardTrackingInitialCheck == true and core:getBlizzardTrackingStatus(achievementID) ~= automaticBlizzardTracking then
 		--The value of blizzard tracking has changed. Check if it failed or succeded
 		core:sendDebugMessage("Blizzard Tracking Has changed")
 		if automaticBlizzardTracking == false then
@@ -3917,7 +3929,7 @@ function core:detectBlizzardTrackingAutomatically()
 			--Send a message to user asking them to report tracking to user
 			core:printMessage("has detected that " .. core:getAchievement() .. " (" .. core.achievementIDs[1] .. ") can be tracked for faliure. Please report this to the Instance Achievement Tracker author")
 		end
-		automaticBlizzardTracking = core:getBlizzardTrackingStatus(core.achievementIDs[1])
+		automaticBlizzardTracking = core:getBlizzardTrackingStatus(achievementID)
 	end
 end
 
