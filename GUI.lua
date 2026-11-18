@@ -1136,6 +1136,9 @@ function Config:CreateUI()
         button.OutputPlayers:SetWidth(110)
         button.OutputTactics:SetWidth(110)
         button.TacticsSelector:SetWidth(110)
+        button.OutputPlayers:SetText(L["GUI_OutputPlayers"])
+        button.OutputTactics:SetText(L["GUI_OutputTactics"])
+        button.Trackable:SetText(L["GUI_Trackable"])
 
         -- Grey out achievement if achievement completed and option is enabled
         if data.completedAchievement == true then
@@ -1474,6 +1477,9 @@ function Config:CreateUI()
         button.TrackAchievement:SetWidth(110)
         button.OutputTactics:SetWidth(110)
         button.TacticsSelector:SetWidth(110)
+        button.OutputTactics:SetText(L["GUI_OutputTactics"])
+        button.TrackAchievement:SetText(L["GUI_Track"])
+        button.Trackable:SetText(L["GUI_Trackable"])
 
         -- Grey out achievement if achievement completed and option is enabled
         if data.completedAchievement == true then
@@ -1738,15 +1744,15 @@ function Config:ShowTodayPanel(tabID)
 
     -- Iterate through the instances for the selected expansion
     table.insert(categoriesToSort, {
-        name = "Trackable",
+        name = L["GUI_Trackable"],
         id = 0,
     })
     table.insert(categoriesToSort, {
-        name = "Current Zone",
+        name = L["GUI_CurrentZone"],
         id = 1,
     })
     table.insert(categoriesToSort, {
-        name = "Currently Tracked",
+        name = L["GUI_CurrentlyTracked"],
         id = 2,
     })
 
@@ -1798,7 +1804,7 @@ function Config:ShowOptionsPanel()
 
     self.UI.OptionsLayoutContainer.RightDisplay.DiscordURL = self.UI.OptionsLayoutContainer:CreateFontString(nil, "OVERLAY", "GameFontNormal")
     self.UI.OptionsLayoutContainer.RightDisplay.DiscordURL:SetPoint("TOPLEFT", self.UI.OptionsLayoutContainer.RightDisplay.DiscordTitle, "BOTTOMLEFT", 0, -5)
-    self.UI.OptionsLayoutContainer.RightDisplay.DiscordURL:SetText("https://discord.gg/BE8VB86T")
+    self.UI.OptionsLayoutContainer.RightDisplay.DiscordURL:SetText("https://discord.gg/U6S7vjb")
 
     self.UI.OptionsLayoutContainer.RightDisplay.DiscordDescription = self.UI.OptionsLayoutContainer:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
     self.UI.OptionsLayoutContainer.RightDisplay.DiscordDescription:SetPoint("TOPLEFT", self.UI.OptionsLayoutContainer.RightDisplay.DiscordURL, "BOTTOMLEFT", 0, -5)

@@ -1118,5 +1118,8 @@ local baseLocale = {
 	["GrimBatol_ErudaxtheDukeofBelow_1"] = "",
 	["Core_RestrictionsForAchievement"] = "Automatic tracking is limited for this encounter; using in-game tracking if possible",
 	["MarchonQuelDanas_MidnightFalls_1"] = "",
+	["GUI_Trackable"] = "Trackable",
+	["GUI_CurrentZone"] = "Current Zone",
+	["GUI_CurrentlyTracked"] = "Currently Tracked",
 }
 core:RegisterLocale('enUS', baseLocale)
